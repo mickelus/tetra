@@ -1,0 +1,7 @@
+tile.emptyblock.name=Empty Block
+tile.interfaceblock.name=Interface Block
+
+item.customgenerationbook.name=Book of Custom Generation
+item.placeholderitem.name=Loot placeholder
+
+itemGroup.customgen=Customgen
