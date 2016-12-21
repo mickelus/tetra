@@ -9,7 +9,7 @@ public class UtilRocketBoots {
     public static boolean hasBoots(EntityPlayer player) {
         ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-        return stack != null && stack.getItem() instanceof ItemRocketBoots;
+        return stack != null && stack.getItem() instanceof ItemRocketBoots && stack.hasTagCompound();
     }
 
 }

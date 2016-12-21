@@ -32,16 +32,16 @@ public class OverlayRocketBoots {
 
         if (!UtilRocketBoots.hasBoots(event.player)) {
             fuelPercent = -1;
-            return;
+        } else {
+            stack = event.player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+            fuelPercent = ItemRocketBoots.getFuelPercent(stack.getTagCompound());
         }
 
-        stack = event.player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-        fuelPercent = ItemRocketBoots.getFuelPercent(stack.getTagCompound());
         gui.setFuel(fuelPercent);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+    public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         gui.draw();
     }
 }

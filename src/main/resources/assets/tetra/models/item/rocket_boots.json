@@ -1,7 +1,8 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "tetra:items/rocket_boots"
+    "layer0": "items/leather_boots",
+    "layer1": "items/leather_boots_overlay"
   },
   "display": {
     "thirdperson": {

@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.gui.DisabledSlot;
 
 
 public class ContainerToolbelt extends Container {
@@ -24,12 +25,24 @@ public class ContainerToolbelt extends Container {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 87));
+                Slot slot;
+                if (itemStackToolbelt.isItemEqual(playerInventory.getStackInSlot(i * 9 + j + 9))) {
+                    slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 87);
+                } else {
+                    slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 87);
+                }
+                this.addSlotToContainer(slot);
             }
         }
 
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 12, 142));
+            Slot slot;
+            if (itemStackToolbelt.isItemEqualIgnoreDurability(playerInventory.getStackInSlot(i))) {
+                slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 142);
+            } else {
+                slot = new Slot(playerInventory, i, i * 17 + 12, 142);
+            }
+            this.addSlotToContainer(slot);
         }
     }
 
@@ -42,12 +55,15 @@ public class ContainerToolbelt extends Container {
      * Take a stack from the specified inventory slot.
      */
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-        ItemStack copy = null;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemStack = slot.getStack();
-            copy = itemStack.copy();
+
+            if (itemStack.isItemEqual(this.itemStackToolbelt)) {
+                System.out.println("GRAB EM BY THE TOOLBELT");
+                return null;
+            }
 
             if (index < this.toolbeltInventory.getSizeInventory()) {
                 if (!this.mergeItemStack(itemStack,  this.toolbeltInventory.getSizeInventory(), this.inventorySlots.size(), true)) {
@@ -62,9 +78,11 @@ public class ContainerToolbelt extends Container {
             } else {
                 slot.onSlotChanged();
             }
+
+            return itemStack.copy();
         }
 
-        return copy;
+        return null;
     }
 
     /**

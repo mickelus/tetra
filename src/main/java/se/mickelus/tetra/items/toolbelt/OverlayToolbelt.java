@@ -25,6 +25,8 @@ public class OverlayToolbelt {
 
     private boolean drawOverlay = false;
 
+    private boolean canShow = false;
+
     private OverlayGuiToolbelt gui;
 
     public OverlayToolbelt(Minecraft mc) {
@@ -62,9 +64,11 @@ public class OverlayToolbelt {
     }
 
     private void showView() {
-        updateGuiData();
-        drawOverlay = true;
-        mc.mouseHelper.ungrabMouseCursor();
+        boolean canOpen = updateGuiData();
+        if (canOpen) {
+            drawOverlay = true;
+            mc.mouseHelper.ungrabMouseCursor();
+        }
     }
 
     private void hideView() {
@@ -83,8 +87,14 @@ public class OverlayToolbelt {
         PacketPipeline.instance.sendToServer(packet);
     }
 
-    private void updateGuiData() {
-        gui.setInventoryToolbelt(UtilToolbelt.findToolbeltInventory(mc.thePlayer));
+    private boolean updateGuiData() {
+        InventoryToolbelt inventoryToolbelt = UtilToolbelt.findToolbeltInventory(mc.thePlayer);
+        if (inventoryToolbelt != null) {
+            gui.setInventoryToolbelt(inventoryToolbelt);
+            return true;
+        }
+
+        return false;
     }
 
     private int findIndex() {

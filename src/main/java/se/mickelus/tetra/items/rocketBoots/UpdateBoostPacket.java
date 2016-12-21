@@ -42,7 +42,6 @@ public class UpdateBoostPacket extends AbstractPacket {
 
     @Override
     public void handleServerSide(EntityPlayer player) {
-        System.out.println("POW; GOT SOME PKTS " +  charged);
         ItemStack stack;
 
         if (!UtilRocketBoots.hasBoots(player)) {

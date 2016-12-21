@@ -1,7 +1,6 @@
 package se.mickelus.tetra;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -9,16 +8,19 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.blocks.workbench.ITetraBlock;
+import se.mickelus.tetra.items.ITetraItem;
+import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.hammer.HammerItem;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
-import se.mickelus.tetra.items.rocketBoots.JumpHandlerRocketBoots;
-import se.mickelus.tetra.items.rocketBoots.UpdateBoostPacket;
-import se.mickelus.tetra.items.toolbelt.EquipToolbeltItemPacket;
 import se.mickelus.tetra.items.toolbelt.GuiHandlerToolbelt;
 import se.mickelus.tetra.items.JournalItem;
 import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
-import se.mickelus.tetra.items.toolbelt.TickHandlerToolbelt;
 import se.mickelus.tetra.network.PacketPipeline;
 import se.mickelus.tetra.proxy.IProxy;
+
+import java.util.Arrays;
 
 @Mod(useMetadata = true, modid = TetraMod.MOD_ID)
 public class TetraMod {
@@ -30,17 +32,28 @@ public class TetraMod {
     @Mod.Instance(TetraMod.MOD_ID)
     public static TetraMod instance;
 
+    private ITetraItem[] items;
+    private ITetraBlock[] blocks;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
 
         new TetraCreativeTabs();
 
-        new ItemRocketBoots();
-        new ItemToolbelt();
-        new JournalItem();
+        items = new ITetraItem[] {
+            new ItemRocketBoots(),
+            new ItemToolbelt(),
+            new JournalItem(),
+            new HammerItem()
+        };
 
-        proxy.preInit(event);
+        blocks = new ITetraBlock[] {
+            new BlockWorkbench()
+        };
+
+
+        proxy.preInit(event, items);
     }
     
     @EventHandler
@@ -50,13 +63,9 @@ public class TetraMod {
         proxy.init(event);
 
         PacketPipeline packetPipeline = new PacketPipeline();
-
         packetPipeline.initialize();
-        packetPipeline.registerPacket(EquipToolbeltItemPacket.class);
-        packetPipeline.registerPacket(UpdateBoostPacket.class);
 
-        MinecraftForge.EVENT_BUS.register(new TickHandlerToolbelt());
-        MinecraftForge.EVENT_BUS.register(new JumpHandlerRocketBoots(Minecraft.getMinecraft()));
+        Arrays.stream(items).forEach(item -> item.init(packetPipeline));
     }
 
     @EventHandler

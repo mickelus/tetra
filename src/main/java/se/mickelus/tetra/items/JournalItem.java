@@ -1,16 +1,12 @@
 package se.mickelus.tetra.items;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import se.mickelus.tetra.TetraCreativeTabs;
-import se.mickelus.tetra.items.toolbelt.GuiToolbelt;
 
-public class JournalItem extends Item {
+public class JournalItem extends TetraItem {
 
     private static JournalItem instance;
     private static String unlocalizedName = "journal";
