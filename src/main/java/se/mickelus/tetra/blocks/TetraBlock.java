@@ -16,7 +16,10 @@ public class TetraBlock extends Block implements ITetraBlock {
 
     @Override
     public void clientPreInit() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	    Item item = Item.getItemFromBlock(this);
+	    if (item != null) {
+            ModelLoader.setCustomModelResourceLocation(item , 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	    }
     }
 
     @Override

@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import se.mickelus.tetra.blocks.geode.BlockGeode;
+import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.blocks.workbench.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
@@ -45,15 +47,17 @@ public class TetraMod {
             new ItemRocketBoots(),
             new ItemToolbelt(),
             new JournalItem(),
-            new HammerItem()
+            new HammerItem(),
+	        new ItemGeode()
         };
 
         blocks = new ITetraBlock[] {
-            new BlockWorkbench()
+            new BlockWorkbench(),
+	        new BlockGeode()
         };
 
 
-        proxy.preInit(event, items);
+        proxy.preInit(event, items, blocks);
     }
     
     @EventHandler

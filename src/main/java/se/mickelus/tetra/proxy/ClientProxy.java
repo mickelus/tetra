@@ -6,6 +6,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import se.mickelus.tetra.blocks.workbench.ITetraBlock;
 import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.items.ITetraItem;
@@ -16,9 +17,9 @@ import java.util.Arrays;
 
 public class ClientProxy implements IProxy {
     @Override
-    public void preInit(FMLPreInitializationEvent event, ITetraItem[] items) {
-
+    public void preInit(FMLPreInitializationEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
         Arrays.stream(items).forEach(ITetraItem::clientPreInit);
+        Arrays.stream(blocks).forEach(ITetraBlock::clientPreInit);
     }
 
     @Override
