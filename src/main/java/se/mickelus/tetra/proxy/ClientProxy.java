@@ -6,7 +6,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import se.mickelus.tetra.blocks.workbench.ITetraBlock;
+import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.items.ITetraItem;

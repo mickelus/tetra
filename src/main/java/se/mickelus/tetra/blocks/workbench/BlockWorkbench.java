@@ -3,8 +3,6 @@ package se.mickelus.tetra.blocks.workbench;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -15,13 +13,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
@@ -52,44 +51,29 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
-            TileEntityWorkbench te = (TileEntityWorkbench) world.getTileEntity(pos);
-            if (te.getItemStack() == null) {
-                if (player.getHeldItem(EnumHand.MAIN_HAND) != null) {
-                    // There is no item in the pedestal and the player is holding an item. We move that item
-                    // to the pedestal
-                    te.setStack(player.getHeldItem(EnumHand.MAIN_HAND));
-                    world.notifyBlockUpdate(pos, state, state, 3);
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        player.openGui(TetraMod.instance, GuiHandlerWorkbench.GUI_WORKBENCH_ID, world, pos.getX(), pos.getY(), pos.getZ());
 
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                    // Make sure the client knows about the changes in the player inventory
-                    player.openContainer.detectAndSendChanges();
-                }
-            } else {
-                // There is a stack in the pedestal. In this case we remove it and try to put it in the
-                // players inventory if there is room
-                ItemStack stack = te.getItemStack();
-                te.setStack(null);
-                world.notifyBlockUpdate(pos, state, state, 3);
+//        if (!world.isRemote) {
+//            TileEntityWorkbench te = (TileEntityWorkbench) world.getTileEntity(pos);
+//
+//            te.setCurrentState(te.getCurrentState() + 1);
+//            te.markDirty();
+//        }
 
-                if (!player.inventory.addItemStackToInventory(stack)) {
-                    // Not possible. Throw item in the world
-                    EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY()+1, pos.getZ(), stack);
-                    world.spawnEntityInWorld(entityItem);
-                } else {
-                    player.openContainer.detectAndSendChanges();
-                }
-            }
-        }
-
-        // Return true also on the client to make sure that MC knows we handled this and will not try to place
-        // a block on the client
         return true;
     }
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return Blocks.CRAFTING_TABLE.getPickBlock(state, target, world, pos, player);
+    }
+
+    @Override
+    public void init(PacketPipeline packetPipeline) {
+        super.init(packetPipeline);
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(TetraMod.instance, new GuiHandlerWorkbench());
+        PacketPipeline.instance.registerPacket(UpdateWorkbenchPacket.class);
     }
 }

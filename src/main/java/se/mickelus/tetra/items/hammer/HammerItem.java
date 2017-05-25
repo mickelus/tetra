@@ -27,10 +27,10 @@ public class HammerItem extends TetraItem {
         setCreativeTab(TetraCreativeTabs.getInstance());
     }
 
-    @SuppressWarnings("NullableProblems")
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!player.canPlayerEdit(pos.offset(facing), facing, stack)) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack itemStack = player.getHeldItem(hand);
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
             return EnumActionResult.FAIL;
         }
 

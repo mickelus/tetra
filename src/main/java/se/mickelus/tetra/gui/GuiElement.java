@@ -10,6 +10,9 @@ public class GuiElement extends GuiNode {
 
     protected boolean hasFocus = false;
 
+    public GuiElement() {
+    }
+
     public GuiElement(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -18,7 +21,13 @@ public class GuiElement extends GuiNode {
     }
 
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
         calculateFocusState(refX, refY, mouseX, mouseY);
+    }
+
+    @Override
+    public void onClick(int x, int y) {
+        elements.stream().forEach(element -> element.onClick(x, y));
     }
 
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {

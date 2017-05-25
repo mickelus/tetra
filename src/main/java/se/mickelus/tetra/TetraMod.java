@@ -1,6 +1,5 @@
 package se.mickelus.tetra;
 
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -11,7 +10,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
-import se.mickelus.tetra.blocks.workbench.ITetraBlock;
+import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.hammer.HammerItem;
@@ -63,6 +62,7 @@ public class TetraMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
 
+
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerToolbelt());
         proxy.init(event);
 
@@ -70,6 +70,7 @@ public class TetraMod {
         packetPipeline.initialize();
 
         Arrays.stream(items).forEach(item -> item.init(packetPipeline));
+        Arrays.stream(blocks).forEach(block -> block.init(packetPipeline));
     }
 
     @EventHandler

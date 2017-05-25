@@ -2,6 +2,7 @@ package se.mickelus.tetra.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
 
 public class TetraCreativeTabs extends CreativeTabs {
@@ -15,8 +16,8 @@ public class TetraCreativeTabs extends CreativeTabs {
     }
 
     @Override
-    public Item getTabIconItem() {
-        return ItemToolbelt.instance;
+    public ItemStack getTabIconItem() {
+        return new ItemStack(ItemToolbelt.instance);
     }
 
     public static TetraCreativeTabs getInstance() {

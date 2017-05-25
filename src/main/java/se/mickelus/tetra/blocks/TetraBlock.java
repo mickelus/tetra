@@ -5,7 +5,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import se.mickelus.tetra.blocks.workbench.ITetraBlock;
 import se.mickelus.tetra.network.PacketPipeline;
 
 public class TetraBlock extends Block implements ITetraBlock {

@@ -23,35 +23,14 @@ import se.mickelus.tetra.gui.hud.TileEntityHudRenderer;
 @SideOnly(Side.CLIENT)
 public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
-    private IModel model;
-    private IBakedModel bakedModel;
-
     private RenderItem itemRenderer;
 
-    private GuiWorkbench gui;
+//    private GuiHudWorkbench gui;
 
     public TESRWorkbench() {
         itemRenderer = Minecraft.getMinecraft().getRenderItem();
-
-        gui = new GuiWorkbench();
-
-        try {
-            // Manually load our rotating model here
-            model = ModelLoaderRegistry.getModel(new ResourceLocation(TetraMod.MOD_ID, "block/workbench"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    private IBakedModel getBakedModel() {
-        // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-        // for rendering
-        if (bakedModel == null) {
-            bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
-                    location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString()));
-        }
-        return bakedModel;
-    }
 
     @Override
     public void renderTileEntityAt(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -60,17 +39,8 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
         // Translate to the location of our tile entity
         GlStateManager.translate(x, y, z);
+
         GlStateManager.disableRescaleNormal();
-
-        if (te.getItemStack() != null) {
-            adjustLight(te);
-            gui.setTileEntity(te);
-            gui.draw();
-            //renderHud(te.getItemStack().getDisplayName());
-        }
-
-        // Render the rotating handles
-        //renderHandles(te);
 
         // Render our item
         renderItem(te);
@@ -80,55 +50,18 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
     }
 
-    private void renderHandles(TileEntityWorkbench te) {
-        GlStateManager.pushMatrix();
-
-        GlStateManager.translate(.5, 1/8f, .5);
-        long angle = (System.currentTimeMillis() / 10) % 360;
-        // GlStateManager.rotate(angle, 0, 1, 0);
-
-        RenderHelper.disableStandardItemLighting();
-        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        if (Minecraft.isAmbientOcclusionEnabled()) {
-            GlStateManager.shadeModel(GL11.GL_SMOOTH);
-        } else {
-            GlStateManager.shadeModel(GL11.GL_FLAT);
-        }
-
-        World world = te.getWorld();
-        // Translate back to local view coordinates so that we can do the acual rendering here
-        GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
-
-        Tessellator tessellator = Tessellator.getInstance();
-        tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-                world,
-                getBakedModel(),
-                world.getBlockState(te.getPos()),
-                te.getPos(),
-                Tessellator.getInstance().getBuffer(),
-                false);
-        tessellator.draw();
-
-        RenderHelper.enableStandardItemLighting();
-        GlStateManager.popMatrix();
-    }
-
     private void renderItem(TileEntityWorkbench te) {
-        ItemStack stack = te.getItemStack();
+        ItemStack stack = te.getStackInSlot(0);
         if (stack != null) {
 
             GlStateManager.pushMatrix();
-            GlStateManager.translate(.5, 1.44, .5);
-            GlStateManager.scale(.3f, .3f, .3f);
-
-            rotateModel();
+            GlStateManager.translate(.5, 0.94, .5);
 
             applyCorrections(stack);
 
             adjustLight(te);
 
-            Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+            itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 
             GlStateManager.popMatrix();
         }
@@ -136,22 +69,18 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
     private void adjustLight(TileEntityWorkbench te) {
         getWorld().getBlockState(te.getPos()).getPackedLightmapCoords(getWorld(), te.getPos());
-        int i = getWorld().getCombinedLight(te.getPos().offset(EnumFacing.UP), 0);
-        int j = i % 65536;
-        int k = i / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
-    }
-
-    private void rotateModel() {
-        long angle = (System.currentTimeMillis() / 20) % 360;
-        GlStateManager.rotate(angle, 0, 1, 0);
+        int combinedLight = getWorld().getCombinedLight(te.getPos().offset(EnumFacing.UP), 0);
+        int x = combinedLight % 65536;
+        int y = combinedLight / 65536;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)x, (float)y);
     }
 
     private void applyCorrections(ItemStack stack) {
         IBakedModel model = itemRenderer.getItemModelWithOverrides(stack, getWorld(), null);
         if (!model.isGui3d()) {
+            GlStateManager.translate(0, 0.073, -0.1);
             GlStateManager.scale(.8f, .8f, .8f);
-            GlStateManager.translate(0, 0.13, 0);
+            GlStateManager.rotate(90, 1, 0, 0);
         }
     }
 }

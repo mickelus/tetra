@@ -24,6 +24,8 @@ public class GuiNode extends Gui {
         elements.stream().forEach((element -> element.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY)));
     }
 
+    public void onClick(int x, int y) {}
+
     public void addChild(GuiNode child) {
         this.elements.add(child);
     }

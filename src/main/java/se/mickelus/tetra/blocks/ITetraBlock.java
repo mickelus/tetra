@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.workbench;
+package se.mickelus.tetra.blocks;
 
 import se.mickelus.tetra.network.PacketPipeline;
 
