@@ -18,8 +18,8 @@ public class ContainerToolbelt extends Container {
         this.itemStackToolbelt = itemStackToolbelt;
         toolbeltInventory.openInventory(player);
 
-        this.addSlotToContainer(new Slot(toolbeltInventory, 0, 79, 18));
-        this.addSlotToContainer(new Slot(toolbeltInventory, 1, 94, 33));
+        this.addSlotToContainer(new Slot(toolbeltInventory, 0, 79, 19));
+        this.addSlotToContainer(new Slot(toolbeltInventory, 1, 93, 33));
         this.addSlotToContainer(new Slot(toolbeltInventory, 2, 65, 33));
         this.addSlotToContainer(new Slot(toolbeltInventory, 3, 79, 47));
 
@@ -61,7 +61,6 @@ public class ContainerToolbelt extends Container {
             ItemStack itemStack = slot.getStack();
 
             if (itemStack.isItemEqual(this.itemStackToolbelt)) {
-                System.out.println("GRAB EM BY THE TOOLBELT");
                 return null;
             }
 
@@ -73,8 +72,8 @@ public class ContainerToolbelt extends Container {
                 return null;
             }
 
-            if (itemStack.stackSize == 0) {
-                slot.putStack(null);
+            if (itemStack.func_190916_E() == 0) {
+                slot.putStack(ItemStack.field_190927_a);
             } else {
                 slot.onSlotChanged();
             }
@@ -88,8 +87,7 @@ public class ContainerToolbelt extends Container {
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
-    {
+    public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         this.toolbeltInventory.closeInventory(playerIn);
     }

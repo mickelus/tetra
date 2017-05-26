@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -35,7 +36,7 @@ public class TickHandlerToolbelt {
 
         for (int i = 0; i < toolbeltInventory.getSizeInventory(); i++) {
             ItemStack shadowStack = toolbeltInventory.getShadowOfSlot(i);
-            if (toolbeltInventory.getStackInSlot(i) != null || shadowStack == null) {
+            if (!toolbeltInventory.getStackInSlot(i).func_190926_b() || shadowStack.func_190926_b()) {
                 continue;
             }
 
@@ -44,7 +45,7 @@ public class TickHandlerToolbelt {
             }
 
             ItemStack inventoryStack = getStackFromPlayer(player, shadowStack);
-            if (inventoryStack != null) {
+            if (!inventoryStack.func_190926_b()) {
                 toolbeltInventory.setInventorySlotContents(i, inventoryStack);
             }
         }
@@ -57,7 +58,7 @@ public class TickHandlerToolbelt {
             return playerInventory.removeStackFromSlot(playerInventory.currentItem);
         }
 
-        return null;
+        return new ItemStack(Blocks.AIR);
     }
 
     private void storeOffhand(EntityPlayer player) {
@@ -67,7 +68,7 @@ public class TickHandlerToolbelt {
     private boolean wasInOffhand(EntityPlayer player, ItemStack itemStack) {
         ItemStack previousOffhand = previousOffhandMap.get(player.getUniqueID());
 
-        if (previousOffhand == null) {
+        if (previousOffhand == null || previousOffhand.func_190926_b()) {
             return false;
         }
 

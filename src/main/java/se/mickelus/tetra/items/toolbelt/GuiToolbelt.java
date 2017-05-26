@@ -14,15 +14,17 @@ public class GuiToolbelt extends GuiContainer {
 
     private static GuiToolbelt instance;
 
-    public static final String textureLocation = "textures/gui/toolbelt-inventory.png";
-    private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(TetraMod.MOD_ID, textureLocation);
+    private static final ResourceLocation TOOLBELT_TEXTURE = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
+    private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
 
 
     public GuiToolbelt(ContainerToolbelt container) {
         super(container);
         this.allowUserInput = false;
-        this.xSize = 175;
+        this.xSize = 179;
         this.ySize = 176;
+
+        instance = this;
     }
 
     /**
@@ -48,10 +50,18 @@ public class GuiToolbelt extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        int x = (width - xSize) / 2;
+        int y = (height - ySize) / 2;
+
+        mc.getTextureManager().bindTexture(TOOLBELT_TEXTURE);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(-0.5F, 0.5F, 0);
+        this.drawTexturedModalRect(x + 13, y + 3, 0, 0, 143, 75);
+        GlStateManager.popMatrix();
+
+
         mc.getTextureManager().bindTexture(INVENTORY_TEXTURE);
-        int i = (width - xSize) / 2;
-        int j = (height - ySize) / 2;
-        this.drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
+        this.drawTexturedModalRect(x, y + 74, 0, 0, 179, 106);
     }
 
     @Override

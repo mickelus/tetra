@@ -18,6 +18,7 @@ import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.toolbelt.GuiHandlerToolbelt;
 import se.mickelus.tetra.items.JournalItem;
 import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
+import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 import se.mickelus.tetra.proxy.IProxy;
 
@@ -42,6 +43,8 @@ public class TetraMod {
 
         new TetraCreativeTabs();
 
+        new GuiHandlerRegistry();
+
         items = new ITetraItem[] {
             new ItemRocketBoots(),
             new ItemToolbelt(),
@@ -61,10 +64,9 @@ public class TetraMod {
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
-
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerToolbelt());
         proxy.init(event);
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, GuiHandlerRegistry.instance);
 
         PacketPipeline packetPipeline = new PacketPipeline();
         packetPipeline.initialize();

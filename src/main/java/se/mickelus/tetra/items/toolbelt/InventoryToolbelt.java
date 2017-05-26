@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
@@ -16,11 +17,14 @@ public class InventoryToolbelt implements IInventory {
     
     private ItemStack toolbeltItemStack;
 
-    private ItemStack[] inventoryContents = new ItemStack[INVENTORY_SIZE];
-    private ItemStack[] inventoryShadows = new ItemStack[INVENTORY_SIZE];
+    private NonNullList<ItemStack> inventoryContents;
+    private NonNullList<ItemStack> inventoryShadows;
 
     public InventoryToolbelt(ItemStack stack) {
         toolbeltItemStack = stack;
+
+        inventoryContents = NonNullList.func_191197_a(INVENTORY_SIZE, ItemStack.field_190927_a);
+        inventoryShadows = NonNullList.func_191197_a(INVENTORY_SIZE, ItemStack.field_190927_a);
 
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
@@ -34,11 +38,11 @@ public class InventoryToolbelt implements IInventory {
         NBTTagList shadows = compound.getTagList("ItemShadows", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < items.tagCount(); i++) {
-            NBTTagCompound item = items.getCompoundTagAt(i);
-            int slot = item.getInteger("Slot");
+            NBTTagCompound itemTag = items.getCompoundTagAt(i);
+            int slot = itemTag.getInteger("Slot");
 
             if (0 <= slot && slot < getSizeInventory()) {
-                inventoryContents[slot] = ItemStack.loadItemStackFromNBT(item);
+                inventoryContents.set(slot, new ItemStack(itemTag));
             }
         }
 
@@ -47,7 +51,7 @@ public class InventoryToolbelt implements IInventory {
             int slot = item.getInteger("Slot");
 
             if (0 <= slot && slot < getSizeInventory()) {
-                inventoryShadows[slot] = ItemStack.loadItemStackFromNBT(item);
+                inventoryShadows.set(slot, new ItemStack(item));
             }
         }
     }
@@ -78,16 +82,21 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public int getSizeInventory() {
-        return inventoryContents.length;
+        return inventoryContents.size();
+    }
+
+    @Override
+    public boolean func_191420_l() {
+        return false;
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return index >= 0 && index < this.inventoryContents.length ? this.inventoryContents[index] : null;
+        return inventoryContents.get(index);
     }
 
     public ItemStack getShadowOfSlot(int index) {
-        return index >= 0 && index < this.inventoryShadows.length ? this.inventoryShadows[index] : null;
+        return inventoryShadows.get(index);
     }
 
     @Override
@@ -103,22 +112,22 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        if (this.inventoryContents[index] != null) {
-            ItemStack itemstack = this.inventoryContents[index];
-            this.inventoryContents[index] = null;
+        ItemStack itemstack = (ItemStack)this.inventoryContents.get(index);
 
-            return itemstack;
+        if (itemstack.func_190926_b()) {
+            return ItemStack.field_190927_a;
         } else {
-            return null;
+            this.inventoryContents.set(index, ItemStack.field_190927_a);
+            return itemstack;
         }
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.inventoryContents[index] = stack;
+        this.inventoryContents.set(index, stack);
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        if (!stack.func_190926_b() && stack.func_190916_E() > this.getInventoryStackLimit()) {
+            stack.func_190920_e(this.getInventoryStackLimit());
         }
 
         this.markDirty();
@@ -132,14 +141,14 @@ public class InventoryToolbelt implements IInventory {
     @Override
     public void markDirty() {
         for (int i = 0; i < getSizeInventory(); ++i) {
-            if (getStackInSlot(i) != null && getStackInSlot(i).stackSize == 0) {
-                inventoryContents[i] = null;
+            if (getStackInSlot(i).func_190916_E() == 0) {
+                inventoryContents.set(i, ItemStack.field_190927_a);
             }
         }
 
         for (int i = 0; i < getSizeInventory(); ++i) {
-            if (getStackInSlot(i) != null) {
-                inventoryShadows[i] = getStackInSlot(i).copy();
+            if (!getStackInSlot(i).func_190926_b()) {
+                inventoryShadows.set(i, getStackInSlot(i).copy());
             }
         }
 
@@ -179,9 +188,7 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.inventoryContents.length; ++i) {
-            this.inventoryContents[i] = null;
-        }
+        inventoryContents.clear();
     }
 
     @Override

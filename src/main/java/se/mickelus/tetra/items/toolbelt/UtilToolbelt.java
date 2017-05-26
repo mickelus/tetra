@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
@@ -10,15 +11,15 @@ public class UtilToolbelt {
         InventoryToolbelt toolbeltInventory = findToolbeltInventory(player);
         ItemStack offhandItem = player.getHeldItemOffhand();
 
-        if (toolbeltInventory == null || toolbeltInventory.getStackInSlot(index) == null) {
+        if (toolbeltInventory == null || toolbeltInventory.getStackInSlot(index).func_190926_b()) {
             return;
         }
 
         player.setHeldItem(EnumHand.OFF_HAND, toolbeltInventory.getStackInSlot(index));
 
-        toolbeltInventory.setInventorySlotContents(index, null);
+        toolbeltInventory.setInventorySlotContents(index, new ItemStack(Blocks.AIR));
 
-        if (offhandItem != null) {
+        if (!offhandItem.func_190926_b()) {
             int restockIndex = getRestockIndex(toolbeltInventory, offhandItem);
             if (restockIndex != -1) {
                 toolbeltInventory.setInventorySlotContents(restockIndex, offhandItem);
@@ -38,10 +39,10 @@ public class UtilToolbelt {
 
     public static ItemStack findToolbeltItemStack(EntityPlayer player) {
         InventoryPlayer inventoryPlayer = player.inventory;
-        for (int i = 0; i < inventoryPlayer.mainInventory.length; ++i) {
-            if (inventoryPlayer.mainInventory[i] != null
-                    && ItemToolbelt.instance.equals(inventoryPlayer.mainInventory[i].getItem())) {
-                return inventoryPlayer.mainInventory[i];
+        for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
+            ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
+            if (ItemToolbelt.instance.equals(itemStack.getItem())) {
+                return itemStack;
             }
         }
         return null;
@@ -49,7 +50,7 @@ public class UtilToolbelt {
 
     public static int getRestockIndex(InventoryToolbelt inventory, ItemStack itemStack) {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            if (itemStack.isItemEqual(inventory.getShadowOfSlot(i)) && inventory.getStackInSlot(i) == null) {
+            if (itemStack.isItemEqual(inventory.getShadowOfSlot(i)) && inventory.getStackInSlot(i).func_190926_b()) {
                 return i;
             }
         }

@@ -5,25 +5,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import se.mickelus.tetra.network.TetraGuiHandler;
 
-public class GuiHandlerToolbelt implements IGuiHandler {
+public class GuiHandlerToolbelt implements TetraGuiHandler {
 
     public static final int GUI_TOOLBELT_ID = 0;
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int hand, int y, int z) {
-        if (GUI_TOOLBELT_ID == ID) {
-            return new ContainerToolbelt(player.inventory, getItem(player, hand), player);
-        }
-        return null;
+    public Object getServerGuiElement(EntityPlayer player, World world, int hand, int y, int z) {
+        return new ContainerToolbelt(player.inventory, getItem(player, hand), player);
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int hand, int y, int z) {
-        if (GUI_TOOLBELT_ID == ID) {
-            return new GuiToolbelt(new ContainerToolbelt(player.inventory, getItem(player, hand), player));
-        }
-        return null;
+    public Object getClientGuiElement(EntityPlayer player, World world, int hand, int y, int z) {
+        return new GuiToolbelt(new ContainerToolbelt(player.inventory, getItem(player, hand), player));
     }
 
     private ItemStack getItem(EntityPlayer player, int handOrdinal) {

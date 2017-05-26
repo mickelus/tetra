@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
@@ -73,7 +74,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     public void init(PacketPipeline packetPipeline) {
         super.init(packetPipeline);
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(TetraMod.instance, new GuiHandlerWorkbench());
+        GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
         PacketPipeline.instance.registerPacket(UpdateWorkbenchPacket.class);
     }
 }

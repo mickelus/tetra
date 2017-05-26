@@ -66,12 +66,14 @@ public class OverlayToolbelt {
     private void showView() {
         boolean canOpen = updateGuiData();
         if (canOpen) {
+            mc.inGameHasFocus = false;
             drawOverlay = true;
             mc.mouseHelper.ungrabMouseCursor();
         }
     }
 
     private void hideView() {
+        mc.inGameHasFocus = true;
         drawOverlay = false;
         mc.mouseHelper.grabMouseCursor();
 
