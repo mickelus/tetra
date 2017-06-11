@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.rocketBoots;
+package se.mickelus.tetra.gui.filter;
 
 public class VisibilityFilter {
 
@@ -13,7 +13,7 @@ public class VisibilityFilter {
 
     private int delay = DECREASE_DELAY;
 
-    VisibilityFilter(float min, float max) {
+    public VisibilityFilter(float min, float max) {
         this.min = min;
         this.max = max;
     }

@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.rocketBoots;
 
 import net.minecraft.client.renderer.GlStateManager;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.filter.VisibilityFilter;
 
 public class GuiBarRocketBoots extends GuiElement {
 
