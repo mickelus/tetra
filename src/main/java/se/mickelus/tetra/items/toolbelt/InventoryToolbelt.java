@@ -23,8 +23,8 @@ public class InventoryToolbelt implements IInventory {
     public InventoryToolbelt(ItemStack stack) {
         toolbeltItemStack = stack;
 
-        inventoryContents = NonNullList.func_191197_a(INVENTORY_SIZE, ItemStack.field_190927_a);
-        inventoryShadows = NonNullList.func_191197_a(INVENTORY_SIZE, ItemStack.field_190927_a);
+        inventoryContents = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
+        inventoryShadows = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
 
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
@@ -86,7 +86,7 @@ public class InventoryToolbelt implements IInventory {
     }
 
     @Override
-    public boolean func_191420_l() {
+    public boolean isEmpty() {
         return false;
     }
 
@@ -103,7 +103,7 @@ public class InventoryToolbelt implements IInventory {
     public ItemStack decrStackSize(int index, int count) {
         ItemStack itemstack = ItemStackHelper.getAndSplit(this.inventoryContents, index, count);
 
-        if (itemstack != null) {
+        if (!itemstack.isEmpty()) {
             this.markDirty();
         }
 
@@ -112,13 +112,13 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        ItemStack itemstack = (ItemStack)this.inventoryContents.get(index);
+        ItemStack itemStack = this.inventoryContents.get(index);
 
-        if (itemstack.func_190926_b()) {
-            return ItemStack.field_190927_a;
+        if (itemStack.isEmpty()) {
+            return itemStack;
         } else {
-            this.inventoryContents.set(index, ItemStack.field_190927_a);
-            return itemstack;
+            this.inventoryContents.set(index, ItemStack.EMPTY);
+            return itemStack;
         }
     }
 
@@ -126,8 +126,8 @@ public class InventoryToolbelt implements IInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.inventoryContents.set(index, stack);
 
-        if (!stack.func_190926_b() && stack.func_190916_E() > this.getInventoryStackLimit()) {
-            stack.func_190920_e(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         this.markDirty();
@@ -141,13 +141,13 @@ public class InventoryToolbelt implements IInventory {
     @Override
     public void markDirty() {
         for (int i = 0; i < getSizeInventory(); ++i) {
-            if (getStackInSlot(i).func_190916_E() == 0) {
-                inventoryContents.set(i, ItemStack.field_190927_a);
+            if (getStackInSlot(i).getCount() == 0) {
+                inventoryContents.set(i, ItemStack.EMPTY);
             }
         }
 
         for (int i = 0; i < getSizeInventory(); ++i) {
-            if (!getStackInSlot(i).func_190926_b()) {
+            if (!getStackInSlot(i).isEmpty()) {
                 inventoryShadows.set(i, getStackInSlot(i).copy());
             }
         }
@@ -156,7 +156,7 @@ public class InventoryToolbelt implements IInventory {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return true;
     }
 

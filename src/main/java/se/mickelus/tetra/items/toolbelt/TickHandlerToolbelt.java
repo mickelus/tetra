@@ -36,7 +36,7 @@ public class TickHandlerToolbelt {
 
         for (int i = 0; i < toolbeltInventory.getSizeInventory(); i++) {
             ItemStack shadowStack = toolbeltInventory.getShadowOfSlot(i);
-            if (!toolbeltInventory.getStackInSlot(i).func_190926_b() || shadowStack.func_190926_b()) {
+            if (!toolbeltInventory.getStackInSlot(i).isEmpty() || shadowStack.isEmpty()) {
                 continue;
             }
 
@@ -45,7 +45,7 @@ public class TickHandlerToolbelt {
             }
 
             ItemStack inventoryStack = getStackFromPlayer(player, shadowStack);
-            if (!inventoryStack.func_190926_b()) {
+            if (!inventoryStack.isEmpty()) {
                 toolbeltInventory.setInventorySlotContents(i, inventoryStack);
             }
         }
@@ -58,7 +58,7 @@ public class TickHandlerToolbelt {
             return playerInventory.removeStackFromSlot(playerInventory.currentItem);
         }
 
-        return new ItemStack(Blocks.AIR);
+        return ItemStack.EMPTY;
     }
 
     private void storeOffhand(EntityPlayer player) {
@@ -68,7 +68,7 @@ public class TickHandlerToolbelt {
     private boolean wasInOffhand(EntityPlayer player, ItemStack itemStack) {
         ItemStack previousOffhand = previousOffhandMap.get(player.getUniqueID());
 
-        if (previousOffhand == null || previousOffhand.func_190926_b()) {
+        if (previousOffhand == null || previousOffhand.isEmpty()) {
             return false;
         }
 

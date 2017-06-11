@@ -16,7 +16,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
         clearChildren();
         for (int i = 0; i < inventoryToolbelt.getSizeInventory(); i++) {
             ItemStack itemStack = inventoryToolbelt.getStackInSlot(i);
-            if (!itemStack.func_190926_b()) {
+            if (!itemStack.isEmpty()) {
                 addChild(new OverlayGuiItem(i * 25,  i * 25 - 100, itemStack, i));
             }
         }

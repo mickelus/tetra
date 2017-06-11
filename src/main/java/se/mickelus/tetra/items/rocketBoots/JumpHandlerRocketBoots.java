@@ -23,10 +23,10 @@ public class JumpHandlerRocketBoots {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.inGameHasFocus) {
-            if (jumpKey.isKeyDown() && mc.thePlayer.onGround && mc.thePlayer.isSneaking()) {
+            if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isSneaking()) {
                 UpdateBoostPacket packet = new UpdateBoostPacket(true, true);
                 PacketPipeline.instance.sendToServer(packet);
-            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.thePlayer.onGround) {
+            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.onGround) {
                 UpdateBoostPacket packet = new UpdateBoostPacket(true);
                 PacketPipeline.instance.sendToServer(packet);
             } else if (!jumpKey.isKeyDown() && wasJumpKeyDown) {

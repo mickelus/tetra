@@ -34,7 +34,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
 
     public TileEntityWorkbench() {
-        stacks = NonNullList.func_191197_a(3, ItemStack.field_190927_a);
+        stacks = NonNullList.withSize(3, ItemStack.EMPTY);
     }
 
     public int getCurrentState() {
@@ -48,10 +48,10 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     private void sync() {
-        if (worldObj.isRemote) {
+        if (world.isRemote) {
             PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, getCurrentState()));
         } else {
-            worldObj.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
+            world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
             markDirty();
         }
     }
@@ -123,10 +123,11 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return 1;
     }
 
+
     @Override
-    public boolean func_191420_l() {
+    public boolean isEmpty() {
         for (ItemStack itemstack : this.stacks) {
-            if (!itemstack.func_190926_b()) {
+            if (!itemstack.isEmpty()) {
                 return false;
             }
         }
@@ -145,7 +146,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public ItemStack decrStackSize(int index, int count) {
         ItemStack itemstack = ItemStackHelper.getAndSplit(this.stacks, index, count);
 
-        if (itemstack != null) {
+        if (!itemstack.isEmpty()) {
             this.markDirty();
         }
 
@@ -162,9 +163,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
         this.stacks.set(index, stack);
 
-        if (stack != null && stack.func_190916_E() > this.getInventoryStackLimit())
-        {
-            stack.func_190920_e(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         this.markDirty();
@@ -176,7 +176,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return true;
     }
 

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.hud;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
@@ -63,16 +63,16 @@ public abstract class TileEntityHudRenderer<T extends TileEntity> extends TileEn
         float blue = (float)(color >> 8 & 255) / 255.0F;
         float green = (float)(color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.color(red, blue, green, opacity);
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION);
-        vertexbuffer.pos((double)left, (double)bottom, 0.0D).endVertex();
-        vertexbuffer.pos((double)right, (double)bottom, 0.0D).endVertex();
-        vertexbuffer.pos((double)right, (double)top, 0.0D).endVertex();
-        vertexbuffer.pos((double)left, (double)top, 0.0D).endVertex();
+        bufferBuilder.begin(7, DefaultVertexFormats.POSITION);
+        bufferBuilder.pos((double)left, (double)bottom, 0.0D).endVertex();
+        bufferBuilder.pos((double)right, (double)bottom, 0.0D).endVertex();
+        bufferBuilder.pos((double)right, (double)top, 0.0D).endVertex();
+        bufferBuilder.pos((double)left, (double)top, 0.0D).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();

@@ -32,7 +32,7 @@ public class ContainerWorkbench extends Container {
 
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.workbench.isUseableByPlayer(playerIn);
+        return this.workbench.isUsableByPlayer(playerIn);
     }
 
     /**
@@ -52,8 +52,8 @@ public class ContainerWorkbench extends Container {
                 return null;
             }
 
-            if (itemStack.func_190916_E() == 0) {
-                slot.putStack(null);
+            if (itemStack.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }

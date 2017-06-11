@@ -86,7 +86,7 @@ public class OverlayToolbelt {
     }
 
     private boolean updateGuiData() {
-        InventoryToolbelt inventoryToolbelt = UtilToolbelt.findToolbeltInventory(mc.thePlayer);
+        InventoryToolbelt inventoryToolbelt = UtilToolbelt.findToolbeltInventory(mc.player);
         if (inventoryToolbelt != null) {
             gui.setInventoryToolbelt(inventoryToolbelt);
             return true;

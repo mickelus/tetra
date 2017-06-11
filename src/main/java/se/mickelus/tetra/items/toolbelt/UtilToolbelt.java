@@ -11,7 +11,7 @@ public class UtilToolbelt {
         InventoryToolbelt toolbeltInventory = findToolbeltInventory(player);
         ItemStack offhandItem = player.getHeldItemOffhand();
 
-        if (toolbeltInventory == null || toolbeltInventory.getStackInSlot(index).func_190926_b()) {
+        if (toolbeltInventory == null || toolbeltInventory.getStackInSlot(index).isEmpty()) {
             return;
         }
 
@@ -19,7 +19,7 @@ public class UtilToolbelt {
 
         toolbeltInventory.setInventorySlotContents(index, new ItemStack(Blocks.AIR));
 
-        if (!offhandItem.func_190926_b()) {
+        if (!offhandItem.isEmpty()) {
             int restockIndex = getRestockIndex(toolbeltInventory, offhandItem);
             if (restockIndex != -1) {
                 toolbeltInventory.setInventorySlotContents(restockIndex, offhandItem);
@@ -50,7 +50,7 @@ public class UtilToolbelt {
 
     public static int getRestockIndex(InventoryToolbelt inventory, ItemStack itemStack) {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            if (itemStack.isItemEqual(inventory.getShadowOfSlot(i)) && inventory.getStackInSlot(i).func_190926_b()) {
+            if (itemStack.isItemEqual(inventory.getShadowOfSlot(i)) && inventory.getStackInSlot(i).isEmpty()) {
                 return i;
             }
         }

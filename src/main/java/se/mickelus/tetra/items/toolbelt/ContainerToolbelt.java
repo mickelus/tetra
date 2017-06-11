@@ -46,9 +46,8 @@ public class ContainerToolbelt extends Container {
         }
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
-    {
-        return this.toolbeltInventory.isUseableByPlayer(playerIn);
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        return this.toolbeltInventory.isUsableByPlayer(playerIn);
     }
 
     /**
@@ -72,8 +71,8 @@ public class ContainerToolbelt extends Container {
                 return null;
             }
 
-            if (itemStack.func_190916_E() == 0) {
-                slot.putStack(ItemStack.field_190927_a);
+            if (itemStack.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }

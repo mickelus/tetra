@@ -49,13 +49,14 @@ public class HammerItem extends TetraItem {
 
     @Override
     public void init(PacketPipeline packetPipeline) {
-        IRecipe recipe = new ShapedOreRecipe(new ItemStack(this),
-                "..L",
-                ".S.",
-                "S..",
-                'L', "logWood",
-                'S', Items.STICK);
-
-        GameRegistry.addRecipe(recipe);
+        // TODO register hammer recipe
+//        IRecipe recipe = new ShapedOreRecipe(new ItemStack(this),
+//                "..L",
+//                ".S.",
+//                "S..",
+//                'L', "logWood",
+//                'S', Items.STICK);
+//
+//        GameRegistry.addRecipe(recipe);
     }
 }

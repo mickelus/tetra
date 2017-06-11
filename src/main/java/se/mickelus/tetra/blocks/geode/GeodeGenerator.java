@@ -7,8 +7,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
@@ -25,11 +25,8 @@ public class GeodeGenerator implements IWorldGenerator {
 		};
 	}
 
-
 	@Override
-	public void generate(final Random random, final int chunkX, final int chunkZ, final World world,
-			final IChunkGenerator chunkGenerator,
-			final IChunkProvider chunkProvider) {
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 
 		final ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
 

@@ -33,7 +33,7 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
 
     @Override
-    public void renderTileEntityAt(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void func_192841_a(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
 

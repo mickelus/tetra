@@ -53,7 +53,7 @@ public class UpdateBoostPacket extends AbstractPacket {
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        ItemRocketBoots.setActive(stack.getTagCompound(), active, charged);
+        UtilRocketBoots.setActive(stack.getTagCompound(), active, charged);
     }
 
 }
