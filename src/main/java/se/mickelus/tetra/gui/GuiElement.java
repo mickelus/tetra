@@ -21,7 +21,7 @@ public class GuiElement extends GuiNode {
     }
 
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+        super.draw(refX + x, refY + y, screenWidth, screenHeight, mouseX, mouseY);
         calculateFocusState(refX, refY, mouseX, mouseY);
     }
 
