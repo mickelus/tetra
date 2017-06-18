@@ -5,27 +5,27 @@ import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
-public class HiltModule extends ItemModuleMajor {
+public class BladeModule extends ItemModuleMajor {
 
-    public static final String key = "basic_hilt";
+    public static final String key = "basic_blade";
 
-    public static HiltModule instance;
+    public static BladeModule instance;
 
-    public HiltModule() {
+    public BladeModule() {
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);
     }
 
     @Override
     public String getName(ItemStack stack) {
-        return "Wooden hilt";
+        return "Wooden blade";
     }
 
     @Override
     public void addModule(ItemStack targetStack, ItemStack[] materials) {
         NBTTagCompound tag = targetStack.getTagCompound();
 
-        tag.setString(ItemSwordModular.hiltKey, key);
+        tag.setString(ItemSwordModular.bladeKey, key);
     }
 
     @Override

@@ -1,17 +1,15 @@
 package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.*;
 
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiWorkbench extends GuiContainer {
+public class GuiWorkbench extends GuiContainer implements Runnable {
 
     private static GuiWorkbench instance;
 
@@ -22,8 +20,9 @@ public class GuiWorkbench extends GuiContainer {
 
     private GuiElement defaultGui;
 
-    private GuiElement actionLabels;
+    private GuiModuleList componentList;
 
+    private ItemStack targetStack = ItemStack.EMPTY;
 
     public GuiWorkbench(ContainerWorkbench container, TileEntityWorkbench tileEntity) {
         super(container);
@@ -37,30 +36,20 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTextureOffset(61, 0, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(0, 74, 179, 106, INVENTORY_TEXTURE));
 
-        actionLabels = new GuiElement(0, 0, 0, 0);
-        actionLabels.addChild(new GuiString(30, -15, "Upgrade"));
-        actionLabels.addChild(new GuiString(30, -5, "Salvage"));
-        actionLabels.addChild(new GuiString(30, 5, "Repair"));
-        actionLabels.addChild(new GuiString(30, 15, "Enchant"));
+        componentList = new GuiModuleList(0, 0);
+
+        tileEntity.registerChangeListener(this);
     }
 
-    /**
-     * Draws the background layer of this container (behind the items).
-     *
-     * @param partialTicks How far into the current tick the game is, with 0.0 being the start of the tick and 1.0 being
-     * the end.
-     * @param mouseX Mouse x coordinate
-     * @param mouseY Mouse y coordinate
-     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
         defaultGui.draw(x, y, width, height, mouseX, mouseY);
-        actionLabels.draw(width / 2, y, width, height, mouseX, mouseY);
+        componentList.draw(width / 2, y, width, height, mouseX, mouseY);
 
-        this.fontRendererObj.drawString("" + tileEntity.getCurrentState(), x, y, 0xffffffff, false);
+        fontRendererObj.drawString("" + tileEntity.getCurrentState(), x, y, 0xffffffff, false);
     }
 
     @Override
@@ -68,5 +57,28 @@ public class GuiWorkbench extends GuiContainer {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
         tileEntity.setCurrentState(tileEntity.getCurrentState() + 1);
+    }
+
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+//        inventorySlots.removeListener(this);
+    }
+
+    /**
+     * Called when the tileentity changes
+     */
+    @Override
+    public void run() {
+        onStackChange();
+    }
+
+    private void onStackChange() {
+        ItemStack stack = tileEntity.getTargetItemStack();
+
+        if (!targetStack.isItemEqual(stack)) {
+            componentList.update(stack);
+            targetStack = stack;
+        }
     }
 }

@@ -4,7 +4,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.TetraMod;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class ItemUpgradeRegistry {
@@ -15,15 +18,19 @@ public class ItemUpgradeRegistry {
 
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
 
+    private Map<String, ItemModule> moduleMap;
+
     public ItemUpgradeRegistry() {
         instance = this;
+        replacementFunctions = new ArrayList<> ();
+        moduleMap = new HashMap<>();
     }
 
     public boolean canUpgrade(ItemStack itemStack) {
         return true;
     }
 
-    public UpgradeSchema[] getAvailableUpgrades(ItemStack itemStack) {
+    public UpgradeSchema[] getAvailableModuleUpgrades(ItemStack itemStack) {
         return new UpgradeSchema[0];
     }
 
@@ -38,11 +45,14 @@ public class ItemUpgradeRegistry {
                 return replacementStack;
             }
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
-    public ItemModule getModuleFromNBT(NBTTagCompound tag) {
+    public void registerModule(String key, ItemModule module) {
+        moduleMap.put(key, module);
+    }
 
-        return null;
+    public ItemModule getModule(String key) {
+        return moduleMap.get(key);
     }
 }

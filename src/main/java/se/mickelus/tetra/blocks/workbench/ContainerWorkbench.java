@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -30,6 +31,7 @@ public class ContainerWorkbench extends Container {
         }
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
         return this.workbench.isUsableByPlayer(playerIn);
@@ -38,6 +40,7 @@ public class ContainerWorkbench extends Container {
     /**
      * Take a stack from the specified inventory slot.
      */
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         Slot slot = this.inventorySlots.get(index);
 
@@ -66,10 +69,9 @@ public class ContainerWorkbench extends Container {
     /**
      * Called when the container is closed.
      */
+    @Override
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         this.workbench.closeInventory(playerIn);
     }
-
-
 }

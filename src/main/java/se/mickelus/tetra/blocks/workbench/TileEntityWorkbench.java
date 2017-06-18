@@ -10,11 +10,15 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.ItemModule;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class TileEntityWorkbench extends TileEntity implements IInventory {
 
@@ -31,6 +35,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public static final int SALVAGED_STATE = 4;
 
     private int currentState = 0;
+
+    private Runnable changeListener;
 
 
     public TileEntityWorkbench() {
@@ -53,6 +59,36 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         } else {
             world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
             markDirty();
+        }
+    }
+
+    public ItemStack getTargetItemStack() {
+        ItemStack stack = getStackInSlot(0);
+
+        if (stack == null) {
+            return ItemStack.EMPTY;
+        }
+
+        if (stack.getItem() instanceof ItemModular) {
+            return stack;
+        }
+
+        stack = ItemUpgradeRegistry.instance.getPlaceholder(stack);
+
+        return stack;
+    }
+
+    public void registerChangeListener(Runnable runnable) {
+        this.changeListener = runnable;
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+
+        if (this.world.isRemote && changeListener != null) {
+            // TODO: this is called several times everytime a change occurs
+            changeListener.run();
         }
     }
 
@@ -227,4 +263,6 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public boolean hasCustomName() {
         return false;
     }
+
+
 }

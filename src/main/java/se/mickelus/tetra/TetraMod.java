@@ -15,9 +15,11 @@ import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.hammer.HammerItem;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
+import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.GuiHandlerToolbelt;
 import se.mickelus.tetra.items.JournalItem;
 import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 import se.mickelus.tetra.proxy.IProxy;
@@ -41,11 +43,14 @@ public class TetraMod {
     public void preInit(FMLPreInitializationEvent event) {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
 
+        new ItemUpgradeRegistry();
+
         new TetraCreativeTabs();
 
         new GuiHandlerRegistry();
 
         items = new ITetraItem[] {
+            new ItemSwordModular(),
             new ItemRocketBoots(),
             new ItemToolbelt(),
             new JournalItem(),

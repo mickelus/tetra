@@ -1,13 +1,16 @@
 package se.mickelus.tetra.module;
 
-public class ItemModuleMajor extends ItemModule {
+import net.minecraft.item.ItemStack;
+
+public abstract class ItemModuleMajor extends ItemModule {
+
     @Override
-    public int getIntegrity() {
+    public int getIntegrity(ItemStack stack) {
         return 0;
     }
 
     @Override
-    public int getDurability() {
+    public int getDurability(ItemStack stack) {
         return 0;
     }
 }
