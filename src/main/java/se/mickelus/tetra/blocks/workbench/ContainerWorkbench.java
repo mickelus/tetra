@@ -16,6 +16,8 @@ public class ContainerWorkbench extends Container {
     public ContainerWorkbench(IInventory playerInventory, TileEntityWorkbench workbench, EntityPlayer player) {
         this.workbench = workbench;
 
+	    workbench.openInventory(player);
+
         this.addSlotToContainer(new Slot(workbench, 0, 79, 18));
 
         // player inventory
