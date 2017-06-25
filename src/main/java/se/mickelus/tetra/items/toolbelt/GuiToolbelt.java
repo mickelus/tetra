@@ -27,26 +27,13 @@ public class GuiToolbelt extends GuiContainer {
         instance = this;
     }
 
-    /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items)
-     *
-     * @param mouseX Mouse x coordinate
-     * @param mouseY Mouse y coordinate
-     */
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-//        this.fontRendererObj.drawString(this.lowerChestInventory.getDisplayName().getUnformattedText(), 8, 6, 4210752);
-//        this.fontRendererObj.drawString(this.upperChestInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
-    }
+	@Override
+	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
+		this.drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.func_191948_b(mouseX, mouseY);
+	}
 
-    /**
-     * Draws the background layer of this container (behind the items).
-     *
-     * @param partialTicks How far into the current tick the game is, with 0.0 being the start of the tick and 1.0 being
-     * the end.
-     * @param mouseX Mouse x coordinate
-     * @param mouseY Mouse y coordinate
-     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

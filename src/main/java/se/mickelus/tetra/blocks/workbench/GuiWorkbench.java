@@ -41,7 +41,14 @@ public class GuiWorkbench extends GuiContainer implements Runnable {
         tileEntity.registerChangeListener(this);
     }
 
-    @Override
+	@Override
+	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
+		this.drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.func_191948_b(mouseX, mouseY);
+	}
+
+	@Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
