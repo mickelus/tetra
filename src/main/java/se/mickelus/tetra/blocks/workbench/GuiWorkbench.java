@@ -69,7 +69,6 @@ public class GuiWorkbench extends GuiContainer implements Runnable {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
-//        inventorySlots.removeListener(this);
     }
 
     /**
@@ -83,7 +82,7 @@ public class GuiWorkbench extends GuiContainer implements Runnable {
     private void onStackChange() {
         ItemStack stack = tileEntity.getTargetItemStack();
 
-        if (!targetStack.isItemEqual(stack)) {
+        if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
             componentList.update(stack);
             targetStack = stack;
         }
