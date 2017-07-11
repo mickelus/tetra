@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.TetraMod;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ItemUpgradeRegistry {
@@ -17,6 +19,7 @@ public class ItemUpgradeRegistry {
     public static ItemUpgradeRegistry instance;
 
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
+    private List<BiFunction<EntityPlayer, ItemStack, UpgradeSchema>> schemaFunctions;
 
     private Map<String, ItemModule> moduleMap;
 
@@ -26,12 +29,19 @@ public class ItemUpgradeRegistry {
         moduleMap = new HashMap<>();
     }
 
-    public boolean canUpgrade(ItemStack itemStack) {
-        return true;
+    public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
+	    ArrayList<UpgradeSchema> resultList = new ArrayList<>();
+	    for (BiFunction<EntityPlayer, ItemStack, UpgradeSchema> schemaFunction : schemaFunctions) {
+		    UpgradeSchema schema = schemaFunction.apply(player, itemStack);
+		    if (schema != null) {
+			    resultList.add(schema);
+		    }
+	    }
+	    return resultList.toArray(new UpgradeSchema[resultList.size()]);
     }
 
-    public UpgradeSchema[] getAvailableModuleUpgrades(ItemStack itemStack) {
-        return new UpgradeSchema[0];
+    public void registerSchema(BiFunction<EntityPlayer, ItemStack, UpgradeSchema> schemaFunction) {
+	    schemaFunctions.add(schemaFunction);
     }
 
     public void registerPlaceholder(Function<ItemStack, ItemStack> replacementFunction) {
