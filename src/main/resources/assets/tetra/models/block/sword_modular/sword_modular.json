@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "tetra:items/sword_modular/basic_blade_stone",
+    "layer1": "tetra:items/sword_modular/hilt_stick"
+  }
+}

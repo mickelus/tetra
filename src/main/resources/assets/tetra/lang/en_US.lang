@@ -4,4 +4,7 @@ tile.interfaceblock.name=Interface Block
 item.customgenerationbook.name=Book of Custom Generation
 item.placeholderitem.name=Loot placeholder
 
+item.hammer.name=Hammer
+item.toolbelt.name=Toolbelt
+
 itemGroup.customgen=Customgen

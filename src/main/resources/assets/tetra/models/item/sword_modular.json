@@ -1,6 +1,12 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "tetra:items/sword_modular"
-  }
+    "layer0": "tetra:items/sword_modular/basic_blade_oak",
+    "layer1": "tetra:items/sword_modular/hilt_stick"
+  },
+  "overrides": [
+    { "predicate": { "blade": 0 }, "model": "item/clock" },
+    { "predicate": { "blade": 1 }, "model": "item/clock_01" },
+    { "predicate": { "blade": 2 }, "model": "item/clock_01" }
+    ]
 }

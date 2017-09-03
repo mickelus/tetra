@@ -26,8 +26,16 @@ public class GuiElement extends GuiNode {
     }
 
     @Override
-    public void onClick(int x, int y) {
-        elements.stream().forEach(element -> element.onClick(x, y));
+    public boolean onClick(int x, int y) {
+        for (GuiNode element : elements) {
+            if (element.isVisible()) {
+                if (element.onClick(x, y)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {

@@ -76,5 +76,6 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
         PacketPipeline.instance.registerPacket(UpdateWorkbenchPacket.class);
+        PacketPipeline.instance.registerPacket(CraftWorkbenchPacket.class);
     }
 }

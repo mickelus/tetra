@@ -13,49 +13,52 @@ import net.minecraft.util.NonNullList;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.UpgradeSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private static final String STACKS_KEY = "stacks";
     private static final String SLOT_KEY = "slot";
-    private static final String STATE_KEY = "state";
+    private static final String SCHEMA_KEY = "schema";
 
     private NonNullList<ItemStack> stacks;
 
-    public static final int EMPTY_STATE = 0;
-    public static final int READY_STATE = 1;
-    public static final int PRE_UPGRADE_STATE = 2;
-    public static final int SALVAGE_STATE = 3;
-    public static final int SALVAGED_STATE = 4;
+    private ItemStack previousTarget = ItemStack.EMPTY;
+    private UpgradeSchema currentSchema;
 
-    private int currentState = 0;
-
-    private Runnable changeListener;
+    private Map<String, Runnable> changeListeners;
 
 
     public TileEntityWorkbench() {
-        stacks = NonNullList.withSize(3, ItemStack.EMPTY);
+        stacks = NonNullList.withSize(4, ItemStack.EMPTY);
+        changeListeners = new HashMap<>();
     }
 
-    public int getCurrentState() {
-        return currentState;
+    public UpgradeSchema getCurrentSchema() {
+        return currentSchema;
     }
 
-    public void setCurrentState(int state) {
-        currentState = state;
+    public void setCurrentSchema(UpgradeSchema schema) {
+        this.currentSchema = schema;
 
         sync();
+
+        if (world.isRemote) {
+            changeListeners.values().forEach(Runnable::run);
+        }
     }
 
     private void sync() {
         if (world.isRemote) {
-            PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, getCurrentState()));
+            PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema));
         } else {
             world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
             markDirty();
@@ -78,17 +81,47 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return stack;
     }
 
-    public void registerChangeListener(Runnable runnable) {
-        this.changeListener = runnable;
+    public ItemStack[] getMaterials() {
+        return stacks.subList(1, 4).toArray(new ItemStack[3]);
+    }
+
+    public void initiateCrafting() {
+        if (world.isRemote) {
+            PacketPipeline.instance.sendToServer(new CraftWorkbenchPacket(pos));
+        }
+
+        craft();
+
+        sync();
+    }
+
+    public void craft() {
+        ItemStack itemStack = getTargetItemStack();
+
+        if (currentSchema != null) {
+            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials());
+        }
+
+        setInventorySlotContents(0, itemStack);
+        this.setCurrentSchema(null);
+    }
+
+    public void addChangeListener(String key, Runnable runnable) {
+        changeListeners.put(key, runnable);
+    }
+
+    public void removeChangeListener(String key) {
+        changeListeners.remove(key);
     }
 
     @Override
     public void markDirty() {
         super.markDirty();
 
-        if (this.world.isRemote && changeListener != null) {
+        if (this.world.isRemote) {
             // TODO: this is called several times everytime a change occurs
-            changeListener.run();
+
+            changeListeners.values().forEach(Runnable::run);
         }
     }
 
@@ -128,7 +161,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             }
         }
 
-        currentState = compound.getInteger(STATE_KEY);
+        String schemaKey = compound.getString(SCHEMA_KEY);
+        currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
     }
 
     @Override
@@ -137,7 +171,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.stacks.size(); ++i) {
-            if (this.stacks.get(i) != null) {
+            if (!this.stacks.get(i).isEmpty()) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
 
                 nbttagcompound.setByte(SLOT_KEY, (byte)i);
@@ -149,13 +183,18 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
         compound.setTag(STACKS_KEY, nbttaglist);
 
-        compound.setInteger(STATE_KEY, currentState);
+        if (currentSchema != null) {
+            compound.setString(SCHEMA_KEY, currentSchema.getKey());
+        }
 
         return compound;
     }
 
     @Override
     public int getSizeInventory() {
+        if (currentSchema != null) {
+            return currentSchema.getNumMaterialSlots() + 1;
+        }
         return 1;
     }
 
@@ -203,7 +242,12 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             stack.setCount(this.getInventoryStackLimit());
         }
 
-        this.markDirty();
+        if (index == 0 && !world.isRemote) {
+            currentSchema = null;
+            sync();
+        } else {
+            markDirty();
+        }
     }
 
     @Override

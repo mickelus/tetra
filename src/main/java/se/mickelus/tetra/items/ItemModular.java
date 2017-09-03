@@ -1,11 +1,14 @@
 package se.mickelus.tetra.items;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
+import javax.annotation.Nullable;
 import java.util.LinkedList;
 
 public abstract class ItemModular extends TetraItem implements IItemModular {
@@ -24,18 +27,23 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
 
     public ItemModule[] getAllModules(ItemStack stack) {
         LinkedList<ItemModule> modules = new LinkedList<>();
+        NBTTagCompound stackTag = stack.getTagCompound();
 
-        for (String moduleKey : majorModuleKeys) {
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
-            if (module != null) {
-                modules.add(module);
+        if (stackTag != null) {
+            for (String moduleKey : majorModuleKeys) {
+                String moduleName = stackTag.getString(moduleKey);
+                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
+                if (module != null) {
+                    modules.add(module);
+                }
             }
-        }
 
-        for (String moduleKey : minorModuleKeys) {
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
-            if (module != null) {
-                modules.add(module);
+            for (String moduleKey : minorModuleKeys) {
+                String moduleName = stackTag.getString(moduleKey);
+                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
+                if (module != null) {
+                    modules.add(module);
+                }
             }
         }
 
@@ -43,13 +51,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
     }
 
     @Override
-    public ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
+    public ItemModuleMajor[] getMajorModules(ItemStack stack) {
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
-        NBTTagCompound stackTag = itemStack.getTagCompound();
+        NBTTagCompound stackTag = stack.getTagCompound();
 
         for (int i = 0; i < majorModuleKeys.length; i++) {
-            String moduleKey = stackTag.getString(majorModuleKeys[i]);
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
+            String moduleName = stackTag.getString(majorModuleKeys[i]);
+            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
             if (module instanceof ItemModuleMajor) {
                 modules[i] = (ItemModuleMajor) module;
             }
@@ -64,8 +72,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         NBTTagCompound stackTag = itemStack.getTagCompound();
 
         for (int i = 0; i < minorModuleKeys.length; i++) {
-            String moduleKey = stackTag.getString(minorModuleKeys[i]);
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
+            String moduleName = stackTag.getString(minorModuleKeys[i]);
+            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
             modules[i] = (ItemModuleMajor) module;
         }
 
@@ -90,5 +98,17 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
     @Override
     public String[] getMinorModuleNames() {
         return minorModuleNames;
+    }
+
+    public java.util.Set<String> getToolClasses(ItemStack stack) {
+        return super.getToolClasses(stack);
+    }
+
+    public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
+        return super.getHarvestLevel(stack, toolClass, player, blockState);
+    }
+
+    public int getItemEnchantability(ItemStack stack) {
+        return super.getItemEnchantability(stack);
     }
 }

@@ -4,18 +4,22 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.UpgradeSchema;
 import se.mickelus.tetra.network.AbstractPacket;
+
+import java.io.IOException;
 
 public class UpdateWorkbenchPacket extends AbstractPacket {
 
     private BlockPos pos;
-    private int state;
+    private UpgradeSchema schema;
 
     public UpdateWorkbenchPacket() {}
 
-    public UpdateWorkbenchPacket(BlockPos pos, int state) {
+    public UpdateWorkbenchPacket(BlockPos pos, UpgradeSchema schema) {
         this.pos = pos;
-        this.state = state;
+        this.schema = schema;
     }
 
     @Override
@@ -24,7 +28,16 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
         buffer.writeInt(pos.getY());
         buffer.writeInt(pos.getZ());
 
-        buffer.writeInt(state);
+        try {
+            if (schema != null) {
+                writeString(schema.getKey(), buffer);
+            } else {
+                writeString("", buffer);
+            }
+        } catch (IOException exception) {
+            System.err.println("An error occurred when writing schema name to packet buffer");
+        }
+
     }
 
     @Override
@@ -34,7 +47,12 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
         int z = buffer.readInt();
         pos = new BlockPos(x, y, z);
 
-        state = buffer.readInt();
+        try {
+            String schemaKey = readString(buffer);
+            schema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+        } catch (IOException exception) {
+            System.err.println("An error occurred when reading schema name from packet buffer");
+        }
     }
 
     @Override
@@ -46,7 +64,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     public void handleServerSide(EntityPlayer player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
-            workbench.setCurrentState(state);
+            workbench.setCurrentSchema(schema);
         }
     }
 }

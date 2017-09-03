@@ -10,10 +10,20 @@ import java.util.ArrayList;
 
 public class GuiNode extends Gui {
 
+    private boolean isVisible = true;
+
     protected ArrayList<GuiNode> elements;
 
     public GuiNode() {
         elements = new ArrayList<>();
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
     }
 
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
@@ -21,10 +31,12 @@ public class GuiNode extends Gui {
     }
 
     protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        elements.stream().forEach((element -> element.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY)));
+        elements.stream()
+                .filter(GuiNode::isVisible)
+                .forEach((element -> element.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY)));
     }
 
-    public void onClick(int x, int y) {}
+    public boolean onClick(int x, int y) { return false; }
 
     public void addChild(GuiNode child) {
         this.elements.add(child);

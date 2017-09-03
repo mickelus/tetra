@@ -52,4 +52,24 @@ public class BladeModule extends ItemModuleMajor {
     public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
         return new ItemStack[0];
     }
+
+    @Override
+    public double getDamageModifier(ItemStack stack) {
+        NBTTagCompound tag = stack.getTagCompound();
+        String materialName = tag.getString(materialKey);
+
+        switch (materialName) {
+            case "minecraft:planks":
+                return 1;
+            case "minecraft:cobblestone":
+                return 2;
+            case "minecraft:iron_ingot":
+                return 3;
+            case "minecraft:gold_ingot":
+                return 4;
+            case "minecraft:diamond":
+                return 5;
+        }
+        return 1;
+    }
 }

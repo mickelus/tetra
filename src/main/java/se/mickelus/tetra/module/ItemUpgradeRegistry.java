@@ -14,34 +14,38 @@ import java.util.function.Function;
 
 public class ItemUpgradeRegistry {
 
-    public static final String moduleName = TetraMod.MOD_ID + "moduleName";
-
     public static ItemUpgradeRegistry instance;
 
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
-    private List<BiFunction<EntityPlayer, ItemStack, UpgradeSchema>> schemaFunctions;
+
+    private Map<String, UpgradeSchema> schemaMap;
 
     private Map<String, ItemModule> moduleMap;
 
     public ItemUpgradeRegistry() {
         instance = this;
         replacementFunctions = new ArrayList<> ();
+        schemaMap = new HashMap<>();
         moduleMap = new HashMap<>();
     }
 
     public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
-	    ArrayList<UpgradeSchema> resultList = new ArrayList<>();
-	    for (BiFunction<EntityPlayer, ItemStack, UpgradeSchema> schemaFunction : schemaFunctions) {
-		    UpgradeSchema schema = schemaFunction.apply(player, itemStack);
-		    if (schema != null) {
-			    resultList.add(schema);
-		    }
-	    }
-	    return resultList.toArray(new UpgradeSchema[resultList.size()]);
+        return schemaMap.values().stream()
+                .filter(upgradeSchema -> playerHasSchema(player, upgradeSchema))
+                .filter(upgradeSchema -> upgradeSchema.canUpgrade(itemStack))
+                .toArray(UpgradeSchema[]::new);
     }
 
-    public void registerSchema(BiFunction<EntityPlayer, ItemStack, UpgradeSchema> schemaFunction) {
-	    schemaFunctions.add(schemaFunction);
+    public UpgradeSchema getSchema(String key) {
+        return schemaMap.get(key);
+    }
+
+    public boolean playerHasSchema(EntityPlayer player, UpgradeSchema schema) {
+        return true;
+    }
+
+    public void registerSchema(UpgradeSchema upgradeSchema) {
+        schemaMap.put(upgradeSchema.getKey(), upgradeSchema);
     }
 
     public void registerPlaceholder(Function<ItemStack, ItemStack> replacementFunction) {

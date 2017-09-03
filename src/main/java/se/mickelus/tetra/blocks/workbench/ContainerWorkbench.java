@@ -2,34 +2,46 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.DisabledSlot;
-import se.mickelus.tetra.items.toolbelt.InventoryToolbelt;
+import se.mickelus.tetra.gui.ToggleableSlot;
+import se.mickelus.tetra.module.UpgradeSchema;
 
 
 public class ContainerWorkbench extends Container {
     private TileEntityWorkbench workbench;
 
+    private ToggleableSlot[] materialSlots;
+
     public ContainerWorkbench(IInventory playerInventory, TileEntityWorkbench workbench, EntityPlayer player) {
         this.workbench = workbench;
 
-	    workbench.openInventory(player);
+//        materialSlots = new ToggleableSlot[3];
 
-        this.addSlotToContainer(new Slot(workbench, 0, 79, 18));
+//        workbench.addChangeListener(this::updateMaterialSlots);
+        workbench.openInventory(player);
+
+        this.addSlotToContainer(new Slot(workbench, 0, 152, 58));
+
+        // material inventory
+        for (int i = 0; i < 3; i++) {
+//            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 271, 18 * i + 100);
+//            materialSlots[i].toggle(false);
+//            this.addSlotToContainer(materialSlots[i]);
+            this.addSlotToContainer(new Slot(workbench, i + 1, 271, 18 * i + 105));
+        }
 
         // player inventory
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 3; y++) {
-                this.addSlotToContainer(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 12, y * 17 + 87));
+                this.addSlotToContainer(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
             }
         }
 
         // player toolbar
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 12, 142));
+            this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 84, 221));
         }
     }
 
@@ -68,12 +80,31 @@ public class ContainerWorkbench extends Container {
         return null;
     }
 
+    private void updateMaterialSlots() {
+        UpgradeSchema currentSchema = workbench.getCurrentSchema();
+        int numMaterialSlots = 0;
+
+        if (currentSchema != null) {
+            numMaterialSlots = currentSchema.getNumMaterialSlots();
+        }
+
+        for (int i = 0; i < numMaterialSlots; i++) {
+            materialSlots[i].toggle(true);
+        }
+
+        for (int i = numMaterialSlots; i < materialSlots.length; i++) {
+            materialSlots[i].toggle(false);
+        }
+    }
+
     /**
      * Called when the container is closed.
      */
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
-        this.workbench.closeInventory(playerIn);
+
+//        workbench.removeChangeListener(this::updateMaterialSlots);
+        workbench.closeInventory(playerIn);
     }
 }

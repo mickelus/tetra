@@ -33,8 +33,8 @@ public class GuiModuleList extends GuiElement {
             addChild(new GuiModuleMajor(11, i * 18 + 9, itemStack, majorModules[i], majorModuleNames[i]));
         }
 
-        for (int i = 0; i < minorModuleNames.length; i++) {
-            addChild(new GuiStringSmall(0, ( i + minorModuleNames.length) * 12, minorModuleNames[i]));
-        }
+//        for (int i = 0; i < minorModuleNames.length; i++) {
+//            addChild(new GuiStringSmall(0, ( i + minorModuleNames.length) * 12, minorModuleNames[i]));
+//        }
     }
 }

@@ -37,9 +37,12 @@ public class GuiButton extends GuiElement {
     }
 
     @Override
-    public void onClick(int x, int y) {
-        if (x >= screenX && x <= x + screenX + width && y >= screenY && y <= screenY + height) {
+    public boolean onClick(int x, int y) {
+        if (x >= screenX && x <= screenX + width && y >= screenY && y <= screenY + height) {
             onClickHandler.run();
+            return true;
         }
+
+        return false;
     }
 }
