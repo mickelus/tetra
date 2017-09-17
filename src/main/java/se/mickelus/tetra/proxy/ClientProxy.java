@@ -1,6 +1,7 @@
 package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -22,13 +23,12 @@ public class ClientProxy implements IProxy {
     public void preInit(FMLPreInitializationEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
         Arrays.stream(items).forEach(ITetraItem::clientPreInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientPreInit);
-
-        ModelLoaderRegistry.registerLoader(new ModularModelLoader());
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
+	    ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
     }
 
     @Override

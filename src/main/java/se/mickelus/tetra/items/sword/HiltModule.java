@@ -2,6 +2,8 @@ package se.mickelus.tetra.items.sword;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
@@ -32,4 +34,14 @@ public class HiltModule extends ItemModuleMajor {
     public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
         return new ItemStack[0];
     }
+
+	@Override
+	public ResourceLocation[] getTextures(final ItemStack itemStack) {
+		return new ResourceLocation[] {new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/hilt_stick")};
+	}
+
+	@Override
+	public ResourceLocation[] getAllTextures() {
+		return new ResourceLocation[] {new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/hilt_stick")};
+	}
 }

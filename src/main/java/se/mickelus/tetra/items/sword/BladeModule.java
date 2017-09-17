@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
@@ -54,8 +55,8 @@ public class BladeModule extends ItemModuleMajor {
     }
 
     @Override
-    public double getDamageModifier(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
+    public double getDamageModifier(ItemStack itemStack) {
+        NBTTagCompound tag = itemStack.getTagCompound();
         String materialName = tag.getString(materialKey);
 
         switch (materialName) {
@@ -72,4 +73,41 @@ public class BladeModule extends ItemModuleMajor {
         }
         return 1;
     }
+
+	@Override
+	public ResourceLocation[] getTextures(final ItemStack itemStack) {
+		NBTTagCompound tag = itemStack.getTagCompound();
+		String materialName = tag.getString(materialKey);
+		ResourceLocation result = new ResourceLocation(TetraMod.MOD_ID, "sword_modular/basic_blade_oak");
+
+		switch (materialName) {
+			case "minecraft:planks":
+				result = new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_oak");
+				break;
+			case "minecraft:cobblestone":
+				result = new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_stone");
+				break;
+			case "minecraft:iron_ingot":
+				result = new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_iron");
+				break;
+			case "minecraft:gold_ingot":
+				result = new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_stone");
+				break;
+			case "minecraft:diamond":
+				result = new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_diamond");
+				break;
+		}
+		return new ResourceLocation[] {result};
+	}
+
+	@Override
+	public ResourceLocation[] getAllTextures() {
+		return new ResourceLocation[] {
+			new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_oak"),
+			new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_stone"),
+			new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_iron"),
+			new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_stone"),
+			new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/basic_blade_diamond")
+		};
+	}
 }

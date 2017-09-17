@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.TetraMod;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,5 +69,9 @@ public class ItemUpgradeRegistry {
 
     public ItemModule getModule(String key) {
         return moduleMap.get(key);
+    }
+
+    public Collection<ItemModule> getAllModules() {
+	    return moduleMap.values();
     }
 }

@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.sword;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,14 +52,14 @@ public class ItemSwordModular extends ItemModular {
 
     @Override
     public void init(PacketPipeline packetPipeline) {
-        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
-        new BladeModule();
-        new HiltModule();
+		new BladeModule();
+		new HiltModule();
 
-        new SimpleBladeSchema();
+		new SimpleBladeSchema();
+		ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
     }
 
-    private ItemStack replaceSword(ItemStack originalStack) {
+	private ItemStack replaceSword(ItemStack originalStack) {
         Item originalItem = originalStack.getItem();
 
         if (!(originalItem instanceof ItemSword)) {
