@@ -63,10 +63,10 @@ public class ContainerWorkbench extends Container {
 
             if (index < this.workbench.getSizeInventory()) {
                 if (!this.mergeItemStack(itemStack,  this.workbench.getSizeInventory(), this.inventorySlots.size(), true)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(itemStack, 0,  this.workbench.getSizeInventory(), false)) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
             if (itemStack.getCount() == 0) {
@@ -77,7 +77,7 @@ public class ContainerWorkbench extends Container {
             return itemStack.copy();
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private void updateMaterialSlots() {
