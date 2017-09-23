@@ -30,7 +30,7 @@ public class GuiModuleList extends GuiElement {
         clearChildren();
 
         for (int i = 0; i < majorModuleNames.length; i++) {
-            addChild(new GuiModuleMajor(11, i * 18 + 9, itemStack, majorModules[i], majorModuleNames[i]));
+            addChild(new GuiModuleMajor(11, i * 18, itemStack, majorModules[i], majorModuleNames[i]));
         }
 
 //        for (int i = 0; i < minorModuleNames.length; i++) {

@@ -6,42 +6,33 @@ import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.WeaponModuleData;
 
-public class HiltModule extends ItemModuleMajor {
+public class HiltModule extends ItemModuleMajor<ModuleData> {
 
     public static final String key = "basic_hilt";
+	public static final String materialKey = "basic_hilt_material";
 
     public static HiltModule instance;
 
-    public HiltModule() {
+    public HiltModule(String slotKey) {
+	    super(slotKey, key, materialKey);
+
+	    data = new WeaponModuleData[] {
+			    new WeaponModuleData("basic_hilt/hilt_stick", "minecraft:stick", 10, 1, 0),
+			    new WeaponModuleData("basic_hilt/oak", "minecraft:planks", 24, 3, 0),
+			    new WeaponModuleData("basic_hilt/iron", "minecraft:iron_ingot", 32, 4, 0),
+			    new WeaponModuleData("basic_hilt/bone", "minecraft:bone", 32, 4, 0),
+			    new WeaponModuleData("basic_hilt/blaze_rod", "minecraft:blaze_rod", 80, 6, 0),
+			    new WeaponModuleData("basic_hilt/end_rod", "minecraft:end_rod", 106, 8, 0)
+	    };
+
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);
     }
-
-    @Override
-    public String getName(ItemStack stack) {
-        return "Wooden hilt";
-    }
-
-    @Override
-    public void addModule(ItemStack targetStack, ItemStack[] materials) {
-        NBTTagCompound tag = targetStack.getTagCompound();
-
-        tag.setString(ItemSwordModular.hiltKey, key);
-    }
-
     @Override
     public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
         return new ItemStack[0];
     }
-
-	@Override
-	public ResourceLocation[] getTextures(final ItemStack itemStack) {
-		return new ResourceLocation[] {new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/hilt_stick")};
-	}
-
-	@Override
-	public ResourceLocation[] getAllTextures() {
-		return new ResourceLocation[] {new ResourceLocation(TetraMod.MOD_ID, "items/sword_modular/hilt_stick")};
-	}
 }

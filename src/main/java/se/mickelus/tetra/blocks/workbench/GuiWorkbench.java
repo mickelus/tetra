@@ -46,7 +46,7 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
 
 
-        componentList = new GuiModuleList(164, 0);
+        componentList = new GuiModuleList(164, 49);
         defaultGui.addChild(componentList);
 
         schemaList = new GuiSchemaList(46, 100);

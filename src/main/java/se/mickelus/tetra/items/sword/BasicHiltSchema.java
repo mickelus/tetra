@@ -4,11 +4,11 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.UpgradeSchema;
 
-public class SimpleBladeSchema implements UpgradeSchema {
+public class BasicHiltSchema implements UpgradeSchema {
 
-    private String key = "basic_blade";
+    private String key = "basic_hilt";
 
-    public SimpleBladeSchema() {
+    public BasicHiltSchema() {
         ItemUpgradeRegistry.instance.registerSchema(this);
     }
 
@@ -19,12 +19,12 @@ public class SimpleBladeSchema implements UpgradeSchema {
 
     @Override
     public String getName() {
-        return "Replace blade";
+        return "Replace hilt";
     }
 
     @Override
     public String getDescription() {
-        return "Replace the current sword blade with the given blade, or reforge it using raw materials.";
+        return "Replace the current hilt with the given hilt, or a hilt crafted from raw materials.";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SimpleBladeSchema implements UpgradeSchema {
     @Override
     public String getSlotName(final int index) {
 
-        return "Blade material";
+        return "Hilt material";
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SimpleBladeSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials) {
         ItemStack upgradedStack = itemStack.copy();
 
-        BladeModule.instance.addModule(upgradedStack, materials);
+        HiltModule.instance.addModule(upgradedStack, materials);
 
         return upgradedStack;
     }

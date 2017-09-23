@@ -10,9 +10,13 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
 public abstract class ItemModular extends TetraItem implements IItemModular {
@@ -29,29 +33,18 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         return super.getMaxDamage(stack);
     }
 
-    protected ItemModule[] getAllModules(ItemStack stack) {
-        LinkedList<ItemModule> modules = new LinkedList<>();
+    protected Collection<ItemModule> getAllModules(ItemStack stack) {
         NBTTagCompound stackTag = stack.getTagCompound();
 
         if (stackTag != null) {
-            for (String moduleKey : majorModuleKeys) {
-                String moduleName = stackTag.getString(moduleKey);
-                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
-                if (module != null) {
-                    modules.add(module);
-                }
-            }
-
-            for (String moduleKey : minorModuleKeys) {
-                String moduleName = stackTag.getString(moduleKey);
-                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
-                if (module != null) {
-                    modules.add(module);
-                }
-            }
+	        return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))
+			        .map(stackTag::getString)
+			        .map(ItemUpgradeRegistry.instance::getModule)
+			        .filter(itemModule -> itemModule != null)
+			        .collect(Collectors.toList());
         }
 
-        return modules.toArray(new ItemModule[modules.size()]);
+        return Collections.EMPTY_LIST;
     }
 
     @Override
