@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.UpgradeSchema;
 
 import java.io.IOException;
 
@@ -50,7 +52,7 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(componentList);
 
         schemaList = new GuiSchemaList(46, 100);
-        schemaList.registerSelectHandler((tileEntity::setCurrentSchema));
+        schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
         defaultGui.addChild(schemaList);
 
         schemaDetail = new GuiSchemaDetail(46, 100, this::deselectSchema, this::craftUpgrade);
@@ -100,19 +102,22 @@ public class GuiWorkbench extends GuiContainer {
 
     private void onTileEntityChange() {
         ItemStack stack = tileEntity.getTargetItemStack();
+        UpgradeSchema schema = tileEntity.getCurrentSchema();
 
         if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
             componentList.update(stack);
             targetStack = stack;
         }
 
-        if (tileEntity.getCurrentSchema() == null) {
+        if (schema == null) {
             schemaList.setSchemas(ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, tileEntity.getTargetItemStack()));
 
             schemaList.setVisible(true);
             schemaDetail.setVisible(false);
         } else {
-            schemaDetail.setSchema(tileEntity.getCurrentSchema());
+
+            schemaDetail.setSchema(schema);
+            schemaDetail.toggleButton(schema.canApplyUpgrade(stack, tileEntity.getMaterials()));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);

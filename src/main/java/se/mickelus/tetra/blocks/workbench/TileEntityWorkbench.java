@@ -11,17 +11,13 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.UpgradeSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class TileEntityWorkbench extends TileEntity implements IInventory {
 
@@ -98,12 +94,11 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public void craft() {
         ItemStack itemStack = getTargetItemStack();
 
-        if (currentSchema != null) {
+        if (currentSchema != null && currentSchema.canApplyUpgrade(itemStack, getMaterials())) {
             itemStack = currentSchema.applyUpgrade(itemStack, getMaterials());
         }
 
         setInventorySlotContents(0, itemStack);
-        this.setCurrentSchema(null);
     }
 
     public void addChangeListener(String key, Runnable runnable) {
@@ -274,8 +269,9 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public boolean isItemValidForSlot(int index, ItemStack stack) {
         if(index == 0) {
             return true;
+        } else if (currentSchema != null) {
+            return currentSchema.slotAcceptsMaterial(getTargetItemStack(), index - 1, stack);
         }
-
         return false;
     }
 

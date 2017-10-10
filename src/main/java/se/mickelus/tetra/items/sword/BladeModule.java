@@ -16,11 +16,11 @@ public class BladeModule extends ItemModuleMajor<WeaponModuleData> {
     	super(slotKey, key, materialKey);
 
     	data = new WeaponModuleData[] {
-            new WeaponModuleData("basic_blade/oak", "minecraft:planks", 100, -1, 1),
-            new WeaponModuleData("basic_blade/cobblestone", "minecraft:cobblestone", 150, -1, 2),
-            new WeaponModuleData("basic_blade/iron", "minecraft:iron_ingot", 300, 0, 3),
-            new WeaponModuleData("basic_blade/gold", "minecraft:gold_ingot", 30, 1, 4),
-            new WeaponModuleData("basic_blade/diamond", "minecraft:diamond", 540, 0, 5)
+            new WeaponModuleData("basic_blade/oak", "minecraft:planks", 100, -1, 1, 0x866526, 16, 0),
+            new WeaponModuleData("basic_blade/cobblestone", "minecraft:cobblestone", 150, -1, 2, 0x9a9a9a, 16, 0),
+            new WeaponModuleData("basic_blade/iron", "minecraft:iron_ingot", 300, 0, 3, 0xd8d8d8, 16, 0),
+            new WeaponModuleData("basic_blade/gold", "minecraft:gold_ingot", 30, 1, 4, 0xeaee57, 16, 0),
+            new WeaponModuleData("basic_blade/diamond", "minecraft:diamond", 540, 0, 5, 0x33ebcb, 16, 0)
 	    };
 
         instance = this;

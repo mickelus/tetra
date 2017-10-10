@@ -10,76 +10,105 @@ import se.mickelus.tetra.NBTHelper;
 
 public abstract class ItemModule<T extends ModuleData> {
 
-	protected T[] data;
+    protected T[] data;
 
-	protected String slotKey;
-	protected String moduleKey;
-	protected String dataKey;
+    protected String slotKey;
+    protected String moduleKey;
+    protected String dataKey;
 
-	public ItemModule(String slotKey, String moduleKey, String dataKey) {
-		this.slotKey = slotKey;
-		this.moduleKey = moduleKey;
-		this.dataKey = dataKey;
-	}
+    protected RenderLayer renderLayer = RenderLayer.BASE;
 
-	public void addModule(ItemStack targetStack, ItemStack[] materials) {
-		NBTTagCompound tag = NBTHelper.getTag(targetStack);
+    public ItemModule(String slotKey, String moduleKey, String dataKey) {
+        this.slotKey = slotKey;
+        this.moduleKey = moduleKey;
+        this.dataKey = dataKey;
+    }
 
-		tag.setString(slotKey, moduleKey);
-		tag.setString(dataKey, getDataByMaterial(materials[0]).key);
-	}
+    public void addModule(ItemStack targetStack, ItemStack[] materials) {
+        NBTTagCompound tag = NBTHelper.getTag(targetStack);
 
-	private T getDataByMaterial(ItemStack itemStack) {
-		String material = Item.REGISTRY.getNameForObject(itemStack.getItem()).toString();
+        tag.setString(slotKey, moduleKey);
+        tag.setString(dataKey, getDataByMaterial(materials[0]).key);
 
-		return Arrays.stream(data)
-				.filter(moduleData -> moduleData.material.equals(material))
-				.findAny().orElse(getDefaultData());
-	}
+        materials[0].setCount(materials[0].getCount()-1);
+    }
 
-	public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
-		NBTTagCompound tag = NBTHelper.getTag(targetStack);
+    // todo: fix to work for upgrades with more than one material
+    public boolean canApplyUpgrade(ItemStack targetStack, ItemStack[] materials) {
+        return slotAcceptsMaterial(targetStack, materials[0]);
+    }
 
-		tag.removeTag(slotKey);
-		tag.removeTag(dataKey);
+    public boolean slotAcceptsMaterial(ItemStack targetStack, ItemStack material) {
+        String materialName = Item.REGISTRY.getNameForObject(material.getItem()).toString();
 
-		return new ItemStack[0];
-	}
+        return Arrays.stream(data)
+                .anyMatch(moduleData -> moduleData.material.equals(materialName));
+    }
 
-	public T getData(ItemStack itemStack) {
-		NBTTagCompound tag = NBTHelper.getTag(itemStack);
-		String dataName = tag.getString(this.dataKey);
+    private T getDataByMaterial(ItemStack itemStack) {
+        String material = Item.REGISTRY.getNameForObject(itemStack.getItem()).toString();
 
-		return Arrays.stream(data)
-				.filter(moduleData -> moduleData.key.equals(dataName))
-				.findAny().orElse(getDefaultData());
-	}
+        return Arrays.stream(data)
+                .filter(moduleData -> moduleData.material.equals(material))
+                .findAny().orElse(getDefaultData());
+    }
 
-	protected T getDefaultData() {
-		return data[0];
-	}
+    public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
+        NBTTagCompound tag = NBTHelper.getTag(targetStack);
+
+        tag.removeTag(slotKey);
+        tag.removeTag(dataKey);
+
+        return new ItemStack[0];
+    }
+
+    public T getData(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        String dataName = tag.getString(this.dataKey);
+
+        return Arrays.stream(data)
+                .filter(moduleData -> moduleData.key.equals(dataName))
+                .findAny().orElse(getDefaultData());
+    }
+
+    protected T getDefaultData() {
+        return data[0];
+    }
 
     public String getName(ItemStack itemStack) {
-	    return I18n.format(getData(itemStack).key);
+        return I18n.format(getData(itemStack).key);
     }
 
     public int getIntegrity(ItemStack itemStack) {
-    	return getData(itemStack).integrity;
+        return getData(itemStack).integrity;
     }
     public int getDurability(ItemStack itemStack) {
-    	return getData(itemStack).durability;
+        return getData(itemStack).durability;
     }
 
     public double getDamageModifier(ItemStack itemStack) { return 0; }
     public double getDamageMultiplierModifier(ItemStack itemStack) { return 1; }
 
-	public ResourceLocation[] getTextures(ItemStack itemStack) {
+    public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[] { getData(itemStack).textureLocation };
-	}
+    }
 
-	public ResourceLocation[] getAllTextures() {
-		return Arrays.stream(data)
-				.map(moduleData -> moduleData.textureLocation)
-				.toArray(ResourceLocation[]::new);
-	}
+    public RenderLayer getRenderLayer() {
+        return renderLayer;
+    }
+
+    public ResourceLocation[] getAllTextures() {
+        return Arrays.stream(data)
+                .map(moduleData -> moduleData.textureLocation)
+                .toArray(ResourceLocation[]::new);
+    }
+
+    public ResourceLocation getGlyphLocation(ItemStack itemStack) {
+        return getData(itemStack).glyphLocation;
+    }
+
+    public int getGlyphTint(ItemStack itemStack) {
+        return getData(itemStack).glyphTint;
+    }
+
 }

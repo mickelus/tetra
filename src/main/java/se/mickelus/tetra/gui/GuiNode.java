@@ -1,12 +1,15 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GuiNode extends Gui {
 
@@ -58,8 +61,7 @@ public class GuiNode extends Gui {
     }
 
 
-    public static void drawRect(int left, int top, int right, int bottom, int color, float opacity)
-    {
+    public static void drawRect(int left, int top, int right, int bottom, int color, float opacity) {
         if (left < right) {
             int i = left;
             left = right;

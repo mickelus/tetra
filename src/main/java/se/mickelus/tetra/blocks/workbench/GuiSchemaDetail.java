@@ -10,6 +10,8 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiString title;
     private GuiTextSmall description;
 
+    private GuiButton craftButton;
+
     private GuiString[] slotNames;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
@@ -28,7 +30,8 @@ public class GuiSchemaDetail extends GuiElement {
             addChild(slotNames[i]);
         }
 
-        addChild(new GuiButton(138, 50, 100, 16, "Craft", craftListener));
+        craftButton = new GuiButton(138, 50, 100, 16, "Craft", craftListener);
+        addChild(craftButton);
     }
 
     public void setSchema(UpgradeSchema schema) {
@@ -40,6 +43,10 @@ public class GuiSchemaDetail extends GuiElement {
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(i));
         }
+    }
+
+    public void toggleButton(boolean enabled) {
+        craftButton.setEnabled(enabled);
     }
 
     @Override

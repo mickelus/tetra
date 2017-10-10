@@ -10,56 +10,56 @@ import se.mickelus.tetra.module.UpgradeSchema;
 
 
 public class ContainerWorkbench extends Container {
-    private TileEntityWorkbench workbench;
+                private TileEntityWorkbench workbench;
 
-    private ToggleableSlot[] materialSlots;
+                private ToggleableSlot[] materialSlots;
 
     public ContainerWorkbench(IInventory playerInventory, TileEntityWorkbench workbench, EntityPlayer player) {
-        this.workbench = workbench;
+                    this.workbench = workbench;
 
 //        materialSlots = new ToggleableSlot[3];
 
-//        workbench.addChangeListener(this::updateMaterialSlots);
-        workbench.openInventory(player);
+                    workbench.addChangeListener("container.workbench", this::updateSlots);
+                    workbench.openInventory(player);
 
-        this.addSlotToContainer(new Slot(workbench, 0, 152, 58));
+                    this.addSlotToContainer(new Slot(workbench, 0, 152, 58));
 
-        // material inventory
-        for (int i = 0; i < 3; i++) {
+                    // material inventory
+                    for (int i = 0; i < 3; i++) {
 //            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 271, 18 * i + 100);
 //            materialSlots[i].toggle(false);
 //            this.addSlotToContainer(materialSlots[i]);
-            this.addSlotToContainer(new Slot(workbench, i + 1, 271, 18 * i + 105));
-        }
+                        this.addSlotToContainer(new Slot(workbench, i + 1, 271, 18 * i + 105));
+                    }
 
-        // player inventory
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 3; y++) {
-                this.addSlotToContainer(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
-            }
-        }
+                    // player inventory
+                    for (int x = 0; x < 9; x++) {
+                        for (int y = 0; y < 3; y++) {
+                            this.addSlotToContainer(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
+                        }
+                    }
 
-        // player toolbar
-        for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 84, 221));
-        }
-    }
+                    // player toolbar
+                    for (int i = 0; i < 9; i++) {
+                        this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 84, 221));
+                    }
+                }
 
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn)
-    {
-        return this.workbench.isUsableByPlayer(playerIn);
-    }
+                @Override
+                public boolean canInteractWith(EntityPlayer playerIn)
+                {
+                    return this.workbench.isUsableByPlayer(playerIn);
+                }
 
-    /**
-     * Take a stack from the specified inventory slot.
-     */
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-        Slot slot = this.inventorySlots.get(index);
+                /**
+                 * Take a stack from the specified inventory slot.
+                 */
+                @Override
+                public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+                    Slot slot = this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemStack = slot.getStack();
+                    if (slot != null && slot.getHasStack()) {
+                        ItemStack itemStack = slot.getStack();
 
             if (index < this.workbench.getSizeInventory()) {
                 if (!this.mergeItemStack(itemStack,  this.workbench.getSizeInventory(), this.inventorySlots.size(), true)) {
@@ -80,7 +80,7 @@ public class ContainerWorkbench extends Container {
         return ItemStack.EMPTY;
     }
 
-    private void updateMaterialSlots() {
+    private void updateSlots() {
         UpgradeSchema currentSchema = workbench.getCurrentSchema();
         int numMaterialSlots = 0;
 
@@ -104,7 +104,7 @@ public class ContainerWorkbench extends Container {
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
 
-//        workbench.removeChangeListener(this::updateMaterialSlots);
+        workbench.removeChangeListener("container.workbench");
         workbench.closeInventory(playerIn);
     }
 }

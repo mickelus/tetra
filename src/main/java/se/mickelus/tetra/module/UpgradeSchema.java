@@ -9,8 +9,9 @@ public interface UpgradeSchema {
     public String getDescription();
     public int getNumMaterialSlots();
     public String getSlotName(int index);
-	public boolean slotAcceptsStack(int index, ItemStack itemStack);
+	public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
 
     public boolean canUpgrade(ItemStack itemStack);
+    public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials);
 }

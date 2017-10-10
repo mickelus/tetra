@@ -10,11 +10,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
@@ -99,13 +95,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
 
 	@Override
 	public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
-		List<ResourceLocation> textures = new LinkedList<>();
 
-		for (ItemModule module : getAllModules(itemStack)) {
-			Collections.addAll(textures, module.getTextures(itemStack));
-		}
-
-		return ImmutableList.copyOf(textures);
+        return getAllModules(itemStack).stream()
+                .sorted(Comparator.comparing(ItemModule::getRenderLayer))
+                .flatMap(itemModule -> Arrays.stream(itemModule.getTextures(itemStack)))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 	}
 
     public java.util.Set<String> getToolClasses(ItemStack itemStack) {

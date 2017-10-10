@@ -1,9 +1,7 @@
 package se.mickelus.tetra.items.sword;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.init.Blocks;
@@ -15,15 +13,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 
 public class ItemSwordModular extends ItemModular {
 
@@ -52,16 +49,17 @@ public class ItemSwordModular extends ItemModular {
 
     @Override
     public void init(PacketPipeline packetPipeline) {
-		new BladeModule(bladeKey);
-		new HiltModule(hiltKey);
+        new BladeModule(bladeKey);
+        new BasicSchema("blade_schema", BladeModule.instance);
 
-		new SimpleBladeSchema();
-		new BasicHiltSchema();
+        new HiltModule(hiltKey);
+        new BasicSchema("hilt_schema", HiltModule.instance);
 
-		ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
+
+        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
     }
 
-	private ItemStack replaceSword(ItemStack originalStack) {
+    private ItemStack replaceSword(ItemStack originalStack) {
         Item originalItem = originalStack.getItem();
 
         if (!(originalItem instanceof ItemSword)) {
@@ -114,12 +112,12 @@ public class ItemSwordModular extends ItemModular {
 
         if (slot == EntityEquipmentSlot.MAINHAND) {
             double damageModifier = getAllModules(stack).stream()
-		            .map(itemModule -> itemModule.getDamageModifier(stack))
-		            .reduce(0d, Double::sum);
+                    .map(itemModule -> itemModule.getDamageModifier(stack))
+                    .reduce(0d, Double::sum);
 
             damageModifier = getAllModules(stack).stream()
-		            .map(itemModule -> itemModule.getDamageMultiplierModifier(stack))
-		            .reduce(damageModifier, (a, b) -> a*b);
+                    .map(itemModule -> itemModule.getDamageMultiplierModifier(stack))
+                    .reduce(damageModifier, (a, b) -> a*b);
 
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damageModifier, 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -3.6D, 0));
