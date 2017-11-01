@@ -92,8 +92,8 @@ public class ItemSwordModular extends ItemModular {
                 break;
         }
 
-        BladeModule.instance.addModule(itemStack, new ItemStack[]{bladeMaterial});
-        HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)});
+        BladeModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false);
+        HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false);
         return itemStack;
     }
 

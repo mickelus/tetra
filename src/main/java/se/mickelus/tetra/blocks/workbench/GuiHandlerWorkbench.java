@@ -4,9 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
-import se.mickelus.tetra.items.toolbelt.ContainerToolbelt;
-import se.mickelus.tetra.items.toolbelt.GuiToolbelt;
+import se.mickelus.tetra.blocks.workbench.gui.GuiWorkbench;
 import se.mickelus.tetra.network.TetraGuiHandler;
 
 public class GuiHandlerWorkbench implements TetraGuiHandler {

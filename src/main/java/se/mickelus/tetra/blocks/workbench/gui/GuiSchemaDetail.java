@@ -1,9 +1,13 @@
-package se.mickelus.tetra.blocks.workbench;
+package se.mickelus.tetra.blocks.workbench.gui;
 
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.UpgradeSchema;
 
 public class GuiSchemaDetail extends GuiElement {
+
+    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
+
+    private static final int MAX_NUM_SLOTS = 2;
 
     private UpgradeSchema schema;
 
@@ -13,10 +17,11 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiButton craftButton;
 
     private GuiString[] slotNames;
+    private GuiTexture[] slotBorders;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 64);
-        addChild(new GuiButton(-4 , height + 4, 20, 18, "< back", backListener));
+        addChild(new GuiButton(-4 , height + 4, 40, 8, "< back", backListener));
 
         title = new GuiString(4, 4, "");
         addChild(title);
@@ -24,13 +29,19 @@ public class GuiSchemaDetail extends GuiElement {
         description = new GuiTextSmall(4, 16, 106, "");
         addChild(description);
 
-        slotNames = new GuiString[3];
-        for (int i = 0; i < slotNames.length; i++) {
-            slotNames[i] = new GuiString(120, 6 + i * 18, "");
+        slotNames = new GuiString[MAX_NUM_SLOTS];
+        slotBorders = new GuiTexture[MAX_NUM_SLOTS];
+        for (int i = 0; i < MAX_NUM_SLOTS; i++) {
+            slotNames[i] = new GuiString(140, 8 + i * 17, "");
+            slotNames[i].setVisible(false);
             addChild(slotNames[i]);
+
+            slotBorders[i] = new GuiTexture(121, 4 + i * 17, 16, 16, 52, 16, WORKBENCH_TEXTURE);
+            slotBorders[i].setVisible(false);
+            addChild(slotBorders[i]);
         }
 
-        craftButton = new GuiButton(138, 50, 100, 16, "Craft", craftListener);
+        craftButton = new GuiButton(138, 50, 30, 8, "Craft", craftListener);
         addChild(craftButton);
     }
 
@@ -42,6 +53,13 @@ public class GuiSchemaDetail extends GuiElement {
 
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(i));
+            slotNames[i].setVisible(true);
+            slotBorders[i].setVisible(true);
+        }
+
+        for (int i = schema.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
+            slotNames[i].setVisible(false);
+            slotBorders[i].setVisible(false);
         }
     }
 

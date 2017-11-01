@@ -24,13 +24,15 @@ public abstract class ItemModule<T extends ModuleData> {
         this.dataKey = dataKey;
     }
 
-    public void addModule(ItemStack targetStack, ItemStack[] materials) {
+    public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
 
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, getDataByMaterial(materials[0]).key);
 
-        materials[0].setCount(materials[0].getCount()-1);
+        if (consumeMaterials) {
+            materials[0].setCount(materials[0].getCount()-1);
+        }
     }
 
     // todo: fix to work for upgrades with more than one material

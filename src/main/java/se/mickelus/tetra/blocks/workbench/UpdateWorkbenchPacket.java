@@ -64,7 +64,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     public void handleServerSide(EntityPlayer player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
-            workbench.setCurrentSchema(schema);
+            workbench.setCurrentSchema(schema, player);
         }
     }
 }

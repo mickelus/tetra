@@ -5,18 +5,33 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 
+/**
+ * Texture with half "pixel" offset
+ */
 public class GuiTextureOffset extends GuiElement {
 
     private ResourceLocation textureLocation;
 
-    public GuiTextureOffset(int x, int y, int width, int height, String texture) {
-        super(x, y, width + 1, height + 1);
+    private int textureX;
+    private int textureY;
 
-        textureLocation = new ResourceLocation(TetraMod.MOD_ID, texture);
+    public GuiTextureOffset(int x, int y, int width, int height, String texture) {
+        this(x, y, width, height, new ResourceLocation(TetraMod.MOD_ID, texture));
+    }
+
+    public GuiTextureOffset(int x, int y, int width, int height, int textureX, int textureY, String texture) {
+        this(x, y, width, height, textureX, textureY, new ResourceLocation(TetraMod.MOD_ID, texture));
     }
 
     public GuiTextureOffset(int x, int y, int width, int height, ResourceLocation textureLocation) {
+        this(x, y, width, height, 0, 0, textureLocation);
+    }
+
+    public GuiTextureOffset(int x, int y, int width, int height, int textureX, int textureY, ResourceLocation textureLocation) {
         super(x, y, width + 1, height + 1);
+
+        this.textureX = textureX;
+        this.textureY = textureY;
 
         this.textureLocation = textureLocation;
     }
@@ -31,7 +46,7 @@ public class GuiTextureOffset extends GuiElement {
         drawTexturedModalRect(
                 refX + x,
                 refY + y,
-                0, 0, width - 1, height - 1);
+                textureX, textureY, width - 1, height - 1);
         GlStateManager.translate(-0.5F, -0.5F, 0);
     }
 }

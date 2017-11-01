@@ -13,5 +13,5 @@ public interface UpgradeSchema {
 
     public boolean canUpgrade(ItemStack itemStack);
     public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials);
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials);
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials);
 }

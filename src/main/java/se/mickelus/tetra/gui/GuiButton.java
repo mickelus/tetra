@@ -8,7 +8,7 @@ public class GuiButton extends GuiElement {
 
     private static final int COLOR_DEFAULT = 0xffffffff;
     private static final int COLOR_HOVER = 0xffffff00;
-    private static final int COLOR_DISABLED = 0x66ffff00;
+    private static final int COLOR_DISABLED = 0x66ffffff;
 
     private final Runnable onClickHandler;
 

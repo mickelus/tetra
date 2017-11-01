@@ -69,10 +69,10 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials) {
         ItemStack upgradedStack = itemStack.copy();
 
-        module.addModule(upgradedStack, materials);
+        module.addModule(upgradedStack, materials, consumeMaterials);
 
         return upgradedStack;
     }

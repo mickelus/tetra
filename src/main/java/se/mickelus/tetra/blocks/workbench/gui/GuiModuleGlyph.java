@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.workbench;
+package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

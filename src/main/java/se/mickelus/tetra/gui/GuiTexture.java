@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 
@@ -8,10 +9,28 @@ public class GuiTexture extends GuiElement {
 
     private ResourceLocation textureLocation;
 
-    public GuiTexture(int x, int y, int width, int height, String texture) {
-        super(x, y, width, height);
+    private final int textureX;
+    private final int textureY;
 
-        textureLocation = new ResourceLocation(TetraMod.MOD_ID, texture);
+    public GuiTexture(int x, int y, int width, int height, String texture) {
+        this(x, y, width, height, new ResourceLocation(TetraMod.MOD_ID, texture));
+    }
+
+    public GuiTexture(int x, int y, int width, int height, int textureX, int textureY, String texture) {
+        this(x, y, width, height, textureX, textureY, new ResourceLocation(TetraMod.MOD_ID, texture));
+    }
+
+    public GuiTexture(int x, int y, int width, int height, ResourceLocation textureLocation) {
+        this(x, y, width, height, 0, 0, textureLocation);
+    }
+
+    public GuiTexture(int x, int y, int width, int height, int textureX, int textureY, ResourceLocation textureLocation) {
+        super(x, y, width + 1, height + 1);
+
+        this.textureX = textureX;
+        this.textureY = textureY;
+
+        this.textureLocation = textureLocation;
     }
 
     @Override
@@ -20,10 +39,11 @@ public class GuiTexture extends GuiElement {
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(textureLocation);
 
-        // draw background
+        GlStateManager.enableBlend();
         drawTexturedModalRect(
                 refX + x,
                 refY + y,
-                0, 0, width, height);
+                textureX, textureY, width, height);
+        GlStateManager.disableBlend();
     }
 }

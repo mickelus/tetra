@@ -1,12 +1,12 @@
-package se.mickelus.tetra.blocks.workbench;
+package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
+import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.UpgradeSchema;
@@ -24,6 +24,7 @@ public class GuiWorkbench extends GuiContainer {
     private EntityPlayer viewingPlayer;
 
     private final TileEntityWorkbench tileEntity;
+    private final ContainerWorkbench container;
 
     private GuiElement defaultGui;
 
@@ -40,6 +41,7 @@ public class GuiWorkbench extends GuiContainer {
         this.ySize = 240;
 
         this.tileEntity = tileEntity;
+        this.container = container;
 
         this.viewingPlayer = viewingPlayer;
 
@@ -63,15 +65,15 @@ public class GuiWorkbench extends GuiContainer {
         instance = this;
     }
 
-	@Override
-	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-		this.drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
+    @Override
+    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
 
-		this.func_191948_b(mouseX, mouseY);
-	}
+        this.func_191948_b(mouseX, mouseY);
+    }
 
-	@Override
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
@@ -102,12 +104,10 @@ public class GuiWorkbench extends GuiContainer {
 
     private void onTileEntityChange() {
         ItemStack stack = tileEntity.getTargetItemStack();
+        ItemStack previewStack = ItemStack.EMPTY;
         UpgradeSchema schema = tileEntity.getCurrentSchema();
 
-        if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
-            componentList.update(stack);
-            targetStack = stack;
-        }
+        container.updateSlots();
 
         if (schema == null) {
             schemaList.setSchemas(ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, tileEntity.getTargetItemStack()));
@@ -115,6 +115,7 @@ public class GuiWorkbench extends GuiContainer {
             schemaList.setVisible(true);
             schemaDetail.setVisible(false);
         } else {
+            previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
 
             schemaDetail.setSchema(schema);
             schemaDetail.toggleButton(schema.canApplyUpgrade(stack, tileEntity.getMaterials()));
@@ -122,5 +123,18 @@ public class GuiWorkbench extends GuiContainer {
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);
         }
+
+        componentList.update(stack, previewStack);
+
+        if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
+            targetStack = stack;
+        }
+    }
+
+    private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
+        if (schema.canApplyUpgrade(targetStack, materials)) {
+            return schema.applyUpgrade(targetStack, materials, false);
+        }
+        return ItemStack.EMPTY;
     }
 }

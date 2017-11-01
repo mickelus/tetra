@@ -43,6 +43,15 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     public void setCurrentSchema(UpgradeSchema schema) {
+        setCurrentSchema(schema, null);
+    }
+
+    public void setCurrentSchema(UpgradeSchema schema, EntityPlayer player) {
+        // todo: inventory change hack, better solution?
+        if (!world.isRemote && schema == null && player != null) {
+            emptyMaterialSlots(player);
+        }
+
         this.currentSchema = schema;
 
         sync();
@@ -95,7 +104,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         ItemStack itemStack = getTargetItemStack();
 
         if (currentSchema != null && currentSchema.canApplyUpgrade(itemStack, getMaterials())) {
-            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials());
+            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials(), true);
         }
 
         setInventorySlotContents(0, itemStack);
@@ -150,7 +159,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 NBTTagCompound nbttagcompound = tagList.getCompoundTagAt(i);
                 int slot = nbttagcompound.getByte(SLOT_KEY) & 255;
 
-                if (slot >= 0 && slot < this.stacks.size()) {
+                if (slot < this.stacks.size()) {
                     this.stacks.set(slot, new ItemStack(nbttagcompound));
                 }
             }
@@ -158,6 +167,11 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
         String schemaKey = compound.getString(SCHEMA_KEY);
         currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+
+        // todo : due to the null check perhaps this is not the right place to do this
+        if (this.world != null && this.world.isRemote) {
+            changeListeners.values().forEach(Runnable::run);
+        }
     }
 
     @Override
@@ -169,7 +183,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             if (!this.stacks.get(i).isEmpty()) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
 
-                nbttagcompound.setByte(SLOT_KEY, (byte)i);
+                nbttagcompound.setByte(SLOT_KEY, (byte) i);
                 this.stacks.get(i).writeToNBT(nbttagcompound);
 
                 nbttaglist.appendTag(nbttagcompound);
@@ -184,6 +198,22 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
         return compound;
     }
+
+    private void emptyMaterialSlots(EntityPlayer player) {
+        for (int i = 1; i < getSizeInventory(); i++) {
+            transferStackToPlayer(player, i);
+        }
+    }
+
+    private void transferStackToPlayer(EntityPlayer player, int index) {
+        ItemStack itemStack = getStackInSlot(index);
+        if (!itemStack.isEmpty()) {
+            if (!player.inventory.addItemStackToInventory(itemStack)) {
+                player.dropItem(itemStack, false);
+            }
+        }
+    }
+
 
     @Override
     public int getSizeInventory() {
@@ -238,7 +268,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         }
 
         if (index == 0 && !world.isRemote) {
-            currentSchema = null;
+            setCurrentSchema(null);
             sync();
         } else {
             markDirty();
@@ -267,7 +297,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        if(index == 0) {
+        if (index == 0) {
             return true;
         } else if (currentSchema != null) {
             return currentSchema.slotAcceptsMaterial(getTargetItemStack(), index - 1, stack);

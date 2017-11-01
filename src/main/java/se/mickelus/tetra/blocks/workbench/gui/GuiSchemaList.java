@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.workbench;
+package se.mickelus.tetra.blocks.workbench.gui;
 
 import se.mickelus.tetra.gui.GuiButton;
 import se.mickelus.tetra.gui.GuiElement;

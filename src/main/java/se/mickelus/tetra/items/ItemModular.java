@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -44,9 +45,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
     }
 
     @Override
-    public ItemModuleMajor[] getMajorModules(ItemStack stack) {
+    public ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
-        NBTTagCompound stackTag = stack.getTagCompound();
+        NBTTagCompound stackTag = NBTHelper.getTag(itemStack);
 
         for (int i = 0; i < majorModuleKeys.length; i++) {
             String moduleName = stackTag.getString(majorModuleKeys[i]);
@@ -62,7 +63,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
     @Override
     public ItemModule[] getMinorModules(ItemStack itemStack) {
         ItemModuleMajor[] modules = new ItemModuleMajor[minorModuleKeys.length];
-        NBTTagCompound stackTag = itemStack.getTagCompound();
+        NBTTagCompound stackTag = NBTHelper.getTag(itemStack);
 
         for (int i = 0; i < minorModuleKeys.length; i++) {
             String moduleName = stackTag.getString(minorModuleKeys[i]);
