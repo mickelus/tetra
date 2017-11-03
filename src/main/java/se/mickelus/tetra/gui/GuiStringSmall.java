@@ -8,6 +8,18 @@ public class GuiStringSmall extends GuiString {
         super(x*2, y*2, string);
     }
 
+    public GuiStringSmall(int x, int y, String string, int color) {
+        super(x*2, y*2, string, color);
+    }
+
+    public GuiStringSmall(int x, int y, String string, GuiAlignment alignment) {
+        super(x*2, y*2, string, alignment);
+    }
+
+    public GuiStringSmall(int x, int y, String string, int color, GuiAlignment alignment) {
+        super(x*2, y*2, string, color, alignment);
+    }
+
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();

@@ -29,6 +29,7 @@ public class GuiWorkbench extends GuiContainer {
     private GuiElement defaultGui;
 
     private GuiModuleList componentList;
+    private GuiStatGroup statGroup;
     private GuiSchemaList schemaList;
     private GuiSchemaDetail schemaDetail;
 
@@ -49,9 +50,11 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
 
-
         componentList = new GuiModuleList(164, 49);
         defaultGui.addChild(componentList);
+
+        statGroup = new GuiStatGroup(60, 0);
+        defaultGui.addChild(statGroup);
 
         schemaList = new GuiSchemaList(46, 100);
         schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
@@ -125,6 +128,7 @@ public class GuiWorkbench extends GuiContainer {
         }
 
         componentList.update(stack, previewStack);
+        statGroup.setItemStack(stack, previewStack, viewingPlayer);
 
         if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
             targetStack = stack;
