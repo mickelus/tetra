@@ -27,7 +27,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return super.getMaxDamage(stack);
+        return getAllModules(stack).stream()
+                .map(itemModule -> itemModule.getDurability(stack))
+                .reduce(0, Integer::sum) + baseDurability;
     }
 
     protected Collection<ItemModule> getAllModules(ItemStack stack) {

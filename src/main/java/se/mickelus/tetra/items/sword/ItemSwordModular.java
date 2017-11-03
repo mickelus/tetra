@@ -1,7 +1,9 @@
 package se.mickelus.tetra.items.sword;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.init.Blocks;
@@ -13,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
@@ -132,5 +136,18 @@ public class ItemSwordModular extends ItemModular {
         return super.getArmorTexture(stack, entity, slot, type);
     }
 
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        stack.damageItem(1, attacker);
+        return true;
+    }
 
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        if (state.getBlockHardness(worldIn, pos) > 0) {
+            stack.damageItem(2, entityLiving);
+        }
+
+        return true;
+    }
 }
