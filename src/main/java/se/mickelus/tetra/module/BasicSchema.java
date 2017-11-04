@@ -2,10 +2,8 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.sword.BladeModule;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.UpgradeSchema;
 
 public class BasicSchema implements UpgradeSchema {
 
@@ -65,7 +63,18 @@ public class BasicSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials) {
+        return isMaterialsValid(itemStack, materials) && isIntegrityViolation(itemStack, materials);
+    }
+
+    @Override
+    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
         return module.canApplyUpgrade(itemStack, materials);
+    }
+
+    @Override
+    public boolean isIntegrityViolation(ItemStack itemStack, final ItemStack[] materials) {
+        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false);
+        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) >= 0;
     }
 
     @Override
