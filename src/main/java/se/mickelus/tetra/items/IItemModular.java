@@ -16,5 +16,5 @@ public interface IItemModular {
     public String[] getMinorModuleNames();
     public ItemModule[] getMinorModules(ItemStack itemStack);
 
-	public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
+    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
 }
