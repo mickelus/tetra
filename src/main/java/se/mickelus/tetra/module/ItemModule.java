@@ -81,9 +81,37 @@ public abstract class ItemModule<T extends ModuleData> {
         return I18n.format(getData(itemStack).key);
     }
 
-    public int getIntegrity(ItemStack itemStack) {
-        return getData(itemStack).integrity;
+    /**
+     * Returns the integrity gained from this module. Split into two methods as modules with improvements may have
+     * internal gains/costs which should be visible.
+     *
+     * @param itemStack An itemstack containing module data for this module
+     * @return Integrity gained from this module, excluding internal costs
+     */
+    public int getIntegrityGain(ItemStack itemStack) {
+        int integrity = getData(itemStack).integrity;
+        if (integrity > 0 ) {
+            return integrity;
+        }
+        return 0;
     }
+
+    /**
+     * Returns the integrity cost of this module. Split into two methods as modules with improvements may have
+     * internal gains/costs which should be visible.
+     *
+     * @param itemStack An itemstack containing module data for this module
+     * @return Integrity cost of this module, excluding internal gains
+     */
+    public int getIntegrityCost(ItemStack itemStack) {
+        int integrity = getData(itemStack).integrity;
+        if (integrity < 0 ) {
+            return integrity;
+        }
+        return 0;
+    }
+
+
     public int getDurability(ItemStack itemStack) {
         return getData(itemStack).durability;
     }

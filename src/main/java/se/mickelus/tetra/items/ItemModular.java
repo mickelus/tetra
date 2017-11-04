@@ -32,15 +32,33 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
                 .reduce(0, Integer::sum) + baseDurability;
     }
 
+    public static int getIntegrityGain(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ItemModular) {
+            return ((ItemModular) itemStack.getItem()).getAllModules(itemStack).stream()
+                    .map(module -> module.getIntegrityGain(itemStack))
+                    .reduce(0, Integer::sum);
+        }
+        return 0;
+    }
+
+    public static int getIntegrityCost(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ItemModular) {
+            return ((ItemModular) itemStack.getItem()).getAllModules(itemStack).stream()
+                    .map(module -> module.getIntegrityCost(itemStack))
+                    .reduce(0, Integer::sum);
+        }
+        return 0;
+    }
+
     protected Collection<ItemModule> getAllModules(ItemStack stack) {
         NBTTagCompound stackTag = stack.getTagCompound();
 
         if (stackTag != null) {
-	        return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))
-			        .map(stackTag::getString)
-			        .map(ItemUpgradeRegistry.instance::getModule)
-			        .filter(itemModule -> itemModule != null)
-			        .collect(Collectors.toList());
+            return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))
+                    .map(stackTag::getString)
+                    .map(ItemUpgradeRegistry.instance::getModule)
+                    .filter(itemModule -> itemModule != null)
+                    .collect(Collectors.toList());
         }
 
         return Collections.EMPTY_LIST;
@@ -96,14 +114,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         return minorModuleNames;
     }
 
-	@Override
-	public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
+    @Override
+    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
 
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getTextures(itemStack)))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
-	}
+    }
 
     public java.util.Set<String> getToolClasses(ItemStack itemStack) {
         return super.getToolClasses(itemStack);

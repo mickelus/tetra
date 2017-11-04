@@ -30,6 +30,7 @@ public class GuiWorkbench extends GuiContainer {
 
     private GuiModuleList componentList;
     private GuiStatGroup statGroup;
+    private GuiIntegrityBar integrityBar;
     private GuiSchemaList schemaList;
     private GuiSchemaDetail schemaDetail;
 
@@ -55,6 +56,9 @@ public class GuiWorkbench extends GuiContainer {
 
         statGroup = new GuiStatGroup(60, 0);
         defaultGui.addChild(statGroup);
+
+        integrityBar = new GuiIntegrityBar(160, 90);
+        defaultGui.addChild(integrityBar);
 
         schemaList = new GuiSchemaList(46, 100);
         schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
@@ -129,6 +133,7 @@ public class GuiWorkbench extends GuiContainer {
 
         componentList.update(stack, previewStack);
         statGroup.setItemStack(stack, previewStack, viewingPlayer);
+        integrityBar.setItemStack(stack, previewStack);
 
         if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
             targetStack = stack;
