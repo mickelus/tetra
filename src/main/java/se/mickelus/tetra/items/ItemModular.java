@@ -1,10 +1,14 @@
 package se.mickelus.tetra.items;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -133,5 +137,24 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
 
     public int getItemEnchantability(ItemStack stack) {
         return super.getItemEnchantability(stack);
+    }
+
+    public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
+        if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
+            itemStack.damageItem(amount, responsibleEntity);
+        } else {
+            setDamage(itemStack, itemStack.getMaxDamage());
+        }
+    }
+
+    public boolean isBroken(ItemStack itemStack) {
+        return itemStack.getItemDamage() >= itemStack.getMaxDamage();
+    }
+
+    @Override
+    public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+        if (isBroken(itemStack)) {
+            tooltip.add("§4§o" + I18n.format("item.modular.broken"));
+        }
     }
 }

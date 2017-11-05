@@ -107,21 +107,27 @@ public class ItemSwordModular extends ItemModular {
         if (stack.hasTagCompound() && tag.hasKey(BladeModule.materialKey)) {
             return tag.getString(BladeModule.materialKey);
         }
-        return "Wooden Blade";
+        return "§kUnknown";
     }
 
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
-    {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack itemStack) {
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, itemStack);
 
         if (slot == EntityEquipmentSlot.MAINHAND) {
-            double damageModifier = getAllModules(stack).stream()
-                    .map(itemModule -> itemModule.getDamageModifier(stack))
+            double damageModifier = getAllModules(itemStack).stream()
+                    .map(itemModule -> itemModule.getDamageModifier(itemStack))
                     .reduce(0d, Double::sum);
 
-            damageModifier = getAllModules(stack).stream()
-                    .map(itemModule -> itemModule.getDamageMultiplierModifier(stack))
+            damageModifier = getAllModules(itemStack).stream()
+                    .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
                     .reduce(damageModifier, (a, b) -> a*b);
+
+            double speedModifier = -3.6D;
+
+            if (isBroken(itemStack)) {
+                damageModifier = 0;
+                speedModifier = 0;
+            }
 
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damageModifier, 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -3.6D, 0));
@@ -137,15 +143,15 @@ public class ItemSwordModular extends ItemModular {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        stack.damageItem(1, attacker);
+    public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
+        applyDamage(1, itemStack, attacker);
         return true;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+    public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if (state.getBlockHardness(worldIn, pos) > 0) {
-            stack.damageItem(2, entityLiving);
+            applyDamage(2, itemStack, entityLiving);
         }
 
         return true;
