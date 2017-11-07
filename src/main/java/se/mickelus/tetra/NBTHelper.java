@@ -5,8 +5,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTHelper {
     public static NBTTagCompound getTag(ItemStack stack) {
-        if(stack == null || !stack.hasTagCompound()) {
+        if(stack == null) {
             return new NBTTagCompound();
+        }
+
+        if (!stack.hasTagCompound()) {
+            stack.setTagCompound(new NBTTagCompound());
         }
 
         return stack.getTagCompound();

@@ -22,6 +22,7 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
@@ -59,6 +60,7 @@ public class ItemSwordModular extends ItemModular {
         new HiltModule(hiltKey);
         new BasicSchema("hilt_schema", HiltModule.instance);
 
+        new RepairSchema(this);
 
         ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
     }

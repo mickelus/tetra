@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.UpgradeSchema;
 
@@ -45,14 +46,14 @@ public class GuiSchemaDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void setSchema(UpgradeSchema schema) {
+    public void setSchema(UpgradeSchema schema, ItemStack itemStack) {
         this.schema = schema;
 
         title.setString(schema.getName());
         description.setString(schema.getDescription());
 
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
-            slotNames[i].setString(schema.getSlotName(i));
+            slotNames[i].setString(schema.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
             slotBorders[i].setVisible(true);
         }

@@ -124,7 +124,7 @@ public class GuiWorkbench extends GuiContainer {
         } else {
             previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
 
-            schemaDetail.setSchema(schema);
+            schemaDetail.setSchema(schema, stack);
             schemaDetail.toggleButton(schema.canApplyUpgrade(stack, tileEntity.getMaterials()));
 
             schemaList.setVisible(false);

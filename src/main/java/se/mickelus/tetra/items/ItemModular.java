@@ -5,6 +5,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +22,9 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
 public abstract class ItemModular extends TetraItem implements IItemModular {
+
+    private static final String repairCountKey = "repairCount";
+
     protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
     protected String[] minorModuleNames;
@@ -156,5 +160,49 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         if (isBroken(itemStack)) {
             tooltip.add("§4§o" + I18n.format("item.modular.broken"));
         }
+    }
+
+    /**
+     * Returns an itemstack with the material required for the next repair attempt. Rotates between materials required
+     * for different modules
+     * @param itemStack The itemstack for the modular item
+     * @return An itemstack representing the material required for the repair
+     */
+    public ItemStack getRepairMaterial(ItemStack itemStack) {
+        List<ItemModule> modules = getAllModules(itemStack).stream()
+                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .collect(Collectors.toList());
+        return modules.get(getRepairCount(itemStack) % modules.size()).getRepairMaterial(itemStack);
+    }
+
+    /**
+     * Returns the amount of durability restored by the next repair attemt.
+     * @param itemStack The itemstack for the modular item
+     * @return
+     */
+    public int getRepairAmount(ItemStack itemStack) {
+        List<ItemModule> modules = getAllModules(itemStack).stream()
+                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .collect(Collectors.toList());
+        if (modules.size() > 0) {
+            return modules.get(getRepairCount(itemStack) % modules.size()).getRepairAmount(itemStack);
+        } else {
+            return 0;
+        }
+    }
+
+    private int getRepairCount(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getInteger(repairCountKey);
+    }
+
+    private void incrementRepairCount(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        tag.setInteger(repairCountKey, tag.getInteger(repairCountKey) + 1);
+    }
+
+    public void repair(ItemStack itemStack) {
+        setDamage(itemStack, getDamage(itemStack) - getRepairAmount(itemStack));
+
+        incrementRepairCount(itemStack);
     }
 }

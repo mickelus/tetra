@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameData;
 import se.mickelus.tetra.NBTHelper;
 
 public abstract class ItemModule<T extends ModuleData> {
@@ -31,7 +32,7 @@ public abstract class ItemModule<T extends ModuleData> {
         tag.setString(dataKey, getDataByMaterial(materials[0]).key);
 
         if (consumeMaterials) {
-            materials[0].setCount(materials[0].getCount()-1);
+            materials[0].shrink(1);
         }
     }
 
@@ -113,6 +114,20 @@ public abstract class ItemModule<T extends ModuleData> {
 
 
     public int getDurability(ItemStack itemStack) {
+        return getData(itemStack).durability;
+    }
+
+    public ItemStack getRepairMaterial(ItemStack itemStack) {
+        Item item = Item.getByNameOrId(getData(itemStack).material);
+
+        if (item != null) {
+            return new ItemStack(item);
+        } else {
+            return null;
+        }
+    }
+
+    public int getRepairAmount(ItemStack itemStack) {
         return getData(itemStack).durability;
     }
 
