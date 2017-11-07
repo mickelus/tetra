@@ -1,10 +1,28 @@
-tile.emptyblock.name=Empty Block
-tile.interfaceblock.name=Interface Block
+item.modular.broken=Broken
+repair_schema.name=Repair
+repair_schema.description=Repair the item. Materials used are based on what the modules are made of
 
-item.customgenerationbook.name=Book of Custom Generation
-item.placeholderitem.name=Loot placeholder
+blade_schema.name=Simple blade
+blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
+blade_schema.slot1=Blade material
 
-item.hammer.name=Hammer
-item.toolbelt.name=Toolbelt
+basic_blade/oak=Oak blade
+basic_blade/cobblestone=Stone blade
+basic_blade/stone=Solid stone blade
+basic_blade/iron=Iron blade
+basic_blade/gold=Golden blade
+basic_blade/diamond=Diamond blade
+basic_blade/obsidian=Obsidian blade
 
-itemGroup.customgen=Customgen
+hilt_schema.name=Simple hilt
+hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
+hilt_schema.slot1=Hilt material
+
+basic_hilt/hilt_stick=Wooden hilt
+basic_hilt/oak=Heavy oak hilt
+basic_hilt/iron=Iron hilt
+basic_hilt/bone=Bone hilt
+basic_hilt/blaze_rod=Blazing hilt
+basic_hilt/end_rod=End rod
+
+itemGroup.tetra=Tetra
