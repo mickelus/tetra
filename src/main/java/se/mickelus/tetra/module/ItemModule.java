@@ -2,6 +2,7 @@ package se.mickelus.tetra.module;
 
 import java.util.Arrays;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -134,6 +135,9 @@ public abstract class ItemModule<T extends ModuleData> {
     public double getDamageModifier(ItemStack itemStack) { return 0; }
     public double getDamageMultiplierModifier(ItemStack itemStack) { return 1; }
 
+    public double getSpeedModifier(ItemStack itemStack) { return 0; }
+    public double getSpeedMultiplierModifier(ItemStack itemStack) { return 1; }
+
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[] { getData(itemStack).textureLocation };
     }
@@ -156,4 +160,5 @@ public abstract class ItemModule<T extends ModuleData> {
         return getData(itemStack).glyphTint;
     }
 
+    public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}
 }

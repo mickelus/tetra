@@ -25,4 +25,8 @@ basic_hilt/bone=Bone hilt
 basic_hilt/blaze_rod=Blazing hilt
 basic_hilt/end_rod=End rod
 
+short_blade.name=Shortblade
+short_blade.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is also less suitable for sweeping attacks.
+short_blade.slot1=Blade material
+
 itemGroup.tetra=Tetra

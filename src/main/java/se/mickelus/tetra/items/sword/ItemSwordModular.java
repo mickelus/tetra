@@ -57,6 +57,9 @@ public class ItemSwordModular extends ItemModular {
         new BladeModule(bladeKey);
         new BasicSchema("blade_schema", BladeModule.instance);
 
+        new ShortBladeModule(bladeKey);
+        new BasicSchema("short_blade_schema", ShortBladeModule.instance);
+
         new HiltModule(hiltKey);
         new BasicSchema("hilt_schema", HiltModule.instance);
 
@@ -124,15 +127,25 @@ public class ItemSwordModular extends ItemModular {
                     .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
                     .reduce(damageModifier, (a, b) -> a*b);
 
-            double speedModifier = -3.6D;
+            double speedModifier = getAllModules(itemStack).stream()
+                    .map(itemModule -> itemModule.getSpeedModifier(itemStack))
+                    .reduce(-2.4d, Double::sum);
+
+            speedModifier = getAllModules(itemStack).stream()
+                    .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
+                    .reduce(speedModifier, (a, b) -> a*b);
+
+            if (speedModifier < -4) {
+                speedModifier = -3.9d;
+            }
 
             if (isBroken(itemStack)) {
                 damageModifier = 0;
-                speedModifier = 0;
+                speedModifier = 2;
             }
 
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damageModifier, 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -3.6D, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", speedModifier, 0));
         }
 
         return multimap;
@@ -142,12 +155,6 @@ public class ItemSwordModular extends ItemModular {
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         return super.getArmorTexture(stack, entity, slot, type);
-    }
-
-    @Override
-    public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
-        applyDamage(1, itemStack, attacker);
-        return true;
     }
 
     @Override

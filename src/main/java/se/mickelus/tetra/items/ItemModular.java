@@ -131,14 +131,17 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
     }
 
+    @Override
     public java.util.Set<String> getToolClasses(ItemStack itemStack) {
         return super.getToolClasses(itemStack);
     }
 
+    @Override
     public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
         return super.getHarvestLevel(stack, toolClass, player, blockState);
     }
 
+    @Override
     public int getItemEnchantability(ItemStack stack) {
         return super.getItemEnchantability(stack);
     }
@@ -204,5 +207,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         setDamage(itemStack, getDamage(itemStack) - getRepairAmount(itemStack));
 
         incrementRepairCount(itemStack);
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        applyDamage(1, stack, attacker);
+        getAllModules(stack).forEach(module -> module.hitEntity(stack, target, attacker));
+
+        return true;
     }
 }
