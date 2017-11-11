@@ -27,9 +27,9 @@ public class ModularModel implements IRetexturableModel {
 
     @Override
     public Collection<ResourceLocation> getTextures() {
-	    return ItemUpgradeRegistry.instance.getAllModules().stream()
-			    .flatMap((itemModule -> Arrays.stream(itemModule.getAllTextures())))
-			    .collect(Collectors.toList());
+        return ItemUpgradeRegistry.instance.getAllModules().stream()
+                .flatMap((itemModule -> Arrays.stream(itemModule.getAllTextures())))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ModularModel implements IRetexturableModel {
         tMap.putAll(IPerspectiveAwareModel.MapWrapper.getTransforms(state));
         IModelState perState = new SimpleModelState(ImmutableMap.copyOf(tMap));
 
-	    return new BakedWrapper(perState, format, ModularOverrideList.INSTANCE, bakedTextureGetter);
+        return new BakedWrapper(perState, format, ModularOverrideList.INSTANCE, bakedTextureGetter);
     }
 
     @Override

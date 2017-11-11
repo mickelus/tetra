@@ -22,16 +22,16 @@ import javax.annotation.Nonnull;
 public class BakedWrapper implements IBakedModel {
 
     protected final IBakedModel parent;
-	private final IModelState state;
-	private final VertexFormat format;
-	private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
+    private final IModelState state;
+    private final VertexFormat format;
+    private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
 
-	public BakedWrapper(IModelState state, VertexFormat format, ItemOverrideList overrideList,
-		    Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    public BakedWrapper(IModelState state, VertexFormat format, ItemOverrideList overrideList,
+            Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
         parent = new ItemLayerModel(ImmutableList.of(), overrideList).bake(state, format, bakedTextureGetter);
-	    this.state = state;
-	    this.format = format;
-		this.bakedTextureGetter = bakedTextureGetter;
+        this.state = state;
+        this.format = format;
+        this.bakedTextureGetter = bakedTextureGetter;
     }
 
     @Nonnull
@@ -74,14 +74,14 @@ public class BakedWrapper implements IBakedModel {
     }
 
     public IModelState getOriginalState() {
-	    return state;
+        return state;
     }
 
     public VertexFormat getOriginalFormat() {
-	    return format;
+        return format;
     }
 
-	public Function<ResourceLocation, TextureAtlasSprite> getBakedTextureGetter() {
-		return bakedTextureGetter;
-	}
+    public Function<ResourceLocation, TextureAtlasSprite> getBakedTextureGetter() {
+        return bakedTextureGetter;
+    }
 }

@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 public class ModularModelLoader implements ICustomModelLoader {
     private IResourceManager resourceManager;
 
-	public static ModularModelLoader instance = new ModularModelLoader();
+    public static ModularModelLoader instance = new ModularModelLoader();
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
@@ -32,30 +32,30 @@ public class ModularModelLoader implements ICustomModelLoader {
     @Override
     public IModel loadModel(ResourceLocation location) throws Exception {
 
-		ModelBlock modelBlock = loadModelBlock(getModelLocation(location));
+        ModelBlock modelBlock = loadModelBlock(getModelLocation(location));
         return new ModularModel(modelBlock);
     }
 
     public ModelBlock loadModelBlock(ResourceLocation location) throws Exception {
-	    IResource resource = null;
-	    Reader reader = null;
-	    ModelBlock modelBlock;
+        IResource resource = null;
+        Reader reader = null;
+        ModelBlock modelBlock;
 
-	    try {
-		    resource = this.resourceManager.getResource(location);
-		    reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-		    modelBlock = ModelBlock.deserialize(reader);
-		    modelBlock.name = location.toString();
-	    } finally {
-		    IOUtils.closeQuietly(reader);
-		    IOUtils.closeQuietly(resource);
-	    }
+        try {
+            resource = this.resourceManager.getResource(location);
+            reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+            modelBlock = ModelBlock.deserialize(reader);
+            modelBlock.name = location.toString();
+        } finally {
+            IOUtils.closeQuietly(reader);
+            IOUtils.closeQuietly(resource);
+        }
 
-	    if (modelBlock.getParentLocation() != null) {
-		    modelBlock.parent = loadModelBlock(modelBlock.getParentLocation());
-	    }
+        if (modelBlock.getParentLocation() != null) {
+            modelBlock.parent = loadModelBlock(modelBlock.getParentLocation());
+        }
 
-	    return modelBlock;
+        return modelBlock;
     }
 
     @Override
