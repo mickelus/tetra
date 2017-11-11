@@ -73,7 +73,7 @@ public class BasicSchema implements UpgradeSchema {
     @Override
     public boolean isIntegrityViolation(ItemStack itemStack, final ItemStack[] materials) {
         ItemStack upgradedStack = applyUpgrade(itemStack, materials, false);
-        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) <= 0;
+        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
     }
 
     @Override
