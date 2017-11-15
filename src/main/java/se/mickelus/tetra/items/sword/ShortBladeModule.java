@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.WeaponModuleData;
@@ -15,11 +16,7 @@ public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
     public ShortBladeModule(String slotKey) {
         super(slotKey, key, materialKey);
 
-        data = new WeaponModuleData[] {
-            new WeaponModuleData("short_blade/oak", "minecraft:planks", 30, 1, 1, 2.4f, 0x866526, 32, 0),
-            new WeaponModuleData("short_blade/iron", "minecraft:iron_ingot", 120, 1, 2, 1, 0xd8d8d8, 32, 0),
-            new WeaponModuleData("short_blade/gold", "minecraft:gold_ingot", 10, 1, 2, 1.5f, 0xeaee57, 32, 0),
-        };
+        data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);

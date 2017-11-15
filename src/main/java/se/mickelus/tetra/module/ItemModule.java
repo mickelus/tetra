@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameData;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.NBTHelper;
 
 public abstract class ItemModule<T extends ModuleData> {
@@ -139,7 +140,7 @@ public abstract class ItemModule<T extends ModuleData> {
     public double getSpeedMultiplierModifier(ItemStack itemStack) { return 1; }
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
-        return new ResourceLocation[] { getData(itemStack).textureLocation };
+        return new ResourceLocation[] { getData(itemStack).getTextureLocation() };
     }
 
     public RenderLayer getRenderLayer() {
@@ -148,16 +149,16 @@ public abstract class ItemModule<T extends ModuleData> {
 
     public ResourceLocation[] getAllTextures() {
         return Arrays.stream(data)
-                .map(moduleData -> moduleData.textureLocation)
+                .map(ModuleData::getTextureLocation)
                 .toArray(ResourceLocation[]::new);
     }
 
     public ResourceLocation getGlyphLocation(ItemStack itemStack) {
-        return getData(itemStack).glyphLocation;
+        return getData(itemStack).glyph.textureLocation;
     }
 
     public int getGlyphTint(ItemStack itemStack) {
-        return getData(itemStack).glyphTint;
+        return getData(itemStack).glyph.tint;
     }
 
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}

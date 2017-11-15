@@ -1,0 +1,58 @@
+[
+    {
+        "key": "basic_blade/oak",
+        "material": "minecraft:planks",
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "866526" }
+    },
+    {
+        "key": "basic_blade/cobblestone",
+        "material": "minecraft:cobblestone",
+        "durability": 150,
+        "integrity": -1,
+        "damage": 2,
+        "glyph": { "tint": "9a9a9a" }
+    },
+    {
+        "key": "basic_blade/stone",
+        "material": "minecraft:stone",
+        "durability": 300,
+        "integrity": -1,
+        "damage": 3,
+        "glyph": { "tint": "9a9a9a" }
+    },
+    {
+        "key": "basic_blade/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 300,
+        "integrity": 0,
+        "damage": 3,
+        "glyph": { "tint": "d8d8d8" }
+    },
+    {
+        "key": "basic_blade/gold",
+        "material": "minecraft:gold_ingot",
+        "durability": 30,
+        "integrity": 0,
+        "damage": 4,
+        "glyph": { "tint": "eaee57" }
+    },
+    {
+        "key": "basic_blade/diamond",
+        "material": "minecraft:diamond",
+        "durability": 540,
+        "integrity": -1,
+        "damage": 5,
+        "glyph": { "tint": "33ebcb" }
+    },
+    {
+        "key": "basic_blade/obsidian",
+        "material": "minecraft:obsidian",
+        "durability": 720,
+        "integrity": -3,
+        "damage": 5,
+        "glyph": { "tint": "3c3056" }
+    }
+]

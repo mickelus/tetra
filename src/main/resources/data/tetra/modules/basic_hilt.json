@@ -1,0 +1,62 @@
+[
+    {
+        "key": "basic_hilt/hilt_stick",
+        "material": "minecraft:stick",
+        "durability": 10,
+        "integrity": 1,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/oak",
+        "material": "minecraft:planks",
+        "durability": 24,
+        "integrity": 3,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 32,
+        "integrity": 4,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/bone",
+        "material": "minecraft:bone",
+        "durability": 32,
+        "integrity": 4,
+        "glyph": {
+            "tint": "edebca",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/blaze_rod",
+        "material": "minecraft:blaze_rod",
+        "durability": 80,
+        "integrity": 6,
+        "glyph": {
+            "tint": "ffc100",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/end_rod",
+        "material": "minecraft:end_rod",
+        "durability": 106,
+        "integrity": 8,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 16
+        }
+    }
+]

@@ -43,6 +43,8 @@ public class TetraMod {
     public void preInit(FMLPreInitializationEvent event) {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
 
+        new DataHandler(event.getSourceFile());
+
         new ItemUpgradeRegistry();
 
         new TetraCreativeTabs();
@@ -55,12 +57,12 @@ public class TetraMod {
             new ItemToolbelt(),
             new JournalItem(),
             new HammerItem(),
-	        new ItemGeode()
+            new ItemGeode()
         };
 
         blocks = new ITetraBlock[] {
             new BlockWorkbench(),
-	        new BlockGeode()
+            new BlockGeode()
         };
 
 

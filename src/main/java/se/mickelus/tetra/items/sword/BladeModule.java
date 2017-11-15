@@ -9,6 +9,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.WeaponModuleData;
@@ -23,15 +24,7 @@ public class BladeModule extends ItemModuleMajor<WeaponModuleData> {
     public BladeModule(String slotKey) {
         super(slotKey, key, materialKey);
 
-        data = new WeaponModuleData[] {
-            new WeaponModuleData("basic_blade/oak", "minecraft:planks", 100, 0, 1, 0, 0x866526, 0, 0),
-            new WeaponModuleData("basic_blade/cobblestone", "minecraft:cobblestone", 150, -1, 2, 0, 0x9a9a9a, 0, 0),
-            new WeaponModuleData("basic_blade/stone", "minecraft:stone", 300, -1, 3, 0, 0x9a9a9a, 0, 0),
-            new WeaponModuleData("basic_blade/iron", "minecraft:iron_ingot", 300, 0, 3, 0, 0xd8d8d8, 0, 0),
-            new WeaponModuleData("basic_blade/gold", "minecraft:gold_ingot", 30, 0, 4, 0, 0xeaee57, 0, 0),
-            new WeaponModuleData("basic_blade/diamond", "minecraft:diamond", 540, -1, 5, 0, 0x33ebcb, 0, 0),
-            new WeaponModuleData("basic_blade/obsidian", "minecraft:obsidian", 720, -3, 5, 0, 0x3c3056, 0, 0)
-        };
+        data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);
