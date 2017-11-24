@@ -60,6 +60,9 @@ public class ItemSwordModular extends ItemModular {
         new ShortBladeModule(bladeKey);
         new BasicSchema("short_blade_schema", ShortBladeModule.instance);
 
+        new HeavyBladeModule(bladeKey);
+        new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance);
+
         new HiltModule(hiltKey);
         new BasicSchema("hilt_schema", HiltModule.instance);
 

@@ -1,0 +1,80 @@
+[
+    {
+        "key": "heavy_blade/oak_log",
+        "material": "minecraft:log",
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/cobblestone",
+        "material": "minecraft:cobblestone",
+        "materialCount": 8,
+        "durability": 150,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/stone",
+        "material": "minecraft:stone",
+        "materialCount": 8,
+        "durability": 300,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.9,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/iron",
+        "material": "minecraft:iron_ingot",
+        "materialCount": 16,
+        "durability": 300,
+        "integrity": -3,
+        "damage": 6,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/gold",
+        "material": "minecraft:gold_ingot",
+        "materialCount": 16,
+        "durability": 30,
+        "integrity": -3,
+        "damage": 7,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/obsidian",
+        "material": "minecraft:obsidian",
+        "materialCount": 8,
+        "durability": 960,
+        "integrity": -4,
+        "damage": 9,
+        "attackSpeed": -1.2,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    }
+]

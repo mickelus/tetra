@@ -9,11 +9,30 @@ public interface UpgradeSchema {
     public String getDescription();
     public int getNumMaterialSlots();
     public String getSlotName(final ItemStack itemStack, int index);
-	public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
+    public int getRequiredQuantity(final ItemStack itemStack, int index, ItemStack materialStack);
+
+    /**
+     * Returns true if the provided materialStack is accepted in the slot at the given index, for the given upgrade
+     * target.
+     * A slot may accept a material without a craft actually being possible using the material.
+     * @param itemStack the itemstack that is to be upgraded
+     * @param index the index of the slot
+     * @param materialStack the upgrade material
+     * @return
+     */
+    public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
+
+    /**
+     * Returns true if all material slot contain valid material of enough quantity. Craft is possible using the provided
+     * materials.
+     * @param itemStack the itemstack that is to be upgraded
+     * @param materials the materials to be used for the upgrade
+     * @return
+     */
+    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
 
     public boolean canUpgrade(ItemStack itemStack);
     public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials);
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
     public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials);
 }

@@ -48,6 +48,14 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
+    public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
+        if (index == 0) {
+            return module.getDataByMaterial(materialStack).materialCount;
+        }
+        return 0;
+    }
+
+    @Override
     public boolean slotAcceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
         if (index == 0) {
             return module.slotAcceptsMaterial(itemStack, materialStack);

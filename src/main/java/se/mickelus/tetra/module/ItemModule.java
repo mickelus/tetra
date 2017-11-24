@@ -29,12 +29,13 @@ public abstract class ItemModule<T extends ModuleData> {
 
     public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
+        ModuleData data = getDataByMaterial(materials[0]);
 
         tag.setString(slotKey, moduleKey);
-        tag.setString(dataKey, getDataByMaterial(materials[0]).key);
+        tag.setString(dataKey, data.key);
 
         if (consumeMaterials) {
-            materials[0].shrink(1);
+            materials[0].shrink(data.materialCount);
         }
     }
 
@@ -50,7 +51,7 @@ public abstract class ItemModule<T extends ModuleData> {
                 .anyMatch(moduleData -> moduleData.material.equals(materialName));
     }
 
-    private T getDataByMaterial(ItemStack itemStack) {
+    public T getDataByMaterial(ItemStack itemStack) {
         String material = Item.REGISTRY.getNameForObject(itemStack.getItem()).toString();
 
         return Arrays.stream(data)

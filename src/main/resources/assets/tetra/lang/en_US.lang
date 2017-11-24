@@ -26,11 +26,22 @@ basic_hilt/blaze_rod=Blazing hilt
 basic_hilt/end_rod=End rod
 
 short_blade_schema.name=Shortblade
-short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is also less suitable for sweeping attacks.
+short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
 short_blade_schema.slot1=Blade material
 
 short_blade/oak=Oak shortblade
 short_blade/iron=Iron shortblade
 short_blade/gold=Golden shortblade
+
+heavy_blade_schema.name=Heavy blade
+heavy_blade_schema.description=Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
+heavy_blade_schema.slot1=Blade material
+
+heavy_blade/oak=Heavy oaken blade
+heavy_blade/iron=Heavy iron cleaver
+heavy_blade/stone=Heavy stone blade
+heavy_blade/cobblestone=Solid stone cleaver
+heavy_blade/gold=Excessive ornate blade
+heavy_blade/obsidian=Heavy obsidian blade
 
 itemGroup.tetra=Tetra

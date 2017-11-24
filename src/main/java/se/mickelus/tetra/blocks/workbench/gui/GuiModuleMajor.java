@@ -21,13 +21,13 @@ public class GuiModuleMajor extends GuiElement {
             setupChildren(previewModule, previewData, previewStack, GuiModuleBackdrop.COLOR_CHANGE);
         }
 
-        addChild(new GuiStringSmall(18, 0, moduleClassName));
+        addChild(new GuiStringSmall(19, 0, moduleClassName));
     }
 
     private void setupChildren(ItemModule module, ModuleData data, ItemStack itemStack, int color) {
-        addChild(new GuiModuleBackdrop(0, 0, color));
-        addChild(new GuiString(18, 5, module.getName(itemStack), color));
-        addChild(new GuiModuleGlyph(0, 0, 15, 15,
+        addChild(new GuiModuleBackdrop(1, 0, color));
+        addChild(new GuiString(19, 5, module.getName(itemStack), color));
+        addChild(new GuiModuleGlyph(0, 0, 16, 16,
                 data.glyph.tint, data.glyph.textureX, data.glyph.textureY,
                 module.getGlyphLocation(itemStack)));
     }

@@ -3,6 +3,7 @@ package se.mickelus.tetra.items;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,6 +25,8 @@ import com.google.common.collect.ImmutableList;
 public abstract class ItemModular extends TetraItem implements IItemModular {
 
     private static final String repairCountKey = "repairCount";
+
+    private static final String cooledStrengthKey = "cooledStrength";
 
     protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
@@ -215,5 +218,19 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
         getAllModules(stack).forEach(module -> module.hitEntity(stack, target, attacker));
 
         return true;
+    }
+
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+        setCooledAttackStrength(stack, player.getCooledAttackStrength(0.5f));
+        return false;
+    }
+
+    public void setCooledAttackStrength(ItemStack itemStack, float strength) {
+        NBTHelper.getTag(itemStack).setFloat(cooledStrengthKey, strength);
+    }
+
+    public static float getCooledAttackStrength(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getFloat(cooledStrengthKey);
     }
 }

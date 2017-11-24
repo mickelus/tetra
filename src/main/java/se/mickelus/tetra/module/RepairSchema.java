@@ -48,6 +48,12 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
+    public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
+        // todo: return random between 1 and materialCount based on seed and yield % of module durability based on quantity?
+        return 1;
+    }
+
+    @Override
     public boolean slotAcceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();

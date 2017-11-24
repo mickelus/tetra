@@ -7,6 +7,7 @@ public class ModuleData {
     public String key;
 
     public String material;
+    public int materialCount = 1;
 
     public int durability = 0;
     public float durabilityMultiplier = 1;

@@ -18,6 +18,7 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiButton craftButton;
 
     private GuiString[] slotNames;
+    private GuiString[] slotQuantities;
     private GuiTexture[] slotBorders;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
@@ -31,11 +32,16 @@ public class GuiSchemaDetail extends GuiElement {
         addChild(description);
 
         slotNames = new GuiString[MAX_NUM_SLOTS];
+        slotQuantities = new GuiString[MAX_NUM_SLOTS];
         slotBorders = new GuiTexture[MAX_NUM_SLOTS];
         for (int i = 0; i < MAX_NUM_SLOTS; i++) {
             slotNames[i] = new GuiString(140, 8 + i * 17, "");
             slotNames[i].setVisible(false);
             addChild(slotNames[i]);
+
+            slotQuantities[i] = new GuiStringSmall(139, 17 + i * 17, "");
+            slotQuantities[i].setVisible(false);
+            addChild(slotQuantities[i]);
 
             slotBorders[i] = new GuiTexture(121, 4 + i * 17, 16, 16, 52, 16, WORKBENCH_TEXTURE);
             slotBorders[i].setVisible(false);
@@ -46,7 +52,7 @@ public class GuiSchemaDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void setSchema(UpgradeSchema schema, ItemStack itemStack) {
+    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials) {
         this.schema = schema;
 
         title.setString(schema.getName());
@@ -55,11 +61,20 @@ public class GuiSchemaDetail extends GuiElement {
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
+
+            int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
+            if (!materials[i].isEmpty() && requiredCount > 1) {
+                slotQuantities[i].setString("/" + requiredCount);
+                slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? 0xffff0000 : 0xffffffff);
+            }
+            slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
+
             slotBorders[i].setVisible(true);
         }
 
         for (int i = schema.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
             slotNames[i].setVisible(false);
+            slotQuantities[i].setVisible(false);
             slotBorders[i].setVisible(false);
         }
     }

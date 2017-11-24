@@ -2,7 +2,7 @@
     {
         "key": "short_blade/oak",
         "material": "minecraft:planks",
-        "durability": 30,
+        "durability": 40,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": 2.4,
@@ -16,8 +16,8 @@
         "material": "minecraft:iron_ingot",
         "durability": 120,
         "integrity": -1,
-        "damage": 2,
-        "attackSpeed": 1,
+        "damage": 4,
+        "attackSpeed": 1.5,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 32
@@ -28,7 +28,7 @@
         "material": "minecraft:gold_ingot",
         "durability": 10,
         "integrity": -1,
-        "damage": 2,
+        "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
             "tint": "eaee57",
