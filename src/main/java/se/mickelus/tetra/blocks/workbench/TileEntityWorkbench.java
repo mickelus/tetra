@@ -90,22 +90,23 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return stacks.subList(1, 4).toArray(new ItemStack[3]);
     }
 
-    public void initiateCrafting() {
+    public void initiateCrafting(EntityPlayer player) {
         if (world.isRemote) {
             PacketPipeline.instance.sendToServer(new CraftWorkbenchPacket(pos));
         }
 
-        craft();
+        craft(player);
 
         sync();
     }
 
-    public void craft() {
+    public void craft(EntityPlayer player) {
         ItemStack itemStack = getTargetItemStack();
 
-        if (currentSchema != null && currentSchema.canApplyUpgrade(itemStack, getMaterials())) {
+        if (currentSchema != null && currentSchema.canApplyUpgrade(player, itemStack, getMaterials())) {
             itemStack = currentSchema.applyUpgrade(itemStack, getMaterials(), true);
         }
+
 
         setInventorySlotContents(0, itemStack);
     }

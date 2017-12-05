@@ -7,6 +7,9 @@
         "glyph": {
             "tint": "866526",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 1
         }
     },
     {
@@ -17,6 +20,9 @@
         "glyph": {
             "tint": "755821",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 2
         }
     },
     {
@@ -27,6 +33,9 @@
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 3
         }
     },
     {
@@ -37,6 +46,9 @@
         "glyph": {
             "tint": "edebca",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 2
         }
     },
     {
@@ -47,6 +59,9 @@
         "glyph": {
             "tint": "ffc100",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 4
         }
     },
     {
@@ -57,6 +72,9 @@
         "glyph": {
             "tint": "bd9ab1",
             "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 4
         }
     }
 ]

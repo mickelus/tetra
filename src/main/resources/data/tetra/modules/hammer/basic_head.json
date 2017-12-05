@@ -1,0 +1,60 @@
+[
+    {
+        "key": "basic_head/log",
+        "material": "minecraft:log",
+        "durability": 100,
+        "integrity": -1,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_head/stone",
+        "material": "minecraft:stone",
+        "durability": 300,
+        "integrity": -1,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_head/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 300,
+        "integrity": -3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_head/obsidian",
+        "material": "minecraft:obsidian",
+        "durability": 720,
+        "integrity": -5,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 4
+        },
+        "requiredCapabilities": {
+            "hammer": 4
+        }
+    }
+]

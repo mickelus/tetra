@@ -1,4 +1,7 @@
 item.modular.broken=Broken
+item.modular.tier=Tier
+item.modular.durability=Durability
+
 repair_schema.name=Repair
 repair_schema.description=Repair the item. Materials used are based on what the modules are made of
 

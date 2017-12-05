@@ -1,6 +1,10 @@
 package se.mickelus.tetra.module;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.capabilities.Capability;
+
+import java.util.Collection;
 
 public interface UpgradeSchema {
 
@@ -32,7 +36,13 @@ public interface UpgradeSchema {
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
 
     public boolean canUpgrade(ItemStack itemStack);
-    public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials);
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials);
     public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials);
+
+    public boolean checkCapabilities(EntityPlayer player, final ItemStack[] materials);
+    public Collection<Capability> getRequiredCapabilities(final ItemStack[] materials);
+    public int getRequiredCapabilityLevel(final ItemStack[] materials, Capability capability);
+    public int getCapabilityLevel(EntityPlayer player, Capability capability);
+    public Collection<Capability> getCapabilities(EntityPlayer player);
 }

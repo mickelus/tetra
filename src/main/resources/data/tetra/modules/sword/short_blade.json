@@ -9,6 +9,9 @@
         "glyph": {
             "tint": "866526",
             "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
         }
     },
     {
@@ -21,6 +24,9 @@
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 3
         }
     },
     {
@@ -33,6 +39,9 @@
         "glyph": {
             "tint": "eaee57",
             "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 3
         }
     }
 ]

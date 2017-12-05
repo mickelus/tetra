@@ -79,8 +79,8 @@ public class GuiStatBar extends GuiElement {
 
         drawRect(refX + x, refY + y + 6,refX + x + barMaxLength, refY + y + 6 + barHeight, 0x22ffffff);
         if (alignment == GuiAlignment.right) {
-            drawRect(refX + x + barLength, refY + y + 6,refX + x + barMaxLength, refY + y + 6 + barHeight, 0xffffffff);
-            drawRect(refX + x + barLength - diffLength, refY + y + 6,refX + x + barLength, refY + y + 6 + barHeight,
+            drawRect(refX + x + barMaxLength - barLength, refY + y + 6,refX + x + barMaxLength, refY + y + 6 + barHeight, 0xffffffff);
+            drawRect(refX + x + barMaxLength - barLength - diffLength, refY + y + 6,refX + x + barMaxLength - barLength, refY + y + 6 + barHeight,
                     value < diffValue ? increaseColorBar : decreaseColorBar);
         } else {
             drawRect(refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + barHeight, 0xffffffff);

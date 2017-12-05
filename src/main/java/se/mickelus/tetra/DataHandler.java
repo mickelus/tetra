@@ -2,6 +2,7 @@ package se.mickelus.tetra;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import se.mickelus.tetra.module.CapabilityData;
 import se.mickelus.tetra.module.GlyphData;
 
 import java.io.File;
@@ -18,6 +19,7 @@ public class DataHandler {
     public DataHandler(File source) {
         this.source = source;
         gson = new GsonBuilder()
+                .registerTypeAdapter(CapabilityData.class, new CapabilityData.CapabilityTypeAdapter())
                 .registerTypeAdapter(GlyphData.class, new GlyphData.GlyphTypeAdapter())
                 .create();
 
@@ -26,8 +28,6 @@ public class DataHandler {
 
     public <T> T getModuleData(String moduleKey, Class<T> dataClass) {
         File file = new File(source, String.format("data/%s/modules/%s.json", TetraMod.MOD_ID, moduleKey));
-        System.out.println(file.exists());
-        System.out.println(file);
 
         try {
             return gson.fromJson(new InputStreamReader(new FileInputStream(file)), dataClass);

@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.sword;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -39,7 +40,6 @@ public class ItemSwordModular extends ItemModular {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         GameRegistry.register(this);
-        setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
@@ -48,23 +48,18 @@ public class ItemSwordModular extends ItemModular {
     }
 
     @Override
-    public IItemPropertyGetter getPropertyGetter(ResourceLocation key) {
-        return super.getPropertyGetter(key);
-    }
-
-    @Override
     public void init(PacketPipeline packetPipeline) {
         new BladeModule(bladeKey);
-        new BasicSchema("blade_schema", BladeModule.instance);
+        new BasicSchema("blade_schema", BladeModule.instance, this);
 
         new ShortBladeModule(bladeKey);
-        new BasicSchema("short_blade_schema", ShortBladeModule.instance);
+        new BasicSchema("short_blade_schema", ShortBladeModule.instance, this);
 
         new HeavyBladeModule(bladeKey);
-        new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance);
+        new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
 
         new HiltModule(hiltKey);
-        new BasicSchema("hilt_schema", HiltModule.instance);
+        new BasicSchema("hilt_schema", HiltModule.instance, this);
 
         new RepairSchema(this);
 
@@ -112,9 +107,6 @@ public class ItemSwordModular extends ItemModular {
     public String getItemStackDisplayName(ItemStack stack) {
         NBTTagCompound tag = stack.getTagCompound();
 
-        if (stack.hasTagCompound() && tag.hasKey(BladeModule.materialKey)) {
-            return tag.getString(BladeModule.materialKey);
-        }
         return "§kUnknown";
     }
 
@@ -152,12 +144,6 @@ public class ItemSwordModular extends ItemModular {
         }
 
         return multimap;
-    }
-
-    @Nullable
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return super.getArmorTexture(stack, entity, slot, type);
     }
 
     @Override

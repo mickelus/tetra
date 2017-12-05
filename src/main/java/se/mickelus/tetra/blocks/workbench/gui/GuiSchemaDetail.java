@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.UpgradeSchema;
@@ -20,6 +21,8 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiString[] slotNames;
     private GuiString[] slotQuantities;
     private GuiTexture[] slotBorders;
+
+    private GuiCapabilityIndicatorList capabilityIndicatorList;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 64);
@@ -48,11 +51,14 @@ public class GuiSchemaDetail extends GuiElement {
             addChild(slotBorders[i]);
         }
 
+        capabilityIndicatorList = new GuiCapabilityIndicatorList(80, 45);
+        addChild(capabilityIndicatorList);
+
         craftButton = new GuiButton(138, 50, 30, 8, "Craft", craftListener);
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials) {
+    public void update(EntityPlayer player, UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials) {
         this.schema = schema;
 
         title.setString(schema.getName());
@@ -77,6 +83,8 @@ public class GuiSchemaDetail extends GuiElement {
             slotQuantities[i].setVisible(false);
             slotBorders[i].setVisible(false);
         }
+
+        capabilityIndicatorList.update(player, schema, itemStack, materials);
     }
 
     public void toggleButton(boolean enabled) {

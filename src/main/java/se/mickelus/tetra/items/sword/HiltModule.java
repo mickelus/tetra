@@ -9,13 +9,12 @@ import se.mickelus.tetra.module.*;
 
 public class HiltModule extends ItemModuleMajor<WeaponModuleData> {
 
-    public static final String key = "basic_hilt";
-    public static final String materialKey = "basic_hilt_material";
+    public static final String key = "sword/basic_hilt";
 
     public static HiltModule instance;
 
     public HiltModule(String slotKey) {
-        super(slotKey, key, materialKey);
+        super(slotKey, key);
 
         data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
 

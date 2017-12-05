@@ -1,0 +1,25 @@
+[
+    {
+        "key": "basic_handle/stick",
+        "material": "minecraft:stick",
+        "durability": 100,
+        "integrity": 2,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_handle/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 300,
+        "integrity": 4,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    }
+]

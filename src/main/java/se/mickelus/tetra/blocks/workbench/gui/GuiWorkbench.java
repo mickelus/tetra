@@ -106,7 +106,7 @@ public class GuiWorkbench extends GuiContainer {
     }
 
     private void craftUpgrade() {
-        tileEntity.initiateCrafting();
+        tileEntity.initiateCrafting(viewingPlayer);
     }
 
     private void onTileEntityChange() {
@@ -124,8 +124,8 @@ public class GuiWorkbench extends GuiContainer {
         } else {
             previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
 
-            schemaDetail.update(schema, stack, tileEntity.getMaterials());
-            schemaDetail.toggleButton(schema.canApplyUpgrade(stack, tileEntity.getMaterials()));
+            schemaDetail.update(viewingPlayer, schema, stack, tileEntity.getMaterials());
+            schemaDetail.toggleButton(schema.canApplyUpgrade(viewingPlayer, stack, tileEntity.getMaterials()));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);

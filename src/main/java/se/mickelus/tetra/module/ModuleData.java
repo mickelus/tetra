@@ -17,6 +17,9 @@ public class ModuleData {
 
     public GlyphData glyph = new GlyphData();
 
+    public CapabilityData capabilities = new CapabilityData();
+    public CapabilityData requiredCapabilities = new CapabilityData();
+
     public ModuleData() {}
 
     public ResourceLocation getTextureLocation() {

@@ -1,17 +1,19 @@
 package se.mickelus.tetra.module;
 
 import java.util.Arrays;
+import java.util.Collection;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
-import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 
-public abstract class ItemModule<T extends ModuleData> {
+public abstract class ItemModule<T extends ModuleData> implements ICapabilityProvider {
 
     protected T[] data;
 
@@ -21,10 +23,10 @@ public abstract class ItemModule<T extends ModuleData> {
 
     protected RenderLayer renderLayer = RenderLayer.BASE;
 
-    public ItemModule(String slotKey, String moduleKey, String dataKey) {
+    public ItemModule(String slotKey, String moduleKey) {
         this.slotKey = slotKey;
         this.moduleKey = moduleKey;
-        this.dataKey = dataKey;
+        this.dataKey = moduleKey + "_material";
     }
 
     public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials) {
@@ -163,4 +165,22 @@ public abstract class ItemModule<T extends ModuleData> {
     }
 
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}
+
+    @Override
+    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+        return getData(itemStack).capabilities.getCapabilityLevel(capability);
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+        return getData(itemStack).capabilities.getCapabilities();
+    }
+
+    public int getRequiredCapabilityLevel(final ItemStack material, Capability capability) {
+        return getDataByMaterial(material).requiredCapabilities.getCapabilityLevel(capability);
+    }
+
+    public Collection<Capability> getRequiredCapabilities(final ItemStack material) {
+        return getDataByMaterial(material).requiredCapabilities.getCapabilities();
+    }
 }

@@ -12,6 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
-public abstract class ItemModular extends TetraItem implements IItemModular {
+public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
     private static final String repairCountKey = "repairCount";
 
@@ -232,5 +234,20 @@ public abstract class ItemModular extends TetraItem implements IItemModular {
 
     public static float getCooledAttackStrength(ItemStack itemStack) {
         return NBTHelper.getTag(itemStack).getFloat(cooledStrengthKey);
+    }
+
+    @Override
+    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+        return getAllModules(itemStack).stream()
+                .map(module -> module.getCapabilityLevel(itemStack, capability))
+                .max(Integer::compare)
+                .orElse(0);
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .flatMap(module -> ((Collection<Capability>)module.getCapabilities(itemStack)).stream())
+                .collect(Collectors.toSet());
     }
 }

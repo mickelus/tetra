@@ -8,13 +8,12 @@ import se.mickelus.tetra.module.WeaponModuleData;
 
 public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
 
-    public static final String key = "short_blade";
-    public static final String materialKey = "short_blade_material";
+    public static final String key = "sword/short_blade";
 
     public static ShortBladeModule instance;
 
     public ShortBladeModule(String slotKey) {
-        super(slotKey, key, materialKey);
+        super(slotKey, key);
 
         data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
 

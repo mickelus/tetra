@@ -1,8 +1,16 @@
 package se.mickelus.tetra.module;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RepairSchema implements UpgradeSchema {
     private static final String nameSuffix = ".name";
@@ -68,7 +76,7 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(ItemStack itemStack, ItemStack[] materials) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
         return slotAcceptsMaterial(itemStack, 0, materials[0]);
     }
 
@@ -94,5 +102,44 @@ public class RepairSchema implements UpgradeSchema {
         }
 
         return upgradedStack;
+    }
+
+    @Override
+    public boolean checkCapabilities(EntityPlayer player, final ItemStack[] materials) {
+        return getRequiredCapabilities(materials).stream()
+                .allMatch(capability -> getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(materials, capability));
+    }
+
+    @Override
+    public Collection<Capability> getRequiredCapabilities(final ItemStack[] materials) {
+        return Collections.EMPTY_LIST;
+        // todo: use same capability as target module
+//        return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilities();
+    }
+
+    @Override
+    public int getRequiredCapabilityLevel(final ItemStack[] materials, Capability capability) {
+        return 0;
+        // todo: use same capability as target module
+//        return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilityLevel(capability);
+    }
+
+    @Override
+    public int getCapabilityLevel(EntityPlayer player, Capability capability) {
+        return Stream.concat(player.inventory.mainInventory.stream(), player.inventory.offHandInventory.stream())
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)
+                .map(itemStack -> ((ICapabilityProvider) itemStack.getItem()).getCapabilityLevel(itemStack, capability))
+                .max(Integer::compare)
+                .orElse(0);
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(EntityPlayer player) {
+        return Stream.concat(player.inventory.mainInventory.stream(), player.inventory.offHandInventory.stream())
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)
+                .flatMap(itemStack -> ((ICapabilityProvider) itemStack.getItem()).getCapabilities(itemStack).stream())
+                .collect(Collectors.toSet());
     }
 }

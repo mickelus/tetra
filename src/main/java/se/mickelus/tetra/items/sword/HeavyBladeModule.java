@@ -17,13 +17,12 @@ import se.mickelus.tetra.module.WeaponModuleData;
 
 public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
 
-    public static final String key = "heavy_blade";
-    public static final String materialKey = "heavy_blade_material";
+    public static final String key = "sword/heavy_blade";
 
     public static HeavyBladeModule instance;
 
     public HeavyBladeModule(String slotKey) {
-        super(slotKey, key, materialKey);
+        super(slotKey, key);
 
         data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
 
