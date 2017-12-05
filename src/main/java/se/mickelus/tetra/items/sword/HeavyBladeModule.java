@@ -82,12 +82,12 @@ public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
 
         if (attacker.world instanceof WorldServer) {
             ((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK,
-                    attacker.posX + d0,
+                    attacker.posX + d0 * 1.5,
                     attacker.posY + attacker.height * 0.5D,
-                    attacker.posZ + d1,
+                    attacker.posZ + d1 * 1.5,
                     0,
-                    d0, Math.PI / 2, d1,
-                    0.0D);
+                    d0 * 1.5, -1, d1 * 1.5,
+                    2); // particle speed is actually size in this case
         }
     }
 }
