@@ -31,9 +31,8 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
         itemRenderer = Minecraft.getMinecraft().getRenderItem();
     }
 
-
     @Override
-    public void func_192841_a(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+    public void renderTileEntityFast(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
 
@@ -47,7 +46,6 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
 
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
-
     }
 
     private void renderItem(TileEntityWorkbench te) {

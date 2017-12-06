@@ -1,6 +1,5 @@
 package se.mickelus.tetra.client.model;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +15,7 @@ import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.common.model.IModelState;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 

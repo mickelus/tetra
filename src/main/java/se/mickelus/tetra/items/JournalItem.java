@@ -17,7 +17,6 @@ public class JournalItem extends TetraItem {
         maxStackSize = 1;
 
         setRegistryName(unlocalizedName);
-        //GameRegistry.register(this);
         setUnlocalizedName(unlocalizedName);
         setCreativeTab(TetraCreativeTabs.getInstance());
         

@@ -39,7 +39,6 @@ public class ItemHammerModular extends ItemModular {
 
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        GameRegistry.register(this);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Head", "Handle"};
@@ -64,7 +63,7 @@ public class ItemHammerModular extends ItemModular {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
-        if (func_194125_a(creativeTabs)) {
+        if (isInCreativeTab(creativeTabs)) {
             itemList.add(createDefaultStack());
         }
     }

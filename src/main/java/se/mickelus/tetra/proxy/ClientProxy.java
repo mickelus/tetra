@@ -28,7 +28,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
-	    ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
+        ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
     }
 
     @Override

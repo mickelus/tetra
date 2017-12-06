@@ -31,7 +31,7 @@ public class OverlayGuiItem extends GuiElement {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
 
-        mc.fontRendererObj.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 20, y + refY + 6, hasFocus() ? COLOR_HOVER : COLOR_DEFAULT);
+        mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 20, y + refY + 6, hasFocus() ? COLOR_HOVER : COLOR_DEFAULT);
 
         drawItemStack(itemStack, x + refX, y + refY, null);
     }
@@ -52,7 +52,7 @@ public class OverlayGuiItem extends GuiElement {
         }
 
         if (font == null) {
-            font = mc.fontRendererObj;
+            font = mc.fontRenderer;
         }
 
         mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);

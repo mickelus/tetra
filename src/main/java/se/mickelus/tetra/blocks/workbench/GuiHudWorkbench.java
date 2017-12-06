@@ -25,8 +25,8 @@ public class GuiHudWorkbench extends GuiRootHud {
         ItemStack itemStack = te.getStackInSlot(0);
         if (itemStack != null) {
             String itemName = itemStack.getDisplayName();
-            int width = mc.fontRendererObj.getStringWidth(itemName);
-            mc.fontRendererObj.drawString(itemName, - width / 2, -30, 0xffffffff);
+            int width = mc.fontRenderer.getStringWidth(itemName);
+            mc.fontRenderer.drawString(itemName, - width / 2, -30, 0xffffffff);
         }
 
 //        GlStateManager.depthMask(true);

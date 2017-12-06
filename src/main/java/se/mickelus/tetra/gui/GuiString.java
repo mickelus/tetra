@@ -18,7 +18,7 @@ public class GuiString extends GuiElement {
 
         this.string = string;
 
-        fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        fontRenderer = Minecraft.getMinecraft().fontRenderer;
     }
 
     public GuiString(int x, int y, String string, GuiAlignment textAlign) {

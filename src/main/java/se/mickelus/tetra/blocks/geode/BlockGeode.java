@@ -33,9 +33,6 @@ public class BlockGeode extends TetraBlock {
 		setUnlocalizedName(unlocalizedName);
 		setRegistryName(unlocalizedName);
 
-		GameRegistry.register(this);
-		GameRegistry.register(new ItemBlock(this), getRegistryName());
-
 		setCreativeTab(TetraCreativeTabs.getInstance());
 
 		instance = this;

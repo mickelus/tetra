@@ -53,7 +53,7 @@ public class UtilRocketBoots {
 
         Vec3d lookVector = player.getLookVec();
         //player.addVelocity(0, 5, 0);
-        player.addVelocity(lookVector.xCoord, Math.max(lookVector.yCoord * 0.06, 0.2), lookVector.zCoord);
+        player.addVelocity(lookVector.x, Math.max(lookVector.y * 0.06, 0.2), lookVector.z);
     }
 
     public static void consumeFuel(NBTTagCompound tag, boolean charged) {

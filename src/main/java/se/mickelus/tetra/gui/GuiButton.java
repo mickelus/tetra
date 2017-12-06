@@ -30,7 +30,7 @@ public class GuiButton extends GuiElement {
 
         onClickHandler = onClick;
 
-        fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        fontRenderer = Minecraft.getMinecraft().fontRenderer;
     }
 
     public GuiButton(int x, int y, int width, int height, String text, Runnable onClick, String disabledText) {

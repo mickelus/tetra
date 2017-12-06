@@ -77,7 +77,7 @@ public class GuiWorkbench extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        this.func_191948_b(mouseX, mouseY);
+        this.drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
 
     @Override

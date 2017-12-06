@@ -36,7 +36,6 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
 
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        GameRegistry.register(this);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         instance = this;

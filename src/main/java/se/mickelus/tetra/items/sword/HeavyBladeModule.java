@@ -58,7 +58,7 @@ public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
                     .stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
-                    .filter(entity -> attacker.getDistanceSqToEntity(entity) < 9.0D)
+                    .filter(entity -> attacker.getDistanceSq(entity) < 9.0D)
                     .forEach(entity -> {
                         entity.knockBack(attacker, 0.4F,
                                 MathHelper.sin(attacker.rotationYaw * 0.017453292F),

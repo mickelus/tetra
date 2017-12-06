@@ -1,18 +1,26 @@
 package se.mickelus.tetra;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.hammer.ItemHammerModular;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
@@ -35,8 +43,8 @@ public class TetraMod {
     @Mod.Instance(TetraMod.MOD_ID)
     public static TetraMod instance;
 
-    private ITetraItem[] items;
-    private ITetraBlock[] blocks;
+    private Item[] items;
+    private TetraBlock[] blocks;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -50,22 +58,41 @@ public class TetraMod {
 
         new GuiHandlerRegistry();
 
-        items = new ITetraItem[] {
-            new ItemSwordModular(),
+        blocks = new TetraBlock[] {
+                new BlockWorkbench(),
+                new BlockGeode()
+        };
+
+        items = new Item[] {
+//            new ItemSwordModular(),
             new ItemRocketBoots(),
+            new ItemGeode(),
             new ItemToolbelt(),
-            new JournalItem(),
-            new ItemHammerModular(),
-            new ItemGeode()
+//            new JournalItem(),
+//            new ItemHammerModular(),
+//            new ItemBlock(BlockGeode.instance)
         };
 
-        blocks = new ITetraBlock[] {
-            new BlockWorkbench(),
-            new BlockGeode()
-        };
+//        Arrays.stream(items)
+//                .forEach(MinecraftForge.EVENT_BUS::register);
 
+        proxy.preInit(event,
+                Arrays.stream(items)
+                    .filter(item -> item instanceof ITetraItem)
+                    .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
+                blocks);
 
-        proxy.preInit(event, items, blocks);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void registerBlocks(RegistryEvent.Register<Block> event) {
+        event.getRegistry().registerAll(blocks);
+    }
+
+    @SubscribeEvent
+    public void registerItems(RegistryEvent.Register<Item> event) {
+        event.getRegistry().registerAll(items);
     }
     
     @EventHandler
@@ -77,7 +104,10 @@ public class TetraMod {
         PacketPipeline packetPipeline = new PacketPipeline();
         packetPipeline.initialize();
 
-        Arrays.stream(items).forEach(item -> item.init(packetPipeline));
+        Arrays.stream(items)
+                .filter(item -> item instanceof ITetraItem)
+                .map(item -> (ITetraItem) item)
+                .forEach(item -> item.init(packetPipeline));
         Arrays.stream(blocks).forEach(block -> block.init(packetPipeline));
     }
 

@@ -39,7 +39,7 @@ public class ItemSwordModular extends ItemModular {
     public ItemSwordModular() {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        GameRegistry.register(this);
+        setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};

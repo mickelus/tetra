@@ -27,12 +27,12 @@ public class GuiToolbelt extends GuiContainer {
         instance = this;
     }
 
-	@Override
-	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-		this.drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.func_191948_b(mouseX, mouseY);
-	}
+    @Override
+    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        drawGuiContainerForegroundLayer(mouseX, mouseY);
+    }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

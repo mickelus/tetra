@@ -14,7 +14,7 @@ public class GuiText extends GuiElement {
 
         setString(string);
 
-        fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        fontRenderer = Minecraft.getMinecraft().fontRenderer;
     }
 
     public void setString(String string) {
