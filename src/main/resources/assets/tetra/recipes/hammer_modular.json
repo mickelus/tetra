@@ -8,13 +8,13 @@
     "key": {
         "#": {
             "item": "minecraft:log",
-            "data": 0
+            "data": 32767
         },
         "/": {
             "item": "minecraft:stick"
         }
     },
     "result": {
-        "item": "tetra:modular_hammer"
+        "item": "tetra:hammer_basic"
     }
 }

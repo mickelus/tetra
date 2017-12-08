@@ -1,7 +1,5 @@
 package se.mickelus.tetra.items.hammer;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -11,19 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 
 public class ItemHammerModular extends ItemModular {
@@ -39,7 +32,7 @@ public class ItemHammerModular extends ItemModular {
 
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setMaxStackSize(1);
 
         majorModuleNames = new String[]{"Head", "Handle"};
         majorModuleKeys = new String[]{headKey, handleKey};
@@ -58,27 +51,35 @@ public class ItemHammerModular extends ItemModular {
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
 
         new RepairSchema(this);
+
+        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceHammer);
+    }
+
+    private ItemStack replaceHammer(ItemStack originalStack) {
+        if (originalStack.getItem() instanceof ItemHammerBasic) {
+            return createDefaultStack(originalStack);
+        }
+
+        return null;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createDefaultStack());
+            itemList.add(createDefaultStack(null));
         }
     }
 
-    private ItemStack createDefaultStack() {
+    private ItemStack createDefaultStack(ItemStack originalStack) {
         ItemStack itemStack = new ItemStack(this);
+
+        if (originalStack != null) {
+            itemStack.setItemDamage(originalStack.getItemDamage());
+        }
         BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Blocks.LOG)}, false);
         BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.STICK)}, false);
         return itemStack;
-    }
-
-    @Override
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-        BasicHeadModule.instance.addModule(stack, new ItemStack[]{new ItemStack(Blocks.LOG)}, false);
-        BasicHandleModule.instance.addModule(stack, new ItemStack[]{new ItemStack(Items.STICK)}, false);
     }
 
     @Override
