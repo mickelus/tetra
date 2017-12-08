@@ -74,10 +74,11 @@ public class GuiWorkbench extends GuiContainer {
 
     @Override
     public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-        this.drawDefaultBackground();
+        drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
 
-        this.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
 
     @Override

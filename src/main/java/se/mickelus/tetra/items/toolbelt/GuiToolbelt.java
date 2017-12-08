@@ -31,6 +31,7 @@ public class GuiToolbelt extends GuiContainer {
     public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
         drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
 
