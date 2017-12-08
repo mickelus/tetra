@@ -199,6 +199,29 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
     }
 
+    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
+        List<ItemModule> modules = getAllModules(itemStack).stream()
+                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .collect(Collectors.toList());
+        if (modules.size() > 0) {
+            return modules.get(getRepairCount(itemStack) % modules.size()).getRequiredCapabilities(getRepairMaterial(itemStack));
+        } else {
+            return Collections.EMPTY_LIST;
+        }
+    }
+
+    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
+        List<ItemModule> modules = getAllModules(itemStack).stream()
+                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .collect(Collectors.toList());
+        if (modules.size() > 0) {
+            int level = modules.get(getRepairCount(itemStack) % modules.size()).getRequiredCapabilityLevel(getRepairMaterial(itemStack), capability);
+            return level > 1 ? level - 1 : 1;
+        } else {
+            return 0;
+        }
+    }
+
     private int getRepairCount(ItemStack itemStack) {
         return NBTHelper.getTag(itemStack).getInteger(repairCountKey);
     }

@@ -1,18 +1,23 @@
 package se.mickelus.tetra.items.hammer;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.TetraItem;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
 public class ItemHammerBasic extends TetraItem implements ICapabilityProvider {
     private static final String unlocalizedName = "hammer_basic";
-
     public ItemHammerBasic() {
 
         setUnlocalizedName(unlocalizedName);
@@ -20,6 +25,11 @@ public class ItemHammerBasic extends TetraItem implements ICapabilityProvider {
         setMaxDamage(200);
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, facing);
     }
 
     @Override

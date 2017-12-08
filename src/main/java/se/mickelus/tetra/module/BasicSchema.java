@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
@@ -81,7 +82,7 @@ public class BasicSchema implements UpgradeSchema {
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
         return isMaterialsValid(itemStack, materials)
                 && !isIntegrityViolation(itemStack, materials)
-                && checkCapabilities(player, materials);
+                && checkCapabilities(player, itemStack, materials);
     }
 
     @Override
@@ -96,38 +97,19 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean checkCapabilities(EntityPlayer player, final ItemStack[] materials) {
-        return getRequiredCapabilities(materials).stream()
-                .allMatch(capability -> getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(materials, capability));
+    public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials) {
+        return getRequiredCapabilities(targetStack, materials).stream()
+                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
 
     @Override
-    public Collection<Capability> getRequiredCapabilities(final ItemStack[] materials) {
+    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
         return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilities();
     }
 
     @Override
-    public int getRequiredCapabilityLevel(final ItemStack[] materials, Capability capability) {
+    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
         return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilityLevel(capability);
-    }
-
-    @Override
-    public int getCapabilityLevel(EntityPlayer player, Capability capability) {
-        return Stream.concat(player.inventory.mainInventory.stream(), player.inventory.offHandInventory.stream())
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)
-                .map(itemStack -> ((ICapabilityProvider) itemStack.getItem()).getCapabilityLevel(itemStack, capability))
-                .max(Integer::compare)
-                .orElse(0);
-    }
-
-    @Override
-    public Collection<Capability> getCapabilities(EntityPlayer player) {
-        return Stream.concat(player.inventory.mainInventory.stream(), player.inventory.offHandInventory.stream())
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)
-                .flatMap(itemStack -> ((ICapabilityProvider) itemStack.getItem()).getCapabilities(itemStack).stream())
-                .collect(Collectors.toSet());
     }
 
     @Override

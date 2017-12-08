@@ -19,6 +19,6 @@ public class GuiCapabilityIndicatorList extends GuiElement {
 
     public void update(EntityPlayer player, UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
         setVisible(schema.isMaterialsValid(targetStack, materials));
-        hammerIndicator.update(player, schema, materials);
+        hammerIndicator.update(player, schema, targetStack, materials);
     }
 }

@@ -1,10 +1,12 @@
 package se.mickelus.tetra.items.hammer;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -12,11 +14,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
+
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 public class ItemHammerModular extends ItemModular {
@@ -84,21 +94,13 @@ public class ItemHammerModular extends ItemModular {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return EnumActionResult.FAIL;
-        }
+        return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, facing);
+    }
 
-        if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
-
-            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-            if (!world.isRemote) {
-                world.setBlockState(pos, BlockWorkbench.instance.getDefaultState());
-            }
-            return EnumActionResult.SUCCESS;
-        }
-
-        return EnumActionResult.PASS;
+    @Override
+    public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+        super.addInformation(itemStack, playerIn, tooltip, advanced);
     }
 }
+
+
