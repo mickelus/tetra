@@ -25,14 +25,26 @@ public class GuiBarRocketBoots extends GuiElement {
         float opacity = filter.apply(visibleIndicators);
         if (opacity > 0) {
             GlStateManager.translate(opacity * -10, 0, 0);
+
+
             for (int i = 0; i < visibleIndicators; i++) {
                 drawRect(
                         refX + x + 2 * i,
                         refY + y,
                         refX + x + 2 * i + 1,
                         refY + y + 4,
-                        0xffffff, opacity * 0.7f);
+                        0xffffff, opacity * 0.9f);
             }
+
+            for (int i = visibleIndicators; i < indicatorCount; i++) {
+                drawRect(
+                        refX + x + 2 * i,
+                        refY + y,
+                        refX + x + 2 * i + 1,
+                        refY + y + 4,
+                        0x000000, opacity * 0.3f);
+            }
+
             drawRect(
                     refX + x - 2,
                     refY + y + 3,
