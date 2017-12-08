@@ -64,7 +64,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     protected Collection<ItemModule> getAllModules(ItemStack stack) {
-        NBTTagCompound stackTag = stack.getTagCompound();
+        NBTTagCompound stackTag = NBTHelper.getTag(stack);
 
         if (stackTag != null) {
             return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))

@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
@@ -107,7 +108,7 @@ public class ItemSwordModular extends ItemModular {
     }
 
     public String getItemStackDisplayName(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
+        NBTTagCompound tag = NBTHelper.getTag(stack);
 
         return "§kUnknown";
     }

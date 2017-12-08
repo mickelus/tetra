@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
+import se.mickelus.tetra.NBTHelper;
 
 public class InventoryToolbelt implements IInventory {
 
@@ -29,7 +30,7 @@ public class InventoryToolbelt implements IInventory {
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
-        readFromNBT(stack.getTagCompound());
+        readFromNBT(NBTHelper.getTag(stack));
     }
 
 
@@ -152,7 +153,7 @@ public class InventoryToolbelt implements IInventory {
             }
         }
 
-        writeToNBT(toolbeltItemStack.getTagCompound());
+        writeToNBT(NBTHelper.getTag(toolbeltItemStack));
     }
 
     @Override

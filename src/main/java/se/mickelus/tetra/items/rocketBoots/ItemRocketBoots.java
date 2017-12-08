@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.rocketBoots;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -16,10 +18,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.network.PacketPipeline;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemRocketBoots extends ItemArmor implements ITetraItem {
@@ -45,22 +49,9 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
         return instance;
     }
 
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-//        for (int i = 0; i < 14; i++) {
-//            ItemStack stack = new ItemStack(itemIn, 1, i);
-//            ItemArmor itemArmor = (ItemArmor)stack.getItem();
-//            subItems.add(stack);
-//            if (i != 0) itemArmor.setColor(stack, dyeints[i]);
-//            ItemRenderRegister.reg(itemArmor, i);
-//
-//        }
-//    }
-
     @Override
     public void clientPreInit() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @Override
@@ -71,35 +62,7 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
     }
 
     @Override
-    public int getColor(ItemStack stack) {
-        NBTTagCompound nbt = stack.getTagCompound();
-
-        if (nbt != null) {
-            NBTTagCompound nbtDisplay = nbt.getCompoundTag("display");
-
-            if (nbtDisplay.hasKey("color", 3)) {
-                return nbtDisplay.getInteger("color");
-            }
-        }
-
-        return 10511680;
-    }
-
-    @Override
-    public void setColor(ItemStack stack, int color) {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null) {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
-
-        if (!nbttagcompound.hasKey("display", 10)) {
-            nbttagcompound.setTag("display", nbttagcompound1);
-        }
-
-        nbttagcompound1.setInteger("color", color);
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add("§8WIP");
     }
 }

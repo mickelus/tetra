@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import se.mickelus.tetra.NBTHelper;
 
 public class OverlayRocketBoots {
 
@@ -31,7 +32,7 @@ public class OverlayRocketBoots {
         if (UtilRocketBoots.hasBoots(event.player)) {
             ItemStack stack = event.player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-            fuelPercent = UtilRocketBoots.getFuelPercent(stack.getTagCompound());
+            fuelPercent = UtilRocketBoots.getFuelPercent(NBTHelper.getTag(stack));
         }
 
         gui.setFuel(fuelPercent);

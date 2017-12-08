@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -49,11 +50,7 @@ public class UpdateBoostPacket extends AbstractPacket {
         }
 
         stack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        UtilRocketBoots.setActive(stack.getTagCompound(), active, charged);
+        UtilRocketBoots.setActive(NBTHelper.getTag(stack), active, charged);
     }
 
 }

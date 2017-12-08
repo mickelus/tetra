@@ -22,7 +22,7 @@ public class UtilRocketBoots {
     public static boolean hasBoots(EntityPlayer player) {
         ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-        return stack != null && stack.getItem() instanceof ItemRocketBoots && stack.hasTagCompound();
+        return stack != null && stack.getItem() instanceof ItemRocketBoots;
     }
 
     public static boolean hasFuel(NBTTagCompound tag, boolean charged) {

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import se.mickelus.tetra.NBTHelper;
 
 public class TickHandlerRocketBoots {
 
@@ -17,12 +18,7 @@ public class TickHandlerRocketBoots {
     }
 
     public void tickItem(EntityPlayer player, ItemStack stack) {
-
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
+        NBTTagCompound tag = NBTHelper.getTag(stack);
         boolean charged = tag.getBoolean(UtilRocketBoots.chargedKey);
         if (UtilRocketBoots.isActive(tag) && UtilRocketBoots.hasFuel(tag, charged)) {
             if (charged) {
