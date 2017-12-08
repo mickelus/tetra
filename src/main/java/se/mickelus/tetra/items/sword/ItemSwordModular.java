@@ -45,20 +45,18 @@ public class ItemSwordModular extends ItemModular {
         majorModuleKeys = new String[]{bladeKey, hiltKey};
         minorModuleNames = new String[]{"Guard", "Pommel", "Fuller"};
         minorModuleKeys = new String[]{"sword:guard", "sword:pommel", "sword:fuller"};
+
+        new BladeModule(bladeKey);
+        new ShortBladeModule(bladeKey);
+        new HeavyBladeModule(bladeKey);
+        new HiltModule(hiltKey);
     }
 
     @Override
     public void init(PacketPipeline packetPipeline) {
-        new BladeModule(bladeKey);
         new BasicSchema("blade_schema", BladeModule.instance, this);
-
-        new ShortBladeModule(bladeKey);
         new BasicSchema("short_blade_schema", ShortBladeModule.instance, this);
-
-        new HeavyBladeModule(bladeKey);
         new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
-
-        new HiltModule(hiltKey);
         new BasicSchema("hilt_schema", HiltModule.instance, this);
 
         new RepairSchema(this);
@@ -68,12 +66,16 @@ public class ItemSwordModular extends ItemModular {
 
     private ItemStack replaceSword(ItemStack originalStack) {
         Item originalItem = originalStack.getItem();
+        ItemStack newStack;
 
         if (!(originalItem instanceof ItemSword)) {
             return null;
         }
 
-        return createItemStack(((ItemSword) originalItem).getToolMaterialName());
+        newStack = createItemStack(((ItemSword) originalItem).getToolMaterialName());
+        newStack.setItemDamage(originalStack.getItemDamage());
+
+        return newStack;
     }
 
     private ItemStack createItemStack(String material) {

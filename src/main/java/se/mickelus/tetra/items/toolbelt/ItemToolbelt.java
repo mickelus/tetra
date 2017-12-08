@@ -33,13 +33,6 @@ public class ItemToolbelt extends TetraItem {
 
         instance = this;
     }
-
-    @SubscribeEvent
-    public void registerItem(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(this);
-        System.out.println("BELTZ" + getRegistryName());
-    }
-
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         player.openGui(TetraMod.instance, GuiHandlerToolbelt.GUI_TOOLBELT_ID, world, hand.ordinal(), 0, 0);

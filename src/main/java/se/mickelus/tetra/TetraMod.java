@@ -1,30 +1,24 @@
 package se.mickelus.tetra;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
-import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.items.TetraItem;
+import se.mickelus.tetra.items.hammer.ItemHammerBasic;
 import se.mickelus.tetra.items.hammer.ItemHammerModular;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
-import se.mickelus.tetra.items.JournalItem;
 import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
@@ -64,35 +58,23 @@ public class TetraMod {
         };
 
         items = new Item[] {
-//            new ItemSwordModular(),
+            new ItemSwordModular(),
             new ItemRocketBoots(),
             new ItemGeode(),
             new ItemToolbelt(),
-//            new JournalItem(),
-//            new ItemHammerModular(),
-//            new ItemBlock(BlockGeode.instance)
+            new ItemHammerModular(),
+            new ItemHammerBasic()
         };
 
-//        Arrays.stream(items)
-//                .forEach(MinecraftForge.EVENT_BUS::register);
+
+        ForgeRegistries.ITEMS.registerAll(items);
+        ForgeRegistries.BLOCKS.registerAll(blocks);
 
         proxy.preInit(event,
                 Arrays.stream(items)
                     .filter(item -> item instanceof ITetraItem)
                     .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
                 blocks);
-
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void registerBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().registerAll(blocks);
-    }
-
-    @SubscribeEvent
-    public void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().registerAll(items);
     }
     
     @EventHandler

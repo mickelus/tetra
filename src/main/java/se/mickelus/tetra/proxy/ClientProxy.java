@@ -19,6 +19,11 @@ import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 import java.util.Arrays;
 
 public class ClientProxy implements IProxy {
+
+    static {
+        ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
+    }
+
     @Override
     public void preInit(FMLPreInitializationEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
         Arrays.stream(items).forEach(ITetraItem::clientPreInit);
@@ -28,7 +33,6 @@ public class ClientProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
-        ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
     }
 
     @Override

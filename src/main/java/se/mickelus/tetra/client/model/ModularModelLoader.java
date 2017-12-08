@@ -1,10 +1,7 @@
 package se.mickelus.tetra.client.model;
 
-import java.util.Arrays;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +9,6 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import org.apache.commons.io.IOUtils;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

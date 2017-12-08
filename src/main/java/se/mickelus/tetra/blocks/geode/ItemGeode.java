@@ -19,11 +19,4 @@ public class ItemGeode extends TetraItem {
 
         instance = this;
     }
-
-    @SubscribeEvent
-    public void registerItem(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(this);
-        System.out.println("GEODE " + getRegistryName());
-    }
-
 }

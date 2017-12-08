@@ -45,11 +45,6 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
         return instance;
     }
 
-    @Override
-    public void clientPreInit() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
-    }
-
 //    @Override
 //    @SideOnly(Side.CLIENT)
 //    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
@@ -62,6 +57,11 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
 //
 //        }
 //    }
+
+    @Override
+    public void clientPreInit() {
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
+    }
 
     @Override
     public void init(PacketPipeline packetPipeline) {
