@@ -18,6 +18,9 @@ import java.util.Collections;
 
 public class ItemHammerBasic extends TetraItem implements ICapabilityProvider {
     private static final String unlocalizedName = "hammer_basic";
+
+    public static ItemHammerBasic instance;
+
     public ItemHammerBasic() {
 
         setUnlocalizedName(unlocalizedName);
@@ -25,6 +28,8 @@ public class ItemHammerBasic extends TetraItem implements ICapabilityProvider {
         setMaxDamage(200);
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
+
+        instance = this;
     }
 
     @Override
