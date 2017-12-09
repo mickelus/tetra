@@ -1,0 +1,15 @@
+[
+    {
+        "key": "single_strap/leather_strap",
+        "material": "minecraft:leather",
+        "integrity": -1
+    },
+    {
+        "key": "single_strap/metal_loop",
+        "material": "minecraft:iron",
+        "integrity": 0,
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    }
+]

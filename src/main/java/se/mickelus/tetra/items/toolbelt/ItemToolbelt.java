@@ -1,26 +1,24 @@
 package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
-public class ItemToolbelt extends TetraItem {
+public class ItemToolbelt extends ItemModular {
     public static ItemToolbelt instance;
-    private final static String unlocalizedName = "toolbelt";
+    private final static String unlocalizedName = "toolbelt_modular";
+
+    public final static String slotKey = "toolbelt:slot1";
+    public final static String beltKey = "toolbelt:belt";
 
     public ItemToolbelt() {
         super();
@@ -30,6 +28,12 @@ public class ItemToolbelt extends TetraItem {
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         setCreativeTab(TetraCreativeTabs.getInstance());
+
+
+        majorModuleNames = new String[]{""};
+        majorModuleKeys = new String[]{slotKey};
+        minorModuleNames = new String[]{"Belt"};
+        minorModuleKeys = new String[]{beltKey};
 
         instance = this;
     }

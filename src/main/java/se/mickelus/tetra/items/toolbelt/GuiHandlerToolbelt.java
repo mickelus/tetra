@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
+import se.mickelus.tetra.items.toolbelt.gui.GuiToolbelt;
 import se.mickelus.tetra.network.TetraGuiHandler;
 
 public class GuiHandlerToolbelt implements TetraGuiHandler {

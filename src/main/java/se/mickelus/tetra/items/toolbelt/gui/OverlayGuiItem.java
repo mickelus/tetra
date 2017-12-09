@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.toolbelt;
+package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

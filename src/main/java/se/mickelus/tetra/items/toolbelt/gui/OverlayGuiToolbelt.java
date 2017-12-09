@@ -1,10 +1,11 @@
-package se.mickelus.tetra.items.toolbelt;
+package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 import se.mickelus.tetra.gui.GuiRoot;
+import se.mickelus.tetra.items.toolbelt.InventoryToolbelt;
 
 public class OverlayGuiToolbelt extends GuiRoot {
 

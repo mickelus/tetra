@@ -1,7 +1,6 @@
 package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -14,7 +13,7 @@ import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.rocketBoots.OverlayRocketBoots;
-import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
+import se.mickelus.tetra.items.toolbelt.gui.OverlayToolbelt;
 
 import java.util.Arrays;
 

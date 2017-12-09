@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.toolbelt;
+package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.items.toolbelt.ContainerToolbelt;
 
 import java.io.IOException;
 

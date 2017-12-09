@@ -1,0 +1,23 @@
+[
+    {
+        "key": "belt/rope",
+        "material": "minecraft:lead",
+        "integrity": 1
+    },
+    {
+        "key": "belt/leather",
+        "material": "minecraft:leather",
+        "integrity": 3
+    },
+    {
+        "key": "belt/buckled",
+        "material": "minecraft:iron",
+        "integrity": 5
+    },
+    {
+        "key": "belt/inlaid",
+        "material": "minecraft:shulker_shell",
+        "materialCount": 3,
+        "integrity": 8
+    }
+]

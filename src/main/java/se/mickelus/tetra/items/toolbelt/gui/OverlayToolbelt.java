@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.toolbelt;
+package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -8,6 +8,9 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
+import se.mickelus.tetra.items.toolbelt.EquipToolbeltItemPacket;
+import se.mickelus.tetra.items.toolbelt.InventoryToolbelt;
+import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.network.PacketPipeline;
 
 public class OverlayToolbelt {
