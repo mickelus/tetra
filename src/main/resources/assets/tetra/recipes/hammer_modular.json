@@ -15,6 +15,12 @@
         }
     },
     "result": {
-        "item": "tetra:hammer_basic"
+        "item": "tetra:hammer_modular",
+        "nbt": {
+            "head": "hammer/basic_head",
+            "hammer/basic_head_material": "basic_head/log",
+            "handle": "hammer/basic_handle",
+            "hammer/basic_handle_material": "basic_handle/stick"
+        }
     }
 }

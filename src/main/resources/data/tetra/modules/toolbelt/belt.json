@@ -2,22 +2,55 @@
     {
         "key": "belt/rope",
         "material": "minecraft:lead",
-        "integrity": 1
+        "integrity": 1,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 0,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "belt/sash",
+        "material": "minecraft:wool",
+        "integrity": 2,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 0,
+            "textureY": 16
+        }
     },
     {
         "key": "belt/leather",
         "material": "minecraft:leather",
-        "integrity": 3
+        "integrity": 3,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 0,
+            "textureY": 16
+        }
     },
     {
         "key": "belt/buckled",
-        "material": "minecraft:iron",
-        "integrity": 5
+        "material": "minecraft:iron_ingot",
+        "integrity": 5,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 0,
+            "textureY": 16
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
     },
     {
         "key": "belt/inlaid",
         "material": "minecraft:shulker_shell",
         "materialCount": 3,
-        "integrity": 8
+        "integrity": 8,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 0,
+            "textureY": 16
+        }
     }
 ]

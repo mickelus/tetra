@@ -1,12 +1,29 @@
 itemGroup.tetra=Tetra
 
+###############################
+# MISC
+###############################
 item.modular.broken=Broken
 item.modular.tier=Tier
 item.modular.durability=Durability
 
+###############################
+# ITEM NAMES
+###############################
+item.hammer_basic.name=Wooden mallet
+item.toolbelt.name=Toolbelt
+item.rocket_boots.name=Rocket boots
+
+
+###############################
+# REPAIR SCHEMA
+###############################
 repair_schema.name=Repair
 repair_schema.description=Repair the item. Materials used are based on what the modules are made of
 
+###############################
+# BASIC BLADE
+###############################
 blade_schema.name=Simple blade
 blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
 blade_schema.slot1=Blade material
@@ -19,6 +36,10 @@ basic_blade/gold=Golden blade
 basic_blade/diamond=Diamond blade
 basic_blade/obsidian=Obsidian blade
 
+
+###############################
+# BASIC HILT
+###############################
 hilt_schema.name=Simple hilt
 hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
 hilt_schema.slot1=Hilt material
@@ -30,6 +51,9 @@ basic_hilt/bone=Bone hilt
 basic_hilt/blaze_rod=Blazing hilt
 basic_hilt/end_rod=End rod
 
+###############################
+# SHORTBLADE
+###############################
 short_blade_schema.name=Shortblade
 short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
 short_blade_schema.slot1=Blade material
@@ -38,6 +62,9 @@ short_blade/oak=Oak shortblade
 short_blade/iron=Iron shortblade
 short_blade/gold=Golden shortblade
 
+###############################
+# HEAVY BLADE
+###############################
 heavy_blade_schema.name=Heavy blade
 heavy_blade_schema.description=Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
 heavy_blade_schema.slot1=Blade material
@@ -49,23 +76,61 @@ heavy_blade/cobblestone=Solid stone cleaver
 heavy_blade/gold=Excessive ornate blade
 heavy_blade/obsidian=Heavy obsidian blade
 
-basic_handle_schema.name=Mallet head
-basic_handle_schema.description=Reforge the hammer head into a mallet using the given material. The mallet is useful for upgrading other things.
-basic_handle_schema.slot1=Head material
+
+
+###############################
+# HAMMER HANDLE
+###############################
+basic_handle_schema.name=Tool handle
+basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier hammer heads.
+basic_handle_schema.slot1=Handle material
 
 basic_handle/stick=Wooden handle
 basic_handle/iron=Iron handle
 
-
-basic_head_schema.name=Tool handle
-basic_head_schema.description=Replace the handle for the head. A sturdier handle supports heavier hammer heads.
-basic_head_schema.slot1=Handle material
+###############################
+# HAMMER HEAD
+###############################
+basic_head_schema.name=Mallet head
+basic_head_schema.description=Reforge the hammer head into a mallet using the given material. The mallet is useful for upgrading other things.
+basic_head_schema.slot1=Head material
 
 basic_head/log=Wooden mallet
 basic_head/stone=Stone mallet
 basic_head/iron=Iron mallet
 basic_head/obsidian=Obsidian mallet
 
-item.hammer_basic.name=Wooden mallet
-item.toolbelt.name=Toolbelt
-item.rocket_boots.name=Rocket boots
+###############################
+# TOOLBELT BELT
+###############################
+toolbelt_belt0.name=Woolen sash
+toolbelt_belt0.description=A rope and some leather scraps proved to be a great way to gain easy access to one of your tools, but the rope lacks the strength to support additional tools. Weaving a sash out of wool should provide better support than simply tying a rope around your waist.
+toolbelt_belt0.slot1=Wool
+
+toolbelt_belt1.name=Leather wrap
+toolbelt_belt1.description=With the proper tools at hand you should be able to cut leather into a long strap, which should prove even stronger than a belt fashioned from wool.
+toolbelt_belt1.slot1=Leather
+
+toolbelt_belt2.name=Belt buckle
+toolbelt_belt2.description=A buckle instead of a knot should provide additional support for carrying things around your waist.
+toolbelt_belt2.slot1=Buckle material
+
+toolbelt_belt3.name=Shulker inlay
+toolbelt_belt3.description=Shulker shells proved exceptional as support when carrying chests, inlaying shells into the belt should further increase it's integrity.
+toolbelt_belt3.slot1=Shulker shells
+
+belt/rope=Rope
+belt/sash=Wool sash
+belt/leather=Leather wrap
+belt/buckled=Leather belt
+belt/inlaid=Shulker inlaid belt
+
+###############################
+# TOOLBELT SINGLE STRAP
+###############################
+single_strap_schema.name=Single belt strap
+single_strap_schema.description=Attach a single strap for attaching tools, or other items, to the belt.
+single_strap_schema.slot1=Strap material
+
+single_strap/leather_strap=Leather strap
+single_strap/iron_loop=Iron loop

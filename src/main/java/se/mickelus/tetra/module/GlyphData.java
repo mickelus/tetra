@@ -28,7 +28,7 @@ public class GlyphData {
             }
 
             if (jsonObject.has("textureY")) {
-                data.textureX = jsonObject.get("textureY").getAsInt();
+                data.textureY = jsonObject.get("textureY").getAsInt();
             }
 
             if (jsonObject.has("tint")) {

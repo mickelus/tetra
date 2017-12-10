@@ -70,7 +70,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))
                     .map(stackTag::getString)
                     .map(ItemUpgradeRegistry.instance::getModule)
-                    .filter(itemModule -> itemModule != null)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
 
@@ -95,13 +95,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public ItemModule[] getMinorModules(ItemStack itemStack) {
-        ItemModuleMajor[] modules = new ItemModuleMajor[minorModuleKeys.length];
+        ItemModule[] modules = new ItemModule[minorModuleKeys.length];
         NBTTagCompound stackTag = NBTHelper.getTag(itemStack);
 
         for (int i = 0; i < minorModuleKeys.length; i++) {
             String moduleName = stackTag.getString(minorModuleKeys[i]);
             ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
-            modules[i] = (ItemModuleMajor) module;
+            modules[i] = module;
         }
 
         return modules;

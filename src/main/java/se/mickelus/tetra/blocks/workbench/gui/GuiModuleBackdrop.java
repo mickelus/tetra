@@ -10,10 +10,14 @@ public class GuiModuleBackdrop extends GuiTextureOffset {
     public static final int COLOR_REMOVE = 0xffaaaa;
     public static final int COLOR_CHANGE = 0xaaaaff;
 
-    private int color;
+    protected int color;
 
     public GuiModuleBackdrop(int x, int y, int color) {
-        super(x, y, 15, 15, 52, 0, "textures/gui/workbench.png");
+        this(x, y, color, 15, 15, 52, 0);
+    }
+
+    protected GuiModuleBackdrop(int x, int y, int color, int width, int height, int textureX, int textureY) {
+        super(x, y, width, height, textureX, textureY, "textures/gui/workbench.png");
         this.color = color;
     }
 

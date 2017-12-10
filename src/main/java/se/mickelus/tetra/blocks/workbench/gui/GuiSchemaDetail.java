@@ -68,14 +68,18 @@ public class GuiSchemaDetail extends GuiElement {
             slotNames[i].setString(schema.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
 
-            int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
-            if (!materials[i].isEmpty() && requiredCount > 1) {
-                slotQuantities[i].setString("/" + requiredCount);
-                slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? 0xffff0000 : 0xffffffff);
-            }
-            slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
+            if (schema.slotAcceptsMaterial(itemStack, i, materials[i])) {
+                int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
+                if (!materials[i].isEmpty() && requiredCount > 1) {
+                    slotQuantities[i].setString("/" + requiredCount);
+                    slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? 0xffff0000 : 0xffffffff);
+                }
+                slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
 
-            slotBorders[i].setVisible(true);
+                slotBorders[i].setVisible(true);
+            } else {
+                slotBorders[i].setVisible(false);
+            }
         }
 
         for (int i = schema.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {

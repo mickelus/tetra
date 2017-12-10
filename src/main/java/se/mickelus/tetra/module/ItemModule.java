@@ -156,14 +156,6 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                 .toArray(ResourceLocation[]::new);
     }
 
-    public ResourceLocation getGlyphLocation(ItemStack itemStack) {
-        return getData(itemStack).glyph.textureLocation;
-    }
-
-    public int getGlyphTint(ItemStack itemStack) {
-        return getData(itemStack).glyph.tint;
-    }
-
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}
 
     @Override

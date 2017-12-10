@@ -41,7 +41,7 @@ public class UtilToolbelt {
         InventoryPlayer inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
-            if (ItemToolbelt.instance.equals(itemStack.getItem())) {
+            if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
                 return itemStack;
             }
         }

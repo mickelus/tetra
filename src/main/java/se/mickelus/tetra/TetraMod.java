@@ -15,11 +15,10 @@ import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.items.hammer.ItemHammerBasic;
 import se.mickelus.tetra.items.hammer.ItemHammerModular;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
-import se.mickelus.tetra.items.toolbelt.ItemToolbelt;
+import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -61,9 +60,8 @@ public class TetraMod {
             new ItemSwordModular(),
             new ItemRocketBoots(),
             new ItemGeode(),
-            new ItemToolbelt(),
-            new ItemHammerModular(),
-            new ItemHammerBasic()
+            new ItemToolbeltModular(),
+            new ItemHammerModular()
         };
 
 

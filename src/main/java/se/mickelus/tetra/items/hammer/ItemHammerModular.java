@@ -61,16 +61,6 @@ public class ItemHammerModular extends ItemModular {
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
 
         new RepairSchema(this);
-
-        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceHammer);
-    }
-
-    private ItemStack replaceHammer(ItemStack originalStack) {
-        if (originalStack.getItem() instanceof ItemHammerBasic) {
-            return createDefaultStack(originalStack);
-        }
-
-        return null;
     }
 
     @Override

@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        { "item": "minecraft:lead" },
+        { "item": "minecraft:leather" }
+    ],
+    "result": {
+        "item": "tetra:toolbelt_modular",
+        "nbt": {
+            "toolbelt:slot1": "toolbelt/single_strap",
+            "toolbelt/single_strap_material": "basic_head/log",
+            "toolbelt:belt": "toolbelt/belt",
+            "toolbelt/belt_material": "single_strap/leather_strap"
+        }
+    }
+}

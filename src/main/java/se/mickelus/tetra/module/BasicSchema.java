@@ -20,9 +20,9 @@ public class BasicSchema implements UpgradeSchema {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
-    private String key;
-    private ItemModule module;
-    private Item item;
+    protected String key;
+    protected ItemModule module;
+    protected Item item;
 
     public BasicSchema(String key, ItemModule module, Item item) {
         this.key = key;

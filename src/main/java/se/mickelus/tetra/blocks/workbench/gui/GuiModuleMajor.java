@@ -28,7 +28,7 @@ public class GuiModuleMajor extends GuiElement {
         addChild(new GuiModuleBackdrop(1, 0, color));
         addChild(new GuiString(19, 5, module.getName(itemStack), color));
         addChild(new GuiModuleGlyph(0, 0, 16, 16,
-                data.glyph.tint, data.glyph.textureX, data.glyph.textureY,
-                module.getGlyphLocation(itemStack)));
+            data.glyph.tint, data.glyph.textureX, data.glyph.textureY,
+            data.glyph.textureLocation));
     }
 }
