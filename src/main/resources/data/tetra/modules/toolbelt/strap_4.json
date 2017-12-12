@@ -1,23 +1,25 @@
 [
     {
-        "key": "single_strap/leather_strap",
+        "key": "strap_4/leather",
         "material": "minecraft:leather",
-        "integrity": -1,
+        "materialCount": 4,
+        "integrity": -6,
         "glyph": {
             "tint": "866526",
             "textureX": 80
         }
     },
     {
-        "key": "single_strap/iron_loop",
+        "key": "strap_4/iron",
         "material": "minecraft:iron_ingot",
-        "integrity": 0,
+        "materialCount": 4,
+        "integrity": -4,
         "glyph": {
             "tint": "866526",
             "textureX": 80
         },
         "requiredCapabilities": {
-            "hammer": 2
+            "hammer": 4
         }
     }
 ]

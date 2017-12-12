@@ -16,7 +16,8 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.module.BeltModule;
-import se.mickelus.tetra.items.toolbelt.module.SingleStrapModule;
+import se.mickelus.tetra.items.toolbelt.module.ModuleDataToolbelt;
+import se.mickelus.tetra.items.toolbelt.module.StrapModule;
 import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -27,6 +28,8 @@ public class ItemToolbeltModular extends ItemModular {
 
     public final static String slotKey = "toolbelt:slot1";
     public final static String beltKey = "toolbelt:belt";
+
+    private StrapModule[] strapModules;
 
     public ItemToolbeltModular() {
         super();
@@ -46,7 +49,11 @@ public class ItemToolbeltModular extends ItemModular {
         instance = this;
 
         new BeltModule(beltKey);
-        new SingleStrapModule(slotKey);
+
+        strapModules = new StrapModule[4];
+        for (int i = 0; i < strapModules.length; i++) {
+            strapModules[i] = new StrapModule(slotKey, "toolbelt/strap_" + (i+1));
+        }
     }
 
     @Override
@@ -57,7 +64,10 @@ public class ItemToolbeltModular extends ItemModular {
         MinecraftForge.EVENT_BUS.register(new TickHandlerToolbelt());
 
         BeltModule.instance.registerUpgradeSchemas();
-        new BasicSchema("single_strap_schema", SingleStrapModule.instance, this);
+
+        for (int i = 0; i < strapModules.length; i++) {
+            new BasicSchema("strap_schema_" + (i+1), strapModules[i], this);
+        }
     }
 
     @Override
@@ -71,7 +81,7 @@ public class ItemToolbeltModular extends ItemModular {
     private ItemStack createDefaultStack() {
         ItemStack itemStack = new ItemStack(this);
         BeltModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEAD)}, false);
-        SingleStrapModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEATHER)}, false);
+        strapModules[0].addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEATHER)}, false);
         return itemStack;
     }
 

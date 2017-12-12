@@ -26,7 +26,7 @@ public class GuiModuleMinor extends GuiElement {
             if (data.equals(previewData)) {
                 setupChildren(module.getName(itemStack), data.glyph, GuiModuleBackdrop.COLOR_NORMAL);
             } else {
-                setupChildren(previewModule.getName(itemStack), previewData.glyph, GuiModuleBackdrop.COLOR_CHANGE);
+                setupChildren(previewModule.getName(previewStack), previewData.glyph, GuiModuleBackdrop.COLOR_CHANGE);
             }
         }
 
@@ -34,7 +34,7 @@ public class GuiModuleMinor extends GuiElement {
 
     private void setupChildren(String moduleName, GlyphData glyphData, int color) {
         addChild(new GuiModuleMinorBackdrop(-10, -2, color));
-        addChild(new GuiString(-10, 0, moduleName, color, GuiAlignment.right));
+        addChild(new GuiString(-12, -1, moduleName, color, GuiAlignment.right));
 
         if (glyphData != null) {
             addChild(new GuiModuleGlyph(-8, 0, 8, 8,

@@ -1,17 +1,19 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 
 public class GuiModuleList extends GuiElement {
 
-    private static int[] minorYOffsets = { 12, 4, 0 };
+    private static int[][] minorYOffsets = { {13}, {6, 19}, {0, 13, 26} };
+    private static int[][] minorXOffsets = { {-16}, {-4, -4}, {0, -8, 0} };
 
     public GuiModuleList(int x, int y) {
         super(x, y, 0, 0);
@@ -24,13 +26,18 @@ public class GuiModuleList extends GuiElement {
         }
 
         ItemModular item = (ItemModular) itemStack.getItem();
-        String[] majorModuleNames = item.getMajorModuleNames();
-        String[] minorModuleNames = item.getMinorModuleNames();
-
-        ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
-        ItemModule[] minorModules = item.getMinorModules(itemStack);
 
         clearChildren();
+
+        updateMajorModules(item, itemStack, previewStack);
+        updateMinorModules(item, itemStack, previewStack);
+
+
+    }
+
+    private void updateMajorModules(ItemModular item, ItemStack itemStack, ItemStack previewStack) {
+        String[] majorModuleNames = item.getMajorModuleNames();
+        ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
 
         if (!previewStack.isEmpty()) {
             ItemModuleMajor[] majorModulesPreview = item.getMajorModules(previewStack);
@@ -42,23 +49,51 @@ public class GuiModuleList extends GuiElement {
                 addChild(new GuiModuleMajor(11, i * 18, itemStack, itemStack, majorModuleNames[i], majorModules[i], majorModules[i]));
             }
         }
+    }
+
+    private void updateMinorModules(ItemModular item, ItemStack itemStack, ItemStack previewStack) {
+        String[] minorModuleNames = item.getMinorModuleNames();
+        ItemModule[] minorModules = item.getMinorModules(itemStack);
+        int index = 0;
+        int count = 0;
 
         if (!previewStack.isEmpty()) {
             ItemModule[] minorModulesPreview = item.getMinorModules(previewStack);
+
             for (int i = 0; i < minorModuleNames.length; i++) {
-                addChild(getMinorModule(i, minorModuleNames.length, itemStack, previewStack, minorModuleNames[i], minorModules[i], minorModulesPreview[i]));
+                if (minorModules[i] != null || minorModulesPreview[i] != null) {
+                    count++;
+                }
+            }
+
+            for (int i = 0; i < minorModuleNames.length; i++) {
+                if (minorModules[i] != null || minorModulesPreview[i] != null) {
+                    addChild(getMinorModule(count, index,
+                        itemStack, previewStack, minorModuleNames[i],
+                        minorModules[i], minorModulesPreview[i]));
+                    index++;
+                }
             }
         } else {
+            count = (int) Arrays.stream(minorModules).filter(Objects::nonNull).count();
+
+
             for (int i = 0; i < minorModuleNames.length; i++) {
-                addChild(getMinorModule(i, minorModuleNames.length, itemStack, itemStack, minorModuleNames[i], minorModules[i], minorModules[i]));
+                if (minorModules[i] != null) {
+                    addChild(getMinorModule(count, index,
+                        itemStack, itemStack, minorModuleNames[i],
+                        minorModules[i], minorModules[i]));
+                    index++;
+                }
             }
         }
     }
 
-    private GuiElement getMinorModule(int index, int count, ItemStack itemStack, ItemStack previewStack, String moduleClassName,
+    private GuiElement getMinorModule(int count, int index, ItemStack itemStack, ItemStack previewStack, String moduleClassName,
                                       ItemModule module, ItemModule previewModule) {
-        int offsetY = minorYOffsets[count - 1] + index * 12 + 1;
-        int offsetX = (int) (0.6 * Math.abs(13 - offsetY) - 21);
-        return new GuiModuleMinor(offsetX, offsetY, itemStack, previewStack, moduleClassName, module, previewModule);
+        minorYOffsets = new int[][] { {13}, {6, 20}, {0, 13, 26} };
+        minorXOffsets = new int[][] { {-21}, {-18, -18}, {-12, -21, -12} };
+        return new GuiModuleMinor(minorXOffsets[count-1][index], minorYOffsets[count-1][index], itemStack, previewStack,
+            moduleClassName, module, previewModule);
     }
 }

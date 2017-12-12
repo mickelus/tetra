@@ -160,7 +160,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public boolean isBroken(ItemStack itemStack) {
-        return itemStack.getItemDamage() >= itemStack.getMaxDamage();
+        return itemStack.getMaxDamage() != 0 && itemStack.getItemDamage() >= itemStack.getMaxDamage();
     }
 
     @Override

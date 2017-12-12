@@ -1,0 +1,25 @@
+[
+    {
+        "key": "strap_3/leather",
+        "material": "minecraft:leather",
+        "materialCount": 3,
+        "integrity": -4,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 80
+        }
+    },
+    {
+        "key": "strap_3/iron",
+        "material": "minecraft:iron_ingot",
+        "materialCount": 3,
+        "integrity": -2,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 80
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
+    }
+]

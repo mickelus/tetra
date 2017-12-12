@@ -126,11 +126,26 @@ belt/buckled=Leather belt
 belt/inlaid=Shulker inlaid belt
 
 ###############################
-# TOOLBELT SINGLE STRAP
+# TOOLBELT STRAPS
 ###############################
-single_strap_schema.name=Single belt strap
-single_strap_schema.description=Attach a single strap for attaching tools, or other items, to the belt.
-single_strap_schema.slot1=Strap material
+strap_schema_1.name=Single belt strap
+strap_schema_1.description=Attach a single strap to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema_1.slot1=Strap material
+strap_schema_2.name=Double belt strap
+strap_schema_2.description=Attach a two straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema_2.slot1=Strap material
+strap_schema_3.name=Triple belt strap
+strap_schema_3.description=Attach a three straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema_3.slot1=Strap material
+strap_schema_4.name=Quadruple belt strap
+strap_schema_4.description=Attach a four straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema_4.slot1=Strap material
 
-single_strap/leather_strap=Leather strap
-single_strap/iron_loop=Iron loop
+strap_1/leather=Leather strap
+strap_1/iron=Iron loop
+strap_2/leather=2 Leather straps
+strap_2/iron=2 Iron loops
+strap_3/leather=3 Leather straps
+strap_3/iron=3 Iron loops
+strap_4/leather=4 Leather straps
+strap_4/iron=4 Iron loops
