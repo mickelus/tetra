@@ -10,6 +10,8 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.items.ItemModularHandheld;
+import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 
 
 public class GuiStatGroup extends GuiElement {
@@ -18,27 +20,33 @@ public class GuiStatGroup extends GuiElement {
     private GuiStatBar speedBar;
     private GuiStatBar durabilityBar;
     private GuiStatBar hammerBar;
+    private GuiStatBar slotBar;
 
 
     public GuiStatGroup(int x, int y) {
         super(x, y, 200, 64);
 
-        damageBar = new GuiStatBar(104, 30, I18n.format("attribute.name.generic.attackDamage"), 0, 40, GuiAlignment.left);
-        addChild(damageBar);
+        damageBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackDamage"), 0, 40, GuiAlignment.left);
+        speedBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackSpeed"), -4, 4, GuiAlignment.left);
+        durabilityBar = new GuiStatBar(0, 0, I18n.format("item.modular.durability"), 0, 1024, GuiAlignment.left);
 
-        speedBar = new GuiStatBar(0, 30, I18n.format("attribute.name.generic.attackSpeed"), -4, 4, GuiAlignment.right);
-        addChild(speedBar);
-
-        durabilityBar = new GuiStatBar(104, 15, I18n.format("item.modular.durability"), 0, 1024, GuiAlignment.left);
-        addChild(durabilityBar);
-
-        hammerBar = new GuiStatBar(0, 15, I18n.format("item.modular.tier"), 0, 4, GuiAlignment.right);
-        addChild(hammerBar);
+        hammerBar = new GuiStatBarSegmented(0, 0, I18n.format("item.modular.tier"), 0, 4, GuiAlignment.left);
+        slotBar = new GuiStatBarSegmented(0, 0, I18n.format("Slots"), 0, 9, GuiAlignment.left);
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack, EntityPlayer player) {
         setVisible(!itemStack.isEmpty());
         if (!itemStack.isEmpty()) {
+            clearChildren();
+            if (itemStack.getItem() instanceof ItemModularHandheld) {
+                showBar(damageBar);
+                showBar(speedBar);
+            }
+
+            if (itemStack.getMaxDamage() > 0) {
+                showBar(durabilityBar);
+            }
+
             if (!previewStack.isEmpty()) {
                 damageBar.setValue(getAttackDamage(itemStack, player), getAttackDamage(previewStack, player));
                 speedBar.setValue(getAttackSpeed(itemStack, player), getAttackSpeed(previewStack, player));
@@ -57,12 +65,43 @@ public class GuiStatGroup extends GuiElement {
                 int hammerTier = getCapability(itemStack, Capability.hammer);
                 updateHammerBar(hammerTier, hammerTier);
             }
+
+            updateSlotBar(itemStack, previewStack);
+        }
+    }
+
+    private void showBar(GuiStatBar bar) {
+        int offset = getNumChildren();
+        bar.setX((1 - offset % 2) * 104);
+        bar.setY(30 - 15 * (offset / 2));
+        if (offset % 2 == 0) {
+            bar.setAlignment(GuiAlignment.left);
+        } else {
+            bar.setAlignment(GuiAlignment.right);
+        }
+        addChild(bar);
+    }
+
+    private void updateSlotBar(ItemStack itemStack, ItemStack previewStack) {
+        if (itemStack.getItem() instanceof ItemToolbeltModular) {
+            ItemToolbeltModular item = (ItemToolbeltModular) itemStack.getItem();
+
+            int slots = item.getNumSlots(itemStack);
+            if (!previewStack.isEmpty()) {
+                slotBar.setValue(slots, item.getNumSlots(previewStack));
+            } else {
+                slotBar.setValue(slots, slots);
+            }
+
+            showBar(slotBar);
         }
     }
 
     private void updateHammerBar(int tier, int previewTier) {
-        hammerBar.setVisible(tier != 0 || previewTier != 0);
-        hammerBar.setValue(tier, previewTier);
+        if (tier != 0 || previewTier != 0) {
+            hammerBar.setValue(tier, previewTier);
+            showBar(hammerBar);
+        }
     }
 
     private double getAttackDamage(ItemStack itemStack, EntityPlayer player) {

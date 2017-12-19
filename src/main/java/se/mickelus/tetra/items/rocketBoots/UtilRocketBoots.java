@@ -13,11 +13,11 @@ public class UtilRocketBoots {
     public static final String fuelKey = "fuel";
     public static final String cooldownKey = "cooldown";
 
-    public static final int fuelCapacity = 200;
-    public static final int fuelCost = 2;
+    public static final int fuelCapacity = 600;
+    public static final int fuelCost = 1;
     public static final int fuelCostCharged = 40;
     public static final int fuelRecharge = 1;
-    public static final int cooldownTicks = 80;
+    public static final int cooldownTicks = 20;
 
     public static final double boostStrength = 0.05;
     public static final double chargedBoostStrength = 1.2;
@@ -44,19 +44,24 @@ public class UtilRocketBoots {
     }
 
     public static void boostPlayer(EntityPlayer player, NBTTagCompound tag) {
-        player.addVelocity(0, boostStrength, 0);
-
         if (player.motionY > -0.1) {
+            if (player.isSneaking()) {
+                player.addVelocity(0, boostStrength, 0);
+            } else {
+                player.addVelocity(0, boostStrength / 1.5, 0);
+            }
             player.fallDistance = 0;
+        } else {
+            player.addVelocity(0, boostStrength * 2, 0);
         }
     }
 
     public static void boostPlayerCharged(EntityPlayer player, NBTTagCompound tag) {
         Vec3d lookVector = player.getLookVec();
         //player.addVelocity(0, 5, 0);
-        player.addVelocity(
+        player.setVelocity(
                 lookVector.x * chargedBoostStrength,
-                Math.max(lookVector.y  * chargedBoostStrength / 10, 0.2),
+                Math.max(lookVector.y  * chargedBoostStrength, 0.3),
                 lookVector.z * chargedBoostStrength);
     }
 

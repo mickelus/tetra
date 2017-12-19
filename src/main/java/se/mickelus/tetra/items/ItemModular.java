@@ -23,12 +23,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
+import se.mickelus.tetra.module.ModuleData;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
-    private static final String repairCountKey = "repairCount";
+    protected static final String repairCountKey = "repairCount";
 
-    private static final String cooledStrengthKey = "cooledStrength";
+    protected static final String cooledStrengthKey = "cooledStrength";
 
     protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
@@ -235,28 +236,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         setDamage(itemStack, getDamage(itemStack) - getRepairAmount(itemStack));
 
         incrementRepairCount(itemStack);
-    }
-
-    @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        applyDamage(1, stack, attacker);
-        getAllModules(stack).forEach(module -> module.hitEntity(stack, target, attacker));
-
-        return true;
-    }
-
-    @Override
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        setCooledAttackStrength(stack, player.getCooledAttackStrength(0.5f));
-        return false;
-    }
-
-    public void setCooledAttackStrength(ItemStack itemStack, float strength) {
-        NBTHelper.getTag(itemStack).setFloat(cooledStrengthKey, strength);
-    }
-
-    public static float getCooledAttackStrength(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getFloat(cooledStrengthKey);
     }
 
     @Override

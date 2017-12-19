@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.WeaponModuleData;
@@ -49,7 +50,7 @@ public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         float cooldown = 1;
         if (attacker instanceof EntityPlayer) {
-            cooldown = ItemModular.getCooledAttackStrength(stack);
+            cooldown = ItemModularHandheld.getCooledAttackStrength(stack);
         }
 
         if (cooldown > 0.9) {

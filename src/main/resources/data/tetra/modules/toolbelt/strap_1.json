@@ -3,7 +3,7 @@
         "key": "strap_1/leather",
         "material": "minecraft:leather",
         "integrity": -1,
-        "slots": 1,
+        "size": 1,
         "glyph": {
             "tint": "866526",
             "textureX": 80
@@ -13,7 +13,7 @@
         "key": "strap_1/iron",
         "material": "minecraft:iron_ingot",
         "integrity": 0,
-        "slots": 1,
+        "size": 1,
         "glyph": {
             "tint": "866526",
             "textureX": 80

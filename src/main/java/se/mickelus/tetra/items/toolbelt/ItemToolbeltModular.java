@@ -91,4 +91,11 @@ public class ItemToolbeltModular extends ItemModular {
 
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
+
+
+    public int getNumSlots(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+            .map(module -> module.getSize(itemStack))
+            .reduce(0, Integer::sum);
+    }
 }

@@ -4,7 +4,7 @@
         "material": "minecraft:leather",
         "materialCount": 2,
         "integrity": -3,
-        "slots": 2,
+        "size": 2,
         "glyph": {
             "tint": "866526",
             "textureX": 80
@@ -12,10 +12,10 @@
     },
     {
         "key": "strap_2/iron",
-        "material": "minecraft:iron",
+        "material": "minecraft:iron_ingot",
         "materialCount": 2,
         "integrity": -1,
-        "slots": 2,
+        "size": 2,
         "glyph": {
             "tint": "866526",
             "textureX": 80

@@ -21,6 +21,26 @@ public class GuiStringSmall extends GuiString {
     }
 
     @Override
+    public void setX(int x) {
+        super.setX(x * 2);
+    }
+
+    @Override
+    public void setY(int y) {
+        super.setY(y * 2);
+    }
+
+    @Override
+    public int getX() {
+        return super.getX() / 2;
+    }
+
+    @Override
+    public int getY() {
+        return super.getY() / 2;
+    }
+
+    @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(.5, .5, .5);

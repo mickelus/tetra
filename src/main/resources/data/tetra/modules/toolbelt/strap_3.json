@@ -4,6 +4,7 @@
         "material": "minecraft:leather",
         "materialCount": 3,
         "integrity": -4,
+        "size": 3,
         "glyph": {
             "tint": "866526",
             "textureX": 80
@@ -14,6 +15,7 @@
         "material": "minecraft:iron_ingot",
         "materialCount": 3,
         "integrity": -2,
+        "size": 3,
         "glyph": {
             "tint": "866526",
             "textureX": 80

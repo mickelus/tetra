@@ -48,6 +48,10 @@ public class GuiString extends GuiElement {
         this.string = string;
     }
 
+    public void setTextAlignment(GuiAlignment textAlign) {
+        this.textAlign = textAlign;
+    }
+
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
         if (textAlign == GuiAlignment.left) {

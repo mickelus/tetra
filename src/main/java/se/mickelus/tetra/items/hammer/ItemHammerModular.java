@@ -17,6 +17,7 @@ import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -29,12 +30,13 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ItemHammerModular extends ItemModular {
+public class ItemHammerModular extends ItemModularHandheld {
 
     public final static String headKey = "head";
 
     public final static String handleKey = "handle";
     public final static String bindingKey = "binding";
+    public final static String accessoryKey = "accessory";
 
     private static final String unlocalizedName = "hammer_modular";
 
@@ -46,8 +48,8 @@ public class ItemHammerModular extends ItemModular {
 
         majorModuleNames = new String[]{"Head", "Handle"};
         majorModuleKeys = new String[]{headKey, handleKey};
-        minorModuleNames = new String[]{"Binding"};
-        minorModuleKeys = new String[]{bindingKey};
+        minorModuleNames = new String[]{"Binding", "Accessory"};
+        minorModuleKeys = new String[]{bindingKey, accessoryKey};
 
         new BasicHeadModule(headKey);
         new BasicHandleModule(handleKey);
