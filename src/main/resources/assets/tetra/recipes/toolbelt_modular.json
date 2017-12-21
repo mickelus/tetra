@@ -7,10 +7,10 @@
     "result": {
         "item": "tetra:toolbelt_modular",
         "nbt": {
-            "toolbelt:slot1": "toolbelt/single_strap",
-            "toolbelt/single_strap_material": "basic_head/log",
+            "toolbelt:slot1": "toolbelt/strap_1",
+            "toolbelt/single_strap_material": "strap_1/rope",
             "toolbelt:belt": "toolbelt/belt",
-            "toolbelt/belt_material": "single_strap/leather_strap"
+            "toolbelt/belt_material": "belt/rope"
         }
     }
 }
