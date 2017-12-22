@@ -16,7 +16,6 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.module.BeltModule;
-import se.mickelus.tetra.items.toolbelt.module.ModuleDataToolbelt;
 import se.mickelus.tetra.items.toolbelt.module.StrapModule;
 import se.mickelus.tetra.module.BasicSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
