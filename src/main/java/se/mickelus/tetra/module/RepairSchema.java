@@ -29,7 +29,7 @@ public class RepairSchema implements UpgradeSchema {
 
     @Override
     public String getKey() {
-        return key;
+        return key + "/" + item.getUnlocalizedName();
     }
 
     @Override

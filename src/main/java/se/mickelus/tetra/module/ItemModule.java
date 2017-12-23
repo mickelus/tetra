@@ -133,9 +133,13 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public ItemStack getRepairMaterial(ItemStack itemStack) {
-        Item item = Item.getByNameOrId(getData(itemStack).material);
+        ModuleData data = getData(itemStack);
+        Item item = Item.getByNameOrId(data.material);
 
         if (item != null) {
+            if (data.materialData != -1) {
+                return new ItemStack(item, 1, data.materialData);
+            }
             return new ItemStack(item);
         } else {
             return null;

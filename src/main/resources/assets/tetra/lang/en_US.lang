@@ -19,7 +19,7 @@ item.rocket_boots.name=Rocket boots
 # REPAIR SCHEMA
 ###############################
 repair_schema.name=Repair
-repair_schema.description=Repair the item. Materials used are based on what the modules are made of
+repair_schema.description=Repair the item using various materials.
 
 ###############################
 # BASIC BLADE
