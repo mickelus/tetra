@@ -29,8 +29,16 @@ blade_schema.description=Replace the current sword blade with the given blade, o
 blade_schema.slot1=Blade material
 
 basic_blade/oak=Oak blade
+basic_blade/spruce=Spruce blade
+basic_blade/birch=Birch blade
+basic_blade/jungle=Jungle blade
+basic_blade/acacia=Acacia blade
+basic_blade/dark_oak=Dark oak blade
 basic_blade/cobblestone=Stone blade
 basic_blade/stone=Solid stone blade
+basic_blade/granite=Granite blade
+basic_blade/diorite=Diorite blade
+basic_blade/andesite=Andesite blade
 basic_blade/iron=Iron blade
 basic_blade/gold=Golden blade
 basic_blade/diamond=Diamond blade

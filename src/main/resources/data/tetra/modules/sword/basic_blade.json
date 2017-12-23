@@ -2,10 +2,71 @@
     {
         "key": "basic_blade/oak",
         "material": "minecraft:planks",
+        "materialData": 0,
         "durability": 100,
         "integrity": 0,
         "damage": 1,
-        "glyph": { "tint": "866526" },
+        "glyph": { "tint": "9d804e" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/spruce",
+        "material": "minecraft:planks",
+        "materialData": 1,
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "694f2f" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/birch",
+        "material": "minecraft:planks",
+        "materialData": 2,
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "c8b77d" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/jungle",
+        "material": "minecraft:planks",
+        "materialData": 3,
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "996e4c" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/acacia",
+        "material": "minecraft:planks",
+        "materialData": 4,
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "ac5d33" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/dark_oak",
+        "material": "minecraft:planks",
+        "materialData": 5,
+        "durability": 100,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": { "tint": "3c2712" },
         "requiredCapabilities": {
             "hammer": 1
         }
@@ -24,10 +85,47 @@
     {
         "key": "basic_blade/stone",
         "material": "minecraft:stone",
+        "materialData": 0,
         "durability": 300,
         "integrity": -1,
         "damage": 3,
         "glyph": { "tint": "9a9a9a" },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_blade/granite",
+        "material": "minecraft:stone",
+        "materialData": 1,
+        "durability": 420,
+        "integrity": -1,
+        "damage": 3,
+        "glyph": { "tint": "8a6658" },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_blade/diorite",
+        "material": "minecraft:stone",
+        "materialData": 3,
+        "durability": 280,
+        "integrity": -1,
+        "damage": 3,
+        "glyph": { "tint": "b1b1b3" },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_blade/andesite",
+        "material": "minecraft:stone",
+        "materialData": 5,
+        "durability": 320,
+        "integrity": -2,
+        "damage": 4,
+        "glyph": { "tint": "79797a" },
         "requiredCapabilities": {
             "hammer": 2
         }

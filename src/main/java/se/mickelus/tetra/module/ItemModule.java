@@ -46,18 +46,28 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return slotAcceptsMaterial(targetStack, materials[0]);
     }
 
-    public boolean slotAcceptsMaterial(ItemStack targetStack, ItemStack material) {
-        String materialName = Item.REGISTRY.getNameForObject(material.getItem()).toString();
+    public boolean slotAcceptsMaterial(ItemStack targetStack, ItemStack materialStack) {
+        String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
 
         return Arrays.stream(data)
-                .anyMatch(moduleData -> moduleData.material.equals(materialName));
+                .anyMatch(moduleData -> {
+                    if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
+                        return false;
+                    }
+                    return moduleData.material.equals(materialName);
+                });
     }
 
-    public T getDataByMaterial(ItemStack itemStack) {
-        String material = Item.REGISTRY.getNameForObject(itemStack.getItem()).toString();
+    public T getDataByMaterial(ItemStack materialStack) {
+        String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
 
         return Arrays.stream(data)
-                .filter(moduleData -> moduleData.material.equals(material))
+                .filter(moduleData -> {
+                    if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
+                        return false;
+                    }
+                    return moduleData.material.equals(materialName);
+                })
                 .findAny().orElse(getDefaultData());
     }
 
