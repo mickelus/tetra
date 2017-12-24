@@ -79,6 +79,7 @@ public class GuiSchemaDetail extends GuiElement {
                 slotBorders[i].setVisible(true);
             } else {
                 slotBorders[i].setVisible(false);
+                slotQuantities[i].setVisible(false);
             }
         }
 
