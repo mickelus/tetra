@@ -33,7 +33,7 @@ basic_blade/spruce=Spruce blade
 basic_blade/birch=Birch blade
 basic_blade/jungle=Jungle blade
 basic_blade/acacia=Acacia blade
-basic_blade/dark_oak=Dark oak blade
+basic_blade/dark_oak=Oak blade
 basic_blade/cobblestone=Stone blade
 basic_blade/stone=Solid stone blade
 basic_blade/granite=Granite blade
@@ -53,7 +53,7 @@ hilt_schema.description=Replaces the current hilt with a new one crafted from th
 hilt_schema.slot1=Hilt material
 
 basic_hilt/hilt_stick=Wooden hilt
-basic_hilt/oak=Heavy oak hilt
+basic_hilt/oak=Sturdy wooden hilt
 basic_hilt/iron=Iron hilt
 basic_hilt/bone=Bone hilt
 basic_hilt/blaze_rod=Blazing hilt
@@ -67,6 +67,11 @@ short_blade_schema.description=Replace the current sword blade with a blade that
 short_blade_schema.slot1=Blade material
 
 short_blade/oak=Oak shortblade
+short_blade/spruce=Spruce shortblade
+short_blade/birch=Birch shortblade
+short_blade/jungle=Jungle  shortblade
+short_blade/acacia=Acacia  shortblade
+short_blade/dark_oak=Oak shortblade
 short_blade/iron=Iron shortblade
 short_blade/gold=Golden shortblade
 
@@ -78,9 +83,17 @@ heavy_blade_schema.description=Replace the current sword blade with a large and 
 heavy_blade_schema.slot1=Blade material
 
 heavy_blade/oak=Heavy oaken blade
+heavy_blade/spruce=Heavy spruce blade
+heavy_blade/birch=Heavy birch blade
+heavy_blade/jungle=Heavy jungle blade
+heavy_blade/acacia=Heavy acacia blade
+heavy_blade/dark_oak=Heavy oaken blade
 heavy_blade/iron=Heavy iron cleaver
-heavy_blade/stone=Heavy stone blade
-heavy_blade/cobblestone=Solid stone cleaver
+heavy_blade/cobblestone=Heavy stone blade
+heavy_blade/stone=Solid stone cleaver
+heavy_blade/granite=Solid granite cleaver
+heavy_blade/diorite=Solid diorite cleaver
+heavy_blade/andesite=Solid andesite cleaver
 heavy_blade/gold=Excessive ornate blade
 heavy_blade/obsidian=Heavy obsidian blade
 

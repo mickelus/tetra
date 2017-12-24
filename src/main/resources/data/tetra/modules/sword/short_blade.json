@@ -2,12 +2,93 @@
     {
         "key": "short_blade/oak",
         "material": "minecraft:planks",
+        "materialData": 0,
         "durability": 40,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": 2.4,
         "glyph": {
             "tint": "866526",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "short_blade/spruce",
+        "material": "minecraft:planks",
+        "materialData": 1,
+        "durability": 40,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 2.4,
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "short_blade/birch",
+        "material": "minecraft:planks",
+        "materialData": 2,
+        "durability": 40,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 2.4,
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "short_blade/jungle",
+        "material": "minecraft:planks",
+        "materialData": 3,
+        "durability": 40,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 2.4,
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "short_blade/acacia",
+        "material": "minecraft:planks",
+        "materialData": 4,
+        "durability": 40,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 2.4,
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "short_blade/dark_oak",
+        "material": "minecraft:planks",
+        "materialData": 5,
+        "durability": 40,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 2.4,
+        "glyph": {
+            "tint": "3c2712",
             "textureX": 32
         },
         "requiredCapabilities": {

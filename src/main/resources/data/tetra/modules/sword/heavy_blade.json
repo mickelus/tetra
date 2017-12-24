@@ -2,13 +2,99 @@
     {
         "key": "heavy_blade/oak_log",
         "material": "minecraft:log",
+        "materialData": 0,
         "materialCount": 8,
         "durability": 100,
         "integrity": -2,
         "damage": 3,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "866526",
+            "tint": "9d804e",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "heavy_blade/spruce_log",
+        "material": "minecraft:log",
+        "materialData": 1,
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "heavy_blade/birch_log",
+        "material": "minecraft:log",
+        "materialData": 2,
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "heavy_blade/jungle_log",
+        "material": "minecraft:log",
+        "materialData": 3,
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "heavy_blade/acacia_log",
+        "material": "minecraft:log",
+        "materialData": 4,
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "6c655a",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "heavy_blade/dark_oak_log",
+        "material": "minecraft:log",
+        "materialData": 5,
+        "materialCount": 8,
+        "durability": 100,
+        "integrity": -2,
+        "damage": 3,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c2712",
             "textureX": 48
         },
         "requiredCapabilities": {
@@ -34,6 +120,7 @@
     {
         "key": "heavy_blade/stone",
         "material": "minecraft:stone",
+        "materialData": 0,
         "materialCount": 8,
         "durability": 300,
         "integrity": -2,
@@ -41,6 +128,57 @@
         "attackSpeed": -0.9,
         "glyph": {
             "tint": "9a9a9a",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "heavy_blade/granite",
+        "material": "minecraft:stone",
+        "materialData": 1,
+        "materialCount": 8,
+        "durability": 300,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.9,
+        "glyph": {
+            "tint": "8a6658",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "heavy_blade/diorite",
+        "material": "minecraft:stone",
+        "materialData": 3,
+        "materialCount": 8,
+        "durability": 300,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.9,
+        "glyph": {
+            "tint": "b1b1b3",
+            "textureX": 48
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "heavy_blade/andesite",
+        "material": "minecraft:stone",
+        "materialData": 5,
+        "materialCount": 8,
+        "durability": 300,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.9,
+        "glyph": {
+            "tint": "79797a",
             "textureX": 48
         },
         "requiredCapabilities": {
