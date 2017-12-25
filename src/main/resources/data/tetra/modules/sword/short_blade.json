@@ -22,7 +22,7 @@
         "durability": 40,
         "integrity": -1,
         "damage": 1,
-        "attackSpeed": 2.4,
+        "attackSpeed": 2.6,
         "glyph": {
             "tint": "694f2f",
             "textureX": 32
@@ -35,7 +35,7 @@
         "key": "short_blade/birch",
         "material": "minecraft:planks",
         "materialData": 2,
-        "durability": 40,
+        "durability": 50,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": 2.4,
@@ -53,7 +53,7 @@
         "materialData": 3,
         "durability": 40,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": 2.4,
         "glyph": {
             "tint": "996e4c",
@@ -67,10 +67,10 @@
         "key": "short_blade/acacia",
         "material": "minecraft:planks",
         "materialData": 4,
-        "durability": 40,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": 2.4,
+        "durability": 50,
+        "integrity": -2,
+        "damage": 2,
+        "attackSpeed": 2.6,
         "glyph": {
             "tint": "ac5d33",
             "textureX": 32
