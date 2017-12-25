@@ -7,7 +7,7 @@
         "size": 2,
         "glyph": {
             "tint": "866526",
-            "textureX": 80
+            "textureX": 96
         }
     },
     {
@@ -18,7 +18,7 @@
         "size": 2,
         "glyph": {
             "tint": "866526",
-            "textureX": 80
+            "textureX": 96
         },
         "requiredCapabilities": {
             "hammer": 2
