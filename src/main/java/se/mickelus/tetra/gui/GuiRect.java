@@ -27,5 +27,6 @@ public class GuiRect extends GuiElement {
         } else {
             drawRect(refX + x, refY + y, refX + x + width, refY + y + height, color);
         }
+        GlStateManager.color(255, 255, 255, 255);
     }
 }

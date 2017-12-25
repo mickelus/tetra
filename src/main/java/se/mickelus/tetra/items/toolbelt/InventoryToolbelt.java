@@ -22,10 +22,12 @@ public class InventoryToolbelt implements IInventory {
     private NonNullList<ItemStack> inventoryShadows;
 
     public InventoryToolbelt(ItemStack stack) {
+        ItemToolbeltModular item = (ItemToolbeltModular) stack.getItem();
+        int numSlots = item.getNumSlots(stack);
         toolbeltItemStack = stack;
 
-        inventoryContents = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
-        inventoryShadows = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
+        inventoryContents = NonNullList.withSize(numSlots, ItemStack.EMPTY);
+        inventoryShadows = NonNullList.withSize(numSlots, ItemStack.EMPTY);
 
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());

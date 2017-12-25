@@ -18,10 +18,11 @@ public class ContainerToolbelt extends Container {
         this.itemStackToolbelt = itemStackToolbelt;
         toolbeltInventory.openInventory(player);
 
-        this.addSlotToContainer(new Slot(toolbeltInventory, 0, 79, 19));
-        this.addSlotToContainer(new Slot(toolbeltInventory, 1, 93, 33));
-        this.addSlotToContainer(new Slot(toolbeltInventory, 2, 65, 33));
-        this.addSlotToContainer(new Slot(toolbeltInventory, 3, 79, 47));
+        int numSlots = toolbeltInventory.getSizeInventory();
+
+        for (int i = 0; i < numSlots; i++) {
+            this.addSlotToContainer(new Slot(toolbeltInventory, i, -8 * numSlots + 17 * i + 85, 19));
+        }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

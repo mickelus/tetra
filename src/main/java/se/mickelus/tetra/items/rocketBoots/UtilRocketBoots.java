@@ -13,7 +13,7 @@ public class UtilRocketBoots {
     public static final String fuelKey = "fuel";
     public static final String cooldownKey = "cooldown";
 
-    public static final int fuelCapacity = 600;
+    public static final int fuelCapacity = 300;
     public static final int fuelCost = 1;
     public static final int fuelCostCharged = 40;
     public static final int fuelRecharge = 1;

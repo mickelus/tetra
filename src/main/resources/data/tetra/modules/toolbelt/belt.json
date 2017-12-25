@@ -4,7 +4,7 @@
         "material": "minecraft:lead",
         "integrity": 1,
         "glyph": {
-            "tint": "866526",
+            "tint": "7a6758",
             "textureX": 0,
             "textureY": 16
         }
@@ -14,7 +14,7 @@
         "material": "minecraft:wool",
         "integrity": 2,
         "glyph": {
-            "tint": "866526",
+            "tint": "9f9895",
             "textureX": 0,
             "textureY": 16
         }
@@ -34,7 +34,7 @@
         "material": "minecraft:iron_ingot",
         "integrity": 5,
         "glyph": {
-            "tint": "866526",
+            "tint": "6e6e6e",
             "textureX": 0,
             "textureY": 16
         },
@@ -48,7 +48,7 @@
         "materialCount": 3,
         "integrity": 8,
         "glyph": {
-            "tint": "866526",
+            "tint": "563d4a",
             "textureX": 0,
             "textureY": 16
         }

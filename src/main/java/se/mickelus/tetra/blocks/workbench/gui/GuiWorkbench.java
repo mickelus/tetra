@@ -86,11 +86,7 @@ public class GuiWorkbench extends GuiContainer {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-//        drawRect(x, y, x + xSize, y + ySize, 0x44ffffff);
         defaultGui.draw(x, y, width, height, mouseX, mouseY);
-//        componentList.draw(width / 2, y, width, height, mouseX, mouseY);
-
-//        fontRendererObj.drawString("" + tileEntity.getCurrentState(), x, y, 0xffffffff, false);
     }
 
     @Override
@@ -98,8 +94,6 @@ public class GuiWorkbench extends GuiContainer {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
         defaultGui.onClick(mouseX, mouseY);
-
-//        tileEntity.setCurrentState(tileEntity.getCurrentState() + 1);
     }
 
     private void deselectSchema() {
