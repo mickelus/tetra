@@ -56,4 +56,8 @@ public class UtilToolbelt {
         }
         return -1;
     }
+
+    public static void emptyOverflowSlots(ItemStack itemStack, EntityPlayer player) {
+        new InventoryToolbelt(itemStack).emptyOverflowSlots(player);
+    }
 }

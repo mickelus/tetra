@@ -79,8 +79,8 @@ public class ItemHammerModular extends ItemModularHandheld {
         if (originalStack != null) {
             itemStack.setItemDamage(originalStack.getItemDamage());
         }
-        BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Blocks.LOG)}, false);
-        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.STICK)}, false);
+        BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Blocks.LOG)}, false, null);
+        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.STICK)}, false, null);
         return itemStack;
     }
 

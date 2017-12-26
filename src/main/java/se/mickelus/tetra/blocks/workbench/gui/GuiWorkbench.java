@@ -137,7 +137,7 @@ public class GuiWorkbench extends GuiContainer {
 
     private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
         if (schema.isMaterialsValid(targetStack, materials)) {
-            return schema.applyUpgrade(targetStack, materials, false);
+            return schema.applyUpgrade(targetStack, materials, false, null);
         }
         return ItemStack.EMPTY;
     }

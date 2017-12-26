@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,15 +30,21 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
-    public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials) {
+    public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
         ModuleData data = getDataByMaterial(materials[0]);
+
+        ItemModule previousModule = ItemUpgradeRegistry.instance.getModule(tag.getString(slotKey));
 
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, data.key);
 
         if (consumeMaterials) {
             materials[0].shrink(data.materialCount);
+
+            if (previousModule != null && player != null) {
+                previousModule.postRemove(targetStack, player);
+            }
         }
     }
 
@@ -78,6 +85,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         tag.removeTag(dataKey);
 
         return new ItemStack[0];
+    }
+
+    public void postRemove(ItemStack targetStack, EntityPlayer player) {
+
     }
 
     public T getData(ItemStack itemStack) {

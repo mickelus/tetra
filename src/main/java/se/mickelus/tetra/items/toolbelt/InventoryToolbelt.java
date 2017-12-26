@@ -14,20 +14,21 @@ import se.mickelus.tetra.NBTHelper;
 
 public class InventoryToolbelt implements IInventory {
 
-    public static int INVENTORY_SIZE = 4;
+    public static int INVENTORY_MAX_SIZE = 4;
     
     private ItemStack toolbeltItemStack;
 
     private NonNullList<ItemStack> inventoryContents;
     private NonNullList<ItemStack> inventoryShadows;
+    private int numSlots = 0;
 
     public InventoryToolbelt(ItemStack stack) {
         ItemToolbeltModular item = (ItemToolbeltModular) stack.getItem();
-        int numSlots = item.getNumSlots(stack);
+        numSlots = item.getNumSlots(stack);
         toolbeltItemStack = stack;
 
-        inventoryContents = NonNullList.withSize(numSlots, ItemStack.EMPTY);
-        inventoryShadows = NonNullList.withSize(numSlots, ItemStack.EMPTY);
+        inventoryContents = NonNullList.withSize(INVENTORY_MAX_SIZE, ItemStack.EMPTY);
+        inventoryShadows = NonNullList.withSize(INVENTORY_MAX_SIZE, ItemStack.EMPTY);
 
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
@@ -44,7 +45,7 @@ public class InventoryToolbelt implements IInventory {
             NBTTagCompound itemTag = items.getCompoundTagAt(i);
             int slot = itemTag.getInteger("Slot");
 
-            if (0 <= slot && slot < getSizeInventory()) {
+            if (0 <= slot && slot < INVENTORY_MAX_SIZE) {
                 inventoryContents.set(slot, new ItemStack(itemTag));
             }
         }
@@ -63,7 +64,7 @@ public class InventoryToolbelt implements IInventory {
         NBTTagList items = new NBTTagList();
         NBTTagList shadows = new NBTTagList();
 
-        for (int i = 0; i < getSizeInventory(); i++) {
+        for (int i = 0; i < INVENTORY_MAX_SIZE; i++) {
             if (getStackInSlot(i) != null) {
                 NBTTagCompound item = new NBTTagCompound();
                 item.setInteger("Slot", i);
@@ -85,7 +86,7 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public int getSizeInventory() {
-        return inventoryContents.size();
+        return numSlots;
     }
 
     @Override
@@ -207,5 +208,20 @@ public class InventoryToolbelt implements IInventory {
     @Override
     public ITextComponent getDisplayName() {
         return null;
+    }
+
+    public void emptyOverflowSlots(EntityPlayer player) {
+        for (int i = getSizeInventory(); i < INVENTORY_MAX_SIZE; i++) {
+            moveStackToPlayer(removeStackFromSlot(i), player);
+        }
+        this.markDirty();
+    }
+
+    private void moveStackToPlayer(ItemStack itemStack, EntityPlayer player) {
+        if (!itemStack.isEmpty()) {
+            if (!player.inventory.addItemStackToInventory(itemStack)) {
+                player.dropItem(itemStack, false);
+            }
+        }
     }
 }

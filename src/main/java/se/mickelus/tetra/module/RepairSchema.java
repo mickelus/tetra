@@ -92,7 +92,7 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) upgradedStack.getItem();
 
