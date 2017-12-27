@@ -42,10 +42,10 @@ public class GuiToolbelt extends GuiContainer {
         defaultGui.addChild(new GuiRect(-8 * numSlots + 85, 18, numSlots * 17 - 1, 18, 0xff000000));
 
         // toolbelt left cap
-        defaultGui.addChild(new GuiTexture(-8 * numSlots + 72, 14, 16, 28, TOOLBELT_TEXTURE));
+        defaultGui.addChild(new GuiTexture(-8 * numSlots + 72, 14, 17, 28, TOOLBELT_TEXTURE));
 
         // toolbelt right cap
-        defaultGui.addChild(new GuiTexture(9 * numSlots + 80, 13, 17, 27, 17, 0, TOOLBELT_TEXTURE));
+        defaultGui.addChild(new GuiTexture(9 * numSlots + 80, 13, 17, 28, 17, 0, TOOLBELT_TEXTURE));
 
         instance = this;
     }

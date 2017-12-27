@@ -19,7 +19,7 @@ public class OverlayGuiItem extends GuiElement {
     private static final int COLOR_HOVER = 0xffffff00;
 
     public OverlayGuiItem(int x, int y, ItemStack itemStack, int slot) {
-        super(x, y, 200, 20);
+        super(x, y, 200, 24);
 
         this.itemStack = itemStack;
         this.slot = slot;
@@ -31,9 +31,11 @@ public class OverlayGuiItem extends GuiElement {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
 
-        mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 20, y + refY + 6, hasFocus() ? COLOR_HOVER : COLOR_DEFAULT);
+        if (hasFocus()) {
+            mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 65, y + refY + 4, COLOR_HOVER);
+        }
 
-        drawItemStack(itemStack, x + refX, y + refY, null);
+        drawItemStack(itemStack, x + refX + 40, y + refY, null);
     }
 
     private void drawItemStack(ItemStack stack, int x, int y, String altText) {

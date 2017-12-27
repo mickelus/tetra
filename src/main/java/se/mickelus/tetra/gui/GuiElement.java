@@ -39,7 +39,7 @@ public class GuiElement extends GuiNode {
     }
 
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
-        boolean gainFocus = mouseX >= x + refX && mouseX <= x + refX + width && mouseY >= y + refY && mouseY <= y + refY + height;
+        boolean gainFocus = mouseX >= x + refX && mouseX < x + refX + width && mouseY >= y + refY && mouseY < y + refY + height;
 
         if (gainFocus != hasFocus) {
             hasFocus = gainFocus;

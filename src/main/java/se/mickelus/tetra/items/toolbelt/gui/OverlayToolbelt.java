@@ -22,9 +22,7 @@ public class OverlayToolbelt {
     private int bindingKey = Keyboard.KEY_V;
     private KeyBinding key;
 
-    private boolean drawOverlay = false;
-
-    private boolean canShow = false;
+    private boolean wasKeyDown = false;
 
     private OverlayGuiToolbelt gui;
 
@@ -40,8 +38,9 @@ public class OverlayToolbelt {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.inGameHasFocus) {
-            if (key.isKeyDown() && !drawOverlay) {
+            if (key.isKeyDown() && !wasKeyDown) {
                 showView();
+                wasKeyDown = true;
             }
         }
     }
@@ -53,27 +52,25 @@ public class OverlayToolbelt {
             return;
         }
 
-        if (!key.isKeyDown() && drawOverlay) {
+        if (!key.isKeyDown() && wasKeyDown) {
             hideView();
+            wasKeyDown = false;
         }
 
-        if (drawOverlay) {
-            gui.draw();
-        }
+        gui.draw();
     }
 
     private void showView() {
         boolean canOpen = updateGuiData();
         if (canOpen) {
             mc.inGameHasFocus = false;
-            drawOverlay = true;
             mc.mouseHelper.ungrabMouseCursor();
         }
     }
 
     private void hideView() {
         mc.inGameHasFocus = true;
-        drawOverlay = false;
+        gui.setVisible(false);
         mc.mouseHelper.grabMouseCursor();
 
         int focusIndex = findIndex();
@@ -84,7 +81,6 @@ public class OverlayToolbelt {
 
     private void equipToolbeltItem(int toolbeltItemIndex) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(toolbeltItemIndex);
-        //packet.handleClientSide(mc.thePlayer);
         PacketPipeline.instance.sendToServer(packet);
     }
 
@@ -92,6 +88,7 @@ public class OverlayToolbelt {
         InventoryToolbelt inventoryToolbelt = UtilToolbelt.findToolbeltInventory(mc.player);
         if (inventoryToolbelt != null) {
             gui.setInventoryToolbelt(inventoryToolbelt);
+            gui.setVisible(true);
             return true;
         }
 

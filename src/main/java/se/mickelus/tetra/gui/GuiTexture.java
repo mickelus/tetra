@@ -25,7 +25,7 @@ public class GuiTexture extends GuiElement {
     }
 
     public GuiTexture(int x, int y, int width, int height, int textureX, int textureY, ResourceLocation textureLocation) {
-        super(x, y, width + 1, height + 1);
+        super(x, y, width, height);
 
         this.textureX = textureX;
         this.textureY = textureY;
