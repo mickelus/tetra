@@ -41,10 +41,10 @@ public class GuiStringSmall extends GuiString {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(.5, .5, .5);
-        super.draw(refX*2, refY*2, screenWidth*2, screenHeight*2, mouseX*2, mouseY*2);
+        super.draw(refX*2, refY*2, screenWidth*2, screenHeight*2, mouseX*2, mouseY*2, opacity);
         GlStateManager.popMatrix();
     }
 }

@@ -22,7 +22,7 @@ public class GuiText extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         fontRenderer.drawSplitString(string, refX + x, refY + y, width, 0xffffffff);
     }
 }

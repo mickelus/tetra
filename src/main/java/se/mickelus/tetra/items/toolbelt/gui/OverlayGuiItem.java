@@ -6,6 +6,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class OverlayGuiItem extends GuiElement {
 
@@ -18,6 +20,8 @@ public class OverlayGuiItem extends GuiElement {
     private static final int COLOR_DEFAULT = 0xffffffff;
     private static final int COLOR_HOVER = 0xffffff00;
 
+    private KeyframeAnimation showAnimation;
+
     public OverlayGuiItem(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, 24);
 
@@ -25,17 +29,37 @@ public class OverlayGuiItem extends GuiElement {
         this.slot = slot;
 
         mc = Minecraft.getMinecraft();
+
+        isVisible = false;
+        opacity = 0;
+        showAnimation = new KeyframeAnimation(50, this)
+            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y - 3, y))
+            .withDelay(slot * 100);
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    protected void onShow() {
+        showAnimation.start();
+    }
+
+    @Override
+    protected boolean onHide() {
+        if (showAnimation.isActive()) {
+            showAnimation.stop();
+        }
+        opacity = 0;
+        return true;
+    }
+
+    @Override
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
-            mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 65, y + refY + 4, COLOR_HOVER);
+            mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 63, y + refY + 4, COLOR_HOVER);
         }
 
-        drawItemStack(itemStack, x + refX + 40, y + refY, null);
+        drawItemStack(itemStack, x + refX + 38, y + refY, null);
     }
 
     private void drawItemStack(ItemStack stack, int x, int y, String altText) {
@@ -59,7 +83,10 @@ public class OverlayGuiItem extends GuiElement {
 
         mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
         mc.getRenderItem().renderItemOverlayIntoGUI(font, stack, x, y, altText);
-
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableTexture2D();
+        drawRect(x, y, x + 16, y + 16, 0, 1 - opacity);
         this.zLevel = 0.0F;
         mc.getRenderItem().zLevel = 0.0F;
         RenderHelper.disableStandardItemLighting();

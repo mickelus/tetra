@@ -100,8 +100,8 @@ public class GuiStatBar extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         drawBar(refX, refY);
     }

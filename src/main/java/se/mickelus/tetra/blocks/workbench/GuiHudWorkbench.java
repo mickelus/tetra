@@ -16,8 +16,8 @@ public class GuiHudWorkbench extends GuiRootHud {
     }
 
     @Override
-    protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        new GuiTexture(-16, -16, 31, 31, "textures/gui/glyphs.png").draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        new GuiTexture(-16, -16, 31, 31, "textures/gui/glyphs.png").draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, 1);
 
         GlStateManager.pushMatrix();
 //        GlStateManager.depthMask(false);

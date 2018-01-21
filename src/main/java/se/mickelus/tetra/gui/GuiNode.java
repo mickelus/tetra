@@ -1,19 +1,16 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GuiNode extends Gui {
 
-    private boolean isVisible = true;
+    protected boolean isVisible = true;
 
     protected ArrayList<GuiNode> elements;
 
@@ -22,21 +19,39 @@ public class GuiNode extends Gui {
     }
 
     public void setVisible(boolean visible) {
+//        if (isVisible != visible) { todo: switch back to only toggling if actual change?
+        if (visible) {
+            onShow();
+        } else {
+            if (!onHide()) {
+                return;
+            }
+        }
         isVisible = visible;
+//        }
     }
+
+    protected void onShow() {}
+
+    /**
+     * Can be overridden to do something when the element is hidden. Returning false indicates that the handler will
+     * take care of setting isVisible to false.
+     * @return
+     */
+    protected boolean onHide() { return true; }
 
     public boolean isVisible() {
         return isVisible;
     }
 
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        drawChildren(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        drawChildren(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 
-    protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         elements.stream()
                 .filter(GuiNode::isVisible)
-                .forEach((element -> element.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY)));
+                .forEach((element -> element.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity)));
     }
 
     public boolean onClick(int x, int y) { return false; }
@@ -75,14 +90,14 @@ public class GuiNode extends Gui {
         }
 
         float red = (float)(color >> 16 & 255) / 255.0F;
-        float blue = (float)(color >> 8 & 255) / 255.0F;
-        float green = (float)(color & 255) / 255.0F;
+        float green = (float)(color >> 8 & 255) / 255.0F;
+        float blue = (float)(color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.color(red, blue, green, opacity);
+        GlStateManager.color(red, green, blue, opacity);
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION);
         bufferBuilder.pos((double)left, (double)bottom, 0.0D).endVertex();
         bufferBuilder.pos((double)right, (double)bottom, 0.0D).endVertex();

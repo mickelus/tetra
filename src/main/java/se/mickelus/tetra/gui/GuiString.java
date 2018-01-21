@@ -53,7 +53,7 @@ public class GuiString extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (textAlign == GuiAlignment.left) {
             drawString(fontRenderer, string, refX + x, refY + y, color);
         } else if (textAlign == GuiAlignment.center) {

@@ -18,7 +18,7 @@ public class GuiRoot extends GuiNode {
         int height = scaledResolution.getScaledHeight();
         int mouseX = Mouse.getX() * width / mc.displayWidth;
         int mouseY = height - Mouse.getY() * height / mc.displayHeight - 1;
-        drawChildren(0,0, width, height, mouseX, mouseY);
+        drawChildren(0,0, width, height, mouseX, mouseY, 1);
     }
 
 }

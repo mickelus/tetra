@@ -85,8 +85,8 @@ public class GuiSchemaList extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         drawRect(refX + x, refY + y, refX + x + width, refY + + y + height, 0xff000000);
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

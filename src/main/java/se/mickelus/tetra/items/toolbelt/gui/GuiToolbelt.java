@@ -63,7 +63,7 @@ public class GuiToolbelt extends GuiContainer {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
-        defaultGui.draw(x, y, width, height, mouseX, mouseY);
+        defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override

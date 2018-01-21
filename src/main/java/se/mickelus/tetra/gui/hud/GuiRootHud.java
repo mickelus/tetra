@@ -21,7 +21,7 @@ public class GuiRootHud extends GuiNode {
         GlStateManager.glNormal3f(0.0F, 0.0F, -0.010416667F);
         GlStateManager.disableLighting();
 
-        drawChildren(0,0, 0, 0, 0, 0);
+        drawChildren(0,0, 0, 0, 0, 0, 1);
 
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();

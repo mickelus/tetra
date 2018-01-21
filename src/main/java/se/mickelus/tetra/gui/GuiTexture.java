@@ -12,6 +12,8 @@ public class GuiTexture extends GuiElement {
     private final int textureX;
     private final int textureY;
 
+    protected int color = 0xffffff;
+
     public GuiTexture(int x, int y, int width, int height, String texture) {
         this(x, y, width, height, new ResourceLocation(TetraMod.MOD_ID, texture));
     }
@@ -34,16 +36,22 @@ public class GuiTexture extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
+        GlStateManager.pushMatrix();
         Minecraft.getMinecraft().getTextureManager().bindTexture(textureLocation);
 
+        GlStateManager.color(
+            (color >> 16 & 255) / 255f,
+            (color >> 8 & 255) / 255f,
+            (color & 255) / 255f,
+            opacity * getOpacity());
         GlStateManager.enableBlend();
         drawTexturedModalRect(
                 refX + x,
                 refY + y,
                 textureX, textureY, width, height);
-        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
     }
 }

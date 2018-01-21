@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.rocketBoots;
 
 import net.minecraft.client.renderer.GlStateManager;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.filter.VisibilityFilter;
+import se.mickelus.tetra.gui.animation.VisibilityFilter;
 
 public class GuiBarRocketBoots extends GuiElement {
 
@@ -21,8 +21,8 @@ public class GuiBarRocketBoots extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        float opacity = filter.apply(visibleIndicators);
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        opacity = filter.apply(visibleIndicators) * opacity;
         if (opacity > 0) {
             GlStateManager.translate(opacity * -10, 0, 0);
 

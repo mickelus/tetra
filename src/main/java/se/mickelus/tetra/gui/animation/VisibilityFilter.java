@@ -1,4 +1,4 @@
-package se.mickelus.tetra.gui.filter;
+package se.mickelus.tetra.gui.animation;
 
 public class VisibilityFilter {
 

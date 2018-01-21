@@ -9,7 +9,7 @@ public class GuiTextSmall extends GuiText {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(.5, .5, .5);
         fontRenderer.drawSplitString(string, (refX + x) * 2, (refY + y) * 2, width*2, 0xffffffff);

@@ -19,13 +19,13 @@ public class GuiRect extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (offset) {
             GlStateManager.translate(0.5F, 0.5F, 0);
             drawRect(refX + x, refY + y, refX + x + width - 1, refY + y + height - 1, color);
             GlStateManager.translate(-0.5F, -0.5F, 0);
         } else {
-            drawRect(refX + x, refY + y, refX + x + width, refY + y + height, color);
+            drawRect(refX + x, refY + y, refX + x + width, refY + y + height, colorWithOpacity(color, opacity));
         }
         GlStateManager.color(255, 255, 255, 255);
     }

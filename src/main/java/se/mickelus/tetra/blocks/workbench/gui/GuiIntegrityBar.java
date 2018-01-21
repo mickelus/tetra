@@ -48,8 +48,8 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY);
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         int offset = integrityGain * ( segmentWidth + 1) / 2;
 
         for (int i = 0; i < -integrityCost; i++) {
