@@ -14,6 +14,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.BasicSchema;
+import se.mickelus.tetra.module.ImprovementSchema;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -45,7 +46,12 @@ public class ItemSwordModular extends ItemModularHandheld {
     @Override
     public void init(PacketPipeline packetPipeline) {
         new BasicSchema("blade_schema", BladeModule.instance, this);
+
         new BasicSchema("short_blade_schema", ShortBladeModule.instance, this);
+        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.hookedImprovement);
+        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.temperedImprovement);
+        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.serratedImprovement);
+
         new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
         new BasicSchema("hilt_schema", HiltModule.instance, this);
 

@@ -116,8 +116,17 @@ public class BasicSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
+        removePreviousModule(upgradedStack);
         module.addModule(upgradedStack, materials, consumeMaterials, player);
 
         return upgradedStack;
+    }
+
+    protected void removePreviousModule(final ItemStack itemStack) {
+        ItemModular item = (ItemModular) itemStack.getItem();
+        ItemModule previousModule = item.getModuleFromSlot(itemStack, module.slotKey);
+        if (previousModule != null) {
+            previousModule.removeModule(itemStack);
+        }
     }
 }

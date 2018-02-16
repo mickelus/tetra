@@ -1,8 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
@@ -12,6 +15,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.UpgradeSchema;
 
 import java.io.IOException;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiWorkbench extends GuiContainer {
@@ -27,6 +31,7 @@ public class GuiWorkbench extends GuiContainer {
     private final ContainerWorkbench container;
 
     private GuiElement defaultGui;
+    private FontRenderer fontRenderer;
 
     private GuiModuleList componentList;
     private GuiStatGroup statGroup;
@@ -47,6 +52,7 @@ public class GuiWorkbench extends GuiContainer {
 
         this.viewingPlayer = viewingPlayer;
 
+        fontRenderer = Minecraft.getMinecraft().fontRenderer;
         defaultGui = new GuiElement(0, 0, xSize, ySize);
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
@@ -60,11 +66,11 @@ public class GuiWorkbench extends GuiContainer {
         integrityBar = new GuiIntegrityBar(160, 90);
         defaultGui.addChild(integrityBar);
 
-        schemaList = new GuiSchemaList(46, 100);
+        schemaList = new GuiSchemaList(46, 105);
         schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
         defaultGui.addChild(schemaList);
 
-        schemaDetail = new GuiSchemaDetail(46, 100, this::deselectSchema, this::craftUpgrade);
+        schemaDetail = new GuiSchemaDetail(46, 105, this::deselectSchema, this::craftUpgrade);
         defaultGui.addChild(schemaDetail);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
@@ -87,6 +93,15 @@ public class GuiWorkbench extends GuiContainer {
         int y = (height - ySize) / 2;
 
         defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
+    }
+
+    @Override
+    protected void renderHoveredToolTip(int mouseX, int mouseY) {
+        super.renderHoveredToolTip(mouseX, mouseY);
+        List<String> tooltipLines = defaultGui.getTooltipLines();
+        if (tooltipLines !=null) {
+            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
+        }
     }
 
     @Override

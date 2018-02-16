@@ -78,7 +78,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                 .findAny().orElse(getDefaultData());
     }
 
-    public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
+    public ItemStack[] removeModule(ItemStack targetStack) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
 
         tag.removeTag(slotKey);

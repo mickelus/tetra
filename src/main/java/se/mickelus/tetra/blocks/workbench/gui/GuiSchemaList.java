@@ -2,13 +2,16 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import se.mickelus.tetra.gui.GuiButton;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.module.UpgradeSchema;
 
 import java.util.function.Consumer;
 
 public class GuiSchemaList extends GuiElement {
 
-    private static int pageLength = 5;
+    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
+
+    private static int pageLength = 8;
 
     private int page = 0;
 
@@ -23,37 +26,37 @@ public class GuiSchemaList extends GuiElement {
     public GuiSchemaList(int x, int y) {
         super(x, y, 224, 64);
 
-        listGroup = new GuiElement(0, 0, width, height);
+        addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
+
+        listGroup = new GuiElement(5, 5, width - 10, height - 10);
         addChild(listGroup);
 
-        buttonBack = new GuiButton(-4, height + 4, 12, 20, "Previous", () -> setPage(getPage() - 1));
-        buttonForward = new GuiButton(width - 16, height + 4, 12, 20, "Next", () -> setPage(getPage() + 1));
+        buttonBack = new GuiButton(-25, height + 4, 45, 12, "< Previous", () -> setPage(getPage() - 1));
+        addChild(buttonBack);
+        buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
+        addChild(buttonForward);
     }
 
     public void setSchemas(UpgradeSchema[] schemas) {
         this.schemas = schemas;
         setPage(0);
-
-
-
-        updateSchemas();
     }
 
     private void updateSchemas() {
-        int start = page * pageLength;
-        int end = page * pageLength + pageLength;
+        int offset = page * pageLength;
+        int count = pageLength;
 
-        if (end > schemas.length) {
-            end = schemas.length;
+        if (count + offset > schemas.length) {
+            count = schemas.length - offset;
         }
 
         listGroup.clearChildren();
-        for (int i = start; i < end; i++) {
-            UpgradeSchema schema = schemas[i];
+        for (int i = 0; i < count; i++) {
+            UpgradeSchema schema = schemas[i + offset];
             listGroup.addChild(new GuiButton(
-                    i / pageLength * 112 + 3,
-                    i % pageLength * 13 + 3,
-                    80, 12,
+                    i / (pageLength / 2) * 107,
+                    i % (pageLength / 2) * 13,
+                    107, 12,
                     schema.getName(), () -> onSchemaSelect(schema)));
         }
     }
@@ -67,11 +70,12 @@ public class GuiSchemaList extends GuiElement {
 
         buttonBack.setVisible(page > 0);
         buttonForward.setVisible(page < getNumPages() - 1);
+        updateSchemas();
 
     }
 
     private int getNumPages() {
-        return schemas.length / ( pageLength * 2 );
+        return (int) Math.ceil(1f * schemas.length / pageLength );
     }
 
     public void onSchemaSelect(UpgradeSchema schema) {
@@ -86,7 +90,6 @@ public class GuiSchemaList extends GuiElement {
 
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawRect(refX + x, refY + y, refX + x + width, refY + + y + height, 0xff000000);
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

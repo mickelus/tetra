@@ -26,35 +26,37 @@ public class GuiSchemaDetail extends GuiElement {
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 64);
-        addChild(new GuiButton(-4 , height + 4, 40, 8, "< back", backListener));
+        addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
-        title = new GuiString(4, 4, "");
+        addChild(new GuiButton(-4 , height - 2, 40, 8, "< back", backListener));
+
+        title = new GuiString(5, 5, "");
         addChild(title);
 
-        description = new GuiTextSmall(4, 16, 106, "");
+        description = new GuiTextSmall(5, 17, 105, "");
         addChild(description);
 
         slotNames = new GuiString[MAX_NUM_SLOTS];
         slotQuantities = new GuiString[MAX_NUM_SLOTS];
         slotBorders = new GuiTexture[MAX_NUM_SLOTS];
         for (int i = 0; i < MAX_NUM_SLOTS; i++) {
-            slotNames[i] = new GuiString(140, 8 + i * 17, "");
+            slotNames[i] = new GuiString(140, 9 + i * 17, "test");
             slotNames[i].setVisible(false);
             addChild(slotNames[i]);
 
-            slotQuantities[i] = new GuiStringSmall(139, 17 + i * 17, "");
+            slotQuantities[i] = new GuiStringSmall(139, 18 + i * 18, "/5");
             slotQuantities[i].setVisible(false);
             addChild(slotQuantities[i]);
 
-            slotBorders[i] = new GuiTexture(121, 4 + i * 17, 16, 16, 52, 16, WORKBENCH_TEXTURE);
+            slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, WORKBENCH_TEXTURE);
             slotBorders[i].setVisible(false);
             addChild(slotBorders[i]);
         }
 
-        capabilityIndicatorList = new GuiCapabilityIndicatorList(80, 45);
+        capabilityIndicatorList = new GuiCapabilityIndicatorList(80, 39);
         addChild(capabilityIndicatorList);
 
-        craftButton = new GuiButton(138, 50, 30, 8, "Craft", craftListener);
+        craftButton = new GuiButton(138, 44, 30, 8, "Craft", craftListener);
         addChild(craftButton);
     }
 
@@ -67,6 +69,7 @@ public class GuiSchemaDetail extends GuiElement {
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
+            slotBorders[i].setVisible(true);
 
             if (schema.slotAcceptsMaterial(itemStack, i, materials[i])) {
                 int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
@@ -75,10 +78,7 @@ public class GuiSchemaDetail extends GuiElement {
                     slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? 0xffff0000 : 0xffffffff);
                 }
                 slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
-
-                slotBorders[i].setVisible(true);
             } else {
-                slotBorders[i].setVisible(false);
                 slotQuantities[i].setVisible(false);
             }
         }
@@ -98,7 +98,6 @@ public class GuiSchemaDetail extends GuiElement {
 
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawRect(refX + x, refY + y, refX + x + width, refY + + y + height, 0xff000000);
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

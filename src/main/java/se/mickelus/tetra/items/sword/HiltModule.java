@@ -23,8 +23,4 @@ public class HiltModule extends ItemModuleMajor<WeaponModuleData> {
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);
     }
-    @Override
-    public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
-        return new ItemStack[0];
-    }
 }

@@ -25,7 +25,7 @@ public class ContainerWorkbench extends Container {
 
         // material inventory
         for (int i = 0; i < 3; i++) {
-            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 167, 104 + 18 * i);
+            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 167, 110 + 18 * i);
             materialSlots[i].toggle(false);
             this.addSlotToContainer(materialSlots[i]);
         }

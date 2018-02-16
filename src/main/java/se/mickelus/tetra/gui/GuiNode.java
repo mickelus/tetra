@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class GuiNode extends Gui {
 
@@ -73,6 +75,14 @@ public class GuiNode extends Gui {
             return elements.get(index);
         }
         return null;
+    }
+
+    public List<String> getTooltipLines() {
+        return elements.stream()
+            .map(GuiNode::getTooltipLines)
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(null);
     }
 
 

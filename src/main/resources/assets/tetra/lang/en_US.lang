@@ -69,11 +69,26 @@ short_blade_schema.slot1=Blade material
 short_blade/oak=Oak shortblade
 short_blade/spruce=Spruce shortblade
 short_blade/birch=Birch shortblade
-short_blade/jungle=Jungle  shortblade
-short_blade/acacia=Acacia  shortblade
+short_blade/jungle=Jungle shortblade
+short_blade/acacia=Acacia shortblade
 short_blade/dark_oak=Oak shortblade
 short_blade/iron=Iron shortblade
 short_blade/gold=Golden shortblade
+
+sword/short_blade.hooked.name=Hooked blade %s
+sword/short_blade.hooked.description=§7Striking enemies from behind cause critical damage.
+sword/short_blade.hooked.schema.name=Notch hook
+sword/short_blade.hooked.schema.description=Notch the back side of the blade, providing additional damage when striking unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
+
+sword/short_blade.tempered.name=Tempered point %s
+sword/short_blade.tempered.description=§7Attacks ignore armor.
+sword/short_blade.tempered.schema.name=Temper
+sword/short_blade.tempered.schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes attacks to partially ignore armor.
+
+sword/short_blade.serrated.name=Serrated blade %s
+sword/short_blade.serrated.description=§7Attacks may inflict bleed.
+sword/short_blade.serrated.schema.name=Serrate
+sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Slightly reduces direct damage but may cause the target to bleed.
 
 ###############################
 # HEAVY BLADE

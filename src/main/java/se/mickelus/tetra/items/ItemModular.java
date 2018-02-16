@@ -3,10 +3,8 @@ package se.mickelus.tetra.items;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +21,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
-import se.mickelus.tetra.module.ModuleData;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -135,6 +132,15 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getTextures(itemStack)))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
+    }
+
+    public boolean hasModule(ItemStack itemStack, ItemModule module) {
+        return getAllModules(itemStack).stream()
+            .anyMatch(module::equals);
+    }
+
+    public ItemModule getModuleFromSlot(ItemStack itemStack, String slot) {
+        return ItemUpgradeRegistry.instance.getModule(NBTHelper.getTag(itemStack).getString(slot));
     }
 
     @Override

@@ -30,11 +30,6 @@ public class BladeModule extends ItemModuleMajor<WeaponModuleData> {
     }
 
     @Override
-    public ItemStack[] removeModule(ItemStack targetStack, ItemStack[] tools) {
-        return new ItemStack[0];
-    }
-
-    @Override
     public double getDamageModifier(ItemStack itemStack) {
         return getData(itemStack).damage;
     }
