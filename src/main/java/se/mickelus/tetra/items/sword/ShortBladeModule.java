@@ -1,11 +1,16 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.PotionBleeding;
+import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.WeaponModuleData;
@@ -46,9 +51,21 @@ public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
     }
 
     @Override
-    public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (getImprovementLevel(hookedImprovement, stack) > 0) {
-            backstabEntity(stack, target, attacker);
+    public void hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
+        int hookedLevel = getImprovementLevel(hookedImprovement, itemStack);
+        int serratedLevel = getImprovementLevel(serratedImprovement, itemStack);
+        int temperedLevel = getImprovementLevel(temperedImprovement, itemStack);
+
+        if (hookedLevel > 0) {
+            backstabEntity(itemStack, target, attacker);
+        }
+        if (serratedLevel > 0) {
+            if (Math.random() > 0.7f) {
+                target.addPotionEffect(new PotionEffect(PotionBleeding.instance, 40, serratedLevel));
+            }
+        }
+        if (temperedLevel > 0 && ItemModularHandheld.getCooledAttackStrength(itemStack) > 0.9) {
+            penetrateEntityArmor(itemStack, target, attacker);
         }
     }
 
@@ -63,5 +80,22 @@ public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
                 target.attackEntityFrom(DamageSource.causeMobDamage(attacker), 1);
             }
         }
+    }
+
+    private void penetrateEntityArmor(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
+        if (target.getLastDamageSource() != null && attacker.equals(target.getLastDamageSource().getTrueSource())) {
+            float damage = (float) (ItemModularHandheld.getDamageModifierStatic(itemStack) + 1);
+            float reducedDamage = CombatRules.getDamageAfterAbsorb(damage, (float)target.getTotalArmorValue(), (float)target.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+            if (reducedDamage < damage / 2) {
+                damage = damage / 2 - reducedDamage;
+                target.hurtResistantTime = 0;
+                if (attacker instanceof EntityPlayer) {
+                    target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker).setDamageBypassesArmor(), damage);
+                } else {
+                    target.attackEntityFrom(DamageSource.causeMobDamage(attacker).setDamageBypassesArmor(), damage);
+                }
+            }
+        }
+
     }
 }

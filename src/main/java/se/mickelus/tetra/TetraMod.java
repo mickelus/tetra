@@ -67,6 +67,7 @@ public class TetraMod {
 
         ForgeRegistries.ITEMS.registerAll(items);
         ForgeRegistries.BLOCKS.registerAll(blocks);
+        ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
 
         proxy.preInit(event,
                 Arrays.stream(items)

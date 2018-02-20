@@ -51,7 +51,7 @@ public class GuiModuleMajor extends GuiElement {
                 color = GuiModuleBackdrop.COLOR_CHANGE;
             }
 
-            addChild(new GuiModuleImprovement(19 + i * 4, 13, improvements[i], previewValue, color));
+            addChild(new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color));
         }
     }
 

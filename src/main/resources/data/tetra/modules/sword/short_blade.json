@@ -124,5 +124,20 @@
         "requiredCapabilities": {
             "hammer": 3
         }
+    },
+    {
+        "key": "short_blade/prismarine",
+        "material": "minecraft:prismarine_shard",
+        "durability": 140,
+        "integrity": -3,
+        "damage": 5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        }
     }
 ]

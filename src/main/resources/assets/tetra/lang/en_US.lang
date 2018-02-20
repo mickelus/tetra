@@ -74,6 +74,7 @@ short_blade/acacia=Acacia shortblade
 short_blade/dark_oak=Oak shortblade
 short_blade/iron=Iron shortblade
 short_blade/gold=Golden shortblade
+short_blade/prismarine=Prismarine shortblade
 
 sword/short_blade.hooked.name=Hooked blade %s
 sword/short_blade.hooked.description=§7Striking enemies from behind cause critical damage.
@@ -83,12 +84,12 @@ sword/short_blade.hooked.schema.description=Notch the back side of the blade, pr
 sword/short_blade.tempered.name=Tempered point %s
 sword/short_blade.tempered.description=§7Attacks ignore armor.
 sword/short_blade.tempered.schema.name=Temper
-sword/short_blade.tempered.schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes attacks to partially ignore armor.
+sword/short_blade.tempered.schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes half of the damage dealt to ignore armor.
 
 sword/short_blade.serrated.name=Serrated blade %s
 sword/short_blade.serrated.description=§7Attacks may inflict bleed.
 sword/short_blade.serrated.schema.name=Serrate
-sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Slightly reduces direct damage but may cause the target to bleed.
+sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30% chance to cause the target to bleed for 4 damage over 2 seconds.
 
 ###############################
 # HEAVY BLADE

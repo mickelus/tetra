@@ -127,11 +127,11 @@ public class GuiWorkbench extends GuiContainer {
         container.updateSlots();
 
         if (schema == null) {
-            schemaList.setSchemas(ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, tileEntity.getTargetItemStack()));
+            schemaList.setSchemas(ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, stack));
 
             schemaList.setVisible(true);
             schemaDetail.setVisible(false);
-        } else {
+        } else if (!stack.isEmpty()) {
             previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
 
             schemaDetail.update(viewingPlayer, schema, stack, tileEntity.getMaterials());

@@ -39,35 +39,60 @@ public class ItemModularHandheld extends ItemModular {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, itemStack);
 
         if (slot == EntityEquipmentSlot.MAINHAND) {
-            double damageModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDamageModifier(itemStack))
-                .reduce(0d, Double::sum);
-
-            damageModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
-                .reduce(damageModifier, (a, b) -> a*b);
-
-            double speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-                .reduce(-2.4d, Double::sum);
-
-            speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
-                .reduce(speedModifier, (a, b) -> a*b);
-
-            if (speedModifier < -4) {
-                speedModifier = -3.9d;
-            }
-
-            if (isBroken(itemStack)) {
-                damageModifier = 0;
-                speedModifier = 2;
-            }
-
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damageModifier, 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", speedModifier, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
+                new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageModifier(itemStack), 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
+                new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getSpeedModifier(itemStack), 0));
         }
 
         return multimap;
+    }
+
+    public double getDamageModifier(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
+        double damageModifier = getAllModules(itemStack).stream()
+            .map(itemModule -> itemModule.getDamageModifier(itemStack))
+            .reduce(0d, Double::sum);
+
+        return getAllModules(itemStack).stream()
+            .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
+            .reduce(damageModifier, (a, b) -> a*b);
+    }
+
+    public static double getDamageModifierStatic(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ItemModularHandheld) {
+            return ((ItemModularHandheld) itemStack.getItem()).getDamageModifier(itemStack);
+        }
+        return 0;
+    }
+
+    public double getSpeedModifier(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return 2;
+        }
+
+        double speedModifier = getAllModules(itemStack).stream()
+            .map(itemModule -> itemModule.getSpeedModifier(itemStack))
+            .reduce(-2.4d, Double::sum);
+
+        speedModifier = getAllModules(itemStack).stream()
+            .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
+            .reduce(speedModifier, (a, b) -> a*b);
+
+        if (speedModifier < -4) {
+            speedModifier = -3.9d;
+        }
+
+        return speedModifier;
+    }
+
+    public static double getSpeedModifierStatic(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ItemModularHandheld) {
+            return ((ItemModularHandheld) itemStack.getItem()).getSpeedModifier(itemStack);
+        }
+        return 2;
     }
 }
