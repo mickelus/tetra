@@ -22,7 +22,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     protected String moduleKey;
     protected String dataKey;
 
-    protected RenderLayer renderLayer = RenderLayer.BASE;
+    protected Priority renderLayer = Priority.BASE;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotKey = slotKey;
@@ -108,6 +108,35 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return I18n.format(getData(itemStack).key);
     }
 
+    public String getItemName(ItemStack itemStack) {
+        String name = getData(itemStack).key + ".name";
+        if (I18n.hasKey(name)) {
+            return I18n.format(name);
+        } else if (I18n.hasKey(moduleKey + ".name")) {
+            return I18n.format(moduleKey + ".name");
+        }
+        return null;
+    }
+
+    public Priority getItemNamePriority(ItemStack itemStack) {
+        return Priority.BASE;
+    }
+
+    public String getItemPrefix(ItemStack itemStack) {
+        String prefix = getData(itemStack).key + ".prefix";
+        if (I18n.hasKey(prefix)) {
+            return I18n.format(prefix);
+        } else if (I18n.hasKey(moduleKey + ".prefix")) {
+            return I18n.format(moduleKey + ".prefix");
+        }
+        return null;
+    }
+
+    public Priority getItemPrefixPriority(ItemStack itemStack) {
+        return Priority.BASE;
+    }
+
+
     /**
      * Returns the integrity gained from this module. Split into two methods as modules with improvements may have
      * internal gains/costs which should be visible.
@@ -171,7 +200,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return new ResourceLocation[] { getData(itemStack).getTextureLocation() };
     }
 
-    public RenderLayer getRenderLayer() {
+    public Priority getRenderLayer() {
         return renderLayer;
     }
 

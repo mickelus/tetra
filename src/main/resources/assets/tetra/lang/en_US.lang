@@ -28,21 +28,38 @@ blade_schema.name=Simple blade
 blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
 blade_schema.slot1=Blade material
 
+sword/basic_blade.name=Sword
+
 basic_blade/oak=Oak blade
+basic_blade/oak.prefix=Oak
 basic_blade/spruce=Spruce blade
+basic_blade/spruce.prefix=Spruce
 basic_blade/birch=Birch blade
+basic_blade/birch.prefix=Birch
 basic_blade/jungle=Jungle blade
+basic_blade/jungle.prefix=Jungle
 basic_blade/acacia=Acacia blade
+basic_blade/acacia.prefix=Acacia
 basic_blade/dark_oak=Oak blade
+basic_blade/dark_oak.prefix=Oak
 basic_blade/cobblestone=Stone blade
+basic_blade/cobblestone.prefix=Stone
 basic_blade/stone=Solid stone blade
+basic_blade/stone.prefix=Solid stone
 basic_blade/granite=Granite blade
+basic_blade/granite.prefix=Granite
 basic_blade/diorite=Diorite blade
+basic_blade/diorite.prefix=Diorite
 basic_blade/andesite=Andesite blade
+basic_blade/andesite.prefix=Andesite
 basic_blade/iron=Iron blade
+basic_blade/iron.prefix=Iron
 basic_blade/gold=Golden blade
+basic_blade/gold.prefix=Golden
 basic_blade/diamond=Diamond blade
+basic_blade/diamond.prefix=Diamond
 basic_blade/obsidian=Obsidian blade
+basic_blade/obsidian.prefix=Obsidian
 
 
 ###############################
@@ -66,27 +83,45 @@ short_blade_schema.name=Shortblade
 short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
 short_blade_schema.slot1=Blade material
 
+sword/short_blade.name=Shortblade
+
 short_blade/oak=Oak shortblade
+short_blade/oak.prefix=Oak
 short_blade/spruce=Spruce shortblade
+short_blade/spruce.prefix=Spruce
 short_blade/birch=Birch shortblade
+short_blade/birch.prefix=Birch
 short_blade/jungle=Jungle shortblade
+short_blade/jungle.prefix=Jungle
+short_blade/jungle.name=Stinger
 short_blade/acacia=Acacia shortblade
+short_blade/acacia.prefix=Acacia
 short_blade/dark_oak=Oak shortblade
+short_blade/dark_oak.prefix=Oak
 short_blade/iron=Iron shortblade
+short_blade/iron.prefix=Iron
+short_blade/iron.name=Dagger
 short_blade/gold=Golden shortblade
+short_blade/gold.prefix=Golden
+short_blade/gold.prefix=Dagger
 short_blade/prismarine=Prismarine shortblade
+short_blade/prismarine.prefix=Prismarine
+short_blade/prismarine.name=Shanker
 
 sword/short_blade.hooked.name=Hooked blade %s
+sword/short_blade.hooked.prefix=Hooked
 sword/short_blade.hooked.description=§7Striking enemies from behind cause critical damage.
 sword/short_blade.hooked.schema.name=Notch hook
 sword/short_blade.hooked.schema.description=Notch the back side of the blade, providing additional damage when striking unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
 
 sword/short_blade.tempered.name=Tempered point %s
+sword/short_blade.tempered.prefix=Tempered
 sword/short_blade.tempered.description=§7Attacks ignore armor.
 sword/short_blade.tempered.schema.name=Temper
 sword/short_blade.tempered.schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes half of the damage dealt to ignore armor.
 
 sword/short_blade.serrated.name=Serrated blade %s
+sword/short_blade.serrated.prefix=Serrated
 sword/short_blade.serrated.description=§7Attacks may inflict bleed.
 sword/short_blade.serrated.schema.name=Serrate
 sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30% chance to cause the target to bleed for 4 damage over 2 seconds.
@@ -98,20 +133,40 @@ heavy_blade_schema.name=Heavy blade
 heavy_blade_schema.description=Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
 heavy_blade_schema.slot1=Blade material
 
+sword/heavy_blade.name=Greatsword
+
 heavy_blade/oak=Heavy oaken blade
+heavy_blade/oak.prefix=oaken
 heavy_blade/spruce=Heavy spruce blade
+heavy_blade/spruce.prefix=spruce
 heavy_blade/birch=Heavy birch blade
+heavy_blade/birch.prefix=birch
 heavy_blade/jungle=Heavy jungle blade
+heavy_blade/jungle.prefix=jungle
 heavy_blade/acacia=Heavy acacia blade
+heavy_blade/acacia.prefix=acacia
 heavy_blade/dark_oak=Heavy oaken blade
+heavy_blade/dark_oak.prefix=oaken
 heavy_blade/iron=Heavy iron cleaver
+heavy_blade/iron.prefix=iron
 heavy_blade/cobblestone=Heavy stone blade
+heavy_blade/cobblestone.prefix=stone
 heavy_blade/stone=Solid stone cleaver
+heavy_blade/stone.prefix=stone
+heavy_blade/stone.name=Cleaver
 heavy_blade/granite=Solid granite cleaver
+heavy_blade/granite.prefix=granite
+heavy_blade/granite.name=Cleaver
 heavy_blade/diorite=Solid diorite cleaver
+heavy_blade/diorite.prefix=diorite
+heavy_blade/diorite.name=Cleaver
 heavy_blade/andesite=Solid andesite cleaver
+heavy_blade/andesite.prefix=andesite
+heavy_blade/andesite.name=Cleaver
 heavy_blade/gold=Excessive ornate blade
+heavy_blade/gold.prefix=ornate
 heavy_blade/obsidian=Heavy obsidian blade
+heavy_blade/obsidian.prefix=obsidian
 
 
 
@@ -132,10 +187,16 @@ basic_head_schema.name=Mallet head
 basic_head_schema.description=Reforge the hammer head into a mallet using the given material. The mallet is useful for upgrading other things.
 basic_head_schema.slot1=Head material
 
+hammer/basic_head.name=Mallet
+
 basic_head/log=Wooden mallet
+basic_head/log.prefix=Wooden
 basic_head/stone=Stone mallet
+basic_head/stone.prefix=Stone
 basic_head/iron=Iron mallet
+basic_head/iron.prefix=Iron
 basic_head/obsidian=Obsidian mallet
+basic_head/obsidian.prefix=Obsidian
 
 ###############################
 # TOOLBELT BELT
@@ -156,11 +217,17 @@ toolbelt_belt3.name=Shulker inlay
 toolbelt_belt3.description=Shulker shells proved exceptional as support when carrying chests, inlaying shells into the belt should further increase it's integrity.
 toolbelt_belt3.slot1=Shulker shells
 
+toolbelt/belt.name=Toolbelt
+
 belt/rope=Rope
-belt/sash=Wool sash
+belt/rope.name=Rope
+belt/sash=Sash
+belt/sash.name=Wool sash
 belt/leather=Leather wrap
+belt/leather.name=Wrap
 belt/buckled=Leather belt
 belt/inlaid=Shulker inlaid belt
+belt/inlaid.prefix=Inlaid
 
 ###############################
 # TOOLBELT STRAPS

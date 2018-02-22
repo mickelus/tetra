@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -257,5 +258,35 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return getAllModules(itemStack).stream()
                 .flatMap(module -> ((Collection<Capability>)module.getCapabilities(itemStack)).stream())
                 .collect(Collectors.toSet());
+    }
+
+    public String[] getImprovements(ItemStack itemStack) {
+        return Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
+                .toArray(String[]::new);
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack itemStack) {
+        String name = getAllModules(itemStack).stream()
+                .sorted(Comparator.comparing(module -> module.getItemNamePriority(itemStack)))
+                .map(module -> module.getItemName(itemStack))
+                .filter(Objects::nonNull)
+                .findFirst().orElse("");
+
+        String prefixes = Stream.concat(
+                Arrays.stream(getImprovements(itemStack))
+                        .map(improvement -> improvement + ".prefix")
+                        .filter(I18n::hasKey)
+                        .map(I18n::format),
+                getAllModules(itemStack).stream()
+                        .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
+                        .map(module -> module.getItemPrefix(itemStack))
+                        .filter(Objects::nonNull)
+                )
+                .limit(2)
+                .reduce("", (result, prefix) -> result + prefix + " ");
+        return WordUtils.capitalize(prefixes + name);
     }
 }

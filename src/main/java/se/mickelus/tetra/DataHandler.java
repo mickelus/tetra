@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import se.mickelus.tetra.module.CapabilityData;
 import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.Priority;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ public class DataHandler {
         gson = new GsonBuilder()
                 .registerTypeAdapter(CapabilityData.class, new CapabilityData.CapabilityTypeAdapter())
                 .registerTypeAdapter(GlyphData.class, new GlyphData.GlyphTypeAdapter())
+                .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
                 .create();
 
         instance = this;

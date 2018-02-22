@@ -6,6 +6,9 @@ import se.mickelus.tetra.TetraMod;
 public class ModuleData {
     public String key;
 
+    public Priority namePriority = Priority.BASE;
+    public Priority prefixPriority = Priority.BASE;
+
     public String material;
     public int materialData = -1;
     public int materialCount = 1;

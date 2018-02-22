@@ -102,12 +102,6 @@ public class ItemSwordModular extends ItemModularHandheld {
         return itemStack;
     }
 
-    public String getItemStackDisplayName(ItemStack stack) {
-        NBTTagCompound tag = NBTHelper.getTag(stack);
-
-        return "§kUnknown";
-    }
-
     @Override
     public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if (state.getBlockHardness(worldIn, pos) > 0) {

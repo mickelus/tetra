@@ -4,7 +4,7 @@ import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleData;
-import se.mickelus.tetra.module.RenderLayer;
+import se.mickelus.tetra.module.Priority;
 
 public class BasicHandleModule extends ItemModuleMajor<ModuleData> {
 
@@ -17,7 +17,7 @@ public class BasicHandleModule extends ItemModuleMajor<ModuleData> {
 
         data = DataHandler.instance.getModuleData(moduleKey, ModuleData[].class);
 
-        renderLayer = RenderLayer.LOWER;
+        renderLayer = Priority.LOWER;
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
