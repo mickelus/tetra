@@ -1,7 +1,8 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.schema;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.module.ItemModule;
 
 public class SingleVariantSchema extends BasicSchema {
     private String currentModuleKey;

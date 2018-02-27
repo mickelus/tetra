@@ -1,8 +1,9 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.schema;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.module.GlyphData;
 
 import java.util.Collection;
 
@@ -43,4 +44,7 @@ public interface UpgradeSchema {
     public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials);
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
+
+    public SchemaType getType();
+    public GlyphData getGlyph();
 }

@@ -3,7 +3,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.schema.SchemaType;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiSchemaDetail extends GuiElement {
 
@@ -13,6 +15,7 @@ public class GuiSchemaDetail extends GuiElement {
 
     private UpgradeSchema schema;
 
+    private GuiElement glyph;
     private GuiString title;
     private GuiTextSmall description;
 
@@ -25,12 +28,15 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiCapabilityIndicatorList capabilityIndicatorList;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
-        super(x, y, 224, 64);
+        super(x, y, 224, 67);
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
         addChild(new GuiButton(-4 , height - 2, 40, 8, "< back", backListener));
 
-        title = new GuiString(5, 5, "");
+        glyph = new GuiElement(3, 3, 16, 16);
+        addChild(glyph);
+
+        title = new GuiString(19, 6, 100, "");
         addChild(title);
 
         description = new GuiTextSmall(5, 17, 105, "");
@@ -44,7 +50,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotNames[i].setVisible(false);
             addChild(slotNames[i]);
 
-            slotQuantities[i] = new GuiStringSmall(139, 18 + i * 18, "/5");
+            slotQuantities[i] = new GuiStringSmall(139, 18 + i * 18, "");
             slotQuantities[i].setVisible(false);
             addChild(slotQuantities[i]);
 
@@ -65,6 +71,22 @@ public class GuiSchemaDetail extends GuiElement {
 
         title.setString(schema.getName());
         description.setString(schema.getDescription());
+
+        glyph.clearChildren();
+        GlyphData glyphData = schema.getGlyph();
+        if (schema.getType() == SchemaType.major) {
+            glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
+            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+        } else if (schema.getType() == SchemaType.minor) {
+            glyph.addChild(new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png").setOpacity(0.3f));
+            glyph.addChild(new GuiTexture(4, 3, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+        } else if (schema.getType() == SchemaType.improvement) {
+            glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
+            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+        } else if (schema.getType() == SchemaType.other) {
+            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation).setOpacity(0.3f));
+        }
 
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(itemStack, i));

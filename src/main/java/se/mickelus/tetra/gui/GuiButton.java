@@ -4,13 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class GuiButton extends GuiElement {
+public class GuiButton extends GuiClickable {
 
     private static final int COLOR_DEFAULT = 0xffffffff;
     private static final int COLOR_HOVER = 0xffffff00;
     private static final int COLOR_DISABLED = 0x66ffffff;
-
-    private final Runnable onClickHandler;
 
     private final String text;
 
@@ -19,16 +17,12 @@ public class GuiButton extends GuiElement {
     private boolean enabled = true;
     private String disabledText;
 
-    /* buttons position on the actual screen, updated on draw to be used when calculating if click events hit this button */
-    private int screenX;
-    private int screenY;
+
 
     public GuiButton(int x, int y, int width, int height, String text, Runnable onClick) {
-        super(x, y, width, height);
+        super(x, y, width, height, onClick);
 
         this.text = text;
-
-        onClickHandler = onClick;
 
         fontRenderer = Minecraft.getMinecraft().fontRenderer;
     }
@@ -42,28 +36,21 @@ public class GuiButton extends GuiElement {
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-        screenX = refX + x;
-        screenY = refY + y;
 
         GlStateManager.enableBlend();
         if (!enabled) {
-            fontRenderer.drawString(text, screenX, screenY, COLOR_DISABLED);
+            fontRenderer.drawString(text, refX + x, refY + y, COLOR_DISABLED);
         } else if (hasFocus()) {
-            fontRenderer.drawString(text, screenX, screenY, COLOR_HOVER);
+            fontRenderer.drawString(text, refX + x, refY + y, COLOR_HOVER);
         } else {
-            fontRenderer.drawString(text, screenX, screenY, COLOR_DEFAULT);
+            fontRenderer.drawString(text, refX + x, refY + y, COLOR_DEFAULT);
         }
         GlStateManager.disableBlend();
     }
 
     @Override
     public boolean onClick(int x, int y) {
-        if (x >= screenX && x <= screenX + width && y >= screenY && y <= screenY + height && enabled) {
-            onClickHandler.run();
-            return true;
-        }
-
-        return false;
+        return enabled && super.onClick(x, y);
     }
 
     public void setEnabled(boolean enabled) {

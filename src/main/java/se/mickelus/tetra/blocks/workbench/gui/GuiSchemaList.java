@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import se.mickelus.tetra.gui.GuiButton;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.function.Consumer;
 
@@ -24,11 +24,11 @@ public class GuiSchemaList extends GuiElement {
     private GuiButton buttonForward;
 
     public GuiSchemaList(int x, int y) {
-        super(x, y, 224, 64);
+        super(x, y, 224, 67);
 
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
-        listGroup = new GuiElement(5, 5, width - 10, height - 10);
+        listGroup = new GuiElement(3, 3, width - 6, height - 6);
         addChild(listGroup);
 
         buttonBack = new GuiButton(-25, height + 4, 45, 12, "< Previous", () -> setPage(getPage() - 1));
@@ -53,11 +53,10 @@ public class GuiSchemaList extends GuiElement {
         listGroup.clearChildren();
         for (int i = 0; i < count; i++) {
             UpgradeSchema schema = schemas[i + offset];
-            listGroup.addChild(new GuiButton(
-                    i / (pageLength / 2) * 107,
-                    i % (pageLength / 2) * 13,
-                    107, 12,
-                    schema.getName(), () -> onSchemaSelect(schema)));
+            listGroup.addChild(new GuiSchemaListItem(
+                    i / (pageLength / 2) * 109,
+                    i % (pageLength / 2) * 14,
+                    schema, () -> onSchemaSelect(schema)));
         }
     }
 

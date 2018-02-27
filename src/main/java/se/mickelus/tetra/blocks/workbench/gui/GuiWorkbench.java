@@ -127,9 +127,16 @@ public class GuiWorkbench extends GuiContainer {
         container.updateSlots();
 
         if (schema == null) {
-            schemaList.setSchemas(ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, stack));
-
-            schemaList.setVisible(true);
+            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, stack);
+            if (schemas.length > 0) {
+                schemas = Arrays.stream(schemas)
+                        .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
+                        .toArray(UpgradeSchema[]::new);
+                schemaList.setSchemas(schemas);
+                schemaList.setVisible(true);
+            } else {
+                schemaList.setVisible(false);
+            }
             schemaDetail.setVisible(false);
         } else if (!stack.isEmpty()) {
             previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());

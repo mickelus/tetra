@@ -6,6 +6,7 @@ import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiString;
 import se.mickelus.tetra.gui.GuiStringSmall;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.ItemModularHandheld;
 
 public class GuiIntegrityBar extends GuiElement {
 
@@ -32,8 +33,9 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
-        setVisible(!itemStack.isEmpty());
-        if (!itemStack.isEmpty()) {
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
+        setVisible(shouldShow);
+        if (shouldShow) {
             if (!previewStack.isEmpty()) {
                 integrityGain = ItemModular.getIntegrityGain(previewStack);
                 integrityCost = ItemModular.getIntegrityCost(previewStack);
@@ -53,15 +55,17 @@ public class GuiIntegrityBar extends GuiElement {
         int offset = integrityGain * ( segmentWidth + 1) / 2;
 
         for (int i = 0; i < -integrityCost; i++) {
-            drawRect(refX + x  - offset + i * (segmentWidth + 1), refY + y + segmentOffset,
-                    refX + x  - offset + i * (segmentWidth + 1) + segmentWidth, refY + y + segmentOffset + segmentHeight,
+            drawSegment(refX + x  - offset + i * (segmentWidth + 1),refY + y + segmentOffset,
                     i >= integrityGain ? overuseColor : costColor);
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawRect(refX + x  - offset + i * (segmentWidth + 1), refY + y + segmentOffset,
-                    refX + x  - offset + i * (segmentWidth + 1) + segmentWidth, refY + y + segmentOffset + segmentHeight,
-                    gainColor);
+            drawSegment(refX + x  - offset + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor);
         }
     }
+
+    private void drawSegment(int x, int y, int color) {
+        drawRect(x, y,x + segmentWidth, y + segmentHeight, color);
+    }
+
 }

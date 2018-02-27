@@ -21,6 +21,14 @@ public class GuiString extends GuiElement {
         fontRenderer = Minecraft.getMinecraft().fontRenderer;
     }
 
+    public GuiString(int x, int y, int width, String string) {
+        super(x, y, width ,0);
+
+
+        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        this.string = fontRenderer.trimStringToWidth(string, width);
+    }
+
     public GuiString(int x, int y, String string, GuiAlignment textAlign) {
         this(x, y, string);
 
@@ -45,7 +53,12 @@ public class GuiString extends GuiElement {
     }
 
     public void setString(String string) {
-        this.string = string;
+        if (width > 0) {
+            this.string = fontRenderer.trimStringToWidth(string, width);
+        } else {
+            this.string = string;
+        }
+    }
     }
 
     public void setTextAlignment(GuiAlignment textAlign) {

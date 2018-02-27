@@ -6,7 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.ToggleableSlot;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 
 public class ContainerWorkbench extends Container {
@@ -25,7 +25,7 @@ public class ContainerWorkbench extends Container {
 
         // material inventory
         for (int i = 0; i < 3; i++) {
-            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 167, 110 + 18 * i);
+            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 167, 107 + 18 * i);
             materialSlots[i].toggle(false);
             this.addSlotToContainer(materialSlots[i]);
         }

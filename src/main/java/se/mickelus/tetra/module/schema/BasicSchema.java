@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -6,13 +6,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.sword.ItemSwordModular;
+import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.ItemModule;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BasicSchema implements UpgradeSchema {
 
@@ -124,9 +124,23 @@ public class BasicSchema implements UpgradeSchema {
 
     protected void removePreviousModule(final ItemStack itemStack) {
         ItemModular item = (ItemModular) itemStack.getItem();
-        ItemModule previousModule = item.getModuleFromSlot(itemStack, module.slotKey);
+        ItemModule previousModule = item.getModuleFromSlot(itemStack, module.getSlot());
         if (previousModule != null) {
             previousModule.removeModule(itemStack);
         }
+    }
+
+    @Override
+    public SchemaType getType() {
+        if (module instanceof ItemModuleMajor) {
+            return SchemaType.major;
+        } else {
+            return SchemaType.minor;
+        }
+    }
+
+    @Override
+    public GlyphData getGlyph() {
+        return module.getDefaultData().glyph;
     }
 }

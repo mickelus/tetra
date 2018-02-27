@@ -1,10 +1,13 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -105,5 +108,15 @@ public class ImprovementSchema implements UpgradeSchema {
     @Override
     public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
         return module.getData(targetStack).requiredCapabilities.getCapabilityLevel(capability);
+    }
+
+    @Override
+    public SchemaType getType() {
+        return SchemaType.improvement;
+    }
+
+    @Override
+    public GlyphData getGlyph() {
+        return module.getDefaultData().glyph;
     }
 }

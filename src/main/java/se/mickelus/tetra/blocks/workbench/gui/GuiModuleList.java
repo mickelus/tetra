@@ -13,7 +13,7 @@ import java.util.Objects;
 public class GuiModuleList extends GuiElement {
 
     private static int[][] minorYOffsets = { {13}, {6, 19}, {0, 13, 26} };
-    private static int[][] minorXOffsets = { {-16}, {-4, -4}, {0, -8, 0} };
+    private static int[][] minorXOffsets = { {-11}, {1, 1}, {0, -3, 0} };
 
     public GuiModuleList(int x, int y) {
         super(x, y, 0, 0);
@@ -42,11 +42,11 @@ public class GuiModuleList extends GuiElement {
         if (!previewStack.isEmpty()) {
             ItemModuleMajor[] majorModulesPreview = item.getMajorModules(previewStack);
             for (int i = 0; i < majorModuleNames.length; i++) {
-                addChild(new GuiModuleMajor(11, i * 18, itemStack, previewStack, majorModuleNames[i], majorModules[i], majorModulesPreview[i]));
+                addChild(new GuiModuleMajor(4, i * 18, itemStack, previewStack, majorModuleNames[i], majorModules[i], majorModulesPreview[i]));
             }
         } else {
             for (int i = 0; i < majorModuleNames.length; i++) {
-                addChild(new GuiModuleMajor(11, i * 18, itemStack, itemStack, majorModuleNames[i], majorModules[i], majorModules[i]));
+                addChild(new GuiModuleMajor(4, i * 18, itemStack, itemStack, majorModuleNames[i], majorModules[i], majorModules[i]));
             }
         }
     }

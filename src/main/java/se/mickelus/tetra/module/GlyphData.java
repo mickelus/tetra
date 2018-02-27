@@ -14,7 +14,13 @@ public class GlyphData {
     public int textureX = 0;
     public int textureY = 0;
 
-    GlyphData() {}
+    public GlyphData() {}
+
+    public GlyphData(String texture, int textureX, int textureY) {
+        textureLocation = new ResourceLocation(TetraMod.MOD_ID, texture);
+        this.textureX = textureX;
+        this.textureY = textureY;
+    }
 
     public static class GlyphTypeAdapter implements JsonDeserializer<GlyphData> {
 

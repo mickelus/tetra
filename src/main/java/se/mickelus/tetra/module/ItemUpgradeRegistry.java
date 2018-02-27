@@ -2,15 +2,13 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ItemUpgradeRegistry {

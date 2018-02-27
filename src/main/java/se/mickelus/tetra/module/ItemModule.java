@@ -30,6 +30,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
+    public String getSlot() {
+        return slotKey;
+    }
+
     public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
         ModuleData data = getDataByMaterial(materials[0]);

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiCapabilityIndicatorList extends GuiElement {
 

@@ -5,8 +5,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -14,19 +12,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.module.BasicSchema;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.RepairSchema;
+import se.mickelus.tetra.module.schema.BasicSchema;
+import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 

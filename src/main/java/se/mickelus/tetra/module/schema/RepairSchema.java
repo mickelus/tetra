@@ -1,17 +1,16 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RepairSchema implements UpgradeSchema {
     private static final String nameSuffix = ".name";
@@ -21,6 +20,8 @@ public class RepairSchema implements UpgradeSchema {
     private String key = "repair_schema";
 
     private ItemModular item;
+
+    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 0, 52);
 
     public RepairSchema(ItemModular item) {
         this.item = item;
@@ -129,5 +130,15 @@ public class RepairSchema implements UpgradeSchema {
             return item.getRepairRequiredCapabilityLevel(targetStack, capability);
         }
         return 0;
+    }
+
+    @Override
+    public SchemaType getType() {
+        return SchemaType.other;
+    }
+
+    @Override
+    public GlyphData getGlyph() {
+        return glyph;
     }
 }
