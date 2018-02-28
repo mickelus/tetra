@@ -1,24 +1,33 @@
 package se.mickelus.tetra;
 
-import java.io.File;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import se.mickelus.tetra.blocks.geode.ItemGeode;
 
-
-import net.minecraftforge.common.config.Configuration;
-
+@Config(modid = TetraMod.MOD_ID)
 public class ConfigHandler {
 
-    static boolean IMPROVE_DIFFICULTY = true;
+    public static String[] geode_contents = new String[] {
+            "minecraft:iron_nugget", "9", "30",
+            "minecraft:gold_nugget", "4", "20",
+            "minecraft:redstone", "6", "20",
+            "minecraft:flint", "3", "20",
+            "minecraft:diamond", "1", "2",
+            "minecraft:emerald", "1", "1",
+    };
 
 
-    public static void init(File file) {
-        Configuration config = new Configuration(file);
-        config.load();
-
-        IMPROVE_DIFFICULTY = config.getBoolean(
-                "improve_difficulty", "generation_settings",
-                IMPROVE_DIFFICULTY,
-                "Increases the strength of mobs spawned under certain conditions.");
-
-        config.save();
+    @Mod.EventBusSubscriber
+    private static class EventHandler {
+        @SubscribeEvent
+        public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+            if (event.getModID().equals(TetraMod.MOD_ID)) {
+                ConfigManager.sync(TetraMod.MOD_ID, Config.Type.INSTANCE);
+                ItemGeode.instance.initContent();
+            }
+        }
     }
 }

@@ -20,19 +20,14 @@ public class GuiModuleList extends GuiElement {
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack) {
-        if (itemStack.isEmpty()) {
-            clearChildren();
-            return;
-        }
-
-        ItemModular item = (ItemModular) itemStack.getItem();
-
         clearChildren();
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) itemStack.getItem();
 
-        updateMajorModules(item, itemStack, previewStack);
-        updateMinorModules(item, itemStack, previewStack);
 
-
+            updateMajorModules(item, itemStack, previewStack);
+            updateMinorModules(item, itemStack, previewStack);
+        }
     }
 
     private void updateMajorModules(ItemModular item, ItemStack itemStack, ItemStack previewStack) {

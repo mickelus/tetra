@@ -10,6 +10,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 
@@ -35,8 +36,9 @@ public class GuiStatGroup extends GuiElement {
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack, EntityPlayer player) {
-        setVisible(!itemStack.isEmpty());
-        if (!itemStack.isEmpty()) {
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
+        setVisible(shouldShow);
+        if (shouldShow) {
             clearChildren();
             if (itemStack.getItem() instanceof ItemModularHandheld) {
                 showBar(damageBar);

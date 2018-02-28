@@ -14,6 +14,13 @@ item.hammer_basic.name=Wooden mallet
 item.toolbelt.name=Toolbelt
 item.rocket_boots.name=Rocket boots
 
+###############################
+# GEODE
+###############################
+item.geode.name=Geode
+item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
+item.geode.label=crack open
+
 
 ###############################
 # REPAIR SCHEMA

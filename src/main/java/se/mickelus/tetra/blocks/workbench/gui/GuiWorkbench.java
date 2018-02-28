@@ -3,18 +3,25 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.action.BreakAction;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -38,6 +45,8 @@ public class GuiWorkbench extends GuiContainer {
     private GuiIntegrityBar integrityBar;
     private GuiSchemaList schemaList;
     private GuiSchemaDetail schemaDetail;
+
+    private GuiActionButton geodeActionButton;
 
     private ItemStack targetStack = ItemStack.EMPTY;
 
@@ -66,12 +75,20 @@ public class GuiWorkbench extends GuiContainer {
         integrityBar = new GuiIntegrityBar(160, 90);
         defaultGui.addChild(integrityBar);
 
-        schemaList = new GuiSchemaList(46, 105);
+        schemaList = new GuiSchemaList(46, 102);
         schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
+        schemaList.setVisible(false);
         defaultGui.addChild(schemaList);
 
-        schemaDetail = new GuiSchemaDetail(46, 105, this::deselectSchema, this::craftUpgrade);
+        schemaDetail = new GuiSchemaDetail(46, 102, this::deselectSchema, this::craftUpgrade);
+        schemaDetail.setVisible(false);
         defaultGui.addChild(schemaDetail);
+
+        geodeActionButton = new GuiActionButton(140, 114, I18n.format("item.geode.label"), Capability.hammer, () -> {
+            tileEntity.performAction(viewingPlayer, BreakAction.key);
+        });
+        geodeActionButton.setVisible(false);
+        defaultGui.addChild(geodeActionButton);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
 
@@ -126,6 +143,7 @@ public class GuiWorkbench extends GuiContainer {
 
         container.updateSlots();
 
+        geodeActionButton.setVisible(false);
         if (schema == null) {
             UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, stack);
             if (schemas.length > 0) {
@@ -136,9 +154,14 @@ public class GuiWorkbench extends GuiContainer {
                 schemaList.setVisible(true);
             } else {
                 schemaList.setVisible(false);
+
+                if (tileEntity.canPerformAction(BreakAction.key)) {
+                    geodeActionButton.update(viewingPlayer, 2);
+                    geodeActionButton.setVisible(true);
+                }
             }
             schemaDetail.setVisible(false);
-        } else if (!stack.isEmpty()) {
+        } else if (!stack.isEmpty() && stack.getItem() instanceof ItemModular) {
             previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
 
             schemaDetail.update(viewingPlayer, schema, stack, tileEntity.getMaterials());
@@ -151,6 +174,7 @@ public class GuiWorkbench extends GuiContainer {
         componentList.update(stack, previewStack);
         statGroup.setItemStack(stack, previewStack, viewingPlayer);
         integrityBar.setItemStack(stack, previewStack);
+
 
         if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
             targetStack = stack;

@@ -35,6 +35,11 @@ public class GuiTexture extends GuiElement {
         this.textureLocation = textureLocation;
     }
 
+    public GuiTexture setColor(int color) {
+        this.color = color;
+        return this;
+    }
+
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);

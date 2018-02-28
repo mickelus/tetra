@@ -104,7 +104,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                 .findAny().orElse(getDefaultData());
     }
 
-    protected T getDefaultData() {
+    public T getDefaultData() {
         return data[0];
     }
 

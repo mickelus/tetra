@@ -1,19 +1,18 @@
 package se.mickelus.tetra.blocks.geode;
 
-import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.network.PacketPipeline;
 
 public class BlockGeode extends TetraBlock {
 
@@ -50,5 +49,15 @@ public class BlockGeode extends TetraBlock {
     @Override
     public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
         return ItemGeode.instance;
+    }
+
+    @Override
+    public void init(PacketPipeline packetPipeline) {
+        GameRegistry.registerWorldGenerator(new GeodeGenerator(), 1);
+    }
+
+    @Override
+    public String getLocalizedName() {
+        return I18n.format("tile.stone.stone.name");
     }
 }

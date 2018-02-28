@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
@@ -36,6 +37,8 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     public BlockWorkbench() {
         super(Material.WOOD);
+
+        setHardness(2.5f);
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
@@ -96,5 +99,6 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
         PacketPipeline.instance.registerPacket(UpdateWorkbenchPacket.class);
         PacketPipeline.instance.registerPacket(CraftWorkbenchPacket.class);
+        PacketPipeline.instance.registerPacket(WorkbenchActionPacket.class);
     }
 }

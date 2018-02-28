@@ -41,7 +41,7 @@ public class TetraMod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        ConfigHandler.init(event.getSuggestedConfigurationFile());
+
 
         new DataHandler(event.getSourceFile());
 

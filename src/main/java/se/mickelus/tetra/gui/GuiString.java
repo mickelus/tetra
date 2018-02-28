@@ -5,13 +5,14 @@ import net.minecraft.client.gui.FontRenderer;
 
 public class GuiString extends GuiElement {
 
-    private String string;
+    protected String string;
 
-    private FontRenderer fontRenderer;
+    protected FontRenderer fontRenderer;
 
-    private int color = 0xffffffff;
+    protected int color = 0xffffffff;
+    protected boolean drawShadow = true;
 
-    private GuiAlignment textAlign = GuiAlignment.left;
+    protected GuiAlignment textAlign = GuiAlignment.left;
 
     public GuiString(int x, int y, String string) {
         super(x, y, 0 ,0);
@@ -59,6 +60,10 @@ public class GuiString extends GuiElement {
             this.string = string;
         }
     }
+
+    public GuiString setShadow(boolean shadow) {
+        drawShadow = shadow;
+        return this;
     }
 
     public void setTextAlignment(GuiAlignment textAlign) {
@@ -68,11 +73,19 @@ public class GuiString extends GuiElement {
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (textAlign == GuiAlignment.left) {
-            drawString(fontRenderer, string, refX + x, refY + y, color);
+            drawString(string, refX + x, refY + y, color, drawShadow);
         } else if (textAlign == GuiAlignment.center) {
-            drawCenteredString(fontRenderer, string, refX + x, refY + y, color);
+            drawCenteredString(string, refX + x, refY + y, color, drawShadow);
         } else if (textAlign == GuiAlignment.right) {
-            drawString(fontRenderer, string, refX + x - fontRenderer.getStringWidth(string), refY + y, color);
+            drawString(string, refX + x - fontRenderer.getStringWidth(string), refY + y, color, drawShadow);
         }
+    }
+
+    protected void drawString(String text, int x, int y, int color, boolean drawShadow) {
+        fontRenderer.drawString(text, (float)x, (float)y, color, drawShadow);
+    }
+
+    protected void drawCenteredString(String text, int x, int y, int color, boolean drawShadow) {
+        drawString(text, (x - fontRenderer.getStringWidth(text) / 2), y, color, drawShadow);
     }
 }

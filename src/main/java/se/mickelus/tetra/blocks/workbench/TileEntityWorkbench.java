@@ -10,12 +10,16 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.blocks.workbench.action.BreakAction;
+import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
+import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,10 +36,48 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private Map<String, Runnable> changeListeners;
 
+    private static final WorkbenchAction[] actions = new WorkbenchAction[] {
+            new BreakAction()
+    };
+
 
     public TileEntityWorkbench() {
         stacks = NonNullList.withSize(4, ItemStack.EMPTY);
         changeListeners = new HashMap<>();
+    }
+
+    public WorkbenchAction[] getAvailableActions() {
+        ItemStack itemStack = getTargetItemStack();
+        return Arrays.stream(actions)
+                .filter(action -> action.canPerformOn(itemStack))
+                .toArray(WorkbenchAction[]::new);
+    }
+
+    public boolean canPerformAction(String actionKey) {
+        ItemStack itemStack = getTargetItemStack();
+        return Arrays.stream(actions)
+                .filter(action -> action.getKey().equals(actionKey))
+                .anyMatch(action -> action.canPerformOn(itemStack));
+    }
+
+    public void performAction(EntityPlayer player, String actionKey) {
+        if (world.isRemote) {
+            PacketPipeline.instance.sendToServer(new WorkbenchActionPacket(pos, actionKey));
+            return;
+        }
+
+        ItemStack itemStack = getTargetItemStack();
+        Arrays.stream(actions)
+                .filter(action -> action.getKey().equals(actionKey))
+                .findFirst()
+                .filter(action -> action.canPerformOn(itemStack))
+                .filter(action -> checkActionCapabilities(player, action, itemStack))
+                .ifPresent(action -> action.perform(player, itemStack, this));
+    }
+
+    private boolean checkActionCapabilities(EntityPlayer player, WorkbenchAction action, ItemStack itemStack) {
+        return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
+                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= action.getCapabilityLevel(itemStack, capability));
     }
 
     public UpgradeSchema getCurrentSchema() {
@@ -77,11 +119,10 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             return ItemStack.EMPTY;
         }
 
-        if (stack.getItem() instanceof ItemModular) {
-            return stack;
+        ItemStack placeholder = ItemUpgradeRegistry.instance.getPlaceholder(stack);
+        if (!placeholder.isEmpty()) {
+            return placeholder;
         }
-
-        stack = ItemUpgradeRegistry.instance.getPlaceholder(stack);
 
         return stack;
     }

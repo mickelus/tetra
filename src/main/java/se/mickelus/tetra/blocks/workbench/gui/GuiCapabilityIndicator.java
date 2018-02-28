@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiCapabilityIndicator extends GuiElement {
 
@@ -28,14 +28,17 @@ public class GuiCapabilityIndicator extends GuiElement {
     }
 
     public void update(EntityPlayer player, UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
-        int requiredLevel = schema.getRequiredCapabilityLevel(targetStack, materials, capability);
+        this.update(player, schema.getRequiredCapabilityLevel(targetStack, materials, capability));
+    }
 
+    public void update(EntityPlayer player, int requiredLevel) {
         setVisible(requiredLevel > 0);
 
         if (requiredLevel > CapabilityHelper.getCapabilityLevel(player, capability)) {
             levelIndicator.setString("§c" + requiredLevel + "§r");
         } else {
             levelIndicator.setString("§a" + requiredLevel + "§r");
+            levelIndicator.setVisible(requiredLevel > 1);
         }
     }
 }

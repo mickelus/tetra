@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.UpgradeSchema;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.AbstractPacket;
 
 import java.io.IOException;
@@ -37,7 +37,6 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
         } catch (IOException exception) {
             System.err.println("An error occurred when writing schema name to packet buffer");
         }
-
     }
 
     @Override
