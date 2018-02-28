@@ -4,24 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
-import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.hud.TileEntityHudRenderer;
-
 
 @SideOnly(Side.CLIENT)
-public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
+public class TESRWorkbench extends TileEntitySpecialRenderer<TileEntityWorkbench> {
 
     private RenderItem itemRenderer;
 
@@ -32,7 +22,7 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
     }
 
     @Override
-    public void renderTileEntityFast(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
+    public void render(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
 
@@ -51,8 +41,6 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
     private void renderItem(TileEntityWorkbench te) {
         ItemStack stack = te.getStackInSlot(0);
         if (stack != null) {
-
-            GlStateManager.pushMatrix();
             GlStateManager.translate(.5, 0.94, .5);
 
             applyCorrections(stack);
@@ -60,8 +48,6 @@ public class TESRWorkbench extends TileEntityHudRenderer<TileEntityWorkbench> {
             adjustLight(te);
 
             itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
-
-            GlStateManager.popMatrix();
         }
     }
 
