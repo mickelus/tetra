@@ -22,9 +22,8 @@ public class GeodeGenerator implements IWorldGenerator {
         final ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
 
         for (int i = 0; i < density; i++) {
-            final BlockPos blockPos = chunkPos.getBlock(random.nextInt(16), minY + random.nextInt(rangeY), random.nextInt(16));
+            final BlockPos blockPos = chunkPos.getBlock(random.nextInt(15), minY + random.nextInt(rangeY), random.nextInt(15));
             world.setBlockState(blockPos, BlockGeode.instance.getDefaultState(), 2);
-            System.out.println(blockPos);
         }
     }
 }
