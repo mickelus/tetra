@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -60,7 +61,7 @@ public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
             backstabEntity(itemStack, target, attacker);
         }
         if (serratedLevel > 0) {
-            if (Math.random() > 0.7f) {
+            if (!EnumCreatureAttribute.UNDEAD.equals(target.getCreatureAttribute()) && Math.random() > 0.7f) {
                 target.addPotionEffect(new PotionEffect(PotionBleeding.instance, 40, serratedLevel));
             }
         }
