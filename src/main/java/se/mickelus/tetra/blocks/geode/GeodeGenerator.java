@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class GeodeGenerator implements IWorldGenerator {
 
     private final int density = 4;
-    private final int minY = 10;
-    private final int rangeY = 26;
+    private final int minY = 5;
+    private final int rangeY = 25;
 
     public GeodeGenerator() {
     }
