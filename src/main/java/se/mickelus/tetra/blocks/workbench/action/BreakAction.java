@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -56,6 +58,9 @@ public class BreakAction implements WorkbenchAction {
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
                     6,  0, 0 ,0, player.world.rand.nextGaussian() * 0.2, Item.getIdFromItem(itemStack.getItem()), itemStack.getMetadata());
         }
+
+        // todo: add proper criteria
+        CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, itemStack);
 
         itemStack.setCount(itemStack.getCount() - 1);
     }

@@ -1,7 +1,9 @@
 package se.mickelus.tetra.module.schema;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
@@ -92,6 +94,12 @@ public class ImprovementSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         module.addImprovement(upgradedStack, improvement, 1);
+
+        if (consumeMaterials) {
+            // todo: add proper criteria
+            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+        }
+
         return upgradedStack;
     }
 

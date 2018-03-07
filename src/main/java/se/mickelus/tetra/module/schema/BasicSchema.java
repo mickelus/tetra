@@ -1,7 +1,9 @@
 package se.mickelus.tetra.module.schema;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
@@ -118,6 +120,11 @@ public class BasicSchema implements UpgradeSchema {
 
         removePreviousModule(upgradedStack);
         module.addModule(upgradedStack, materials, consumeMaterials, player);
+
+        if (consumeMaterials) {
+            // todo: add proper criteria
+            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+        }
 
         return upgradedStack;
     }

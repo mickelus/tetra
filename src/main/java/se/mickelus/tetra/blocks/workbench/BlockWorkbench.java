@@ -1,9 +1,11 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
@@ -85,6 +87,9 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
             if (!world.isRemote) {
                 world.setBlockState(pos, instance.getDefaultState());
+
+                // todo: add proper criteria ?
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemStack);
             }
             return EnumActionResult.SUCCESS;
         }
