@@ -11,10 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ImprovementSchema;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
@@ -29,7 +28,6 @@ public class ItemSwordModular extends ItemModularHandheld {
     public ItemSwordModular() {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
