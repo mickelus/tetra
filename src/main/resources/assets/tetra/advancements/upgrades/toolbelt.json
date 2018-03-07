@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:toolbelt_modular",
+            "nbt": "{\"toolbelt:belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
+        },
+        "title": "Stay Hip",
+        "description": "Find a way to easily access your tools",
+        "announceToChat": false
+    },
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "toolbelt": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:toolbelt_modular"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword:blade\": \"sword/heavy_blade\",\"sword/heavy_blade_material\": \"heavy_blade/iron\",\"sword:hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+        },
+        "title": "Wide Sweeps",
+        "description": "Craft a heavy blade",
+        "announceToChat": false
+    },
+    "parent": "tetra:upgrades/hammer_2",
+    "criteria": {
+        "upgrade_any": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:sword_modular",
+                    "nbt": "{\"sword:blade\": \"sword/heavy_blade\"}"
+                }
+            }
+        }
+    }
+}

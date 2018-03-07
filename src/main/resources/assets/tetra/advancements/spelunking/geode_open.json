@@ -1,0 +1,20 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:gold_nugget"
+        },
+        "title": "Mineral crackers",
+        "description": "Crack open a geode at a workbench"
+    },
+    "parent": "tetra:spelunking/geode",
+    "criteria": {
+        "consume_geode": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:geode"
+                }
+            }
+        }
+    }
+}

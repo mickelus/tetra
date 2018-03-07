@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:hammer_modular",
+            "nbt": "{\"head\": \"hammer/basic_head\",\"hammer/basic_head_material\": \"basic_head/stone\",\"handle\": \"hammer/basic_handle\",\"hammer/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": "Smashing",
+        "description": "Replace the mallet with something harder",
+        "announceToChat": false
+    },
+    "parent": "tetra:upgrades/workbench",
+    "criteria": {
+        "hammer": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:hammer_modular",
+                    "nbt": "{\"hammer/basic_head_material\": \"basic_head/stone\"}"
+                }
+            }
+        }
+    }
+}

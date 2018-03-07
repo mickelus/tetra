@@ -1,0 +1,25 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:hammer_modular",
+            "nbt": "{\"head\": \"hammer/basic_head\",\"hammer/basic_head_material\": \"basic_head/log\",\"handle\": \"hammer/basic_handle\",\"hammer/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": "More Upgrades!",
+        "description": "Craft a basic mallet from sticks and logs",
+        "announceToChat": false,
+        "frame": "goal"
+    },
+    "parent": "minecraft:story/upgrade_tools",
+    "criteria": {
+        "hammer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:hammer_modular"
+                    }
+                ]
+            }
+        }
+    }
+}

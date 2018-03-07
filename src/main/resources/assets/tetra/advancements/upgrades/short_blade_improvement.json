@@ -1,0 +1,44 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword:blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/prismarine\",\"sword:hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\"}"
+        },
+        "title": "Short and Stout",
+        "description": "Improve a shortblade",
+        "announceToChat": false
+    },
+    "parent": "tetra:upgrades/short_blade",
+    "criteria": {
+        "hooked": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:sword_modular",
+                    "nbt": "{\"sword:blade:sword/short_blade.hooked\": 1}"
+                }
+            }
+        },
+        "tempered": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:sword_modular",
+                    "nbt": "{\"sword:blade:sword/short_blade.tempered\": 1}"
+                }
+            }
+        },
+        "serrated": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "item": "tetra:sword_modular",
+                    "nbt": "{\"sword:blade:sword/short_blade.serrated\": 1}"
+                }
+            }
+        }
+    },
+    "requirements": [
+        ["hooked", "tempered", "serrated"]
+    ]
+}

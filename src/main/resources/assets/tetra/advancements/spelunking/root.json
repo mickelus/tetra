@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:diamond_ore"
+        },
+        "title": "Spelunking",
+        "description": "Delve deep underground",
+        "background": "minecraft:textures/blocks/concrete_powder_black.png",
+        "announceToChat": false
+    },
+    "criteria": {
+        "spelunking": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "dimension": "overworld",
+                "position": {
+                    "y": {
+                        "max": 30
+                    }
+                }
+            }
+        }
+    }
+}

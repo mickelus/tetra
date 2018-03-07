@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:crafting_table"
+        },
+        "title": "Bench mk II",
+        "description": "Upgrade a crafting table",
+        "announceToChat": false
+    },
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "hammer": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "tetra:workbench"
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:geode"
+        },
+        "title": "Hollow Solids",
+        "description": "Find a geode in the depths"
+    },
+    "parent": "tetra:spelunking/root",
+    "criteria": {
+        "get_geode": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:geode"
+                    }
+                ]
+            }
+        }
+    }
+}
