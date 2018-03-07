@@ -52,12 +52,12 @@ public class ItemRocketBoots extends ItemArmor implements ITetraItem {
     @Override
     public void clientPreInit() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+        MinecraftForge.EVENT_BUS.register(new JumpHandlerRocketBoots(Minecraft.getMinecraft()));
     }
 
     @Override
     public void init(PacketPipeline packetPipeline) {
         packetPipeline.registerPacket(UpdateBoostPacket.class);
-        MinecraftForge.EVENT_BUS.register(new JumpHandlerRocketBoots(Minecraft.getMinecraft()));
         MinecraftForge.EVENT_BUS.register(new TickHandlerRocketBoots());
     }
 

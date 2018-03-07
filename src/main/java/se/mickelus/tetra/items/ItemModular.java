@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
@@ -269,6 +271,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
+        // todo: since getItemStackDisplayName is called on the server we cannot use the new I18n service
+        if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)) {
+            return "";
+        }
         String name = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(module -> module.getItemNamePriority(itemStack)))
                 .map(module -> module.getItemName(itemStack))
