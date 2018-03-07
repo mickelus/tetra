@@ -38,7 +38,6 @@ public class GuiCapabilityIndicator extends GuiElement {
             levelIndicator.setString("§c" + requiredLevel + "§r");
         } else {
             levelIndicator.setString("§a" + requiredLevel + "§r");
-            levelIndicator.setVisible(requiredLevel > 1);
         }
     }
 }
