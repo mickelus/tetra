@@ -131,7 +131,7 @@ sword/short_blade.serrated.name=Serrated blade %s
 sword/short_blade.serrated.prefix=Serrated
 sword/short_blade.serrated.description=§7Attacks may inflict bleed.
 sword/short_blade.serrated.schema.name=Serrate
-sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
+sword/short_blade.serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
 
 ###############################
 # HEAVY BLADE
