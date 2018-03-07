@@ -95,7 +95,7 @@ public class ImprovementSchema implements UpgradeSchema {
         ItemStack upgradedStack = itemStack.copy();
         module.addImprovement(upgradedStack, improvement, 1);
 
-        if (consumeMaterials) {
+        if (consumeMaterials && player instanceof EntityPlayerMP) {
             // todo: add proper criteria
             CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
         }

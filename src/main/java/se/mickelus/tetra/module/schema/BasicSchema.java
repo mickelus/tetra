@@ -121,7 +121,7 @@ public class BasicSchema implements UpgradeSchema {
         removePreviousModule(upgradedStack);
         module.addModule(upgradedStack, materials, consumeMaterials, player);
 
-        if (consumeMaterials) {
+        if (consumeMaterials && player instanceof EntityPlayerMP) {
             // todo: add proper criteria
             CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
         }
