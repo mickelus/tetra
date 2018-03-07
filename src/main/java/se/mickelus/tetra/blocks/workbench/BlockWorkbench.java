@@ -8,6 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,6 +31,7 @@ import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
@@ -68,6 +72,19 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 //        }
 
         return true;
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Blocks.CRAFTING_TABLE.getItemDropped(Blocks.CRAFTING_TABLE.getDefaultState(), rand, fortune);
+    }
+
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        TileEntity tileentity = world.getTileEntity(pos);
+
+        if (tileentity instanceof IInventory) {
+            InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileentity);
+        }
     }
 
     @Override
