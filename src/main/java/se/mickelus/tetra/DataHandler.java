@@ -6,10 +6,13 @@ import se.mickelus.tetra.module.CapabilityData;
 import se.mickelus.tetra.module.GlyphData;
 import se.mickelus.tetra.module.Priority;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class DataHandler {
     private final File source;
@@ -29,13 +32,25 @@ public class DataHandler {
     }
 
     public <T> T getModuleData(String moduleKey, Class<T> dataClass) {
-        File file = new File(source, String.format("data/%s/modules/%s.json", TetraMod.MOD_ID, moduleKey));
-
+        String pathString = String.format("data/%s/modules/%s.json", TetraMod.MOD_ID, moduleKey);
         try {
-            return gson.fromJson(new InputStreamReader(new FileInputStream(file)), dataClass);
-        } catch (FileNotFoundException e) {
+            Path fPath = null;
+
+            if (source.isFile()) {
+                FileSystem fs = FileSystems.newFileSystem(source.toPath(), null);
+                fPath = fs.getPath(pathString);
+            } else if (source.isDirectory()) {
+                fPath = source.toPath().resolve(pathString);
+            }
+
+            if (fPath != null && Files.exists(fPath)) {
+                BufferedReader reader = Files.newBufferedReader(fPath);
+                return gson.fromJson(reader, dataClass);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        System.err.printf("Could not read data from '%s'. Initializing from empty array.\n");
         return gson.fromJson("[]", dataClass);
     }
 }
