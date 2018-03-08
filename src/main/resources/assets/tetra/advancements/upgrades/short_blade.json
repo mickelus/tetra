@@ -6,7 +6,7 @@
         },
         "title": "Take a Stab",
         "description": "Craft a shortblade",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/hammer_2",
     "criteria": {

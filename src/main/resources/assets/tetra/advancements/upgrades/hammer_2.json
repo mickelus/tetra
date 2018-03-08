@@ -6,7 +6,7 @@
         },
         "title": "Smashing",
         "description": "Replace the mallet with something harder",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {

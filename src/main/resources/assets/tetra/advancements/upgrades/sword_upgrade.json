@@ -6,7 +6,7 @@
         },
         "title": "Cutting a New One",
         "description": "Upgrade a sword at the workbench",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {

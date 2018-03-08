@@ -6,7 +6,7 @@
         },
         "title": "Short and Stout",
         "description": "Improve a shortblade",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/short_blade",
     "criteria": {

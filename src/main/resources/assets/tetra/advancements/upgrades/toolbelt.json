@@ -6,7 +6,7 @@
         },
         "title": "Stay Hip",
         "description": "Find a way to easily access your tools",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/root",
     "criteria": {

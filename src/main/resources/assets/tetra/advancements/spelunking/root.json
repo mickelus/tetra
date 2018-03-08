@@ -6,7 +6,7 @@
         "title": "Spelunking",
         "description": "Delve deep underground",
         "background": "minecraft:textures/blocks/concrete_powder_black.png",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "criteria": {
         "spelunking": {

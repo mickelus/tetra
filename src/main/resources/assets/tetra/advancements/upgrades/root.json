@@ -7,7 +7,7 @@
         "title": "More Upgrades!",
         "description": "Craft a basic mallet from sticks and logs",
         "background": "minecraft:textures/blocks/brick.png",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "criteria": {
         "hammer": {

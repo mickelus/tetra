@@ -5,7 +5,7 @@
         },
         "title": "Bench mk II",
         "description": "Upgrade a crafting table",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/root",
     "criteria": {

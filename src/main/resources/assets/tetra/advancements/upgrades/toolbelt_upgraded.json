@@ -6,7 +6,7 @@
         },
         "title": "Wrapped Up",
         "description": "Fully upgrade a toolbelt",
-        "announceToChat": false
+        "announce_to_chat": false
     },
     "parent": "tetra:upgrades/toolbelt",
     "criteria": {
