@@ -1,0 +1,57 @@
+[
+    {
+        "key": "decorative_pommel/oak",
+        "material": "minecraft:oak",
+        "durability": 8,
+        "integrity": 0,
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/cobblestone",
+        "material": "minecraft:cobblestone",
+        "durability": 8,
+        "integrity": 0,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 8,
+        "integrity": 0,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/gold",
+        "material": "minecraft:gold",
+        "durability": 8,
+        "integrity": 0,
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/diamond",
+        "material": "minecraft:diamond_ingot",
+        "durability": 8,
+        "integrity": 0,
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 14,
+            "textureY": 16
+        }
+    }
+]

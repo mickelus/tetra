@@ -84,6 +84,24 @@ basic_hilt/blaze_rod=Blazing hilt
 basic_hilt/end_rod=End rod
 
 ###############################
+# DECORATIVE POMMEL
+###############################
+decorative_pommel/oak=Decorative oak pommel
+decorative_pommel/cobblestone=Decorative stone pommel
+decorative_pommel/iron=Decorative iron pommel
+decorative_pommel/gold=Decorative gold pommel
+decorative_pommel/diamond=Decorative diamond pommel
+
+###############################
+# MAKESHIFT GUARD
+###############################
+makeshift_guard/oak=Makeshift oak guard
+makeshift_guard/cobblestone=Makeshift stone guard
+makeshift_guard/iron=Makeshift iron guard
+makeshift_guard/gold=Makeshift gold guard
+makeshift_guard/diamond=Makeshift diamond guard
+
+###############################
 # SHORTBLADE
 ###############################
 short_blade_schema.name=Shortblade

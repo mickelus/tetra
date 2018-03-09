@@ -22,6 +22,9 @@ public class ItemSwordModular extends ItemModularHandheld {
     public final static String bladeKey = "sword:blade";
     public final static String hiltKey = "sword:hilt";
 
+    public final static String guardKey = "sword:guard";
+    public final static String pommelKey = "sword:pommel";
+
 
     static final String unlocalizedName = "sword_modular";
 
@@ -32,12 +35,15 @@ public class ItemSwordModular extends ItemModularHandheld {
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
         minorModuleNames = new String[]{"Guard", "Pommel", "Fuller"};
-        minorModuleKeys = new String[]{"sword:guard", "sword:pommel", "sword:fuller"};
+        minorModuleKeys = new String[]{guardKey, pommelKey, "sword:fuller"};
 
         new BladeModule(bladeKey);
         new ShortBladeModule(bladeKey);
         new HeavyBladeModule(bladeKey);
         new HiltModule(hiltKey);
+
+        new MakeshiftGuardModule(guardKey);
+        new DecorativePommelModule(pommelKey);
     }
 
     @Override
@@ -96,6 +102,8 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         BladeModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false, null);
+        MakeshiftGuardModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
+        DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         return itemStack;
     }
 
