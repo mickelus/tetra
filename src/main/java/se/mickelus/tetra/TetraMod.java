@@ -26,7 +26,7 @@ import se.mickelus.tetra.proxy.IProxy;
 
 import java.util.Arrays;
 
-@Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "0.1.0")
+@Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "0.3.0")
 public class TetraMod {
     public static final String MOD_ID = "tetra";
 
