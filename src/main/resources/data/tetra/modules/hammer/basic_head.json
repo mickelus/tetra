@@ -45,7 +45,7 @@
         "key": "basic_head/obsidian",
         "material": "minecraft:obsidian",
         "durability": 720,
-        "integrity": -5,
+        "integrity": -4,
         "glyph": {
             "tint": "3c3056",
             "textureX": 64

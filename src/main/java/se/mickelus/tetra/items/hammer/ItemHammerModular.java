@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ItemModularHandheld;
+import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -36,6 +37,7 @@ public class ItemHammerModular extends ItemModularHandheld {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         setMaxStackSize(1);
+        setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Head", "Handle"};
         majorModuleKeys = new String[]{headKey, handleKey};
@@ -60,18 +62,16 @@ public class ItemHammerModular extends ItemModularHandheld {
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createDefaultStack(null));
+            itemList.add(createDefaultStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK)));
+            itemList.add(createDefaultStack(new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.IRON_INGOT)));
         }
     }
 
-    private ItemStack createDefaultStack(ItemStack originalStack) {
+    private ItemStack createDefaultStack(ItemStack headMaterial, ItemStack handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
-        if (originalStack != null) {
-            itemStack.setItemDamage(originalStack.getItemDamage());
-        }
-        BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Blocks.LOG)}, false, null);
-        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.STICK)}, false, null);
+        BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
+        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{handleMaterial}, false, null);
         return itemStack;
     }
 
