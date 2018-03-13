@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:sword_modular",
-            "nbt": "{\"sword:blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/prismarine\",\"sword:hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\"}"
+            "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/prismarine\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\"}"
         },
         "title": "Short and Stout",
         "description": "Improve a shortblade",
@@ -15,7 +15,7 @@
             "conditions": {
                 "item": {
                     "item": "tetra:sword_modular",
-                    "nbt": "{\"sword:blade:sword/short_blade.hooked\": 1}"
+                    "nbt": "{\"sword/blade:sword/short_blade.hooked\": 1}"
                 }
             }
         },
@@ -24,7 +24,7 @@
             "conditions": {
                 "item": {
                     "item": "tetra:sword_modular",
-                    "nbt": "{\"sword:blade:sword/short_blade.tempered\": 1}"
+                    "nbt": "{\"sword/blade:sword/short_blade.tempered\": 1}"
                 }
             }
         },
@@ -33,7 +33,7 @@
             "conditions": {
                 "item": {
                     "item": "tetra:sword_modular",
-                    "nbt": "{\"sword:blade:sword/short_blade.serrated\": 1}"
+                    "nbt": "{\"sword/blade:sword/short_blade.serrated\": 1}"
                 }
             }
         }

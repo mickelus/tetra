@@ -19,11 +19,11 @@ import se.mickelus.tetra.network.PacketPipeline;
 
 public class ItemSwordModular extends ItemModularHandheld {
 
-    public final static String bladeKey = "sword:blade";
-    public final static String hiltKey = "sword:hilt";
+    public final static String bladeKey = "sword/blade";
+    public final static String hiltKey = "sword/hilt";
 
-    public final static String guardKey = "sword:guard";
-    public final static String pommelKey = "sword:pommel";
+    public final static String guardKey = "sword/guard";
+    public final static String pommelKey = "sword/pommel";
 
 
     static final String unlocalizedName = "sword_modular";
@@ -35,7 +35,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
         minorModuleNames = new String[]{"Guard", "Pommel", "Fuller"};
-        minorModuleKeys = new String[]{guardKey, pommelKey, "sword:fuller"};
+        minorModuleKeys = new String[]{guardKey, pommelKey, "sword/fuller"};
 
         new BladeModule(bladeKey);
         new ShortBladeModule(bladeKey);

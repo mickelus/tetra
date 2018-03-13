@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.hammer;
 
-import net.minecraft.client.util.ITooltipFlag;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,33 +18,35 @@ import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
-import javax.annotation.Nullable;
-import java.util.List;
 
+public class ItemDuplexToolModular extends ItemModularHandheld {
 
-public class ItemHammerModular extends ItemModularHandheld {
+    public final static String headLeftKey = "duplex/head_left";
+    public final static String headRightKey = "duplex/head_right";
 
-    public final static String headKey = "head";
+    public final static String handleKey = "duplex/handle";
+    public final static String bindingKey = "duplex/binding";
+    public final static String accessoryKey = "duplex/accessory";
 
-    public final static String handleKey = "handle";
-    public final static String bindingKey = "binding";
-    public final static String accessoryKey = "accessory";
+    private static final String unlocalizedName = "duplex_tool_modular";
 
-    private static final String unlocalizedName = "hammer_modular";
+    public static BasicBiHeadModule basicHammerHeadLeft;
+    public static BasicBiHeadModule basicHammerHeadRight;
 
-    public ItemHammerModular() {
+    public ItemDuplexToolModular() {
 
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        majorModuleNames = new String[]{"Head", "Handle"};
-        majorModuleKeys = new String[]{headKey, handleKey};
-        minorModuleNames = new String[]{"Binding", "Accessory"};
-        minorModuleKeys = new String[]{bindingKey, accessoryKey};
+        majorModuleNames = new String[]{"Head §7(left)", "Head §7(right)"};
+        majorModuleKeys = new String[]{headLeftKey,headRightKey, };
+        minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
+        minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
-        new BasicHeadModule(headKey);
+        basicHammerHeadLeft = new BasicBiHeadModule(headLeftKey, "hammer/basic_head", true);
+        basicHammerHeadRight = new BasicBiHeadModule(headRightKey, "hammer/basic_head", false);
         new BasicHandleModule(handleKey);
     }
 
@@ -52,7 +54,7 @@ public class ItemHammerModular extends ItemModularHandheld {
     @Override
     public void init(PacketPipeline packetPipeline) {
 
-        new BasicSchema("basic_head_schema", BasicHeadModule.instance, this);
+        new BasicSchema("basic_head_schema", basicHammerHeadLeft, this);
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
 
         new RepairSchema(this);
@@ -70,7 +72,8 @@ public class ItemHammerModular extends ItemModularHandheld {
     private ItemStack createDefaultStack(ItemStack headMaterial, ItemStack handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
-        BasicHeadModule.instance.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
+        basicHammerHeadLeft.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
+        basicHammerHeadRight.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
         BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{handleMaterial}, false, null);
         return itemStack;
     }
@@ -81,8 +84,8 @@ public class ItemHammerModular extends ItemModularHandheld {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-        super.addInformation(itemStack, playerIn, tooltip, advanced);
+    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
+        return super.getTextures(itemStack);
     }
 }
 

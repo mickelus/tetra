@@ -7,9 +7,9 @@
     "result": {
         "item": "tetra:toolbelt_modular",
         "nbt": {
-            "toolbelt:slot1": "toolbelt/strap_1",
+            "toolbelt/slot1": "toolbelt/strap_1",
             "toolbelt/strap_1_material": "strap_1/rope",
-            "toolbelt:belt": "toolbelt/belt",
+            "toolbelt/belt": "toolbelt/belt",
             "toolbelt/belt_material": "belt/rope"
         }
     }

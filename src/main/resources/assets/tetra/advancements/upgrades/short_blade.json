@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:sword_modular",
-            "nbt": "{\"sword:blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword:hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+            "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Take a Stab",
         "description": "Craft a shortblade",
@@ -15,7 +15,7 @@
             "conditions": {
                 "item": {
                     "item": "tetra:sword_modular",
-                    "nbt": "{\"sword:blade\": \"sword/short_blade\"}"
+                    "nbt": "{\"sword/blade\": \"sword/short_blade\"}"
                 }
             }
         }

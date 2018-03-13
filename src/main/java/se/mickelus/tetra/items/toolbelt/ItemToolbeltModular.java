@@ -25,8 +25,8 @@ public class ItemToolbeltModular extends ItemModular {
     public static ItemToolbeltModular instance;
     private final static String unlocalizedName = "toolbelt_modular";
 
-    public final static String slotKey = "toolbelt:slot1";
-    public final static String beltKey = "toolbelt:belt";
+    public final static String slotKey = "toolbelt/slot1";
+    public final static String beltKey = "toolbelt/belt";
 
     private StrapModule[] strapModules;
 

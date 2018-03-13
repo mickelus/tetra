@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:toolbelt_modular",
-            "nbt": "{\"toolbelt:belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
+            "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
         },
         "title": "Stay Hip",
         "description": "Find a way to easily access your tools",

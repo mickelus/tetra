@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.hammer;
 
 import se.mickelus.tetra.DataHandler;
-import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleData;
 import se.mickelus.tetra.module.Priority;
 
-public class BasicHandleModule extends ItemModuleMajor<ModuleData> {
+public class BasicHandleModule extends ItemModule<ModuleData> {
 
     public static final String moduleKey = "hammer/basic_handle";
 

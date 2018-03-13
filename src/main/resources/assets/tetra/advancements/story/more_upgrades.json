@@ -1,8 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:hammer_modular",
-            "nbt": "{\"head\": \"hammer/basic_head\",\"hammer/basic_head_material\": \"basic_head/log\",\"handle\": \"hammer/basic_handle\",\"hammer/basic_handle_material\": \"basic_handle/stick\"}"
+            "item": "tetra:duplex_tool_modular",
+            "nbt": "{\"head_left\": \"hammer/basic_head\",\"hammer/basic_head_left_material\": \"basic_head/log\",\"head_right\": \"hammer/basic_head\",\"hammer/basic_head_right_material\": \"basic_head/log\",\"handle\": \"hammer/basic_handle\",\"hammer/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": "More Upgrades!",
         "description": "Craft a basic mallet from sticks and logs",
@@ -17,7 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:hammer_modular"
+                        "item": "tetra:duplex_tool_modular"
                     }
                 ]
             }

@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:sword_modular",
-            "nbt": "{\"sword:blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/diorite\",\"sword:hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/diorite\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Cutting a New One",
         "description": "Upgrade a sword at the workbench",
