@@ -10,26 +10,14 @@
     },
     "parent": "tetra:upgrades/toolbelt",
     "criteria": {
-        "leather_strap": {
+        "inlaid": {
             "trigger": "minecraft:consume_item",
             "conditions": {
                 "item": {
                     "item": "tetra:toolbelt_modular",
-                    "nbt": "{\"toolbelt/strap_4_material\": \"strap_4/leather\"}"
-                }
-            }
-        },
-        "iron_loop": {
-            "trigger": "minecraft:consume_item",
-            "conditions": {
-                "item": {
-                    "item": "tetra:toolbelt_modular",
-                    "nbt": "{\"toolbelt/strap_4_material\": \"strap_4/iron\"}"
+                    "nbt": "{\"toolbelt/belt_material\": \"belt/inlaid\"}"
                 }
             }
         }
-    },
-    "requirements": [
-        ["leather_strap", "iron_loop"]
-    ]
+    }
 }
