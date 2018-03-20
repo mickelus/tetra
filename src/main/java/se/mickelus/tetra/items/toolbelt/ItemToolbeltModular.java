@@ -39,10 +39,11 @@ public class ItemToolbeltModular extends ItemModular {
     public ItemToolbeltModular() {
         super();
 
-        maxStackSize = 1;
-
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
+
+        setMaxStackSize(1);
+
         setCreativeTab(TetraCreativeTabs.getInstance());
 
 
