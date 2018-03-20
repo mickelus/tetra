@@ -210,7 +210,7 @@ public class GuiWorkbench extends GuiContainer {
             }
 
             if (tileEntity.canPerformAction(viewingPlayer, RepairAction.key)) {
-                repairActionButton.update(viewingPlayer, 0);
+                repairActionButton.update(viewingPlayer, -1);
                 repairActionButton.setVisible(true);
             }
         }

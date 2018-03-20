@@ -16,7 +16,6 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 
