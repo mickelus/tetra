@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.blocks.workbench.action.BreakAction;
+import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
@@ -48,6 +49,8 @@ public class GuiWorkbench extends GuiContainer {
     private String selectedSlot;
 
     private GuiActionButton geodeActionButton;
+    private final GuiActionButton repairActionButton;
+
 
     private ItemStack targetStack = ItemStack.EMPTY;
 
@@ -91,6 +94,12 @@ public class GuiWorkbench extends GuiContainer {
         });
         geodeActionButton.setVisible(false);
         defaultGui.addChild(geodeActionButton);
+
+        repairActionButton = new GuiActionButton(140, 114, I18n.format("workbench.repair"), Capability.hammer, () -> {
+            tileEntity.performAction(viewingPlayer, RepairAction.key);
+        });
+        repairActionButton.setVisible(false);
+        defaultGui.addChild(repairActionButton);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
 
@@ -163,6 +172,8 @@ public class GuiWorkbench extends GuiContainer {
         container.updateSlots();
 
         geodeActionButton.setVisible(false);
+        repairActionButton.setVisible(false);
+
         if (currentSchema == null) {
             updateSchemaList();
             schemaDetail.setVisible(false);
@@ -193,9 +204,14 @@ public class GuiWorkbench extends GuiContainer {
         } else {
             schemaList.setVisible(false);
 
-            if (tileEntity.canPerformAction(BreakAction.key)) {
+            if (tileEntity.canPerformAction(viewingPlayer, BreakAction.key)) {
                 geodeActionButton.update(viewingPlayer, 2);
                 geodeActionButton.setVisible(true);
+            }
+
+            if (tileEntity.canPerformAction(viewingPlayer, RepairAction.key)) {
+                repairActionButton.update(viewingPlayer, 0);
+                repairActionButton.setVisible(true);
             }
         }
 

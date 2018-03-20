@@ -15,7 +15,6 @@ import java.util.Collections;
 public class RepairSchema implements UpgradeSchema {
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
-    private static final String slotSuffix = ".slot1";
 
     private String key = "repair_schema";
 
@@ -79,7 +78,7 @@ public class RepairSchema implements UpgradeSchema {
 
     @Override
     public boolean isApplicableForSlot(String slot) {
-        return false;
+        return slot == null;
     }
 
     @Override
@@ -119,7 +118,6 @@ public class RepairSchema implements UpgradeSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-//        return Collections.EMPTY_LIST;
         // todo: use same capability as target module
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();

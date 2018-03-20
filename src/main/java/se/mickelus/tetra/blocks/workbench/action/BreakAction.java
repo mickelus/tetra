@@ -25,7 +25,7 @@ public class BreakAction implements WorkbenchAction {
     }
 
     @Override
-    public boolean canPerformOn(ItemStack itemStack) {
+    public boolean canPerformOn(EntityPlayer player, ItemStack itemStack) {
         return !itemStack.isEmpty() && itemStack.getItem() instanceof ItemGeode;
     }
 

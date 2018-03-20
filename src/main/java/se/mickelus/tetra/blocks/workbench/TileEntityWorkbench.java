@@ -12,6 +12,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import se.mickelus.tetra.blocks.workbench.action.BreakAction;
+import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
@@ -40,7 +41,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     private Map<String, Runnable> changeListeners;
 
     private static final WorkbenchAction[] actions = new WorkbenchAction[] {
-            new BreakAction()
+            new BreakAction(),
+            new RepairAction()
     };
 
 
@@ -49,18 +51,18 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         changeListeners = new HashMap<>();
     }
 
-    public WorkbenchAction[] getAvailableActions() {
+    public WorkbenchAction[] getAvailableActions(EntityPlayer player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
-                .filter(action -> action.canPerformOn(itemStack))
+                .filter(action -> action.canPerformOn(player, itemStack))
                 .toArray(WorkbenchAction[]::new);
     }
 
-    public boolean canPerformAction(String actionKey) {
+    public boolean canPerformAction(EntityPlayer player, String actionKey) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
-                .anyMatch(action -> action.canPerformOn(itemStack));
+                .anyMatch(action -> action.canPerformOn(player, itemStack));
     }
 
     public void performAction(EntityPlayer player, String actionKey) {
@@ -73,7 +75,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
-                .filter(action -> action.canPerformOn(itemStack))
+                .filter(action -> action.canPerformOn(player, itemStack))
                 .filter(action -> checkActionCapabilities(player, action, itemStack))
                 .ifPresent(action -> action.perform(player, itemStack, this));
     }

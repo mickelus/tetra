@@ -61,8 +61,6 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new ModuleSlotSchema("basic_head_schema", basicHammerHeadLeft, this);
         new ModuleSlotSchema("basic_head_schema", basicHammerHeadRight, this);
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
-
-        new RepairSchema(this);
     }
 
     @Override

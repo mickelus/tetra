@@ -32,7 +32,8 @@ public class GuiCapabilityIndicator extends GuiElement {
     }
 
     public void update(EntityPlayer player, int requiredLevel) {
-        setVisible(requiredLevel > 0);
+        setVisible(requiredLevel >= 0);
+        levelIndicator.setVisible(requiredLevel > 0);
 
         if (requiredLevel > CapabilityHelper.getCapabilityLevel(player, capability)) {
             levelIndicator.setString("§c" + requiredLevel + "§r");
