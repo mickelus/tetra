@@ -1,6 +1,6 @@
 [
     {
-        "key": "strap_4/leather",
+        "key": "strap4/leather",
         "material": "minecraft:leather",
         "materialCount": 4,
         "integrity": -6,
@@ -11,7 +11,7 @@
         }
     },
     {
-        "key": "strap_4/iron",
+        "key": "strap4/iron",
         "material": "minecraft:iron_ingot",
         "materialCount": 4,
         "integrity": -4,

@@ -1,24 +1,22 @@
 [
     {
-        "key": "strap_2/leather",
+        "key": "strap1/leather",
         "material": "minecraft:leather",
-        "materialCount": 2,
-        "integrity": -3,
-        "size": 2,
+        "integrity": -1,
+        "size": 1,
         "glyph": {
             "tint": "866526",
-            "textureX": 96
+            "textureX": 80
         }
     },
     {
-        "key": "strap_2/iron",
+        "key": "strap1/iron",
         "material": "minecraft:iron_ingot",
-        "materialCount": 2,
-        "integrity": -1,
-        "size": 2,
+        "integrity": 0,
+        "size": 1,
         "glyph": {
             "tint": "d8d8d8",
-            "textureX": 96
+            "textureX": 80
         },
         "requiredCapabilities": {
             "hammer": 2

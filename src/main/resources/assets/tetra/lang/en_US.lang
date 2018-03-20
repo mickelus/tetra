@@ -263,24 +263,24 @@ belt/inlaid.prefix=Inlaid
 ###############################
 # TOOLBELT STRAPS
 ###############################
-strap_schema_1.name=Single belt strap
-strap_schema_1.description=Attach a single strap to the belt, which can be used for carrying and quickly accessing tools or other items.
-strap_schema_1.slot1=Strap material
-strap_schema_2.name=Double belt strap
-strap_schema_2.description=Attach two straps to the belt, which can be used for carrying and quickly accessing tools or other items.
-strap_schema_2.slot1=Strap material
-strap_schema_3.name=Triple belt strap
-strap_schema_3.description=Attach three straps to the belt, which can be used for carrying and quickly accessing tools or other items.
-strap_schema_3.slot1=Strap material
-strap_schema_4.name=Quadruple belt strap
-strap_schema_4.description=Attach four straps to the belt, which can be used for carrying and quickly accessing tools or other items.
-strap_schema_4.slot1=Strap material
+strap_schema1.name=Single belt strap
+strap_schema1.description=Attach a single strap to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema1.slot1=Strap material
+strap_schema2.name=Double belt strap
+strap_schema2.description=Attach two straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema2.slot1=Strap material
+strap_schema3.name=Triple belt strap
+strap_schema3.description=Attach three straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema3.slot1=Strap material
+strap_schema4.name=Quadruple belt strap
+strap_schema4.description=Attach four straps to the belt, which can be used for carrying and quickly accessing tools or other items.
+strap_schema4.slot1=Strap material
 
-strap_1/leather=Leather strap
-strap_1/iron=Iron loop
-strap_2/leather=2 Leather straps
-strap_2/iron=2 Iron loops
-strap_3/leather=3 Leather straps
-strap_3/iron=3 Iron loops
-strap_4/leather=4 Leather straps
-strap_4/iron=4 Iron loops
+strap1/leather=Leather strap
+strap1/iron=Iron loop
+strap2/leather=2 Leather straps
+strap2/iron=2 Iron loops
+strap3/leather=3 Leather straps
+strap3/iron=3 Iron loops
+strap4/leather=4 Leather straps
+strap4/iron=4 Iron loops

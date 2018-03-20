@@ -59,8 +59,8 @@ public class ItemToolbeltModular extends ItemModular {
         slot1StrapModules = new StrapModule[4];
         slot2StrapModules = new StrapModule[4];
         for (int i = 0; i < slot1StrapModules.length; i++) {
-            slot1StrapModules[i] = new StrapModule(slot1Key, "toolbelt/strap_" + (i+1), slot1Suffix);
-            slot2StrapModules[i] = new StrapModule(slot2Key, "toolbelt/strap_" + (i+1), slot2Suffix);
+            slot1StrapModules[i] = new StrapModule(slot1Key, "toolbelt/strap" + (i+1), slot1Suffix);
+            slot2StrapModules[i] = new StrapModule(slot2Key, "toolbelt/strap" + (i+1), slot2Suffix);
         }
     }
 
@@ -74,8 +74,8 @@ public class ItemToolbeltModular extends ItemModular {
         BeltModule.instance.registerUpgradeSchemas();
 
         for (int i = 0; i < slot1StrapModules.length; i++) {
-            new ModuleSlotSchema("strap_schema_" + (i+1), slot1StrapModules[i], this);
-            new ModuleSlotSchema("strap_schema_" + (i+1), slot2StrapModules[i], this);
+            new ModuleSlotSchema("strap_schema" + (i+1), slot1StrapModules[i], this);
+            new ModuleSlotSchema("strap_schema" + (i+1), slot2StrapModules[i], this);
         }
     }
 
