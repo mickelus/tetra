@@ -1,8 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.tetra.gui.GuiButton;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiTexture;
+import net.minecraft.client.resources.I18n;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.function.Consumer;
@@ -20,10 +19,15 @@ public class GuiSchemaList extends GuiElement {
     private Consumer<UpgradeSchema> schemaSelectionConsumer;
 
     private GuiElement listGroup;
+
     private GuiButton buttonBack;
     private GuiButton buttonForward;
 
-    public GuiSchemaList(int x, int y) {
+    private GuiButton buttonClose;
+
+    private GuiText emptyStateText;
+
+    public GuiSchemaList(int x, int y, Consumer<UpgradeSchema> schemaSelectionConsumer, Runnable closeCallback) {
         super(x, y, 224, 67);
 
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
@@ -35,10 +39,19 @@ public class GuiSchemaList extends GuiElement {
         addChild(buttonBack);
         buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
         addChild(buttonForward);
+
+        buttonClose = new GuiButton(215, -4, "x", closeCallback);
+        addChild(buttonClose);
+
+        emptyStateText = new GuiText(10, 23, 204, "§7" + I18n.format("workbench.schema_list.empty"));
+        addChild(emptyStateText);
+
+        this.schemaSelectionConsumer = schemaSelectionConsumer;
     }
 
     public void setSchemas(UpgradeSchema[] schemas) {
         this.schemas = schemas;
+        emptyStateText.setVisible(schemas.length == 0);
         setPage(0);
     }
 
@@ -56,7 +69,7 @@ public class GuiSchemaList extends GuiElement {
             listGroup.addChild(new GuiSchemaListItem(
                     i / (pageLength / 2) * 109,
                     i % (pageLength / 2) * 14,
-                    schema, () -> onSchemaSelect(schema)));
+                    schema, () -> schemaSelectionConsumer.accept(schema)));
         }
     }
 
@@ -75,16 +88,6 @@ public class GuiSchemaList extends GuiElement {
 
     private int getNumPages() {
         return (int) Math.ceil(1f * schemas.length / pageLength );
-    }
-
-    public void onSchemaSelect(UpgradeSchema schema) {
-        if (schemaSelectionConsumer != null) {
-            schemaSelectionConsumer.accept(schema);
-        }
-    }
-
-    public void registerSelectHandler(Consumer<UpgradeSchema> schemaSelectionConsumer) {
-        this.schemaSelectionConsumer = schemaSelectionConsumer;
     }
 
     @Override

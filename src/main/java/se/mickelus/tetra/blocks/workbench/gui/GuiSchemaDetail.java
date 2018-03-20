@@ -79,7 +79,7 @@ public class GuiSchemaDetail extends GuiElement {
             glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
         } else if (schema.getType() == SchemaType.minor) {
             glyph.addChild(new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png").setOpacity(0.3f));
-            glyph.addChild(new GuiTexture(4, 3, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            glyph.addChild(new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
         } else if (schema.getType() == SchemaType.improvement) {
             glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
             glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
@@ -93,7 +93,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotNames[i].setVisible(true);
             slotBorders[i].setVisible(true);
 
-            if (schema.slotAcceptsMaterial(itemStack, i, materials[i])) {
+            if (schema.acceptsMaterial(itemStack, i, materials[i])) {
                 int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
                 if (!materials[i].isEmpty() && requiredCount > 1) {
                     slotQuantities[i].setString("/" + requiredCount);

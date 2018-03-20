@@ -26,26 +26,26 @@ public class GuiActionButton extends GuiElement {
 
         labelClickable = new GuiClickable(0, 0, width, height, onClickHandler) {
             protected void onFocus() {
-                setBorderColors(0x8f8f6f);
+                setBorderColors(GuiColors.hoverMuted);
             }
 
             protected void onBlur() {
                 if (!iconClickable.hasFocus()) {
-                    setBorderColors(0x7f7f7f);
+                    setBorderColors(GuiColors.muted);
                 }
             }
         };
 
         labelClickable.addChild(new GuiRect(9, 0, width - 18, 11, 0));
 
-        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, WORKBENCH_TEXTURE).setColor(0x7f7f7f);
+        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
         labelClickable.addChild(borderLeft);
-        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, WORKBENCH_TEXTURE).setColor(0x7f7f7f);
+        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
         labelClickable.addChild(borderRight);
 
-        borderTop = new GuiRect(9, 1, width - 18, 1, 0x7f7f7f);
+        borderTop = new GuiRect(9, 1, width - 18, 1, GuiColors.muted);
         labelClickable.addChild(borderTop);
-        borderBottom = new GuiRect(9, 9, width - 18, 1, 0x7f7f7f);
+        borderBottom = new GuiRect(9, 9, width - 18, 1, GuiColors.muted);
         labelClickable.addChild(borderBottom);
 
         labelClickable.addChild(new GuiStringOutline(35, 1, label));
@@ -55,12 +55,12 @@ public class GuiActionButton extends GuiElement {
 
         iconClickable = new GuiClickable(6, -9, 29, 29, onClickHandler) {
             protected void onFocus() {
-                setBorderColors(0x8f8f6f);
+                setBorderColors(GuiColors.hoverMuted);
             }
 
             protected void onBlur() {
                 if (!labelClickable.hasFocus()) {
-                    setBorderColors(0x7f7f7f);
+                    setBorderColors(GuiColors.muted);
                 }
             }
         };

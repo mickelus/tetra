@@ -20,12 +20,12 @@ public class SingleVariantSchema extends BasicSchema {
     }
 
     @Override
-    public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
+    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
         return targetModuleKey.equals(module.getDataByMaterial(materialStack).key);
     }
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return slotAcceptsMaterial(itemStack, 0, materials[0]);
+        return acceptsMaterial(itemStack, 0, materials[0]);
     }
 }

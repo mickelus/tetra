@@ -1,6 +1,11 @@
 itemGroup.tetra=Tetra
 
 ###############################
+# WORKBENCH
+###############################
+workbench.schema_list.empty=No upgrades available for the selected slot.
+
+###############################
 # MISC
 ###############################
 item.modular.broken=Broken

@@ -64,7 +64,7 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean slotAcceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
+    public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
             return materialStack.isItemEqual(item.getRepairMaterial(itemStack));
@@ -78,13 +78,18 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
+    public boolean isApplicableForSlot(String slot) {
+        return false;
+    }
+
+    @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
-        return slotAcceptsMaterial(itemStack, 0, materials[0]);
+        return acceptsMaterial(itemStack, 0, materials[0]);
     }
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return slotAcceptsMaterial(itemStack, 0, materials[0]);
+        return acceptsMaterial(itemStack, 0, materials[0]);
     }
 
     @Override

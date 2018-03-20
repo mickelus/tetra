@@ -18,6 +18,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.module.BeltModule;
 import se.mickelus.tetra.items.toolbelt.module.StrapModule;
 import se.mickelus.tetra.module.schema.BasicSchema;
+import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
 
@@ -25,10 +26,15 @@ public class ItemToolbeltModular extends ItemModular {
     public static ItemToolbeltModular instance;
     private final static String unlocalizedName = "toolbelt_modular";
 
-    public final static String slotKey = "toolbelt/slot1";
+    public final static String slot1Key = "toolbelt/slot1";
+    public final static String slot2Key = "toolbelt/slot2";
     public final static String beltKey = "toolbelt/belt";
 
-    private StrapModule[] strapModules;
+    public final static String slot1Suffix = "_slot1";
+    public final static String slot2Suffix = "_slot2";
+
+    private StrapModule[] slot1StrapModules;
+    private StrapModule[] slot2StrapModules;
 
     public ItemToolbeltModular() {
         super();
@@ -40,8 +46,8 @@ public class ItemToolbeltModular extends ItemModular {
         setCreativeTab(TetraCreativeTabs.getInstance());
 
 
-        majorModuleNames = new String[]{""};
-        majorModuleKeys = new String[]{slotKey};
+        majorModuleNames = new String[]{"", ""};
+        majorModuleKeys = new String[]{slot1Key, slot2Key};
         minorModuleNames = new String[]{"Belt"};
         minorModuleKeys = new String[]{beltKey};
 
@@ -49,9 +55,11 @@ public class ItemToolbeltModular extends ItemModular {
 
         new BeltModule(beltKey);
 
-        strapModules = new StrapModule[4];
-        for (int i = 0; i < strapModules.length; i++) {
-            strapModules[i] = new StrapModule(slotKey, "toolbelt/strap_" + (i+1));
+        slot1StrapModules = new StrapModule[4];
+        slot2StrapModules = new StrapModule[4];
+        for (int i = 0; i < slot1StrapModules.length; i++) {
+            slot1StrapModules[i] = new StrapModule(slot1Key, "toolbelt/strap_" + (i+1), slot1Suffix);
+            slot2StrapModules[i] = new StrapModule(slot2Key, "toolbelt/strap_" + (i+1), slot2Suffix);
         }
     }
 
@@ -64,8 +72,9 @@ public class ItemToolbeltModular extends ItemModular {
 
         BeltModule.instance.registerUpgradeSchemas();
 
-        for (int i = 0; i < strapModules.length; i++) {
-            new BasicSchema("strap_schema_" + (i+1), strapModules[i], this);
+        for (int i = 0; i < slot1StrapModules.length; i++) {
+            new ModuleSlotSchema("strap_schema_" + (i+1), slot1StrapModules[i], this);
+            new ModuleSlotSchema("strap_schema_" + (i+1), slot2StrapModules[i], this);
         }
     }
 
@@ -80,7 +89,7 @@ public class ItemToolbeltModular extends ItemModular {
     private ItemStack createDefaultStack() {
         ItemStack itemStack = new ItemStack(this);
         BeltModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEAD)}, false, null);
-        strapModules[0].addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEATHER)}, false, null);
+        slot1StrapModules[0].addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEATHER)}, false, null);
         return itemStack;
     }
 

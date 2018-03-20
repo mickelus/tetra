@@ -37,9 +37,10 @@ public class GuiElement extends GuiNode {
 
     @Override
     public boolean onClick(int x, int y) {
-        for (GuiNode element : elements) {
-            if (element.isVisible()) {
-                if (element.onClick(x, y)) {
+        // iterate reverse, elements rendered last (=topmost) should intercept clicks first
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            if (elements.get(i).isVisible()) {
+                if (elements.get(i).onClick(x, y)) {
                     return true;
                 }
             }

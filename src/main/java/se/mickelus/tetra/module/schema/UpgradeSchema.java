@@ -25,7 +25,7 @@ public interface UpgradeSchema {
      * @param materialStack the upgrade material
      * @return
      */
-    public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
+    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
 
     /**
      * Returns true if all material slot contain valid material of enough quantity. Craft is possible using the provided
@@ -37,6 +37,7 @@ public interface UpgradeSchema {
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
 
     public boolean canUpgrade(ItemStack itemStack);
+    public boolean isApplicableForSlot(String slot);
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials);
     public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player);

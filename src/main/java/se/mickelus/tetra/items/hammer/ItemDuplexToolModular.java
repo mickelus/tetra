@@ -15,6 +15,7 @@ import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.schema.BasicSchema;
+import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
@@ -28,10 +29,13 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public final static String bindingKey = "duplex/binding";
     public final static String accessoryKey = "duplex/accessory";
 
+    public final static String leftSuffix = "_left";
+    public final static String rightSuffix = "_right";
+
     private static final String unlocalizedName = "duplex_tool_modular";
 
-    public static BasicBiHeadModule basicHammerHeadLeft;
-    public static BasicBiHeadModule basicHammerHeadRight;
+    public static DuplexHeadModule basicHammerHeadLeft;
+    public static DuplexHeadModule basicHammerHeadRight;
 
     public ItemDuplexToolModular() {
 
@@ -45,8 +49,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
-        basicHammerHeadLeft = new BasicBiHeadModule(headLeftKey, "hammer/basic_head", true);
-        basicHammerHeadRight = new BasicBiHeadModule(headRightKey, "hammer/basic_head", false);
+        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "hammer/basic_head", leftSuffix);
+        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "hammer/basic_head", rightSuffix);
         new BasicHandleModule(handleKey);
     }
 
@@ -54,7 +58,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     @Override
     public void init(PacketPipeline packetPipeline) {
 
-        new BasicSchema("basic_head_schema", basicHammerHeadLeft, this);
+        new ModuleSlotSchema("basic_head_schema", basicHammerHeadLeft, this);
+        new ModuleSlotSchema("basic_head_schema", basicHammerHeadRight, this);
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
 
         new RepairSchema(this);

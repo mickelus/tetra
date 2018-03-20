@@ -60,7 +60,7 @@ public class ImprovementSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean slotAcceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
+    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
         return false;
     }
 
@@ -76,6 +76,11 @@ public class ImprovementSchema implements UpgradeSchema {
             return item.hasModule(itemStack, module);
         }
         return false;
+    }
+
+    @Override
+    public boolean isApplicableForSlot(String slot) {
+        return module.getSlot().equals(slot);
     }
 
     @Override

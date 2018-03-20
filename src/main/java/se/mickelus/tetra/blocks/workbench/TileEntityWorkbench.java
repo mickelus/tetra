@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -27,12 +28,14 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private static final String STACKS_KEY = "stacks";
     private static final String SLOT_KEY = "slot";
+    private static final String CURRENT_SLOT_KEY = "current_slot";
     private static final String SCHEMA_KEY = "schema";
 
     private NonNullList<ItemStack> stacks;
 
     private ItemStack previousTarget = ItemStack.EMPTY;
     private UpgradeSchema currentSchema;
+    private String currentSlot;
 
     private Map<String, Runnable> changeListeners;
 
@@ -84,28 +87,43 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return currentSchema;
     }
 
-    public void setCurrentSchema(UpgradeSchema schema) {
-        setCurrentSchema(schema, null);
+    public void setCurrentSchema(UpgradeSchema schema, String currentSlot) {
+
+        this.currentSchema = schema;
+        this.currentSlot = currentSlot;
+
+        changeListeners.values().forEach(Runnable::run);
+        sync();
     }
 
-    public void setCurrentSchema(UpgradeSchema schema, EntityPlayer player) {
+    public void clearSchema() {
+        setCurrentSchema(null, null);
+    }
+
+    /**
+     * Intended for updating the TE when receiving update packets on the server.
+     * @param currentSchema A schema, or null if it should be unset
+     * @param currentSlot A slot key, or null if it should be unset
+     * @param player
+     */
+    public void update(UpgradeSchema currentSchema, String currentSlot, EntityPlayer player) {
         // todo: inventory change hack, better solution?
-        if (!world.isRemote && schema == null && player != null) {
+        if (currentSchema == null && player != null) {
             emptyMaterialSlots(player);
         }
 
-        this.currentSchema = schema;
+        this.currentSchema = currentSchema;
+        this.currentSlot = currentSlot;
 
         sync();
-
-        if (world.isRemote) {
-            changeListeners.values().forEach(Runnable::run);
-        }
+    }
+    public String getCurrentSlot() {
+        return currentSlot;
     }
 
     private void sync() {
         if (world.isRemote) {
-            PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema));
+            PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema, currentSlot));
         } else {
             world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
             markDirty();
@@ -210,6 +228,10 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         String schemaKey = compound.getString(SCHEMA_KEY);
         currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
 
+        if (compound.hasKey(CURRENT_SLOT_KEY)) {
+            currentSlot = compound.getString(CURRENT_SLOT_KEY);
+        }
+
         // todo : due to the null check perhaps this is not the right place to do this
         if (this.world != null && this.world.isRemote) {
             changeListeners.values().forEach(Runnable::run);
@@ -238,11 +260,15 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             compound.setString(SCHEMA_KEY, currentSchema.getKey());
         }
 
+        if (currentSlot != null) {
+            compound.setString(CURRENT_SLOT_KEY, currentSlot);
+        }
+
         return compound;
     }
 
     private void emptyMaterialSlots(EntityPlayer player) {
-        for (int i = 1; i < getSizeInventory(); i++) {
+        for (int i = 1; i < stacks.size(); i++) {
             transferStackToPlayer(player, i);
         }
     }
@@ -302,18 +328,22 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        this.stacks.set(index, stack);
+    public void setInventorySlotContents(int index, @Nullable ItemStack itemStack) {
+        // todo: figure out something less hacky
+        if (index == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
 
-        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
+            currentSchema = null;
+            currentSlot = null;
+
+            if (world.isRemote) {
+                emptyMaterialSlots(Minecraft.getMinecraft().player);
+            }
         }
 
-        if (index == 0 && !world.isRemote) {
-            setCurrentSchema(null);
-            sync();
-        } else {
-            markDirty();
+        this.stacks.set(index, itemStack);
+
+        if (!itemStack.isEmpty() && itemStack.getCount() > this.getInventoryStackLimit()) {
+            itemStack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -342,7 +372,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         if (index == 0) {
             return true;
         } else if (currentSchema != null) {
-            return currentSchema.slotAcceptsMaterial(getTargetItemStack(), index - 1, stack);
+            return currentSchema.acceptsMaterial(getTargetItemStack(), index - 1, stack);
         }
         return false;
     }

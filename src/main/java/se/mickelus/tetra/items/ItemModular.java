@@ -114,6 +114,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
+    public String[] getMajorModuleKeys() {
+        return majorModuleKeys;
+    }
+
+    @Override
     public String[] getMajorModuleNames() {
         return majorModuleNames;
     }
@@ -121,6 +126,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public int getNumMinorModules() {
         return minorModuleNames.length;
+    }
+
+    @Override
+    public String[] getMinorModuleKeys() {
+        return minorModuleKeys;
     }
 
     @Override

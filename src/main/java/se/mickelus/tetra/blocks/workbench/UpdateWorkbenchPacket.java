@@ -14,12 +14,14 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
 
     private BlockPos pos;
     private UpgradeSchema schema;
+    private String selectedSlot;
 
     public UpdateWorkbenchPacket() {}
 
-    public UpdateWorkbenchPacket(BlockPos pos, UpgradeSchema schema) {
+    public UpdateWorkbenchPacket(BlockPos pos, UpgradeSchema schema, String selectedSlot) {
         this.pos = pos;
         this.schema = schema;
+        this.selectedSlot = selectedSlot;
     }
 
     @Override
@@ -31,6 +33,12 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
         try {
             if (schema != null) {
                 writeString(schema.getKey(), buffer);
+            } else {
+                writeString("", buffer);
+            }
+
+            if (selectedSlot != null) {
+                writeString(selectedSlot, buffer);
             } else {
                 writeString("", buffer);
             }
@@ -49,6 +57,12 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
         try {
             String schemaKey = readString(buffer);
             schema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+
+            selectedSlot = readString(buffer);
+
+            if ("".equals(selectedSlot)) {
+                selectedSlot = null;
+            }
         } catch (IOException exception) {
             System.err.println("An error occurred when reading schema name from packet buffer");
         }
@@ -63,7 +77,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     public void handleServerSide(EntityPlayer player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
-            workbench.setCurrentSchema(schema, player);
+            workbench.update(schema, selectedSlot, player);
         }
     }
 }

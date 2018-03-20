@@ -14,7 +14,7 @@ import se.mickelus.tetra.NBTHelper;
 
 public class InventoryToolbelt implements IInventory {
 
-    public static int INVENTORY_MAX_SIZE = 4;
+    public static int INVENTORY_MAX_SIZE = 8;
     
     private ItemStack toolbeltItemStack;
 

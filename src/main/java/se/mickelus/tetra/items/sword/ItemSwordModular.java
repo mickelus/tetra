@@ -24,6 +24,7 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     public final static String guardKey = "sword/guard";
     public final static String pommelKey = "sword/pommel";
+    public final static String fullerKey = "sword/fuller";
 
 
     static final String unlocalizedName = "sword_modular";
@@ -34,8 +35,8 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
-        minorModuleNames = new String[]{"Guard", "Pommel", "Fuller"};
-        minorModuleKeys = new String[]{guardKey, pommelKey, "sword/fuller"};
+        minorModuleNames = new String[]{"Fuller", "Guard", "Pommel"};
+        minorModuleKeys = new String[]{fullerKey, guardKey, pommelKey};
 
         new BladeModule(bladeKey);
         new ShortBladeModule(bladeKey);

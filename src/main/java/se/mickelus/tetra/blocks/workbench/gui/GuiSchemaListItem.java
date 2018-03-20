@@ -24,7 +24,7 @@ public class GuiSchemaListItem extends GuiClickable {
         } else if (schema.getType() == SchemaType.minor) {
             border = new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png").setOpacity(0.3f);
             addChild(border);
-            addChild(new GuiTexture(4, 3, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            addChild(new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
         } else if (schema.getType() == SchemaType.improvement) {
             border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f);
             addChild(border);
@@ -41,7 +41,7 @@ public class GuiSchemaListItem extends GuiClickable {
         if (border != null) {
             border.setOpacity(0.6f);
         }
-        label.setColor(0xffffcc);
+        label.setColor(GuiColors.hover);
     }
 
     @Override

@@ -68,7 +68,7 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean slotAcceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
+    public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
         if (index == 0) {
             return module.slotAcceptsMaterial(itemStack, materialStack);
         }
@@ -78,6 +78,11 @@ public class BasicSchema implements UpgradeSchema {
     @Override
     public boolean canUpgrade(ItemStack itemStack) {
         return item.equals(itemStack.getItem());
+    }
+
+    @Override
+    public boolean isApplicableForSlot(String slot) {
+        return module.getSlot().equals(slot);
     }
 
     @Override

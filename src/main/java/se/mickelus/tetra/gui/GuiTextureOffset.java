@@ -58,4 +58,12 @@ public class GuiTextureOffset extends GuiElement {
                 textureX, textureY, width - 1, height - 1);
         GlStateManager.popMatrix();
     }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
 }

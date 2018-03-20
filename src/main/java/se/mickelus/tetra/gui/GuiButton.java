@@ -1,51 +1,31 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+
+import java.util.Collections;
+import java.util.List;
 
 public class GuiButton extends GuiClickable {
-
-    private static final int COLOR_DEFAULT = 0xffffffff;
-    private static final int COLOR_HOVER = 0xffffff00;
-    private static final int COLOR_DISABLED = 0x66ffffff;
-
-    private final String text;
-
-    private final FontRenderer fontRenderer;
+    private final GuiStringOutline textElement;
 
     private boolean enabled = true;
-    private String disabledText;
-
-
+    private String disabledTooltip;
 
     public GuiButton(int x, int y, int width, int height, String text, Runnable onClick) {
         super(x, y, width, height, onClick);
 
-        this.text = text;
-
-        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        textElement = new GuiStringOutline(0, (height - 8) / 2, text);
+        addChild(textElement);
     }
 
-    public GuiButton(int x, int y, int width, int height, String text, Runnable onClick, String disabledText) {
+    public GuiButton(int x, int y, String text, Runnable onClick) {
+        this(x, y, Minecraft.getMinecraft().fontRenderer.getStringWidth(text), 10, text, onClick);
+    }
+
+    public GuiButton(int x, int y, int width, int height, String text, Runnable onClick, String disabledTooltip) {
         this(x, y, width, height, text, onClick);
 
-        this.disabledText = disabledText;
-    }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-
-        GlStateManager.enableBlend();
-        if (!enabled) {
-            fontRenderer.drawString(text, refX + x, refY + y, COLOR_DISABLED);
-        } else if (hasFocus()) {
-            fontRenderer.drawString(text, refX + x, refY + y, COLOR_HOVER);
-        } else {
-            fontRenderer.drawString(text, refX + x, refY + y, COLOR_DEFAULT);
-        }
-        GlStateManager.disableBlend();
+        this.disabledTooltip = disabledTooltip;
     }
 
     @Override
@@ -53,7 +33,36 @@ public class GuiButton extends GuiClickable {
         return enabled && super.onClick(x, y);
     }
 
+    private void updateColor() {
+        if (!enabled) {
+            textElement.setColor(GuiColors.muted);
+        } else if (hasFocus()) {
+            textElement.setColor(GuiColors.hover);
+        } else {
+            textElement.setColor(GuiColors.normal);
+        }
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+        updateColor();
+    }
+
+    @Override
+    protected void onFocus() {
+        updateColor();
+    }
+
+    @Override
+    protected void onBlur() {
+        updateColor();
+    }
+
+    @Override
+    public List<String> getTooltipLines() {
+        if (!enabled && disabledTooltip != null && hasFocus()) {
+            return Collections.singletonList(disabledTooltip);
+        }
+        return null;
     }
 }

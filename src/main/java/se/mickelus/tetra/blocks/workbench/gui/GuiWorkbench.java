@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.blocks.workbench.action.BreakAction;
@@ -40,11 +39,13 @@ public class GuiWorkbench extends GuiContainer {
     private GuiElement defaultGui;
     private FontRenderer fontRenderer;
 
-    private GuiModuleList componentList;
+    private GuiModuleList moduleList;
     private GuiStatGroup statGroup;
     private GuiIntegrityBar integrityBar;
     private GuiSchemaList schemaList;
+
     private GuiSchemaDetail schemaDetail;
+    private String selectedSlot;
 
     private GuiActionButton geodeActionButton;
 
@@ -66,8 +67,8 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
 
-        componentList = new GuiModuleList(164, 49);
-        defaultGui.addChild(componentList);
+        moduleList = new GuiModuleList(164, 49, this::selectSlot);
+        defaultGui.addChild(moduleList);
 
         statGroup = new GuiStatGroup(60, 0);
         defaultGui.addChild(statGroup);
@@ -75,8 +76,9 @@ public class GuiWorkbench extends GuiContainer {
         integrityBar = new GuiIntegrityBar(160, 90);
         defaultGui.addChild(integrityBar);
 
-        schemaList = new GuiSchemaList(46, 102);
-        schemaList.registerSelectHandler(tileEntity::setCurrentSchema);
+        schemaList = new GuiSchemaList(46, 102,
+                schema -> tileEntity.setCurrentSchema(schema, selectedSlot),
+                () -> selectSlot(null));
         schemaList.setVisible(false);
         defaultGui.addChild(schemaList);
 
@@ -128,8 +130,15 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.onClick(mouseX, mouseY);
     }
 
+    private void selectSlot(String slotKey) {
+        selectedSlot = slotKey;
+        tileEntity.clearSchema();
+        moduleList.setFocus(selectedSlot);
+        updateSchemaList();
+    }
+
     private void deselectSchema() {
-        tileEntity.setCurrentSchema(null);
+        tileEntity.clearSchema();
     }
 
     private void craftUpgrade() {
@@ -137,48 +146,59 @@ public class GuiWorkbench extends GuiContainer {
     }
 
     private void onTileEntityChange() {
-        ItemStack stack = tileEntity.getTargetItemStack();
+        ItemStack itemStack = tileEntity.getTargetItemStack();
         ItemStack previewStack = ItemStack.EMPTY;
-        UpgradeSchema schema = tileEntity.getCurrentSchema();
+        UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
+        String currentSlot = tileEntity.getCurrentSlot();
+
+        if (!ItemStack.areItemStackTagsEqual(targetStack, itemStack)) {
+            targetStack = itemStack;
+            selectedSlot = null;
+        }
+
+        if (!itemStack.isEmpty() && currentSlot != null) {
+            selectedSlot = currentSlot;
+        }
 
         container.updateSlots();
 
         geodeActionButton.setVisible(false);
-        if (schema == null) {
-            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, stack);
-            if (schemas.length > 0) {
-                schemas = Arrays.stream(schemas)
-                        .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
-                        .toArray(UpgradeSchema[]::new);
-                schemaList.setSchemas(schemas);
-                schemaList.setVisible(true);
-            } else {
-                schemaList.setVisible(false);
-
-                if (tileEntity.canPerformAction(BreakAction.key)) {
-                    geodeActionButton.update(viewingPlayer, 2);
-                    geodeActionButton.setVisible(true);
-                }
-            }
+        if (currentSchema == null) {
+            updateSchemaList();
             schemaDetail.setVisible(false);
-        } else if (!stack.isEmpty() && stack.getItem() instanceof ItemModular) {
-            previewStack = buildPreviewStack(schema, stack, tileEntity.getMaterials());
+        } else if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
+            previewStack = buildPreviewStack(currentSchema, itemStack, tileEntity.getMaterials());
 
-            schemaDetail.update(viewingPlayer, schema, stack, tileEntity.getMaterials());
-            schemaDetail.toggleButton(schema.canApplyUpgrade(viewingPlayer, stack, tileEntity.getMaterials()));
+            schemaDetail.update(viewingPlayer, currentSchema, itemStack, tileEntity.getMaterials());
+            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials()));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);
         }
 
-        componentList.update(stack, previewStack);
-        statGroup.setItemStack(stack, previewStack, viewingPlayer);
-        integrityBar.setItemStack(stack, previewStack);
+        moduleList.update(itemStack, previewStack, currentSlot != null ? currentSlot : selectedSlot);
+        statGroup.setItemStack(itemStack, previewStack, viewingPlayer);
+        integrityBar.setItemStack(itemStack, previewStack);
+    }
 
+    private void updateSchemaList() {
+        if (selectedSlot != null) {
+            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, tileEntity.getTargetItemStack());
+            schemas = Arrays.stream(schemas)
+                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot))
+                    .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
+                    .toArray(UpgradeSchema[]::new);
+            schemaList.setSchemas(schemas);
+            schemaList.setVisible(true);
+        } else {
+            schemaList.setVisible(false);
 
-        if (!ItemStack.areItemStackTagsEqual(targetStack, stack)) {
-            targetStack = stack;
+            if (tileEntity.canPerformAction(BreakAction.key)) {
+                geodeActionButton.update(viewingPlayer, 2);
+                geodeActionButton.setVisible(true);
+            }
         }
+
     }
 
     private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
