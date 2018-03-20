@@ -29,7 +29,7 @@
         "key": "basic_head/iron",
         "material": "minecraft:iron_ingot",
         "durability": 300,
-        "integrity": -3,
+        "integrity": -2,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 64
@@ -45,7 +45,7 @@
         "key": "basic_head/obsidian",
         "material": "minecraft:obsidian",
         "durability": 720,
-        "integrity": -4,
+        "integrity": -3,
         "glyph": {
             "tint": "3c3056",
             "textureX": 64

@@ -3,7 +3,7 @@
         "key": "basic_handle/stick",
         "material": "minecraft:stick",
         "durability": 100,
-        "integrity": 2,
+        "integrity": 3,
         "glyph": {
             "tint": "866526",
             "textureX": 21,
@@ -14,7 +14,7 @@
         "key": "basic_handle/iron",
         "material": "minecraft:iron_ingot",
         "durability": 300,
-        "integrity": 4,
+        "integrity": 6,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 21,
