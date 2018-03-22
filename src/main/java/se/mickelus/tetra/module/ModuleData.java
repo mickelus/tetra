@@ -19,7 +19,7 @@ public class ModuleData {
     public int integrity = 0;
     public float integrityMultiplier = 1;
 
-    int size = 0;
+    public int size = 0;
 
     public GlyphData glyph = new GlyphData();
 

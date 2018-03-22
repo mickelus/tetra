@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.sword;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.*;
 
-public class HiltModule extends ItemModuleMajor<WeaponModuleData> {
+public class HiltModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/basic_hilt";
 
@@ -12,7 +12,7 @@ public class HiltModule extends ItemModuleMajor<WeaponModuleData> {
     public HiltModule(String slotKey) {
         super(slotKey, key);
 
-        data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
+        data = DataHandler.instance.getModuleData(key, HandheldModuleData[].class);
 
         renderLayer = Priority.LOWER;
 

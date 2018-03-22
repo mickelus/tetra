@@ -4,19 +4,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 import se.mickelus.tetra.DataHandler;
-import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.WeaponModuleData;
+import se.mickelus.tetra.module.HandheldModuleData;
 
-public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
+public class HeavyBladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/heavy_blade";
 
@@ -25,7 +23,7 @@ public class HeavyBladeModule extends ItemModuleMajor<WeaponModuleData> {
     public HeavyBladeModule(String slotKey) {
         super(slotKey, key);
 
-        data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
+        data = DataHandler.instance.getModuleData(key, HandheldModuleData[].class);
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);

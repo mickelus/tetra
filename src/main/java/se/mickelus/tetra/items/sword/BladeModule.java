@@ -1,6 +1,5 @@
 package se.mickelus.tetra.items.sword;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -12,9 +11,9 @@ import net.minecraft.world.WorldServer;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.WeaponModuleData;
+import se.mickelus.tetra.module.HandheldModuleData;
 
-public class BladeModule extends ItemModuleMajor<WeaponModuleData> {
+public class BladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/basic_blade";
 
@@ -23,7 +22,7 @@ public class BladeModule extends ItemModuleMajor<WeaponModuleData> {
     public BladeModule(String slotKey) {
         super(slotKey, key);
 
-        data = DataHandler.instance.getModuleData(key, WeaponModuleData[].class);
+        data = DataHandler.instance.getModuleData(key, HandheldModuleData[].class);
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);

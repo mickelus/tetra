@@ -14,9 +14,9 @@ import se.mickelus.tetra.PotionBleeding;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.WeaponModuleData;
+import se.mickelus.tetra.module.HandheldModuleData;
 
-public class ShortBladeModule extends ItemModuleMajor<WeaponModuleData> {
+public class ShortBladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/short_blade";
 
