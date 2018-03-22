@@ -22,7 +22,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": 1
         }
     },
     {
@@ -35,7 +35,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": 2
         },
         "requiredCapabilities": {
             "hammer": 2

@@ -32,7 +32,11 @@ public class DataHandler {
     }
 
     public <T> T getModuleData(String moduleKey, Class<T> dataClass) {
-        String pathString = String.format("data/%s/modules/%s.json", TetraMod.MOD_ID, moduleKey);
+        return getData(String.format("modules/%s", moduleKey), dataClass);
+    }
+
+    public <T> T getData(String path, Class<T> dataClass) {
+        String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
         try {
             Path fPath = null;
 

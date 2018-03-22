@@ -24,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
+import se.mickelus.tetra.module.SynergyData;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -38,6 +39,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     protected int baseDurability = 0;
     protected int baseIntegrity = 0;
+
+    protected SynergyData[] synergies = new SynergyData[0];
 
     @Override
     public int getMaxDamage(ItemStack stack) {
@@ -259,10 +262,17 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
-        return getAllModules(itemStack).stream()
+        int base = getAllModules(itemStack).stream()
                 .map(module -> module.getCapabilityLevel(itemStack, capability))
                 .max(Integer::compare)
-                .orElse(0);
+                .orElse(-1);
+
+        int synergyBonus = Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.capabilities)
+                .mapToInt(capabilityData -> capabilityData.getCapabilityLevel(capability))
+                .sum();
+
+        return base + synergyBonus;
     }
 
     @Override
@@ -304,5 +314,34 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .limit(2)
                 .reduce("", (result, prefix) -> result + prefix + " ");
         return WordUtils.capitalize(prefixes + name);
+    }
+
+    protected SynergyData[] getSynergyData(ItemStack itemStack) {
+        if (synergies.length > 0) {
+            ArrayList<SynergyData> result = new ArrayList<>();
+            String[] variantKeys = getAllModules(itemStack).stream()
+                    .map(module -> module.getData(itemStack))
+                    .map(data -> data.key)
+                    .sorted()
+                    .toArray(String[]::new);
+
+            for (SynergyData synergy : synergies) {
+                int matchCount = 0;
+                for (String variantKey : variantKeys) {
+                    for (int i = 0; i < synergy.moduleVariants.length; i++) {
+                        if (variantKey.equals(synergy.moduleVariants[i])) {
+                            matchCount++;
+                            break;
+                        }
+                    }
+                }
+
+                if (matchCount == synergy.moduleVariants.length) {
+                    result.add(synergy);
+                }
+            }
+            return result.toArray(new SynergyData[result.size()]);
+        }
+        return new SynergyData[0];
     }
 }

@@ -11,9 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.module.SynergyData;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -47,6 +49,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         majorModuleKeys = new String[]{headLeftKey,headRightKey, };
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
+
+        synergies = DataHandler.instance.getModuleData("hammer/synergies", SynergyData[].class);
 
         basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "hammer/basic_head", leftSuffix);
         basicHammerHeadRight = new DuplexHeadModule(headRightKey, "hammer/basic_head", rightSuffix);
