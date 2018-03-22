@@ -200,7 +200,6 @@ heavy_blade/obsidian=Heavy obsidian blade
 heavy_blade/obsidian.prefix=obsidian
 
 
-
 ###############################
 # HAMMER HANDLE
 ###############################
@@ -218,16 +217,15 @@ basic_head_schema.name=Mallet head
 basic_head_schema.description=Reforge the hammer head into a mallet using the given material. The mallet is useful for upgrading other things.
 basic_head_schema.slot1=Head material
 
-hammer/basic_head.name=Mallet
 
 basic_head/log=Wooden mallet
-basic_head/log.prefix=Wooden
-basic_head/stone=Stone mallet
-basic_head/stone.prefix=Stone
-basic_head/iron=Iron mallet
-basic_head/iron.prefix=Iron
-basic_head/obsidian=Obsidian mallet
-basic_head/obsidian.prefix=Obsidian
+basic_head/log.name=Mallet
+basic_head/stone=Stone hammer
+basic_head/stone.name=Hammer
+basic_head/iron=Iron hammer
+basic_head/iron.name=Hammer
+basic_head/obsidian=Obsidian hammer
+basic_head/obsidian.name=Hammer
 
 ###############################
 # TOOLBELT BELT
