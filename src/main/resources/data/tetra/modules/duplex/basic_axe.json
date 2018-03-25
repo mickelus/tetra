@@ -1,0 +1,98 @@
+[
+    {
+        "key": "basic_axe/oak",
+        "material": "minecraft:planks",
+        "materialCount": 2,
+        "materialData": 0,
+        "durability": 26,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": 1
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_axe/cobblestone",
+        "material": "minecraft:cobblestone",
+        "materialCount": 2,
+        "durability": 92,
+        "integrity": -1,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": 1
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_axe/iron",
+        "material": "minecraft:iron_ingot",
+        "materialCount": 2,
+        "durability": 193,
+        "integrity": -2,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": 2
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_axe/diamond",
+        "material": "minecraft:diamond",
+        "materialCount": 2,
+        "durability": 992,
+        "integrity": -2,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": 2
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_axe/gold",
+        "material": "minecraft:gold_ingot",
+        "materialCount": 2,
+        "durability": 11,
+        "integrity": -2,
+        "damage": 5,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": 1
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    }
+]

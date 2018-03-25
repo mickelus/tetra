@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -9,6 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.NBTHelper;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ItemModular {
 
@@ -57,6 +64,10 @@ public class ItemModularHandheld extends ItemModular {
             .map(itemModule -> itemModule.getDamageModifier(itemStack))
             .reduce(0d, Double::sum);
 
+        damageModifier = Arrays.stream(getSynergyData(itemStack))
+            .map(synergyData -> synergyData.damage)
+            .reduce(damageModifier, Double::sum);
+
         return getAllModules(itemStack).stream()
             .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
             .reduce(damageModifier, (a, b) -> a*b);
@@ -78,6 +89,10 @@ public class ItemModularHandheld extends ItemModular {
             .map(itemModule -> itemModule.getSpeedModifier(itemStack))
             .reduce(-2.4d, Double::sum);
 
+        speedModifier = Arrays.stream(getSynergyData(itemStack))
+            .map(synergyData -> synergyData.speed)
+            .reduce(speedModifier, Double::sum);
+
         speedModifier = getAllModules(itemStack).stream()
             .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
             .reduce(speedModifier, (a, b) -> a*b);
@@ -94,5 +109,37 @@ public class ItemModularHandheld extends ItemModular {
             return ((ItemModularHandheld) itemStack.getItem()).getSpeedModifier(itemStack);
         }
         return 2;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack itemStack) {
+        if (!isBroken(itemStack)) {
+            return getCapabilities(itemStack).stream()
+                .map(Enum::toString)
+                .collect(Collectors.toSet());
+        }
+        return Collections.EMPTY_SET;
+    }
+
+    @Override
+    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
+        if (!isBroken(itemStack)) {
+            int capabilityLevel = getCapabilityLevel(itemStack, toolClass);
+            if (capabilityLevel > 0) {
+                return capabilityLevel - 1;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack itemStack, IBlockState blockState) {
+        if (!isBroken(itemStack)) {
+            int capabilityLevel = getCapabilityLevel(itemStack, blockState.getBlock().getHarvestTool(blockState));
+            if (capabilityLevel > 0) {
+                return capabilityLevel * 2;
+            }
+        }
+        return -1;
     }
 }

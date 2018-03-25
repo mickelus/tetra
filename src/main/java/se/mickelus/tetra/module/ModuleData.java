@@ -13,6 +13,12 @@ public class ModuleData {
     public int materialData = -1;
     public int materialCount = 1;
 
+    public float damage = 0;
+    public float damageMultiplier = 1;
+
+    public float attackSpeed = 0;
+    public float attackSpeedMultiplier = 1;
+
     public int durability = 0;
     public float durabilityMultiplier = 1;
 

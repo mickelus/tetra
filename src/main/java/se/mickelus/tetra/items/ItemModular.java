@@ -5,12 +5,15 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
@@ -160,16 +163,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public java.util.Set<String> getToolClasses(ItemStack itemStack) {
-        return super.getToolClasses(itemStack);
-    }
-
-    @Override
-    public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
-        return super.getHarvestLevel(stack, toolClass, player, blockState);
-    }
-
-    @Override
     public int getItemEnchantability(ItemStack stack) {
         return super.getItemEnchantability(stack);
     }
@@ -260,6 +253,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         incrementRepairCount(itemStack);
     }
 
+    public int getCapabilityLevel(ItemStack itemStack, String capability) {
+        if (EnumUtils.isValidEnum(Capability.class, capability)) {
+            return getCapabilityLevel(itemStack, Capability.valueOf(capability));
+        }
+        return -1;
+    }
+
     @Override
     public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
         int base = getAllModules(itemStack).stream()
@@ -343,5 +343,22 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return result.toArray(new SynergyData[result.size()]);
         }
         return new SynergyData[0];
+    }
+
+    protected ItemStack getStackFromMaterialString(String material) {
+        switch (material) {
+            case "WOOD":
+                return new ItemStack(Blocks.PLANKS, 1);
+            case "STONE":
+                return new ItemStack(Blocks.COBBLESTONE, 1);
+            case "IRON":
+                return new ItemStack(Items.IRON_INGOT, 1);
+            case "DIAMOND":
+                return new ItemStack(Items.DIAMOND, 1);
+            case "GOLD":
+                return new ItemStack(Items.GOLD_INGOT, 1);
+            default:
+                return new ItemStack(Blocks.PLANKS, 1);
+        }
     }
 }

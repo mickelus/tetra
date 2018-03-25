@@ -9,7 +9,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleData;
 import se.mickelus.tetra.module.MultiSlotModule;
 
-public class StrapModule extends MultiSlotModule {
+public class StrapModule extends MultiSlotModule<ModuleData> {
     public StrapModule(String slotKey, String moduleKey, String slotSuffix) {
         super(slotKey, moduleKey, slotSuffix);
 

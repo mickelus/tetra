@@ -1,0 +1,84 @@
+[
+    {
+        "key": "butt/oak",
+        "material": "minecraft:plank",
+        "materialData": 0,
+        "durability": 12,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 160
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/cobblestone",
+        "material": "minecraft:cobblestone",
+        "durability": 18,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 160
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/iron",
+        "material": "minecraft:iron_ingot",
+        "durability": 26,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/diamond",
+        "material": "minecraft:diamond",
+        "durability": 548,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 160
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/gold",
+        "material": "minecraft:gold_ingot",
+        "durability": 11,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 160
+        },
+        "requiredCapabilities": {
+            "hammer": 1
+        }
+    }
+]

@@ -2,7 +2,7 @@
     {
         "key": "basic_handle/stick",
         "material": "minecraft:stick",
-        "durability": 100,
+        "durability": 20,
         "integrity": 3,
         "glyph": {
             "tint": "866526",
@@ -13,7 +13,7 @@
     {
         "key": "basic_handle/iron",
         "material": "minecraft:iron_ingot",
-        "durability": 300,
+        "durability": 58,
         "integrity": 6,
         "glyph": {
             "tint": "d8d8d8",

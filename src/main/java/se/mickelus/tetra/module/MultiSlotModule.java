@@ -6,7 +6,7 @@ import se.mickelus.tetra.TetraMod;
 
 import java.util.Arrays;
 
-public class MultiSlotModule extends ItemModuleMajor<ModuleData> {
+public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
 
     protected String slotSuffix;
 

@@ -194,11 +194,18 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return getData(itemStack).durability;
     }
 
-    public double getDamageModifier(ItemStack itemStack) { return 0; }
-    public double getDamageMultiplierModifier(ItemStack itemStack) { return 1; }
 
-    public double getSpeedModifier(ItemStack itemStack) { return 0; }
-    public double getSpeedMultiplierModifier(ItemStack itemStack) { return 1; }
+    public double getDamageModifier(ItemStack itemStack) {
+        return getData(itemStack).damage;
+    }
+
+    public double getDamageMultiplierModifier(ItemStack itemStack) { return getData(itemStack).damageMultiplier; }
+
+    public double getSpeedModifier(ItemStack itemStack) {
+        return getData(itemStack).attackSpeed;
+    }
+
+    public double getSpeedMultiplierModifier(ItemStack itemStack) { return getData(itemStack).attackSpeedMultiplier; }
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[] { getData(itemStack).getTextureLocation() };

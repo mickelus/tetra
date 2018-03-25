@@ -83,24 +83,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemStack itemStack = new ItemStack(this);
         itemStack.setTagCompound(new NBTTagCompound());
 
-        ItemStack bladeMaterial;
-        switch (material) {
-            case "WOOD":
-                bladeMaterial = new ItemStack(Blocks.PLANKS, 2);
-                break;
-            case "STONE":
-                bladeMaterial = new ItemStack(Blocks.COBBLESTONE, 2);
-                break;
-            case "IRON":
-                bladeMaterial = new ItemStack(Items.IRON_INGOT, 2);
-                break;
-            case "DIAMOND":
-                bladeMaterial = new ItemStack(Items.DIAMOND, 2);
-                break;
-            default:
-                bladeMaterial = new ItemStack(Blocks.PLANKS, 2);
-                break;
-        }
+        ItemStack bladeMaterial = getStackFromMaterialString(material);
 
         BladeModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false, null);

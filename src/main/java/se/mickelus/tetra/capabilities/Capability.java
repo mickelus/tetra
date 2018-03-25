@@ -1,5 +1,7 @@
 package se.mickelus.tetra.capabilities;
 
 public enum Capability {
-    hammer
+    hammer,
+    axe,
+    pickaxe
 }

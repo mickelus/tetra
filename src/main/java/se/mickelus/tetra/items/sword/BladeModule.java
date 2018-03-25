@@ -29,11 +29,6 @@ public class BladeModule extends ItemModuleMajor<HandheldModuleData> {
     }
 
     @Override
-    public double getDamageModifier(ItemStack itemStack) {
-        return getData(itemStack).damage;
-    }
-
-    @Override
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         attacker.world.getEntitiesWithinAABB(EntityLivingBase.class,
                 target.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))

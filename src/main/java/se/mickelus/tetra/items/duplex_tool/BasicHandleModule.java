@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.hammer;
+package se.mickelus.tetra.items.duplex_tool;
 
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModule;
@@ -8,7 +8,7 @@ import se.mickelus.tetra.module.Priority;
 
 public class BasicHandleModule extends ItemModule<ModuleData> {
 
-    public static final String moduleKey = "hammer/basic_handle";
+    public static final String moduleKey = "duplex/basic_handle";
 
     public static BasicHandleModule instance;
 

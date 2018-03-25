@@ -1,11 +1,11 @@
-package se.mickelus.tetra.items.hammer;
+package se.mickelus.tetra.items.duplex_tool;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,6 +15,7 @@ import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SynergyData;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
@@ -38,6 +39,14 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public static DuplexHeadModule basicHammerHeadLeft;
     public static DuplexHeadModule basicHammerHeadRight;
 
+    public static DuplexHeadModule basicAxeLeft;
+    public static DuplexHeadModule basicAxeRight;
+
+    public static DuplexHeadModule basicPickaxeLeft;
+    public static DuplexHeadModule basicPickaxeRight;
+
+    public static DuplexHeadModule butt;
+
     public ItemDuplexToolModular() {
 
         setUnlocalizedName(unlocalizedName);
@@ -50,32 +59,77 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
-        synergies = DataHandler.instance.getModuleData("hammer/synergies", SynergyData[].class);
+        synergies = DataHandler.instance.getModuleData("duplex/synergies", SynergyData[].class);
 
-        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "hammer/basic_head", leftSuffix);
-        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "hammer/basic_head", rightSuffix);
+        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_hammer", leftSuffix);
+        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "duplex/basic_hammer", rightSuffix);
+
+        basicAxeLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_axe", leftSuffix);
+        basicAxeRight = new DuplexHeadModule(headRightKey, "duplex/basic_axe", rightSuffix);
+
+        basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_pickaxe", leftSuffix);
+        basicPickaxeRight = new DuplexHeadModule(headRightKey, "duplex/basic_pickaxe", rightSuffix);
+
+        butt = new DuplexHeadModule(headRightKey, "duplex/butt", rightSuffix);
+
         new BasicHandleModule(handleKey);
     }
 
 
     @Override
     public void init(PacketPipeline packetPipeline) {
+        new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadLeft, this);
+        new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadRight, this);
 
-        new ModuleSlotSchema("basic_head_schema", basicHammerHeadLeft, this);
-        new ModuleSlotSchema("basic_head_schema", basicHammerHeadRight, this);
+        new ModuleSlotSchema("basic_axe_schema", basicAxeLeft, this);
+        new ModuleSlotSchema("basic_axe_schema", basicAxeRight, this);
+
+        new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeLeft, this);
+        new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeRight, this);
+
+        new ModuleSlotSchema("butt_schema", butt, this);
+
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
+
+        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceTool);
+    }
+
+    private ItemStack replaceTool(ItemStack originalStack) {
+        Item originalItem = originalStack.getItem();
+        ItemStack newStack = new ItemStack(this);
+
+        if (!(originalItem instanceof ItemAxe || originalItem instanceof ItemPickaxe)) {
+            return null;
+        }
+
+        ItemStack material = getStackFromMaterialString(((ItemTool) originalItem).getToolMaterialName());
+
+        if (originalItem instanceof ItemAxe) {
+            basicAxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
+            butt.addModule(newStack, new ItemStack[]{material}, false, null);
+        }
+
+        if (originalItem instanceof ItemPickaxe) {
+            basicPickaxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
+            basicPickaxeRight.addModule(newStack, new ItemStack[]{material}, false, null);
+        }
+
+        BasicHandleModule.instance.addModule(newStack, new ItemStack[]{new ItemStack(Items.STICK)}, false, null);
+        newStack.setItemDamage(originalStack.getItemDamage());
+
+        return newStack;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createDefaultStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK)));
-            itemList.add(createDefaultStack(new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.IRON_INGOT)));
+            itemList.add(createHammerStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK)));
+            itemList.add(createHammerStack(new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.IRON_INGOT)));
         }
     }
 
-    private ItemStack createDefaultStack(ItemStack headMaterial, ItemStack handleMaterial) {
+    private ItemStack createHammerStack(ItemStack headMaterial, ItemStack handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
         basicHammerHeadLeft.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);

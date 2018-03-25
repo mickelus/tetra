@@ -30,16 +30,6 @@ public class HeavyBladeModule extends ItemModuleMajor<HandheldModuleData> {
     }
 
     @Override
-    public double getDamageModifier(ItemStack itemStack) {
-        return getData(itemStack).damage;
-    }
-
-    @Override
-    public double getSpeedModifier(ItemStack itemStack) {
-        return getData(itemStack).attackSpeed;
-    }
-
-    @Override
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         float cooldown = 1;
         if (attacker instanceof EntityPlayer) {

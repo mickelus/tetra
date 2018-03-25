@@ -49,16 +49,6 @@ public class ShortBladeModule extends ItemModuleMajor<HandheldModuleData> {
     }
 
     @Override
-    public double getDamageModifier(ItemStack itemStack) {
-        return getData(itemStack).damage;
-    }
-
-    @Override
-    public double getSpeedModifier(ItemStack itemStack) {
-        return getData(itemStack).attackSpeed;
-    }
-
-    @Override
     public void hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
         int hookedLevel = getImprovementLevel(hookedImprovement, itemStack);
         int serratedLevel = getImprovementLevel(serratedImprovement, itemStack);

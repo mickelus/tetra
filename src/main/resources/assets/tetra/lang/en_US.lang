@@ -211,21 +211,73 @@ basic_handle/stick=Wooden handle
 basic_handle/iron=Iron handle
 
 ###############################
+# AXE HEAD
+###############################
+basic_axe_schema.name=Axe head
+basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.
+basic_axe_schema.slot1=Head material
+
+
+basic_axe/oak=Wooden axe
+basic_axe/oak.name=Axe
+basic_axe/cobblestone=Stone axe
+basic_axe/cobblestone.name=Axe
+basic_axe/iron=Iron axe
+basic_axe/iron.name=Axe
+basic_axe/diamond=Diamond axe
+basic_axe/diamond.name=Axe
+basic_axe/gold=Gold axe
+basic_axe/gold.name=Axe
+
+###############################
+# PICKAXE HEAD
+###############################
+basic_pickaxe_schema.name=Pickxe head
+basic_pickaxe_schema.description=Forge a pickaxe head from the given material.
+basic_pickaxe_schema.slot1=Head material
+
+
+basic_pickaxe/oak=Wooden pick
+basic_pickaxe/oak.name=Pickaxe
+basic_pickaxe/cobblestone=Stone pick
+basic_pickaxe/cobblestone.name=Pickaxe
+basic_pickaxe/iron=Iron pick
+basic_pickaxe/iron.name=Pickaxe
+basic_pickaxe/diamond=Diamond pick
+basic_pickaxe/diamond.name=Pickaxe
+basic_pickaxe/gold=Gold pick
+basic_pickaxe/gold.name=Pickaxe
+
+###############################
+# BUTT
+###############################
+butt_schema.name=Tool butt
+butt_schema.description=Used as the back side of a single sided tool, yields lower weight than a double sided tool. Can sometimes be used for hammering if crafted from a sturdy material.
+butt_schema.slot1=Head material
+
+
+butt/oak=Oak butt
+butt/cobblestone=Stone butt
+butt/iron=Iron butt
+butt/diamond=Diamond butt
+butt/gold=Golden butt
+
+###############################
 # HAMMER HEAD
 ###############################
-basic_head_schema.name=Mallet head
-basic_head_schema.description=Reforge the hammer head into a mallet using the given material. The mallet is useful for upgrading other things.
-basic_head_schema.slot1=Head material
+basic_hammer_schema.name=Mallet head
+basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for upgrading other things.
+basic_hammer_schema.slot1=Head material
 
 
-basic_head/log=Wooden mallet
-basic_head/log.name=Mallet
-basic_head/stone=Stone hammer
-basic_head/stone.name=Hammer
-basic_head/iron=Iron hammer
-basic_head/iron.name=Hammer
-basic_head/obsidian=Obsidian hammer
-basic_head/obsidian.name=Hammer
+basic_hammer/log=Wooden mallet
+basic_hammer/log.name=Mallet
+basic_hammer/stone=Stone hammer
+basic_hammer/stone.name=Hammer
+basic_hammer/iron=Iron hammer
+basic_hammer/iron.name=Hammer
+basic_hammer/obsidian=Obsidian hammer
+basic_hammer/obsidian.name=Hammer
 
 ###############################
 # TOOLBELT BELT
