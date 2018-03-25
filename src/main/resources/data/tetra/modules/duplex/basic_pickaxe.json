@@ -12,7 +12,7 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": 1
+            "pickaxe": [1, 1.6667]
         },
         "requiredCapabilities": {
             "hammer": 1
@@ -31,7 +31,7 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": 1
+            "pickaxe": [1, 3.33333]
         },
         "requiredCapabilities": {
             "hammer": 1
@@ -50,7 +50,7 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": 3
+            "pickaxe": [3, 5]
         },
         "requiredCapabilities": {
             "hammer": 1
@@ -69,7 +69,7 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": 3
+            "pickaxe": [3, 6.6667]
         },
         "requiredCapabilities": {
             "hammer": 1
@@ -87,7 +87,7 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": 1
+            "pickaxe": [1, 10]
         },
         "requiredCapabilities": {
             "hammer": 1

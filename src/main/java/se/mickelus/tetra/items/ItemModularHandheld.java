@@ -135,11 +135,14 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public float getDestroySpeed(ItemStack itemStack, IBlockState blockState) {
         if (!isBroken(itemStack)) {
-            int capabilityLevel = getCapabilityLevel(itemStack, blockState.getBlock().getHarvestTool(blockState));
-            if (capabilityLevel > 0) {
-                return capabilityLevel * 2;
+            float speed = (float) (4 + getSpeedModifier(itemStack)) *
+                    getCapabilityEfficiency(itemStack, blockState.getBlock().getHarvestTool(blockState));
+
+            if (speed < 1) {
+                return 1;
             }
+            return speed;
         }
-        return -1;
+        return 1;
     }
 }

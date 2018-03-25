@@ -275,6 +275,32 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return base + synergyBonus;
     }
 
+    public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
+        if (EnumUtils.isValidEnum(Capability.class, capability)) {
+            return getCapabilityEfficiency(itemStack, Capability.valueOf(capability));
+        }
+        return -1;
+    }
+
+    @Override
+    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
+        int highestLevel = getAllModules(itemStack).stream()
+                .map(module -> module.getCapabilityLevel(itemStack, capability))
+                .max(Integer::compare)
+                .orElse(-1);
+
+        float base = getAllModules(itemStack).stream()
+                .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
+                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
+                .max(Float::compare)
+                .orElse(1f);
+
+        return Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.capabilities)
+                .map(capabilityData -> capabilityData.getCapabilityEfficiency(capability))
+                .reduce(base, (a, b) -> a * b);
+    }
+
     @Override
     public Collection<Capability> getCapabilities(ItemStack itemStack) {
         return getAllModules(itemStack).stream()

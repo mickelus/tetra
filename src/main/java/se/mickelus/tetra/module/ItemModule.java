@@ -229,6 +229,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     @Override
+    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
+        return getData(itemStack).capabilities.getCapabilityEfficiency(capability);
+    }
+
+    @Override
     public Collection<Capability> getCapabilities(ItemStack itemStack) {
         return getData(itemStack).capabilities.getCapabilities();
     }

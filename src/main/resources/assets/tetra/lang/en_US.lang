@@ -12,6 +12,7 @@ workbench.repair=Repair
 item.modular.broken=Broken
 item.modular.tier=Tier
 item.modular.durability=Durability
+item.modular.speed=Swing speed
 
 ###############################
 # ITEM NAMES

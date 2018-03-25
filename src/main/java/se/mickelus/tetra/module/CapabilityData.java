@@ -12,9 +12,11 @@ import java.util.Set;
 public class CapabilityData {
 
     public Map<Capability, Integer> capabilityMap;
+    public Map<Capability, Float> efficiencyMap;
 
     public CapabilityData() {
         capabilityMap = new HashMap<>();
+        efficiencyMap = new HashMap<>();
     }
 
     public boolean containsCapability(Capability capability) {
@@ -26,6 +28,13 @@ public class CapabilityData {
             return capabilityMap.get(capability);
         }
         return 0;
+    }
+
+    public float getCapabilityEfficiency(Capability capability) {
+        if (efficiencyMap.containsKey(capability)) {
+            return efficiencyMap.get(capability);
+        }
+        return 1;
     }
 
     public Set<Capability> getCapabilities() {
@@ -40,7 +49,18 @@ public class CapabilityData {
 
             jsonObject.entrySet().stream()
                     .filter(entry -> EnumUtils.isValidEnum(Capability.class, entry.getKey()))
-                    .forEach(entry -> data.capabilityMap.put(Capability.valueOf(entry.getKey()), entry.getValue().getAsInt()));
+                    .forEach(entry -> {
+                        JsonElement entryValue = entry.getValue();
+                        if (entryValue.isJsonArray()) {
+                            JsonArray entryArray = entryValue.getAsJsonArray();
+                            if (entryArray.size() == 2) {
+                                data.capabilityMap.put(Capability.valueOf(entry.getKey()), entryArray.get(0).getAsInt());
+                                data.efficiencyMap.put(Capability.valueOf(entry.getKey()), entryArray.get(1).getAsFloat());
+                            }
+                        } else {
+                            data.capabilityMap.put(Capability.valueOf(entry.getKey()), entryValue.getAsInt());
+                        }
+                    });
 
             return data;
         }

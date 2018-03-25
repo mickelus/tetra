@@ -19,6 +19,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SynergyData;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
+import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 
@@ -90,6 +91,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new ModuleSlotSchema("butt_schema", butt, this);
 
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
+
+        new RepairSchema(this);
 
         ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceTool);
     }
