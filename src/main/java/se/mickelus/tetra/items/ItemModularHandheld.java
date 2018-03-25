@@ -20,6 +20,15 @@ import java.util.stream.Collectors;
 public class ItemModularHandheld extends ItemModular {
 
     @Override
+    public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        if (state.getBlockHardness(worldIn, pos) > 0) {
+            applyDamage(2, itemStack, entityLiving);
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         applyDamage(1, stack, attacker);
         getAllModules(stack).forEach(module -> module.hitEntity(stack, target, attacker));
