@@ -62,7 +62,7 @@
             "hammer": 4
         },
         "requiredCapabilities": {
-            "hammer": 4
+            "hammer": 3
         }
     }
 ]
