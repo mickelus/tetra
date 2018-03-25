@@ -11,6 +11,17 @@
         }
     },
     {
+        "key": "basic_handle/bone",
+        "material": "minecraft:bone",
+        "durability": 39,
+        "integrity": 4,
+        "glyph": {
+            "tint": "edebca",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
         "key": "basic_handle/iron",
         "material": "minecraft:iron_ingot",
         "durability": 58,
