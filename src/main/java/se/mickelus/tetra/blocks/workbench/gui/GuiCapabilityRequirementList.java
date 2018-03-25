@@ -6,14 +6,14 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
-public class GuiCapabilityIndicatorList extends GuiElement {
+public class GuiCapabilityRequirementList extends GuiElement {
 
-    private GuiCapabilityIndicator hammerIndicator;
+    private GuiCapabilityRequirement hammerIndicator;
 
-    public GuiCapabilityIndicatorList(int x, int y) {
+    public GuiCapabilityRequirementList(int x, int y) {
         super(x, y, 54, 18);
 
-        hammerIndicator = new GuiCapabilityIndicator(38, 0, Capability.hammer);
+        hammerIndicator = new GuiCapabilityRequirement(38, 0, Capability.hammer);
         addChild(hammerIndicator);
     }
 

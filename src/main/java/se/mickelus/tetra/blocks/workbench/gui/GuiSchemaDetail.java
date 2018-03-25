@@ -25,7 +25,7 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiString[] slotQuantities;
     private GuiTexture[] slotBorders;
 
-    private GuiCapabilityIndicatorList capabilityIndicatorList;
+    private GuiCapabilityRequirementList capabilityIndicatorList;
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
@@ -59,7 +59,7 @@ public class GuiSchemaDetail extends GuiElement {
             addChild(slotBorders[i]);
         }
 
-        capabilityIndicatorList = new GuiCapabilityIndicatorList(80, 39);
+        capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
 
         craftButton = new GuiButton(138, 44, 30, 8, "Craft", craftListener);

@@ -1,9 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringSmall;
+import se.mickelus.tetra.gui.*;
 
 public class GuiStatBar extends GuiElement {
 
@@ -38,13 +35,8 @@ public class GuiStatBar extends GuiElement {
         this.max = max;
         this.alignment = alignment;
 
-        if (alignment == GuiAlignment.right) {
-            labelString = new GuiStringSmall(0, 0, label, alignment);
-            valueString = new GuiString(0, 3, label, alignment);
-        } else {
-            labelString = new GuiStringSmall(0, 0, label, alignment);
-            valueString = new GuiString(0, 3, label, alignment);
-        }
+        labelString = new GuiStringSmall(0, 0, label, alignment);
+        valueString = new GuiString(0, 3, label, alignment);
 
         addChild(labelString);
         addChild(valueString);

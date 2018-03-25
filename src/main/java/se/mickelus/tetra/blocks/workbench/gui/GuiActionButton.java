@@ -9,7 +9,7 @@ public class GuiActionButton extends GuiElement {
 
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
-    private GuiCapabilityIndicator capabilityIndicator;
+    private GuiCapabilityRequirement capabilityIndicator;
 
     private GuiClickable iconClickable;
     private GuiClickable labelClickable;
@@ -68,7 +68,7 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 52, 32, WORKBENCH_TEXTURE));
         addChild(iconClickable);
 
-        capabilityIndicator = new GuiCapabilityIndicator(6, 7, capability);
+        capabilityIndicator = new GuiCapabilityRequirement(6, 7, capability);
         iconClickable.addChild(capabilityIndicator);
     }
 
