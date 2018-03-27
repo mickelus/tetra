@@ -155,6 +155,15 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
+    public boolean canHarvestBlock(IBlockState blockState, ItemStack itemStack) {
+        Material material = blockState.getMaterial();
+        if (Material.ROCK.equals(material) || Material.IRON.equals(material) || Material.ANVIL.equals(material)) {
+            return getHarvestLevel(itemStack, "pickaxe", null, null) >= 0;
+        }
+        return false;
+    }
+
+    @Override
     public float getDestroySpeed(ItemStack itemStack, IBlockState blockState) {
         if (!isBroken(itemStack)) {
             String tool = blockState.getBlock().getHarvestTool(blockState);

@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.sword;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -85,5 +87,10 @@ public class ItemSwordModular extends ItemModularHandheld {
         MakeshiftGuardModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         return itemStack;
+    }
+
+    @Override
+    public boolean canHarvestBlock(IBlockState blockState) {
+        return blockState.getBlock() == Blocks.WEB;
     }
 }
