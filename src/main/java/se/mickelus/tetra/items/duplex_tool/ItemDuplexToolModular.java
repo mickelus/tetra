@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -143,12 +144,21 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, facing);
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
     public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
         return super.getTextures(itemStack);
+    }
+
+    @Override
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        if (!player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
+                && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
+            return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, side);
+        }
+        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
     }
 }
 

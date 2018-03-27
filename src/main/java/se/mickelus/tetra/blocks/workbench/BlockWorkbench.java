@@ -100,7 +100,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
 
-            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
 
             if (!world.isRemote) {
                 world.setBlockState(pos, instance.getDefaultState());
