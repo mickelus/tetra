@@ -17,8 +17,6 @@ item.modular.speed=Swing speed
 ###############################
 # ITEM NAMES
 ###############################
-item.hammer_basic.name=Wooden mallet
-item.toolbelt.name=Toolbelt
 item.rocket_boots.name=Rocket boots
 
 ###############################
@@ -200,6 +198,13 @@ heavy_blade/gold.prefix=ornate
 heavy_blade/obsidian=Heavy obsidian blade
 heavy_blade/obsidian.prefix=obsidian
 
+###############################
+# DUPLEX SYNERGY NAMES
+###############################
+duplex/axe_hammer=Carpenter's hammer
+duplex/axe_axe=Greataxe
+duplex/axe_pickaxe=Dolabra
+duplex/hammer_pickaxe=Geologist's hammer
 
 ###############################
 # HAMMER HANDLE
@@ -209,6 +214,7 @@ basic_handle_schema.description=Replace the handle for the head. A sturdier hand
 basic_handle_schema.slot1=Handle material
 
 basic_handle/stick=Wooden handle
+basic_handle/bone=Bone handle
 basic_handle/iron=Iron handle
 
 ###############################

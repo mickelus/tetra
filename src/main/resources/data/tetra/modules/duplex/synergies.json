@@ -1,5 +1,21 @@
 [
     {
+        "modules": ["duplex/basic_hammer", "duplex/basic_axe"],
+        "name": "duplex/axe_hammer"
+    },
+    {
+        "modules": ["duplex/basic_axe", "duplex/basic_axe"],
+        "name": "duplex/axe_axe"
+    },
+    {
+        "modules": ["duplex/basic_axe", "duplex/basic_pickaxe"],
+        "name": "duplex/axe_pickaxe"
+    },
+    {
+        "modules": ["duplex/basic_hammer", "duplex/basic_pickaxe"],
+        "name": "duplex/hammer_pickaxe"
+    },
+    {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
         "capabilities": {
             "hammer": 1

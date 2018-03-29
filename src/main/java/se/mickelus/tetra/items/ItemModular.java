@@ -321,11 +321,21 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)) {
             return "";
         }
-        String name = getAllModules(itemStack).stream()
-                .sorted(Comparator.comparing(module -> module.getItemNamePriority(itemStack)))
-                .map(module -> module.getItemName(itemStack))
+        String name = Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.name)
                 .filter(Objects::nonNull)
-                .findFirst().orElse("");
+                .filter(I18n::hasKey)
+                .map(I18n::format)
+                .findFirst()
+                .orElse(null);
+
+        if (name == null) {
+            name = getAllModules(itemStack).stream()
+                    .sorted(Comparator.comparing(module -> module.getItemNamePriority(itemStack)))
+                    .map(module -> module.getItemName(itemStack))
+                    .filter(Objects::nonNull)
+                    .findFirst().orElse("");
+        }
 
         String prefixes = Stream.concat(
                 Arrays.stream(getImprovements(itemStack))
