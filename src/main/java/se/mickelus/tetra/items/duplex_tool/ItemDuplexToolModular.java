@@ -61,7 +61,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
-        synergies = DataHandler.instance.getModuleData("duplex/synergies", SynergyData[].class);
+        synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
         basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_hammer", leftSuffix);
         basicHammerHeadRight = new DuplexHeadModule(headRightKey, "duplex/basic_hammer", rightSuffix);

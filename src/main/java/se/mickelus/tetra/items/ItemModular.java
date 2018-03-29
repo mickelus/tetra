@@ -345,6 +345,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     protected SynergyData[] getSynergyData(ItemStack itemStack) {
         if (synergies.length > 0) {
             ArrayList<SynergyData> result = new ArrayList<>();
+            String[] moduleKeys = getAllModules(itemStack).stream()
+                    .map(ItemModule::getUnlocalizedName)
+                    .sorted()
+                    .toArray(String[]::new);
             String[] variantKeys = getAllModules(itemStack).stream()
                     .map(module -> module.getData(itemStack))
                     .map(data -> data.key)
@@ -352,17 +356,30 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .toArray(String[]::new);
 
             for (SynergyData synergy : synergies) {
-                int matchCount = 0;
+                int variantMatches = 0;
+                int moduleMatches = 0;
                 for (String variantKey : variantKeys) {
-                    for (int i = 0; i < synergy.moduleVariants.length; i++) {
-                        if (variantKey.equals(synergy.moduleVariants[i])) {
-                            matchCount++;
-                            break;
-                        }
+                    if (variantMatches == synergy.moduleVariants.length) {
+                        break;
+                    }
+
+                    if (variantKey.equals(synergy.moduleVariants[variantMatches])) {
+                        variantMatches++;
                     }
                 }
 
-                if (matchCount == synergy.moduleVariants.length) {
+                for (String moduleKey : moduleKeys) {
+                    if (moduleMatches == synergy.modules.length) {
+                        break;
+                    }
+
+                    if (moduleKey.equals(synergy.modules[moduleMatches])) {
+                        moduleMatches++;
+                    }
+                }
+
+                if (synergy.moduleVariants.length > 0 && variantMatches == synergy.moduleVariants.length
+                        || synergy.modules.length > 0 && moduleMatches == synergy.modules.length) {
                     result.add(synergy);
                 }
             }

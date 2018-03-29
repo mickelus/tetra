@@ -10,12 +10,21 @@ public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
 
     protected String slotSuffix;
 
+    protected String unlocalizedName;
+
     public MultiSlotModule(String slotKey, String moduleKey, String slotSuffix) {
         super(slotKey, moduleKey + slotSuffix);
 
         this.slotSuffix = slotSuffix;
 
+        this.unlocalizedName = moduleKey;
+
         this.dataKey = moduleKey + slotSuffix + "_material";
+    }
+
+    @Override
+    public String getUnlocalizedName() {
+        return unlocalizedName;
     }
 
     public ResourceLocation[] getAllTextures() {

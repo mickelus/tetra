@@ -30,6 +30,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
+    public String getUnlocalizedName() {
+        return moduleKey;
+    }
+
     public String getSlot() {
         return slotKey;
     }
@@ -116,8 +120,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         String name = getData(itemStack).key + ".name";
         if (I18n.hasKey(name)) {
             return I18n.format(name);
-        } else if (I18n.hasKey(moduleKey + ".name")) {
-            return I18n.format(moduleKey + ".name");
+        } else if (I18n.hasKey(getUnlocalizedName() + ".name")) {
+            return I18n.format(getUnlocalizedName() + ".name");
         }
         return null;
     }
@@ -130,8 +134,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         String prefix = getData(itemStack).key + ".prefix";
         if (I18n.hasKey(prefix)) {
             return I18n.format(prefix);
-        } else if (I18n.hasKey(moduleKey + ".prefix")) {
-            return I18n.format(moduleKey + ".prefix");
+        } else if (I18n.hasKey(getUnlocalizedName() + ".prefix")) {
+            return I18n.format(getUnlocalizedName() + ".prefix");
         }
         return null;
     }

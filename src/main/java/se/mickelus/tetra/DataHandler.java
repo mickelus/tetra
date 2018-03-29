@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import se.mickelus.tetra.module.CapabilityData;
 import se.mickelus.tetra.module.GlyphData;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.SynergyData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class DataHandler {
     private final File source;
@@ -35,6 +37,15 @@ public class DataHandler {
         return getData(String.format("modules/%s", moduleKey), dataClass);
     }
 
+    public SynergyData[] getSynergyData(String path) {
+        SynergyData[] data = getData(path, SynergyData[].class);
+        for (SynergyData entry : data) {
+            Arrays.sort(entry.moduleVariants);
+            Arrays.sort(entry.modules);
+        }
+        return data;
+    }
+
     public <T> T getData(String path, Class<T> dataClass) {
         String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
         try {
@@ -54,7 +65,7 @@ public class DataHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.err.printf("Could not read data from '%s'. Initializing from empty array.\n");
+        System.err.printf("Could not read data from '%s'. Initializing from empty array.\n", path);
         return gson.fromJson("[]", dataClass);
     }
 }
