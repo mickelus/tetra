@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.duplex_tool;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,6 +23,10 @@ import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 
 public class ItemDuplexToolModular extends ItemModularHandheld {
@@ -57,7 +62,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         majorModuleNames = new String[]{"Head §7(left)", "Head §7(right)"};
-        majorModuleKeys = new String[]{headLeftKey,headRightKey, };
+        majorModuleKeys = new String[]{headLeftKey,headRightKey};
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
@@ -159,6 +164,21 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
             return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, side);
         }
         return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+    }
+
+    @Override
+    protected String getDisplayNamePrefixes(ItemStack itemStack) {
+        String modulePrefix = Optional.ofNullable(getModuleFromSlot(itemStack, headLeftKey))
+                .map(module -> module.getItemPrefix(itemStack))
+                .map(prefix -> prefix + " ")
+                .orElse("");
+        return Arrays.stream(getImprovements(itemStack))
+                .map(improvement -> improvement.key + ".prefix")
+                .filter(I18n::hasKey)
+                .map(I18n::format)
+                .findFirst()
+                .map(prefix -> prefix + " " + modulePrefix)
+                .orElse(modulePrefix);
     }
 }
 

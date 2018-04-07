@@ -257,14 +257,19 @@ basic_axe_schema.slot1=Head material
 
 basic_axe/oak=Wooden axe
 basic_axe/oak.name=Axe
+basic_axe/oak.prefix=Oak
 basic_axe/cobblestone=Stone axe
 basic_axe/cobblestone.name=Axe
+basic_axe/cobblestone.prefix=Cobblestone
 basic_axe/iron=Iron axe
 basic_axe/iron.name=Axe
+basic_axe/iron.prefix=Iron
 basic_axe/diamond=Diamond axe
 basic_axe/diamond.name=Axe
+basic_axe/diamond.prefix=Diamond
 basic_axe/gold=Gold axe
 basic_axe/gold.name=Axe
+basic_axe/gold.prefix=Gold
 
 ###############################
 # PICKAXE HEAD
@@ -276,14 +281,19 @@ basic_pickaxe_schema.slot1=Head material
 
 basic_pickaxe/oak=Wooden pick
 basic_pickaxe/oak.name=Pickaxe
+basic_pickaxe/oak.prefix=Oak
 basic_pickaxe/cobblestone=Stone pick
 basic_pickaxe/cobblestone.name=Pickaxe
+basic_pickaxe/cobblestone.prefix=Cobblestone
 basic_pickaxe/iron=Iron pick
 basic_pickaxe/iron.name=Pickaxe
+basic_pickaxe/iron.prefix=Iron
 basic_pickaxe/diamond=Diamond pick
 basic_pickaxe/diamond.name=Pickaxe
+basic_pickaxe/diamond.prefix=Diamond
 basic_pickaxe/gold=Gold pick
 basic_pickaxe/gold.name=Pickaxe
+basic_pickaxe/gold.prefix=Gold
 
 ###############################
 # BUTT
@@ -309,12 +319,16 @@ basic_hammer_schema.slot1=Head material
 
 basic_hammer/log=Wooden mallet
 basic_hammer/log.name=Mallet
+basic_hammer/log.prefix=Log
 basic_hammer/stone=Stone hammer
 basic_hammer/stone.name=Hammer
+basic_hammer/stone.prefix=Stone
 basic_hammer/iron=Iron hammer
 basic_hammer/iron.name=Hammer
+basic_hammer/iron.prefix=Iron
 basic_hammer/obsidian=Obsidian hammer
 basic_hammer/obsidian.name=Hammer
+basic_hammer/obsidian.prefix=Obsidian
 
 ###############################
 # TOOLBELT BELT

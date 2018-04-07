@@ -349,6 +349,20 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
                 .toArray(ImprovementData[]::new);
     }
+
+    protected String getDisplayNamePrefixes(ItemStack itemStack) {
+        return Stream.concat(
+                Arrays.stream(getImprovements(itemStack))
+                        .map(improvement -> improvement.key + ".prefix")
+                        .filter(I18n::hasKey)
+                        .map(I18n::format),
+                getAllModules(itemStack).stream()
+                        .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
+                        .map(module -> module.getItemPrefix(itemStack))
+                        .filter(Objects::nonNull)
+        )
+                .limit(2)
+                .reduce("", (result, prefix) -> result + prefix + " ");
     }
 
     @Override
@@ -373,18 +387,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .findFirst().orElse("");
         }
 
-        String prefixes = Stream.concat(
-                Arrays.stream(getImprovements(itemStack))
-                        .map(improvement -> improvement + ".prefix")
-                        .filter(I18n::hasKey)
-                        .map(I18n::format),
-                getAllModules(itemStack).stream()
-                        .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
-                        .map(module -> module.getItemPrefix(itemStack))
-                        .filter(Objects::nonNull)
-                )
-                .limit(2)
-                .reduce("", (result, prefix) -> result + prefix + " ");
+        String prefixes = getDisplayNamePrefixes(itemStack);
         return WordUtils.capitalize(prefixes + name);
     }
 
