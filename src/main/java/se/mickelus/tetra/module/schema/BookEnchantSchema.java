@@ -117,11 +117,13 @@ public class BookEnchantSchema implements UpgradeSchema {
             }
         }
 
-        if (consumeMaterials && player instanceof EntityPlayerMP) {
-            // todo: add proper criteria
-
+        if (consumeMaterials) {
             materials[0].shrink(1);
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+
+            if (player instanceof EntityPlayerMP) {
+                // todo: add proper criteria
+                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+            }
         }
 
         return upgradedStack;
