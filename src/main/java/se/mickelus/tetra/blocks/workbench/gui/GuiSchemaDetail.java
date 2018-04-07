@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 

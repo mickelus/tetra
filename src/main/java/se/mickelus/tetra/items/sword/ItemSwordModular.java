@@ -1,6 +1,8 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -10,9 +12,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BasicSchema;
+import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.ImprovementSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
+
+import java.util.Map;
 
 public class ItemSwordModular extends ItemModularHandheld {
 
@@ -48,14 +53,20 @@ public class ItemSwordModular extends ItemModularHandheld {
     @Override
     public void init(PacketPipeline packetPipeline) {
         new BasicSchema("blade_schema", BladeModule.instance, this);
+        new ImprovementSchema(BladeModule.instance, BladeModule.serratedImprovement);
+        new BookEnchantSchema(BladeModule.instance);
 
         new BasicSchema("short_blade_schema", ShortBladeModule.instance, this);
         new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.hookedImprovement);
         new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.temperedImprovement);
         new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.serratedImprovement);
+        new BookEnchantSchema(ShortBladeModule.instance);
 
         new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
+        new BookEnchantSchema(HeavyBladeModule.instance);
+
         new BasicSchema("hilt_schema", HiltModule.instance, this);
+        new BookEnchantSchema(HiltModule.instance);
 
         new RepairSchema(this);
 
@@ -72,6 +83,7 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         newStack = createItemStack(((ItemSword) originalItem).getToolMaterialName());
         newStack.setItemDamage(originalStack.getItemDamage());
+        transferEnchantments(originalStack, newStack);
 
         return newStack;
     }
@@ -86,7 +98,23 @@ public class ItemSwordModular extends ItemModularHandheld {
         HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false, null);
         MakeshiftGuardModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
         DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
+
         return itemStack;
+    }
+
+    private void transferEnchantments(ItemStack sourceStack, ItemStack modularStack) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+            if (BladeModule.instance.acceptsImprovement(improvement) && HiltModule.instance.acceptsImprovement(improvement)) {
+                BladeModule.instance.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
+                HiltModule.instance.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
+            } else if (BladeModule.instance.acceptsImprovement(improvement)) {
+                BladeModule.instance.addImprovement(modularStack, improvement, entry.getValue());
+            } else if (HiltModule.instance.acceptsImprovement(improvement)) {
+                HiltModule.instance.addImprovement(modularStack, improvement, entry.getValue());
+            }
+        }
     }
 
     @Override

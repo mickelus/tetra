@@ -3,13 +3,15 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class GuiModuleMajor extends GuiClickable {
 
@@ -108,9 +110,9 @@ public class GuiModuleMajor extends GuiClickable {
             int previewValue = previewModule.getImprovementLevel(improvements[i], previewStack);
             int color = GuiColors.normal;
 
-            if (currentValue == 0) {
+            if (currentValue == -1) {
                 color = GuiColors.add;
-            } else if (previewValue == 0) {
+            } else if (previewValue == -1) {
                 color = GuiColors.remove;
             } else if (currentValue != previewValue) {
                 color = GuiColors.change;
@@ -121,10 +123,11 @@ public class GuiModuleMajor extends GuiClickable {
         }
     }
 
-    public static String[] getImprovementUnion(String[] improvements, String[] previewImprovements) {
-        Set<String> result = new HashSet<>(Arrays.asList(improvements));
-        result.addAll(Arrays.asList(previewImprovements));
-        return result.toArray(new String[result.size()]);
+    public static String[] getImprovementUnion(ImprovementData[] improvements, ImprovementData[] previewImprovements) {
+        return Stream.concat(Arrays.stream(improvements), Arrays.stream(previewImprovements))
+                .map(improvement -> improvement.key)
+                .distinct()
+                .toArray(String[]::new);
     }
 
     private void setColors(int color) {

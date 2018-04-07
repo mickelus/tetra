@@ -4,7 +4,7 @@ import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.schema.SingleVariantSchema;
 
 public class BeltModule extends ItemModule {

@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.MultiSlotModule;
 
 public class StrapModule extends MultiSlotModule<ModuleData> {

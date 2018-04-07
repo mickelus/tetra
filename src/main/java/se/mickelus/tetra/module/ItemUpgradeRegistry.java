@@ -1,14 +1,13 @@
 package se.mickelus.tetra.module;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public class ItemUpgradeRegistry {
@@ -71,5 +70,12 @@ public class ItemUpgradeRegistry {
 
     public Collection<ItemModule> getAllModules() {
 	    return moduleMap.values();
+    }
+
+    public String getImprovementFromEnchantment(Enchantment enchantment) {
+        return Optional.ofNullable(enchantment.getRegistryName())
+                .map(ResourceLocation::getResourcePath)
+                .map(path -> "enchantment/" + path)
+                .orElse(null);
     }
 }

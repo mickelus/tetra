@@ -1,7 +1,10 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.data;
 
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.ItemEffect;
+import se.mickelus.tetra.module.Priority;
 
 public class ModuleData {
     public String key;
@@ -24,6 +27,8 @@ public class ModuleData {
 
     public int integrity = 0;
     public float integrityMultiplier = 1;
+
+    public EffectData effects = new EffectData();
 
     public int size = 0;
 

@@ -1,10 +1,8 @@
 package se.mickelus.tetra.items.duplex_tool;
 
-import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.DataHandler;
-import se.mickelus.tetra.module.HandheldModuleData;
+import se.mickelus.tetra.module.data.HandheldModuleData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.ModuleData;
 import se.mickelus.tetra.module.MultiSlotModule;
 
 public class DuplexHeadModule extends MultiSlotModule<HandheldModuleData> {

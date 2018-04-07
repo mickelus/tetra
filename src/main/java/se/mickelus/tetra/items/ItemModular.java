@@ -1,10 +1,9 @@
 package se.mickelus.tetra.items;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentDurability;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -18,16 +17,15 @@ import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
-import se.mickelus.tetra.module.SynergyData;
+import se.mickelus.tetra.module.data.ImprovementData;
+import se.mickelus.tetra.module.data.SynergyData;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -168,11 +166,27 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
+        amount = getReducedDamage(amount, itemStack, responsibleEntity);
         if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
             itemStack.damageItem(amount, responsibleEntity);
         } else {
             setDamage(itemStack, itemStack.getMaxDamage());
         }
+    }
+
+    private int getReducedDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
+        if (amount > 0) {
+            int level = getEffectLevel(itemStack, ItemEffect.unbreaking);
+            int reduction = 0;
+
+            for (int i = 0; i < amount; i++) {
+                if (EnchantmentDurability.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
+                    reduction++;
+                }
+            }
+            return amount - reduction;
+        }
+        return amount;
     }
 
     public boolean isBroken(ItemStack itemStack) {
@@ -269,11 +283,32 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
         int synergyBonus = Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.capabilities)
-                .mapToInt(capabilityData -> capabilityData.getCapabilityLevel(capability))
+                .mapToInt(capabilityData -> capabilityData.getLevel(capability))
                 .sum();
 
         return base + synergyBonus;
     }
+
+    public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
+        return getAllModules(itemStack).stream()
+                .mapToInt(module -> module.getEffectLevel(itemStack, effect))
+                .sum();
+    }
+
+    public Collection<ItemEffect> getEffects(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .flatMap(module -> ((Collection<ItemEffect>)module.getEffects(itemStack)).stream())
+                .distinct()
+                .collect(Collectors.toSet());
+
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .anyMatch(improvement -> improvement.enchantment);
+    }
+
 
     public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
         if (EnumUtils.isValidEnum(Capability.class, capability)) {
@@ -297,7 +332,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
         return Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.capabilities)
-                .map(capabilityData -> capabilityData.getCapabilityEfficiency(capability))
+                .map(capabilityData -> capabilityData.getEfficiency(capability))
                 .reduce(base, (a, b) -> a * b);
     }
 
@@ -308,11 +343,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .collect(Collectors.toSet());
     }
 
-    public String[] getImprovements(ItemStack itemStack) {
+    public ImprovementData[] getImprovements(ItemStack itemStack) {
         return Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .toArray(String[]::new);
+                .toArray(ImprovementData[]::new);
+    }
     }
 
     @Override

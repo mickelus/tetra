@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -111,12 +111,12 @@ public class BasicSchema implements UpgradeSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilities();
+        return module.getDataByMaterial(materials[0]).requiredCapabilities.getValues();
     }
 
     @Override
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        return module.getDataByMaterial(materials[0]).requiredCapabilities.getCapabilityLevel(capability);
+        return module.getDataByMaterial(materials[0]).requiredCapabilities.getLevel(capability);
     }
 
     @Override

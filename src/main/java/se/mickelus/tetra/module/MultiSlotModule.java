@@ -3,6 +3,7 @@ package se.mickelus.tetra.module;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.Arrays;
 

@@ -1,0 +1,10 @@
+[
+    {
+        "key": "basic_blade/serrated",
+        "textured": false,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 1
+        }
+    }
+]

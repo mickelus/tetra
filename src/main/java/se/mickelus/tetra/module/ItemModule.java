@@ -13,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.items.ItemEffect;
+import se.mickelus.tetra.module.data.ModuleData;
 
 public abstract class ItemModule<T extends ModuleData> implements ICapabilityProvider {
 
@@ -227,27 +229,35 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}
 
+    public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
+        return getData(itemStack).effects.getLevel(effect);
+    }
+
+    public Collection<ItemEffect> getEffects(ItemStack itemStack) {
+        return getData(itemStack).effects.getValues();
+    }
+
     @Override
     public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
-        return getData(itemStack).capabilities.getCapabilityLevel(capability);
+        return getData(itemStack).capabilities.getLevel(capability);
     }
 
     @Override
     public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
-        return getData(itemStack).capabilities.getCapabilityEfficiency(capability);
+        return getData(itemStack).capabilities.getEfficiency(capability);
     }
 
     @Override
     public Collection<Capability> getCapabilities(ItemStack itemStack) {
-        return getData(itemStack).capabilities.getCapabilities();
+        return getData(itemStack).capabilities.getValues();
     }
 
     public int getRequiredCapabilityLevel(final ItemStack material, Capability capability) {
-        return getDataByMaterial(material).requiredCapabilities.getCapabilityLevel(capability);
+        return getDataByMaterial(material).requiredCapabilities.getLevel(capability);
     }
 
     public Collection<Capability> getRequiredCapabilities(final ItemStack material) {
-        return getDataByMaterial(material).requiredCapabilities.getCapabilities();
+        return getDataByMaterial(material).requiredCapabilities.getValues();
     }
 
     public int getSize(ItemStack itemStack) {

@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.sword;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.data.ModuleData;
 
 public class DecorativePommelModule extends ItemModule<ModuleData> {
     public static final String key = "sword/decorative_pommel";

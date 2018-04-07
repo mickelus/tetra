@@ -16,14 +16,18 @@ public class GuiModuleImprovement extends GuiElement {
 
         addChild(new GuiRect(0, 1, width, 1, color));
 
-        if (level > 0) {
+        if (level < 0) {
             tooltipLines = Arrays.asList(
-                I18n.format(improvement + ".name", I18n.format("enchantment.level." + level)),
-                I18n.format(improvement + ".description"));
+                    "§4-" + I18n.format(improvement + ".name", ""),
+                    "§7" + I18n.format(improvement + ".description"));
+        } else if (level == 0) {
+            tooltipLines = Arrays.asList(
+                    I18n.format(improvement + ".name"),
+                    "§7" + I18n.format(improvement + ".description"));
         } else {
             tooltipLines = Arrays.asList(
-                "§4-" + I18n.format(improvement + ".name", ""),
-                I18n.format(improvement + ".description"));
+                    I18n.format(improvement + ".name") + " " + I18n.format("enchantment.level." + level),
+                    "§7" + I18n.format(improvement + ".description"));
         }
     }
 

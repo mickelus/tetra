@@ -1,6 +1,7 @@
 package se.mickelus.tetra;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -19,6 +20,7 @@ import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -26,7 +28,7 @@ import se.mickelus.tetra.proxy.IProxy;
 
 import java.util.Arrays;
 
-@Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "0.3.1")
+@Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "0.4.2")
 public class TetraMod {
     public static final String MOD_ID = "tetra";
 
@@ -41,8 +43,6 @@ public class TetraMod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
-
         new DataHandler(event.getSourceFile());
 
         new ItemUpgradeRegistry();
@@ -50,6 +50,8 @@ public class TetraMod {
         new TetraCreativeTabs();
 
         new GuiHandlerRegistry();
+
+        MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
 
         blocks = new TetraBlock[] {
                 new BlockWorkbench(),
@@ -95,6 +97,7 @@ public class TetraMod {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+
         PacketPipeline.instance.postInitialize();
     }
 }

@@ -1,8 +1,6 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 

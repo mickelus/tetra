@@ -3,9 +3,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ModuleData;
+import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.function.Consumer;
 

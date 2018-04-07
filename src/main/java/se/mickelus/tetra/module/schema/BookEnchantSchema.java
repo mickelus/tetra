@@ -2,71 +2,83 @@ package se.mickelus.tetra.module.schema;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.items.sword.BladeModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.data.GlyphData;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
-public class ImprovementSchema implements UpgradeSchema {
-    private static final String nameSuffix = ".schema.name";
-    private static final String descriptionSuffix = ".schema.description";
+public class BookEnchantSchema implements UpgradeSchema {
+    private static final String key = "book_enchant";
+
+    private static final String nameSuffix = ".name";
+    private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
     protected ItemModuleMajor module;
-    protected String improvement;
 
-    public ImprovementSchema(ItemModuleMajor module, String improvement) {
+    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 81, 52);
+
+    public BookEnchantSchema(ItemModuleMajor module) {
         this.module = module;
-        this.improvement = improvement;
 
         ItemUpgradeRegistry.instance.registerSchema(this);
     }
 
     @Override
     public String getKey() {
-        return improvement;
+        return module.getUnlocalizedName();
     }
 
     @Override
     public String getName() {
-        return I18n.format(improvement + nameSuffix);
+        return I18n.format(key + nameSuffix);
     }
 
     @Override
     public String getDescription() {
-        return I18n.format(improvement + descriptionSuffix);
+        return I18n.format(key + descriptionSuffix);
     }
 
     @Override
     public int getNumMaterialSlots() {
-        return 0;
+        return 1;
     }
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return "";
+        return I18n.format(key + slotSuffix);
     }
 
     @Override
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        return 0;
+        return 1;
     }
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
-        return false;
+        return !materialStack.isEmpty() && materialStack.getItem() instanceof ItemEnchantedBook;
     }
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return true;
+        if (acceptsMaterial(itemStack, 0, materials[0])) {
+            return EnchantmentHelper.getEnchantments(materials[0]).keySet().stream()
+                    .map(ItemUpgradeRegistry.instance::getImprovementFromEnchantment)
+                    .anyMatch(module::acceptsImprovement);
+        }
+        return false;
     }
 
     @Override
@@ -85,23 +97,30 @@ public class ImprovementSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
-        return !isIntegrityViolation(itemStack, materials)
-            && checkCapabilities(player, itemStack, materials);
+        return isMaterialsValid(itemStack, materials);
     }
 
     @Override
     public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials) {
-        ItemStack improvedStack = applyUpgrade(itemStack, materials, false, null);
-        return ItemModular.getIntegrityGain(improvedStack) + ItemModular.getIntegrityCost(improvedStack) < 0;
+        return false;
     }
 
     @Override
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
-        module.addImprovement(upgradedStack, improvement, 0);
+
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+            if (module.acceptsImprovement(improvement)) {
+                module.addImprovement(upgradedStack, improvement, entry.getValue());
+            }
+        }
 
         if (consumeMaterials && player instanceof EntityPlayerMP) {
             // todo: add proper criteria
+
+            materials[0].shrink(1);
             CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
         }
 
@@ -120,16 +139,17 @@ public class ImprovementSchema implements UpgradeSchema {
 
     @Override
     public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
-        return module.getData(targetStack).requiredCapabilities.getLevel(capability);
+        return 0;
     }
 
     @Override
     public SchemaType getType() {
-        return SchemaType.improvement;
+        return SchemaType.major;
     }
 
     @Override
     public GlyphData getGlyph() {
-        return module.getDefaultData().glyph;
+        return glyph;
     }
+
 }

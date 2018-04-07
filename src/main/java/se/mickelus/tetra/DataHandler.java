@@ -2,10 +2,8 @@ package se.mickelus.tetra;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import se.mickelus.tetra.module.CapabilityData;
-import se.mickelus.tetra.module.GlyphData;
+import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
-import se.mickelus.tetra.module.SynergyData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +23,8 @@ public class DataHandler {
     public DataHandler(File source) {
         this.source = source;
         gson = new GsonBuilder()
-                .registerTypeAdapter(CapabilityData.class, new CapabilityData.CapabilityTypeAdapter())
+                .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
+                .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
                 .registerTypeAdapter(GlyphData.class, new GlyphData.GlyphTypeAdapter())
                 .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
                 .create();

@@ -1,0 +1,26 @@
+[
+    {
+        "key": "short_blade/hooked",
+        "textured": true,
+        "integrity": -1,
+        "effects": {
+            "backstab": 1
+        }
+    },
+    {
+        "key": "short_blade/tempered",
+        "textured": true,
+        "integrity": -1,
+        "effects": {
+            "armorPenetration": 1
+        }
+    },
+    {
+        "key": "short_blade/serrated",
+        "textured": true,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 1
+        }
+    }
+]

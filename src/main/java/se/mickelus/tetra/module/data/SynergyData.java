@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.module.data;
 
 public class SynergyData {
     public String[] moduleVariants = new String[0];
