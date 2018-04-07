@@ -16,7 +16,7 @@ public class HiltModule extends ItemModuleMajor<HandheldModuleData> {
 
         data = DataHandler.instance.getModuleData(key, HandheldModuleData[].class);
 
-        improvements = DataHandler.instance.getModuleData("sword/hilt_enchants", ImprovementData[].class);
+        improvements = DataHandler.instance.getModuleData("sword/improvements/hilt_enchants", ImprovementData[].class);
 
         renderLayer = Priority.LOWER;
 
