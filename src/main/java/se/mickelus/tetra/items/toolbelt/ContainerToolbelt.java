@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.DisabledSlot;
 
@@ -61,15 +60,15 @@ public class ContainerToolbelt extends Container {
             ItemStack itemStack = slot.getStack();
 
             if (itemStack.isItemEqual(this.itemStackToolbelt)) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
             if (index < this.toolbeltInventory.getSizeInventory()) {
                 if (!this.mergeItemStack(itemStack,  this.toolbeltInventory.getSizeInventory(), this.inventorySlots.size(), true)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(itemStack, 0,  this.toolbeltInventory.getSizeInventory(), false)) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
             if (itemStack.getCount() == 0) {
@@ -81,7 +80,7 @@ public class ContainerToolbelt extends Container {
             return itemStack.copy();
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     /**
