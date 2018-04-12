@@ -1,27 +1,46 @@
 package se.mickelus.tetra.module;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import se.mickelus.tetra.ReflectionHelper;
 import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class ItemEffectHandler {
+
+    private Cache<Block, Method> silkMethodCache;
+
     public static ItemEffectHandler instance;
 
     public ItemEffectHandler() {
+         silkMethodCache = CacheBuilder.newBuilder()
+                .maximumSize(100)
+                .expireAfterWrite(5, TimeUnit.MINUTES)
+                .build();
+
         instance = this;
     }
 
@@ -121,6 +140,42 @@ public class ItemEffectHandler {
                         player.onItemPickup(event.getOrb(), 1);
                         orb.setDead();
                         event.setCanceled(true);
+                    }
+                });
+    }
+
+    @SubscribeEvent
+    public void onBlockHarvest(BlockEvent.HarvestDropsEvent event) {
+        Optional.ofNullable(event.getHarvester())
+                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .ifPresent(itemStack -> {
+                    int silkTouchLevel = getEffectLevel(itemStack, ItemEffect.silkTouch);
+                    IBlockState state = event.getState();
+                    if (silkTouchLevel > 0
+                            && state.getBlock().canSilkHarvest(event.getWorld(), event.getPos(), state, event.getHarvester())) {
+                        try {
+                            ItemStack silkDrop = (ItemStack) silkMethodCache.get(state.getBlock(), () -> {
+                                return ReflectionHelper.findMethod(state.getBlock().getClass(),
+                                        "getSilkTouchDrop","func_180643_i", IBlockState.class);
+                            })
+                                    .invoke(state.getBlock(), state);
+
+                            event.getDrops().clear();
+                            event.getDrops().add(silkDrop);
+                        } catch (IllegalAccessException | InvocationTargetException | ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
+                        if (fortuneLevel > 0) {
+                            NonNullList<ItemStack> list = NonNullList.create();
+                            event.getDrops().clear();
+                            state.getBlock().getDrops(list, event.getWorld(), event.getPos(), state, fortuneLevel);
+                            event.getDrops().addAll(list);
+                        }
                     }
                 });
     }

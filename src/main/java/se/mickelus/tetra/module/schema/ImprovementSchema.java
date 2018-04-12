@@ -31,7 +31,7 @@ public class ImprovementSchema implements UpgradeSchema {
 
     @Override
     public String getKey() {
-        return improvement;
+        return module.getSlot() + "/" + improvement;
     }
 
     @Override

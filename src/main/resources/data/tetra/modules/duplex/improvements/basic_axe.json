@@ -1,0 +1,98 @@
+[
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 2.222222]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 5.555556]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 11.111111]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 18.888889]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 5,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 28.888889]
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "fortune": 1
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "fortune": 2
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "fortune": 3
+        }
+    },
+    {
+        "key": "enchantment/silk_touch",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "silkTouch": 1
+        }
+    }
+]

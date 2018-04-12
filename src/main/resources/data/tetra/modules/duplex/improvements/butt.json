@@ -1,0 +1,50 @@
+[
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "fortune": 1
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "fortune": 2
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "fortune": 3
+        }
+    }
+]

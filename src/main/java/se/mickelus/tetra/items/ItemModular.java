@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
+import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
@@ -324,16 +325,27 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .max(Integer::compare)
                 .orElse(-1);
 
-        float base = getAllModules(itemStack).stream()
+        float efficiency = getAllModules(itemStack).stream()
                 .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
-                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
+                .map(module -> getModuleEfficiency(module, itemStack, capability))
                 .max(Float::compare)
                 .orElse(1f);
 
-        return Arrays.stream(getSynergyData(itemStack))
+        return efficiency + (float) Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.capabilities)
-                .map(capabilityData -> capabilityData.getEfficiency(capability))
-                .reduce(base, (a, b) -> a * b);
+                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
+                .sum();
+    }
+
+    private float getModuleEfficiency(ItemModule module, ItemStack itemStack, Capability capability) {
+        float efficiency = module.getCapabilityEfficiency(itemStack, capability);
+        if (module instanceof ItemModuleMajor) {
+            efficiency += Arrays.stream(((ItemModuleMajor)module).getImprovements(itemStack))
+                    .map(improvementData -> improvementData.capabilities)
+                    .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
+                    .sum();
+        }
+        return efficiency;
     }
 
     @Override

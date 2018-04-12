@@ -38,7 +38,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public String getKey() {
-        return module.getUnlocalizedName();
+        return module.getKey();
     }
 
     @Override

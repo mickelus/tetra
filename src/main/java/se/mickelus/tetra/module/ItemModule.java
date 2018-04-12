@@ -32,6 +32,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
+    public String getKey() {
+        return moduleKey;
+    }
+
     public String getUnlocalizedName() {
         return moduleKey;
     }

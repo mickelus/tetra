@@ -29,7 +29,7 @@ public class EnumTierData<T extends Enum> {
         if (efficiencyMap.containsKey(capability)) {
             return efficiencyMap.get(capability);
         }
-        return 1;
+        return 0;
     }
 
     public Set<T> getValues() {

@@ -61,6 +61,12 @@ enchantment/mending.name=Mending
 enchantment/mending.description=Repairs durability when gaining experience
 enchantment/sweeping_edge.name=Sweeping Edge
 enchantment/sweeping_edge.description=Increases damage of sweeping strikes
+enchantment/efficiency.name=Efficiency
+enchantment/efficiency.description=Improves efficiency
+enchantment/fortune.name=Fortune
+enchantment/fortune.description=Increases drops when breaking things
+enchantment/silk_touch.name=Silk Touch
+enchantment/silk_touch.description=Harvested blocks will not break
 
 
 ###############################

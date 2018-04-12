@@ -12,5 +12,7 @@ public enum ItemEffect {
     smite,
     arthropod,
     unbreaking,
-    mending
+    mending,
+    silkTouch,
+    fortune
 }

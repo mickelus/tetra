@@ -3,8 +3,11 @@ package se.mickelus.tetra.items.duplex_tool;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -20,11 +23,13 @@ import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BasicSchema;
+import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketPipeline;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -68,16 +73,16 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
-        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_hammer", leftSuffix);
-        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "duplex/basic_hammer", rightSuffix);
+        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "basic_hammer", leftSuffix);
+        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "basic_hammer", rightSuffix);
 
-        basicAxeLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_axe", leftSuffix);
-        basicAxeRight = new DuplexHeadModule(headRightKey, "duplex/basic_axe", rightSuffix);
+        basicAxeLeft = new DuplexHeadModule(headLeftKey, "basic_axe", leftSuffix);
+        basicAxeRight = new DuplexHeadModule(headRightKey, "basic_axe", rightSuffix);
 
-        basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "duplex/basic_pickaxe", leftSuffix);
-        basicPickaxeRight = new DuplexHeadModule(headRightKey, "duplex/basic_pickaxe", rightSuffix);
+        basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "basic_pickaxe", leftSuffix);
+        basicPickaxeRight = new DuplexHeadModule(headRightKey, "basic_pickaxe", rightSuffix);
 
-        butt = new DuplexHeadModule(headRightKey, "duplex/butt", rightSuffix);
+        butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
         new BasicHandleModule(handleKey);
     }
@@ -87,14 +92,21 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public void init(PacketPipeline packetPipeline) {
         new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadLeft, this);
         new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadRight, this);
+        new BookEnchantSchema(basicHammerHeadLeft);
+        new BookEnchantSchema(basicHammerHeadRight);
 
         new ModuleSlotSchema("basic_axe_schema", basicAxeLeft, this);
         new ModuleSlotSchema("basic_axe_schema", basicAxeRight, this);
+        new BookEnchantSchema(basicAxeLeft);
+        new BookEnchantSchema(basicAxeRight);
 
         new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeLeft, this);
         new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeRight, this);
+        new BookEnchantSchema(basicPickaxeLeft);
+        new BookEnchantSchema(basicPickaxeRight);
 
         new ModuleSlotSchema("butt_schema", butt, this);
+        new BookEnchantSchema(butt);
 
         new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
 
@@ -116,17 +128,52 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         if (originalItem instanceof ItemAxe) {
             basicAxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
             butt.addModule(newStack, new ItemStack[]{material}, false, null);
+            transferAxeEnchantments(originalStack, newStack);
         }
 
         if (originalItem instanceof ItemPickaxe) {
             basicPickaxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
             basicPickaxeRight.addModule(newStack, new ItemStack[]{material}, false, null);
+            transferPickaxeEnchantments(originalStack, newStack);
         }
 
         BasicHandleModule.instance.addModule(newStack, new ItemStack[]{new ItemStack(Items.STICK)}, false, null);
         newStack.setItemDamage(originalStack.getItemDamage());
 
         return newStack;
+    }
+
+    private void transferPickaxeEnchantments(ItemStack sourceStack, ItemStack modularStack) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+            if (basicPickaxeLeft.acceptsImprovement(improvement)) {
+                if (entry.getKey().equals(Enchantments.EFFICIENCY)) {
+                    basicPickaxeLeft.addImprovement(modularStack, improvement, entry.getValue());
+                    basicPickaxeRight.addImprovement(modularStack, improvement, entry.getValue());
+                } else {
+                    basicPickaxeLeft.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
+                    basicPickaxeRight.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
+                }
+            }
+        }
+    }
+
+    private void transferAxeEnchantments(ItemStack sourceStack, ItemStack modularStack) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+            if (basicAxeLeft.acceptsImprovement(improvement)) {
+                if (butt.acceptsImprovement(improvement)) {
+                    basicAxeLeft.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
+                    butt.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
+                } else {
+                    basicAxeLeft.addImprovement(modularStack, improvement, entry.getValue());
+                }
+            } else if (butt.acceptsImprovement(improvement)) {
+                butt.addImprovement(modularStack, improvement, entry.getValue());
+            }
+        }
     }
 
     @Override
