@@ -3,10 +3,6 @@ package se.mickelus.tetra.items.toolbelt;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -32,11 +28,14 @@ public class EquipToolbeltItemPacket extends AbstractPacket {
 
     @Override
     public void handleClientSide(EntityPlayer player) {
-        UtilToolbelt.equipToolbeltItemInOffhand(player, toolbeltItemIndex);
     }
 
     @Override
     public void handleServerSide(EntityPlayer player) {
-        UtilToolbelt.equipToolbeltItemInOffhand(player, toolbeltItemIndex);
+        if (toolbeltItemIndex > -1) {
+            UtilToolbelt.equipItemFromToolbelt(player, toolbeltItemIndex, EnumHand.OFF_HAND);
+        } else {
+            UtilToolbelt.storeItemInToolbelt(player);
+        }
     }
 }

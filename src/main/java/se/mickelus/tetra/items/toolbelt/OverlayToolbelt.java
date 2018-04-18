@@ -1,28 +1,34 @@
-package se.mickelus.tetra.items.toolbelt.gui;
+package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
-import se.mickelus.tetra.items.toolbelt.EquipToolbeltItemPacket;
-import se.mickelus.tetra.items.toolbelt.InventoryToolbelt;
-import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.items.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.network.PacketPipeline;
 
 public class OverlayToolbelt {
 
+    public static OverlayToolbelt instance;
+
     private final Minecraft mc;
 
-    private final String bindingDescription = "se.mickelus.tetra.toolbeltDescription";
-    private final String bindingGroup = "key.categories.inventory";
-    private int bindingKey = Keyboard.KEY_V;
-    private KeyBinding key;
+    public static final String bindingGroup = "toolbelt.binding.group";
 
-    private boolean wasKeyDown = false;
+    public KeyBinding accessBinding;
+    public KeyBinding restockBinding;
+
+    // due to gui visibility tricks, let's use this to keep track of when we should show or hide the gui
+    private boolean isActive = false;
 
     private OverlayGuiToolbelt gui;
 
@@ -31,17 +37,23 @@ public class OverlayToolbelt {
 
         gui = new OverlayGuiToolbelt(mc);
 
-        key = new KeyBinding(bindingDescription, bindingKey, bindingGroup);
-        ClientRegistry.registerKeyBinding(key);
+        accessBinding = new KeyBinding("toolbelt.binding.access", KeyConflictContext.IN_GAME,
+                Keyboard.KEY_V, bindingGroup);
+        restockBinding = new KeyBinding("toolbelt.binding.restock", KeyConflictContext.IN_GAME,
+                KeyModifier.SHIFT, Keyboard.KEY_V, bindingGroup);
+
+        ClientRegistry.registerKeyBinding(accessBinding);
+        ClientRegistry.registerKeyBinding(restockBinding);
+
+        instance = this;
     }
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (mc.inGameHasFocus) {
-            if (key.isKeyDown() && !wasKeyDown) {
-                showView();
-                wasKeyDown = true;
-            }
+        if (restockBinding.isPressed()) {
+            equipToolbeltItem(-1);
+        } else if (accessBinding.isPressed() && mc.inGameHasFocus) {
+            showView();
         }
     }
 
@@ -52,9 +64,8 @@ public class OverlayToolbelt {
             return;
         }
 
-        if (!key.isKeyDown() && wasKeyDown) {
+        if (!accessBinding.isKeyDown() && isActive) {
             hideView();
-            wasKeyDown = false;
         }
 
         gui.draw();
@@ -65,6 +76,7 @@ public class OverlayToolbelt {
         if (canOpen) {
             mc.inGameHasFocus = false;
             mc.mouseHelper.ungrabMouseCursor();
+            isActive = true;
         }
     }
 
@@ -72,6 +84,7 @@ public class OverlayToolbelt {
         mc.inGameHasFocus = true;
         gui.setVisible(false);
         mc.mouseHelper.grabMouseCursor();
+        isActive = false;
 
         int focusIndex = findIndex();
         if (focusIndex != -1) {
@@ -82,6 +95,14 @@ public class OverlayToolbelt {
     private void equipToolbeltItem(int toolbeltItemIndex) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(toolbeltItemIndex);
         PacketPipeline.instance.sendToServer(packet);
+        if (toolbeltItemIndex > -1) {
+            UtilToolbelt.equipItemFromToolbelt(mc.player, toolbeltItemIndex, EnumHand.OFF_HAND);
+        } else {
+            boolean storeItemSuccess = UtilToolbelt.storeItemInToolbelt(mc.player);
+            if (!storeItemSuccess) {
+                mc.player.sendStatusMessage(new TextComponentTranslation("toolbelt.full"), true);
+            }
+        }
     }
 
     private boolean updateGuiData() {

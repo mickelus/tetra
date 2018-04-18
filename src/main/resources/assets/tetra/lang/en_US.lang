@@ -343,6 +343,14 @@ basic_hammer/obsidian.name=Hammer
 basic_hammer/obsidian.prefix=Obsidian
 
 ###############################
+# TOOLBELT MISC
+###############################
+toolbelt.full=Toolbelt is full
+toolbelt.binding.group=Tetra toolbelt
+toolbelt.binding.access=Quick access
+toolbelt.binding.restock=Restock
+
+###############################
 # TOOLBELT BELT
 ###############################
 toolbelt_belt0.name=Woolen sash

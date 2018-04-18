@@ -68,7 +68,6 @@ public class ItemToolbeltModular extends ItemModular {
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.GUI_TOOLBELT_ID, new GuiHandlerToolbelt());
 
         packetPipeline.registerPacket(EquipToolbeltItemPacket.class);
-        MinecraftForge.EVENT_BUS.register(new TickHandlerToolbelt());
 
         BeltModule.instance.registerUpgradeSchemas();
 

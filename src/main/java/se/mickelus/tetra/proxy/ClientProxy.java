@@ -13,7 +13,7 @@ import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.rocketBoots.OverlayRocketBoots;
-import se.mickelus.tetra.items.toolbelt.gui.OverlayToolbelt;
+import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.util.Arrays;
 
