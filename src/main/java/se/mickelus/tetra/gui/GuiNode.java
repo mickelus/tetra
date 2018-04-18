@@ -86,7 +86,7 @@ public class GuiNode extends Gui {
     }
 
 
-    public static void drawRect(int left, int top, int right, int bottom, int color, float opacity) {
+    protected void drawRect(int left, int top, int right, int bottom, int color, float opacity) {
         if (left < right) {
             int i = left;
             left = right;
@@ -109,10 +109,10 @@ public class GuiNode extends Gui {
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.color(red, green, blue, opacity);
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION);
-        bufferBuilder.pos((double)left, (double)bottom, 0.0D).endVertex();
-        bufferBuilder.pos((double)right, (double)bottom, 0.0D).endVertex();
-        bufferBuilder.pos((double)right, (double)top, 0.0D).endVertex();
-        bufferBuilder.pos((double)left, (double)top, 0.0D).endVertex();
+        bufferBuilder.pos((double)left, (double)bottom, zLevel).endVertex();
+        bufferBuilder.pos((double)right, (double)bottom, zLevel).endVertex();
+        bufferBuilder.pos((double)right, (double)top, zLevel).endVertex();
+        bufferBuilder.pos((double)left, (double)top, zLevel).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();

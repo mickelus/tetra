@@ -6,10 +6,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
-import se.mickelus.tetra.gui.GuiTexture;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.toolbelt.ContainerToolbelt;
+import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.io.IOException;
 
@@ -34,7 +33,7 @@ public class GuiToolbelt extends GuiContainer {
         defaultGui = new GuiElement(0, 0, xSize, ySize);
 
         // inventory background
-        defaultGui.addChild(new GuiTexture(0, 74, 179, 106, INVENTORY_TEXTURE));
+        defaultGui.addChild(new GuiTexture(0, 103, 179, 106, INVENTORY_TEXTURE));
 
         // toolbelt background rects
         defaultGui.addChild(new GuiRect(-8 * numSlots + 85, 16, numSlots * 17 - 1, 22, 0xff000000));
@@ -46,6 +45,9 @@ public class GuiToolbelt extends GuiContainer {
 
         // toolbelt right cap
         defaultGui.addChild(new GuiTexture(9 * numSlots + 80, 13, 17, 28, 17, 0, TOOLBELT_TEXTURE));
+
+        defaultGui.addChild(new GuiKeybinding(166, 85, OverlayToolbelt.instance.accessBinding));
+        defaultGui.addChild(new GuiKeybinding(166, 100, OverlayToolbelt.instance.restockBinding));
 
         instance = this;
     }

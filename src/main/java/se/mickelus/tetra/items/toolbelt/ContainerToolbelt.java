@@ -27,9 +27,9 @@ public class ContainerToolbelt extends Container {
             for (int j = 0; j < 9; j++) {
                 Slot slot;
                 if (itemStackToolbelt.isItemEqual(playerInventory.getStackInSlot(i * 9 + j + 9))) {
-                    slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 87);
+                    slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 116);
                 } else {
-                    slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 87);
+                    slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 116);
                 }
                 this.addSlotToContainer(slot);
             }
@@ -38,9 +38,9 @@ public class ContainerToolbelt extends Container {
         for (int i = 0; i < 9; i++) {
             Slot slot;
             if (itemStackToolbelt.isItemEqualIgnoreDurability(playerInventory.getStackInSlot(i))) {
-                slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 142);
+                slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 171);
             } else {
-                slot = new Slot(playerInventory, i, i * 17 + 12, 142);
+                slot = new Slot(playerInventory, i, i * 17 + 12, 171);
             }
             this.addSlotToContainer(slot);
         }
