@@ -28,12 +28,16 @@ public class OverlayGuiToolbelt extends GuiRoot {
     private KeyframeAnimation hideAnimation;
     private GuiElement strapList;
 
+    private boolean hasMouseMoved = false;
+    private ScaledResolution scaledResolution;
+
     public OverlayGuiToolbelt(Minecraft mc) {
         super(mc);
 
+        scaledResolution = new ScaledResolution(mc);
+
         strapList = new GuiElement(37, 0, 0, 0);
         addChild(strapList);
-
 
         showAnimation = new KeyframeAnimation(200, strapList)
             .applyTo(new Applier.TranslateX(strapList.getX() + 10), new Applier.Opacity(1))
@@ -77,6 +81,8 @@ public class OverlayGuiToolbelt extends GuiRoot {
         if (hideAnimation.isActive()) {
             hideAnimation.stop();
         }
+        scaledResolution = new ScaledResolution(mc);
+        hasMouseMoved = false;
         showAnimation.start();
     }
 
@@ -95,11 +101,19 @@ public class OverlayGuiToolbelt extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible()) {
-            ScaledResolution scaledResolution = new ScaledResolution(mc);
+            int mouseX, mouseY;
+            if (!hasMouseMoved && (Mouse.getDX() > 0 || Mouse.getDY() > 0)) {
+                hasMouseMoved = true;
+            }
             int width = scaledResolution.getScaledWidth();
             int height = scaledResolution.getScaledHeight();
-            int mouseX = Mouse.getX() * width / mc.displayWidth;
-            int mouseY = height - Mouse.getY() * height / mc.displayHeight - 1;
+            if (hasMouseMoved) {
+                mouseX = Mouse.getX() * width / mc.displayWidth;
+                mouseY = height - Mouse.getY() * height / mc.displayHeight - 1;
+            } else {
+                mouseX = width / 2;
+                mouseY = height / 2;
+            }
             drawChildren(width/2, height/2, width, height, mouseX, mouseY, 1);
         }
     }
