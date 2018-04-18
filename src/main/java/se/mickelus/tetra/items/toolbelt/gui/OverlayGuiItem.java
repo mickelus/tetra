@@ -5,6 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
@@ -17,10 +18,9 @@ public class OverlayGuiItem extends GuiElement {
 
     private Minecraft mc;
 
-    private static final int COLOR_DEFAULT = 0xffffffff;
-    private static final int COLOR_HOVER = 0xffffff00;
-
     private KeyframeAnimation showAnimation;
+
+    private FontRenderer fontRenderer;
 
     public OverlayGuiItem(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, 24);
@@ -30,9 +30,17 @@ public class OverlayGuiItem extends GuiElement {
 
         mc = Minecraft.getMinecraft();
 
+        if (itemStack != null) {
+            fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
+        }
+
+        if (fontRenderer == null) {
+            fontRenderer = mc.fontRenderer;
+        }
+
         isVisible = false;
         opacity = 0;
-        showAnimation = new KeyframeAnimation(50, this)
+        showAnimation = new KeyframeAnimation(80, this)
             .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y - 3, y))
             .withDelay(slot * 100);
     }
@@ -56,42 +64,28 @@ public class OverlayGuiItem extends GuiElement {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
-            mc.fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 63, y + refY + 4, COLOR_HOVER);
+            fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 63, y + refY + 4, GuiColors.hover);
         }
 
-        drawItemStack(itemStack, x + refX + 38, y + refY, null);
+        drawItemStack(itemStack, x + refX + 38, y + refY);
     }
 
-    private void drawItemStack(ItemStack stack, int x, int y, String altText) {
+    private void drawItemStack(ItemStack itemStack, int x, int y) {
+        GlStateManager.pushMatrix();
         GlStateManager.enableRescaleNormal();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
-        // GlStateManager.translate(0.0F, 0.0F, 32.0F);
-        this.zLevel = 200.0F;
-        mc.getRenderItem().zLevel = 200.0F;
-        FontRenderer font = null;
-
-        if (stack != null) {
-            font = stack.getItem().getFontRenderer(stack);
+        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, x, y);
+        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
+        if (opacity < 1) {
+            this.zLevel = 300;
+            GlStateManager.disableDepth();
+            drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }
-
-        if (font == null) {
-            font = mc.fontRenderer;
-        }
-
-        mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(font, stack, x, y, altText);
-        GlStateManager.disableLighting();
-        GlStateManager.disableDepth();
-        GlStateManager.disableTexture2D();
-        drawRect(x, y, x + 16, y + 16, 0, 1 - opacity);
-        this.zLevel = 0.0F;
-        mc.getRenderItem().zLevel = 0.0F;
+        GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.disableBlend();
     }
 
 
