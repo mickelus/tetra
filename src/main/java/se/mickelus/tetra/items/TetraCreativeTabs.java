@@ -1,8 +1,11 @@
 package se.mickelus.tetra.items;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
+import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 
 public class TetraCreativeTabs extends CreativeTabs {
 
@@ -16,7 +19,7 @@ public class TetraCreativeTabs extends CreativeTabs {
 
     @Override
     public ItemStack getTabIconItem() {
-        return new ItemStack(ItemGeode.instance);
+        return ItemDuplexToolModular.instance.createHammerStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK));
     }
 
     public static TetraCreativeTabs getInstance() {

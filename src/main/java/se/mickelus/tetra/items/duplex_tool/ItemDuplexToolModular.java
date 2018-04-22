@@ -59,6 +59,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     public static DuplexHeadModule butt;
 
+    public static ItemDuplexToolModular instance;
+
     public ItemDuplexToolModular() {
 
         setUnlocalizedName(unlocalizedName);
@@ -85,6 +87,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
         new BasicHandleModule(handleKey);
+
+        instance = this;
     }
 
 
@@ -185,7 +189,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         }
     }
 
-    private ItemStack createHammerStack(ItemStack headMaterial, ItemStack handleMaterial) {
+    public ItemStack createHammerStack(ItemStack headMaterial, ItemStack handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
         basicHammerHeadLeft.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
