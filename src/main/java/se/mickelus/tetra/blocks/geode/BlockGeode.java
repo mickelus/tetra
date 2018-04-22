@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -53,7 +54,9 @@ public class BlockGeode extends TetraBlock {
 
     @Override
     public void init(PacketPipeline packetPipeline) {
-        GameRegistry.registerWorldGenerator(new GeodeGenerator(), 1);
+        if (ConfigHandler.geode_generate) {
+            GameRegistry.registerWorldGenerator(new GeodeGenerator(), 10);
+        }
     }
 
     @Override

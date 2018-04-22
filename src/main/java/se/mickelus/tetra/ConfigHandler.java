@@ -10,6 +10,7 @@ import se.mickelus.tetra.blocks.geode.ItemGeode;
 @Config(modid = TetraMod.MOD_ID)
 public class ConfigHandler {
 
+    public static boolean geode_generate = true;
     public static String[] geode_contents = new String[] {
             "minecraft:iron_nugget", "9", "30",
             "minecraft:gold_nugget", "4", "20",
