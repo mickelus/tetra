@@ -256,7 +256,7 @@ duplex/hammer_pickaxe=Geologist's hammer
 # HAMMER HANDLE
 ###############################
 basic_handle_schema.name=Tool handle
-basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier hammer heads.
+basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.
 basic_handle_schema.slot1=Handle material
 
 basic_handle/stick=Wooden handle
