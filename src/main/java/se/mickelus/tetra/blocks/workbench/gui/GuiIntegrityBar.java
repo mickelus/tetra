@@ -1,10 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringSmall;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 
@@ -28,7 +25,7 @@ public class GuiIntegrityBar extends GuiElement {
     public GuiIntegrityBar(int x, int y) {
         super(x, y, 0, 0);
 
-        label = new GuiStringSmall(0, 0, "", GuiAlignment.center);
+        label = new GuiStringSmall(0, 0, "", GuiAttachment.topCenter);
         addChild(label);
     }
 

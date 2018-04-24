@@ -12,12 +12,12 @@ public class GuiStringSmall extends GuiString {
         super(x*2, y*2, string, color);
     }
 
-    public GuiStringSmall(int x, int y, String string, GuiAlignment alignment) {
-        super(x*2, y*2, string, alignment);
+    public GuiStringSmall(int x, int y, String string, GuiAttachment attachment) {
+        super(x*2, y*2, string, attachment);
     }
 
-    public GuiStringSmall(int x, int y, String string, int color, GuiAlignment alignment) {
-        super(x*2, y*2, string, color, alignment);
+    public GuiStringSmall(int x, int y, String string, int color, GuiAttachment attachment) {
+        super(x*2, y*2, string, color, attachment);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GuiStringSmall extends GuiString {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(.5, .5, .5);
-        super.draw(refX*2, refY*2, screenWidth*2, screenHeight*2, mouseX*2, mouseY*2, opacity);
+        drawString(string, refX * 2 + x + getXOffset(this, attachmentPoint), refY * 2 + y + getYOffset(this, attachmentPoint), color, drawShadow);
         GlStateManager.popMatrix();
     }
 }

@@ -1,7 +1,5 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.gui.FontRenderer;
-
 public class GuiStringOutline extends GuiString {
     public GuiStringOutline(int x, int y, String string) {
         super(x, y, string);
@@ -13,8 +11,8 @@ public class GuiStringOutline extends GuiString {
         drawShadow = false;
     }
 
-    public GuiStringOutline(int x, int y, String string, GuiAlignment textAlign) {
-        super(x, y, string, textAlign);
+    public GuiStringOutline(int x, int y, String string, GuiAttachment attachment) {
+        super(x, y, string, attachment);
         drawShadow = false;
     }
 
@@ -23,8 +21,8 @@ public class GuiStringOutline extends GuiString {
         drawShadow = false;
     }
 
-    public GuiStringOutline(int x, int y, String string, int color, GuiAlignment textAlign) {
-        super(x, y, string, color, textAlign);
+    public GuiStringOutline(int x, int y, String string, int color, GuiAttachment attachment) {
+        super(x, y, string, color, attachment);
         drawShadow = false;
     }
 
@@ -38,6 +36,9 @@ public class GuiStringOutline extends GuiString {
         super.drawString(text, x - 1, y + 1, 0, false);
         super.drawString(text, x, y + 1, 0, false);
         super.drawString(text, x + 1, y + 1, 0, false);
+
+        super.drawString(text, x + 1, y, 0, false);
+        super.drawString(text, x - 1, y, 0, false);
 
         super.drawString(text, x, y, color, false);
     }

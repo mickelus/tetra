@@ -12,28 +12,31 @@ public class GuiString extends GuiElement {
     protected int color = 0xffffffff;
     protected boolean drawShadow = true;
 
-    protected GuiAlignment textAlign = GuiAlignment.left;
+    protected boolean fixedWidth = false;
 
     public GuiString(int x, int y, String string) {
-        super(x, y, 0 ,0);
-
-        this.string = string;
+        super(x, y, 0, 9);
 
         fontRenderer = Minecraft.getMinecraft().fontRenderer;
+
+        this.string = string;
+        width = fontRenderer.getStringWidth(string);
     }
 
     public GuiString(int x, int y, int width, String string) {
-        super(x, y, width ,0);
+        super(x, y, width, 9);
 
+        fixedWidth = true;
 
         fontRenderer = Minecraft.getMinecraft().fontRenderer;
+
         this.string = fontRenderer.trimStringToWidth(string, width);
     }
 
-    public GuiString(int x, int y, String string, GuiAlignment textAlign) {
+    public GuiString(int x, int y, String string, GuiAttachment attachment) {
         this(x, y, string);
 
-        this.textAlign = textAlign;
+        attachmentPoint = attachment;
     }
 
     public GuiString(int x, int y, String string, int color) {
@@ -42,11 +45,10 @@ public class GuiString extends GuiElement {
         this.color = color;
     }
 
-    public GuiString(int x, int y, String string, int color, GuiAlignment textAlign) {
-        this(x, y, string);
+    public GuiString(int x, int y, String string, int color, GuiAttachment attachment) {
+        this(x, y, string, attachment);
 
         this.color = color;
-        this.textAlign = textAlign;
     }
 
     public void setColor(int color) {
@@ -54,10 +56,11 @@ public class GuiString extends GuiElement {
     }
 
     public void setString(String string) {
-        if (width > 0) {
+        if (fixedWidth) {
             this.string = fontRenderer.trimStringToWidth(string, width);
         } else {
             this.string = string;
+            width = fontRenderer.getStringWidth(string);
         }
     }
 
@@ -66,26 +69,12 @@ public class GuiString extends GuiElement {
         return this;
     }
 
-    public void setTextAlignment(GuiAlignment textAlign) {
-        this.textAlign = textAlign;
-    }
-
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        if (textAlign == GuiAlignment.left) {
-            drawString(string, refX + x, refY + y, color, drawShadow);
-        } else if (textAlign == GuiAlignment.center) {
-            drawCenteredString(string, refX + x, refY + y, color, drawShadow);
-        } else if (textAlign == GuiAlignment.right) {
-            drawString(string, refX + x - fontRenderer.getStringWidth(string), refY + y, color, drawShadow);
-        }
+        drawString(string, refX + x, refY + y, color, drawShadow);
     }
 
     protected void drawString(String text, int x, int y, int color, boolean drawShadow) {
         fontRenderer.drawString(text, (float)x, (float)y, color, drawShadow);
-    }
-
-    protected void drawCenteredString(String text, int x, int y, int color, boolean drawShadow) {
-        drawString(text, (x - fontRenderer.getStringWidth(text) / 2), y, color, drawShadow);
     }
 }

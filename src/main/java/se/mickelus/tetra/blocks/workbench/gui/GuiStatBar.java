@@ -35,8 +35,8 @@ public class GuiStatBar extends GuiElement {
         this.max = max;
         this.alignment = alignment;
 
-        labelString = new GuiStringSmall(0, 0, label, alignment);
-        valueString = new GuiString(0, 3, label, alignment);
+        labelString = new GuiStringSmall(0, 0, label, alignment.toAttachment());
+        valueString = new GuiString(0, 3, label, alignment.toAttachment());
 
         addChild(labelString);
         addChild(valueString);
@@ -56,8 +56,8 @@ public class GuiStatBar extends GuiElement {
             valueString.setX(barMaxLength + 4);
         }
 
-        labelString.setTextAlignment(alignment);
-        valueString.setTextAlignment(alignment);
+        labelString.setAttachmentPoint(alignment.toAttachment());
+        valueString.setAttachmentPoint(alignment.toAttachment());
     }
 
     public void setValue(double value, double diffValue) {

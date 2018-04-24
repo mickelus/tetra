@@ -2,12 +2,13 @@ package se.mickelus.tetra.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import se.mickelus.tetra.gui.GuiNode;
+import se.mickelus.tetra.gui.GuiElement;
 
-public class GuiRootHud extends GuiNode {
+public class GuiRootHud extends GuiElement {
     protected Minecraft mc;
 
     public GuiRootHud(Minecraft mc) {
+        super(0, 0, 0, 0);
         this.mc = mc;
     }
 

@@ -4,11 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
 
-public class GuiRoot extends GuiNode {
+public class GuiRoot extends GuiElement {
 
     protected Minecraft mc;
 
     public GuiRoot(Minecraft mc) {
+        super(0, 0, 0 ,0);
         this.mc = mc;
     }
 
