@@ -27,13 +27,16 @@ public class ItemToolbeltModular extends ItemModular {
 
     public final static String slot1Key = "toolbelt/slot1";
     public final static String slot2Key = "toolbelt/slot2";
+    public final static String slot3Key = "toolbelt/slot3";
     public final static String beltKey = "toolbelt/belt";
 
     public final static String slot1Suffix = "_slot1";
     public final static String slot2Suffix = "_slot2";
+    public final static String slot3Suffix = "_slot3";
 
     private StrapModule[] slot1StrapModules;
     private StrapModule[] slot2StrapModules;
+    private StrapModule[] slot3StrapModules;
 
     public ItemToolbeltModular() {
         super();
@@ -46,8 +49,8 @@ public class ItemToolbeltModular extends ItemModular {
         setCreativeTab(TetraCreativeTabs.getInstance());
 
 
-        majorModuleNames = new String[]{"", ""};
-        majorModuleKeys = new String[]{slot1Key, slot2Key};
+        majorModuleNames = new String[]{"", "", ""};
+        majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
         minorModuleNames = new String[]{"Belt"};
         minorModuleKeys = new String[]{beltKey};
 
@@ -57,9 +60,11 @@ public class ItemToolbeltModular extends ItemModular {
 
         slot1StrapModules = new StrapModule[4];
         slot2StrapModules = new StrapModule[4];
+        slot3StrapModules = new StrapModule[4];
         for (int i = 0; i < slot1StrapModules.length; i++) {
             slot1StrapModules[i] = new StrapModule(slot1Key, "toolbelt/strap" + (i+1), slot1Suffix);
             slot2StrapModules[i] = new StrapModule(slot2Key, "toolbelt/strap" + (i+1), slot2Suffix);
+            slot3StrapModules[i] = new StrapModule(slot3Key, "toolbelt/strap" + (i+1), slot3Suffix);
         }
     }
 
@@ -74,6 +79,7 @@ public class ItemToolbeltModular extends ItemModular {
         for (int i = 0; i < slot1StrapModules.length; i++) {
             new ModuleSlotSchema("strap_schema" + (i+1), slot1StrapModules[i], this);
             new ModuleSlotSchema("strap_schema" + (i+1), slot2StrapModules[i], this);
+            new ModuleSlotSchema("strap_schema" + (i+1), slot3StrapModules[i], this);
         }
     }
 

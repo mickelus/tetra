@@ -27,20 +27,29 @@ public class GuiModuleMajor extends GuiClickable {
 
     private GuiModuleImprovement[] improvementElements;
 
-    public GuiModuleMajor(int x, int y, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
+    public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
+                          String slotKey, String slotName,
                           ItemModuleMajor module, ItemModuleMajor previewModule,
                           Consumer<String> slotClickHandler) {
         super(x, y, 0, 16, () -> slotClickHandler.accept(slotKey));
+
+        setAttachmentPoint(attachmentPoint);
 
         ModuleData data = null;
         ModuleData previewData = null;
 
         this.slotKey = slotKey;
 
+        slotString = new GuiStringSmall(19, 0, slotName);
+        if (GuiAttachment.topRight.equals(attachmentPoint)) {
+            slotString.setX(-19);
+        }
+        slotString.setAttachmentAnchor(attachmentPoint);
+        slotString.setAttachmentPoint(attachmentPoint);
+        addChild(slotString);
+
         improvementElements = new GuiModuleImprovement[0];
 
-        slotString = new GuiStringSmall(19, 0, slotName);
-        addChild(slotString);
 
         if (module != null) {
              data = module.getData(itemStack);
@@ -85,20 +94,33 @@ public class GuiModuleMajor extends GuiClickable {
     private void setupModule(ItemModuleMajor module, ModuleData data, ItemStack itemStack, int color) {
         String moduleName = "Empty";
         backdrop = new GuiModuleBackdrop(1, 0, color);
+        backdrop.setAttachmentAnchor(attachmentPoint);
+        backdrop.setAttachmentPoint(attachmentPoint);
         addChild(backdrop);
 
         if (module != null) {
             moduleName = module.getName(itemStack);
         }
         moduleString = new GuiString(19, 5, moduleName, color);
+        if (GuiAttachment.topRight.equals(attachmentPoint)) {
+            moduleString.setX(-19);
+        }
+        moduleString.setAttachmentAnchor(attachmentPoint);
+        moduleString.setAttachmentPoint(attachmentPoint);
         addChild(moduleString);
 
         width = Minecraft.getMinecraft().fontRenderer.getStringWidth(moduleName) + 19;
 
         if (data != null) {
-            addChild(new GuiModuleGlyph(0, 0, 16, 16,
+            final GuiModuleGlyph guiModuleGlyph = new GuiModuleGlyph(0, 0, 16, 16,
                     data.glyph.tint, data.glyph.textureX, data.glyph.textureY,
-                    data.glyph.textureLocation));
+                    data.glyph.textureLocation);
+            if (GuiAttachment.topRight.equals(attachmentPoint)) {
+                guiModuleGlyph.setX(1);
+            }
+            guiModuleGlyph.setAttachmentAnchor(attachmentPoint);
+            guiModuleGlyph.setAttachmentPoint(attachmentPoint);
+            addChild(guiModuleGlyph);
         }
     }
 
@@ -118,7 +140,11 @@ public class GuiModuleMajor extends GuiClickable {
                 color = GuiColors.change;
             }
 
-            improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color);
+            if (GuiAttachment.topRight.equals(attachmentPoint)) {
+                improvementElements[i] = new GuiModuleImprovement(-19 + i * -5, 13, improvements[i], previewValue, color);
+            } else {
+                improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color);
+            }
             addChild(improvementElements[i]);
         }
     }

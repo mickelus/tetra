@@ -115,7 +115,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public int getNumMajorModules() {
-        return minorModuleNames.length;
+        return majorModuleNames.length;
     }
 
     @Override

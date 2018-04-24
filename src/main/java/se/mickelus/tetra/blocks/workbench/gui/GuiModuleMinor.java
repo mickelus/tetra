@@ -18,11 +18,11 @@ public class GuiModuleMinor extends GuiClickable {
 
     private boolean isEmpty;
 
-    public GuiModuleMinor(int x, int y, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
+    public GuiModuleMinor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
                           ItemModule module, ItemModule previewModule, Consumer<String> slotClickHandler) {
         super(x, y, 0, 11, () -> slotClickHandler.accept(slotKey));
-
         this.slotKey = slotKey;
+        setAttachmentPoint(attachmentPoint);
 
         if (module == null && previewModule == null) {
             isEmpty = true;
@@ -46,28 +46,45 @@ public class GuiModuleMinor extends GuiClickable {
     }
 
     private void setupChildren(String moduleName, GlyphData glyphData, int color) {
-        width = Minecraft.getMinecraft().fontRenderer.getStringWidth(moduleName + 12);
-        x = x - width;
-
-        backdrop = new GuiModuleMinorBackdrop(width - 11, -1, color);
+        backdrop = new GuiModuleMinorBackdrop(1, -1, color);
+        if (GuiAttachment.topLeft.equals(attachmentPoint)) {
+            backdrop.setX(-1);
+        }
+        backdrop.setAttachmentPoint(attachmentPoint);
+        backdrop.setAttachmentAnchor(attachmentPoint);
         addChild(backdrop);
-        moduleString = new GuiString(width - 12, 1, moduleName, color, GuiAlignment.right);
+
+
+        moduleString = new GuiString(-12, 1, moduleName, color);
+        if (GuiAttachment.topLeft.equals(attachmentPoint)) {
+            moduleString.setX(12);
+        }
+        moduleString.setAttachmentPoint(attachmentPoint);
+        moduleString.setAttachmentAnchor(attachmentPoint);
         addChild(moduleString);
 
+        width = moduleString.getWidth() + 12;
 
         if (glyphData != null) {
-            addChild(new GuiModuleGlyph(width - 9, 1, 8, 8,
-                glyphData.tint, glyphData.textureX, glyphData.textureY,
-                glyphData.textureLocation));
+            final GuiModuleGlyph glyph = new GuiModuleGlyph(0, 1, 8, 8,
+                    glyphData.tint, glyphData.textureX, glyphData.textureY,
+                    glyphData.textureLocation);
+            if (GuiAttachment.topLeft.equals(attachmentPoint)) {
+                glyph.setX(1);
+            }
+            glyph.setAttachmentPoint(attachmentPoint);
+            glyph.setAttachmentAnchor(attachmentPoint);
+            addChild(glyph);
         }
+
 
         this.color = color;
     }
 
     public void setFocusSlot(String focusSlotKey) {
-        if(slotKey.equals(focusSlotKey)) {
+        if (slotKey.equals(focusSlotKey)) {
             color = GuiColors.normal;
-        } else if (!isEmpty && focusSlotKey == null){
+        } else if (!isEmpty && focusSlotKey == null) {
             color = GuiColors.normal;
         } else {
             color = GuiColors.muted;
