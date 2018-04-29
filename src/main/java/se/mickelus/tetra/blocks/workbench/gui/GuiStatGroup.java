@@ -14,6 +14,9 @@ import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
 
 
 public class GuiStatGroup extends GuiElement {
@@ -21,7 +24,10 @@ public class GuiStatGroup extends GuiElement {
     private GuiStatBar damageBar;
     private GuiStatBar speedBar;
     private GuiStatBar durabilityBar;
-    private GuiStatBar slotBar;
+
+    private GuiStatBar quickslotBar;
+    private GuiStatBar potionBar;
+    private GuiStatBar storageBar;
 
     private GuiElement barGroup;
     private GuiElement capabilityGroup;
@@ -33,11 +39,16 @@ public class GuiStatGroup extends GuiElement {
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
 
-        damageBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackDamage"), 0, 40, GuiAlignment.left);
-        speedBar = new GuiStatBar(0, 0, I18n.format("item.modular.speed"), -4, 4, GuiAlignment.left);
-        durabilityBar = new GuiStatBar(0, 0, I18n.format("item.modular.durability"), 0, 2024, GuiAlignment.left);
+        damageBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackDamage"), 0, 40);
+        speedBar = new GuiStatBar(0, 0, I18n.format("item.modular.speed"), -4, 4);
+        durabilityBar = new GuiStatBar(0, 0, I18n.format("item.modular.durability"), 0, 2024);
 
-        slotBar = new GuiStatBarSegmented(0, 0, I18n.format("Slots"), 0, 9, GuiAlignment.left);
+        quickslotBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quickslot"),
+                0, InventoryQuickslot.maxSize);
+        potionBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.potion_storage"),
+                0, InventoryPotions.maxSize);
+        storageBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.storage"),
+                0, InventoryStorage.maxSize);
 
         capabilityGroup = new GuiElement(width / 2, 0, 0, 0);
         addChild(capabilityGroup);
@@ -71,7 +82,7 @@ public class GuiStatGroup extends GuiElement {
                 durabilityBar.setValue(itemStack.getMaxDamage(), itemStack.getMaxDamage());
             }
 
-            updateSlotBar(itemStack, previewStack);
+            updateToolbeltBars(itemStack, previewStack);
 
             updateCapabilityIndicators(itemStack, previewStack);
         }
@@ -89,18 +100,46 @@ public class GuiStatGroup extends GuiElement {
         barGroup.addChild(bar);
     }
 
-    private void updateSlotBar(ItemStack itemStack, ItemStack previewStack) {
+    private void updateToolbeltBars(ItemStack itemStack, ItemStack previewStack) {
         if (itemStack.getItem() instanceof ItemToolbeltModular) {
             ItemToolbeltModular item = (ItemToolbeltModular) itemStack.getItem();
 
-            int slots = item.getNumSlots(itemStack);
+            int numQuickslots = item.getNumQuickslots(itemStack);
             if (!previewStack.isEmpty()) {
-                slotBar.setValue(slots, item.getNumSlots(previewStack));
-            } else {
-                slotBar.setValue(slots, slots);
+                int numQuickSlotsPreview = item.getNumQuickslots(previewStack);
+                if (numQuickslots > 0 || numQuickSlotsPreview > 0) {
+                    quickslotBar.setValue(numQuickslots, numQuickSlotsPreview);
+                    showBar(quickslotBar);
+                }
+            } else if (numQuickslots > 0) {
+                quickslotBar.setValue(numQuickslots, numQuickslots);
+                showBar(quickslotBar);
             }
 
-            showBar(slotBar);
+            int numPotionSlots = item.getNumPotionSlots(itemStack);
+            if (!previewStack.isEmpty()) {
+                int numPotionSlotsPreview = item.getNumPotionSlots(previewStack);
+                if (numPotionSlots > 0 || numPotionSlotsPreview > 0) {
+                    potionBar.setValue(numPotionSlots, numPotionSlotsPreview);
+                    showBar(potionBar);
+                }
+            } else if (numPotionSlots > 0) {
+                potionBar.setValue(numPotionSlots, numPotionSlots);
+                showBar(potionBar);
+            }
+
+            int numStorageSlots = item.getNumStorageSlots(itemStack);
+            if (!previewStack.isEmpty()) {
+                int numStorageSlotsPreview = item.getNumStorageSlots(previewStack);
+                if (numStorageSlots > 0 || numStorageSlotsPreview > 0) {
+                    storageBar.setValue(numStorageSlots, numStorageSlotsPreview);
+                    showBar(storageBar);
+                }
+            } else if (numStorageSlots > 0) {
+                storageBar.setValue(numStorageSlots, numStorageSlots);
+                showBar(storageBar);
+            }
+
         }
     }
 

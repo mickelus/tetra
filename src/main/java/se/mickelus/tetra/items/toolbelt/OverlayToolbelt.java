@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -12,8 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.gui.OverlayGuiToolbelt;
+import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
 import se.mickelus.tetra.network.PacketPipeline;
 
 public class OverlayToolbelt {
@@ -51,7 +52,7 @@ public class OverlayToolbelt {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (restockBinding.isPressed()) {
-            equipToolbeltItem(-1);
+            equipToolbeltItem(ToolbeltSlotType.quickslot, -1);
         } else if (accessBinding.isPressed() && mc.inGameHasFocus) {
             showView();
         }
@@ -88,15 +89,15 @@ public class OverlayToolbelt {
 
         int focusIndex = findIndex();
         if (focusIndex != -1) {
-            equipToolbeltItem(focusIndex);
+            equipToolbeltItem(findSlotType(), focusIndex);
         }
     }
 
-    private void equipToolbeltItem(int toolbeltItemIndex) {
-        EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(toolbeltItemIndex);
+    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex) {
+        EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex);
         PacketPipeline.instance.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
-            UtilToolbelt.equipItemFromToolbelt(mc.player, toolbeltItemIndex, EnumHand.OFF_HAND);
+            UtilToolbelt.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, EnumHand.OFF_HAND);
         } else {
             boolean storeItemSuccess = UtilToolbelt.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
@@ -106,9 +107,9 @@ public class OverlayToolbelt {
     }
 
     private boolean updateGuiData() {
-        InventoryToolbelt inventoryToolbelt = UtilToolbelt.findToolbeltInventory(mc.player);
-        if (inventoryToolbelt != null) {
-            gui.setInventoryToolbelt(inventoryToolbelt);
+        ItemStack itemStack = UtilToolbelt.findToolbelt(mc.player);
+        if (!itemStack.isEmpty()) {
+            gui.setInventories(itemStack);
             gui.setVisible(true);
             return true;
         }
@@ -117,6 +118,10 @@ public class OverlayToolbelt {
     }
 
     private int findIndex() {
-        return gui.getFocus();
+        return gui.getFocusIndex();
+    }
+
+    private ToolbeltSlotType findSlotType() {
+        return gui.getFocusType();
     }
 }

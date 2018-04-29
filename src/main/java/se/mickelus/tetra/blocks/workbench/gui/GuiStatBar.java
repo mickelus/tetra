@@ -26,17 +26,16 @@ public class GuiStatBar extends GuiElement {
     protected GuiString labelString;
     protected GuiString valueString;
 
-    protected GuiAlignment alignment;
+    protected GuiAlignment alignment = GuiAlignment.left;
 
-    public GuiStatBar(int x, int y, String label, double min, double max, GuiAlignment alignment) {
+    public GuiStatBar(int x, int y, String label, double min, double max) {
         super(x, y, 98, 16);
 
         this.min = min;
         this.max = max;
-        this.alignment = alignment;
 
-        labelString = new GuiStringSmall(0, 0, label, alignment.toAttachment());
-        valueString = new GuiString(0, 3, label, alignment.toAttachment());
+        labelString = new GuiStringSmall(0, 0, label);
+        valueString = new GuiString(0, 3, label);
 
         addChild(labelString);
         addChild(valueString);

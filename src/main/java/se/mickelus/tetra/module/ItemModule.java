@@ -48,17 +48,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
         ModuleData data = getDataByMaterial(materials[0]);
 
-        ItemModule previousModule = ItemUpgradeRegistry.instance.getModule(tag.getString(slotKey));
-
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, data.key);
 
         if (consumeMaterials) {
             materials[0].shrink(data.materialCount);
-
-            if (previousModule != null && player != null) {
-                previousModule.postRemove(targetStack, player);
-            }
         }
     }
 

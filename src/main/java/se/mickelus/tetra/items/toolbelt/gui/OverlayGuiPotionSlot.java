@@ -5,12 +5,18 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
-public class OverlayGuiItem extends GuiElement {
+public class OverlayGuiPotionSlot extends GuiElement {
+
+    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
 
     private ItemStack itemStack;
 
@@ -22,8 +28,13 @@ public class OverlayGuiItem extends GuiElement {
 
     private FontRenderer fontRenderer;
 
-    public OverlayGuiItem(int x, int y, ItemStack itemStack, int slot) {
-        super(x, y, 200, 24);
+    GuiTexture backdrop;
+
+    public OverlayGuiPotionSlot(int x, int y, ItemStack itemStack, int slot, boolean animateUp) {
+        super(x, y, 23, 23);
+
+        setAttachmentPoint(GuiAttachment.middleLeft);
+        setAttachmentAnchor(GuiAttachment.middleLeft);
 
         this.itemStack = itemStack;
         this.slot = slot;
@@ -38,11 +49,13 @@ public class OverlayGuiItem extends GuiElement {
             fontRenderer = mc.fontRenderer;
         }
 
+        backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, texture);
+        addChild(backdrop);
+
         isVisible = false;
-        opacity = 0;
         showAnimation = new KeyframeAnimation(80, this)
-            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y - 3, y))
-            .withDelay(slot * 100);
+            .applyTo(new Applier.TranslateY(animateUp ? y + 2 : y - 2, y), new Applier.Opacity(0, 1))
+            .withDelay((int) (Math.random() * 300));
     }
 
     @Override
@@ -55,7 +68,6 @@ public class OverlayGuiItem extends GuiElement {
         if (showAnimation.isActive()) {
             showAnimation.stop();
         }
-        opacity = 0;
         return true;
     }
 
@@ -63,27 +75,21 @@ public class OverlayGuiItem extends GuiElement {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
-        if (hasFocus()) {
-            fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 63, y + refY + 4, GuiColors.hover);
+        if (this.opacity == 1) {
+            drawItemStack(itemStack, x + refX + 3, y + refY + 2);
         }
-
-        drawItemStack(itemStack, x + refX + 38, y + refY);
     }
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableBlend();
+        GlStateManager.enableDepth();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
         mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
-        if (opacity < 1) {
-            this.zLevel = 300;
-            GlStateManager.disableDepth();
-            drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
-        }
+        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
+        GlStateManager.disableDepth();
+
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
     }
@@ -91,5 +97,47 @@ public class OverlayGuiItem extends GuiElement {
 
     public int getSlot() {
         return slot;
+    }
+
+    @Override
+    protected void onFocus() {
+        backdrop.setColor(GuiColors.hover);
+    }
+
+    @Override
+    protected void onBlur() {
+        backdrop.setColor(GuiColors.normal);
+    }
+
+    @Override
+    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
+        mouseX -= refX + x;
+        mouseY -= refY + y;
+        boolean gainFocus = true;
+
+        if (mouseX + mouseY < 12) {
+            gainFocus = false;
+        }
+
+        if (mouseX + mouseY > 34) {
+            gainFocus = false;
+        }
+
+        if (mouseX - mouseY > 8) {
+            gainFocus = false;
+        }
+
+        if (mouseY - mouseX > 12) {
+            gainFocus = false;
+        }
+
+        if (gainFocus != hasFocus) {
+            hasFocus = gainFocus;
+            if (hasFocus) {
+                onFocus();
+            } else {
+                onBlur();
+            }
+        }
     }
 }

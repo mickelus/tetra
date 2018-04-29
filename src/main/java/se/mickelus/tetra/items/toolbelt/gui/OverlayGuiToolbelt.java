@@ -6,27 +6,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
-import se.mickelus.tetra.gui.GuiRoot;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.toolbelt.InventoryToolbelt;
-
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Stream;
+import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
 
 public class OverlayGuiToolbelt extends GuiRoot {
 
     private static final ResourceLocation toolbeltTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
 
-    private OverlayGuiItem[] items = new OverlayGuiItem[0];
-
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-    private GuiElement strapList;
+    private OverlayGuiQuickslotGroup quickslotGroup;
+    private OverlayGuiPotionGroup potionGroup;
 
     private boolean hasMouseMoved = false;
     private ScaledResolution scaledResolution;
@@ -36,65 +26,32 @@ public class OverlayGuiToolbelt extends GuiRoot {
 
         scaledResolution = new ScaledResolution(mc);
 
-        strapList = new GuiElement(37, 0, 0, 0);
-        addChild(strapList);
+        quickslotGroup = new OverlayGuiQuickslotGroup(37, 0);
+        addChild(quickslotGroup);
 
-        showAnimation = new KeyframeAnimation(200, strapList)
-            .applyTo(new Applier.TranslateX(strapList.getX() + 10), new Applier.Opacity(1))
-            .onStop(isFinished -> {
-                if (isFinished) {
-                    Arrays.stream(items)
-                        .filter(Objects::nonNull)
-                        .forEach(item -> item.setVisible(true));
-                }
-            });
-        hideAnimation = new KeyframeAnimation(100, strapList)
-            .applyTo(new Applier.TranslateX(strapList.getX()), new Applier.Opacity(0))
-            .onStop(isFinished -> {
-                if (isFinished) {
-                    isVisible = false;
-                }
-            });
+        potionGroup = new OverlayGuiPotionGroup(0, 30);
+        addChild(potionGroup);
 
     }
 
-    public void setInventoryToolbelt(InventoryToolbelt inventoryToolbelt) {
-        strapList.clearChildren();
-        int numSlots = inventoryToolbelt.getSizeInventory();
-        items = new OverlayGuiItem[numSlots];
-
-        strapList.addChild(new GuiTexture(0, numSlots * -12 - 7, 22, 7, 0, 28, toolbeltTexture));
-        strapList.addChild(new GuiTexture(0, numSlots * 12, 22, 7, 0, 35, toolbeltTexture));
-        strapList.addChild(new GuiRect(0, numSlots * -12, 22, numSlots * 24, 0xcc000000));
-
-        for (int i = 0; i < numSlots; i++) {
-            ItemStack itemStack = inventoryToolbelt.getStackInSlot(i);
-            if (!itemStack.isEmpty()) {
-                items[i] = new OverlayGuiItem(-35, numSlots * -12 + i * 24 + 3, itemStack, i);
-                strapList.addChild(items[i]);
-            }
-        }
+    public void setInventories(ItemStack itemStack) {
+        quickslotGroup.setInventory(new InventoryQuickslot(itemStack));
+        potionGroup.setInventory(new InventoryPotions(itemStack));
     }
 
     @Override
     protected void onShow() {
-        if (hideAnimation.isActive()) {
-            hideAnimation.stop();
-        }
+
         scaledResolution = new ScaledResolution(mc);
         hasMouseMoved = false;
-        showAnimation.start();
+        quickslotGroup.setVisible(true);
+        potionGroup.setVisible(true);
     }
 
     @Override
     protected boolean onHide() {
-        if (showAnimation.isActive()) {
-            showAnimation.stop();
-        }
-        hideAnimation.start();
-        Arrays.stream(items)
-            .filter(Objects::nonNull)
-            .forEach(item -> item.setVisible(false));
+        quickslotGroup.setVisible(false);
+        potionGroup.setVisible(false);
         return false;
     }
 
@@ -118,13 +75,29 @@ public class OverlayGuiToolbelt extends GuiRoot {
         }
     }
 
-    public int getFocus() {
-        for (int i = 0; i < items.length; i++) {
-            OverlayGuiItem element = items[i];
-            if (items[i] != null && element.hasFocus()) {
-                return element.getSlot();
-            }
+    public ToolbeltSlotType getFocusType() {
+        if (quickslotGroup.getFocus() != -1) {
+            return ToolbeltSlotType.quickslot;
         }
+
+        if (potionGroup.getFocus() != -1) {
+            return ToolbeltSlotType.potion;
+        }
+
+        return ToolbeltSlotType.quickslot;
+    }
+
+    public int getFocusIndex() {
+        int quickslotFocus = quickslotGroup.getFocus();
+        if (quickslotFocus != -1) {
+            return quickslotFocus;
+        }
+
+        int potionFocus = potionGroup.getFocus();
+        if (potionFocus != -1) {
+            return potionFocus;
+        }
+
         return -1;
     }
 }

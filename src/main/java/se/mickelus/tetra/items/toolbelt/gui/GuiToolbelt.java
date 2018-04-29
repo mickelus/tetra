@@ -17,7 +17,6 @@ public class GuiToolbelt extends GuiContainer {
 
     private static GuiToolbelt instance;
 
-    private static final ResourceLocation TOOLBELT_TEXTURE = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
     private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
 
     private GuiElement defaultGui;
@@ -28,23 +27,30 @@ public class GuiToolbelt extends GuiContainer {
         this.xSize = 179;
         this.ySize = 176;
 
-        int numSlots = container.getToolbeltInventory().getSizeInventory();
+        int numQuickslots = container.getQuickslotInventory().getSizeInventory();
+        int numStorageSlots = container.getStorageInventory().getSizeInventory();
+        int numPotionSlots = container.getPotionInventory().getSizeInventory();
+        int offset = 0;
 
         defaultGui = new GuiElement(0, 0, xSize, ySize);
 
         // inventory background
         defaultGui.addChild(new GuiTexture(0, 103, 179, 106, INVENTORY_TEXTURE));
 
-        // toolbelt background rects
-        defaultGui.addChild(new GuiRect(-8 * numSlots + 85, 16, numSlots * 17 - 1, 22, 0xff000000));
-        defaultGui.addChild(new GuiRect(-8 * numSlots + 85, 17, numSlots * 17 - 1, 20, 0xffffffff));
-        defaultGui.addChild(new GuiRect(-8 * numSlots + 85, 18, numSlots * 17 - 1, 18, 0xff000000));
+        if (numPotionSlots > 0) {
+            defaultGui.addChild(new GuiPotionsBackdrop(0, 55 - 30 * offset, numPotionSlots));
+            offset++;
+        }
 
-        // toolbelt left cap
-        defaultGui.addChild(new GuiTexture(-8 * numSlots + 72, 14, 17, 28, TOOLBELT_TEXTURE));
+        if (numQuickslots > 0 ) {
+            defaultGui.addChild(new GuiQuickSlotBackdrop(0, 55 - 30 * offset, numQuickslots));
+            offset++;
+        }
 
-        // toolbelt right cap
-        defaultGui.addChild(new GuiTexture(9 * numSlots + 80, 13, 17, 28, 17, 0, TOOLBELT_TEXTURE));
+        if (numStorageSlots > 0) {
+            defaultGui.addChild(new GuiStorageBackdrop(0, 55 - 30 * offset, numStorageSlots));
+            offset++;
+        }
 
         defaultGui.addChild(new GuiKeybinding(166, 85, OverlayToolbelt.instance.accessBinding));
         defaultGui.addChild(new GuiKeybinding(166, 100, OverlayToolbelt.instance.restockBinding));

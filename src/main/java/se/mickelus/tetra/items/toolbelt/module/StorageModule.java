@@ -6,11 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.MultiSlotModule;
+import se.mickelus.tetra.module.data.ModuleData;
 
-public class StrapModule extends MultiSlotModule<ModuleData> {
-    public StrapModule(String slotKey, String moduleKey, String slotSuffix) {
+public class StorageModule extends MultiSlotModule<ModuleData> {
+    public StorageModule(String slotKey, String moduleKey, String slotSuffix) {
         super(slotKey, moduleKey, slotSuffix);
 
         // this uses the unsuffixed module key, to use the same data for both sides

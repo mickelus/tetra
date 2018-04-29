@@ -82,6 +82,14 @@ public abstract class Applier {
         }
 
         @Override
+        public void start(int duration) {
+            super.start(duration);
+            if (!relativeStart) {
+                element.setY((int) startValue);
+            }
+        }
+
+        @Override
         protected float getRelativeStartValue() {
             return element.getY();
         }
@@ -101,6 +109,14 @@ public abstract class Applier {
 
         public Opacity(float startValue, float targetValue) {
             super(startValue, targetValue);
+        }
+
+        @Override
+        public void start(int duration) {
+            super.start(duration);
+            if (!relativeStart) {
+                element.setOpacity((int) startValue);
+            }
         }
 
         @Override

@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.module.data.GlyphData;
 
 public class GuiModuleGlyph extends GuiElement {
 
@@ -22,6 +23,10 @@ public class GuiModuleGlyph extends GuiElement {
         this.textureY = textureY;
 
         this.textureLocation = textureLocation;
+    }
+
+    public GuiModuleGlyph(int x, int y, int width, int height, int tint, GlyphData glyphData) {
+        this(x, y, width, height, tint, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
     }
 
     @Override

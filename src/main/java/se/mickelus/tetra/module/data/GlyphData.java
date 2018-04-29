@@ -14,6 +14,11 @@ public class GlyphData {
 
     public GlyphData() {}
 
+    public GlyphData(int textureX, int textureY) {
+        this.textureX = textureX;
+        this.textureY = textureY;
+    }
+
     public GlyphData(String texture, int textureX, int textureY) {
         textureLocation = new ResourceLocation(TetraMod.MOD_ID, texture);
         this.textureX = textureX;

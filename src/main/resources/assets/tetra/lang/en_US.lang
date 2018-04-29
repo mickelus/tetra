@@ -388,6 +388,8 @@ belt/inlaid.prefix=Inlaid
 ###############################
 # TOOLBELT STRAPS
 ###############################
+stats.toolbelt.quickslot=Quickslots
+
 strap_schema1.name=Single belt strap
 strap_schema1.description=Attach a single strap to the belt, which can be used for carrying and quickly accessing tools or other items.
 strap_schema1.slot1=Strap material
@@ -409,3 +411,29 @@ strap3/leather=3 Leather straps
 strap3/iron=3 Iron loops
 strap4/leather=4 Leather straps
 strap4/iron=4 Iron loops
+
+###############################
+# POTION BAG
+###############################
+stats.toolbelt.potion_storage=Potion slots
+
+potion_storage_schema.name=Potion bag
+potion_storage_schema.description=Attach a small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
+potion_storage_schema.slot1=Material
+
+potion_storage/leather=Large potion bag
+potion_storage/wool=Potion bag
+potion_storage/hide=Small potion bag
+
+###############################
+# STORAGE POUCH
+###############################
+stats.toolbelt.storage=Storage slots
+
+storage_schema.name=Storage pouch
+storage_schema.description=Attach a small pouch to the toolbelt, which can store a large amount of items. While the items in the pouch are not easily accessible, held items can be stored into the pouch as easily as with other toolbelt attachments.
+storage_schema.slot1=Material
+
+storage/leather=Large pouch
+storage/wool=Pouch
+storage/hide=Small pouch

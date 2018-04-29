@@ -4,8 +4,8 @@ import se.mickelus.tetra.gui.GuiAlignment;
 
 public class GuiStatBarSegmented extends GuiStatBar {
     int maxSegments, segmentCount, diffCount, segmentLength;
-    public GuiStatBarSegmented(int x, int y, String label, double min, double max, GuiAlignment alignment) {
-        super(x, y, label, min, max, alignment);
+    public GuiStatBarSegmented(int x, int y, String label, double min, double max) {
+        super(x, y, label, min, max);
     }
 
     @Override

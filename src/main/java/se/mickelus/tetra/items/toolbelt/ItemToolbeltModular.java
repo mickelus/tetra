@@ -9,14 +9,15 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.module.BeltModule;
-import se.mickelus.tetra.items.toolbelt.module.StrapModule;
+import se.mickelus.tetra.items.toolbelt.module.PotionStorageModule;
+import se.mickelus.tetra.items.toolbelt.module.QuickAccessModule;
+import se.mickelus.tetra.items.toolbelt.module.StorageModule;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -34,9 +35,17 @@ public class ItemToolbeltModular extends ItemModular {
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
-    private StrapModule[] slot1StrapModules;
-    private StrapModule[] slot2StrapModules;
-    private StrapModule[] slot3StrapModules;
+    private QuickAccessModule[] slot1StrapModules;
+    private QuickAccessModule[] slot2StrapModules;
+    private QuickAccessModule[] slot3StrapModules;
+
+    private PotionStorageModule slot1PotionStorageModule;
+    private PotionStorageModule slot2PotionStorageModule;
+    private PotionStorageModule slot3PotionStorageModule;
+
+    private StorageModule slot1StorageModule;
+    private StorageModule slot2StorageModule;
+    private StorageModule slot3StorageModule;
 
     public ItemToolbeltModular() {
         super();
@@ -58,14 +67,22 @@ public class ItemToolbeltModular extends ItemModular {
 
         new BeltModule(beltKey);
 
-        slot1StrapModules = new StrapModule[4];
-        slot2StrapModules = new StrapModule[4];
-        slot3StrapModules = new StrapModule[4];
+        slot1StrapModules = new QuickAccessModule[4];
+        slot2StrapModules = new QuickAccessModule[4];
+        slot3StrapModules = new QuickAccessModule[4];
         for (int i = 0; i < slot1StrapModules.length; i++) {
-            slot1StrapModules[i] = new StrapModule(slot1Key, "toolbelt/strap" + (i+1), slot1Suffix);
-            slot2StrapModules[i] = new StrapModule(slot2Key, "toolbelt/strap" + (i+1), slot2Suffix);
-            slot3StrapModules[i] = new StrapModule(slot3Key, "toolbelt/strap" + (i+1), slot3Suffix);
+            slot1StrapModules[i] = new QuickAccessModule(slot1Key, "toolbelt/strap" + (i+1), slot1Suffix);
+            slot2StrapModules[i] = new QuickAccessModule(slot2Key, "toolbelt/strap" + (i+1), slot2Suffix);
+            slot3StrapModules[i] = new QuickAccessModule(slot3Key, "toolbelt/strap" + (i+1), slot3Suffix);
         }
+
+        slot1PotionStorageModule = new PotionStorageModule(slot1Key, "toolbelt/potionStorage", slot1Suffix);
+        slot2PotionStorageModule = new PotionStorageModule(slot2Key, "toolbelt/potionStorage", slot2Suffix);
+        slot3PotionStorageModule = new PotionStorageModule(slot3Key, "toolbelt/potionStorage", slot3Suffix);
+
+        slot1StorageModule = new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
+        slot2StorageModule = new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
+        slot3StorageModule = new StorageModule(slot3Key, "toolbelt/storage", slot3Suffix);
     }
 
     @Override
@@ -81,6 +98,14 @@ public class ItemToolbeltModular extends ItemModular {
             new ModuleSlotSchema("strap_schema" + (i+1), slot2StrapModules[i], this);
             new ModuleSlotSchema("strap_schema" + (i+1), slot3StrapModules[i], this);
         }
+
+        new ModuleSlotSchema("potion_storage_schema", slot1PotionStorageModule, this);
+        new ModuleSlotSchema("potion_storage_schema", slot2PotionStorageModule, this);
+        new ModuleSlotSchema("potion_storage_schema", slot3PotionStorageModule, this);
+
+        new ModuleSlotSchema("storage_schema", slot1StorageModule, this);
+        new ModuleSlotSchema("storage_schema", slot2StorageModule, this);
+        new ModuleSlotSchema("storage_schema", slot3StorageModule, this);
     }
 
     @Override
@@ -105,10 +130,24 @@ public class ItemToolbeltModular extends ItemModular {
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
-
-    public int getNumSlots(ItemStack itemStack) {
+    public int getNumQuickslots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
-            .map(module -> module.getSize(itemStack))
-            .reduce(0, Integer::sum);
+                .filter(module -> module instanceof QuickAccessModule)
+                .map(module -> module.getSize(itemStack))
+                .reduce(0, Integer::sum);
+    }
+
+    public int getNumStorageSlots(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .filter(module -> module instanceof StorageModule)
+                .map(module -> module.getSize(itemStack))
+                .reduce(0, Integer::sum);
+    }
+
+    public int getNumPotionSlots(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .filter(module -> module instanceof PotionStorageModule)
+                .map(module -> module.getSize(itemStack))
+                .reduce(0, Integer::sum);
     }
 }

@@ -123,8 +123,12 @@ public class BasicSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        removePreviousModule(upgradedStack);
+        ItemModule previousModule = removePreviousModule(upgradedStack);
         module.addModule(upgradedStack, materials, consumeMaterials, player);
+
+        if (previousModule != null && consumeMaterials) {
+            previousModule.postRemove(upgradedStack, player);
+        }
 
         if (consumeMaterials && player instanceof EntityPlayerMP) {
             // todo: add proper criteria
@@ -134,12 +138,13 @@ public class BasicSchema implements UpgradeSchema {
         return upgradedStack;
     }
 
-    protected void removePreviousModule(final ItemStack itemStack) {
+    protected ItemModule removePreviousModule(final ItemStack itemStack) {
         ItemModular item = (ItemModular) itemStack.getItem();
         ItemModule previousModule = item.getModuleFromSlot(itemStack, module.getSlot());
         if (previousModule != null) {
             previousModule.removeModule(itemStack);
         }
+        return previousModule;
     }
 
     @Override
