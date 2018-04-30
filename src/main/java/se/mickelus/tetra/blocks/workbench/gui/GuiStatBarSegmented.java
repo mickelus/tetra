@@ -13,7 +13,7 @@ public class GuiStatBarSegmented extends GuiStatBar {
         double minValue = Math.min(value, diffValue);
 
 
-        maxSegments = (int) Math.ceil(max - min);
+        maxSegments = (int) (barMaxLength / Math.ceil(barMaxLength / (max - min)));
         segmentCount = (int) Math.round(minValue - min);
         diffCount = (int) Math.ceil(Math.abs(value - diffValue));
 

@@ -8,9 +8,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
@@ -36,7 +34,7 @@ public class GuiStatGroup extends GuiElement {
 
 
     public GuiStatGroup(int x, int y) {
-        super(x, y, 200, 64);
+        super(x, y, 200, 52);
 
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
@@ -51,7 +49,7 @@ public class GuiStatGroup extends GuiElement {
                 0, InventoryPotions.maxSize);
         storageBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.storage"),
                 0, InventoryStorage.maxSize);
-        quiverBar = new GuiStatBar(0, 0, I18n.format("stats.toolbelt.quiver"),
+        quiverBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quiver"),
                 0, InventoryQuiver.maxSize);
 
         capabilityGroup = new GuiElement(width / 2, 0, 0, 0);
@@ -94,11 +92,14 @@ public class GuiStatGroup extends GuiElement {
 
     private void showBar(GuiStatBar bar) {
         int offset = barGroup.getNumChildren();
-        bar.setX((1 - offset % 2) * 104);
-        bar.setY(35 - 15 * (offset / 2));
+        bar.setY(-15 * (offset / 2));
         if (offset % 2 == 0) {
+            bar.setX(3);
+            bar.setAttachmentPoint(GuiAttachment.bottomLeft);
             bar.setAlignment(GuiAlignment.left);
         } else {
+            bar.setX(-3);
+            bar.setAttachmentPoint(GuiAttachment.bottomRight);
             bar.setAlignment(GuiAlignment.right);
         }
         barGroup.addChild(bar);

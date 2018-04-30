@@ -4,7 +4,7 @@ import se.mickelus.tetra.gui.*;
 
 public class GuiStatBar extends GuiElement {
 
-    protected static final int barMaxLength = 98;
+    protected static final int barMaxLength = 120;
     protected static final int barHeight = 1;
 
     protected static final String increaseColorFont = "§a";
@@ -29,7 +29,9 @@ public class GuiStatBar extends GuiElement {
     protected GuiAlignment alignment = GuiAlignment.left;
 
     public GuiStatBar(int x, int y, String label, double min, double max) {
-        super(x, y, 98, 16);
+        super(x, y, barMaxLength, 16);
+
+        setAttachmentAnchor(GuiAttachment.bottomCenter);
 
         this.min = min;
         this.max = max;
@@ -48,15 +50,14 @@ public class GuiStatBar extends GuiElement {
 
     private void realign() {
         if (alignment == GuiAlignment.right) {
-            labelString.setX(barMaxLength);
             valueString.setX(-4);
         } else {
-            labelString.setX(0);
-            valueString.setX(barMaxLength + 4);
+            valueString.setX(4);
         }
 
-        labelString.setAttachmentPoint(alignment.toAttachment());
+        labelString.setAttachment(alignment.toAttachment());
         valueString.setAttachmentPoint(alignment.toAttachment());
+        valueString.setAttachmentAnchor(alignment.toAttachment().flipHorizontal());
     }
 
     public void setValue(double value, double diffValue) {
