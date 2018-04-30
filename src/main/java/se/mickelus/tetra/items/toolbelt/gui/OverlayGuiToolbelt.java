@@ -9,6 +9,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
 import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
 
 public class OverlayGuiToolbelt extends GuiRoot {
@@ -17,6 +18,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
 
     private OverlayGuiQuickslotGroup quickslotGroup;
     private OverlayGuiPotionGroup potionGroup;
+    private OverlayGuiQuiverGroup quiverGroup;
 
     private boolean hasMouseMoved = false;
     private ScaledResolution scaledResolution;
@@ -32,11 +34,15 @@ public class OverlayGuiToolbelt extends GuiRoot {
         potionGroup = new OverlayGuiPotionGroup(0, 30);
         addChild(potionGroup);
 
+        quiverGroup = new OverlayGuiQuiverGroup(-30, -30);
+        addChild(quiverGroup);
+
     }
 
     public void setInventories(ItemStack itemStack) {
         quickslotGroup.setInventory(new InventoryQuickslot(itemStack));
         potionGroup.setInventory(new InventoryPotions(itemStack));
+        quiverGroup.setInventory(new InventoryQuiver(itemStack));
     }
 
     @Override
@@ -46,12 +52,14 @@ public class OverlayGuiToolbelt extends GuiRoot {
         hasMouseMoved = false;
         quickslotGroup.setVisible(true);
         potionGroup.setVisible(true);
+        quiverGroup.setVisible(true);
     }
 
     @Override
     protected boolean onHide() {
         quickslotGroup.setVisible(false);
         potionGroup.setVisible(false);
+        quiverGroup.setVisible(false);
         return false;
     }
 
@@ -84,6 +92,10 @@ public class OverlayGuiToolbelt extends GuiRoot {
             return ToolbeltSlotType.potion;
         }
 
+        if (quiverGroup.getFocus() != -1) {
+            return ToolbeltSlotType.quiver;
+        }
+
         return ToolbeltSlotType.quickslot;
     }
 
@@ -96,6 +108,11 @@ public class OverlayGuiToolbelt extends GuiRoot {
         int potionFocus = potionGroup.getFocus();
         if (potionFocus != -1) {
             return potionFocus;
+        }
+
+        int quiverFocus = quiverGroup.getFocus();
+        if (quiverFocus != -1) {
+            return quiverFocus;
         }
 
         return -1;

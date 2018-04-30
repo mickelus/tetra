@@ -16,6 +16,7 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
 
 
@@ -28,6 +29,7 @@ public class GuiStatGroup extends GuiElement {
     private GuiStatBar quickslotBar;
     private GuiStatBar potionBar;
     private GuiStatBar storageBar;
+    private GuiStatBar quiverBar;
 
     private GuiElement barGroup;
     private GuiElement capabilityGroup;
@@ -49,6 +51,8 @@ public class GuiStatGroup extends GuiElement {
                 0, InventoryPotions.maxSize);
         storageBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.storage"),
                 0, InventoryStorage.maxSize);
+        quiverBar = new GuiStatBar(0, 0, I18n.format("stats.toolbelt.quiver"),
+                0, InventoryQuiver.maxSize);
 
         capabilityGroup = new GuiElement(width / 2, 0, 0, 0);
         addChild(capabilityGroup);
@@ -140,6 +144,17 @@ public class GuiStatGroup extends GuiElement {
                 showBar(storageBar);
             }
 
+            int numQuiverSlots = item.getNumQuiverSlots(itemStack);
+            if (!previewStack.isEmpty()) {
+                int numQuiverSlotsPreview = item.getNumQuiverSlots(previewStack);
+                if (numQuiverSlots > 0 || numQuiverSlotsPreview > 0) {
+                    quiverBar.setValue(numQuiverSlots, numQuiverSlotsPreview);
+                    showBar(quiverBar);
+                }
+            } else if (numQuiverSlots > 0) {
+                quiverBar.setValue(numQuiverSlots, numQuiverSlots);
+                showBar(quiverBar);
+            }
         }
     }
 

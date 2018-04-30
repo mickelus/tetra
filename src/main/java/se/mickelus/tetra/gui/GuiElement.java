@@ -154,6 +154,11 @@ public class GuiElement extends Gui {
         attachmentAnchor = attachment;
     }
 
+    public void setAttachment(GuiAttachment attachment) {
+        attachmentPoint = attachment;
+        attachmentAnchor = attachment;
+    }
+
     public int getWidth() {
         return width;
     }

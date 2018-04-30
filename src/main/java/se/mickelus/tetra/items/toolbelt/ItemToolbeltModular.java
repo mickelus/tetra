@@ -14,10 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.toolbelt.module.BeltModule;
-import se.mickelus.tetra.items.toolbelt.module.PotionStorageModule;
-import se.mickelus.tetra.items.toolbelt.module.QuickAccessModule;
-import se.mickelus.tetra.items.toolbelt.module.StorageModule;
+import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
@@ -46,6 +43,10 @@ public class ItemToolbeltModular extends ItemModular {
     private StorageModule slot1StorageModule;
     private StorageModule slot2StorageModule;
     private StorageModule slot3StorageModule;
+
+    private QuiverModule slot1QuiverModule;
+    private QuiverModule slot2QuiverModule;
+    private QuiverModule slot3QuiverModule;
 
     public ItemToolbeltModular() {
         super();
@@ -83,6 +84,10 @@ public class ItemToolbeltModular extends ItemModular {
         slot1StorageModule = new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
         slot2StorageModule = new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
         slot3StorageModule = new StorageModule(slot3Key, "toolbelt/storage", slot3Suffix);
+
+        slot1QuiverModule = new QuiverModule(slot1Key, "toolbelt/quiver", slot1Suffix);
+        slot2QuiverModule = new QuiverModule(slot2Key, "toolbelt/quiver", slot2Suffix);
+        slot3QuiverModule = new QuiverModule(slot3Key, "toolbelt/quiver", slot3Suffix);
     }
 
     @Override
@@ -106,6 +111,10 @@ public class ItemToolbeltModular extends ItemModular {
         new ModuleSlotSchema("storage_schema", slot1StorageModule, this);
         new ModuleSlotSchema("storage_schema", slot2StorageModule, this);
         new ModuleSlotSchema("storage_schema", slot3StorageModule, this);
+
+        new ModuleSlotSchema("quiver_schema", slot1QuiverModule, this);
+        new ModuleSlotSchema("quiver_schema", slot2QuiverModule, this);
+        new ModuleSlotSchema("quiver_schema", slot3QuiverModule, this);
     }
 
     @Override
@@ -147,6 +156,13 @@ public class ItemToolbeltModular extends ItemModular {
     public int getNumPotionSlots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
                 .filter(module -> module instanceof PotionStorageModule)
+                .map(module -> module.getSize(itemStack))
+                .reduce(0, Integer::sum);
+    }
+
+    public int getNumQuiverSlots(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .filter(module -> module instanceof QuiverModule)
                 .map(module -> module.getSize(itemStack))
                 .reduce(0, Integer::sum);
     }

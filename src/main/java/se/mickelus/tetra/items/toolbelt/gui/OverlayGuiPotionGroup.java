@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class OverlayGuiPotionGroup extends GuiElement {
-    private static final ResourceLocation toolbeltTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
-
     GuiString focusSlot;
 
     private OverlayGuiPotionSlot[] slots = new OverlayGuiPotionSlot[0];
@@ -97,7 +95,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
     public int getFocus() {
         for (int i = 0; i < slots.length; i++) {
             OverlayGuiPotionSlot element = slots[i];
-            if (slots[i] != null && element.hasFocus()) {
+            if (element != null && element.hasFocus()) {
                 return element.getSlot();
             }
         }

@@ -16,11 +16,13 @@ public class ContainerToolbelt extends Container {
     private InventoryQuickslot quickslotInventory;
     private InventoryStorage storageInventory;
     private InventoryPotions potionsInventory;
+    private InventoryQuiver quiverInventory;
 
     public ContainerToolbelt(IInventory playerInventory, ItemStack itemStackToolbelt, EntityPlayer player) {
         this.quickslotInventory = new InventoryQuickslot(itemStackToolbelt);
         this.storageInventory = new InventoryStorage(itemStackToolbelt);
         this.potionsInventory = new InventoryPotions(itemStackToolbelt);
+        this.quiverInventory = new InventoryQuiver(itemStackToolbelt);
 
         this.itemStackToolbelt = itemStackToolbelt;
 
@@ -29,12 +31,20 @@ public class ContainerToolbelt extends Container {
         int numPotionSlots = potionsInventory.getSizeInventory();
         int numQuickslots = quickslotInventory.getSizeInventory();
         int numStorageSlots = storageInventory.getSizeInventory();
+        int numQuiverSlots = quiverInventory.getSizeInventory();
         int offset = 0;
 
         for (int i = 0; i < numPotionSlots; i++) {
             this.addSlotToContainer(new PotionSlot(potionsInventory, i, (int)(-8.5 * numPotionSlots + 17 * i + 90), 61 - offset * 30));
         }
         if (numPotionSlots > 0) {
+            offset++;
+        }
+
+        for (int i = 0; i < numQuiverSlots; i++) {
+            this.addSlotToContainer(new QuiverSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 61 - offset * 30));
+        }
+        if (numQuiverSlots > 0) {
             offset++;
         }
 
@@ -47,9 +57,6 @@ public class ContainerToolbelt extends Container {
 
         for (int i = 0; i < numStorageSlots; i++) {
             this.addSlotToContainer(new Slot(storageInventory, i, (int)(-8.5 * numStorageSlots + 17 * i + 90), 61 - offset * 30));
-        }
-        if (numStorageSlots > 0) {
-            offset++;
         }
 
         for (int i = 0; i < 3; i++) {
@@ -170,10 +177,11 @@ public class ContainerToolbelt extends Container {
                 return ItemStack.EMPTY;
             }
 
+            int numQuiverSlots = quiverInventory.getSizeInventory();
+            int numPotionSlots = potionsInventory.getSizeInventory();
             int numQuickslots = quickslotInventory.getSizeInventory();
             int numStorageSlots = storageInventory.getSizeInventory();
-            int numPotionSlots = potionsInventory.getSizeInventory();
-            int playerInventoryStart = numQuickslots + numStorageSlots + numPotionSlots;
+            int playerInventoryStart = numQuickslots + numStorageSlots + numPotionSlots + numQuiverSlots;
 
             if (slot.inventory instanceof InventoryToolbelt) {
                 if (slot.isHere(potionsInventory, index)) {
@@ -186,10 +194,13 @@ public class ContainerToolbelt extends Container {
                 if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, 0,  numPotionSlots)) {
                     return itemStack;
                 }
-                if (numQuickslots > 0 && mergeItemStack(itemStack, numPotionSlots,  numPotionSlots + numQuickslots, false)) {
+                if (numQuiverSlots > 0 && mergeItemStack(itemStack, numPotionSlots,  numPotionSlots + numQuiverSlots, false)) {
                     return itemStack;
                 }
-                if (numStorageSlots > 0 && mergeItemStack(itemStack, numPotionSlots + numQuickslots,  playerInventoryStart, false)) {
+                if (numQuickslots > 0 && mergeItemStack(itemStack, numPotionSlots + numQuiverSlots,  numPotionSlots + numQuiverSlots + numQuickslots, false)) {
+                    return itemStack;
+                }
+                if (numStorageSlots > 0 && mergeItemStack(itemStack, numPotionSlots + numQuiverSlots + numQuickslots,  playerInventoryStart, false)) {
                     return itemStack;
                 }
                 return ItemStack.EMPTY;
@@ -219,5 +230,9 @@ public class ContainerToolbelt extends Container {
 
     public IInventory getPotionInventory() {
         return potionsInventory;
+    }
+
+    public IInventory getQuiverInventory() {
+        return quiverInventory;
     }
 }

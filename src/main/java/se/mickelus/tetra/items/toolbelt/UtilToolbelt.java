@@ -19,7 +19,7 @@ public class UtilToolbelt {
                 inventory = new InventoryPotions(toolbeltStack);
                 break;
             case quiver:
-                inventory = new InventoryStorage(toolbeltStack);
+                inventory = new InventoryQuiver(toolbeltStack);
                 break;
             case storage:
                 inventory = new InventoryStorage(toolbeltStack);
@@ -68,6 +68,10 @@ public class UtilToolbelt {
 
     public static boolean storeItemInToolbelt(ItemStack toolbeltStack, ItemStack itemStack) {
         if (new InventoryPotions(toolbeltStack).storeItemInInventory(itemStack)) {
+            return true;
+        }
+
+        if (new InventoryQuiver(toolbeltStack).storeItemInInventory(itemStack)) {
             return true;
         }
 

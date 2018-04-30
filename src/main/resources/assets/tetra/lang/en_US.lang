@@ -437,3 +437,16 @@ storage_schema.slot1=Material
 storage/leather=Large pouch
 storage/wool=Pouch
 storage/hide=Small pouch
+
+###############################
+# QUIVER
+###############################
+stats.toolbelt.quiver=Quiver slots
+
+quiver_schema.name=Quiver
+quiver_schema.description=Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.
+quiver_schema.slot1=Material
+
+quiver/leather=Leather quiver
+quiver/wool=Cloth quiver
+quiver/hide=Hide quiver

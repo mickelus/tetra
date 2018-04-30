@@ -30,6 +30,7 @@ public class GuiToolbelt extends GuiContainer {
         int numQuickslots = container.getQuickslotInventory().getSizeInventory();
         int numStorageSlots = container.getStorageInventory().getSizeInventory();
         int numPotionSlots = container.getPotionInventory().getSizeInventory();
+        int numQuiverSlots = container.getQuiverInventory().getSizeInventory();
         int offset = 0;
 
         defaultGui = new GuiElement(0, 0, xSize, ySize);
@@ -42,6 +43,11 @@ public class GuiToolbelt extends GuiContainer {
             offset++;
         }
 
+        if (numQuiverSlots > 0) {
+            defaultGui.addChild(new GuiQuiverBackdrop(0, 55 - 30 * offset, numQuiverSlots));
+            offset++;
+        }
+
         if (numQuickslots > 0 ) {
             defaultGui.addChild(new GuiQuickSlotBackdrop(0, 55 - 30 * offset, numQuickslots));
             offset++;
@@ -49,7 +55,6 @@ public class GuiToolbelt extends GuiContainer {
 
         if (numStorageSlots > 0) {
             defaultGui.addChild(new GuiStorageBackdrop(0, 55 - 30 * offset, numStorageSlots));
-            offset++;
         }
 
         defaultGui.addChild(new GuiKeybinding(166, 85, OverlayToolbelt.instance.accessBinding));
