@@ -96,6 +96,21 @@
         }
     },
     {
+        "key": "short_blade/flint",
+        "material": "minecraft:flint",
+        "durability": 66,
+        "integrity": -1,
+        "damage": 3,
+        "attackSpeed": 1.4,
+        "glyph": {
+            "tint": "343434",
+            "textureX": 32
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
         "key": "short_blade/iron",
         "material": "minecraft:iron_ingot",
         "durability": 120,

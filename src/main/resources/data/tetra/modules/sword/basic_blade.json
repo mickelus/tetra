@@ -156,6 +156,18 @@
         }
     },
     {
+        "key": "basic_blade/flint",
+        "material": "minecraft:flint",
+        "materialCount": 2,
+        "durability": 200,
+        "integrity": -1,
+        "damage": 5,
+        "glyph": { "tint": "343434" },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
         "key": "basic_blade/gold",
         "material": "minecraft:gold_ingot",
         "materialCount": 2,

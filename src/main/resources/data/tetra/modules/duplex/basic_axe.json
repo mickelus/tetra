@@ -39,6 +39,25 @@
         }
     },
     {
+        "key": "basic_axe/flint",
+        "material": "minecraft:flint",
+        "materialCount": 2,
+        "durability": 145,
+        "integrity": -1,
+        "damage": 7,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "343434",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [1, 5.1]
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
         "key": "basic_axe/iron",
         "material": "minecraft:iron_ingot",
         "materialCount": 2,

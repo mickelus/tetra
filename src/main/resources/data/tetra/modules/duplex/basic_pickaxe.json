@@ -38,6 +38,25 @@
         }
     },
     {
+        "key": "basic_pickaxe/flint",
+        "material": "minecraft:flint",
+        "materialCount": 2,
+        "durability": 78,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "343434",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [2, 4.7]
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        }
+    },
+    {
         "key": "basic_pickaxe/iron",
         "material": "minecraft:iron_ingot",
         "materialCount": 2,
