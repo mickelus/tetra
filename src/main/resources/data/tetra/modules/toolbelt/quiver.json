@@ -1,6 +1,6 @@
 [
     {
-        "key": "storage/leather",
+        "key": "quiver/leather",
         "material": "minecraft:leather",
         "materialCount": 3,
         "integrity": -3,
@@ -11,7 +11,7 @@
         }
     },
     {
-        "key": "storage/wool",
+        "key": "quiver/wool",
         "material": "minecraft:wool",
         "materialCount": 2,
         "integrity": -1,
@@ -22,7 +22,7 @@
         }
     },
     {
-        "key": "storage/hide",
+        "key": "quiver/hide",
         "material": "minecraft:rabbit_hide",
         "materialCount": 7,
         "integrity": 0,
