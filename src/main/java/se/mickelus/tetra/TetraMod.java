@@ -17,7 +17,6 @@ import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.rocketBoots.ItemRocketBoots;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemEffectHandler;
@@ -60,7 +59,6 @@ public class TetraMod {
 
         items = new Item[] {
             new ItemSwordModular(),
-            new ItemRocketBoots(),
             new ItemGeode(),
             new ItemToolbeltModular(),
             new ItemDuplexToolModular()

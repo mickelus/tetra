@@ -450,3 +450,14 @@ quiver_schema.slot1=Material
 quiver/leather=Leather quiver
 quiver/wool=Cloth quiver
 quiver/hide=Hide quiver
+
+###############################
+# BOOSTER
+###############################
+stats.booster=Boost strength
+
+booster_schema.name=Booster
+booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder as fuel.
+booster_schema.slot1=Material
+
+booster/iron=Booster unit

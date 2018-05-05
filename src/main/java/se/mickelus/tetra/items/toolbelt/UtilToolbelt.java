@@ -107,5 +107,6 @@ public class UtilToolbelt {
         new InventoryQuickslot(itemStack).emptyOverflowSlots(player);
         new InventoryPotions(itemStack).emptyOverflowSlots(player);
         new InventoryStorage(itemStack).emptyOverflowSlots(player);
+        new InventoryQuiver(itemStack).emptyOverflowSlots(player);
     }
 }

@@ -1,27 +1,26 @@
-package se.mickelus.tetra.items.rocketBoots;
+package se.mickelus.tetra.items.toolbelt.booster;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.network.AbstractPacket;
 
-public class UpdateBoostPacket extends AbstractPacket {
+public class UpdateBoosterPacket extends AbstractPacket {
 
     private boolean active;
     private boolean charged;
 
-    public UpdateBoostPacket() { }
+    public UpdateBoosterPacket() { }
 
-    public UpdateBoostPacket(boolean active) {
+    public UpdateBoosterPacket(boolean active) {
         this(active, false);
     }
 
-    public UpdateBoostPacket(boolean active, boolean charged) {
+    public UpdateBoosterPacket(boolean active, boolean charged) {
         this.active = active;
         this.charged = charged;
     }
@@ -43,14 +42,12 @@ public class UpdateBoostPacket extends AbstractPacket {
 
     @Override
     public void handleServerSide(EntityPlayer player) {
-        ItemStack stack;
+        ItemStack itemStack = UtilToolbelt.findToolbelt(player);
 
-        if (!UtilRocketBoots.hasBoots(player)) {
-            return;
+        if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
+            UtilBooster.setActive(NBTHelper.getTag(itemStack), active, charged);
         }
 
-        stack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-        UtilRocketBoots.setActive(NBTHelper.getTag(stack), active, charged);
     }
 
 }

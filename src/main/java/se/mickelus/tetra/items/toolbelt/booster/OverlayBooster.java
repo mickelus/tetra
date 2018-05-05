@@ -1,24 +1,23 @@
-package se.mickelus.tetra.items.rocketBoots;
+package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 
-public class OverlayRocketBoots {
+public class OverlayBooster {
 
     private final Minecraft mc;
-    private final OverlayGuiRocketBoots gui;
+    private final OverlayGuiBooster gui;
 
-    public OverlayRocketBoots(Minecraft mc) {
+    public OverlayBooster(Minecraft mc) {
         this.mc = mc;
-        gui = new OverlayGuiRocketBoots(mc);
+        gui = new OverlayGuiBooster(mc);
     }
 
     @SubscribeEvent
@@ -29,10 +28,9 @@ public class OverlayRocketBoots {
             return;
         }
 
-        if (UtilRocketBoots.hasBoots(event.player)) {
-            ItemStack stack = event.player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-
-            fuelPercent = UtilRocketBoots.getFuelPercent(NBTHelper.getTag(stack));
+        ItemStack itemStack = UtilToolbelt.findToolbelt(event.player);
+        if (UtilBooster.canBoost(itemStack)) {
+            fuelPercent = UtilBooster.getFuelPercent(NBTHelper.getTag(itemStack));
         }
 
         gui.setFuel(fuelPercent);

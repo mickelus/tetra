@@ -1,17 +1,17 @@
-package se.mickelus.tetra.items.rocketBoots;
+package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.client.renderer.GlStateManager;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.animation.VisibilityFilter;
 
-public class GuiBarRocketBoots extends GuiElement {
+public class GuiBarBooster extends GuiElement {
 
     private final int indicatorCount = 20;
     private final VisibilityFilter filter;
 
     private int visibleIndicators = 0;
 
-    public GuiBarRocketBoots(int x, int y, int width, int height) {
+    public GuiBarBooster(int x, int y, int width, int height) {
         super(x, y, width, height);
         filter = new VisibilityFilter(-1, indicatorCount);
     }

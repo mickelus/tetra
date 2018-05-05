@@ -310,6 +310,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .anyMatch(improvement -> improvement.enchantment);
     }
 
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
+    }
 
     public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
         if (EnumUtils.isValidEnum(Capability.class, capability)) {

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.rocketBoots;
+package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import se.mickelus.tetra.network.PacketPipeline;
 
-public class JumpHandlerRocketBoots {
+public class JumpHandlerBooster {
 
     private final Minecraft mc;
 
@@ -15,7 +15,7 @@ public class JumpHandlerRocketBoots {
 
     private boolean wasJumpKeyDown = false;
 
-    public  JumpHandlerRocketBoots(Minecraft mc) {
+    public JumpHandlerBooster(Minecraft mc) {
         this.mc = mc;
         jumpKey = mc.gameSettings.keyBindJump;
     }
@@ -24,13 +24,13 @@ public class JumpHandlerRocketBoots {
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.inGameHasFocus) {
             if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isSneaking()) {
-                UpdateBoostPacket packet = new UpdateBoostPacket(true, true);
+                UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
                 PacketPipeline.instance.sendToServer(packet);
             } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.onGround) {
-                UpdateBoostPacket packet = new UpdateBoostPacket(true);
+                UpdateBoosterPacket packet = new UpdateBoosterPacket(true);
                 PacketPipeline.instance.sendToServer(packet);
             } else if (!jumpKey.isKeyDown() && wasJumpKeyDown) {
-                UpdateBoostPacket packet = new UpdateBoostPacket(false);
+                UpdateBoosterPacket packet = new UpdateBoosterPacket(false);
                 PacketPipeline.instance.sendToServer(packet);
             }
 

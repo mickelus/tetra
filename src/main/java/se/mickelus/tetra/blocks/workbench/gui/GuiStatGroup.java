@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
@@ -28,6 +29,7 @@ public class GuiStatGroup extends GuiElement {
     private GuiStatBar potionBar;
     private GuiStatBar storageBar;
     private GuiStatBar quiverBar;
+    private GuiStatBar boosterBar;
 
     private GuiElement barGroup;
     private GuiElement capabilityGroup;
@@ -51,6 +53,8 @@ public class GuiStatGroup extends GuiElement {
                 0, InventoryStorage.maxSize);
         quiverBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quiver"),
                 0, InventoryQuiver.maxSize);
+        boosterBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.booster"),
+                0, 3);
 
         capabilityGroup = new GuiElement(width / 2, 0, 0, 0);
         addChild(capabilityGroup);
@@ -155,6 +159,18 @@ public class GuiStatGroup extends GuiElement {
             } else if (numQuiverSlots > 0) {
                 quiverBar.setValue(numQuiverSlots, numQuiverSlots);
                 showBar(quiverBar);
+            }
+
+            int boostStrength = item.getEffectLevel(itemStack, ItemEffect.booster);
+            if (!previewStack.isEmpty()) {
+                int boostStrengthPreview = item.getEffectLevel(itemStack, ItemEffect.booster);
+                if (boostStrength > 0 || boostStrengthPreview > 0) {
+                    boosterBar.setValue(boostStrength, boostStrengthPreview);
+                    showBar(boosterBar);
+                }
+            } else if (boostStrength > 0) {
+                boosterBar.setValue(boostStrength, boostStrength);
+                showBar(boosterBar);
             }
         }
     }

@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.toolbelt.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -224,5 +225,14 @@ public class InventoryToolbelt implements IInventory {
             }
         }
         return false;
+    }
+
+    public int getFirstIndexForItem(Item item) {
+        for (int i = 0; i < inventoryContents.size(); i++) {
+            if (!inventoryContents.get(i).isEmpty() && inventoryContents.get(i).getItem().equals(item)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

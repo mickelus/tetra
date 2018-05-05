@@ -12,7 +12,7 @@ import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.ITetraItem;
-import se.mickelus.tetra.items.rocketBoots.OverlayRocketBoots;
+import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.util.Arrays;
@@ -37,6 +37,6 @@ public class ClientProxy implements IProxy {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getMinecraft()));
-        MinecraftForge.EVENT_BUS.register(new OverlayRocketBoots(Minecraft.getMinecraft()));
+        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getMinecraft()));
     }
 }

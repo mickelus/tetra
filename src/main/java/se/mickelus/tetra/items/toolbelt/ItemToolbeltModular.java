@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.toolbelt;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -9,15 +10,21 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.items.toolbelt.booster.BoosterModule;
+import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
+import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
+import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketPipeline;
+
 
 public class ItemToolbeltModular extends ItemModular {
     public static ItemToolbeltModular instance;
@@ -47,6 +54,10 @@ public class ItemToolbeltModular extends ItemModular {
     private QuiverModule slot1QuiverModule;
     private QuiverModule slot2QuiverModule;
     private QuiverModule slot3QuiverModule;
+
+    private BoosterModule slot1BoosterModule;
+    private BoosterModule slot2BoosterModule;
+    private BoosterModule slot3BoosterModule;
 
     public ItemToolbeltModular() {
         super();
@@ -88,6 +99,16 @@ public class ItemToolbeltModular extends ItemModular {
         slot1QuiverModule = new QuiverModule(slot1Key, "toolbelt/quiver", slot1Suffix);
         slot2QuiverModule = new QuiverModule(slot2Key, "toolbelt/quiver", slot2Suffix);
         slot3QuiverModule = new QuiverModule(slot3Key, "toolbelt/quiver", slot3Suffix);
+
+        slot1BoosterModule = new BoosterModule(slot1Key, "toolbelt/booster", slot1Suffix);
+        slot2BoosterModule = new BoosterModule(slot2Key, "toolbelt/booster", slot2Suffix);
+        slot3BoosterModule = new BoosterModule(slot3Key, "toolbelt/booster", slot3Suffix);
+    }
+
+    @Override
+    public void clientPreInit() {
+        super.clientPreInit();
+        MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getMinecraft()));
     }
 
     @Override
@@ -95,6 +116,8 @@ public class ItemToolbeltModular extends ItemModular {
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.GUI_TOOLBELT_ID, new GuiHandlerToolbelt());
 
         packetPipeline.registerPacket(EquipToolbeltItemPacket.class);
+        packetPipeline.registerPacket(UpdateBoosterPacket.class);
+        MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
         BeltModule.instance.registerUpgradeSchemas();
 
@@ -115,6 +138,10 @@ public class ItemToolbeltModular extends ItemModular {
         new ModuleSlotSchema("quiver_schema", slot1QuiverModule, this);
         new ModuleSlotSchema("quiver_schema", slot2QuiverModule, this);
         new ModuleSlotSchema("quiver_schema", slot3QuiverModule, this);
+
+        new ModuleSlotSchema("booster_schema", slot1BoosterModule, this);
+        new ModuleSlotSchema("booster_schema", slot2BoosterModule, this);
+        new ModuleSlotSchema("booster_schema", slot3BoosterModule, this);
     }
 
     @Override
