@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items;
 
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 public interface ITetraItem {
     public void clientPreInit();
-    public void init(PacketPipeline packetPipeline);
+    public void init(PacketHandler packetHandler);
 }

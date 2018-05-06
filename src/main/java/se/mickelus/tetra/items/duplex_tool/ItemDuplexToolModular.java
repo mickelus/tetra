@@ -20,17 +20,15 @@ import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 
@@ -93,7 +91,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
 
     @Override
-    public void init(PacketPipeline packetPipeline) {
+    public void init(PacketHandler packetHandler) {
         new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadLeft, this);
         new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadRight, this);
         new BookEnchantSchema(basicHammerHeadLeft);

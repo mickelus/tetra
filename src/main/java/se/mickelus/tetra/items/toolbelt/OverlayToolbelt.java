@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 import se.mickelus.tetra.items.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 public class OverlayToolbelt {
 
@@ -95,7 +95,7 @@ public class OverlayToolbelt {
 
     private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex);
-        PacketPipeline.instance.sendToServer(packet);
+        PacketHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
             UtilToolbelt.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, EnumHand.OFF_HAND);
         } else {

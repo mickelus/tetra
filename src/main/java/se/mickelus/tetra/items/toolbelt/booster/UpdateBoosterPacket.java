@@ -1,9 +1,7 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
@@ -26,22 +24,19 @@ public class UpdateBoosterPacket extends AbstractPacket {
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void toBytes(ByteBuf buffer) {
         buffer.writeBoolean(active);
         buffer.writeBoolean(charged);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void fromBytes(ByteBuf buffer) {
         active = buffer.readBoolean();
         charged = buffer.readBoolean();
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player) {}
-
-    @Override
-    public void handleServerSide(EntityPlayer player) {
+    public void handle(EntityPlayer player) {
         ItemStack itemStack = UtilToolbelt.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {

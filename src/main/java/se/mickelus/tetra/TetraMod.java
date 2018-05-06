@@ -22,7 +22,7 @@ import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.IProxy;
 
 import java.util.Arrays;
@@ -82,20 +82,17 @@ public class TetraMod {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, GuiHandlerRegistry.instance);
 
-        PacketPipeline packetPipeline = new PacketPipeline();
-        packetPipeline.initialize();
+        PacketHandler packetHandler = new PacketHandler();
 
         Arrays.stream(items)
                 .filter(item -> item instanceof ITetraItem)
                 .map(item -> (ITetraItem) item)
-                .forEach(item -> item.init(packetPipeline));
-        Arrays.stream(blocks).forEach(block -> block.init(packetPipeline));
+                .forEach(item -> item.init(packetHandler));
+        Arrays.stream(blocks).forEach(block -> block.init(packetHandler));
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
-
-        PacketPipeline.instance.postInitialize();
     }
 }

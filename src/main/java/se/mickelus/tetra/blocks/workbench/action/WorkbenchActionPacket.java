@@ -1,11 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.BlockPosPacket;
 
 import java.io.IOException;
@@ -22,8 +20,8 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-        super.encodeInto(ctx, buffer);
+    public void toBytes(ByteBuf buffer) {
+        super.toBytes(buffer);
         try {
             writeString(actionKey, buffer);
         } catch (IOException exception) {
@@ -32,8 +30,8 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-        super.decodeInto(ctx, buffer);
+    public void fromBytes(ByteBuf buffer) {
+        super.fromBytes(buffer);
 
         try {
             actionKey = readString(buffer);
@@ -43,12 +41,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player) {
-
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player) {
+    public void handle(EntityPlayer player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.performAction(player, actionKey);

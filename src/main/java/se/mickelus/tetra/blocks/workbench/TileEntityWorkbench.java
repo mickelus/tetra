@@ -18,7 +18,7 @@ import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     public void performAction(EntityPlayer player, String actionKey) {
         if (world.isRemote) {
-            PacketPipeline.instance.sendToServer(new WorkbenchActionPacket(pos, actionKey));
+            PacketHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
             return;
         }
 
@@ -125,7 +125,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private void sync() {
         if (world.isRemote) {
-            PacketPipeline.instance.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema, currentSlot));
+            PacketHandler.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema, currentSlot));
         } else {
             world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
             markDirty();
@@ -153,7 +153,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     public void initiateCrafting(EntityPlayer player) {
         if (world.isRemote) {
-            PacketPipeline.instance.sendToServer(new CraftWorkbenchPacket(pos));
+            PacketHandler.sendToServer(new CraftWorkbenchPacket(pos));
         }
 
         craft(player);

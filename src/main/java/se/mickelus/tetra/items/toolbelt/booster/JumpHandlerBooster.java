@@ -5,7 +5,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 public class JumpHandlerBooster {
 
@@ -25,13 +25,13 @@ public class JumpHandlerBooster {
         if (mc.inGameHasFocus) {
             if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isSneaking()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
-                PacketPipeline.instance.sendToServer(packet);
+                PacketHandler.sendToServer(packet);
             } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.onGround) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true);
-                PacketPipeline.instance.sendToServer(packet);
+                PacketHandler.sendToServer(packet);
             } else if (!jumpKey.isKeyDown() && wasJumpKeyDown) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(false);
-                PacketPipeline.instance.sendToServer(packet);
+                PacketHandler.sendToServer(packet);
             }
 
             wasJumpKeyDown = jumpKey.isKeyDown();

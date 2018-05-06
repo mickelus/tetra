@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 public class TetraBlock extends Block implements ITetraBlock {
 
@@ -23,7 +23,7 @@ public class TetraBlock extends Block implements ITetraBlock {
     }
 
     @Override
-    public void init(PacketPipeline packetPipeline) {
+    public void init(PacketHandler packetHandler) {
 
     }
 }

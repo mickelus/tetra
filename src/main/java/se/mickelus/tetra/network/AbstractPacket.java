@@ -1,47 +1,38 @@
 package se.mickelus.tetra.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.io.IOException;
 
 
 /**
- * AbstractPacket class. Should be the parent of all packets wishing to use the PacketPipeline.
+ * AbstractPacket class. Should be the parent of all packets wishing to use the PacketHandler.
  * @author sirgingalot, mickelus
  */
-public abstract class AbstractPacket {
+public abstract class AbstractPacket implements IMessage {
 
     /**
      * Encode the packet data into the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
      *
-     * @param ctx    channel context
      * @param buffer the buffer to encode into
      */
-    public abstract void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
+    public abstract void toBytes(ByteBuf buffer);
 
     /**
      * Decode the packet data from the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
      *
-     * @param ctx    channel context
      * @param buffer the buffer to decode from
      */
-    public abstract void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
-
-    /**
-     * Handle a packet on the client side. Note this occurs after decoding has completed.
-     *
-     * @param player the player reference
-     */
-    public abstract void handleClientSide(EntityPlayer player);
+    public abstract void fromBytes(ByteBuf buffer);
 
     /**
      * Handle a packet on the server side. Note this occurs after decoding has completed.
      *
      * @param player the player reference
      */
-    public abstract void handleServerSide(EntityPlayer player);
+    public abstract void handle(EntityPlayer player);
 
     /**
      * Utility method that reads a string from a buffer object.

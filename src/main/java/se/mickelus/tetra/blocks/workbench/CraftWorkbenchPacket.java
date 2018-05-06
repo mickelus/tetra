@@ -13,12 +13,7 @@ public class CraftWorkbenchPacket extends BlockPosPacket {
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player) {
-
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player) {
+    public void handle(EntityPlayer player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.craft(player);

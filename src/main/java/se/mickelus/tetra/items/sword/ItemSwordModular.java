@@ -15,7 +15,7 @@ import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.ImprovementSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class ItemSwordModular extends ItemModularHandheld {
     }
 
     @Override
-    public void init(PacketPipeline packetPipeline) {
+    public void init(PacketHandler packetHandler) {
         new BasicSchema("blade_schema", BladeModule.instance, this);
         new ImprovementSchema(BladeModule.instance, BladeModule.serratedImprovement);
         new BookEnchantSchema(BladeModule.instance);

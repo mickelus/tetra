@@ -22,11 +22,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Random;
 
@@ -105,12 +106,12 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public void init(PacketPipeline packetPipeline) {
-        super.init(packetPipeline);
+    public void init(PacketHandler packetHandler) {
+        super.init(packetHandler);
 
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
-        PacketPipeline.instance.registerPacket(UpdateWorkbenchPacket.class);
-        PacketPipeline.instance.registerPacket(CraftWorkbenchPacket.class);
-        PacketPipeline.instance.registerPacket(WorkbenchActionPacket.class);
+        PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, Side.SERVER);
+        PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, Side.SERVER);
+        PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, Side.SERVER);
     }
 }

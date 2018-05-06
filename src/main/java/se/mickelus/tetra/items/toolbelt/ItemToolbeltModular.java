@@ -23,7 +23,7 @@ import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
-import se.mickelus.tetra.network.PacketPipeline;
+import se.mickelus.tetra.network.PacketHandler;
 
 
 public class ItemToolbeltModular extends ItemModular {
@@ -112,11 +112,11 @@ public class ItemToolbeltModular extends ItemModular {
     }
 
     @Override
-    public void init(PacketPipeline packetPipeline) {
+    public void init(PacketHandler packetHandler) {
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.GUI_TOOLBELT_ID, new GuiHandlerToolbelt());
 
-        packetPipeline.registerPacket(EquipToolbeltItemPacket.class);
-        packetPipeline.registerPacket(UpdateBoosterPacket.class);
+        packetHandler.registerPacket(EquipToolbeltItemPacket.class, Side.SERVER);
+        packetHandler.registerPacket(UpdateBoosterPacket.class, Side.SERVER);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
         BeltModule.instance.registerUpgradeSchemas();
