@@ -6,7 +6,7 @@
         "durability": 40,
         "integrity": -1,
         "damage": 1,
-        "attackSpeed": 2.4,
+        "attackSpeed": 2.2,
         "glyph": {
             "tint": "866526",
             "textureX": 32
@@ -22,7 +22,7 @@
         "durability": 40,
         "integrity": -1,
         "damage": 1,
-        "attackSpeed": 2.6,
+        "attackSpeed": 2.4,
         "glyph": {
             "tint": "694f2f",
             "textureX": 32
@@ -38,7 +38,7 @@
         "durability": 50,
         "integrity": -1,
         "damage": 1,
-        "attackSpeed": 2.4,
+        "attackSpeed": 2.2,
         "glyph": {
             "tint": "c8b77d",
             "textureX": 32
@@ -54,7 +54,7 @@
         "durability": 40,
         "integrity": -1,
         "damage": 2,
-        "attackSpeed": 2.4,
+        "attackSpeed": 1.6,
         "glyph": {
             "tint": "996e4c",
             "textureX": 32
@@ -101,7 +101,7 @@
         "durability": 66,
         "integrity": -1,
         "damage": 3,
-        "attackSpeed": 1.4,
+        "attackSpeed": 1.8,
         "glyph": {
             "tint": "343434",
             "textureX": 32

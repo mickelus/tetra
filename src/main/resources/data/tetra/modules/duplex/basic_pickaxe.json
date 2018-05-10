@@ -44,13 +44,13 @@
         "durability": 78,
         "integrity": -1,
         "damage": 1,
-        "attackSpeed": -0.2,
+        "attackSpeed": 0.1,
         "glyph": {
             "tint": "343434",
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": [2, 4.7]
+            "pickaxe": [2, 3.33333]
         },
         "requiredCapabilities": {
             "hammer": 2

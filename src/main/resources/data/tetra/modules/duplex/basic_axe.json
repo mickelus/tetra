@@ -45,16 +45,16 @@
         "durability": 145,
         "integrity": -1,
         "damage": 7,
-        "attackSpeed": -0.3,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "343434",
             "textureX": 144
         },
         "capabilities": {
-            "axe": [1, 5.1]
+            "axe": [1, 5]
         },
         "requiredCapabilities": {
-            "hammer": 2
+            "hammer": 1
         }
     },
     {

@@ -60,7 +60,7 @@
         "durability": 130,
         "integrity": -1,
         "damage": 4,
-        "attackSpeed": 0.2,
+        "attackSpeed": -0.2,
         "glyph": { "tint": "ac5d33" },
         "requiredCapabilities": {
             "hammer": 1
@@ -161,10 +161,11 @@
         "materialCount": 2,
         "durability": 200,
         "integrity": -1,
-        "damage": 5,
+        "damage": 4,
+        "attackSpeed": 0.2,
         "glyph": { "tint": "343434" },
         "requiredCapabilities": {
-            "hammer": 2
+            "hammer": 1
         }
     },
     {
@@ -184,7 +185,7 @@
         "material": "minecraft:diamond",
         "materialCount": 2,
         "durability": 540,
-        "integrity": -1,
+        "integrity": -2,
         "damage": 6,
         "glyph": { "tint": "33ebcb" },
         "requiredCapabilities": {
@@ -198,6 +199,7 @@
         "durability": 720,
         "integrity": -3,
         "damage": 8,
+        "attackSpeed": -0.1,
         "glyph": { "tint": "3c3056" },
         "requiredCapabilities": {
             "hammer": 3

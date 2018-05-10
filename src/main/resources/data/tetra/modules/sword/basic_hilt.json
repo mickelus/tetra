@@ -3,7 +3,7 @@
         "key": "basic_hilt/hilt_stick",
         "material": "minecraft:stick",
         "durability": 10,
-        "integrity": 1,
+        "integrity": 2,
         "glyph": {
             "tint": "866526",
             "textureX": 16
@@ -17,6 +17,7 @@
         "material": "minecraft:planks",
         "durability": 24,
         "integrity": 3,
+        "attackSpeed": -0.1,
         "glyph": {
             "tint": "755821",
             "textureX": 16
@@ -30,6 +31,7 @@
         "material": "minecraft:iron_ingot",
         "durability": 32,
         "integrity": 4,
+        "attackSpeed": -0.1,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 16
@@ -41,8 +43,9 @@
     {
         "key": "basic_hilt/bone",
         "material": "minecraft:bone",
-        "durability": 32,
+        "durability": 20,
         "integrity": 4,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "edebca",
             "textureX": 16
