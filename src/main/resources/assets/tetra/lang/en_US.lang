@@ -76,9 +76,9 @@ enchantment/silk_touch.description=Harvested blocks will not break
 ###############################
 # BASIC BLADE
 ###############################
-blade_schema.name=Simple blade
-blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
-blade_schema.slot1=Blade material
+basic_blade_schema.name=Simple blade
+basic_blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
+basic_blade_schema.slot1=Blade material
 
 sword/basic_blade.name=Sword
 
@@ -125,9 +125,9 @@ basic_blade/serrated.schema.description=Serrates the blade, providing a saw-toot
 ###############################
 # BASIC HILT
 ###############################
-hilt_schema.name=Simple hilt
-hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
-hilt_schema.slot1=Hilt material
+basic_hilt_schema.name=Simple hilt
+basic_hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
+basic_hilt_schema.slot1=Hilt material
 
 basic_hilt/hilt_stick=Wooden hilt
 basic_hilt/oak=Sturdy wooden hilt

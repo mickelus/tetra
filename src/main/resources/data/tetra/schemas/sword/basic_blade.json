@@ -2,6 +2,7 @@
     {
         "key": "basic_blade_schema",
         "slots": ["sword/blade"],
+        "materialSlotCount": 1,
         "predicate": {},
         "displayType": "major",
         "glyph": { "tint": "9d804e" },
@@ -16,9 +17,197 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "basic_blade",
-                "moduleVariant": "basic_blade/oak",
-                "improvements": {}
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 1
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 3
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 4
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 5
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 0
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 1
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 3
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 5
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/obsidian"
             }
         ]
     }

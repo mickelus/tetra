@@ -1,0 +1,75 @@
+[
+    {
+        "key": "basic_hilt_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 1,
+        "predicate": {},
+        "displayType": "major",
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:stick"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/hilt_stick"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:bone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/bone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:blaze_rod"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/blaze_rod"
+            },
+            {
+                "material": {
+                    "item": "minecraft:end_rod"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/end_rod"
+            }
+        ]
+    }
+]
