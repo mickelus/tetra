@@ -164,8 +164,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public void craft(EntityPlayer player) {
         ItemStack itemStack = getTargetItemStack();
 
-        if (currentSchema != null && currentSchema.canApplyUpgrade(player, itemStack, getMaterials())) {
-            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials(), true, player);
+        if (currentSchema != null && currentSchema.canApplyUpgrade(player, itemStack, getMaterials(), currentSlot)) {
+            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials(), true, currentSlot, player);
         }
 
 

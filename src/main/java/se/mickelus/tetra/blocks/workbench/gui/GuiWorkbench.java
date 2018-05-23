@@ -181,7 +181,7 @@ public class GuiWorkbench extends GuiContainer {
             previewStack = buildPreviewStack(currentSchema, itemStack, tileEntity.getMaterials());
 
             schemaDetail.update(viewingPlayer, currentSchema, itemStack, tileEntity.getMaterials());
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials()));
+            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(), currentSlot));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);
@@ -219,7 +219,7 @@ public class GuiWorkbench extends GuiContainer {
 
     private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
         if (schema.isMaterialsValid(targetStack, materials)) {
-            return schema.applyUpgrade(targetStack, materials, false, null);
+            return schema.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
         }
         return ItemStack.EMPTY;
     }

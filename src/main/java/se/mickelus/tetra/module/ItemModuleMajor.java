@@ -47,7 +47,11 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     }
 
     public void addImprovement(ItemStack itemStack, String improvement, int level) {
-        NBTHelper.getTag(itemStack).setInteger(slotKey + ":" + improvement, level);
+        addImprovement(itemStack, slotKey, improvement, level);
+    }
+
+    public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
+        NBTHelper.getTag(itemStack).setInteger(slot + ":" + improvement, level);
     }
 
     @Override

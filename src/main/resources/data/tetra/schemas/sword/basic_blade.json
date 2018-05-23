@@ -1,0 +1,25 @@
+[
+    {
+        "key": "basic_blade_schema",
+        "slots": ["sword/blade"],
+        "predicate": {},
+        "displayType": "major",
+        "glyph": { "tint": "9d804e" },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 0
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "basic_blade",
+                "moduleVariant": "basic_blade/oak",
+                "improvements": {}
+            }
+        ]
+    }
+]

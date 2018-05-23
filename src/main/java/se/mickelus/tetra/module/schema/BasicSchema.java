@@ -86,9 +86,9 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return isMaterialsValid(itemStack, materials)
-                && !isIntegrityViolation(itemStack, materials)
+                && !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkCapabilities(player, itemStack, materials);
     }
 
@@ -98,8 +98,8 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean isIntegrityViolation(ItemStack itemStack, final ItemStack[] materials) {
-        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, null);
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
+        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, module.getSlot(), null);
         return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
     }
 
@@ -120,7 +120,7 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
         ItemModule previousModule = removePreviousModule(upgradedStack);

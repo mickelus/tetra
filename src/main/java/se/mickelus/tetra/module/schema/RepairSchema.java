@@ -82,7 +82,7 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return acceptsMaterial(itemStack, 0, materials[0]);
     }
 
@@ -92,12 +92,12 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean isIntegrityViolation(ItemStack itemStack, final ItemStack[] materials) {
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
         return false;
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) upgradedStack.getItem();
 

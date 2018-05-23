@@ -2,8 +2,11 @@ package se.mickelus.tetra;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.schema.Material;
+import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,11 +25,14 @@ public class DataHandler {
 
     public DataHandler(File source) {
         this.source = source;
+        // todo: use the same naming for all deserializers?
         gson = new GsonBuilder()
                 .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
                 .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
                 .registerTypeAdapter(GlyphData.class, new GlyphData.GlyphTypeAdapter())
                 .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
+                .registerTypeAdapter(ItemPredicate.class, new PredicateDeserializer())
+                .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
                 .create();
 
         instance = this;
@@ -34,6 +40,10 @@ public class DataHandler {
 
     public <T> T getModuleData(String moduleKey, Class<T> dataClass) {
         return getData(String.format("modules/%s", moduleKey), dataClass);
+    }
+
+    public SchemaDefinition[] getSchemaDefinitions(String schemaName) {
+        return getData(String.format("schemas/%s", schemaName), SchemaDefinition[].class);
     }
 
     public SynergyData[] getSynergyData(String path) {

@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -27,6 +28,8 @@ import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.schema.ConfigSchema;
+import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -467,6 +470,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 return new ItemStack(Items.GOLD_INGOT, 1);
             default:
                 return new ItemStack(Blocks.PLANKS, 1);
+        }
+    }
+
+    public static void registerConfigSchema(String path) {
+        for (SchemaDefinition definition : DataHandler.instance.getSchemaDefinitions(path)) {
+            new ConfigSchema(definition);
         }
     }
 }

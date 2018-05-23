@@ -84,19 +84,19 @@ public class ImprovementSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
-        return !isIntegrityViolation(itemStack, materials)
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
+        return !isIntegrityViolation(player, itemStack, materials, slot)
             && checkCapabilities(player, itemStack, materials);
     }
 
     @Override
-    public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials) {
-        ItemStack improvedStack = applyUpgrade(itemStack, materials, false, null);
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
+        ItemStack improvedStack = applyUpgrade(itemStack, materials, false, module.getSlot(), null);
         return ItemModular.getIntegrityGain(improvedStack) + ItemModular.getIntegrityCost(improvedStack) < 0;
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         module.addImprovement(upgradedStack, improvement, 0);
 

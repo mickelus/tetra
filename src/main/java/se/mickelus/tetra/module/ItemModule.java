@@ -56,6 +56,13 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         }
     }
 
+    public void addModule(ItemStack targetStack, String variantKey, EntityPlayer player) {
+        NBTTagCompound tag = NBTHelper.getTag(targetStack);
+
+        tag.setString(slotKey, moduleKey);
+        tag.setString(dataKey, variantKey);
+    }
+
     // todo: fix to work for upgrades with more than one material
     public boolean canApplyUpgrade(ItemStack targetStack, ItemStack[] materials) {
         return slotAcceptsMaterial(targetStack, materials[0]);
@@ -84,6 +91,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                     return moduleData.material.equals(materialName);
                 })
                 .findAny().orElse(getDefaultData());
+    }
+
+    public boolean hasData(String dataKey) {
+        return Arrays.stream(data)
+                .anyMatch(data -> data.key.equals(dataKey));
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {

@@ -10,7 +10,6 @@ import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.sword.BladeModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -96,17 +95,17 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return isMaterialsValid(itemStack, materials);
     }
 
     @Override
-    public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials) {
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return false;
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);

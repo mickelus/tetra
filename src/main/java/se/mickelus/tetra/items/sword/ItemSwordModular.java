@@ -9,12 +9,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.BasicSchema;
-import se.mickelus.tetra.module.schema.BookEnchantSchema;
-import se.mickelus.tetra.module.schema.ImprovementSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.module.schema.*;
 import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Map;
@@ -52,7 +50,8 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        new BasicSchema("blade_schema", BladeModule.instance, this);
+        registerConfigSchema("sword/basic_blade");
+
         new ImprovementSchema(BladeModule.instance, BladeModule.serratedImprovement);
         new BookEnchantSchema(BladeModule.instance);
 
@@ -65,7 +64,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
         new BookEnchantSchema(HeavyBladeModule.instance);
 
-        new BasicSchema("hilt_schema", HiltModule.instance, this);
+        registerConfigSchema("sword/basic_hilt");
         new BookEnchantSchema(HiltModule.instance);
 
         new RepairSchema(this);

@@ -38,9 +38,9 @@ public interface UpgradeSchema {
 
     public boolean canUpgrade(ItemStack itemStack);
     public boolean isApplicableForSlot(String slot);
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials);
-    public boolean isIntegrityViolation(ItemStack itemStack, ItemStack[] materials);
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player);
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
 
     public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials);
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
