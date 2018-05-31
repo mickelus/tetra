@@ -12,7 +12,6 @@ public class ShortBladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String hookedImprovement = "short_blade/hooked";
     public static final String temperedImprovement = "short_blade/tempered";
-    public static final String serratedImprovement = "short_blade/serrated";
 
     public static ShortBladeModule instance;
 

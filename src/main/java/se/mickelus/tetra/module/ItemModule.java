@@ -88,7 +88,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                     if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
                         return false;
                     }
-                    return moduleData.material.equals(materialName);
+                    return materialName.equals(moduleData.material);
                 })
                 .findAny().orElse(getDefaultData());
     }

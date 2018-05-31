@@ -1,6 +1,8 @@
 package se.mickelus.tetra;
 
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.advancements.critereon.ItemPredicates;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,6 +17,7 @@ import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ITetraItem;
+import se.mickelus.tetra.items.ItemModularPredicate;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
@@ -42,6 +45,8 @@ public class TetraMod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemModularPredicate::new);
+
         new DataHandler(event.getSourceFile());
 
         new ItemUpgradeRegistry();

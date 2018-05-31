@@ -13,10 +13,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -50,7 +47,7 @@ public class ConfigSchema implements UpgradeSchema {
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
-                .filter(outcome -> outcome.material.craftPredicate.test(materialStack))
+                .filter(outcome -> outcome.material.craftPredicate != null && outcome.material.craftPredicate.test(materialStack))
                 .findAny();
     }
 
@@ -61,11 +58,17 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public String getName() {
+        if (definition.localizationKey != null) {
+            return I18n.format(definition.localizationKey + nameSuffix);
+        }
         return I18n.format(definition.key + nameSuffix);
     }
 
     @Override
     public String getDescription() {
+        if (definition.localizationKey != null) {
+            return I18n.format(definition.localizationKey + descriptionSuffix);
+        }
         return I18n.format(definition.key + descriptionSuffix);
     }
 
@@ -76,6 +79,9 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public String getSlotName(ItemStack itemStack, int index) {
+        if (definition.localizationKey != null) {
+            return I18n.format(definition.localizationKey + slotSuffix + (index + 1));
+        }
         return I18n.format(definition.key + slotSuffix + (index + 1));
     }
 
@@ -133,27 +139,43 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(ItemStack targetStack, ItemStack[] materials) {
-        return IntStream.range(0, materials.length)
-                .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .flatMap(outcome -> outcome.requiredCapabilities.getValues().stream())
-                .distinct()
-                .collect(Collectors.toSet());
+        if (definition.materialSlotCount > 0) {
+            return IntStream.range(0, materials.length)
+                    .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .flatMap(outcome -> outcome.requiredCapabilities.getValues().stream())
+                    .distinct()
+                    .collect(Collectors.toSet());
+        } else {
+            return Arrays.stream(definition.outcomes)
+                    .findFirst()
+                    .map(outcome -> outcome.requiredCapabilities.getValues())
+                    .orElseGet(HashSet::new);
+        }
     }
 
     @Override
     public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
-        return IntStream.range(0, materials.length)
-                .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(outcome -> outcome.requiredCapabilities)
-                .filter(capabilities -> capabilities.contains(capability))
-                .map(capabilities -> capabilities.getLevel(capability))
-                .sorted()
-                .findFirst()
-                .orElse(0);
+        if (definition.materialSlotCount > 0) {
+            return IntStream.range(0, materials.length)
+                    .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(outcome -> outcome.requiredCapabilities)
+                    .filter(capabilities -> capabilities.contains(capability))
+                    .map(capabilities -> capabilities.getLevel(capability))
+                    .sorted()
+                    .findFirst()
+                    .orElse(0);
+        } else {
+            return Arrays.stream(definition.outcomes)
+                    .findFirst()
+                    .map(outcome -> outcome.requiredCapabilities)
+                    .filter(capabilities -> capabilities.contains(capability))
+                    .map(capabilities -> capabilities.getLevel(capability))
+                    .orElse(0);
+        }
 
     }
 
@@ -161,30 +183,41 @@ public class ConfigSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        for (int i = 0; i < materials.length; i++) {
-            final int index = i;
-            Optional<OutcomeDefinition> outcomeOptional = getOutcomeFromMaterial(materials[index], index);
-            outcomeOptional.ifPresent(outcome -> {
-                if (outcome.moduleKey != null) {
-                    ItemModule module = ItemUpgradeRegistry.instance.getModule(outcome.moduleKey);
-                    ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
-                    module.addModule(upgradedStack, outcome.moduleVariant, player);
-                    if (previousModule != null && consumeMaterials) {
-                        previousModule.postRemove(upgradedStack, player);
-                    }
-                } else {
-                    outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
-                }
+        if (definition.materialSlotCount > 0) {
+            for (int i = 0; i < materials.length; i++) {
+                final int index = i;
+                Optional<OutcomeDefinition> outcomeOptional = getOutcomeFromMaterial(materials[index], index);
+                outcomeOptional.ifPresent(outcome -> {
+                    applyOutcome(outcome, upgradedStack, consumeMaterials, slot, player);
 
-                if (consumeMaterials) {
-                    if (player instanceof EntityPlayerMP) {
-                        CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+                    if (consumeMaterials) {
+                        materials[index].shrink(outcome.material.count);
                     }
-                    materials[index].shrink(outcome.material.count);
-                }
-            });
+                });
+            }
+        } else {
+            for (OutcomeDefinition outcome : definition.outcomes) {
+                applyOutcome(outcome, upgradedStack, consumeMaterials, slot, player);
+            }
+        }
+
+        if (consumeMaterials && player instanceof EntityPlayerMP) {
+            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
         }
         return upgradedStack;
+    }
+
+    private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
+        if (outcome.moduleKey != null) {
+            ItemModule module = ItemUpgradeRegistry.instance.getModule(outcome.moduleKey);
+            ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
+            module.addModule(upgradedStack, outcome.moduleVariant, player);
+            if (previousModule != null && consumeMaterials) {
+                previousModule.postRemove(upgradedStack, player);
+            }
+        } else {
+            outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
+        }
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack, String slot) {
