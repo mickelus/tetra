@@ -11,8 +11,6 @@ public class BladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/basic_blade";
 
-    public static final String serratedImprovement = "basic_blade/serrated";
-
     public static BladeModule instance;
 
     public BladeModule(String slotKey) {

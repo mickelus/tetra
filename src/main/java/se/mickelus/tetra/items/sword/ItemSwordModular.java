@@ -51,17 +51,14 @@ public class ItemSwordModular extends ItemModularHandheld {
     @Override
     public void init(PacketHandler packetHandler) {
         registerConfigSchema("sword/basic_blade");
-
-        new ImprovementSchema(BladeModule.instance, BladeModule.serratedImprovement);
+        registerConfigSchema("sword/basic_blade_improvements");
         new BookEnchantSchema(BladeModule.instance);
 
-        new BasicSchema("short_blade_schema", ShortBladeModule.instance, this);
-        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.hookedImprovement);
-        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.temperedImprovement);
-        new ImprovementSchema(ShortBladeModule.instance, ShortBladeModule.serratedImprovement);
+        registerConfigSchema("sword/short_blade");
+        registerConfigSchema("sword/short_blade_improvements");
         new BookEnchantSchema(ShortBladeModule.instance);
 
-        new BasicSchema("heavy_blade_schema", HeavyBladeModule.instance, this);
+        registerConfigSchema("sword/heavy_blade");
         new BookEnchantSchema(HeavyBladeModule.instance);
 
         registerConfigSchema("sword/basic_hilt");

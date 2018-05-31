@@ -1,0 +1,25 @@
+[
+    {
+        "key": "serrated_basic_blade_schema",
+        "localizationKey": "serrated_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["sword/basic_blade"]
+            ]
+        },
+        "displayType": "improvement",
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "basic_blade/serrated": 0
+                }
+            }
+        ]
+    }
+]

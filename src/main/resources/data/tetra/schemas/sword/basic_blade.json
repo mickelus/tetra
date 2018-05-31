@@ -3,7 +3,6 @@
         "key": "basic_blade_schema",
         "slots": ["sword/blade"],
         "materialSlotCount": 1,
-        "predicate": {},
         "displayType": "major",
         "glyph": { "tint": "9d804e" },
         "outcomes": [

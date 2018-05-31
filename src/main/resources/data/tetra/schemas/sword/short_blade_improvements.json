@@ -1,0 +1,74 @@
+[
+    {
+        "key": "serrated_short_blade_schema",
+        "localizationKey": "serrated_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "glyph": { "textureX": 32 },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["sword/short_blade"]
+            ]
+        },
+        "displayType": "improvement",
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "short_blade/serrated": 0
+                }
+            }
+        ]
+    },
+    {
+        "key": "hooked_short_blade_schema",
+        "localizationKey": "hooked_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "glyph": { "textureX": 32 },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["sword/short_blade"]
+            ]
+        },
+        "displayType": "improvement",
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "short_blade/hooked": 0
+                }
+            }
+        ]
+    },
+    {
+        "key": "tempered_short_blade_schema",
+        "localizationKey": "tempered_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "glyph": { "textureX": 32 },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["sword/short_blade"]
+            ]
+        },
+        "displayType": "improvement",
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "short_blade/tempered": 0
+                }
+            }
+        ]
+    }
+]

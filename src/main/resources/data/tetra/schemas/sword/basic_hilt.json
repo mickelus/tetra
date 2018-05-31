@@ -1,9 +1,8 @@
 [
     {
         "key": "basic_hilt_schema",
-        "slots": ["sword/blade"],
+        "slots": ["sword/hilt"],
         "materialSlotCount": 1,
-        "predicate": {},
         "displayType": "major",
         "glyph": {
             "tint": "9d804e",

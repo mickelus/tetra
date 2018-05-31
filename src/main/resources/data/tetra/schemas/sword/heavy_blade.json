@@ -1,0 +1,175 @@
+[
+    {
+        "key": "heavy_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 1,
+        "displayType": "major",
+        "glyph": {"textureX": 48 },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 0,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/oak_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 1,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/spruce_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 2,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/birch_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 3,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/jungle_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 4,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/acacia_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:log",
+                    "data": 5,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/dark_oak_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 16
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 16
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/obsidian"
+            }
+        ]
+    }
+]

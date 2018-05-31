@@ -118,9 +118,13 @@ basic_blade/obsidian.prefix=Obsidian
 basic_blade/serrated.name=Serrated blade
 basic_blade/serrated.prefix=Serrated
 basic_blade/serrated.description=Attacks may inflict bleed
-basic_blade/serrated.schema.name=Serrate
-basic_blade/serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
 
+serrated_blade_schema.name=Serrate
+serrated_blade_schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
+tempered_blade_schema.name=Temper
+tempered_blade_schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes half of the damage dealt to ignore armor.
+hooked_blade_schema.name=Notch hook
+hooked_blade_schema.description=Notch the back side of the blade, providing additional damage when striking unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
 
 ###############################
 # BASIC HILT
@@ -192,20 +196,14 @@ short_blade/prismarine.name=Shanker
 short_blade/hooked.name=Hooked blade
 short_blade/hooked.prefix=Hooked
 short_blade/hooked.description=Striking enemies from behind cause critical damage
-short_blade/hooked.schema.name=Notch hook
-short_blade/hooked.schema.description=Notch the back side of the blade, providing additional damage when striking unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
 
 short_blade/tempered.name=Tempered point
 short_blade/tempered.prefix=Tempered
 short_blade/tempered.description=Attacks ignore armor
-short_blade/tempered.schema.name=Temper
-short_blade/tempered.schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes half of the damage dealt to ignore armor.
 
 short_blade/serrated.name=Serrated blade
 short_blade/serrated.prefix=Serrated
 short_blade/serrated.description=Attacks may inflict bleed
-short_blade/serrated.schema.name=Serrate
-short_blade/serrated.schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
 
 ###############################
 # HEAVY BLADE

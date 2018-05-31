@@ -1,0 +1,127 @@
+[
+    {
+        "key": "short_blade_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 1,
+        "displayType": "major",
+        "glyph": { "textureX": 32 },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 0
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 1
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 3
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 4
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "materialData": 5
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:prismarine_shard"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/prismarine"
+            }
+        ]
+    }
+]
