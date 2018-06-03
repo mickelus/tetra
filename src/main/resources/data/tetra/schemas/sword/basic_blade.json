@@ -4,7 +4,6 @@
         "slots": ["sword/blade"],
         "materialSlotCount": 1,
         "displayType": "major",
-        "glyph": { "tint": "9d804e" },
         "outcomes": [
             {
                 "material": {

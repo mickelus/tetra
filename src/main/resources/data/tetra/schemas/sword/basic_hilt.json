@@ -4,10 +4,7 @@
         "slots": ["sword/hilt"],
         "materialSlotCount": 1,
         "displayType": "major",
-        "glyph": {
-            "tint": "9d804e",
-            "textureX": 16
-        },
+        "glyph": { "textureX": 16 },
         "outcomes": [
             {
                 "material": {
