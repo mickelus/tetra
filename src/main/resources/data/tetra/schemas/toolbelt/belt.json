@@ -1,0 +1,88 @@
+[
+    {
+        "key": "toolbelt_belt0",
+        "slots": ["toolbelt/belt"],
+        "materialSlotCount": 1,
+        "requirement": {
+            "type": "tetra:modular_item",
+            "variants": {
+                "toolbelt/belt": "belt/rope"
+            }
+        },
+        "glyph": { "textureY": 16 },
+        "displayType": "minor",
+        "outcomes": [{
+            "material": {
+                "item": "minecraft:wool"
+            },
+            "moduleKey": "toolbelt/belt",
+            "moduleVariant": "belt/sash"
+        }]
+    },
+    {
+        "key": "toolbelt_belt1",
+        "slots": ["toolbelt/belt"],
+        "materialSlotCount": 1,
+        "requirement": {
+            "type": "tetra:modular_item",
+            "variants": {
+                "toolbelt/belt": "belt/sash"
+            }
+        },
+        "glyph": { "textureY": 16 },
+        "displayType": "minor",
+        "outcomes": [{
+            "material": {
+                "item": "minecraft:leather"
+            },
+            "moduleKey": "toolbelt/belt",
+            "moduleVariant": "belt/leather"
+        }]
+    },
+    {
+        "key": "toolbelt_belt2",
+        "slots": ["toolbelt/belt"],
+        "materialSlotCount": 1,
+        "requirement": {
+            "type": "tetra:modular_item",
+            "variants": {
+                "toolbelt/belt": "belt/leather"
+            }
+        },
+        "glyph": { "textureY": 16 },
+        "displayType": "minor",
+        "outcomes": [{
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "toolbelt/belt",
+            "moduleVariant": "belt/buckled"
+        }]
+
+    },
+    {
+        "key": "toolbelt_belt3",
+        "slots": ["toolbelt/belt"],
+        "materialSlotCount": 1,
+        "requirement": {
+            "type": "tetra:modular_item",
+            "variants": {
+                "toolbelt/belt": "belt/buckled"
+            }
+        },
+        "displayType": "minor",
+        "glyph": { "textureY": 16 },
+        "outcomes": [{
+            "material": {
+                "item": "minecraft:shulker_shell",
+                "count": 3
+            },
+            "moduleKey": "toolbelt/belt",
+            "moduleVariant": "belt/inlaid"
+        }]
+
+    }
+]

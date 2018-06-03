@@ -1,0 +1,21 @@
+[
+    {
+        "key": "booster_schema",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 240 },
+        "displayType": "major",
+        "outcomes": [{
+            "material": {
+                "item": "minecraft:iron_ingot",
+                "count": 8
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "toolbelt/booster",
+            "moduleVariant": "booster/iron"
+        }]
+    }
+]

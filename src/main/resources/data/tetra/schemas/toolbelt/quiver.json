@@ -1,0 +1,36 @@
+[
+    {
+        "key": "quiver_schema",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 224 },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:leather",
+                    "count": 3
+                },
+                "moduleKey": "toolbelt/quiver",
+                "moduleVariant": "quiver/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:wool",
+                    "count": 2
+                },
+                "moduleKey": "toolbelt/quiver",
+                "moduleVariant": "quiver/wool"
+            },
+            {
+                "material": {
+                    "item": "minecraft:rabbit_hide",
+                    "count": 7
+                },
+                "moduleKey": "toolbelt/quiver",
+                "moduleVariant": "quiver/hide"
+            }
+        ]
+    }
+]

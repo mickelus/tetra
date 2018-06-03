@@ -21,6 +21,7 @@ import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
@@ -39,25 +40,7 @@ public class ItemToolbeltModular extends ItemModular {
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
-    private QuickAccessModule[] slot1StrapModules;
-    private QuickAccessModule[] slot2StrapModules;
-    private QuickAccessModule[] slot3StrapModules;
-
-    private PotionStorageModule slot1PotionStorageModule;
-    private PotionStorageModule slot2PotionStorageModule;
-    private PotionStorageModule slot3PotionStorageModule;
-
-    private StorageModule slot1StorageModule;
-    private StorageModule slot2StorageModule;
-    private StorageModule slot3StorageModule;
-
-    private QuiverModule slot1QuiverModule;
-    private QuiverModule slot2QuiverModule;
-    private QuiverModule slot3QuiverModule;
-
-    private BoosterModule slot1BoosterModule;
-    private BoosterModule slot2BoosterModule;
-    private BoosterModule slot3BoosterModule;
+    ItemModule defaultStrap;
 
     public ItemToolbeltModular() {
         super();
@@ -79,30 +62,25 @@ public class ItemToolbeltModular extends ItemModular {
 
         new BeltModule(beltKey);
 
-        slot1StrapModules = new QuickAccessModule[4];
-        slot2StrapModules = new QuickAccessModule[4];
-        slot3StrapModules = new QuickAccessModule[4];
-        for (int i = 0; i < slot1StrapModules.length; i++) {
-            slot1StrapModules[i] = new QuickAccessModule(slot1Key, "toolbelt/strap" + (i+1), slot1Suffix);
-            slot2StrapModules[i] = new QuickAccessModule(slot2Key, "toolbelt/strap" + (i+1), slot2Suffix);
-            slot3StrapModules[i] = new QuickAccessModule(slot3Key, "toolbelt/strap" + (i+1), slot3Suffix);
-        }
+        defaultStrap = new QuickAccessModule(slot1Key, "toolbelt/strap", slot1Suffix);
+        new QuickAccessModule(slot2Key, "toolbelt/strap", slot2Suffix);
+        new QuickAccessModule(slot3Key, "toolbelt/strap", slot3Suffix);
 
-        slot1PotionStorageModule = new PotionStorageModule(slot1Key, "toolbelt/potionStorage", slot1Suffix);
-        slot2PotionStorageModule = new PotionStorageModule(slot2Key, "toolbelt/potionStorage", slot2Suffix);
-        slot3PotionStorageModule = new PotionStorageModule(slot3Key, "toolbelt/potionStorage", slot3Suffix);
+        new PotionStorageModule(slot1Key, "toolbelt/potionStorage", slot1Suffix);
+        new PotionStorageModule(slot2Key, "toolbelt/potionStorage", slot2Suffix);
+        new PotionStorageModule(slot3Key, "toolbelt/potionStorage", slot3Suffix);
 
-        slot1StorageModule = new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
-        slot2StorageModule = new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
-        slot3StorageModule = new StorageModule(slot3Key, "toolbelt/storage", slot3Suffix);
+        new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
+        new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
+        new StorageModule(slot3Key, "toolbelt/storage", slot3Suffix);
 
-        slot1QuiverModule = new QuiverModule(slot1Key, "toolbelt/quiver", slot1Suffix);
-        slot2QuiverModule = new QuiverModule(slot2Key, "toolbelt/quiver", slot2Suffix);
-        slot3QuiverModule = new QuiverModule(slot3Key, "toolbelt/quiver", slot3Suffix);
+        new QuiverModule(slot1Key, "toolbelt/quiver", slot1Suffix);
+        new QuiverModule(slot2Key, "toolbelt/quiver", slot2Suffix);
+        new QuiverModule(slot3Key, "toolbelt/quiver", slot3Suffix);
 
-        slot1BoosterModule = new BoosterModule(slot1Key, "toolbelt/booster", slot1Suffix);
-        slot2BoosterModule = new BoosterModule(slot2Key, "toolbelt/booster", slot2Suffix);
-        slot3BoosterModule = new BoosterModule(slot3Key, "toolbelt/booster", slot3Suffix);
+        new BoosterModule(slot1Key, "toolbelt/booster", slot1Suffix);
+        new BoosterModule(slot2Key, "toolbelt/booster", slot2Suffix);
+        new BoosterModule(slot3Key, "toolbelt/booster", slot3Suffix);
     }
 
     @Override
@@ -119,29 +97,13 @@ public class ItemToolbeltModular extends ItemModular {
         packetHandler.registerPacket(UpdateBoosterPacket.class, Side.SERVER);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
-        BeltModule.instance.registerUpgradeSchemas();
 
-        for (int i = 0; i < slot1StrapModules.length; i++) {
-            new ModuleSlotSchema("strap_schema" + (i+1), slot1StrapModules[i], this);
-            new ModuleSlotSchema("strap_schema" + (i+1), slot2StrapModules[i], this);
-            new ModuleSlotSchema("strap_schema" + (i+1), slot3StrapModules[i], this);
-        }
-
-        new ModuleSlotSchema("potion_storage_schema", slot1PotionStorageModule, this);
-        new ModuleSlotSchema("potion_storage_schema", slot2PotionStorageModule, this);
-        new ModuleSlotSchema("potion_storage_schema", slot3PotionStorageModule, this);
-
-        new ModuleSlotSchema("storage_schema", slot1StorageModule, this);
-        new ModuleSlotSchema("storage_schema", slot2StorageModule, this);
-        new ModuleSlotSchema("storage_schema", slot3StorageModule, this);
-
-        new ModuleSlotSchema("quiver_schema", slot1QuiverModule, this);
-        new ModuleSlotSchema("quiver_schema", slot2QuiverModule, this);
-        new ModuleSlotSchema("quiver_schema", slot3QuiverModule, this);
-
-        new ModuleSlotSchema("booster_schema", slot1BoosterModule, this);
-        new ModuleSlotSchema("booster_schema", slot2BoosterModule, this);
-        new ModuleSlotSchema("booster_schema", slot3BoosterModule, this);
+        registerConfigSchema("toolbelt/belt");
+        registerConfigSchema("toolbelt/strap");
+        registerConfigSchema("toolbelt/booster");
+        registerConfigSchema("toolbelt/potion_storage");
+        registerConfigSchema("toolbelt/storage");
+        registerConfigSchema("toolbelt/quiver");
     }
 
     @Override
@@ -155,7 +117,7 @@ public class ItemToolbeltModular extends ItemModular {
     private ItemStack createDefaultStack() {
         ItemStack itemStack = new ItemStack(this);
         BeltModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEAD)}, false, null);
-        slot1StrapModules[0].addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEATHER)}, false, null);
+        defaultStrap.addModule(itemStack, "strap1/leather", null);
         return itemStack;
     }
 

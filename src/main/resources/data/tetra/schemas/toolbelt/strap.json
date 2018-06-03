@@ -1,0 +1,124 @@
+[
+    {
+        "key": "strap_schema1",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": {
+            "textureX": 80
+        },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:leather"
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap1/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap1/iron"
+            }
+        ]
+    },
+    {
+        "key": "strap_schema2",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": {
+            "textureX": 96
+        },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:leather",
+                    "count": 2
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap2/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap2/iron"
+            }
+        ]
+    },
+    {
+        "key": "strap_schema3",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": {
+            "textureX": 112
+        },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:leather",
+                    "count": 3
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap3/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap3/iron"
+            }
+        ]
+    },
+    {
+        "key": "strap_schema4",
+        "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+        "keySuffixes": ["_slot1", "_slot2", "_slot3"],
+        "materialSlotCount": 1,
+        "glyph": {
+            "textureX": 128
+        },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:leather",
+                    "count": 4
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap4/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 4
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "toolbelt/strap",
+                "moduleVariant": "strap4/iron"
+            }
+        ]
+    }
+]

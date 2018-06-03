@@ -19,11 +19,4 @@ public class BeltModule extends ItemModule {
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
     }
-
-    public void registerUpgradeSchemas() {
-        for (int i = 0; i < data.length - 1; i++) {
-            new SingleVariantSchema("toolbelt_belt" + i, this, ItemToolbeltModular.instance,
-                data[i].key, data[i+1].key);
-        }
-    }
 }
