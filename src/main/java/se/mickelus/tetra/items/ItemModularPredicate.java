@@ -1,19 +1,25 @@
 package se.mickelus.tetra.items;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
+import org.apache.commons.lang3.EnumUtils;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemModule;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ItemModularPredicate extends ItemPredicate {
 
-    private String[][] modules;
+    private String[][] modules = new String[0][0];
+    private Map<String, String> variants = new HashMap<>();
 
     public ItemModularPredicate(String[][] modules) {
         this.modules = modules;
@@ -32,10 +38,12 @@ public class ItemModularPredicate extends ItemPredicate {
                 }
             }
         }
+        if (jsonObject.has("variants")) {
+            jsonObject.getAsJsonObject("variants").entrySet().forEach(entry -> variants.put(entry.getKey(), entry.getValue().getAsString()));
+        }
     }
 
-    @Override
-    public boolean test(ItemStack itemStack) {
+    public boolean test(ItemStack itemStack, String slot) {
         if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
             Collection<ItemModule> itemModules = item.getAllModules(itemStack);
@@ -55,8 +63,25 @@ public class ItemModularPredicate extends ItemPredicate {
                     }
                 }
             }
+
+            for (Map.Entry<String, String> variant : variants.entrySet()) {
+                String currentSlot = variant.getKey();
+                if (slot != null && "§slot".equals(currentSlot)) {
+                    currentSlot = slot;
+                }
+
+                ItemModule module = item.getModuleFromSlot(itemStack, currentSlot);
+                if (module != null && variant.getValue().equals(module.getData(itemStack).key)) {
+                    return true;
+                }
+            }
         }
 
         return false;
+    }
+
+    @Override
+    public boolean test(ItemStack itemStack) {
+       return test(itemStack, null);
     }
 }
