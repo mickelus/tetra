@@ -475,7 +475,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public static void registerConfigSchema(String path) {
         for (SchemaDefinition definition : DataHandler.instance.getSchemaDefinitions(path)) {
-            new ConfigSchema(definition);
+            if (definition.slots.length == definition.keySuffixes.length) {
+                for (int i = 0; i < definition.slots.length; i++) {
+                    new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i]);
+                }
+            } else {
+                new ConfigSchema(definition);
+            }
         }
     }
 }

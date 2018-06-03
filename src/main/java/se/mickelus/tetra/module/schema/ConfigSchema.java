@@ -25,11 +25,20 @@ public class ConfigSchema implements UpgradeSchema {
 
     private SchemaDefinition definition;
 
+    private String keySuffix;
+    private String moduleSlot;
+
     public ConfigSchema(SchemaDefinition definition) {
+        this(definition, "", null);
+    }
+
+    public ConfigSchema(SchemaDefinition definition, String keySuffix, String moduleSlot) {
         this.definition = definition;
+        this.keySuffix = keySuffix;
+        this.moduleSlot = moduleSlot;
 
         String[] faultyModuleOutcomes = Arrays.stream(definition.outcomes)
-                .map(outcome -> outcome.moduleKey)
+                .map(this::getModuleKey)
                 .filter(Objects::nonNull)
                 .filter(moduleKey -> ItemUpgradeRegistry.instance.getModule(moduleKey) == null)
                 .toArray(String[]::new);
@@ -44,6 +53,13 @@ public class ConfigSchema implements UpgradeSchema {
         }
     }
 
+    private String getModuleKey(OutcomeDefinition outcome) {
+        if (outcome.moduleKey != null) {
+            return outcome.moduleKey + keySuffix;
+        }
+        return null;
+    }
+
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
@@ -53,7 +69,7 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public String getKey() {
-        return definition.key;
+        return definition.key + keySuffix;
     }
 
     @Override
@@ -114,6 +130,10 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public boolean isApplicableForSlot(String slot) {
+        if (moduleSlot != null) {
+            return moduleSlot.equals(slot);
+        }
+
         return Arrays.stream(definition.slots)
                 .anyMatch(s -> s.equals(slot));
     }
@@ -209,7 +229,7 @@ public class ConfigSchema implements UpgradeSchema {
 
     private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
         if (outcome.moduleKey != null) {
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(outcome.moduleKey);
+            ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
             ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
             module.addModule(upgradedStack, outcome.moduleVariant, player);
             if (previousModule != null && consumeMaterials) {
