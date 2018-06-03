@@ -17,6 +17,7 @@ public class GuiModuleMinor extends GuiClickable {
     private GuiString moduleString;
 
     private boolean isEmpty;
+    private boolean isPreview;
 
     public GuiModuleMinor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
                           ItemModule module, ItemModule previewModule, Consumer<String> slotClickHandler) {
@@ -40,6 +41,7 @@ public class GuiModuleMinor extends GuiClickable {
             if (data.equals(previewData)) {
                 setupChildren(module.getName(itemStack), data.glyph, GuiColors.normal);
             } else {
+                isPreview = true;
                 setupChildren(previewModule.getName(previewStack), previewData.glyph, GuiColors.change);
             }
         }
@@ -93,8 +95,13 @@ public class GuiModuleMinor extends GuiClickable {
     }
 
     private void setColors(int color) {
-        backdrop.setColor(color);
-        moduleString.setColor(color);
+        if (isPreview) {
+            backdrop.setColor(GuiColors.change);
+            moduleString.setColor(GuiColors.change);
+        } else {
+            backdrop.setColor(color);
+            moduleString.setColor(color);
+        }
     }
 
     @Override
