@@ -42,7 +42,7 @@ public class GuiModuleMajor extends GuiClickable {
 
         slotString = new GuiStringSmall(19, 0, slotName);
         if (GuiAttachment.topRight.equals(attachmentPoint)) {
-            slotString.setX(-19);
+            slotString.setX(-16);
         }
         slotString.setAttachmentAnchor(attachmentPoint);
         slotString.setAttachmentPoint(attachmentPoint);
@@ -103,7 +103,7 @@ public class GuiModuleMajor extends GuiClickable {
         }
         moduleString = new GuiString(19, 5, moduleName, color);
         if (GuiAttachment.topRight.equals(attachmentPoint)) {
-            moduleString.setX(-19);
+            moduleString.setX(-16);
         }
         moduleString.setAttachmentAnchor(attachmentPoint);
         moduleString.setAttachmentPoint(attachmentPoint);

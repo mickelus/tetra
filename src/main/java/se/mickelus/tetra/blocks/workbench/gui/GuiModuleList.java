@@ -126,8 +126,8 @@ public class GuiModuleList extends GuiElement {
                 new Offsets(-12, -1, -21, 12, -12, 25),
         };
 
-        static Offsets toolbeltMajorOffsets = new Offsets();
-        static Offsets toolbeltMinorOffsets = new Offsets();
+        static Offsets toolbeltMajorOffsets = new Offsets(-14, 18, 4, 0, 4, 18);
+        static Offsets toolbeltMinorOffsets = new Offsets(-13, 0);
 
         private int[] offsetX;
         private int[] offsetY;
@@ -162,7 +162,7 @@ public class GuiModuleList extends GuiElement {
 
         public static Offsets getMajorOffsets(ItemModular item) {
             if (item instanceof ItemToolbeltModular) {
-                return new Offsets(-14, 18, 4, 0, 4, 18);
+                return toolbeltMajorOffsets;
             } else {
                 return defaultMajorOffsets[item.getNumMajorModules() - 1];
             }
@@ -170,7 +170,7 @@ public class GuiModuleList extends GuiElement {
 
         public static Offsets getMinorOffsets(ItemModular item) {
             if (item instanceof ItemToolbeltModular) {
-                return new Offsets(-13, 0);
+                return toolbeltMinorOffsets;
             } else {
                 return defaultMinorOffsets[item.getNumMinorModules() - 1];
             }
