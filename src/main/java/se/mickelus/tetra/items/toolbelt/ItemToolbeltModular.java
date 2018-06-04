@@ -66,9 +66,9 @@ public class ItemToolbeltModular extends ItemModular {
         new QuickAccessModule(slot2Key, "toolbelt/strap", slot2Suffix);
         new QuickAccessModule(slot3Key, "toolbelt/strap", slot3Suffix);
 
-        new PotionStorageModule(slot1Key, "toolbelt/potionStorage", slot1Suffix);
-        new PotionStorageModule(slot2Key, "toolbelt/potionStorage", slot2Suffix);
-        new PotionStorageModule(slot3Key, "toolbelt/potionStorage", slot3Suffix);
+        new PotionStorageModule(slot1Key, "toolbelt/potion_storage", slot1Suffix);
+        new PotionStorageModule(slot2Key, "toolbelt/potion_storage", slot2Suffix);
+        new PotionStorageModule(slot3Key, "toolbelt/potion_storage", slot3Suffix);
 
         new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
         new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
