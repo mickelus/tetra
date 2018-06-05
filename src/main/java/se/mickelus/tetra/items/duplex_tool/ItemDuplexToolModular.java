@@ -92,25 +92,22 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadLeft, this);
-        new ModuleSlotSchema("basic_hammer_schema", basicHammerHeadRight, this);
+        registerConfigSchema("duplex/basic_hammer");
         new BookEnchantSchema(basicHammerHeadLeft);
         new BookEnchantSchema(basicHammerHeadRight);
 
-        new ModuleSlotSchema("basic_axe_schema", basicAxeLeft, this);
-        new ModuleSlotSchema("basic_axe_schema", basicAxeRight, this);
+        registerConfigSchema("duplex/basic_axe");
         new BookEnchantSchema(basicAxeLeft);
         new BookEnchantSchema(basicAxeRight);
 
-        new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeLeft, this);
-        new ModuleSlotSchema("basic_pickaxe_schema", basicPickaxeRight, this);
+        registerConfigSchema("duplex/basic_pickaxe");
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
-        new ModuleSlotSchema("butt_schema", butt, this);
+        registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
 
-        new BasicSchema("basic_handle_schema", BasicHandleModule.instance, this);
+        registerConfigSchema("duplex/basic_handle");
 
         new RepairSchema(this);
 

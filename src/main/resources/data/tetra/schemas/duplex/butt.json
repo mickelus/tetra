@@ -1,0 +1,65 @@
+[
+    {
+        "key": "butt_schema",
+        "slots": ["duplex/head_right"],
+        "keySuffixes": ["_right"],
+        "materialSlotCount": 1,
+        "displayType": "major",
+        "glyph": {
+            "textureX": 160
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:plank",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/gold"
+            }
+        ]
+    }
+]

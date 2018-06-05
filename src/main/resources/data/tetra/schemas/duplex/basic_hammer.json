@@ -1,0 +1,46 @@
+[
+    {
+        "key": "basic_hammer_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 64 },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:log"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/obsidian"
+            }
+        ]
+    }
+]

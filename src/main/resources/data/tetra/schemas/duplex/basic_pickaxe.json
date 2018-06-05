@@ -1,0 +1,79 @@
+[
+    {
+        "key": "basic_pickaxe_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 176 },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/gold"
+            }
+        ]
+    }
+]

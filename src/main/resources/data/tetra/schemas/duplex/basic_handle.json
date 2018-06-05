@@ -1,0 +1,38 @@
+[
+    {
+        "key": "basic_handle_schema",
+        "slots": ["duplex/handle"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 21,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:stick"
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/stick"
+            },
+            {
+                "material": {
+                    "item": "minecraft:bone"
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/bone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/iron"
+            }
+        ]
+    }
+]
