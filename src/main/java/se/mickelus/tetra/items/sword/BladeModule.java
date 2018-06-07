@@ -7,6 +7,8 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.HandheldModuleData;
 import se.mickelus.tetra.module.data.ImprovementData;
 
+import java.util.stream.Stream;
+
 public class BladeModule extends ItemModuleMajor<HandheldModuleData> {
 
     public static final String key = "sword/basic_blade";
@@ -18,10 +20,13 @@ public class BladeModule extends ItemModuleMajor<HandheldModuleData> {
 
         data = DataHandler.instance.getModuleData(key, HandheldModuleData[].class);
 
-        improvements = ArrayUtils.addAll(
-                DataHandler.instance.getModuleData("sword/improvements/blade_enchants", ImprovementData[].class),
-                DataHandler.instance.getModuleData("sword/improvements/basic_blade", ImprovementData[].class)
-        );
+        improvements = Stream.of(
+                DataHandler.instance.getImprovementData("shared_improvements"),
+                DataHandler.instance.getImprovementData("sword/improvements/blade_enchants"),
+                DataHandler.instance.getImprovementData("sword/improvements/basic_blade")
+        )
+                .flatMap(Stream::of)
+                .toArray(ImprovementData[]::new);
 
         instance = this;
         ItemUpgradeRegistry.instance.registerModule(key, this);

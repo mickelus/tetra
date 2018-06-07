@@ -89,8 +89,8 @@
         "key": "basic_blade/flint",
         "durability": 200,
         "integrity": -1,
-        "damage": 4,
-        "attackSpeed": 0.2,
+        "damage": 5,
+        "attackSpeed": 0.1,
         "glyph": { "tint": "343434" }
     },
     {

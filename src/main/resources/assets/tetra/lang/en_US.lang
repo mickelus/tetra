@@ -15,11 +15,6 @@ item.modular.durability=Durability
 item.modular.speed=Swing speed
 
 ###############################
-# ITEM NAMES
-###############################
-item.rocket_boots.name=Rocket boots
-
-###############################
 # GEODE
 ###############################
 tetra.general.geode_generate=Generate geodes
@@ -30,6 +25,13 @@ item.geode.name=Geode
 item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
 item.geode.label=crack open
 
+###############################
+# MODULE PROGRESSION
+###############################
+settled.name=Settled
+settled.description=This part has settled into place, reducing its integrity cost
+arrested.name=Arrested
+arrested.description=This part cannot settle
 
 ###############################
 # REPAIR SCHEMA

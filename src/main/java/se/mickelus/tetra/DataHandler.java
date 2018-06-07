@@ -42,6 +42,10 @@ public class DataHandler {
         return getData(String.format("modules/%s", moduleKey), dataClass);
     }
 
+    public ImprovementData[] getImprovementData(String improvementKey) {
+        return getModuleData(improvementKey, ImprovementData[].class);
+    }
+
     public SchemaDefinition[] getSchemaDefinitions(String schemaName) {
         return getData(String.format("schemas/%s", schemaName), SchemaDefinition[].class);
     }

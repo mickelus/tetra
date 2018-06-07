@@ -20,8 +20,39 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
+    private static final String settleImprovementKey = "settled";
+    private static final String settleProgressKey = "settle_progress";
+    private static final int settleLimit = 468;
+
+    private static final String honingProgressKey = "honing_progress";
+    private static final String honingCounterKey = "honing_counter";
+    private static final String honingAvailableKey = "honing_available";
+
     public ItemModuleMajor(String slotKey, String moduleKey) {
         super(slotKey, moduleKey);
+    }
+
+    public void tickProgression(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+
+        if (getImprovementLevel(settleImprovementKey, itemStack) != -1) {
+            int settleProgress = tag.getInteger(settleProgressKey);
+            settleProgress++;
+            tag.setInteger(settleProgressKey, settleProgress);
+            if (settleProgress > settleLimit) {
+                addImprovement(itemStack, settleImprovementKey, 0);
+            }
+        }
+
+        if (!tag.hasKey(honingAvailableKey)) {
+            int honingProgress = tag.getInteger(honingProgressKey);
+            int honingCounter = tag.getInteger(honingCounterKey);
+            honingProgress++;
+            tag.setInteger(honingProgressKey, honingProgress);
+            if (honingProgress > getDefaultData().durability * 0.5 * Math.exp(0.8 * honingCounter)) {
+                tag.setBoolean(honingAvailableKey, true);
+            }
+        }
     }
 
     public int getImprovementLevel(String improvementKey, ItemStack itemStack) {
