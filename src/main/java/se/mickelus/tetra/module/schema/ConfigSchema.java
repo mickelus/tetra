@@ -232,6 +232,7 @@ public class ConfigSchema implements UpgradeSchema {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
             ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
             module.addModule(upgradedStack, outcome.moduleVariant, player);
+            outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
             if (previousModule != null && consumeMaterials) {
                 previousModule.postRemove(upgradedStack, player);
             }
