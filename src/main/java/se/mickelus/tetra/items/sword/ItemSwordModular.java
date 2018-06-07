@@ -9,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
-import se.mickelus.tetra.DataHandler;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.*;
@@ -50,18 +49,18 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        registerConfigSchema("sword/basic_blade");
-        registerConfigSchema("sword/basic_blade_improvements");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade_improvements");
         new BookEnchantSchema(BladeModule.instance);
 
-        registerConfigSchema("sword/short_blade");
-        registerConfigSchema("sword/short_blade_improvements");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade_improvements");
         new BookEnchantSchema(ShortBladeModule.instance);
 
-        registerConfigSchema("sword/heavy_blade");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/heavy_blade");
         new BookEnchantSchema(HeavyBladeModule.instance);
 
-        registerConfigSchema("sword/basic_hilt");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
         new BookEnchantSchema(HiltModule.instance);
 
         new RepairSchema(this);

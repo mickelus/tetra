@@ -28,11 +28,11 @@ public class ConfigSchema implements UpgradeSchema {
     private String keySuffix;
     private String moduleSlot;
 
-    public ConfigSchema(SchemaDefinition definition) {
+    public ConfigSchema(SchemaDefinition definition) throws InvalidSchemaException {
         this(definition, "", null);
     }
 
-    public ConfigSchema(SchemaDefinition definition, String keySuffix, String moduleSlot) {
+    public ConfigSchema(SchemaDefinition definition, String keySuffix, String moduleSlot) throws InvalidSchemaException {
         this.definition = definition;
         this.keySuffix = keySuffix;
         this.moduleSlot = moduleSlot;
@@ -43,13 +43,8 @@ public class ConfigSchema implements UpgradeSchema {
                 .filter(moduleKey -> ItemUpgradeRegistry.instance.getModule(moduleKey) == null)
                 .toArray(String[]::new);
 
-        if (faultyModuleOutcomes.length == 0) {
-            ItemUpgradeRegistry.instance.registerSchema(this);
-        } else {
-            System.err.println(String.format("Skipping schema '%s' due to faulty module keys:", definition.key));
-            for (String faultyKey : faultyModuleOutcomes) {
-                System.err.println("\t" + faultyKey);
-            }
+        if (faultyModuleOutcomes.length != 0) {
+            throw new InvalidSchemaException(definition.key, faultyModuleOutcomes);
         }
     }
 

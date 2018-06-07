@@ -205,55 +205,80 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     /**
+     * Returns the durability and material multiplier of the next repair attempt.
+     * @param repairCount The amount of repairs done so far, used as seed
+     * @return A value between 0.3 and 1
+     */
+    private float getRepairMultiplier(int repairCount) {
+        // the seed has to change a significant amount for there to be any noticable change, 500 seems to be a decent value
+        return Math.max(0.3f, new Random(repairCount*500).nextFloat());
+    }
+
+    /**
+     * Returns an optional with the module that will be repaired in next repair attempt, the optional is empty if
+     * there are no repairable modules in this item.
+     * @param itemStack The itemstack for the modular item
+     * @return An optional with the module that will be repaired in next repair attempt
+     */
+    private Optional<ItemModule> getRepairModule(ItemStack itemStack) {
+        List<ItemModule> modules = getAllModules(itemStack).stream()
+                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .collect(Collectors.toList());
+
+        if (modules.size() > 0) {
+            int repairCount = getRepairCount(itemStack);
+            return Optional.of(modules.get(repairCount % modules.size()));
+        }
+        return Optional.empty();
+    }
+
+    /**
      * Returns an itemstack with the material required for the next repair attempt. Rotates between materials required
      * for different modules
      * @param itemStack The itemstack for the modular item
      * @return An itemstack representing the material required for the repair
      */
     public ItemStack getRepairMaterial(ItemStack itemStack) {
-        List<ItemModule> modules = getAllModules(itemStack).stream()
-                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
-                .collect(Collectors.toList());
-        return modules.get(getRepairCount(itemStack) % modules.size()).getRepairMaterial(itemStack);
+        return getRepairModule(itemStack)
+                .map(module -> {
+                    ItemStack material = module.getRepairMaterial(itemStack).copy();
+                    int repairCount = getRepairCount(itemStack);
+
+                    if (material.getCount() > 1) {
+                        material.setCount(Math.max(1, (int)(getRepairMultiplier(repairCount) * material.getCount())));
+                    }
+                    return material;
+                })
+                .orElse(ItemStack.EMPTY);
     }
 
     /**
-     * Returns the amount of durability restored by the next repair attemt.
+     * Returns the amount of durability restored by the next repair attempt.
      * @param itemStack The itemstack for the modular item
      * @return
      */
     public int getRepairAmount(ItemStack itemStack) {
-        List<ItemModule> modules = getAllModules(itemStack).stream()
-                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
-                .collect(Collectors.toList());
-        if (modules.size() > 0) {
-            return modules.get(getRepairCount(itemStack) % modules.size()).getRepairAmount(itemStack);
-        } else {
-            return 0;
-        }
+        return getRepairModule(itemStack)
+                .map(module -> {
+                    int repairCount = getRepairCount(itemStack);
+                    return (int) (module.getRepairAmount(itemStack) * getRepairMultiplier(repairCount));
+                })
+                .orElse(0);
     }
 
     public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
-        List<ItemModule> modules = getAllModules(itemStack).stream()
-                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
-                .collect(Collectors.toList());
-        if (modules.size() > 0) {
-            return modules.get(getRepairCount(itemStack) % modules.size()).getRequiredCapabilities(getRepairMaterial(itemStack));
-        } else {
-            return Collections.EMPTY_LIST;
-        }
+        return getRepairModule(itemStack)
+                .map(module -> module.getRepairRequiredCapabilities(getRepairMaterial(itemStack)))
+                .orElse(Collections.emptyList());
     }
 
     public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
-        List<ItemModule> modules = getAllModules(itemStack).stream()
-                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
-                .collect(Collectors.toList());
-        if (modules.size() > 0) {
-            int level = modules.get(getRepairCount(itemStack) % modules.size()).getRequiredCapabilityLevel(getRepairMaterial(itemStack), capability);
-            return level > 1 ? level - 1 : 1;
-        } else {
-            return 0;
-        }
+        return getRepairModule(itemStack)
+                .map(module -> {
+                    int level = module.getRepairRequiredCapabilityLevel(getRepairMaterial(itemStack), capability);
+                    return Math.max(1, level);
+        })
+            .orElse(0);
     }
 
     private int getRepairCount(ItemStack itemStack) {
@@ -470,18 +495,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 return new ItemStack(Items.GOLD_INGOT, 1);
             default:
                 return new ItemStack(Blocks.PLANKS, 1);
-        }
-    }
-
-    public static void registerConfigSchema(String path) {
-        for (SchemaDefinition definition : DataHandler.instance.getSchemaDefinitions(path)) {
-            if (definition.slots.length == definition.keySuffixes.length) {
-                for (int i = 0; i < definition.slots.length; i++) {
-                    new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i]);
-                }
-            } else {
-                new ConfigSchema(definition);
-            }
         }
     }
 }

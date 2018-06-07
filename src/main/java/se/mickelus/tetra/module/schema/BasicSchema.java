@@ -16,7 +16,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 import java.util.Collection;
 
-public class BasicSchema implements UpgradeSchema {
+public abstract class BasicSchema implements UpgradeSchema {
 
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
@@ -60,22 +60,6 @@ public class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        if (index == 0) {
-            return module.getDataByMaterial(materialStack).materialCount;
-        }
-        return 0;
-    }
-
-    @Override
-    public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
-        if (index == 0) {
-            return module.slotAcceptsMaterial(itemStack, materialStack);
-        }
-        return true;
-    }
-
-    @Override
     public boolean canUpgrade(ItemStack itemStack) {
         return item.equals(itemStack.getItem());
     }
@@ -91,12 +75,6 @@ public class BasicSchema implements UpgradeSchema {
                 && !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkCapabilities(player, itemStack, materials);
     }
-
-    @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return module.canApplyUpgrade(itemStack, materials);
-    }
-
     @Override
     public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
         ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, module.getSlot(), null);
@@ -108,17 +86,6 @@ public class BasicSchema implements UpgradeSchema {
         return getRequiredCapabilities(targetStack, materials).stream()
                 .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
-
-    @Override
-    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        return module.getDataByMaterial(materials[0]).requiredCapabilities.getValues();
-    }
-
-    @Override
-    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        return module.getDataByMaterial(materials[0]).requiredCapabilities.getLevel(capability);
-    }
-
     @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();

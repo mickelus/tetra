@@ -2,6 +2,9 @@ package se.mickelus.tetra.module;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,6 +18,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.schema.RepairDefinition;
 
 public abstract class ItemModule<T extends ModuleData> implements ICapabilityProvider {
 
@@ -63,23 +67,6 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         tag.setString(dataKey, variantKey);
     }
 
-    // todo: fix to work for upgrades with more than one material
-    public boolean canApplyUpgrade(ItemStack targetStack, ItemStack[] materials) {
-        return slotAcceptsMaterial(targetStack, materials[0]);
-    }
-
-    public boolean slotAcceptsMaterial(ItemStack targetStack, ItemStack materialStack) {
-        String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
-
-        return Arrays.stream(data)
-                .anyMatch(moduleData -> {
-                    if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
-                        return false;
-                    }
-                    return moduleData.material.equals(materialName);
-                });
-    }
-
     public T getDataByMaterial(ItemStack materialStack) {
         String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
 
@@ -91,11 +78,6 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                     return materialName.equals(moduleData.material);
                 })
                 .findAny().orElse(getDefaultData());
-    }
-
-    public boolean hasData(String dataKey) {
-        return Arrays.stream(data)
-                .anyMatch(data -> data.key.equals(dataKey));
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
@@ -193,21 +175,31 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public ItemStack getRepairMaterial(ItemStack itemStack) {
-        ModuleData data = getData(itemStack);
-        Item item = Item.getByNameOrId(data.material);
-
-        if (item != null) {
-            if (data.materialData != -1) {
-                return new ItemStack(item, 1, data.materialData);
-            }
-            return new ItemStack(item);
-        } else {
-            return null;
+        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getData(itemStack).key);
+        if (definition != null) {
+            return definition.material.repairMaterial;
         }
+        return null;
     }
 
     public int getRepairAmount(ItemStack itemStack) {
         return getData(itemStack).durability;
+    }
+
+    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
+        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getData(itemStack).key);
+        if (definition != null) {
+            return definition.requiredCapabilities.getValues();
+        }
+        return Collections.emptyList();
+    }
+
+    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
+        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getData(itemStack).key);
+        if (definition != null) {
+            return definition.requiredCapabilities.getLevel(capability);
+        }
+        return 0;
     }
 
 
@@ -260,14 +252,6 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     @Override
     public Collection<Capability> getCapabilities(ItemStack itemStack) {
         return getData(itemStack).capabilities.getValues();
-    }
-
-    public int getRequiredCapabilityLevel(final ItemStack material, Capability capability) {
-        return getDataByMaterial(material).requiredCapabilities.getLevel(capability);
-    }
-
-    public Collection<Capability> getRequiredCapabilities(final ItemStack material) {
-        return getDataByMaterial(material).requiredCapabilities.getValues();
     }
 
     public int getSize(ItemStack itemStack) {

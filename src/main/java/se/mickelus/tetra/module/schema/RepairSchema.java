@@ -58,8 +58,11 @@ public class RepairSchema implements UpgradeSchema {
 
     @Override
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        // todo: return random between 1 and materialCount based on seed and yield % of module durability based on quantity?
-        return 1;
+        if (index == 0 && itemStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) itemStack.getItem();
+            return item.getRepairMaterial(itemStack).getCount();
+        }
+        return 0;
     }
 
     @Override
@@ -100,11 +103,12 @@ public class RepairSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) upgradedStack.getItem();
+        int quantity = getRequiredQuantity(itemStack, 0, materials[0]);
 
         item.repair(upgradedStack);
 
         if (consumeMaterials) {
-            materials[0].shrink(1);
+            materials[0].shrink(quantity);
         }
 
         return upgradedStack;

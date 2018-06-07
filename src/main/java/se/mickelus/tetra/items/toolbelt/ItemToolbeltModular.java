@@ -22,7 +22,7 @@ import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.schema.ModuleSlotSchema;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -98,12 +98,12 @@ public class ItemToolbeltModular extends ItemModular {
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
 
-        registerConfigSchema("toolbelt/belt");
-        registerConfigSchema("toolbelt/strap");
-        registerConfigSchema("toolbelt/booster");
-        registerConfigSchema("toolbelt/potion_storage");
-        registerConfigSchema("toolbelt/storage");
-        registerConfigSchema("toolbelt/quiver");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/belt");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/booster");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/potion_storage");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver");
     }
 
     @Override

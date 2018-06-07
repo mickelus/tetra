@@ -21,9 +21,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.BasicSchema;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
-import se.mickelus.tetra.module.schema.ModuleSlotSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -92,22 +90,22 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        registerConfigSchema("duplex/basic_hammer");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_hammer");
         new BookEnchantSchema(basicHammerHeadLeft);
         new BookEnchantSchema(basicHammerHeadRight);
 
-        registerConfigSchema("duplex/basic_axe");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_axe");
         new BookEnchantSchema(basicAxeLeft);
         new BookEnchantSchema(basicAxeRight);
 
-        registerConfigSchema("duplex/basic_pickaxe");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_pickaxe");
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
-        registerConfigSchema("duplex/butt");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
 
-        registerConfigSchema("duplex/basic_handle");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
 
         new RepairSchema(this);
 
