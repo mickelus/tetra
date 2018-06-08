@@ -95,6 +95,11 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
+    public boolean isHoning() {
+        return false;
+    }
+
+    @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return isMaterialsValid(itemStack, materials);
     }

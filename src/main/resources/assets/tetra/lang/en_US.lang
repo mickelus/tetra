@@ -29,15 +29,15 @@ item.geode.label=crack open
 # MODULE PROGRESSION
 ###############################
 settled.name=Settled
-settled.description=This part has settled into place, reducing its integrity cost
+settled.description=Due to extended use this part has settled into place, reducing its integrity cost
 arrested.name=Arrested
-arrested.description=This part cannot settle
+arrested.description=This part cannot settle and will not improve over time
 
 ###############################
 # REPAIR SCHEMA
 ###############################
 repair_schema.name=Repair
-repair_schema.description=Repair the item using various materials.
+repair_schema.description=Patch up damage and wear using various materials.
 
 ###############################
 # BOOK ENCHANT SCHEMA

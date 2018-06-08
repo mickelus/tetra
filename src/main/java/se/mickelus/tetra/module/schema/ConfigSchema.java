@@ -139,6 +139,11 @@ public class ConfigSchema implements UpgradeSchema {
     }
 
     @Override
+    public boolean isHoning() {
+        return definition.honing;
+    }
+
+    @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return isMaterialsValid(itemStack, materials)
                 && !isIntegrityViolation(player, itemStack, materials, slot)

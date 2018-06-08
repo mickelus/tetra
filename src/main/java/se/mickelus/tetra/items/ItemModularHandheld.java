@@ -44,7 +44,8 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if (state.getBlockHardness(worldIn, pos) > 0) {
-            applyDamage(2, itemStack, entityLiving);
+            applyDamage(itemStack, 2, entityLiving);
+            tickProgression(itemStack, 1);
         }
 
         return true;
@@ -52,7 +53,8 @@ public class ItemModularHandheld extends ItemModular {
 
     @Override
     public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
-        applyDamage(1, itemStack, attacker);
+        applyDamage(itemStack, 1, attacker);
+        tickProgression(itemStack, 1);
         if (!isBroken(itemStack)) {
             getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
 

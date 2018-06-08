@@ -20,39 +20,38 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
-    private static final String settleImprovementKey = "settled";
-    private static final String settleProgressKey = "settle_progress";
-    private static final int settleLimit = 468;
-
-    private static final String honingProgressKey = "honing_progress";
-    private static final String honingCounterKey = "honing_counter";
-    private static final String honingAvailableKey = "honing_available";
+    private static final String settleImprovement = "settled";
+    private static final int settleLimitBase = 10;
+    private String settleProgressKey = "/settle_progress";
 
     public ItemModuleMajor(String slotKey, String moduleKey) {
         super(slotKey, moduleKey);
+
+        settleProgressKey = getSlot() + settleProgressKey;
     }
 
-    public void tickProgression(ItemStack itemStack) {
+    public void tickProgression(ItemStack itemStack, int multiplier) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
 
-        if (getImprovementLevel(settleImprovementKey, itemStack) != -1) {
-            int settleProgress = tag.getInteger(settleProgressKey);
-            settleProgress++;
-            tag.setInteger(settleProgressKey, settleProgress);
-            if (settleProgress > settleLimit) {
-                addImprovement(itemStack, settleImprovementKey, 0);
+        if (getImprovementLevel(settleImprovement, itemStack) == -1) {
+            int settleProgress;
+            if (tag.hasKey(settleProgressKey)) {
+                settleProgress = tag.getInteger(settleProgressKey);
+            } else {
+                settleProgress = settleLimitBase;
             }
-        }
 
-        if (!tag.hasKey(honingAvailableKey)) {
-            int honingProgress = tag.getInteger(honingProgressKey);
-            int honingCounter = tag.getInteger(honingCounterKey);
-            honingProgress++;
-            tag.setInteger(honingProgressKey, honingProgress);
-            if (honingProgress > getDefaultData().durability * 0.5 * Math.exp(0.8 * honingCounter)) {
-                tag.setBoolean(honingAvailableKey, true);
+            settleProgress -= multiplier;
+            tag.setInteger(settleProgressKey, settleProgress);
+            if (settleProgress <= 0) {
+                addImprovement(itemStack, settleImprovement, 0);
+                tag.removeTag(settleProgressKey);
             }
         }
+    }
+
+    protected void clearProgression(ItemStack itemStack) {
+        NBTHelper.getTag(itemStack).removeTag(String.format(settleProgressKey, getSlot()));
     }
 
     public int getImprovementLevel(String improvementKey, ItemStack itemStack) {
@@ -93,6 +92,8 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         Arrays.stream(improvements)
             .map(improvement -> slotKey + ":" + improvement.key)
             .forEach(tag::removeTag);
+
+        clearProgression(targetStack);
 
         return salvage;
     }

@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.schema.ConfigSchema;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
@@ -36,6 +35,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     protected static final String repairCountKey = "repairCount";
 
     protected static final String cooledStrengthKey = "cooledStrength";
+
+    private static final String honingProgressKey = "honing_progress";
+    private static final String honingAvailableKey = "honing_available";
+    private static final String honingCountKey = "honing_count";
+    protected int honingBase = 450;
 
     protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
@@ -169,7 +173,41 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return super.getItemEnchantability(stack);
     }
 
-    public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
+    public void tickProgression(ItemStack itemStack, int multiplier) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        if (!tag.hasKey(honingAvailableKey)) {
+            int honingProgress;
+            if (tag.hasKey(honingProgressKey)) {
+                honingProgress = tag.getInteger(honingProgressKey);
+            } else {
+                honingProgress = honingBase;
+            }
+            honingProgress += multiplier;
+            tag.setInteger(honingProgressKey, honingProgress);
+            if (honingProgress <= 0) {
+                tag.setBoolean(honingAvailableKey, true);
+            }
+        }
+        for (ItemModuleMajor module: getMajorModules(itemStack)) {
+            module.tickProgression(itemStack, multiplier);
+        }
+    }
+
+    public static boolean isHoneable(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).hasKey(honingAvailableKey);
+    }
+
+    public static int getHoningSeed(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getInteger(honingCountKey) + 1;
+    }
+
+    public static void removeHoneable(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        tag.removeTag(honingAvailableKey);
+        tag.setInteger(honingCountKey, tag.getInteger(honingCountKey) + 1);
+    }
+
+    public void applyDamage(ItemStack itemStack, int amount, EntityLivingBase responsibleEntity) {
         amount = getReducedDamage(amount, itemStack, responsibleEntity);
         if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
             itemStack.damageItem(amount, responsibleEntity);

@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module;
 
+import com.google.common.collect.Streams;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -9,6 +10,7 @@ import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ItemUpgradeRegistry {
 
@@ -28,10 +30,12 @@ public class ItemUpgradeRegistry {
     }
 
     public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
-        return schemaMap.values().stream()
-                .filter(upgradeSchema -> playerHasSchema(player, upgradeSchema))
-                .filter(upgradeSchema -> upgradeSchema.canUpgrade(itemStack))
-                .toArray(UpgradeSchema[]::new);
+        return Streams.concat(
+                schemaMap.values().stream()
+                        .filter(upgradeSchema -> playerHasSchema(player, upgradeSchema))
+                        .filter(upgradeSchema -> !upgradeSchema.isHoning())
+                        .filter(upgradeSchema -> upgradeSchema.canUpgrade(itemStack))
+        ).toArray(UpgradeSchema[]::new);
     }
 
     public UpgradeSchema getSchema(String key) {

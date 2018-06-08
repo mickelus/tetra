@@ -82,6 +82,11 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
+    public boolean isHoning() {
+        return false;
+    }
+
+    @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return acceptsMaterial(itemStack, 0, materials[0]);
     }
