@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -269,9 +270,36 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return compound;
     }
 
+    /**
+     * Empties all material slots into the given players inventory.
+     * @param player
+     */
     private void emptyMaterialSlots(EntityPlayer player) {
         for (int i = 1; i < stacks.size(); i++) {
             transferStackToPlayer(player, i);
+        }
+    }
+
+    /**
+     * Empties all material slots into the world. Make sure to call on both sides.
+     */
+    private void emptyMaterialSlots() {
+        if (!world.isRemote) {
+            for (int i = 1; i < stacks.size(); i++) {
+                ItemStack materialStack = removeStackFromSlot(i);
+                if (!materialStack.isEmpty()) {
+                    double d0 = (double)(world.rand.nextFloat() * 0.5F) + 0.25D;
+                    double d1 = (double)(world.rand.nextFloat() * 0.5F) + 1.25D;
+                    double d2 = (double)(world.rand.nextFloat() * 0.5F) + 0.25D;
+                    EntityItem entityitem = new EntityItem(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, materialStack);
+                    entityitem.setDefaultPickupDelay();
+                    world.spawnEntity(entityitem);
+                }
+            }
+        } else {
+            for (int i = 1; i < stacks.size(); i++) {
+                removeStackFromSlot(i);
+            }
         }
     }
 
@@ -317,7 +345,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         ItemStack itemstack = ItemStackHelper.getAndSplit(this.stacks, index, count);
 
         if (!itemstack.isEmpty()) {
-            this.markDirty();
+            markDirty();
         }
 
         return itemstack;
@@ -326,7 +354,13 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.stacks, index);
+        ItemStack itemstack = ItemStackHelper.getAndRemove(this.stacks, index);
+
+        if (!itemstack.isEmpty()) {
+            markDirty();
+        }
+
+        return itemstack;
     }
 
     @Override
@@ -337,9 +371,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             currentSchema = null;
             currentSlot = null;
 
-            if (world.isRemote) {
-                emptyMaterialSlots(Minecraft.getMinecraft().player);
-            }
+            emptyMaterialSlots();
         }
 
         this.stacks.set(index, itemStack);
