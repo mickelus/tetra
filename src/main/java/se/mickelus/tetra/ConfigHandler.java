@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 
-@Config(modid = TetraMod.MOD_ID)
+@Config(modid = TetraMod.MOD_ID, name = TetraMod.MOD_ID + "/" + TetraMod.MOD_ID)
 public class ConfigHandler {
 
     public static boolean geode_generate = true;

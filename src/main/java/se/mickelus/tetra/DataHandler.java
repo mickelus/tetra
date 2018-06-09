@@ -3,6 +3,7 @@ package se.mickelus.tetra;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraftforge.fml.common.Loader;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
@@ -22,10 +23,14 @@ public class DataHandler {
     private final File source;
     private final Gson gson;
 
+    private File configDir;
+
     public static DataHandler instance;
 
     public DataHandler(File source) {
         this.source = source;
+        configDir = Loader.instance().getConfigDir();
+
         // todo: use the same naming for all deserializers?
         gson = new GsonBuilder()
                 .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
@@ -66,7 +71,10 @@ public class DataHandler {
         try {
             Path fPath = null;
 
-            if (source.isFile()) {
+            File configOverride = new File (configDir, String.format("%s/%s.json", TetraMod.MOD_ID, path));
+            if (configOverride.exists()) {
+                fPath = configOverride.toPath();
+            } else if (source.isFile()) {
                 FileSystem fs = FileSystems.newFileSystem(source.toPath(), null);
                 fPath = fs.getPath(pathString);
             } else if (source.isDirectory()) {
