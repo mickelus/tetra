@@ -65,22 +65,7 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         new RepairSchema(this);
 
-        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceSword);
-    }
-
-    private ItemStack replaceSword(ItemStack originalStack) {
-        Item originalItem = originalStack.getItem();
-        ItemStack newStack;
-
-        if (!(originalItem instanceof ItemSword)) {
-            return null;
-        }
-
-        newStack = createItemStack(((ItemSword) originalItem).getToolMaterialName());
-        newStack.setItemDamage(originalStack.getItemDamage());
-        transferEnchantments(originalStack, newStack);
-
-        return newStack;
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }
 
     private ItemStack createItemStack(String material) {
@@ -95,21 +80,6 @@ public class ItemSwordModular extends ItemModularHandheld {
         DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
 
         return itemStack;
-    }
-
-    private void transferEnchantments(ItemStack sourceStack, ItemStack modularStack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (BladeModule.instance.acceptsImprovement(improvement) && HiltModule.instance.acceptsImprovement(improvement)) {
-                BladeModule.instance.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
-                HiltModule.instance.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
-            } else if (BladeModule.instance.acceptsImprovement(improvement)) {
-                BladeModule.instance.addImprovement(modularStack, improvement, entry.getValue());
-            } else if (HiltModule.instance.acceptsImprovement(improvement)) {
-                HiltModule.instance.addImprovement(modularStack, improvement, entry.getValue());
-            }
-        }
     }
 
     @Override

@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:wooden_sword"
+        },
+        "item": "tetra:sword_modular",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/oak"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/oak"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/oak"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_sword"
+        },
+        "item": "tetra:sword_modular",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/cobblestone"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/cobblestone"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/cobblestone"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:iron_sword"
+        },
+        "item": "tetra:sword_modular",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/iron"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/iron"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/iron"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:golden_sword"
+        },
+        "item": "tetra:sword_modular",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/gold"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/gold"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/gold"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_sword"
+        },
+        "item": "tetra:sword_modular",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/diamond"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/diamond"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/diamond"]
+        }
+    }
+]

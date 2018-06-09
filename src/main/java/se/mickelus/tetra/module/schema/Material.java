@@ -26,12 +26,12 @@ public class Material {
 
             if (element != null && !element.isJsonNull()) {
 
-                JsonObject itemJson = JsonUtils.getJsonObject(element, "item");
-                String type = JsonUtils.getString(itemJson, "type", "");
+                JsonObject jsonObject = JsonUtils.getJsonObject(element, "material");
+                String type = JsonUtils.getString(jsonObject, "type", "");
                 Item item = null;
                 int data = 0;
                 if ("forge:ore_dict".equals(type)) {
-                    String oreName = JsonUtils.getString(itemJson, "ore");
+                    String oreName = JsonUtils.getString(jsonObject, "ore");
                     if (OreDictionary.doesOreNameExist(oreName)) {
                         NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreName);
                         if (!itemStacks.isEmpty()) {
@@ -40,20 +40,20 @@ public class Material {
                             item = itemStack.getItem();
                         }
                     }
-                } else if (itemJson.has("item")) {
-                    ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(itemJson, "item"));
+                } else if (jsonObject.has("item")) {
+                    ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "item"));
                     item = Item.REGISTRY.getObject(resourcelocation);
                 }
 
                 if (item != null) {
-                    material.count = JsonUtils.getInt(itemJson, "count", 1);
+                    material.count = JsonUtils.getInt(jsonObject, "count", 1);
                     if (data != 0) {
-                        data = JsonUtils.getInt(itemJson, "data", 0);
+                        data = JsonUtils.getInt(jsonObject, "data", 0);
                     }
                     material.repairMaterial = new ItemStack(item, material.count, data);
                     material.salvageMaterial = new ItemStack(item, material.count, data);
 
-                    itemJson.remove("count");
+                    jsonObject.remove("count");
                     material.craftPredicate = ItemPredicate.deserialize(element);
                 }
             }

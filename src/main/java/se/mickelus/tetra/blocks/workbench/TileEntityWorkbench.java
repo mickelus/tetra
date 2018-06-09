@@ -139,7 +139,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             return ItemStack.EMPTY;
         }
 
-        ItemStack placeholder = ItemUpgradeRegistry.instance.getPlaceholder(stack);
+        ItemStack placeholder = ItemUpgradeRegistry.instance.getReplacement(stack);
         if (!placeholder.isEmpty()) {
             return placeholder;
         }

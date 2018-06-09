@@ -1,11 +1,14 @@
 package se.mickelus.tetra.module;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.*;
 
 import java.util.*;
@@ -16,6 +19,7 @@ public class ItemUpgradeRegistry {
     public static ItemUpgradeRegistry instance;
 
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
+    private List<ReplacementDefinition> replacementDefinitions;
 
     private Map<String, UpgradeSchema> schemaMap;
     private Map<String, RepairDefinition> repairMap;
@@ -25,6 +29,7 @@ public class ItemUpgradeRegistry {
     public ItemUpgradeRegistry() {
         instance = this;
         replacementFunctions = new ArrayList<> ();
+        replacementDefinitions = new ArrayList<> ();
         schemaMap = new HashMap<>();
         repairMap = new HashMap<>();
         moduleMap = new HashMap<>();
@@ -89,18 +94,55 @@ public class ItemUpgradeRegistry {
         return repairMap.get(moduleVariant);
     }
 
-    public void registerPlaceholder(Function<ItemStack, ItemStack> replacementFunction) {
+    public void registerReplacementDefinition(String path) {
+        Collections.addAll(replacementDefinitions, DataHandler.instance.getReplacementDefinition(path));
+    }
+
+    public void registerReplacementFunction(Function<ItemStack, ItemStack> replacementFunction) {
         replacementFunctions.add(replacementFunction);
     }
 
-    public ItemStack getPlaceholder(ItemStack itemStack) {
-        for (Function<ItemStack, ItemStack> replacementFunction : replacementFunctions) {
+    public ItemStack getReplacement(ItemStack itemStack) {
+        for (ReplacementDefinition replacementDefinition: replacementDefinitions) {
+            if (replacementDefinition.predicate.test(itemStack)) {
+                ItemStack replacementStack = replacementDefinition.itemStack.copy();
+                replacementStack.setItemDamage(itemStack.getItemDamage());
+                transferEnchantments(itemStack, replacementStack);
+
+                return replacementStack;
+            }
+        }
+        for (Function<ItemStack, ItemStack> replacementFunction: replacementFunctions) {
             ItemStack replacementStack = replacementFunction.apply(itemStack);
             if (replacementStack != null) {
                 return replacementStack;
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    private void transferEnchantments(ItemStack sourceStack, ItemStack modularStack) {
+        if (modularStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) modularStack.getItem();
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
+            for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+                ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(modularStack))
+                        .filter(module -> module.acceptsImprovement(improvement))
+                        .toArray(ItemModuleMajor[]::new);
+                if (modules.length > 0) {
+                    float level = 1f * entry.getValue() / modules.length;
+
+                    for (int i = 0; i < modules.length; i++) {
+                        if (i == 0) {
+                            modules[i].addImprovement(modularStack, improvement, (int) Math.ceil(level));
+                        } else {
+                            modules[i].addImprovement(modularStack, improvement, (int) level);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void registerModule(String key, ItemModule module) {

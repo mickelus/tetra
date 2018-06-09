@@ -3,6 +3,7 @@ package se.mickelus.tetra;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.Material;
@@ -33,6 +34,7 @@ public class DataHandler {
                 .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
                 .registerTypeAdapter(ItemPredicate.class, new PredicateDeserializer())
                 .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
+                .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDefinition.ReplacementDeserializer())
                 .create();
 
         instance = this;
@@ -53,6 +55,10 @@ public class DataHandler {
             Arrays.sort(entry.modules);
         }
         return data;
+    }
+
+    public ReplacementDefinition[] getReplacementDefinition(String path) {
+        return getData(String.format("replacements/%s", path), ReplacementDefinition[].class);
     }
 
     public <T> T getData(String path, Class<T> dataClass) {

@@ -1,0 +1,57 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:wooden_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/oak"],
+            "duplex/head_right": ["duplex/butt_right", "butt/oak"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/cobblestone"],
+            "duplex/head_right": ["duplex/butt_right", "butt/cobblestone"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:iron_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/iron"],
+            "duplex/head_right": ["duplex/butt_right", "butt/iron"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:golden_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/gold"],
+            "duplex/head_right": ["duplex/butt_right", "butt/gold"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/diamond"],
+            "duplex/head_right": ["duplex/butt_right", "butt/diamond"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

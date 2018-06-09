@@ -1,0 +1,57 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:wooden_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/oak"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/oak"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/cobblestone"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/cobblestone"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:iron_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/iron"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/iron"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:golden_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/gold"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/gold"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/diamond"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/diamond"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

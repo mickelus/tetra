@@ -109,68 +109,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         new RepairSchema(this);
 
-        ItemUpgradeRegistry.instance.registerPlaceholder(this::replaceTool);
-    }
-
-    private ItemStack replaceTool(ItemStack originalStack) {
-        Item originalItem = originalStack.getItem();
-        ItemStack newStack = new ItemStack(this);
-
-        if (!(originalItem instanceof ItemAxe || originalItem instanceof ItemPickaxe)) {
-            return null;
-        }
-
-        ItemStack material = getStackFromMaterialString(((ItemTool) originalItem).getToolMaterialName());
-
-        if (originalItem instanceof ItemAxe) {
-            basicAxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
-            butt.addModule(newStack, new ItemStack[]{material}, false, null);
-            transferAxeEnchantments(originalStack, newStack);
-        }
-
-        if (originalItem instanceof ItemPickaxe) {
-            basicPickaxeLeft.addModule(newStack, new ItemStack[]{material}, false, null);
-            basicPickaxeRight.addModule(newStack, new ItemStack[]{material}, false, null);
-            transferPickaxeEnchantments(originalStack, newStack);
-        }
-
-        BasicHandleModule.instance.addModule(newStack, new ItemStack[]{new ItemStack(Items.STICK)}, false, null);
-        newStack.setItemDamage(originalStack.getItemDamage());
-
-        return newStack;
-    }
-
-    private void transferPickaxeEnchantments(ItemStack sourceStack, ItemStack modularStack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (basicPickaxeLeft.acceptsImprovement(improvement)) {
-                if (entry.getKey().equals(Enchantments.EFFICIENCY)) {
-                    basicPickaxeLeft.addImprovement(modularStack, improvement, entry.getValue());
-                    basicPickaxeRight.addImprovement(modularStack, improvement, entry.getValue());
-                } else {
-                    basicPickaxeLeft.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
-                    basicPickaxeRight.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
-                }
-            }
-        }
-    }
-
-    private void transferAxeEnchantments(ItemStack sourceStack, ItemStack modularStack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (basicAxeLeft.acceptsImprovement(improvement)) {
-                if (butt.acceptsImprovement(improvement)) {
-                    basicAxeLeft.addImprovement(modularStack, improvement, (int) Math.floor(entry.getValue() / 2f));
-                    butt.addImprovement(modularStack, improvement, (int) Math.ceil(entry.getValue() / 2f));
-                } else {
-                    basicAxeLeft.addImprovement(modularStack, improvement, entry.getValue());
-                }
-            } else if (butt.acceptsImprovement(improvement)) {
-                butt.addImprovement(modularStack, improvement, entry.getValue());
-            }
-        }
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
     }
 
     @Override
