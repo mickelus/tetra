@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.toolbelt;
 
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.items.ItemModular;
@@ -27,7 +30,8 @@ import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
 
-public class ItemToolbeltModular extends ItemModular {
+@Optional.Interface(modid = "baubles", iface = "baubles.api.IBauble")
+public class ItemToolbeltModular extends ItemModular implements IBauble {
     public static ItemToolbeltModular instance;
     private final static String unlocalizedName = "toolbelt_modular";
 
@@ -154,5 +158,11 @@ public class ItemToolbeltModular extends ItemModular {
                 .filter(module -> module instanceof QuiverModule)
                 .map(module -> module.getSize(itemStack))
                 .reduce(0, Integer::sum);
+    }
+
+    @Optional.Method(modid = "baubles")
+    @Override
+    public BaubleType getBaubleType(ItemStack itemstack) {
+        return BaubleType.BELT;
     }
 }

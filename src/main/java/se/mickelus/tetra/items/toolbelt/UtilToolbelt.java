@@ -1,9 +1,15 @@
 package se.mickelus.tetra.items.toolbelt;
 
+import baubles.api.BaublesApi;
+import baubles.api.cap.BaublesCapabilities;
+import baubles.api.cap.IBaublesItemHandler;
+import baubles.api.inv.BaublesInventoryWrapper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.Optional;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 
 public class UtilToolbelt {
@@ -93,6 +99,11 @@ public class UtilToolbelt {
      * @return A toolbelt itemstack, or an empty itemstack if the player has to toolbelt
      */
     public static ItemStack findToolbelt(EntityPlayer player) {
+        ItemStack baubleToolbelt = getBaubleToolbelt(player);
+        if (!baubleToolbelt.isEmpty()) {
+            return baubleToolbelt;
+        }
+
         InventoryPlayer inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
@@ -103,10 +114,35 @@ public class UtilToolbelt {
         return ItemStack.EMPTY;
     }
 
+    public static ItemStack getBaubleToolbelt(EntityPlayer player) {
+        IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
+
+        if (handler != null) {
+            handler.setPlayer(player);
+            IInventory baubleInventory = new BaublesInventoryWrapper(handler, player);
+
+            for (int i = 0; i < baubleInventory.getSizeInventory(); i++) {
+                ItemStack itemStack = baubleInventory.getStackInSlot(i);
+                if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
+                    return itemStack;
+                }
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
     public static void emptyOverflowSlots(ItemStack itemStack, EntityPlayer player) {
         new InventoryQuickslot(itemStack).emptyOverflowSlots(player);
         new InventoryPotions(itemStack).emptyOverflowSlots(player);
         new InventoryStorage(itemStack).emptyOverflowSlots(player);
         new InventoryQuiver(itemStack).emptyOverflowSlots(player);
+    }
+
+    @Optional.Method(modid = "baubles")
+    public static void updateBauble(EntityPlayer player) {
+        int baubleSlot = BaublesApi.isBaubleEquipped(player, ItemToolbeltModular.instance);
+        if (baubleSlot != -1) {
+            BaublesApi.getBaublesHandler(player).setChanged(baubleSlot, true);
+        }
     }
 }
