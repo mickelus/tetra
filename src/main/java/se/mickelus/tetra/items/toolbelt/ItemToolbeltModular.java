@@ -116,7 +116,7 @@ public class ItemToolbeltModular extends ItemModular {
 
     private ItemStack createDefaultStack() {
         ItemStack itemStack = new ItemStack(this);
-        BeltModule.instance.addModule(itemStack, new ItemStack[]{new ItemStack(Items.LEAD)}, false, null);
+        BeltModule.instance.addModule(itemStack, "belt/rope", null);
         defaultStrap.addModule(itemStack, "strap1/leather", null);
         return itemStack;
     }

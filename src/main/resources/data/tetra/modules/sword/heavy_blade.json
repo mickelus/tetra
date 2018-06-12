@@ -1,9 +1,6 @@
 [
     {
         "key": "heavy_blade/oak_log",
-        "material": "minecraft:log",
-        "materialData": 0,
-        "materialCount": 8,
         "durability": 200,
         "integrity": -2,
         "damage": 3,
@@ -11,16 +8,10 @@
         "glyph": {
             "tint": "9d804e",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/spruce_log",
-        "material": "minecraft:log",
-        "materialData": 1,
-        "materialCount": 8,
         "durability": 200,
         "integrity": -2,
         "damage": 3,
@@ -28,16 +19,10 @@
         "glyph": {
             "tint": "694f2f",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/birch_log",
-        "material": "minecraft:log",
-        "materialData": 2,
-        "materialCount": 8,
         "durability": 240,
         "integrity": -2,
         "damage": 3,
@@ -45,16 +30,10 @@
         "glyph": {
             "tint": "c8b77d",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/jungle_log",
-        "material": "minecraft:log",
-        "materialData": 3,
-        "materialCount": 8,
         "durability": 200,
         "integrity": -2,
         "damage": 4,
@@ -62,16 +41,10 @@
         "glyph": {
             "tint": "996e4c",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/acacia_log",
-        "material": "minecraft:log",
-        "materialData": 4,
-        "materialCount": 8,
         "durability": 240,
         "integrity": -2,
         "damage": 4,
@@ -79,16 +52,10 @@
         "glyph": {
             "tint": "6c655a",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/dark_oak_log",
-        "material": "minecraft:log",
-        "materialData": 5,
-        "materialCount": 8,
         "durability": 200,
         "integrity": -2,
         "damage": 3,
@@ -96,15 +63,10 @@
         "glyph": {
             "tint": "3c2712",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/cobblestone",
-        "material": "minecraft:cobblestone",
-        "materialCount": 8,
         "durability": 300,
         "integrity": -2,
         "damage": 4,
@@ -112,16 +74,10 @@
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "heavy_blade/stone",
-        "material": "minecraft:stone",
-        "materialData": 0,
-        "materialCount": 8,
         "durability": 370,
         "integrity": -2,
         "damage": 4,
@@ -129,16 +85,10 @@
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/granite",
-        "material": "minecraft:stone",
-        "materialData": 1,
-        "materialCount": 8,
         "durability": 410,
         "integrity": -2,
         "damage": 4,
@@ -146,16 +96,10 @@
         "glyph": {
             "tint": "8a6658",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/diorite",
-        "material": "minecraft:stone",
-        "materialData": 3,
-        "materialCount": 8,
         "durability": 370,
         "integrity": -2,
         "damage": 4,
@@ -163,16 +107,10 @@
         "glyph": {
             "tint": "b1b1b3",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/andesite",
-        "material": "minecraft:stone",
-        "materialData": 5,
-        "materialCount": 8,
         "durability": 370,
         "integrity": -2,
         "damage": 5,
@@ -180,15 +118,10 @@
         "glyph": {
             "tint": "79797a",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/iron",
-        "material": "minecraft:iron_ingot",
-        "materialCount": 16,
         "durability": 450,
         "integrity": -3,
         "damage": 6,
@@ -196,15 +129,10 @@
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/gold",
-        "material": "minecraft:gold_ingot",
-        "materialCount": 16,
         "durability": 30,
         "integrity": -3,
         "damage": 7,
@@ -212,15 +140,10 @@
         "glyph": {
             "tint": "eaee57",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     },
     {
         "key": "heavy_blade/obsidian",
-        "material": "minecraft:obsidian",
-        "materialCount": 8,
         "durability": 960,
         "integrity": -4,
         "damage": 9,
@@ -228,9 +151,6 @@
         "glyph": {
             "tint": "3c3056",
             "textureX": 48
-        },
-        "requiredCapabilities": {
-            "hammer": 4
         }
     }
 ]

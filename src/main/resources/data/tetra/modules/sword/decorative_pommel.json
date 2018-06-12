@@ -1,7 +1,6 @@
 [
     {
         "key": "decorative_pommel/oak",
-        "material": "minecraft:oak",
         "durability": 8,
         "integrity": 0,
         "glyph": {
@@ -12,7 +11,6 @@
     },
     {
         "key": "decorative_pommel/cobblestone",
-        "material": "minecraft:cobblestone",
         "durability": 8,
         "integrity": 0,
         "glyph": {
@@ -23,7 +21,6 @@
     },
     {
         "key": "decorative_pommel/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 8,
         "integrity": 0,
         "glyph": {
@@ -34,7 +31,6 @@
     },
     {
         "key": "decorative_pommel/gold",
-        "material": "minecraft:gold",
         "durability": 8,
         "integrity": 0,
         "glyph": {
@@ -45,7 +41,6 @@
     },
     {
         "key": "decorative_pommel/diamond",
-        "material": "minecraft:diamond_ingot",
         "durability": 8,
         "integrity": 0,
         "glyph": {

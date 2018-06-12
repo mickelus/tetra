@@ -86,24 +86,6 @@ public abstract class BasicSchema implements UpgradeSchema {
         return getRequiredCapabilities(targetStack, materials).stream()
                 .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
-    @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
-        ItemStack upgradedStack = itemStack.copy();
-
-        ItemModule previousModule = removePreviousModule(upgradedStack);
-        module.addModule(upgradedStack, materials, consumeMaterials, player);
-
-        if (previousModule != null && consumeMaterials) {
-            previousModule.postRemove(upgradedStack, player);
-        }
-
-        if (consumeMaterials && player instanceof EntityPlayerMP) {
-            // todo: add proper criteria
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
-        }
-
-        return upgradedStack;
-    }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack) {
         ItemModular item = (ItemModular) itemStack.getItem();

@@ -1,8 +1,6 @@
 [
     {
         "key": "quiver/leather",
-        "material": "minecraft:leather",
-        "materialCount": 3,
         "integrity": -3,
         "size": 9,
         "glyph": {
@@ -12,8 +10,6 @@
     },
     {
         "key": "quiver/wool",
-        "material": "minecraft:wool",
-        "materialCount": 2,
         "integrity": -1,
         "size": 6,
         "glyph": {
@@ -23,8 +19,6 @@
     },
     {
         "key": "quiver/hide",
-        "material": "minecraft:rabbit_hide",
-        "materialCount": 7,
         "integrity": 0,
         "size": 4,
         "glyph": {

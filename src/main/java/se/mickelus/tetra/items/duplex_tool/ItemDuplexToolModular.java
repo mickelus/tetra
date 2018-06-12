@@ -117,17 +117,17 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createHammerStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK)));
-            itemList.add(createHammerStack(new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.IRON_INGOT)));
+            itemList.add(createHammerStack("log", "stick"));
+            itemList.add(createHammerStack("obsidian", "iron"));
         }
     }
 
-    public ItemStack createHammerStack(ItemStack headMaterial, ItemStack handleMaterial) {
+    public ItemStack createHammerStack(String headMaterial, String handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
-        basicHammerHeadLeft.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
-        basicHammerHeadRight.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
-        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{handleMaterial}, false, null);
+        basicHammerHeadLeft.addModule(itemStack, "basic_hammer/" + headMaterial, null);
+        basicHammerHeadRight.addModule(itemStack, "basic_hammer/" + headMaterial, null);
+        BasicHandleModule.instance.addModule(itemStack, "basic_handle/" + handleMaterial, null);
         return itemStack;
     }
 

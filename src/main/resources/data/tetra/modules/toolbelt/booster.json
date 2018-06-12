@@ -1,15 +1,10 @@
 [
     {
         "key": "booster/iron",
-        "material": "minecraft:iron_ingot",
-        "materialCount": 8,
         "integrity": -4,
         "glyph": {
             "tint": "ffffff",
             "textureX": 240
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         },
         "effects": {
             "booster": 1

@@ -19,7 +19,7 @@ public class TetraCreativeTabs extends CreativeTabs {
 
     @Override
     public ItemStack getTabIconItem() {
-        return ItemDuplexToolModular.instance.createHammerStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK));
+        return ItemDuplexToolModular.instance.createHammerStack("log", "stick");
     }
 
     public static TetraCreativeTabs getInstance() {

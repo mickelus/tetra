@@ -68,20 +68,6 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }
 
-    private ItemStack createItemStack(String material) {
-        ItemStack itemStack = new ItemStack(this);
-        itemStack.setTagCompound(new NBTTagCompound());
-
-        ItemStack bladeMaterial = getStackFromMaterialString(material);
-
-        BladeModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-        HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false, null);
-        MakeshiftGuardModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-        DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-
-        return itemStack;
-    }
-
     @Override
     public boolean canHarvestBlock(IBlockState blockState) {
         return blockState.getBlock() == Blocks.WEB;

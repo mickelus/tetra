@@ -1,7 +1,6 @@
 [
     {
         "key": "basic_hammer/log",
-        "material": "minecraft:log",
         "durability": 100,
         "integrity": -1,
         "damage": 2,
@@ -16,7 +15,6 @@
     },
     {
         "key": "basic_hammer/stone",
-        "material": "minecraft:stone",
         "durability": 300,
         "integrity": -1,
         "damage": 3,
@@ -31,7 +29,6 @@
     },
     {
         "key": "basic_hammer/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 300,
         "integrity": -2,
         "damage": 4,
@@ -42,14 +39,10 @@
         },
         "capabilities": {
             "hammer": 2
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "basic_hammer/obsidian",
-        "material": "minecraft:obsidian",
         "durability": 720,
         "integrity": -3,
         "damage": 4,
@@ -60,9 +53,6 @@
         },
         "capabilities": {
             "hammer": 4
-        },
-        "requiredCapabilities": {
-            "hammer": 3
         }
     }
 ]

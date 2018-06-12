@@ -48,36 +48,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return slotKey;
     }
 
-    public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
-        NBTTagCompound tag = NBTHelper.getTag(targetStack);
-        ModuleData data = getDataByMaterial(materials[0]);
-
-        tag.setString(slotKey, moduleKey);
-        tag.setString(dataKey, data.key);
-
-        if (consumeMaterials) {
-            materials[0].shrink(data.materialCount);
-        }
-    }
-
     public void addModule(ItemStack targetStack, String variantKey, EntityPlayer player) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
 
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, variantKey);
-    }
-
-    public T getDataByMaterial(ItemStack materialStack) {
-        String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
-
-        return Arrays.stream(data)
-                .filter(moduleData -> {
-                    if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
-                        return false;
-                    }
-                    return materialName.equals(moduleData.material);
-                })
-                .findAny().orElse(getDefaultData());
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {

@@ -1,7 +1,6 @@
 [
     {
         "key": "basic_handle/stick",
-        "material": "minecraft:stick",
         "durability": 20,
         "integrity": 4,
         "glyph": {
@@ -12,7 +11,6 @@
     },
     {
         "key": "basic_handle/bone",
-        "material": "minecraft:bone",
         "durability": 39,
         "integrity": 5,
         "glyph": {
@@ -23,16 +21,12 @@
     },
     {
         "key": "basic_handle/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 58,
         "integrity": 6,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 21,
             "textureY": 16
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     }
 ]
