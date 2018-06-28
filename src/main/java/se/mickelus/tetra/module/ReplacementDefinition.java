@@ -25,7 +25,12 @@ public class ReplacementDefinition {
             ReplacementDefinition replacement = new ReplacementDefinition();
             JsonObject jsonObject = element.getAsJsonObject();
 
-            replacement.predicate = ItemPredicate.deserialize(JsonUtils.getJsonObject(jsonObject, "predicate"));
+            try {
+                replacement.predicate = ItemPredicate.deserialize(JsonUtils.getJsonObject(jsonObject, "predicate"));
+            } catch (JsonSyntaxException e) {
+                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JsonUtils.getJsonObject(jsonObject, "predicate").toString()));
+                return replacement;
+            }
 
             ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "item"));
             Item item = Item.REGISTRY.getObject(resourcelocation);
