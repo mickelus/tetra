@@ -2,7 +2,7 @@
     {
         "key": "basic_handle/stick",
         "durability": 20,
-        "integrity": 4,
+        "integrity": 3,
         "glyph": {
             "tint": "866526",
             "textureX": 21,
@@ -10,9 +10,107 @@
         }
     },
     {
+        "key": "basic_handle/oak",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/spruce",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/birch",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/jungle",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/acacia",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/dark_oak",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/maple",
+        "durability": 38,
+        "integrity": 5,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/cherry",
+        "durability": 39,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/baobab",
+        "durability": 47,
+        "integrity": 8,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
         "key": "basic_handle/bone",
         "durability": 39,
-        "integrity": 5,
+        "integrity": 4,
         "glyph": {
             "tint": "edebca",
             "textureX": 21,
@@ -22,9 +120,84 @@
     {
         "key": "basic_handle/iron",
         "durability": 58,
-        "integrity": 6,
+        "integrity": 5,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/bronze",
+        "durability": 18,
+        "integrity": 6,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/steel",
+        "durability": 244,
+        "integrity": 5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/blaze_rod",
+        "durability": 80,
+        "integrity": 7,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "ffc100",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/end_rod",
+        "durability": 106,
+        "integrity": 8,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/greatwood",
+        "durability": 22,
+        "integrity": 6,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/treated_wood",
+        "durability": 124,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 21,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/ironwood",
+        "durability": 63,
+        "integrity": 5,
+        "glyph": {
+            "tint": "bd9ab1",
             "textureX": 21,
             "textureY": 16
         }

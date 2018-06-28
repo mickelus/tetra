@@ -121,6 +121,161 @@
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/prismarine"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/knightmetal"
             }
         ]
     }

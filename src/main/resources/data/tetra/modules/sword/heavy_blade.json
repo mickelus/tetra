@@ -1,7 +1,7 @@
 [
     {
         "key": "heavy_blade/oak_log",
-        "durability": 200,
+        "durability": 100,
         "integrity": -2,
         "damage": 3,
         "attackSpeed": -1,
@@ -12,7 +12,7 @@
     },
     {
         "key": "heavy_blade/spruce_log",
-        "durability": 200,
+        "durability": 100,
         "integrity": -2,
         "damage": 3,
         "attackSpeed": -0.7,
@@ -23,7 +23,7 @@
     },
     {
         "key": "heavy_blade/birch_log",
-        "durability": 240,
+        "durability": 140,
         "integrity": -2,
         "damage": 3,
         "attackSpeed": -1,
@@ -34,7 +34,7 @@
     },
     {
         "key": "heavy_blade/jungle_log",
-        "durability": 200,
+        "durability": 100,
         "integrity": -2,
         "damage": 4,
         "attackSpeed": -1,
@@ -45,7 +45,7 @@
     },
     {
         "key": "heavy_blade/acacia_log",
-        "durability": 240,
+        "durability": 140,
         "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.7,
@@ -56,7 +56,7 @@
     },
     {
         "key": "heavy_blade/dark_oak_log",
-        "durability": 200,
+        "durability": 100,
         "integrity": -2,
         "damage": 3,
         "attackSpeed": -1,
@@ -67,7 +67,7 @@
     },
     {
         "key": "heavy_blade/cobblestone",
-        "durability": 300,
+        "durability": 210,
         "integrity": -2,
         "damage": 4,
         "attackSpeed": -1,
@@ -78,7 +78,7 @@
     },
     {
         "key": "heavy_blade/stone",
-        "durability": 370,
+        "durability": 390,
         "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.9,
@@ -89,7 +89,7 @@
     },
     {
         "key": "heavy_blade/granite",
-        "durability": 410,
+        "durability": 430,
         "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.9,
@@ -144,10 +144,152 @@
     },
     {
         "key": "heavy_blade/obsidian",
-        "durability": 960,
+        "durability": 2423,
         "integrity": -4,
         "damage": 9,
         "attackSpeed": -1.2,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/copper",
+        "durability": 295,
+        "integrity": -2,
+        "damage": 5,
+        "attackSpeed": -1.1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/tin",
+        "durability": 151,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": -0.9,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/silver",
+        "durability": 105,
+        "integrity": -3,
+        "damage": 5,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/nickel",
+        "durability": 370,
+        "integrity": -3,
+        "damage": 7,
+        "attackSpeed": -1.1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/lead",
+        "durability": 220,
+        "integrity": -4,
+        "damage": 6,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/bronze",
+        "durability": 643,
+        "integrity": -1,
+        "damage": 6,
+        "attackSpeed": -1.1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/electrum",
+        "durability": 122,
+        "integrity": -3,
+        "damage": 5,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/steel",
+        "durability": 790,
+        "integrity": -3,
+        "damage": 7,
+        "attackSpeed": -1.1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/thaumium",
+        "durability": 851,
+        "integrity": -3,
+        "damage": 6.5,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/ironwood",
+        "durability": 865,
+        "integrity": -3,
+        "damage": 6,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/steeleaf",
+        "durability": 130,
+        "integrity": -3,
+        "damage": 7,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/fierymetal",
+        "durability": 1888,
+        "integrity": -7,
+        "damage": 9,
+        "attackSpeed": -1,
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48
+        }
+    },
+    {
+        "key": "heavy_blade/knightmetal",
+        "durability": 492,
+        "integrity": -3,
+        "damage": 6,
         "glyph": {
             "tint": "3c3056",
             "textureX": 48

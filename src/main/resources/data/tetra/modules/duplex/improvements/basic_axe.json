@@ -102,5 +102,21 @@
         "effects": {
             "mending": 1
         }
-    }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "fiery": 1
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "fiery": 2
+        }
+    },
 ]

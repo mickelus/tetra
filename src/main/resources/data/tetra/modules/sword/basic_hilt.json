@@ -2,7 +2,7 @@
     {
         "key": "basic_hilt/hilt_stick",
         "durability": 10,
-        "integrity": 2,
+        "integrity": 3,
         "glyph": {
             "tint": "866526",
             "textureX": 16
@@ -10,8 +10,8 @@
     },
     {
         "key": "basic_hilt/oak",
-        "durability": 24,
-        "integrity": 3,
+        "durability": 17,
+        "integrity": 4,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "755821",
@@ -19,29 +19,127 @@
         }
     },
     {
-        "key": "basic_hilt/iron",
-        "durability": 32,
+        "key": "basic_hilt/spruce",
+        "durability": 17,
         "integrity": 4,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/birch",
+        "durability": 17,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/jungle",
+        "durability": 17,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/acacia",
+        "durability": 17,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/dark_oak",
+        "durability": 17,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/maple",
+        "durability": 23,
+        "integrity": 5,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/cherry",
+        "durability": 27,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_handle/baobab",
+        "durability": 33,
+        "integrity": 8,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "755821",
             "textureX": 16
         }
     },
     {
         "key": "basic_hilt/bone",
-        "durability": 20,
+        "durability": 12,
         "integrity": 4,
-        "attackSpeed": -0.2,
         "glyph": {
             "tint": "edebca",
             "textureX": 16
         }
     },
     {
-        "key": "basic_hilt/blaze_rod",
-        "durability": 80,
+        "key": "basic_hilt/iron",
+        "durability": 32,
+        "integrity": 5,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/bronze",
+        "durability": 12,
         "integrity": 6,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/steel",
+        "durability": 47,
+        "integrity": 5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/blaze_rod",
+        "durability": 63,
+        "integrity": 7,
+        "attackSpeed": -0.1,
         "glyph": {
             "tint": "ffc100",
             "textureX": 16
@@ -49,8 +147,37 @@
     },
     {
         "key": "basic_hilt/end_rod",
-        "durability": 106,
+        "durability": 88,
         "integrity": 8,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/greatwood",
+        "durability": 11,
+        "integrity": 6,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/treated_wood",
+        "durability": 81,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 16
+        }
+    },
+    {
+        "key": "basic_hilt/ironwood",
+        "durability": 44,
+        "integrity": 5,
         "glyph": {
             "tint": "bd9ab1",
             "textureX": 16

@@ -14,7 +14,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/oak"
@@ -73,6 +73,166 @@
                 },
                 "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/ironwood",
+                "improvements": {
+                    "enchantment/fortune": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/steeleaf",
+                "improvements": {
+                    "enchantment/efficiency": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFierymetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/fierymetal",
+                "improvements": {
+                    "enchantment/fire_aspect": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                  "hammer": 2
+                },
+                "ModuleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/knightmetal"
             }
         ]
     }

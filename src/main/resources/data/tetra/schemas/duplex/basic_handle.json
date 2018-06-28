@@ -25,6 +25,26 @@
             },
             {
                 "material": {
+                    "item": "minecraft:blaze_rod"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/blaze_rod"
+            },
+            {
+                "material": {
+                    "item": "minecraft:end_rod"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/end_rod"
+            },
+            {
+                "material": {
                     "item": "minecraft:iron_ingot"
                 },
                 "requiredCapabilities": {
@@ -32,6 +52,159 @@
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/iron"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "bronzeIngot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "steelIngot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/steel"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "forestry:planks",
+                    "data": 6
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/maple"
+            },
+            {
+                "material": {
+                    "item": "forestry:planks",
+                    "data": 15
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/cherry"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:plank_greatwood"
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/greatwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankTreatedWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/treated_wood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stickTreatedWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/treated_wood"
+            },
+            {
+                "material": {
+                    "item": "rustic:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/ironwood"
             }
         ]
     }

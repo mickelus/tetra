@@ -82,5 +82,187 @@
         "capabilities": {
             "axe": [1, 12]
         }
+    },
+    {
+        "key": "basic_axe/copper",
+        "durability": 113,
+        "integrity": 0,
+        "damage": 6,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 5]
+        }
+    },
+    {
+        "key": "basic_axe/tin",
+        "durability": 44,
+        "integrity": 0,
+        "damage": 5.5,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 7]
+        }
+    },
+    {
+        "key": "basic_axe/silver",
+        "durability": 163,
+        "integrity": -1,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [1, 11]
+        }
+    },
+    {
+        "key": "basic_axe/nickel",
+        "durability": 156,
+        "integrity": -2,
+        "damage": 6,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 7]
+        }
+    },
+    {
+        "key": "basic_axe/lead",
+        "durability": 64,
+        "integrity": -1,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 5]
+        }
+    },
+    {
+        "key": "basic_axe/bronze",
+        "durability": 357,
+        "integrity": -1,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [3, 8.1]
+        }
+    },
+    {
+        "key": "basic_axe/electrum",
+        "durability": 89,
+        "integrity": -1,
+        "damage": 6,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 13]
+        }
+    },
+    {
+        "key": "basic_axe/steel",
+        "durability": 394,
+        "integrity": -2,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [3, 8]
+        }
+    },
+    {
+        "key": "basic_axe/thaumium",
+        "durability": 419,
+        "integrity": -2,
+        "damage": 7,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 6.7]
+        }
+    },
+    {
+        "key": "basic_axe/ironwood",
+        "durability": 416,
+        "integrity": -2,
+        "damage": 5,
+        "attackSpeed": -0.6,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 7.22]
+        }
+    },
+    {
+        "key": "basic_axe/steeleaf",
+        "durability": 96,
+        "integrity": -1,
+        "damage": 6,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 8.88]
+        }
+    },
+    {
+        "key": "basic_axe/fierymetal",
+        "durability": 756,
+        "integrity": -2,
+        "damage": 7,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 10]
+        }
+    },
+    {
+        "key": "basic_axe/knightmetal",
+        "durability": 396,
+        "integrity": -2,
+        "damage": 6,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "73b5aa",
+            "textureX": 144
+        },
+        "capabilities": {
+            "axe": [2, 8.88]
+        }
     }
 ]

@@ -169,6 +169,174 @@
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 8
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/knightmetal"
             }
         ]
     }

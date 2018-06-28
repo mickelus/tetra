@@ -29,8 +29,52 @@
         }
     },
     {
-        "moduleVariants": ["basic_pickaxe/oak", "basic_pickaxe/oak"],
-        "damage": 1
+        "moduleVariants": ["basic_hammer/nickel", "basic_hammer/nickel"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/steel", "basic_hammer/steel"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
+        "capabilities": {
+            "hammer": 1
+        }
     },
     {
         "moduleVariants": ["basic_pickaxe/cobblestone", "basic_pickaxe/cobblestone"],
@@ -39,17 +83,9 @@
         }
     },
     {
-        "moduleVariants": ["basic_pickaxe/iron", "basic_pickaxe/iron"],
-        "damage": 1
-    },
-    {
         "moduleVariants": ["basic_pickaxe/diamond", "basic_pickaxe/diamond"],
         "capabilities": {
             "pickaxe": 1
         }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/gold", "basic_pickaxe/gold"],
-        "damage": 1
     }
 ]

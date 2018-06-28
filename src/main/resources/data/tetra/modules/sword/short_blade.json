@@ -108,5 +108,148 @@
             "tint": "73b5aa",
             "textureX": 32
         }
+    },
+    {
+        "key": "short_blade/copper",
+        "durability": 85,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 1.4,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/tin",
+        "durability": 77,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/silver",
+        "durability": 36,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/nickel",
+        "durability": 133,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/lead",
+        "durability": 75,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/bronze",
+        "durability": 201,
+        "integrity": 0,
+        "damage": 4.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/electrum",
+        "durability": 41,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/steel",
+        "durability": 311,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/thaumium",
+        "durability": 281,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/ironwood",
+        "durability": 260,
+        "integrity": -1,
+        "damage": 4.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/steeleaf",
+        "durability": 61,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/fierymetal",
+        "durability": 450,
+        "integrity": -3,
+        "damage": 6.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
+    },
+    {
+        "key": "short_blade/knightmetal",
+        "durability": 150,
+        "integrity": -1,
+        "damage": 4.5,
+        "attackSpeed": 2.2,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32
+        }
     }
 ]

@@ -45,7 +45,7 @@
         "key": "basic_hammer/obsidian",
         "durability": 720,
         "integrity": -3,
-        "damage": 4,
+        "damage": 5,
         "attackSpeed": -0.6,
         "glyph": {
             "tint": "3c3056",
@@ -53,6 +53,174 @@
         },
         "capabilities": {
             "hammer": 4
+        }
+    },
+    {
+        "key": "basic_hammer/copper",
+        "durability": 221,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/tin",
+        "durability": 160,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/nickel",
+        "durability": 240,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/lead",
+        "durability": 89,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/bronze",
+        "durability": 465,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/electrum",
+        "durability": 102,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_hammer/steel",
+        "durability": 521,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/thaumium",
+        "durability": 634,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/ironwood",
+        "durability": 591,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/steeleaf",
+        "durability": 111,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/fierymetal",
+        "durability": 947,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/knightmetal",
+        "durability": 512,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
         }
     }
 ]

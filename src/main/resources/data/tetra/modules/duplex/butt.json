@@ -59,5 +59,178 @@
             "tint": "eaee57",
             "textureX": 160
         }
+    },
+    {
+        "key": "butt/copper",
+        "durability": 18,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/tin",
+        "durability": 15,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/silver",
+        "durability": 17,
+        "integrity": 0,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/nickel",
+        "durability": 31,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/lead",
+        "durability": 16,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/bronze",
+        "durability": 47,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/electrum",
+        "durability": 8,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/steel",
+        "durability": 53,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/thaumium",
+        "durability": 61,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/ironwood",
+        "durability": 66,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/steeleaf",
+        "durability": 15,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/fierymetal",
+        "durability": 235,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/knightmetal",
+        "durability": 86,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "axe": [1, 2]
+        }
+    },
+    {
+        "key": "butt/knightmetal2",
+        "durability": 86,
+        "integrity": -1,
+        "damage": 1,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
     }
 ]

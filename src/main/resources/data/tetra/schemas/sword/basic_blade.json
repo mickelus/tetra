@@ -206,6 +206,174 @@
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "materialSlot": 0,
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/knightmetal"
             }
         ]
     }
