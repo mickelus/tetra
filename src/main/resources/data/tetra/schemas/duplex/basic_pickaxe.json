@@ -14,7 +14,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "duplex/basic_pickaxe",
                 "moduleVariant": "basic_pickaxe/oak"

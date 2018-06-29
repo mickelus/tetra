@@ -158,7 +158,7 @@
                     "data": 15
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/cherry"
@@ -168,7 +168,7 @@
                     "item": "thaumcraft:plank_greatwood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/greatwood"
@@ -179,7 +179,7 @@
                     "ore": "plankTreatedWood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/treated_wood"
@@ -190,7 +190,7 @@
                     "ore": "stickTreatedWood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/treated_wood"

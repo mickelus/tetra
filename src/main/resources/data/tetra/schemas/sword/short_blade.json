@@ -13,7 +13,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/oak"
@@ -25,7 +25,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/spruce"
@@ -37,7 +37,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/birch"
@@ -49,7 +49,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/jungle"
@@ -61,7 +61,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/acacia"
@@ -73,7 +73,7 @@
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/dark_oak"

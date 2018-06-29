@@ -13,7 +13,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/oak_log"
@@ -25,7 +25,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/spruce_log"
@@ -37,7 +37,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/birch_log"
@@ -49,7 +49,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/jungle_log"
@@ -61,7 +61,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/acacia_log"
@@ -73,7 +73,7 @@
                     "count": 8
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "axe": 2
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/dark_oak_log"

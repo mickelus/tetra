@@ -172,7 +172,7 @@
                     "data": 15
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/cherry"
@@ -182,7 +182,7 @@
                     "item": "thaumcraft:plank_greatwood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/greatwood"
@@ -193,7 +193,7 @@
                     "ore": "plankTreatedWood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/treated_wood"
@@ -204,7 +204,7 @@
                     "ore": "stickTreatedWood"
                 },
                 "requiredCapabilities": {
-                    "axe": 2
+                    "axe": 3
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/treated_wood"
