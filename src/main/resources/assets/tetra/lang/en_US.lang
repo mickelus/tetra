@@ -171,7 +171,7 @@ basic_hilt/jungle=Jungle wood hilt
 basic_hilt/dark_oak=Dark oak hilt
 basic_hilt/maple=Maple hilt
 basic_hilt/cherry=Cherry wood hilt
-basic_hilt/cherry=Baobab hilt
+basic_hilt/baobab=Baobab hilt
 basic_hilt/bronze=Bronze hilt
 basic_hilt/steel=Steel hilt
 basic_hilt/greatwood=Greatwood hilt
@@ -417,7 +417,7 @@ basic_handle/jungle=Jungle wood handle
 basic_handle/dark_oak=Dark oak handle
 basic_handle/maple=Maple handle
 basic_handle/cherry=Cherry wood handle
-basic_handle/cherry=Baobab handle
+basic_handle/baobab=Baobab handle
 basic_handle/bronze=Bronze handle
 basic_handle/steel=Steel handle
 basic_handle/greatwood=Greatwood handle
@@ -636,6 +636,9 @@ basic_hammer/steeleaf.prefix=Steeleaf
 basic_hammer/fierymetal=Fiery hammer
 basic_hammer/fierymetal.name=Hammer
 basic_hammer/fierymetal.prefix=Fiery
+basic_hammer/knightmetal=Knightmetal hammer
+basic_hammer/knightmetal.name=Hammer
+basic_hammer/knightmetal.prefix=Knightmetal
 
 ###############################
 # TOOLBELT MISC
