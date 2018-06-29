@@ -120,28 +120,28 @@
         "durability": 148,
         "integrity": 0,
         "damage": 4,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "df7646" }
     },
     {
         "key": "basic_blade/tin",
         "durability": 126,
         "integrity": 0,
         "damage": 4,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "b3c9c1" }
     },
     {
         "key": "basic_blade/silver",
         "durability": 60,
         "integrity": -1,
         "damage": 4,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "d6f6ff" }
     },
     {
         "key": "basic_blade/nickel",
         "durability": 200,
         "integrity": -1,
         "damage": 5.5,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "c2d3a6" }
     },
     {
         "key": "basic_blade/lead",
@@ -149,56 +149,56 @@
         "integrity": -2,
         "attackSpeed": -0.1,
         "damage": 6,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "897a9b" }
     },
     {
         "key": "basic_blade/bronze",
         "durability": 320,
         "integrity": 0,
         "damage": 5,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "b2712c" }
     },
     {
         "key": "basic_blade/electrum",
         "durability": 53,
         "integrity": -1,
         "damage": 4,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "e4da4c" }
     },
     {
         "key": "basic_blade/steel",
         "durability": 380,
         "integrity": -1,
         "damage": 6,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "999999" }
     },
     {
         "key": "basic_blade/thaumium",
         "durability": 470,
         "integrity": -1,
         "damage": 5.5,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "4d3984" }
     },
     {
         "key": "basic_blade/ironwood",
         "durability": 482,
         "integrity": -1,
         "damage": 5,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "5ea917" }
     },
     {
         "key": "basic_blade/steeleaf",
         "durability": 101,
         "integrity": -1,
         "damage": 6,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "458430" }
     },
     {
         "key": "basic_blade/fierymetal",
         "durability": 944,
         "integrity": -5,
         "damage": 7,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "fa9f00" }
     },
     {
         "key": "basic_blade/knightmetal",
@@ -206,6 +206,6 @@
         "integrity": -2,
         "damage": 5,
         "attackSpeed": 0.3,
-        "glyph": { "tint": "d8d8d8" }
+        "glyph": { "tint": "b8cf9c" }
     }
 ]

@@ -48,7 +48,7 @@
         "key": "decorative_pommel/copper",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "df7646",
             "textureX": 14,
             "textureY": 16
         }
@@ -57,7 +57,7 @@
         "key": "decorative_pommel/tin",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b3c9c1",
             "textureX": 14,
             "textureY": 16
         }
@@ -66,7 +66,7 @@
         "key": "decorative_pommel/silver",
         "durability": 4,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "d6f6ff",
             "textureX": 14,
             "textureY": 16
         }
@@ -75,7 +75,7 @@
         "key": "decorative_pommel/nickel",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "c2d3a6",
             "textureX": 14,
             "textureY": 16
         }
@@ -84,7 +84,7 @@
         "key": "decorative_pommel/lead",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "897a9b",
             "textureX": 14,
             "textureY": 16
         }
@@ -93,7 +93,7 @@
         "key": "decorative_pommel/bronze",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b2712c",
             "textureX": 14,
             "textureY": 16
         }
@@ -102,7 +102,7 @@
         "key": "decorative_pommel/electrum",
         "durability": 5,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "e4da4c",
             "textureX": 14,
             "textureY": 16
         }
@@ -111,7 +111,7 @@
         "key": "decorative_pommel/steel",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "999999",
             "textureX": 14,
             "textureY": 16
         }
@@ -120,7 +120,7 @@
         "key": "decorative_pommel/thaumium",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "4d3984",
             "textureX": 14,
             "textureY": 16
         }
@@ -129,7 +129,7 @@
         "key": "decorative_pommel/ironwood",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "5ea917",
             "textureX": 14,
             "textureY": 16
         }
@@ -138,7 +138,7 @@
         "key": "decorative_pommel/steeleaf",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "458430",
             "textureX": 14,
             "textureY": 16
         }
@@ -147,7 +147,7 @@
         "key": "decorative_pommel/fierymetal",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "fa9f00",
             "textureX": 14,
             "textureY": 16
         }
@@ -156,7 +156,7 @@
         "key": "decorative_pommel/knightmetal",
         "durability": 8,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b8cf9c",
             "textureX": 14,
             "textureY": 16
         }

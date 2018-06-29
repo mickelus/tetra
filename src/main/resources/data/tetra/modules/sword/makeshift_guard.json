@@ -48,7 +48,7 @@
         "key": "makeshift_guard/copper",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "df7646",
             "textureX": 7,
             "textureY": 16
         }
@@ -57,7 +57,7 @@
         "key": "makeshift_guard/tin",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b3c9c1",
             "textureX": 7,
             "textureY": 16
         }
@@ -66,7 +66,7 @@
         "key": "makeshift_guard/silver",
         "durability": 6,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "d6f6ff",
             "textureX": 7,
             "textureY": 16
         }
@@ -75,7 +75,7 @@
         "key": "makeshift_guard/nickel",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "c2d3a6",
             "textureX": 7,
             "textureY": 16
         }
@@ -84,7 +84,7 @@
         "key": "makeshift_guard/lead",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "897a9b",
             "textureX": 7,
             "textureY": 16
         }
@@ -93,7 +93,7 @@
         "key": "makeshift_guard/bronze",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b2712c",
             "textureX": 7,
             "textureY": 16
         }
@@ -102,7 +102,7 @@
         "key": "makeshift_guard/electrum",
         "durability": 6,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "e4da4c",
             "textureX": 7,
             "textureY": 16
         }
@@ -111,7 +111,7 @@
         "key": "makeshift_guard/steel",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "999999",
             "textureX": 7,
             "textureY": 16
         }
@@ -120,7 +120,7 @@
         "key": "makeshift_guard/thaumium",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "4d3984",
             "textureX": 7,
             "textureY": 16
         }
@@ -129,7 +129,7 @@
         "key": "makeshift_guard/ironwood",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "5ea917",
             "textureX": 7,
             "textureY": 16
         }
@@ -138,7 +138,7 @@
         "key": "makeshift_guard/steeleaf",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "458430",
             "textureX": 7,
             "textureY": 16
         }
@@ -147,7 +147,7 @@
         "key": "makeshift_guard/fierymetal",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "fa9f00",
             "textureX": 7,
             "textureY": 16
         }
@@ -156,7 +156,7 @@
         "key": "makeshift_guard/knightmetal",
         "durability": 12,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "b8cf9c",
             "textureX": 7,
             "textureY": 16
         }

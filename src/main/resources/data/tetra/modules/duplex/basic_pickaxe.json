@@ -90,7 +90,7 @@
         "damage": 1,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "df7646",
             "textureX": 176
         },
         "capabilities": {
@@ -104,7 +104,7 @@
         "damage": 1,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "b3c9c1",
             "textureX": 176
         },
         "capabilities": {
@@ -118,7 +118,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "d6f6ff",
             "textureX": 176
         },
         "capabilities": {
@@ -132,7 +132,7 @@
         "damage": 1.5,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "c2d3a6",
             "textureX": 176
         },
         "capabilities": {
@@ -146,7 +146,7 @@
         "damage": 1.5,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "897a9b",
             "textureX": 176
         },
         "capabilities": {
@@ -160,7 +160,7 @@
         "damage": 1.5,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "b2712c",
             "textureX": 176
         },
         "capabilities": {
@@ -174,7 +174,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "e4da4c",
             "textureX": 176
         },
         "capabilities": {
@@ -188,7 +188,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "999999",
             "textureX": 176
         },
         "capabilities": {
@@ -202,7 +202,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "4d3984",
             "textureX": 176
         },
         "capabilities": {
@@ -216,7 +216,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "5ea917",
             "textureX": 176
         },
         "capabilities": {
@@ -230,7 +230,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "458430",
             "textureX": 176
         },
         "capabilities": {
@@ -244,7 +244,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "fa9f00",
             "textureX": 176
         },
         "capabilities": {
@@ -258,7 +258,7 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "b8cf9c",
             "textureX": 176
         },
         "capabilities": {

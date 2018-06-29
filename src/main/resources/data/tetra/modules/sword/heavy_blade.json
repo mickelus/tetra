@@ -160,7 +160,7 @@
         "damage": 5,
         "attackSpeed": -1.1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "df7646",
             "textureX": 48
         }
     },
@@ -171,7 +171,7 @@
         "damage": 4,
         "attackSpeed": -0.9,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "b3c9c1",
             "textureX": 48
         }
     },
@@ -182,7 +182,7 @@
         "damage": 5,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "d6f6ff",
             "textureX": 48
         }
     },
@@ -193,7 +193,7 @@
         "damage": 7,
         "attackSpeed": -1.1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "c2d3a6",
             "textureX": 48
         }
     },
@@ -204,7 +204,7 @@
         "damage": 6,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "897a9b",
             "textureX": 48
         }
     },
@@ -215,7 +215,7 @@
         "damage": 6,
         "attackSpeed": -1.1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "b2712c",
             "textureX": 48
         }
     },
@@ -226,7 +226,7 @@
         "damage": 5,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "e4da4c",
             "textureX": 48
         }
     },
@@ -237,7 +237,7 @@
         "damage": 7,
         "attackSpeed": -1.1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "999999",
             "textureX": 48
         }
     },
@@ -248,7 +248,7 @@
         "damage": 6.5,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "4d3984",
             "textureX": 48
         }
     },
@@ -259,7 +259,7 @@
         "damage": 6,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "5ea917",
             "textureX": 48
         }
     },
@@ -270,7 +270,7 @@
         "damage": 7,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "458430",
             "textureX": 48
         }
     },
@@ -281,7 +281,7 @@
         "damage": 9,
         "attackSpeed": -1,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "fa9f00",
             "textureX": 48
         }
     },
@@ -291,7 +291,7 @@
         "integrity": -3,
         "damage": 6,
         "glyph": {
-            "tint": "3c3056",
+            "tint": "b8cf9c",
             "textureX": 48
         }
     }
