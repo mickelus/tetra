@@ -61,22 +61,10 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 1
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/tin"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver",
-                    "count": 3
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "ModuleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/silver"
             },
             {
                 "material": {
@@ -97,7 +85,7 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/lead"
@@ -109,7 +97,7 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/bronze"
@@ -121,7 +109,7 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/electrum"
@@ -133,7 +121,7 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 4
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/steel"
@@ -143,13 +131,20 @@
                     "item": "thaumcraft:thaumium_ingot",
                     "count": 3
                 },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/thaumium"
             },
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotIronwood"
+                    "ore": "ingotIronwood",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
                 },
                 "ModuleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/ironwood"

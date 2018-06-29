@@ -29,19 +29,12 @@
         }
     },
     {
-        "moduleVariants": ["basic_hammer/nickel", "basic_hammer/nickel"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
         "moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
-        "capabilities": {
-            "hammer": 1
-        }
+        "integrity": 1
     },
     {
         "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
+        "integrity": 1,
         "capabilities": {
             "hammer": 1
         }
@@ -53,13 +46,19 @@
         }
     },
     {
-        "moduleVariants": ["basic_hammer/steel", "basic_hammer/steel"],
+        "moduleVariants": ["basic_hammer/obsidian", "basic_hammer/obsidian"],
         "capabilities": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
         "capabilities": {
             "hammer": 1
         }

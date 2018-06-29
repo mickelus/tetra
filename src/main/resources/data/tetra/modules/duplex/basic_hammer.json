@@ -71,22 +71,22 @@
     },
     {
         "key": "basic_hammer/tin",
-        "durability": 160,
-        "integrity": -2,
-        "damage": 4,
-        "attackSpeed": -0.3,
+        "durability": 120,
+        "integrity": -1,
+        "damage": 3,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": 1
         }
     },
     {
         "key": "basic_hammer/nickel",
         "durability": 240,
-        "integrity": -1,
+        "integrity": -4,
         "damage": 5,
         "attackSpeed": -0.4,
         "glyph": {
@@ -94,15 +94,15 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": 3
         }
     },
     {
         "key": "basic_hammer/lead",
-        "durability": 89,
-        "integrity": -1,
+        "durability": 120,
+        "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.3,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 64
@@ -116,7 +116,7 @@
         "durability": 465,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.3,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 64
@@ -128,7 +128,7 @@
     {
         "key": "basic_hammer/electrum",
         "durability": 102,
-        "integrity": 0,
+        "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -142,7 +142,7 @@
     {
         "key": "basic_hammer/steel",
         "durability": 521,
-        "integrity": 0,
+        "integrity": -5,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -150,13 +150,13 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": 4
         }
     },
     {
         "key": "basic_hammer/thaumium",
         "durability": 634,
-        "integrity": 0,
+        "integrity": -3,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -170,7 +170,7 @@
     {
         "key": "basic_hammer/ironwood",
         "durability": 591,
-        "integrity": 0,
+        "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -184,7 +184,7 @@
     {
         "key": "basic_hammer/steeleaf",
         "durability": 111,
-        "integrity": 0,
+        "integrity": -3,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -198,7 +198,7 @@
     {
         "key": "basic_hammer/fierymetal",
         "durability": 947,
-        "integrity": 0,
+        "integrity": -3,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -212,7 +212,7 @@
     {
         "key": "basic_hammer/knightmetal",
         "durability": 512,
-        "integrity": 0,
+        "integrity": -2,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
