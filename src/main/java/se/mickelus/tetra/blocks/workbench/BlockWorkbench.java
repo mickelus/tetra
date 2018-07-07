@@ -23,6 +23,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
@@ -67,7 +68,11 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Blocks.CRAFTING_TABLE.getItemDropped(Blocks.CRAFTING_TABLE.getDefaultState(), rand, fortune);
+        if (ConfigHandler.workbenchDropTable) {
+            return Blocks.CRAFTING_TABLE.getItemDropped(Blocks.CRAFTING_TABLE.getDefaultState(), rand, fortune);
+        } else {
+            return super.getItemDropped(state, rand, fortune);
+        }
     }
 
     public void breakBlock(World world, BlockPos pos, IBlockState state) {

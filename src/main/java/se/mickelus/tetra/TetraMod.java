@@ -1,6 +1,7 @@
 package se.mickelus.tetra;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
 import net.minecraftforge.common.MinecraftForge;
@@ -73,6 +74,8 @@ public class TetraMod {
         ForgeRegistries.ITEMS.registerAll(items);
         ForgeRegistries.BLOCKS.registerAll(blocks);
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
+
+        ForgeRegistries.ITEMS.register(new ItemBlock(BlockWorkbench.instance).setRegistryName(BlockWorkbench.instance.getRegistryName()));
 
         proxy.preInit(event,
                 Arrays.stream(items)
