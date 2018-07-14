@@ -366,7 +366,7 @@
     {
         "key": "heavy_blade/knightmetal",
         "durability": 492,
-        "integrity": -3,
+        "integrity": -2,
         "damage": 6,
         "glyph": {
             "tint": "b8cf9c",
