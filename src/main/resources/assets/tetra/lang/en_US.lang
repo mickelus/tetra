@@ -317,8 +317,8 @@ heavy_blade_schema.slot1=Blade material
 
 sword/heavy_blade.name=Greatsword
 
-heavy_blade/tempered.name=Crushing
-heavy_blade/tempered.description=Attacks partially ignore armor
+heavy_blade/crushing.name=Crushing
+heavy_blade/crushing.description=Attacks partially ignore armor
 
 heavy_blade/oak_log=Heavy oaken blade
 heavy_blade/oak_log.prefix=oaken
