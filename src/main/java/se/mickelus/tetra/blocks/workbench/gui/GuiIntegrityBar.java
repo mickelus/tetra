@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -42,7 +43,7 @@ public class GuiIntegrityBar extends GuiElement {
             }
 
             label.setString(String.format(labelText,
-                    integrityGain + integrityCost < 0 ? "§c" : "", -integrityCost, integrityGain));
+                    integrityGain + integrityCost < 0 ? TextFormatting.RED : "", -integrityCost, integrityGain));
         }
     }
 

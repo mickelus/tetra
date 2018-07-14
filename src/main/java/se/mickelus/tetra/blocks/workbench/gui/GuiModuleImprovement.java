@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiRect;
@@ -18,16 +19,16 @@ public class GuiModuleImprovement extends GuiElement {
 
         if (level < 0) {
             tooltipLines = Arrays.asList(
-                    "§4-" + I18n.format(improvement + ".name", ""),
-                    "§7" + I18n.format(improvement + ".description"));
+                    ChatFormatting.DARK_RED + "-" + I18n.format(improvement + ".name", ""),
+                    ChatFormatting.GRAY + I18n.format(improvement + ".description"));
         } else if (level == 0) {
             tooltipLines = Arrays.asList(
                     I18n.format(improvement + ".name"),
-                    "§7" + I18n.format(improvement + ".description"));
+                    ChatFormatting.GRAY + I18n.format(improvement + ".description"));
         } else {
             tooltipLines = Arrays.asList(
                     I18n.format(improvement + ".name") + " " + I18n.format("enchantment.level." + level),
-                    "§7" + I18n.format(improvement + ".description"));
+                    ChatFormatting.GRAY + I18n.format(improvement + ".description"));
         }
     }
 

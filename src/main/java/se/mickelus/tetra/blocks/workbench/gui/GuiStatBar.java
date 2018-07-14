@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import se.mickelus.tetra.gui.*;
 
 public class GuiStatBar extends GuiElement {
@@ -7,8 +8,8 @@ public class GuiStatBar extends GuiElement {
     protected static final int barMaxLength = 120;
     protected static final int barHeight = 1;
 
-    protected static final String increaseColorFont = "§a";
-    protected static final String decreaseColorFont = "§c";
+    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
+    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
 
     protected static final int increaseColorBar = 0x8855ff55;
     protected static final int decreaseColorBar = 0x88ff5555;
@@ -80,8 +81,8 @@ public class GuiStatBar extends GuiElement {
     private void updateValueLabel() {
         if (value != diffValue) {
             if (alignment == GuiAlignment.right) {
-                valueString.setString(String.format("%s(%+.02f) §r%.02f",
-                    value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, diffValue));
+                valueString.setString(String.format("%s(%+.02f) %s%.02f",
+                    value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, ChatFormatting.RESET, diffValue));
             } else {
                 valueString.setString(String.format("%.02f %s(%+.02f)",
                     diffValue, value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value));

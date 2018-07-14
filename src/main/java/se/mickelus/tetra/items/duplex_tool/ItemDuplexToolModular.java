@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.duplex_tool;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -64,8 +65,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        majorModuleNames = new String[]{"Head §7(left)", "Head §7(right)"};
-        majorModuleKeys = new String[]{headLeftKey,headRightKey};
+        majorModuleNames = new String[]{"Head " + ChatFormatting.GRAY + "(left)", "Head " + ChatFormatting.GRAY + "(right)"};
+        majorModuleKeys = new String[]{headLeftKey, headRightKey};
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 

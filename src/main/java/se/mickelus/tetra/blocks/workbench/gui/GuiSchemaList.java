@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
@@ -43,7 +44,7 @@ public class GuiSchemaList extends GuiElement {
         buttonClose = new GuiButton(215, -4, "x", closeCallback);
         addChild(buttonClose);
 
-        emptyStateText = new GuiText(10, 23, 204, "§7" + I18n.format("workbench.schema_list.empty"));
+        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("workbench.schema_list.empty"));
         addChild(emptyStateText);
 
         this.schemaSelectionConsumer = schemaSelectionConsumer;

@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -200,7 +201,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         if (isBroken(itemStack)) {
-            tooltip.add("§4§o" + I18n.format("item.modular.broken"));
+            tooltip.add(TextFormatting.DARK_RED.toString() + TextFormatting.ITALIC + I18n.format("item.modular.broken"));
         }
     }
 
