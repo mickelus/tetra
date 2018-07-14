@@ -310,7 +310,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/steeleaf"
+                "moduleVariant": "heavy_blade/steeleaf",
+                "improvements": {
+                    "sword/blade:enchantment/looting": 2
+                }
             },
             {
                 "material": {
@@ -323,7 +326,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/fierymetal"
+                "moduleVariant": "heavy_blade/fierymetal",
+                "improvements": {
+                    "sword/blade:enchantment/fire_aspect": 2
+                }
             },
             {
                 "material": {
@@ -336,7 +342,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/knightmetal"
+                "moduleVariant": "heavy_blade/knightmetal",
+                "improvements": {
+                    "sword/blade:heavy_blade/crushing": 1
+                }
             }
         ]
     }

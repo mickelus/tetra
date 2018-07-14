@@ -118,5 +118,12 @@
         "effects": {
             "fiery": 2
         }
+    },
+    {
+        "key": "basic_axe/severing",
+        "level": 1,
+        "effects": {
+            "unarmoredDamage": 1
+        }
     }
 ]

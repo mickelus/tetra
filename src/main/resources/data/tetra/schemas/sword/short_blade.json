@@ -251,7 +251,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/steeleaf"
+                "moduleVariant": "short_blade/steeleaf",
+                "improvements": {
+                    "sword/blade:enchantment/looting": 2
+                }
             },
             {
                 "material": {
@@ -263,7 +266,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/fierymetal"
+                "moduleVariant": "short_blade/fierymetal",
+                "improvements": {
+                    "sword/blade:enchantment/fire_aspect": 2
+                }
             },
             {
                 "material": {

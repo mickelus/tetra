@@ -245,7 +245,7 @@
         "key": "short_blade/knightmetal",
         "durability": 150,
         "integrity": -1,
-        "damage": 4.5,
+        "damage": 5,
         "attackSpeed": 2.2,
         "glyph": {
             "tint": "b8cf9c",

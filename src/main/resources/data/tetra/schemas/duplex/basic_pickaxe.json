@@ -83,8 +83,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/copper"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/copper"
             },
             {
                 "material": {
@@ -95,8 +95,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/tin"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/tin"
             },
             {
                 "material": {
@@ -107,8 +107,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/silver"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/silver"
             },
             {
                 "material": {
@@ -119,8 +119,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/nickel"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/nickel"
             },
             {
                 "material": {
@@ -131,8 +131,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/lead"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/lead"
             },
             {
                 "material": {
@@ -143,8 +143,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/bronze"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/bronze"
             },
             {
                 "material": {
@@ -155,8 +155,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/electrum"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/electrum"
             },
             {
                 "material": {
@@ -167,24 +167,24 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/steel"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/steel"
             },
             {
                 "material": {
                     "item": "thaumcraft:thaumium_ingot",
                     "count": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/thaumium"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/thaumium"
             },
             {
                 "material": {
                     "type": "forge:ore_dict",
                     "ore": "ingotIronwood"
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/ironwood",
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/ironwood",
                 "improvements": {
                     "enchantment/efficiency": 1
                 }
@@ -198,8 +198,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/steeleaf",
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/steeleaf",
                 "improvements": {
                     "enchantment/fortune": 1
                 }
@@ -213,8 +213,11 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/fierymetal"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/fierymetal",
+                "improvements": {
+                    "duplex/head_left:basic_pickaxe/smelting": 0
+                }
             },
             {
                 "material": {
@@ -225,8 +228,11 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/knightmetal"
+                "ModuleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/knightmetal",
+                "improvements": {
+                    "duplex/head_left:basic_pickaxe/puncturing": 1
+                }
             }
         ]
     }

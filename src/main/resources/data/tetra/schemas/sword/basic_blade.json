@@ -320,7 +320,10 @@
                     "hammer": 2
                 },
                 "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/steeleaf"
+                "moduleVariant": "basic_blade/steeleaf",
+                "improvements": {
+                    "sword/blade:enchantment/looting": 2
+                }
             },
             {
                 "material": {
@@ -332,7 +335,10 @@
                     "hammer": 2
                 },
                 "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/fierymetal"
+                "moduleVariant": "basic_blade/fierymetal",
+                "improvements": {
+                    "sword/blade:enchantment/fire_aspect": 2
+                }
             },
             {
                 "material": {

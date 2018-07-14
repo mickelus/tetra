@@ -232,7 +232,10 @@
                   "hammer": 2
                 },
                 "ModuleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/knightmetal"
+                "moduleVariant": "basic_axe/knightmetal",
+                "improvements": {
+                    "duplex/head_left:basic_axe/severing": 1
+                }
             }
         ]
     }

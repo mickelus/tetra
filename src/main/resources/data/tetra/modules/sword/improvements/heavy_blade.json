@@ -1,2 +1,11 @@
 [
+    {
+        "key": "heavy_blade/crushing",
+        "level": 1,
+        "integrity": -1,
+        "effects": {
+            "armorPenetration": 1,
+            "sweeping": -1
+        }
+    }
 ]

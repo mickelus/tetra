@@ -99,6 +99,9 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/blaze_rod"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/fierymetal"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/fierymetal"]
+        },
+        "improvements": {
+            "sword/blade:enchantment/fire_aspect": 2
         }
     },
     {
@@ -107,10 +110,13 @@
         },
         "item": "tetra:sword_modular",
         "modules": {
-            "sword/blade": ["sword/basic_blade", "basic_blade/knightmetal"],
+            "sword/blade": ["sword/heavy_blade", "heavy_blade/knightmetal"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/knightmetal"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/knightmetal"]
+        },
+        "improvements": {
+            "sword/blade:heavy_blade/crushing": 1
         }
     },
     {

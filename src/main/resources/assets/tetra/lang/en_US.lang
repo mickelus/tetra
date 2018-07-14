@@ -302,7 +302,7 @@ short_blade/hooked.description=Striking enemies from behind cause critical damag
 
 short_blade/tempered.name=Tempered point
 short_blade/tempered.prefix=Tempered
-short_blade/tempered.description=Attacks ignore armor
+short_blade/tempered.description=Attacks partially ignore armor
 
 short_blade/serrated.name=Serrated blade
 short_blade/serrated.prefix=Serrated
@@ -316,6 +316,9 @@ heavy_blade_schema.description=Replace the current sword blade with a large and 
 heavy_blade_schema.slot1=Blade material
 
 sword/heavy_blade.name=Greatsword
+
+heavy_blade/tempered.name=Crushing
+heavy_blade/tempered.description=Attacks partially ignore armor
 
 heavy_blade/oak_log=Heavy oaken blade
 heavy_blade/oak_log.prefix=oaken
@@ -425,12 +428,14 @@ basic_handle/treated_wood=Treated wooden handle
 basic_handle/ironwood=Ironwood handle
 
 ###############################
-# pick HEAD
+# AXE HEAD
 ############################Picka##
 basic_axe_schema.name=Axe head
 basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.
 basic_axe_schema.slot1=Head material
 
+basic_axe/severing.name=Severing
+basic_axe/severing.description=Deals bonus damage to unarmored targets
 
 basic_axe/oak=Wooden axe
 basic_axe/oak.name=Axe
@@ -496,6 +501,12 @@ basic_axe/knightmetal.prefix=Knightmetal
 basic_pickaxe_schema.name=Pickxe head
 basic_pickaxe_schema.description=Forge a pickaxe head from the given material.
 basic_pickaxe_schema.slot1=Head material
+
+basic_pickaxe/smelting.name=Smelting
+basic_pickaxe/smelting.description=[NOT IMPLEMENTED] Automatically smelts broken blocks
+
+basic_pickaxe/puncturing.name=Puncturing
+basic_pickaxe/puncturing.description=Attacks partially ignore armor
 
 
 basic_pickaxe/oak=Wooden pick
