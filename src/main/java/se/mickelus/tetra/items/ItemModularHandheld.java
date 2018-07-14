@@ -189,10 +189,6 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     public double getSpeedModifier(ItemStack itemStack) {
-//        if (isBroken(itemStack)) {
-//            return 2;
-//        }
-
         double speedModifier = getAllModules(itemStack).stream()
             .map(itemModule -> itemModule.getSpeedModifier(itemStack))
             .reduce(-2.4d, Double::sum);
