@@ -4,6 +4,7 @@ public enum ItemEffect {
     bleeding,
     backstab,
     armorPenetration,
+    unarmoredDamage,
     softStrike,
     knockback,
     sweeping,

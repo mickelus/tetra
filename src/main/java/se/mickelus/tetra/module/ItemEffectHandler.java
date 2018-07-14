@@ -94,6 +94,11 @@ public class ItemEffectHandler {
                     if (penetratingLevel > 0 && event.getAmount() < penetratingLevel * 2) {
                         event.setAmount(penetratingLevel * 2);
                     }
+
+                    int unarmoredBonusLevel = getEffectLevel(itemStack, ItemEffect.unarmoredDamage);
+                    if (unarmoredBonusLevel > 0 && event.getEntityLiving().getTotalArmorValue() == 0) {
+                        event.setAmount(event.getAmount()  + unarmoredBonusLevel);
+                    }
                 });
     }
 
