@@ -380,8 +380,8 @@
             "duplex/handle": ["duplex/basic_handle", "basic_handle/blaze_rod"]
         },
         "improvements": {
-            "duplex/head_left:enchantment/smelting": 0,
-            "duplex/head_right:enchantment/smelting": 0
+            "duplex/head_left:basic_pickaxe/smelting": 0,
+            "duplex/head_right:basic_pickaxe/smelting": 0
         }
     },
     {
