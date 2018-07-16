@@ -40,6 +40,7 @@ public class ItemModularHandheld extends ItemModular {
     private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
     private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
 
+    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB);
 
     @Override
     public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
@@ -240,6 +241,8 @@ public class ItemModularHandheld extends ItemModular {
     public boolean canHarvestBlock(IBlockState blockState, ItemStack itemStack) {
         if (pickaxeMaterials.contains(blockState.getMaterial())) {
             return getHarvestLevel(itemStack, "pickaxe", null, null) >= 0;
+        } else if (blockState.getBlock().equals(Blocks.WEB)) {
+            return getHarvestLevel(itemStack, "cut", null, null) >= 0;
         }
         return false;
     }
@@ -258,10 +261,17 @@ public class ItemModularHandheld extends ItemModular {
                     tool = "axe";
                 } else if (pickaxeBlocks.contains(blockState.getBlock())) {
                     tool = "pickaxe";
+                } else if (cuttingMaterials.contains(blockState.getMaterial())) {
+                    tool = "cut";
                 }
             }
 
             float speed = (float) (4 + getSpeedModifier(itemStack)) * getCapabilityEfficiency(itemStack, tool);
+
+            // todo: need a better way to handle this
+            if ("cut".equals(tool) && blockState.getBlock().equals(Blocks.WEB)) {
+                speed *= 10;
+            }
 
             if (speed < 1) {
                 return 1;

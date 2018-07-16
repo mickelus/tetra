@@ -8,6 +8,9 @@
         "glyph": {
             "tint": "866526",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -19,6 +22,9 @@
         "glyph": {
             "tint": "694f2f",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -30,6 +36,9 @@
         "glyph": {
             "tint": "c8b77d",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -41,6 +50,9 @@
         "glyph": {
             "tint": "996e4c",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -52,6 +64,9 @@
         "glyph": {
             "tint": "ac5d33",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -63,6 +78,9 @@
         "glyph": {
             "tint": "3c2712",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -74,6 +92,9 @@
         "glyph": {
             "tint": "343434",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -85,6 +106,9 @@
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -96,6 +120,9 @@
         "glyph": {
             "tint": "eaee57",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -107,6 +134,9 @@
         "glyph": {
             "tint": "73b5aa",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -118,6 +148,9 @@
         "glyph": {
             "tint": "df7646",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -129,6 +162,9 @@
         "glyph": {
             "tint": "b3c9c1",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -140,6 +176,9 @@
         "glyph": {
             "tint": "d6f6ff",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -151,6 +190,9 @@
         "glyph": {
             "tint": "c2d3a6",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -162,6 +204,9 @@
         "glyph": {
             "tint": "897a9b",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -173,6 +218,9 @@
         "glyph": {
             "tint": "b2712c",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -184,6 +232,9 @@
         "glyph": {
             "tint": "e4da4c",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -195,6 +246,9 @@
         "glyph": {
             "tint": "999999",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -206,6 +260,9 @@
         "glyph": {
             "tint": "4d3984",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -217,6 +274,9 @@
         "glyph": {
             "tint": "5ea917",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -228,6 +288,9 @@
         "glyph": {
             "tint": "458430",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -239,6 +302,9 @@
         "glyph": {
             "tint": "fa9f00",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
@@ -250,6 +316,9 @@
         "glyph": {
             "tint": "b8cf9c",
             "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     }
 ]
