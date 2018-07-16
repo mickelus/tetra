@@ -42,10 +42,16 @@ public class ItemModularHandheld extends ItemModular {
 
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB);
 
+    // the base amount of damage the item should take after destroying a block
+    protected int blockDestroyDamage = 1;
+
+    // the base amount of damage the item should take after hitting an entity
+    protected int entityHitDamage = 1;
+
     @Override
     public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if (state.getBlockHardness(worldIn, pos) > 0) {
-            applyDamage(2, itemStack, entityLiving);
+            applyDamage(blockDestroyDamage, itemStack, entityLiving);
         }
 
         return true;
@@ -53,7 +59,7 @@ public class ItemModularHandheld extends ItemModular {
 
     @Override
     public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
-        applyDamage(1, itemStack, attacker);
+        applyDamage(entityHitDamage, itemStack, attacker);
         if (!isBroken(itemStack)) {
             getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
 

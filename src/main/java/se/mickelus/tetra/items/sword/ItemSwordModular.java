@@ -33,6 +33,8 @@ public class ItemSwordModular extends ItemModularHandheld {
         setRegistryName(unlocalizedName);
         setMaxStackSize(1);
 
+        blockDestroyDamage = 2;
+
         majorModuleNames = new String[]{"Blade", "Hilt"};
         majorModuleKeys = new String[]{bladeKey, hiltKey};
         minorModuleNames = new String[]{"Fuller", "Guard", "Pommel"};

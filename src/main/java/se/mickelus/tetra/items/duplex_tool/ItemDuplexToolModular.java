@@ -65,6 +65,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
+        entityHitDamage = 2;
+
         majorModuleNames = new String[]{"Head " + ChatFormatting.GRAY + "(left)", "Head " + ChatFormatting.GRAY + "(right)"};
         majorModuleKeys = new String[]{headLeftKey, headRightKey};
         minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
