@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items;
+package se.mickelus.tetra.module;
 
 public enum ItemEffect {
     bleeding,
@@ -8,6 +8,7 @@ public enum ItemEffect {
     softStrike,
     knockback,
     sweeping,
+    strikingHarvest,
     looting,
     fiery,
     smite,

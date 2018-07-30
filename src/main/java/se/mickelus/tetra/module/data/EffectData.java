@@ -2,8 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
 import org.apache.commons.lang3.EnumUtils;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.ItemEffect;
+import se.mickelus.tetra.module.ItemEffect;
 
 import java.lang.reflect.Type;
 
