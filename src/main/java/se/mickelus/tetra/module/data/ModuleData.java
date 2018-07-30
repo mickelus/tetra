@@ -2,8 +2,6 @@ package se.mickelus.tetra.module.data;
 
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.module.Priority;
 
 public class ModuleData {
