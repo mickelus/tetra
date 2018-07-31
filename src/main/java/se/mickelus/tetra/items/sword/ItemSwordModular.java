@@ -1,20 +1,12 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
+import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.*;
 import se.mickelus.tetra.network.PacketHandler;
-
-import java.util.Map;
 
 public class ItemSwordModular extends ItemModularHandheld {
 
@@ -45,8 +37,9 @@ public class ItemSwordModular extends ItemModularHandheld {
         new HeavyBladeModule(bladeKey);
         new HiltModule(hiltKey);
 
-        new MakeshiftGuardModule(guardKey);
-        new DecorativePommelModule(pommelKey);
+        new BasicModule(guardKey, "sword/makeshift_guard");
+        new BasicModule(guardKey, "sword/wide_guard");
+        new BasicModule(pommelKey, "sword/decorative_pommel");
     }
 
     @Override
@@ -64,6 +57,8 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
         new BookEnchantSchema(HiltModule.instance);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
 
         new RepairSchema(this);
 

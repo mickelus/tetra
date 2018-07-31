@@ -223,6 +223,15 @@ makeshift_guard/fierymetal=Makeshift fierymetal guard
 makeshift_guard/knightmetal=Makeshift knightmetal guard
 
 ###############################
+# WIDE GUARD
+###############################
+wide_guard_schema.name=Wide guard
+wide_guard_schema.description=Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.
+wide_guard_schema.slot1=Guard material
+
+wide_guard/oak=Wide oak guard
+
+###############################
 # SHORTBLADE
 ###############################
 short_blade_schema.name=Shortblade

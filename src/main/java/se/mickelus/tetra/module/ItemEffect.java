@@ -17,5 +17,6 @@ public enum ItemEffect {
     mending,
     silkTouch,
     fortune,
-    booster
+    booster,
+    armor
 }

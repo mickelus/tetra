@@ -1,0 +1,15 @@
+[
+    {
+        "key": "wide_guard/oak",
+        "durability": 12,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 7,
+            "textureY": 16
+        },
+        "effects": {
+            "armor": 1
+        }
+    }
+]
