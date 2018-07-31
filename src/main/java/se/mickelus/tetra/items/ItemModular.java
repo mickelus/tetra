@@ -34,9 +34,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     protected static final String cooledStrengthKey = "cooledStrength";
 
-    protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
-    protected String[] minorModuleNames;
     protected String[] minorModuleKeys;
 
     protected int baseDurability = 0;
@@ -115,7 +113,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public int getNumMajorModules() {
-        return majorModuleNames.length;
+        return majorModuleKeys.length;
     }
 
     @Override
@@ -125,12 +123,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public String[] getMajorModuleNames() {
-        return majorModuleNames;
+        return Arrays.stream(majorModuleKeys)
+                .map(key -> I18n.format(key))
+                .toArray(String[]::new);
     }
 
     @Override
     public int getNumMinorModules() {
-        return minorModuleNames.length;
+        return minorModuleKeys.length;
     }
 
     @Override
@@ -140,7 +140,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public String[] getMinorModuleNames() {
-        return minorModuleNames;
+        return Arrays.stream(minorModuleKeys)
+                .map(key -> I18n.format(key))
+                .toArray(String[]::new);
     }
 
     @Override

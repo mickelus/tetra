@@ -52,10 +52,7 @@ public class ItemToolbeltModular extends ItemModular {
 
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-
-        majorModuleNames = new String[]{"", "", ""};
         majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
-        minorModuleNames = new String[]{"Belt"};
         minorModuleKeys = new String[]{beltKey};
 
         instance = this;

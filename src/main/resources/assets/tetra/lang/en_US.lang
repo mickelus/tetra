@@ -30,6 +30,31 @@ item.geode.name=Geode
 item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
 item.geode.label=crack open
 
+###############################
+# SWORD
+###############################
+sword/blade=Blade
+sword/hilt=Hilt
+sword/guard=Guard
+sword/pommel=Pommel
+sword/fuller=Fuller
+
+###############################
+# DUPLEX
+###############################
+duplex/head_left=Head §7(left)
+duplex/head_right=Head §7(right)
+duplex/handle=Binding
+duplex/binding=Handle
+duplex/accessory=Accessory
+
+###############################
+# TOOLBELT
+###############################
+toolbelt/slot1=
+toolbelt/slot2=
+toolbelt/slot3=
+toolbelt/belt=Belt
 
 ###############################
 # REPAIR SCHEMA

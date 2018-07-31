@@ -67,9 +67,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         entityHitDamage = 2;
 
-        majorModuleNames = new String[]{"Head " + ChatFormatting.GRAY + "(left)", "Head " + ChatFormatting.GRAY + "(right)"};
         majorModuleKeys = new String[]{headLeftKey, headRightKey};
-        minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
 
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
