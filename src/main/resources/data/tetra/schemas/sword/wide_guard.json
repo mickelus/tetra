@@ -1,0 +1,22 @@
+[
+    {
+        "key": "wide_guard_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/oak"
+            }
+        ]
+    }
+]

@@ -34,6 +34,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ItemModular {
@@ -48,6 +49,8 @@ public class ItemModularHandheld extends ItemModular {
 
 
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB);
+
+    protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
 
     // the base amount of damage the item should take after destroying a block
     protected int blockDestroyDamage = 1;
@@ -284,6 +287,14 @@ public class ItemModularHandheld extends ItemModular {
                 new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageModifier(itemStack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
                 new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getSpeedModifier(itemStack), 0));
+        }
+
+        if (slot == EntityEquipmentSlot.MAINHAND || slot == EntityEquipmentSlot.OFFHAND) {
+            int armor = getEffectLevel(itemStack, ItemEffect.armor);
+            if  (armor > 0) {
+                multimap.put(SharedMonsterAttributes.ARMOR.getName(),
+                        new AttributeModifier(ARMOR_MODIFIER, "Weapon modifier", armor, 0));
+            }
         }
 
         return multimap;

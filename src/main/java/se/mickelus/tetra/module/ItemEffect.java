@@ -22,5 +22,6 @@ public enum ItemEffect {
     fortune,
     booster,
     flattening,
-    tilling
+    tilling,
+    armor
 }
