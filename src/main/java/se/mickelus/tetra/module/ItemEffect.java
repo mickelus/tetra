@@ -8,7 +8,10 @@ public enum ItemEffect {
     softStrike,
     knockback,
     sweeping,
-    strikingHarvest,
+    strikingAxe,
+    strikingPickaxe,
+    strikingCut,
+    strikingShovel,
     looting,
     fiery,
     smite,
@@ -17,5 +20,7 @@ public enum ItemEffect {
     mending,
     silkTouch,
     fortune,
-    booster
+    booster,
+    flattening,
+    tilling
 }

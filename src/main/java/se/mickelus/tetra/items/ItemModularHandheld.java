@@ -3,6 +3,7 @@ package se.mickelus.tetra.items;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.PotionBleeding;
 import se.mickelus.tetra.module.ItemEffect;
@@ -39,6 +43,9 @@ public class ItemModularHandheld extends ItemModular {
 
     private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
     private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
+
+    private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
+
 
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB);
 
@@ -98,7 +105,118 @@ public class ItemModularHandheld extends ItemModular {
         return true;
     }
 
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack itemStack = player.getHeldItem(hand);
+        int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
+        int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
 
+        if (flatteningLevel > 0 && (tillingLevel > 0 && player.isSneaking() || tillingLevel == 0)) {
+            return flattenPath(player, world, pos, hand, facing);
+        } else if (tillingLevel > 0) {
+            return tillBlock(player, world, pos, hand, facing);
+        }
+
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    /**
+     * Flattens grass into a path similar to how vanilla shovels does it.
+     * @param player the responsible player entity
+     * @param world the world in which the action takes place
+     * @param pos the position in the world
+     * @param hand the hand holding the tool
+     * @param facing the clicked face
+     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
+     * otherwise EnumActionResult.PASS
+     */
+    public EnumActionResult flattenPath(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
+            return EnumActionResult.FAIL;
+        }
+
+        if (facing != EnumFacing.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR
+                && world.getBlockState(pos).getBlock() == Blocks.GRASS) {
+            world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1, 1);
+
+            if (!world.isRemote) {
+                world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
+                applyDamage(blockDestroyDamage, itemStack, player);
+            }
+
+            return EnumActionResult.SUCCESS;
+        }
+
+        return EnumActionResult.PASS;
+    }
+
+    /**
+     * Tills dirt or grass, turning it into farmland. Tilling coarse dirt turns it into dirt.
+     * @param player the responsible player entity
+     * @param world the world in which the action takes place
+     * @param pos the position in the world
+     * @param hand the hand holding the tool
+     * @param facing the clicked face
+     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
+     * otherwise EnumActionResult.PASS
+     */
+    public EnumActionResult tillBlock(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
+            return EnumActionResult.FAIL;
+        }
+
+        // fire the forge event manually as the helper damages durability
+        UseHoeEvent event = new UseHoeEvent(player, itemStack, world, pos);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (event.isCanceled()) {
+            return EnumActionResult.FAIL;
+        }
+        if (event.getResult() == Event.Result.ALLOW) {
+            applyDamage(blockDestroyDamage, itemStack, player);
+            return EnumActionResult.SUCCESS;
+        }
+
+        IBlockState currentState = world.getBlockState(pos);
+        Block block = currentState.getBlock();
+
+        if (facing != EnumFacing.DOWN && world.isAirBlock(pos.up())) {
+            IBlockState newState = null;
+
+            if (block == Blocks.GRASS || block == Blocks.GRASS_PATH
+                    || BlockDirt.DirtType.DIRT == currentState.getValue(BlockDirt.VARIANT)) {
+                newState = Blocks.FARMLAND.getDefaultState();
+            } else if (BlockDirt.DirtType.COARSE_DIRT == currentState.getValue(BlockDirt.VARIANT)) {
+                newState = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT);
+            }
+
+            if (newState != null) {
+                world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1, 1);
+
+                if (!world.isRemote) {
+                    world.setBlockState(pos, newState, 11);
+                    applyDamage(blockDestroyDamage, itemStack, player);
+                }
+
+                return EnumActionResult.SUCCESS;
+            }
+        }
+
+        return EnumActionResult.PASS;
+    }
+
+    /**
+     * Perfoms a sweeping attack, dealing damage and playing effects similar to vanilla swords.
+     * @param itemStack the itemstack used for the attack
+     * @param target the attacking entity
+     * @param attacker the attacked entity
+     * @param sweepingLevel the level of the sweeping effect of the itemstack
+     * @param knockbackLevel the level of the knockback effect of the itemstack
+     */
     private void sweepAttack(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker, int sweepingLevel, int knockbackLevel) {
         float cooldown = 1;
         if (attacker instanceof EntityPlayer) {
@@ -270,6 +388,8 @@ public class ItemModularHandheld extends ItemModular {
                     tool = "pickaxe";
                 } else if (cuttingMaterials.contains(blockState.getMaterial())) {
                     tool = "cut";
+                } else if (shovelBlocks.contains(blockState.getBlock())) {
+                    tool = "shovel";
                 }
             }
 

@@ -1,0 +1,215 @@
+[
+    {
+        "key": "hoe_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 176 },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/ironwood",
+                "improvements": {
+                    "enchantment/efficiency": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/steeleaf",
+                "improvements": {
+                    "enchantment/fortune": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFierymetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/hoe",
+                "moduleVariant": "hoe/knightmetal"
+            }
+        ]
+    }
+]

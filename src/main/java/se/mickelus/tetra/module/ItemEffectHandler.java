@@ -196,14 +196,32 @@ public class ItemEffectHandler {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
-                    int strikingHarvestLevel = getEffectLevel(itemStack, ItemEffect.strikingHarvest);
-                    if (strikingHarvestLevel > 0) {
-                        World world = event.getWorld();
-                        if (event.getEntityPlayer().getCooledAttackStrength(0) > 0.9) {
-                            BlockPos pos = event.getPos();
-                            IBlockState blockState = world.getBlockState(pos);
+                    int strikingLevel = 0;
+                    BlockPos pos = event.getPos();
+                    World world = event.getWorld();
+                    IBlockState blockState = world.getBlockState(pos);
+                    String tool = blockState.getBlock().getHarvestTool(blockState);
 
-                            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, blockState.getBlock().getHarvestTool(blockState), event.getEntityPlayer(), blockState);
+                    if (tool != null) {
+                        switch (tool) {
+                            case "axe":
+                                strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingAxe);
+                                break;
+                            case "pickaxe":
+                                strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
+                                break;
+                            case "cut":
+                                strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingCut);
+                                break;
+                            case "shovel":
+                                strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingShovel);
+                                break;
+                        }
+                    }
+
+                    if (strikingLevel > 0) {
+                        if (event.getEntityPlayer().getCooledAttackStrength(0) > 0.9) {
+                            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, event.getEntityPlayer(), blockState);
                             if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState)) || event.getItemStack().canHarvestBlock(blockState)) {
                                 world.playEvent(event.getEntityPlayer(), 2001, event.getPos(), Block.getStateId(event.getWorld().getBlockState(event.getPos())));
                                 if (!event.getWorld().isRemote) {

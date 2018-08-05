@@ -1,0 +1,215 @@
+[
+    {
+        "key": "adze_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 1,
+        "glyph": { "textureX": 176 },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/ironwood",
+                "improvements": {
+                    "enchantment/efficiency": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/steeleaf",
+                "improvements": {
+                    "enchantment/fortune": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFierymetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/adze",
+                "moduleVariant": "adze/knightmetal"
+            }
+        ]
+    }
+]

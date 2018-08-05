@@ -53,6 +53,9 @@
         },
         "capabilities": {
             "pickaxe": [3, 5]
+        },
+        "effects": {
+            "strikingPickaxe": 1
         }
     },
     {

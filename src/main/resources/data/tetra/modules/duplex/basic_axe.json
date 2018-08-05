@@ -108,12 +108,12 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 7]
+            "axe": [2, 6.6]
         }
     },
     {
         "key": "basic_axe/silver",
-        "durability": 163,
+        "durability": 29,
         "integrity": -1,
         "damage": 7,
         "attackSpeed": -0.5,
@@ -164,7 +164,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [3, 8.1]
+            "axe": [3, 7.8]
         }
     },
     {
@@ -186,13 +186,13 @@
         "durability": 394,
         "integrity": -2,
         "damage": 7,
-        "attackSpeed": -0.5,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "999999",
             "textureX": 144
         },
         "capabilities": {
-            "axe": [3, 8]
+            "axe": [3, 8.2]
         }
     },
     {

@@ -54,6 +54,12 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public static DuplexHeadModule basicPickaxeLeft;
     public static DuplexHeadModule basicPickaxeRight;
 
+    public static DuplexHeadModule hoeLeft;
+    public static DuplexHeadModule hoeRight;
+
+    public static DuplexHeadModule adzeLeft;
+    public static DuplexHeadModule adzeRight;
+
     public static DuplexHeadModule butt;
 
     public static ItemDuplexToolModular instance;
@@ -81,6 +87,12 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "basic_pickaxe", leftSuffix);
         basicPickaxeRight = new DuplexHeadModule(headRightKey, "basic_pickaxe", rightSuffix);
 
+        hoeLeft = new DuplexHeadModule(headLeftKey, "hoe", leftSuffix);
+        hoeRight = new DuplexHeadModule(headRightKey, "hoe", rightSuffix);
+
+        adzeLeft = new DuplexHeadModule(headLeftKey, "adze", leftSuffix);
+        adzeRight = new DuplexHeadModule(headRightKey, "adze", rightSuffix);
+
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
         new BasicHandleModule(handleKey);
@@ -103,6 +115,14 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/hoe");
+        new BookEnchantSchema(hoeLeft);
+        new BookEnchantSchema(hoeRight);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/adze");
+        new BookEnchantSchema(adzeLeft);
+        new BookEnchantSchema(adzeRight);
+
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
 
@@ -112,6 +132,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("hoe");
     }
 
     @Override

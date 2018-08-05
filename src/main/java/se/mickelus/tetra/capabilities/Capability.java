@@ -4,5 +4,6 @@ public enum Capability {
     hammer,
     axe,
     pickaxe,
-    cut
+    cut,
+    shovel
 }
