@@ -16,6 +16,14 @@
         "name": "duplex/hammer_pickaxe"
     },
     {
+        "modules": ["duplex/adze", "duplex/basic_pickaxe"],
+        "name": "duplex/adze_pickaxe"
+    },
+    {
+        "modules": ["duplex/basic_aze", "duplex/basic_axe"],
+        "name": "duplex/adze_axe"
+    },
+    {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
         "capabilities": {
             "hammer": 1

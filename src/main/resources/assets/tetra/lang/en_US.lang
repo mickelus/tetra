@@ -439,6 +439,8 @@ duplex/axe_hammer=Carpenter's hammer
 duplex/axe_axe=Greataxe
 duplex/axe_pickaxe=Dolabra
 duplex/hammer_pickaxe=Geologist's hammer
+duplex/adze_pickaxe=Pick mattock
+duplex/adze_axe=Cutter mattock
 
 ###############################
 # HAMMER HANDLE
