@@ -8,6 +8,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 
 public interface IItemModular {
 
+    public boolean isModuleRequired(String moduleSlot);
     public int getNumMajorModules();
     public String[] getMajorModuleKeys();
     public String[] getMajorModuleNames();

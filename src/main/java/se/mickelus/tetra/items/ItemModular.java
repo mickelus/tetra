@@ -37,6 +37,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     protected String[] majorModuleKeys;
     protected String[] minorModuleKeys;
 
+    protected String[] requiredModules = new String[0];
+
     protected int baseDurability = 0;
     protected int baseIntegrity = 0;
 
@@ -109,6 +111,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
 
         return modules;
+    }
+
+    @Override
+    public boolean isModuleRequired(String moduleSlot) {
+        return Arrays.stream(requiredModules).anyMatch(module -> module.equals(moduleSlot));
     }
 
     @Override

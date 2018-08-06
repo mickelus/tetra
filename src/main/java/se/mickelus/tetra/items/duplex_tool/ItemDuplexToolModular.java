@@ -23,6 +23,7 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
+import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -75,6 +76,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         majorModuleKeys = new String[]{headLeftKey, headRightKey};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
+
+        requiredModules = new String[]{headLeftKey, headRightKey, handleKey};
 
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
@@ -129,6 +132,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
 
         new RepairSchema(this);
+        new RemoveSchema(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");

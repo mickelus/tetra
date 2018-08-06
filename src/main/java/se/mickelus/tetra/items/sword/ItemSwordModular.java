@@ -30,6 +30,8 @@ public class ItemSwordModular extends ItemModularHandheld {
         majorModuleKeys = new String[]{bladeKey, hiltKey};
         minorModuleKeys = new String[]{fullerKey, guardKey, pommelKey};
 
+        requiredModules = new String[]{bladeKey, hiltKey};
+
         new BladeModule(bladeKey);
         new ShortBladeModule(bladeKey);
         new HeavyBladeModule(bladeKey);
@@ -59,6 +61,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
 
         new RepairSchema(this);
+        new RemoveSchema(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }

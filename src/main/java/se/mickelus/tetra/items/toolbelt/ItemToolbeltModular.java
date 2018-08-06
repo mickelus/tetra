@@ -23,6 +23,7 @@ import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -54,6 +55,8 @@ public class ItemToolbeltModular extends ItemModular {
 
         majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
         minorModuleKeys = new String[]{beltKey};
+
+        requiredModules = new String[]{beltKey};
 
         instance = this;
 
@@ -101,6 +104,8 @@ public class ItemToolbeltModular extends ItemModular {
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/potion_storage");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver");
+
+        new RemoveSchema(this);
     }
 
     @Override

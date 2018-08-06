@@ -4,7 +4,7 @@
         "durability": 100,
         "integrity": -2,
         "damage": 3,
-        "attackSpeed": -1,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "9d804e",
             "textureX": 48
@@ -21,7 +21,7 @@
         "durability": 100,
         "integrity": -2,
         "damage": 3,
-        "attackSpeed": -0.7,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "694f2f",
             "textureX": 48
@@ -38,7 +38,7 @@
         "durability": 140,
         "integrity": -2,
         "damage": 3,
-        "attackSpeed": -1,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "c8b77d",
             "textureX": 48
@@ -55,7 +55,7 @@
         "durability": 100,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -1,
+        "attackSpeed": -0.4,
         "glyph": {
             "tint": "996e4c",
             "textureX": 48
@@ -72,7 +72,7 @@
         "durability": 140,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.7,
+        "attackSpeed": -0.45,
         "glyph": {
             "tint": "6c655a",
             "textureX": 48
@@ -89,7 +89,7 @@
         "durability": 100,
         "integrity": -2,
         "damage": 3,
-        "attackSpeed": -1,
+        "attackSpeed": -0.45,
         "glyph": {
             "tint": "3c2712",
             "textureX": 48
@@ -106,7 +106,7 @@
         "durability": 210,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -1,
+        "attackSpeed": -0.45,
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 48
@@ -123,7 +123,7 @@
         "durability": 390,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.9,
+        "attackSpeed": -0.55,
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 48
@@ -140,7 +140,7 @@
         "durability": 430,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.9,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "8a6658",
             "textureX": 48
@@ -157,7 +157,7 @@
         "durability": 370,
         "integrity": -2,
         "damage": 4,
-        "attackSpeed": -0.7,
+        "attackSpeed": -0.45,
         "glyph": {
             "tint": "b1b1b3",
             "textureX": 48
@@ -174,7 +174,7 @@
         "durability": 370,
         "integrity": -2,
         "damage": 5,
-        "attackSpeed": -0.9,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "79797a",
             "textureX": 48
@@ -191,7 +191,7 @@
         "durability": 450,
         "integrity": -3,
         "damage": 6,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 48
@@ -208,7 +208,7 @@
         "durability": 30,
         "integrity": -3,
         "damage": 7,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "eaee57",
             "textureX": 48
@@ -225,7 +225,7 @@
         "durability": 2423,
         "integrity": -4,
         "damage": 9,
-        "attackSpeed": -1.2,
+        "attackSpeed": -0.8,
         "glyph": {
             "tint": "3c3056",
             "textureX": 48
@@ -242,7 +242,7 @@
         "durability": 295,
         "integrity": -2,
         "damage": 5,
-        "attackSpeed": -1.1,
+        "attackSpeed": -0.7,
         "glyph": {
             "tint": "df7646",
             "textureX": 48
@@ -259,7 +259,7 @@
         "durability": 151,
         "integrity": -1,
         "damage": 4,
-        "attackSpeed": -0.9,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "b3c9c1",
             "textureX": 48
@@ -276,7 +276,7 @@
         "durability": 105,
         "integrity": -3,
         "damage": 5,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "d6f6ff",
             "textureX": 48
@@ -293,7 +293,7 @@
         "durability": 370,
         "integrity": -3,
         "damage": 7,
-        "attackSpeed": -1.1,
+        "attackSpeed": -0.7,
         "glyph": {
             "tint": "c2d3a6",
             "textureX": 48
@@ -310,7 +310,7 @@
         "durability": 220,
         "integrity": -4,
         "damage": 6,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "897a9b",
             "textureX": 48
@@ -327,7 +327,7 @@
         "durability": 643,
         "integrity": -1,
         "damage": 6,
-        "attackSpeed": -1.1,
+        "attackSpeed": -0.7,
         "glyph": {
             "tint": "b2712c",
             "textureX": 48
@@ -344,7 +344,7 @@
         "durability": 122,
         "integrity": -3,
         "damage": 5,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "e4da4c",
             "textureX": 48
@@ -361,7 +361,7 @@
         "durability": 790,
         "integrity": -3,
         "damage": 7,
-        "attackSpeed": -1.1,
+        "attackSpeed": -0.7,
         "glyph": {
             "tint": "999999",
             "textureX": 48
@@ -378,7 +378,7 @@
         "durability": 851,
         "integrity": -3,
         "damage": 6.5,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "4d3984",
             "textureX": 48
@@ -395,7 +395,7 @@
         "durability": 865,
         "integrity": -3,
         "damage": 6,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "5ea917",
             "textureX": 48
@@ -412,7 +412,7 @@
         "durability": 130,
         "integrity": -3,
         "damage": 7,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "458430",
             "textureX": 48
@@ -429,7 +429,7 @@
         "durability": 1888,
         "integrity": -7,
         "damage": 9,
-        "attackSpeed": -1,
+        "attackSpeed": -0.6,
         "glyph": {
             "tint": "fa9f00",
             "textureX": 48

@@ -2,6 +2,7 @@
     {
         "key": "makeshift_guard/oak",
         "durability": 6,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "9d804e",
             "textureX": 7,
@@ -11,6 +12,7 @@
     {
         "key": "makeshift_guard/cobblestone",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 7,
@@ -20,6 +22,7 @@
     {
         "key": "makeshift_guard/iron",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 7,
@@ -29,6 +32,7 @@
     {
         "key": "makeshift_guard/gold",
         "durability": 3,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "eaee57",
             "textureX": 7,
@@ -38,6 +42,7 @@
     {
         "key": "makeshift_guard/diamond",
         "durability": 42,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "33ebcb",
             "textureX": 7,
@@ -47,6 +52,7 @@
     {
         "key": "makeshift_guard/copper",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "df7646",
             "textureX": 7,
@@ -56,6 +62,7 @@
     {
         "key": "makeshift_guard/tin",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "b3c9c1",
             "textureX": 7,
@@ -65,6 +72,7 @@
     {
         "key": "makeshift_guard/silver",
         "durability": 6,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "d6f6ff",
             "textureX": 7,
@@ -74,6 +82,7 @@
     {
         "key": "makeshift_guard/nickel",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "c2d3a6",
             "textureX": 7,
@@ -83,6 +92,7 @@
     {
         "key": "makeshift_guard/lead",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "897a9b",
             "textureX": 7,
@@ -92,6 +102,7 @@
     {
         "key": "makeshift_guard/bronze",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "b2712c",
             "textureX": 7,
@@ -101,6 +112,7 @@
     {
         "key": "makeshift_guard/electrum",
         "durability": 6,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "e4da4c",
             "textureX": 7,
@@ -110,6 +122,7 @@
     {
         "key": "makeshift_guard/steel",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "999999",
             "textureX": 7,
@@ -119,6 +132,7 @@
     {
         "key": "makeshift_guard/thaumium",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "4d3984",
             "textureX": 7,
@@ -128,6 +142,7 @@
     {
         "key": "makeshift_guard/ironwood",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "5ea917",
             "textureX": 7,
@@ -137,6 +152,7 @@
     {
         "key": "makeshift_guard/steeleaf",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "458430",
             "textureX": 7,
@@ -146,6 +162,7 @@
     {
         "key": "makeshift_guard/fierymetal",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "fa9f00",
             "textureX": 7,
@@ -155,6 +172,7 @@
     {
         "key": "makeshift_guard/knightmetal",
         "durability": 12,
+        "attackSpeed": -0.15,
         "glyph": {
             "tint": "b8cf9c",
             "textureX": 7,

@@ -45,7 +45,7 @@ sword/fuller=Fuller
 duplex/head_left=Head §7(left)
 duplex/head_right=Head §7(right)
 duplex/handle=Binding
-duplex/binding=Handle
+duplex/binding=Binding
 duplex/accessory=Accessory
 
 ###############################
@@ -61,6 +61,12 @@ toolbelt/belt=Belt
 ###############################
 repair_schema.name=Repair
 repair_schema.description=Repair the item using various materials.
+
+###############################
+# REMOVE SCHEMA
+###############################
+remove_schema.name=Remove part
+remove_schema.description=Remove the part in the selected slot.
 
 ###############################
 # BOOK ENCHANT SCHEMA
@@ -463,7 +469,7 @@ basic_handle/ironwood=Ironwood handle
 
 ###############################
 # AXE HEAD
-############################Picka##
+##############################
 basic_axe_schema.name=Axe head
 basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.
 basic_axe_schema.slot1=Head material
