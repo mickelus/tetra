@@ -23,5 +23,6 @@ public enum ItemEffect {
     booster,
     flattening,
     tilling,
-    armor
+    armor,
+    counterweight
 }

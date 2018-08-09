@@ -1,0 +1,22 @@
+[
+    {
+        "key": "counterweight_schema",
+        "slots": ["sword/pommel"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/oak"
+            }
+        ]
+    }
+]

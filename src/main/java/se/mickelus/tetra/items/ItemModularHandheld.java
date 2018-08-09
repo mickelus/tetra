@@ -338,11 +338,23 @@ public class ItemModularHandheld extends ItemModular {
             .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
             .reduce(speedModifier, (a, b) -> a*b);
 
+        speedModifier *= getCounterWeightMultiplier(itemStack);
+
         if (speedModifier < -4) {
             speedModifier = -3.9d;
         }
 
         return speedModifier;
+    }
+
+    public double getCounterWeightMultiplier(ItemStack itemStack) {
+        int counterWeightLevel = getEffectLevel(itemStack, ItemEffect.counterweight);
+        if (counterWeightLevel > 0) {
+            int integrityCost = getIntegrityCost(itemStack);
+
+            return 1.5 - Math.abs(counterWeightLevel + integrityCost) * 0.2;
+        }
+        return 1;
     }
 
     public static double getSpeedModifierStatic(ItemStack itemStack) {

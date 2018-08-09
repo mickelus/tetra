@@ -263,6 +263,15 @@ wide_guard_schema.slot1=Guard material
 wide_guard/oak=Wide oak guard
 
 ###############################
+# COUNTERWEIGHT
+###############################
+counterweight_schema.name=Counterweight
+counterweight_schema.description=Balance the blade with a counterweight. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other parts combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
+counterweight_schema.slot1=Material
+
+counterweight/oak=Oak counterweight
+
+###############################
 # SHORTBLADE
 ###############################
 short_blade_schema.name=Shortblade

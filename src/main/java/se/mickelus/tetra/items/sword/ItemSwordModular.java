@@ -40,6 +40,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(guardKey, "sword/makeshift_guard");
         new BasicModule(guardKey, "sword/wide_guard");
         new BasicModule(pommelKey, "sword/decorative_pommel");
+        new BasicModule(pommelKey, "sword/counterweight");
     }
 
     @Override
@@ -59,6 +60,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BookEnchantSchema(HiltModule.instance);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/counterweight");
 
         new RepairSchema(this);
         new RemoveSchema(this);
