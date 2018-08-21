@@ -82,7 +82,7 @@ public class RemoveSchema implements UpgradeSchema {
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return false;
+        return true;
     }
 
     @Override

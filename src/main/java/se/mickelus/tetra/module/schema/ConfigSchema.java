@@ -58,7 +58,7 @@ public class ConfigSchema implements UpgradeSchema {
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
-                .filter(outcome -> outcome.material.craftPredicate != null && outcome.material.craftPredicate.test(materialStack))
+                .filter(outcome -> outcome.material.craftPredicate != null&& outcome.material.craftPredicate.test(materialStack))
                 .findAny();
     }
 
@@ -110,8 +110,14 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
+        if (getNumMaterialSlots() == 0) {
+            return true;
+        }
+
         for (int i = 0; i < materials.length; i++) {
-            if (i < definition.materialSlotCount && !acceptsMaterial(itemStack, i, materials[i])) {
+            if (i < definition.materialSlotCount
+                    && !acceptsMaterial(itemStack, i, materials[i])
+                    && materials[i].getCount() >= getOutcomeFromMaterial(materials[i], i).map(outcome -> outcome.material.count).orElse(0)) {
                 return false;
             }
         }
