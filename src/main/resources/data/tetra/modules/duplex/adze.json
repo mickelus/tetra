@@ -7,7 +7,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "866526",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 1.5],
@@ -22,7 +22,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "9a9a9a",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 2.7],
@@ -37,7 +37,7 @@
         "attackSpeed": 0,
         "glyph": {
             "tint": "343434",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 2.9],
@@ -52,7 +52,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "d8d8d8",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 3.4],
@@ -67,7 +67,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "33ebcb",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 4.1],
@@ -82,7 +82,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "eaee57",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 6.2],
@@ -97,7 +97,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "df7646",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 2.6],
@@ -112,7 +112,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b3c9c1",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 3.4],
@@ -127,7 +127,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "d6f6ff",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 5.7],
@@ -142,7 +142,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "c2d3a6",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [2, 3.7],
@@ -157,7 +157,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "897a9b",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 2.7],
@@ -172,7 +172,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b2712c",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [2, 3.7],
@@ -187,7 +187,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "e4da4c",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 6.7],
@@ -202,7 +202,7 @@
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "999999",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [2, 4.2],
@@ -217,7 +217,7 @@
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "4d3984",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 3.4],
@@ -225,14 +225,14 @@
         }
     },
     {
-        "key": "adze/ironwood",
+        "key": "adze/ironwood_tf",
         "durability": 355,
         "integrity": -2,
         "damage": 0.5,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "5ea917",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 3.8],
@@ -247,7 +247,7 @@
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "458430",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [2, 4.6],
@@ -262,7 +262,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "fa9f00",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 5.2],
@@ -277,7 +277,7 @@
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "b8cf9c",
-            "textureX": 144
+            "textureY": 32
         },
         "capabilities": {
             "axe": [1, 4.7],

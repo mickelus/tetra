@@ -7,7 +7,8 @@
         "attackSpeed": -0.45,
         "glyph": {
             "tint": "866526",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -21,7 +22,8 @@
         "attackSpeed": -0.45,
         "glyph": {
             "tint": "9a9a9a",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -35,7 +37,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "343434",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -49,7 +52,8 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "d8d8d8",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -63,7 +67,8 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "33ebcb",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -77,7 +82,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "eaee57",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -91,7 +97,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "df7646",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -105,7 +112,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "b3c9c1",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -119,7 +127,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "d6f6ff",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -133,7 +142,8 @@
         "attackSpeed": -0.45,
         "glyph": {
             "tint": "c2d3a6",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -147,7 +157,8 @@
         "attackSpeed": -0.49,
         "glyph": {
             "tint": "897a9b",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -161,7 +172,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "b2712c",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -175,7 +187,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "e4da4c",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -189,7 +202,8 @@
         "attackSpeed": -0.38,
         "glyph": {
             "tint": "999999",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -203,21 +217,23 @@
         "attackSpeed": -0.46,
         "glyph": {
             "tint": "4d3984",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
         }
     },
     {
-        "key": "hoe/ironwood",
+        "key": "hoe/ironwood_tf",
         "durability": 426,
         "integrity": -2,
         "damage": 1,
         "attackSpeed": -0.36,
         "glyph": {
             "tint": "5ea917",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -231,7 +247,8 @@
         "attackSpeed": -0.34,
         "glyph": {
             "tint": "458430",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -245,7 +262,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "fa9f00",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1
@@ -259,7 +277,8 @@
         "attackSpeed": -0.32,
         "glyph": {
             "tint": "b8cf9c",
-            "textureX": 144
+            "textureX": 16,
+            "textureY": 32
         },
         "effects": {
             "tilling": 1

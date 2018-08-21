@@ -1,0 +1,15 @@
+[
+    {
+        "key": "grip_loop/iron",
+        "durability": 12,
+        "integrity": -1,
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 7,
+            "textureY": 16
+        },
+        "effects": {
+            "sweeping": [0, 2]
+        }
+    }
+]

@@ -4,13 +4,14 @@
         "slots": ["duplex/head_left", "duplex/head_right"],
         "keySuffixes": ["_left", "_right"],
         "materialSlotCount": 1,
-        "glyph": { "textureX": 176 },
+        "glyph": { "textureY": 32 },
         "displayType": "major",
         "outcomes": [
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "data": 0
+                    "data": 0,
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -20,7 +21,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:cobblestone"
+                    "item": "minecraft:cobblestone",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -30,7 +32,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:flint"
+                    "item": "minecraft:flint",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -40,7 +43,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:iron_ingot"
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -50,7 +54,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:diamond"
+                    "item": "minecraft:diamond",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -60,7 +65,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:gold_ingot"
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -71,7 +77,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotCopper"
+                    "ore": "ingotCopper",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -82,7 +89,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotTin"
+                    "ore": "ingotTin",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -93,7 +101,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotSilver"
+                    "ore": "ingotSilver",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -104,7 +113,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotNickel"
+                    "ore": "ingotNickel",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -115,7 +125,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotLead"
+                    "ore": "ingotLead",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -126,7 +137,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotBronze"
+                    "ore": "ingotBronze",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -137,7 +149,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotElectrum"
+                    "ore": "ingotElectrum",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -148,7 +161,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotSteel"
+                    "ore": "ingotSteel",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -158,7 +172,11 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:thaumium_ingot"
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
                 },
                 "ModuleKey": "duplex/adze",
                 "moduleVariant": "adze/thaumium"
@@ -166,10 +184,14 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotIronwood"
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
                 },
                 "ModuleKey": "duplex/adze",
-                "moduleVariant": "adze/ironwood",
+                "moduleVariant": "adze/ironwood_tf",
                 "improvements": {
                     "enchantment/efficiency": 1
                 }
@@ -177,7 +199,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf"
+                    "ore": "ingotSteeleaf",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -191,7 +214,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal"
+                    "ore": "ingotFierymetal",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -202,7 +226,8 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal"
+                    "ore": "ingotKnightmetal",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2

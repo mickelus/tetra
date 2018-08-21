@@ -1,0 +1,243 @@
+[
+    {
+        "key": "sickle_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 1,
+        "glyph": {
+            "textureX": 32,
+            "textureY": 32
+        },
+        "displayType": "major",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/ironwood_tf",
+                "improvements": {
+                    "enchantment/efficiency": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/steeleaf",
+                "improvements": {
+                    "enchantment/fortune": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFierymetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "ModuleKey": "duplex/sickle",
+                "moduleVariant": "sickle/knightmetal"
+            }
+        ]
+    }
+]

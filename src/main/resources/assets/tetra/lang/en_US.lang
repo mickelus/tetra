@@ -549,7 +549,7 @@ basic_axe/knightmetal.prefix=Knightmetal
 ###############################
 # PICKAXE HEAD
 ###############################
-basic_pickaxe_schema.name=Pickxe head
+basic_pickaxe_schema.name=Pickaxe head
 basic_pickaxe_schema.description=Forge a pickaxe head from the given material.
 basic_pickaxe_schema.slot1=Head material
 
@@ -701,6 +701,204 @@ basic_hammer/fierymetal.prefix=Fiery
 basic_hammer/knightmetal=Knightmetal hammer
 basic_hammer/knightmetal.name=Hammer
 basic_hammer/knightmetal.prefix=Knightmetal
+
+###############################
+# ADZE HEAD
+###############################
+adze_schema.name=Adze head
+adze_schema.description=Craft a adze head from the given material. The adze can primarily be used for digging but can also be used for cutting wood.
+adze_schema.slot1=Head material
+
+
+adze/oak=Wooden adze
+adze/oak.name=Adze
+adze/oak.prefix=Oak
+adze/cobblestone=Stone adze
+adze/cobblestone.name=Adze
+adze/cobblestone.prefix=Cobblestone
+adze/flint=Flint adze
+adze/flint.name=Adze
+adze/flint.prefix=Flint
+adze/iron=Iron adze
+adze/iron.name=Adze
+adze/iron.prefix=Iron
+adze/diamond=Diamond adze
+adze/diamond.name=Adze
+adze/diamond.prefix=Diamond
+adze/gold=Gold adze
+adze/gold.name=Adze
+adze/gold.prefix=Gold
+adze/copper=Copper adze
+adze/copper.name=Adze
+adze/copper.prefix=Copper
+adze/tin=Tin adze
+adze/tin.name=Adze
+adze/tin.prefix=Tin
+adze/silver=Silver adze
+adze/silver.name=Adze
+adze/silver.prefix=Silver
+adze/nickel=Nickel adze
+adze/nickel.name=Adze
+adze/nickel.prefix=Nickel
+adze/lead=Lead adze
+adze/lead.name=Adze
+adze/lead.prefix=Lead
+adze/bronze=Bronze adze
+adze/bronze.name=Adze
+adze/bronze.prefix=Bronze
+adze/electrum=Electrum adze
+adze/electrum.name=Adze
+adze/electrum.prefix=Electrum
+adze/steel=Steel adze
+adze/steel.name=Adze
+adze/steel.prefix=Steel
+adze/thaumium=Thaumium adze
+adze/thaumium.name=Adze
+adze/thaumium.prefix=Thaumium
+adze/ironwood=Ironwood adze
+adze/ironwood.name=Adze
+adze/ironwood.prefix=Ironwood
+adze/steeleaf=Steeleaf adze
+adze/steeleaf.name=Adze
+adze/steeleaf.prefix=Steeleaf
+adze/fierymetal=Fiery adze
+adze/fierymetal.name=Adze
+adze/fierymetal.prefix=Fiery
+adze/knightmetal=Knightmetal adze
+adze/knightmetal.name=Adze
+adze/knightmetal.prefix=Knightmetal
+
+###############################
+# HOE HEAD
+###############################
+hoe_schema.name=Hoe
+hoe_schema.description=Craft a hoe from the given material, the hoe can be used for tilling soil.
+hoe_schema.slot1=Hoe material
+
+
+hoe/oak=Wooden hoe
+hoe/oak.name=Hoe
+hoe/oak.prefix=Oak
+hoe/cobblestone=Stone hoe
+hoe/cobblestone.name=Hoe
+hoe/cobblestone.prefix=Cobblestone
+hoe/flint=Flint hoe
+hoe/flint.name=Hoe
+hoe/flint.prefix=Flint
+hoe/iron=Iron hoe
+hoe/iron.name=Hoe
+hoe/iron.prefix=Iron
+hoe/diamond=Diamond hoe
+hoe/diamond.name=Hoe
+hoe/diamond.prefix=Diamond
+hoe/gold=Gold hoe
+hoe/gold.name=Hoe
+hoe/gold.prefix=Gold
+hoe/copper=Copper hoe
+hoe/copper.name=Hoe
+hoe/copper.prefix=Copper
+hoe/tin=Tin hoe
+hoe/tin.name=Hoe
+hoe/tin.prefix=Tin
+hoe/silver=Silver hoe
+hoe/silver.name=Hoe
+hoe/silver.prefix=Silver
+hoe/nickel=Nickel hoe
+hoe/nickel.name=Hoe
+hoe/nickel.prefix=Nickel
+hoe/lead=Lead hoe
+hoe/lead.name=Hoe
+hoe/lead.prefix=Lead
+hoe/bronze=Bronze hoe
+hoe/bronze.name=Hoe
+hoe/bronze.prefix=Bronze
+hoe/electrum=Electrum hoe
+hoe/electrum.name=Hoe
+hoe/electrum.prefix=Electrum
+hoe/steel=Steel hoe
+hoe/steel.name=Hoe
+hoe/steel.prefix=Steel
+hoe/thaumium=Thaumium hoe
+hoe/thaumium.name=Hoe
+hoe/thaumium.prefix=Thaumium
+hoe/ironwood=Ironwood hoe
+hoe/ironwood.name=Hoe
+hoe/ironwood.prefix=Ironwood
+hoe/steeleaf=Steeleaf hoe
+hoe/steeleaf.name=Hoe
+hoe/steeleaf.prefix=Steeleaf
+hoe/fierymetal=Fiery hoe
+hoe/fierymetal.name=Hoe
+hoe/fierymetal.prefix=Fiery
+hoe/knightmetal=Knightmetal hoe
+hoe/knightmetal.name=Hoe
+hoe/knightmetal.prefix=Knightmetal
+
+###############################
+# SICKLE HEAD
+###############################
+sickle_schema.name=Sickle
+sickle_schema.description=Craft a sickle from the given material. The sickle can be used to efficiently harvest plants.
+sickle_schema.slot1=Sickle material
+
+
+sickle/oak=Wooden sickle
+sickle/oak.name=Sickle
+sickle/oak.prefix=Oak
+sickle/cobblestone=Stone sickle
+sickle/cobblestone.name=Sickle
+sickle/cobblestone.prefix=Cobblestone
+sickle/flint=Flint sickle
+sickle/flint.name=Sickle
+sickle/flint.prefix=Flint
+sickle/iron=Iron sickle
+sickle/iron.name=Sickle
+sickle/iron.prefix=Iron
+sickle/diamond=Diamond sickle
+sickle/diamond.name=Sickle
+sickle/diamond.prefix=Diamond
+sickle/gold=Gold sickle
+sickle/gold.name=Sickle
+sickle/gold.prefix=Gold
+sickle/copper=Copper sickle
+sickle/copper.name=Sickle
+sickle/copper.prefix=Copper
+sickle/tin=Tin sickle
+sickle/tin.name=Sickle
+sickle/tin.prefix=Tin
+sickle/silver=Silver sickle
+sickle/silver.name=Sickle
+sickle/silver.prefix=Silver
+sickle/nickel=Nickel sickle
+sickle/nickel.name=Sickle
+sickle/nickel.prefix=Nickel
+sickle/lead=Lead sickle
+sickle/lead.name=Sickle
+sickle/lead.prefix=Lead
+sickle/bronze=Bronze sickle
+sickle/bronze.name=Sickle
+sickle/bronze.prefix=Bronze
+sickle/electrum=Electrum sickle
+sickle/electrum.name=Sickle
+sickle/electrum.prefix=Electrum
+sickle/steel=Steel sickle
+sickle/steel.name=Sickle
+sickle/steel.prefix=Steel
+sickle/thaumium=Thaumium sickle
+sickle/thaumium.name=Sickle
+sickle/thaumium.prefix=Thaumium
+sickle/ironwood=Ironwood sickle
+sickle/ironwood.name=Sickle
+sickle/ironwood.prefix=Ironwood
+sickle/steeleaf=Steeleaf sickle
+sickle/steeleaf.name=Sickle
+sickle/steeleaf.prefix=Steeleaf
+sickle/fierymetal=Fiery sickle
+sickle/fierymetal.name=Sickle
+sickle/fierymetal.prefix=Fiery
+sickle/knightmetal=Knightmetal sickle
+sickle/knightmetal.name=Sickle
+sickle/knightmetal.prefix=Knightmetal
 
 ###############################
 # TOOLBELT MISC

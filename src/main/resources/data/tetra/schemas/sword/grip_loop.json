@@ -1,0 +1,21 @@
+[
+    {
+        "key": "grip_loop_schema",
+        "slots": ["sword/pommel"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/oak"
+            }
+        ]
+    }
+]

@@ -4,7 +4,10 @@
         "slots": ["duplex/head_left", "duplex/head_right"],
         "keySuffixes": ["_left", "_right"],
         "materialSlotCount": 1,
-        "glyph": { "textureX": 176 },
+        "glyph": {
+            "textureX": 16,
+            "textureY": 32
+        },
         "displayType": "major",
         "outcomes": [
             {
@@ -169,7 +172,7 @@
                     "ore": "ingotIronwood"
                 },
                 "ModuleKey": "duplex/hoe",
-                "moduleVariant": "hoe/ironwood",
+                "moduleVariant": "hoe/ironwood_tf",
                 "improvements": {
                     "enchantment/efficiency": 1
                 }
