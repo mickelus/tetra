@@ -62,9 +62,9 @@ public class TESRWorkbench extends TileEntitySpecialRenderer<TileEntityWorkbench
     private void applyCorrections(ItemStack stack) {
         IBakedModel model = itemRenderer.getItemModelWithOverrides(stack, getWorld(), null);
         if (!model.isGui3d()) {
-            GlStateManager.translate(0, 0.073, -0.1);
+            GlStateManager.translate(0, 0.073, 0.1);
             GlStateManager.scale(.8f, .8f, .8f);
-            GlStateManager.rotate(90, 1, 0, 0);
+            GlStateManager.rotate(-90, 1, 0, 0);
         }
     }
 }
