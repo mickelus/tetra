@@ -33,7 +33,7 @@ public class GuiModuleMinor extends GuiClickable {
             setupChildren(slotName, data.glyph, GuiColors.remove);
         } else if (module == null) {
             ModuleData previewData = previewModule.getData(previewStack);
-            setupChildren(slotName, previewData.glyph, GuiColors.add);
+            setupChildren(previewModule.getName(previewStack), previewData.glyph, GuiColors.add);
         } else {
             ModuleData data = module.getData(itemStack);
             ModuleData previewData = previewModule.getData(previewStack);
