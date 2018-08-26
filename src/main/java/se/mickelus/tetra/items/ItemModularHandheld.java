@@ -29,6 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.PotionBleeding;
 import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.module.ItemEffectHandler;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ import java.util.stream.Collectors;
 public class ItemModularHandheld extends ItemModular {
 
     private static final Set<Block> axeBlocks = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE);
-    private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.PLANTS, Material.VINE);
+    private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD);
 
     private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
     private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
@@ -48,7 +49,7 @@ public class ItemModularHandheld extends ItemModular {
     private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
 
 
-    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB);
+    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.CLOTH);
 
     protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
 
@@ -398,23 +399,7 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public float getDestroySpeed(ItemStack itemStack, IBlockState blockState) {
         if (!isBroken(itemStack)) {
-            String tool = blockState.getBlock().getHarvestTool(blockState);
-
-            if (tool == null) {
-                if (axeMaterials.contains(blockState.getMaterial())) {
-                    tool = "axe";
-                } else if (pickaxeMaterials.contains(blockState.getMaterial())) {
-                    tool = "pickaxe";
-                } else if (axeBlocks.contains(blockState.getBlock())) {
-                    tool = "axe";
-                } else if (pickaxeBlocks.contains(blockState.getBlock())) {
-                    tool = "pickaxe";
-                } else if (cuttingMaterials.contains(blockState.getMaterial())) {
-                    tool = "cut";
-                } else if (shovelBlocks.contains(blockState.getBlock())) {
-                    tool = "shovel";
-                }
-            }
+            String tool = getEffectiveTool(blockState);
 
             float speed = (float) (4 + getSpeedModifier(itemStack)) * getCapabilityEfficiency(itemStack, tool);
 
@@ -429,5 +414,28 @@ public class ItemModularHandheld extends ItemModular {
             return speed;
         }
         return 1;
+    }
+
+    public static String getEffectiveTool(IBlockState blockState) {
+        String tool = blockState.getBlock().getHarvestTool(blockState);
+
+        if (tool != null) {
+            return tool;
+        }
+
+        if (axeMaterials.contains(blockState.getMaterial())) {
+            return "axe";
+        } else if (pickaxeMaterials.contains(blockState.getMaterial())) {
+            return "pickaxe";
+        } else if (axeBlocks.contains(blockState.getBlock())) {
+            return "axe";
+        } else if (pickaxeBlocks.contains(blockState.getBlock())) {
+            return "pickaxe";
+        } else if (cuttingMaterials.contains(blockState.getMaterial())) {
+            return "cut";
+        } else if (shovelBlocks.contains(blockState.getBlock())) {
+            return "shovel";
+        }
+        return null;
     }
 }

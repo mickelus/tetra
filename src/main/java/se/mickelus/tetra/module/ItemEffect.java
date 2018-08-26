@@ -8,6 +8,7 @@ public enum ItemEffect {
     softStrike,
     knockback,
     sweeping,
+    sweepingStrike,
     strikingAxe,
     strikingPickaxe,
     strikingCut,

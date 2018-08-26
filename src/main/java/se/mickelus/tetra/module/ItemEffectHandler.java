@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import se.mickelus.tetra.ReflectionHelper;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.ItemModularHandheld;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -197,10 +198,11 @@ public class ItemEffectHandler {
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int strikingLevel = 0;
+                    int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweepingStrike);
                     BlockPos pos = event.getPos();
                     World world = event.getWorld();
                     IBlockState blockState = world.getBlockState(pos);
-                    String tool = blockState.getBlock().getHarvestTool(blockState);
+                    String tool = ItemModularHandheld.getEffectiveTool(blockState);
 
                     if (tool != null) {
                         switch (tool) {
@@ -221,15 +223,14 @@ public class ItemEffectHandler {
 
                     if (strikingLevel > 0) {
                         if (event.getEntityPlayer().getCooledAttackStrength(0) > 0.9) {
-                            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, event.getEntityPlayer(), blockState);
-                            if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState)) || event.getItemStack().canHarvestBlock(blockState)) {
-                                world.playEvent(event.getEntityPlayer(), 2001, event.getPos(), Block.getStateId(event.getWorld().getBlockState(event.getPos())));
-                                if (!event.getWorld().isRemote) {
-                                    boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, event.getEntityPlayer(), true);
-                                    if (canRemove) {
-                                        blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
-                                        blockState.getBlock().harvestBlock(world, event.getEntityPlayer(), pos, blockState, world.getTileEntity(pos), itemStack);
-                                    }
+
+                            if (sweepingLevel > 0) {
+                                breakBlocksAround(world, event.getEntityPlayer(), itemStack, pos, tool, sweepingLevel);
+                            } else {
+                                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, event.getEntityPlayer(), blockState);
+                                if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
+                                        || itemStack.canHarvestBlock(blockState)) {
+                                    breakBlock(world, event.getEntityPlayer(), itemStack, pos, blockState);
                                 }
                             }
                         }
@@ -237,5 +238,60 @@ public class ItemEffectHandler {
                         event.getEntityPlayer().resetCooldown();
                     }
                 });
+    }
+
+    /**
+     * Break a block in the world, as a player. Based on how players break blocks in vanilla.
+     * @param world the world in which to break blocks
+     * @param breakingPlayer the player which is breaking the blocks
+     * @param toolStack the itemstack used to break the blocks
+     * @param pos the position which to break blocks around
+     * @param blockState the state of the block that is to broken
+     */
+    private void breakBlock(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
+        // todo: perhaps we don't want to play the event here to avoid noise when breaking blocks with sweeping
+        world.playEvent(breakingPlayer, 2001, pos, Block.getStateId(blockState));
+        if (!world.isRemote) {
+            boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
+            if (canRemove) {
+                blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
+                blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
+            }
+        }
+    }
+
+    /**
+     * Breaks several blocks around the given blockpos.
+     * todo: currently breaks all in a 3x3 area, improve to use better shapes and depend on sweeping level
+     * @param world the world in which to break blocks
+     * @param breakingPlayer the player which is breaking the blocks
+     * @param toolStack the itemstack used to break the blocks
+     * @param pos the position which to break blocks around
+     * @param tool a string representation used to break the center block, the tool required to break nearby blocks has
+     *             to match this
+     * @param sweepingLevel the level of the sweeping effect on the toolStack
+     */
+    private void breakBlocksAround(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos,
+                                   String tool, int sweepingLevel) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                for (int z = -1; z <= 1; z++) {
+                    BlockPos offsetPos = pos.add(x, y, z);
+                    IBlockState blockState = world.getBlockState(offsetPos);
+
+                    // make sure that only blocks which require the same tool are broken
+                    if (!tool.equals(ItemModularHandheld.getEffectiveTool(blockState))) {
+                        continue;
+                    }
+
+                    // check that the tool level is high enough and break the block
+                    int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
+                    if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
+                            || toolStack.canHarvestBlock(blockState)) {
+                        breakBlock(world, breakingPlayer, toolStack, offsetPos, blockState);
+                    }
+                }
+            }
+        }
     }
 }

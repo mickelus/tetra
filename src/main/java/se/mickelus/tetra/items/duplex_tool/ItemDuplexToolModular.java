@@ -61,6 +61,9 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public static DuplexHeadModule adzeLeft;
     public static DuplexHeadModule adzeRight;
 
+    public static DuplexHeadModule sickleLeft;
+    public static DuplexHeadModule sickleRight;
+
     public static DuplexHeadModule butt;
 
     public static ItemDuplexToolModular instance;
@@ -96,6 +99,9 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         adzeLeft = new DuplexHeadModule(headLeftKey, "adze", leftSuffix);
         adzeRight = new DuplexHeadModule(headRightKey, "adze", rightSuffix);
 
+        sickleLeft = new DuplexHeadModule(headLeftKey, "sickle", leftSuffix);
+        sickleRight = new DuplexHeadModule(headRightKey, "sickle", rightSuffix);
+
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
         new BasicHandleModule(handleKey);
@@ -125,6 +131,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/adze");
         new BookEnchantSchema(adzeLeft);
         new BookEnchantSchema(adzeRight);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/sickle");
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
