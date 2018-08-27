@@ -20,7 +20,7 @@
         "name": "duplex/adze_pickaxe"
     },
     {
-        "modules": ["duplex/basic_aze", "duplex/basic_axe"],
+        "modules": ["duplex/adze", "duplex/basic_axe"],
         "name": "duplex/adze_axe"
     },
     {
