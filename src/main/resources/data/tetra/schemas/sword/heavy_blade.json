@@ -4,7 +4,7 @@
         "slots": ["sword/blade"],
         "materialSlotCount": 1,
         "displayType": "major",
-        "glyph": {"textureX": 48 },
+        "glyph": { "textureX": 48 },
         "outcomes": [
             {
                 "material": {
