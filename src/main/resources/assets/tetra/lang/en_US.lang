@@ -94,8 +94,8 @@ enchantment/knockback.name=Knockback
 enchantment/knockback.description=Knock back targets further
 enchantment/mending.name=Mending
 enchantment/mending.description=Repairs durability when gaining experience
-enchantment/sweeping_edge.name=Sweeping Edge
-enchantment/sweeping_edge.description=Increases damage of sweeping strikes
+enchantment/sweeping.name=Sweeping Edge
+enchantment/sweeping.description=Makes sweeping strikes more effective
 enchantment/efficiency.name=Efficiency
 enchantment/efficiency.description=Improves efficiency
 enchantment/fortune.name=Fortune
@@ -838,7 +838,7 @@ hoe/knightmetal.prefix=Knightmetal
 # SICKLE HEAD
 ###############################
 sickle_schema.name=Sickle
-sickle_schema.description=Craft a sickle from the given material. The sickle can be used to efficiently harvest plants.
+sickle_schema.description=Craft a sickle from the given material. The sickle can be used to cut blocks in an area.
 sickle_schema.slot1=Sickle material
 
 

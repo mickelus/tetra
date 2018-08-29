@@ -3,7 +3,7 @@
         "key": "sickle/oak",
         "durability": 20,
         "integrity": -1,
-        "damage": 0,
+        "damage": 0.5,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "866526",
@@ -15,14 +15,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/cobblestone",
         "durability": 56,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "9a9a9a",
@@ -34,14 +35,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/flint",
         "durability": 78,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": 0,
         "glyph": {
             "tint": "343434",
@@ -53,14 +55,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/iron",
         "durability": 115,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "d8d8d8",
@@ -72,14 +75,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/diamond",
         "durability": 771,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "33ebcb",
@@ -91,14 +95,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/gold",
         "durability": 6,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "eaee57",
@@ -110,14 +115,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/copper",
         "durability": 122,
         "integrity": 0,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "df7646",
@@ -129,14 +135,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/tin",
         "durability": 92,
         "integrity": 0,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b3c9c1",
@@ -148,14 +155,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/silver",
         "durability": 46,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "d6f6ff",
@@ -167,14 +175,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/nickel",
         "durability": 230,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "c2d3a6",
@@ -186,14 +195,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/lead",
         "durability": 65,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "897a9b",
@@ -205,14 +215,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/bronze",
         "durability": 360,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b2712c",
@@ -224,14 +235,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/electrum",
         "durability": 121,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "e4da4c",
@@ -243,14 +255,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/steel",
         "durability": 328,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "999999",
@@ -262,14 +275,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/thaumium",
         "durability": 419,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "4d3984",
@@ -281,14 +295,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/ironwood_tf",
         "durability": 426,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "5ea917",
@@ -300,14 +315,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/steeleaf",
         "durability": 96,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
             "tint": "458430",
@@ -319,14 +335,15 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
         "key": "sickle/fierymetal",
         "durability": 602,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "fa9f00",
@@ -338,7 +355,8 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     },
     {
@@ -357,7 +375,8 @@
         },
         "effects": {
             "strikingCut": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sweeping": 1
         }
     }
 ]

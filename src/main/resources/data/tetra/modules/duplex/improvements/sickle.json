@@ -1,0 +1,91 @@
+[
+    {
+        "key": "enchantment/sharpness",
+        "level": 1,
+        "damage": 1,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 2,
+        "damage": 1.5,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 3,
+        "damage": 2,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 4,
+        "damage": 2.5,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 5,
+        "damage": 3,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "mending": 1
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "sweeping": 1,
+            "sweepingStrike": 2
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "sweeping": 2,
+            "sweepingStrike": 3
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "sweeping": 3,
+            "sweepingStrike": 4
+        }
+    }
+]

@@ -133,6 +133,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new BookEnchantSchema(adzeRight);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/sickle");
+        new BookEnchantSchema(sickleLeft);
+        new BookEnchantSchema(sickleRight);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
