@@ -5,7 +5,7 @@
         "integrity": 3,
         "glyph": {
             "tint": "866526",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -16,7 +16,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "9d804e",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -27,7 +27,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "694f2f",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -38,7 +38,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "c8b77d",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -49,7 +49,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "996e4c",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -60,7 +60,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "ac5d33",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -71,7 +71,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "3c2712",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -81,7 +81,7 @@
         "integrity": 5,
         "glyph": {
             "tint": "623913",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -92,7 +92,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "684817",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -103,7 +103,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "444b2c",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -113,7 +113,7 @@
         "integrity": 4,
         "glyph": {
             "tint": "edebca",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -124,7 +124,7 @@
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -135,7 +135,7 @@
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b2712c",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -145,7 +145,7 @@
         "integrity": 5,
         "glyph": {
             "tint": "383838",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -156,7 +156,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "ffc100",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -167,7 +167,7 @@
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "bd9ab1",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -177,7 +177,7 @@
         "integrity": 6,
         "glyph": {
             "tint": "33231e",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -188,7 +188,7 @@
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "422114",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
@@ -198,7 +198,7 @@
         "integrity": 5,
         "glyph": {
             "tint": "8c714d",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     }

@@ -4,11 +4,14 @@
         "slots": ["sword/pommel"],
         "materialSlotCount": 1,
         "displayType": "minor",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 16
+        },
         "outcomes": [
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "count": 2,
                     "data": 0
                 },
                 "requiredCapabilities": {
@@ -16,6 +19,307 @@
                 },
                 "moduleKey": "sword/counterweight",
                 "moduleVariant": "counterweight/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/counterweight",
+                "moduleVariant": "counterweight/knightmetal"
             }
         ]
     }

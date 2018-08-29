@@ -353,7 +353,7 @@ public class ItemModularHandheld extends ItemModular {
         if (counterWeightLevel > 0) {
             int integrityCost = getIntegrityCost(itemStack);
 
-            return 1.5 - Math.abs(counterWeightLevel + integrityCost) * 0.2;
+            return 0.5 + Math.abs(counterWeightLevel + integrityCost) * 0.2;
         }
         return 1;
     }

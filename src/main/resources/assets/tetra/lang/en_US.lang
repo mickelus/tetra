@@ -269,7 +269,35 @@ counterweight_schema.name=Counterweight
 counterweight_schema.description=Balance the blade with a counterweight. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other parts combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
 counterweight_schema.slot1=Material
 
-counterweight/oak=Oak counterweight
+counterweight/oak= Oak counterweight §7II
+counterweight/spruce= Spruce counterweight §7II
+counterweight/birch= Birch counterweight §7II
+counterweight/jungle= Jungle counterweight §7II
+counterweight/acacia= Acacia counterweight §7II
+counterweight/dark_oak= Dark_oak counterweight §7II
+counterweight/cobblestone= Cobblestone counterweight §7IV
+counterweight/stone= Stone counterweight §7IV
+counterweight/granite= Granite counterweight §7IV
+counterweight/diorite= Diorite counterweight §7IV
+counterweight/andesite= Andesite counterweight §7IV
+counterweight/iron= Iron counterweight §7IV
+counterweight/flint= Flint counterweight §7II
+counterweight/gold= Gold counterweight §7IV
+counterweight/diamond= Diamond counterweight §7IV
+counterweight/obsidian= Obsidian counterweight §7VI
+counterweight/copper= Copper counterweight §7IV
+counterweight/tin= Tin counterweight §7II
+counterweight/silver= Silver counterweight §7IV
+counterweight/nickel= Nickel counterweight §7IV
+counterweight/lead= Lead counterweight §7VI
+counterweight/bronze= Bronze counterweight §7IV
+counterweight/electrum= Electrum counterweight §7IV
+counterweight/steel= Steel counterweight §7IV
+counterweight/thaumium= Thaumium counterweight §7IV
+counterweight/ironwood= Ironwood counterweight §7IV
+counterweight/steeleaf= Steeleaf counterweight §7IV
+counterweight/fierymetal= Fierymetal counterweight §7VI
+counterweight/knightmetal= Knightmetal counterweight §7IV
 
 ###############################
 # SHORTBLADE
