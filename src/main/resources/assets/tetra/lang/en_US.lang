@@ -442,6 +442,74 @@ heavy_blade/knightmetal.prefix=Knightmetal
 heavy_blade/knightmetal.name=Cleaver
 
 ###############################
+# MACHETE
+###############################
+machete_schema.name=Machete
+machete_schema.description=Replace the current sword blade with a machete forged from the provided material. The machete works like a regular sword but can also be used to cut down plants in an area.
+machete_schema.slot1=Blade material
+
+sword/machete.name=Machete
+
+machete/oak=Oak machete
+machete/oak.prefix=Oak
+machete/spruce=Spruce machete
+machete/spruce.prefix=Spruce
+machete/birch=Birch machete
+machete/birch.prefix=Birch
+machete/jungle=Jungle machete
+machete/jungle.prefix=Jungle
+machete/acacia=Acacia machete
+machete/acacia.prefix=Acacia
+machete/dark_oak=Oak machete
+machete/dark_oak.prefix=Oak
+machete/cobblestone=Stone machete
+machete/cobblestone.prefix=Stone
+machete/stone=Solid stone machete
+machete/stone.prefix=Solid stone
+machete/granite=Granite machete
+machete/granite.prefix=Granite
+machete/diorite=Diorite machete
+machete/diorite.prefix=Diorite
+machete/andesite=Andesite machete
+machete/andesite.prefix=Andesite
+machete/flint=Flint machete
+machete/flint.prefix=Flint
+machete/iron=Iron machete
+machete/iron.prefix=Iron
+machete/gold=Golden machete
+machete/gold.prefix=Golden
+machete/diamond=Diamond machete
+machete/diamond.prefix=Diamond
+machete/obsidian=Obsidian machete
+machete/obsidian.prefix=Obsidian
+machete/copper=Copper machete
+machete/copper.prefix=Copper
+machete/tin=Tin machete
+machete/tin.prefix=Tin
+machete/silver=Silver machete
+machete/silver.prefix=Silver
+machete/nickel=Nickel machete
+machete/nickel.prefix=Nickel
+machete/lead=Lead machete
+machete/lead.prefix=Lead
+machete/bronze=Bronze machete
+machete/bronze.prefix=Bronze
+machete/electrum=Electrum machete
+machete/electrum.prefix=Electrum
+machete/steel=Steel machete
+machete/steel.prefix=Steel
+machete/thaumium=Thaumium machete
+machete/thaumium.prefix=Thaumium
+machete/ironwood=Ironwood machete
+machete/ironwood.prefix=Ironwood
+machete/steeleaf=Steeleaf machete
+machete/steeleaf.prefix=Steeleaf
+machete/fierymetal=Fiery machete
+machete/fierymetal.prefix=Fiery
+machete/knightmetal=Knightmetal machete
+machete/knightmetal.prefix=Knightmetal
+
+###############################
 # DUPLEX SYNERGY NAMES
 ###############################
 duplex/axe_hammer=Carpenter's hammer
