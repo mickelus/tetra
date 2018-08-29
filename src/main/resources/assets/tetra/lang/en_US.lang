@@ -260,7 +260,35 @@ wide_guard_schema.name=Wide guard
 wide_guard_schema.description=Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.
 wide_guard_schema.slot1=Guard material
 
-wide_guard/oak=Wide oak guard
+wide_guard/oak= Wide oak guard
+wide_guard/spruce= Wide spruce guard
+wide_guard/birch= Wide birch guard
+wide_guard/jungle= Wide jungle guard
+wide_guard/acacia= Wide acacia guard
+wide_guard/dark_oak= Wide dark-oak guard
+wide_guard/cobblestone= Wide cobblestone guard
+wide_guard/stone= Wide stone guard
+wide_guard/granite= Wide granite guard
+wide_guard/diorite= Wide diorite guard
+wide_guard/andesite= Wide andesite guard
+wide_guard/iron= Wide iron guard
+wide_guard/flint= Wide flint guard
+wide_guard/gold= Wide gold guard
+wide_guard/diamond= Wide diamond guard
+wide_guard/obsidian= Wide obsidian guard
+wide_guard/copper= Wide copper guard
+wide_guard/tin= Wide tin guard
+wide_guard/silver= Wide silver guard
+wide_guard/nickel= Wide nickel guard
+wide_guard/lead= Wide lead guard
+wide_guard/bronze= Wide bronze guard
+wide_guard/electrum= Wide electrum guard
+wide_guard/steel= Wide steel guard
+wide_guard/thaumium= Wide thaumium guard
+wide_guard/ironwood= Wide ironwood guard
+wide_guard/steeleaf= Wide steeleaf guard
+wide_guard/fierymetal= Wide fierymetal guard
+wide_guard/knightmetal= Wide knightmetal guard
 
 ###############################
 # COUNTERWEIGHT
@@ -274,7 +302,7 @@ counterweight/spruce= Spruce counterweight §7II
 counterweight/birch= Birch counterweight §7II
 counterweight/jungle= Jungle counterweight §7II
 counterweight/acacia= Acacia counterweight §7II
-counterweight/dark_oak= Dark_oak counterweight §7II
+counterweight/dark_oak= Dark oak counterweight §7II
 counterweight/cobblestone= Cobblestone counterweight §7IV
 counterweight/stone= Stone counterweight §7IV
 counterweight/granite= Granite counterweight §7IV
