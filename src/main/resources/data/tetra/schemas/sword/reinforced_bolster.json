@@ -1,7 +1,7 @@
 [
     {
-        "key": "grip_loop_schema",
-        "slots": ["sword/pommel"],
+        "key": "reinforced_bolster_schema",
+        "slots": ["sword/guard"],
         "materialSlotCount": 1,
         "displayType": "minor",
         "glyph": {
@@ -17,8 +17,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/oak"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/oak"
             },
             {
                 "material": {
@@ -28,8 +28,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/spruce"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/spruce"
             },
             {
                 "material": {
@@ -37,10 +37,10 @@
                     "data": 2
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/birch"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/birch"
             },
             {
                 "material": {
@@ -48,10 +48,10 @@
                     "data": 3
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/jungle"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/jungle"
             },
             {
                 "material": {
@@ -59,10 +59,10 @@
                     "data": 4
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/acacia"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/acacia"
             },
             {
                 "material": {
@@ -72,8 +72,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/dark_oak"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/dark_oak"
             },
             {
                 "material": {
@@ -82,8 +82,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/cobblestone"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/cobblestone"
             },
             {
                 "material": {
@@ -93,8 +93,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/stone"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/stone"
             },
             {
                 "material": {
@@ -104,8 +104,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/granite"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/granite"
             },
             {
                 "material": {
@@ -115,8 +115,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/diorite"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/diorite"
             },
             {
                 "material": {
@@ -126,28 +126,29 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/andesite"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/andesite"
             },
             {
                 "material": {
                     "item": "minecraft:iron_ingot"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/iron"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/iron"
             },
             {
                 "material": {
-                    "item": "minecraft:flint"
+                    "item": "minecraft:flint",
+                    "count": 2
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/flint"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/flint"
             },
             {
                 "material": {
@@ -156,28 +157,28 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/gold"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/gold"
             },
             {
                 "material": {
                     "item": "minecraft:diamond"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/diamond"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/diamond"
             },
             {
                 "material": {
                     "item": "minecraft:obsidian"
                 },
                 "requiredCapabilities": {
-                    "hammer": 3
+                    "hammer": 4
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/obsidian"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/obsidian"
             },
             {
                 "material": {
@@ -185,10 +186,10 @@
                     "ore": "ingotCopper"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/copper"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/copper"
             },
             {
                 "material": {
@@ -196,10 +197,10 @@
                     "ore": "ingotTin"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/tin"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/tin"
             },
             {
                 "material": {
@@ -209,8 +210,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/silver"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/silver"
             },
             {
                 "material": {
@@ -218,10 +219,10 @@
                     "ore": "ingotNickel"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/nickel"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/nickel"
             },
             {
                 "material": {
@@ -229,10 +230,10 @@
                     "ore": "ingotLead"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/lead"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/lead"
             },
             {
                 "material": {
@@ -240,10 +241,10 @@
                     "ore": "ingotBronze"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 4
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/bronze"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/bronze"
             },
             {
                 "material": {
@@ -251,10 +252,10 @@
                     "ore": "ingotElectrum"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 4
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/electrum"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/electrum"
             },
             {
                 "material": {
@@ -262,10 +263,10 @@
                     "ore": "ingotSteel"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 4
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/steel"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/steel"
             },
             {
                 "material": {
@@ -274,8 +275,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/thaumium"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/thaumium"
             },
             {
                 "material": {
@@ -283,10 +284,10 @@
                     "ore": "ingotIronwood"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 1
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/ironwood"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/ironwood"
             },
             {
                 "material": {
@@ -294,10 +295,10 @@
                     "ore": "ingotSteeleaf"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/steeleaf"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/steeleaf"
             },
             {
                 "material": {
@@ -307,8 +308,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/fierymetal"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/fierymetal"
             },
             {
                 "material": {
@@ -316,10 +317,10 @@
                     "ore": "ingotKnightmetal"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 4
                 },
-                "moduleKey": "sword/grip_loop",
-                "moduleVariant": "grip_loop/knightmetal"
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/knightmetal"
             }
         ]
     }

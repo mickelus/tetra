@@ -25,5 +25,6 @@ public enum ItemEffect {
     flattening,
     tilling,
     armor,
-    counterweight
+    counterweight,
+    quickStrike
 }

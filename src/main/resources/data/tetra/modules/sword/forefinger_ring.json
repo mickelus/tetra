@@ -1,11 +1,10 @@
 [
     {
-        "key": "grip_loop/oak",
+        "key": "forefinger_ring/oak",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9d804e",
@@ -14,12 +13,11 @@
         }
     },
     {
-        "key": "grip_loop/spruce",
+        "key": "forefinger_ring/spruce",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "694f2f",
@@ -28,12 +26,11 @@
         }
     },
     {
-        "key": "grip_loop/birch",
+        "key": "forefinger_ring/birch",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "c8b77d",
@@ -42,12 +39,11 @@
         }
     },
     {
-        "key": "grip_loop/jungle",
+        "key": "forefinger_ring/jungle",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "996e4c",
@@ -56,12 +52,11 @@
         }
     },
     {
-        "key": "grip_loop/acacia",
+        "key": "forefinger_ring/acacia",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "ac5d33",
@@ -70,12 +65,11 @@
         }
     },
     {
-        "key": "grip_loop/dark_oak",
+        "key": "forefinger_ring/dark_oak",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "3c2712",
@@ -84,12 +78,11 @@
         }
     },
     {
-        "key": "grip_loop/cobblestone",
+        "key": "forefinger_ring/cobblestone",
         "durability": 23,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -98,12 +91,11 @@
         }
     },
     {
-        "key": "grip_loop/stone",
+        "key": "forefinger_ring/stone",
         "durability": 25,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -112,12 +104,11 @@
         }
     },
     {
-        "key": "grip_loop/granite",
+        "key": "forefinger_ring/granite",
         "durability": 25,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "8a6658",
@@ -126,12 +117,11 @@
         }
     },
     {
-        "key": "grip_loop/diorite",
+        "key": "forefinger_ring/diorite",
         "durability": 24,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b1b1b3",
@@ -140,12 +130,11 @@
         }
     },
     {
-        "key": "grip_loop/andesite",
+        "key": "forefinger_ring/andesite",
         "durability": 25,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "79797a",
@@ -154,12 +143,11 @@
         }
     },
     {
-        "key": "grip_loop/iron",
+        "key": "forefinger_ring/iron",
         "durability": 45,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "d8d8d8",
@@ -168,12 +156,11 @@
         }
     },
     {
-        "key": "grip_loop/flint",
+        "key": "forefinger_ring/flint",
         "durability": 28,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "343434",
@@ -182,12 +169,11 @@
         }
     },
     {
-        "key": "grip_loop/gold",
+        "key": "forefinger_ring/gold",
         "durability": 9,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "eaee57",
@@ -196,12 +182,11 @@
         }
     },
     {
-        "key": "grip_loop/diamond",
+        "key": "forefinger_ring/diamond",
         "durability": 55,
         "integrity": -3,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "33ebcb",
@@ -210,12 +195,11 @@
         }
     },
     {
-        "key": "grip_loop/obsidian",
+        "key": "forefinger_ring/obsidian",
         "durability": 87,
         "integrity": -3,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "3c3056",
@@ -224,12 +208,11 @@
         }
     },
     {
-        "key": "grip_loop/copper",
+        "key": "forefinger_ring/copper",
         "durability": 58,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "df7646",
@@ -238,12 +221,11 @@
         }
     },
     {
-        "key": "grip_loop/tin",
+        "key": "forefinger_ring/tin",
         "durability": 43,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b3c9c1",
@@ -252,12 +234,11 @@
         }
     },
     {
-        "key": "grip_loop/silver",
+        "key": "forefinger_ring/silver",
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "d6f6ff",
@@ -266,12 +247,11 @@
         }
     },
     {
-        "key": "grip_loop/nickel",
+        "key": "forefinger_ring/nickel",
         "durability": 41,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "c2d3a6",
@@ -280,12 +260,11 @@
         }
     },
     {
-        "key": "grip_loop/lead",
+        "key": "forefinger_ring/lead",
         "durability": 77,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "897a9b",
@@ -294,12 +273,11 @@
         }
     },
     {
-        "key": "grip_loop/bronze",
+        "key": "forefinger_ring/bronze",
         "durability": 46,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b2712c",
@@ -308,12 +286,11 @@
         }
     },
     {
-        "key": "grip_loop/electrum",
+        "key": "forefinger_ring/electrum",
         "durability": 9,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "e4da4c",
@@ -322,12 +299,11 @@
         }
     },
     {
-        "key": "grip_loop/steel",
+        "key": "forefinger_ring/steel",
         "durability": 68,
         "integrity": -3,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "999999",
@@ -336,12 +312,11 @@
         }
     },
     {
-        "key": "grip_loop/thaumium",
+        "key": "forefinger_ring/thaumium",
         "durability": 42,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "4d3984",
@@ -350,12 +325,11 @@
         }
     },
     {
-        "key": "grip_loop/ironwood",
+        "key": "forefinger_ring/ironwood",
         "durability": 51,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "5ea917",
@@ -364,12 +338,11 @@
         }
     },
     {
-        "key": "grip_loop/steeleaf",
+        "key": "forefinger_ring/steeleaf",
         "durability": 17,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "458430",
@@ -378,12 +351,11 @@
         }
     },
     {
-        "key": "grip_loop/fierymetal",
+        "key": "forefinger_ring/fierymetal",
         "durability": 59,
         "integrity": -2,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "fa9f00",
@@ -392,12 +364,11 @@
         }
     },
     {
-        "key": "grip_loop/knightmetal",
+        "key": "forefinger_ring/knightmetal",
         "durability": 41,
         "integrity": -3,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b8cf9c",

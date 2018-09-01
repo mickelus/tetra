@@ -76,6 +76,15 @@ public class ItemEffectHandler {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
+                    int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
+                    if (quickStrikeLevel > 0) {
+                        double maxDamage = ItemModularHandheld.getDamageModifierStatic(itemStack);
+
+                        if (event.getAmount() < quickStrikeLevel * 0.05 * maxDamage) {
+                            event.setAmount((float) (quickStrikeLevel * 0.05f * maxDamage));
+                        }
+                    }
+
                     if (EnumCreatureAttribute.UNDEAD.equals(event.getEntityLiving().getCreatureAttribute())) {
                         event.setAmount(event.getAmount() + getEffectLevel(itemStack, ItemEffect.smite) * 2.5f);
                     }
