@@ -192,9 +192,9 @@ public class ItemModularHandheld extends ItemModular {
             IBlockState newState = null;
 
             if (block == Blocks.GRASS || block == Blocks.GRASS_PATH
-                    || BlockDirt.DirtType.DIRT == currentState.getValue(BlockDirt.VARIANT)) {
+                    || (block == Blocks.DIRT && BlockDirt.DirtType.DIRT == currentState.getValue(BlockDirt.VARIANT))) {
                 newState = Blocks.FARMLAND.getDefaultState();
-            } else if (BlockDirt.DirtType.COARSE_DIRT == currentState.getValue(BlockDirt.VARIANT)) {
+            } else if (block == Blocks.DIRT && BlockDirt.DirtType.COARSE_DIRT == currentState.getValue(BlockDirt.VARIANT)) {
                 newState = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT);
             }
 
