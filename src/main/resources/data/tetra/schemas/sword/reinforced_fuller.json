@@ -3,9 +3,9 @@
         "key": "reinforced_fuller_schema",
         "slots": ["sword/fuller"],
         "materialSlotCount": 1,
-        "displayType": "major",
+        "displayType": "minor",
         "glyph": {
-            "textureX": 32,
+            "textureX": 72,
             "textureY": 16
         },
         "outcomes": [
@@ -18,8 +18,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/oak"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/oak"
             },
             {
                 "material": {
@@ -30,8 +30,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/spruce"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/spruce"
             },
             {
                 "material": {
@@ -42,8 +42,8 @@
                 "requiredCapabilities": {
                     "axe": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/birch"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/birch"
             },
             {
                 "material": {
@@ -54,8 +54,8 @@
                 "requiredCapabilities": {
                     "axe": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/jungle"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/jungle"
             },
             {
                 "material": {
@@ -66,8 +66,8 @@
                 "requiredCapabilities": {
                     "axe": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/acacia"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/acacia"
             },
             {
                 "material": {
@@ -78,8 +78,8 @@
                 "requiredCapabilities": {
                     "axe": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/dark_oak"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/dark_oak"
             },
             {
                 "material": {
@@ -89,8 +89,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/cobblestone"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/cobblestone"
             },
             {
                 "material": {
@@ -101,8 +101,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/stone"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/stone"
             },
             {
                 "material": {
@@ -113,8 +113,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/granite"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/granite"
             },
             {
                 "material": {
@@ -125,8 +125,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/diorite"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/diorite"
             },
             {
                 "material": {
@@ -137,8 +137,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/andesite"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/andesite"
             },
             {
                 "material": {
@@ -148,8 +148,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/iron"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/iron"
             },
             {
                 "material": {
@@ -159,8 +159,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/flint"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/flint"
             },
             {
                 "material": {
@@ -170,8 +170,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/gold"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/gold"
             },
             {
                 "material": {
@@ -181,8 +181,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/diamond"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/diamond"
             },
             {
                 "material": {
@@ -192,8 +192,8 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/obsidian"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/obsidian"
             },
             {
                 "material": {
@@ -204,8 +204,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/copper"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/copper"
             },
             {
                 "material": {
@@ -216,8 +216,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/tin"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/tin"
             },
             {
                 "material": {
@@ -228,8 +228,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/silver"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/silver"
             },
             {
                 "material": {
@@ -240,8 +240,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/nickel"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/nickel"
             },
             {
                 "material": {
@@ -252,8 +252,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/lead"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/lead"
             },
             {
                 "material": {
@@ -264,8 +264,8 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/bronze"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/bronze"
             },
             {
                 "material": {
@@ -276,8 +276,8 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/electrum"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/electrum"
             },
             {
                 "material": {
@@ -288,8 +288,8 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/steel"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/steel"
             },
             {
                 "material": {
@@ -299,8 +299,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/thaumium"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/thaumium"
             },
             {
                 "material": {
@@ -311,8 +311,8 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/ironwood"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/ironwood"
             },
             {
                 "material": {
@@ -323,8 +323,8 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/steeleaf"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/steeleaf"
             },
             {
                 "material": {
@@ -335,8 +335,8 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/fierymetal"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/fierymetal"
             },
             {
                 "material": {
@@ -347,8 +347,8 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/knightmetal"
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/knightmetal"
             }
         ]
     }
