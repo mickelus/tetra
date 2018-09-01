@@ -339,7 +339,7 @@ reinforced_fuller/spruce=Spruce reinforced fuller
 reinforced_fuller/birch=Birch reinforced fuller
 reinforced_fuller/jungle=Jungle reinforced fuller
 reinforced_fuller/acacia=Acacia reinforced fuller
-reinforced_fuller/dark_oak=Dark oak reinforced guard
+reinforced_fuller/dark_oak=Dark oak reinforced fuller
 reinforced_fuller/cobblestone=Cobblestone reinforced fuller
 reinforced_fuller/stone=Stone reinforced fuller
 reinforced_fuller/granite=Granite reinforced fuller
@@ -376,7 +376,7 @@ reinforced_bolster/spruce=Spruce reinforced bolster
 reinforced_bolster/birch=Birch reinforced bolster
 reinforced_bolster/jungle=Jungle reinforced bolster
 reinforced_bolster/acacia=Acacia reinforced bolster
-reinforced_bolster/dark_oak=Dark oak reinforced guard
+reinforced_bolster/dark_oak=Dark oak reinforced bolster
 reinforced_bolster/cobblestone=Cobblestone reinforced bolster
 reinforced_bolster/stone=Stone reinforced bolster
 reinforced_bolster/granite=Granite reinforced bolster
@@ -400,6 +400,43 @@ reinforced_bolster/ironwood=Ironwood reinforced bolster
 reinforced_bolster/steeleaf=Steeleaf reinforced bolster
 reinforced_bolster/fierymetal=Fierymetal reinforced bolster
 reinforced_bolster/knightmetal=Knightmetal reinforced bolster
+
+###############################
+# FOREFINGER RING
+###############################
+forefinger_ring_schema.name=Forefinger ring
+forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Reduces the minimum damage dealt when swinging too fast from 20% to 40%.
+forefinger_ring_schema.slot1=Material
+
+forefinger_ring/oak=Oak ring
+forefinger_ring/spruce=Spruce ring
+forefinger_ring/birch=Birch ring
+forefinger_ring/jungle=Jungle ring
+forefinger_ring/acacia=Acacia ring
+forefinger_ring/dark_oak=Dark oak ring
+forefinger_ring/cobblestone=Cobblestone ring
+forefinger_ring/stone=Stone ring
+forefinger_ring/granite=Granite ring
+forefinger_ring/diorite=Diorite ring
+forefinger_ring/andesite=Andesite ring
+forefinger_ring/iron=Iron ring
+forefinger_ring/flint=Flint ring
+forefinger_ring/gold=Gold ring
+forefinger_ring/diamond=Diamond ring
+forefinger_ring/obsidian=Obsidian ring
+forefinger_ring/copper=Copper ring
+forefinger_ring/tin=Tin ring
+forefinger_ring/silver=Silver ring
+forefinger_ring/nickel=Nickel ring
+forefinger_ring/lead=Lead ring
+forefinger_ring/bronze=Bronze ring
+forefinger_ring/electrum=Electrum ring
+forefinger_ring/steel=Steel ring
+forefinger_ring/thaumium=Thaumium ring
+forefinger_ring/ironwood=Ironwood ring
+forefinger_ring/steeleaf=Steeleaf ring
+forefinger_ring/fierymetal=Fierymetal ring
+forefinger_ring/knightmetal=Knightmetal ring
 
 ###############################
 # GRIP LOOP

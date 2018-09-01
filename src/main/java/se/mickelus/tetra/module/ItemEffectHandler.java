@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -78,10 +79,12 @@ public class ItemEffectHandler {
                 .ifPresent(itemStack -> {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
                     if (quickStrikeLevel > 0) {
-                        double maxDamage = ItemModularHandheld.getDamageModifierStatic(itemStack);
+                        float maxDamage = (float) ((EntityLivingBase) event.getSource().getTrueSource())
+                                .getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+                        float multiplier = quickStrikeLevel * 0.05f + 0.2f;
 
-                        if (event.getAmount() < quickStrikeLevel * 0.05 * maxDamage) {
-                            event.setAmount((float) (quickStrikeLevel * 0.05f * maxDamage));
+                        if (event.getAmount() <  multiplier * maxDamage) {
+                            event.setAmount(multiplier * maxDamage);
                         }
                     }
 

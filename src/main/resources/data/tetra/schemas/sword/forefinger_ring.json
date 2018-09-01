@@ -1,0 +1,327 @@
+[
+    {
+        "key": "forefinger_ring_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/forefinger_ring",
+                "moduleVariant": "forefinger_ring/knightmetal"
+            }
+        ]
+    }
+]

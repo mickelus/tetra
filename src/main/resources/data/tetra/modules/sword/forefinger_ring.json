@@ -4,7 +4,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "9d804e",
@@ -17,7 +17,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "694f2f",
@@ -30,7 +30,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "c8b77d",
@@ -43,7 +43,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "996e4c",
@@ -56,7 +56,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "ac5d33",
@@ -69,7 +69,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "3c2712",
@@ -82,7 +82,7 @@
         "durability": 23,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -93,9 +93,9 @@
     {
         "key": "forefinger_ring/stone",
         "durability": 25,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -108,7 +108,7 @@
         "durability": 25,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "8a6658",
@@ -121,7 +121,7 @@
         "durability": 24,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "b1b1b3",
@@ -132,9 +132,9 @@
     {
         "key": "forefinger_ring/andesite",
         "durability": 25,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "79797a",
@@ -147,7 +147,7 @@
         "durability": 45,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "d8d8d8",
@@ -160,7 +160,7 @@
         "durability": 28,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "343434",
@@ -173,7 +173,7 @@
         "durability": 9,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "eaee57",
@@ -184,9 +184,9 @@
     {
         "key": "forefinger_ring/diamond",
         "durability": 55,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "33ebcb",
@@ -197,9 +197,9 @@
     {
         "key": "forefinger_ring/obsidian",
         "durability": 87,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "3c3056",
@@ -212,7 +212,7 @@
         "durability": 58,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "df7646",
@@ -225,7 +225,7 @@
         "durability": 43,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "b3c9c1",
@@ -238,7 +238,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "d6f6ff",
@@ -249,9 +249,9 @@
     {
         "key": "forefinger_ring/nickel",
         "durability": 41,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "c2d3a6",
@@ -262,9 +262,9 @@
     {
         "key": "forefinger_ring/lead",
         "durability": 77,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "897a9b",
@@ -275,9 +275,9 @@
     {
         "key": "forefinger_ring/bronze",
         "durability": 46,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "b2712c",
@@ -288,9 +288,9 @@
     {
         "key": "forefinger_ring/electrum",
         "durability": 9,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "e4da4c",
@@ -301,9 +301,9 @@
     {
         "key": "forefinger_ring/steel",
         "durability": 68,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "999999",
@@ -314,9 +314,9 @@
     {
         "key": "forefinger_ring/thaumium",
         "durability": 42,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "4d3984",
@@ -327,9 +327,9 @@
     {
         "key": "forefinger_ring/ironwood",
         "durability": 51,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "5ea917",
@@ -342,7 +342,7 @@
         "durability": 17,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "458430",
@@ -353,9 +353,9 @@
     {
         "key": "forefinger_ring/fierymetal",
         "durability": 59,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "fa9f00",
@@ -366,9 +366,9 @@
     {
         "key": "forefinger_ring/knightmetal",
         "durability": 41,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2]
+            "quickStrike": 4
         },
         "glyph": {
             "tint": "b8cf9c",
