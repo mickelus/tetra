@@ -15,7 +15,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/oak"
@@ -26,7 +26,7 @@
                     "data": 1
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/spruce"
@@ -37,7 +37,7 @@
                     "data": 2
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/birch"
@@ -48,7 +48,7 @@
                     "data": 3
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/jungle"
@@ -59,7 +59,7 @@
                     "data": 4
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/acacia"
@@ -70,7 +70,7 @@
                     "data": 5
                 },
                 "requiredCapabilities": {
-                    "axe": 1
+                    "axe": 2
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/dark_oak"
@@ -80,7 +80,7 @@
                     "item": "minecraft:cobblestone"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/cobblestone"
@@ -91,7 +91,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/stone"
@@ -102,7 +102,7 @@
                     "data": 1
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/granite"
@@ -113,7 +113,7 @@
                     "data": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/diorite"
@@ -124,7 +124,7 @@
                     "data": 5
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/andesite"
@@ -134,7 +134,7 @@
                     "item": "minecraft:iron_ingot"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/iron"
@@ -144,7 +144,7 @@
                     "item": "minecraft:flint"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/flint"
@@ -154,7 +154,7 @@
                     "item": "minecraft:gold_ingot"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/gold"
@@ -164,7 +164,7 @@
                     "item": "minecraft:diamond"
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/diamond"
@@ -185,7 +185,7 @@
                     "ore": "ingotCopper"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/copper"
@@ -196,7 +196,7 @@
                     "ore": "ingotTin"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/tin"
@@ -207,7 +207,7 @@
                     "ore": "ingotSilver"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/silver"
@@ -218,7 +218,7 @@
                     "ore": "ingotNickel"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/nickel"
@@ -229,7 +229,7 @@
                     "ore": "ingotLead"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/lead"
@@ -240,7 +240,7 @@
                     "ore": "ingotBronze"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/bronze"
@@ -251,7 +251,7 @@
                     "ore": "ingotElectrum"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/electrum"
@@ -262,7 +262,7 @@
                     "ore": "ingotSteel"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/steel"
@@ -272,7 +272,7 @@
                     "item": "thaumcraft:thaumium_ingot"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/thaumium"
@@ -283,7 +283,7 @@
                     "ore": "ingotIronwood"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/ironwood"
@@ -294,7 +294,7 @@
                     "ore": "ingotSteeleaf"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/steeleaf"
@@ -305,7 +305,7 @@
                     "ore": "ingotFiery"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/fierymetal"
@@ -316,7 +316,7 @@
                     "ore": "ingotKnightmetal"
                 },
                 "requiredCapabilities": {
-                    "hammer": 2
+                    "hammer": 3
                 },
                 "moduleKey": "sword/grip_loop",
                 "moduleVariant": "grip_loop/knightmetal"

@@ -230,12 +230,14 @@ public class ItemModularHandheld extends ItemModular {
         if (cooldown > 0.9) {
             float damage = (float) Math.max((getDamageModifier(itemStack) + 1) * (sweepingLevel * 0.125f), 1);
             float knockback = sweepingLevel > 4 ? (knockbackLevel + 1) * 0.5f : 0.5f;
+            double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
+            // range values set up to mimic vanilla behaviour
             attacker.world.getEntitiesWithinAABB(EntityLivingBase.class,
-                    target.getEntityBoundingBox().expand(1.0d, 0.25d, 1.0d)).stream()
+                    target.getEntityBoundingBox().grow(range, 0.25d, range)).stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
-                    .filter(entity -> attacker.getDistanceSq(entity) < 9.0D)
+                    .filter(entity -> attacker.getDistanceSq(entity) < (range + 2) * (range + 2))
                     .forEach(entity -> {
                         entity.knockBack(attacker, knockback,
                                 MathHelper.sin(attacker.rotationYaw * 0.017453292f),

@@ -206,6 +206,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return getData(itemStack).effects.getLevel(effect);
     }
 
+    public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return getData(itemStack).effects.getEfficiency(effect);
+    }
+
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
         return getData(itemStack).effects.getValues();
     }

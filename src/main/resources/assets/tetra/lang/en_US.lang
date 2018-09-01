@@ -402,6 +402,43 @@ reinforced_bolster/fierymetal=Fierymetal reinforced bolster
 reinforced_bolster/knightmetal=Knightmetal reinforced bolster
 
 ###############################
+# GRIP LOOP
+###############################
+grip_loop_schema.name=Grip loop
+grip_loop_schema.description=Attach a loop at the end of the hilt. Increases the range of sweeping attacks by 2 blocks.
+grip_loop_schema.slot1=Material
+
+grip_loop/oak=Oak loop
+grip_loop/spruce=Spruce loop
+grip_loop/birch=Birch loop
+grip_loop/jungle=Jungle loop
+grip_loop/acacia=Acacia loop
+grip_loop/dark_oak=Dark oak loop
+grip_loop/cobblestone=Cobblestone loop
+grip_loop/stone=Stone loop
+grip_loop/granite=Granite loop
+grip_loop/diorite=Diorite loop
+grip_loop/andesite=Andesite loop
+grip_loop/iron=Iron loop
+grip_loop/flint=Flint loop
+grip_loop/gold=Gold loop
+grip_loop/diamond=Diamond loop
+grip_loop/obsidian=Obsidian loop
+grip_loop/copper=Copper loop
+grip_loop/tin=Tin loop
+grip_loop/silver=Silver loop
+grip_loop/nickel=Nickel loop
+grip_loop/lead=Lead loop
+grip_loop/bronze=Bronze loop
+grip_loop/electrum=Electrum loop
+grip_loop/steel=Steel loop
+grip_loop/thaumium=Thaumium loop
+grip_loop/ironwood=Ironwood loop
+grip_loop/steeleaf=Steeleaf loop
+grip_loop/fierymetal=Fierymetal loop
+grip_loop/knightmetal=Knightmetal loop
+
+###############################
 # SHORTBLADE
 ###############################
 short_blade_schema.name=Shortblade

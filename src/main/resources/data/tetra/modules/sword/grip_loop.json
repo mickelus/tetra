@@ -4,8 +4,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9d804e",
@@ -18,8 +17,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "694f2f",
@@ -32,8 +30,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "c8b77d",
@@ -46,8 +43,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "996e4c",
@@ -60,8 +56,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "ac5d33",
@@ -74,8 +69,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "3c2712",
@@ -88,8 +82,7 @@
         "durability": 23,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -100,10 +93,9 @@
     {
         "key": "grip_loop/stone",
         "durability": 25,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "9a9a9a",
@@ -116,8 +108,7 @@
         "durability": 25,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "8a6658",
@@ -130,8 +121,7 @@
         "durability": 24,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b1b1b3",
@@ -142,10 +132,9 @@
     {
         "key": "grip_loop/andesite",
         "durability": 25,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "79797a",
@@ -158,8 +147,7 @@
         "durability": 45,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "d8d8d8",
@@ -172,8 +160,7 @@
         "durability": 28,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "343434",
@@ -186,8 +173,7 @@
         "durability": 9,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "eaee57",
@@ -198,10 +184,9 @@
     {
         "key": "grip_loop/diamond",
         "durability": 55,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "33ebcb",
@@ -212,10 +197,9 @@
     {
         "key": "grip_loop/obsidian",
         "durability": 87,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "3c3056",
@@ -228,8 +212,7 @@
         "durability": 58,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "df7646",
@@ -242,8 +225,7 @@
         "durability": 43,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b3c9c1",
@@ -256,8 +238,7 @@
         "durability": 12,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "d6f6ff",
@@ -268,10 +249,9 @@
     {
         "key": "grip_loop/nickel",
         "durability": 41,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "c2d3a6",
@@ -282,10 +262,9 @@
     {
         "key": "grip_loop/lead",
         "durability": 77,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "897a9b",
@@ -296,10 +275,9 @@
     {
         "key": "grip_loop/bronze",
         "durability": 46,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b2712c",
@@ -310,10 +288,9 @@
     {
         "key": "grip_loop/electrum",
         "durability": 9,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "e4da4c",
@@ -324,10 +301,9 @@
     {
         "key": "grip_loop/steel",
         "durability": 68,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "999999",
@@ -338,10 +314,9 @@
     {
         "key": "grip_loop/thaumium",
         "durability": 42,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "4d3984",
@@ -352,10 +327,9 @@
     {
         "key": "grip_loop/ironwood",
         "durability": 51,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "5ea917",
@@ -368,8 +342,7 @@
         "durability": 17,
         "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "458430",
@@ -380,10 +353,9 @@
     {
         "key": "grip_loop/fierymetal",
         "durability": 59,
-        "integrity": -2,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "fa9f00",
@@ -394,10 +366,9 @@
     {
         "key": "grip_loop/knightmetal",
         "durability": 41,
-        "integrity": -3,
+        "integrity": -1,
         "effects": {
-            "sweeping": [0, 2],
-            "sweepingStrikes": [0, 1]
+            "sweeping": [0, 2]
         },
         "glyph": {
             "tint": "b8cf9c",

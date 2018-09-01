@@ -330,6 +330,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sum();
     }
 
+    public double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return getAllModules(itemStack).stream()
+                .mapToDouble(module -> module.getEffectEfficiency(itemStack, effect))
+                .sum();
+    }
+
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
                 .flatMap(module -> ((Collection<ItemEffect>)module.getEffects(itemStack)).stream())

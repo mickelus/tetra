@@ -102,6 +102,14 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     }
 
     @Override
+    public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return (float) Arrays.stream(getImprovements(itemStack))
+                .map(improvement -> improvement.effects)
+                .mapToDouble(effects -> effects.getEfficiency(effect))
+                .sum() + super.getEffectLevel(itemStack, effect);
+    }
+
+    @Override
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
         return Streams.concat(
                 super.getEffects(itemStack).stream(),
