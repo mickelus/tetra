@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -12,12 +11,16 @@ import java.util.function.Consumer;
 public class GuiModuleMinor extends GuiClickable {
 
     private final String slotKey;
-    private int color;
     private GuiModuleMinorBackdrop backdrop;
     private GuiString moduleString;
 
     private boolean isEmpty;
+    private boolean isHovered;
+    private boolean isUnselected;
+    private boolean isSelected;
     private boolean isPreview;
+    private boolean isRemoving;
+    private boolean isAdding;
 
     public GuiModuleMinor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
                           ItemModule module, ItemModule previewModule, Consumer<String> slotClickHandler) {
@@ -27,28 +30,31 @@ public class GuiModuleMinor extends GuiClickable {
 
         if (module == null && previewModule == null) {
             isEmpty = true;
-            setupChildren(slotName, null, GuiColors.muted);
+            setupChildren(slotName, null);
         } else if (previewModule == null) {
+            isRemoving = true;
             ModuleData data = module.getData(itemStack);
-            setupChildren(slotName, data.glyph, GuiColors.remove);
+            setupChildren(slotName, data.glyph);
         } else if (module == null) {
+            isAdding = true;
             ModuleData previewData = previewModule.getData(previewStack);
-            setupChildren(previewModule.getName(previewStack), previewData.glyph, GuiColors.add);
+            setupChildren(previewModule.getName(previewStack), previewData.glyph);
         } else {
             ModuleData data = module.getData(itemStack);
             ModuleData previewData = previewModule.getData(previewStack);
 
             if (data.equals(previewData)) {
-                setupChildren(module.getName(itemStack), data.glyph, GuiColors.normal);
+                setupChildren(module.getName(itemStack), data.glyph);
             } else {
                 isPreview = true;
-                setupChildren(previewModule.getName(previewStack), previewData.glyph, GuiColors.change);
+                setupChildren(previewModule.getName(previewStack), previewData.glyph);
             }
         }
+        updateColors();
     }
 
-    private void setupChildren(String moduleName, GlyphData glyphData, int color) {
-        backdrop = new GuiModuleMinorBackdrop(1, -1, color);
+    private void setupChildren(String moduleName, GlyphData glyphData) {
+        backdrop = new GuiModuleMinorBackdrop(1, -1, GuiColors.normal);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             backdrop.setX(-1);
         }
@@ -57,7 +63,7 @@ public class GuiModuleMinor extends GuiClickable {
         addChild(backdrop);
 
 
-        moduleString = new GuiString(-12, 1, moduleName, color);
+        moduleString = new GuiString(-12, 1, moduleName);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             moduleString.setX(12);
         }
@@ -78,39 +84,49 @@ public class GuiModuleMinor extends GuiClickable {
             glyph.setAttachmentAnchor(attachmentPoint);
             addChild(glyph);
         }
-
-
-        this.color = color;
     }
 
-    public void setFocusSlot(String focusSlotKey) {
-        if (slotKey.equals(focusSlotKey)) {
-            color = GuiColors.normal;
-        } else if (!isEmpty && focusSlotKey == null) {
-            color = GuiColors.normal;
-        } else {
-            color = GuiColors.muted;
-        }
-        setColors(color);
+    public void updateSelectedHighlight(String selectedSlot) {
+        isUnselected = selectedSlot != null && !slotKey.equals(selectedSlot);
+        isSelected = selectedSlot != null && slotKey.equals(selectedSlot);
+        updateColors();
+
     }
 
-    private void setColors(int color) {
+    private void updateColors() {
         if (isPreview) {
-            backdrop.setColor(GuiColors.change);
-            moduleString.setColor(GuiColors.change);
+            setColor(GuiColors.change);
+        } else if (isAdding) {
+            setColor(GuiColors.add);
+        } else if (isRemoving) {
+            setColor(GuiColors.remove);
+        } else if (isHovered && isEmpty) {
+            setColor(GuiColors.hoverMuted);
+        } else if (isHovered) {
+            setColor(GuiColors.hover);
+        } else if (isSelected) {
+            setColor(GuiColors.normal);
+        } else if (isEmpty || isUnselected) {
+            setColor(GuiColors.muted);
         } else {
-            backdrop.setColor(color);
-            moduleString.setColor(color);
+            setColor(GuiColors.normal);
         }
+    }
+
+    private void setColor(int color) {
+        backdrop.setColor(color);
+        moduleString.setColor(color);
     }
 
     @Override
     protected void onFocus() {
-        setColors(GuiColors.hover);
+        isHovered = true;
+        updateColors();
     }
 
     @Override
     protected void onBlur() {
-        setColors(color);
+        isHovered = false;
+        updateColors();
     }
 }

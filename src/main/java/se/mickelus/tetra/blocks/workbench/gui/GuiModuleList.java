@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.ItemModular;
@@ -41,12 +40,12 @@ public class GuiModuleList extends GuiElement {
     public void setFocus(String slotKey) {
         for (GuiModuleMajor element :
                 majorModuleElements) {
-            element.setFocusSlot(slotKey);
+            element.updateSelectedHighlight(slotKey);
         }
 
         for (GuiModuleMinor element :
                 minorModuleElements) {
-            element.setFocusSlot(slotKey);
+            element.updateSelectedHighlight(slotKey);
         }
     }
 

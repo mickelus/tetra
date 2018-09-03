@@ -77,11 +77,11 @@ public class GuiModuleMajor extends GuiClickable {
         }
     }
 
-    public void setFocusSlot(String focusSlotKey) {
+    public void updateSelectedHighlight(String focusSlotKey) {
         if(slotKey.equals(focusSlotKey)) {
             color = GuiColors.normal;
             Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
-        } else if (!isEmpty && focusSlotKey == null){
+        } else if (!isEmpty && focusSlotKey == null) {
             color = GuiColors.normal;
             Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
         } else {
