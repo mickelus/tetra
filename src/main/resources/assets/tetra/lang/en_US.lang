@@ -405,7 +405,7 @@ reinforced_bolster/knightmetal=Knightmetal reinforced bolster
 # FOREFINGER RING
 ###############################
 forefinger_ring_schema.name=Forefinger ring
-forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Reduces the minimum damage dealt when swinging too fast from 20% to 40%.
+forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Reduces the minimum damage dealt when swinging too fast from 20%% to 40%%.
 forefinger_ring_schema.slot1=Material
 
 forefinger_ring/oak=Oak ring
