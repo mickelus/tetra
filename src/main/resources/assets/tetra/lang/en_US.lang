@@ -649,7 +649,7 @@ heavy_blade/knightmetal.name=Cleaver
 # MACHETE
 ###############################
 machete_schema.name=Machete
-machete_schema.description=Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area.The machete works different from other tools as it instantly harvests blocks but only if it's not on cooldown.
+machete_schema.description=Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area. The machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 machete_schema.slot1=Blade material
 
 sword/machete.name=Machete
@@ -1110,7 +1110,7 @@ hoe/knightmetal.prefix=Knightmetal
 # SICKLE HEAD
 ###############################
 sickle_schema.name=Sickle
-sickle_schema.description=Craft a sickle from the given material, which can be used to cut blocks in an area. The sickle works different from other tools as it instantly harvests blocks but only if it's not on cooldown.
+sickle_schema.description=Craft a sickle from the given material, which can be used to cut blocks in an area. The sickle works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 sickle_schema.slot1=Sickle material
 
 
