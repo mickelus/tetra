@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
@@ -15,8 +16,6 @@ public class GuiIntegrityBar extends GuiElement {
     private static final int gainColor = 0x22ffffff;
     private static final int costColor = 0xffffffff;
     private static final int overuseColor = 0x88ff5555;
-
-    private static final String labelText = "%sIntegrity usage: %d/%d";
 
     private int integrityGain;
     private int integrityCost;
@@ -42,8 +41,11 @@ public class GuiIntegrityBar extends GuiElement {
                 integrityCost = ItemModular.getIntegrityCost(itemStack);
             }
 
-            label.setString(String.format(labelText,
-                    integrityGain + integrityCost < 0 ? TextFormatting.RED : "", -integrityCost, integrityGain));
+            if (integrityGain + integrityCost < 0) {
+                label.setString(TextFormatting.RED + I18n.format("item.modular.integrity_usage", -integrityCost, integrityGain));
+            } else {
+                label.setString(I18n.format("item.modular.integrity_usage", -integrityCost, integrityGain));
+            }
         }
     }
 

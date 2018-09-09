@@ -13,6 +13,7 @@ item.modular.broken=Broken
 item.modular.tier=Tier
 item.modular.durability=Durability
 item.modular.speed=Swing speed
+item.modular.integrity_usage=Integrity usage: %d/%d
 
 ###############################
 # ITEM NAMES
