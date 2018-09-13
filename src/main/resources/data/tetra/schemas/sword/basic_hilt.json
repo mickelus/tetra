@@ -18,17 +18,6 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/oak"
-            },
-            {
-                "material": {
                     "item": "minecraft:iron_ingot"
                 },
                 "requiredCapabilities": {
