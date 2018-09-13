@@ -83,7 +83,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/copper"
             },
             {
@@ -95,7 +95,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/tin"
             },
             {
@@ -107,7 +107,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/silver"
             },
             {
@@ -119,7 +119,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/nickel"
             },
             {
@@ -131,7 +131,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/lead"
             },
             {
@@ -143,7 +143,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/bronze"
             },
             {
@@ -155,7 +155,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/electrum"
             },
             {
@@ -167,7 +167,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/steel"
             },
             {
@@ -178,7 +178,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/thaumium"
             },
             {
@@ -190,7 +190,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/ironwood_tf",
                 "improvements": {
                     "enchantment/efficiency": 1
@@ -205,7 +205,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/steeleaf",
                 "improvements": {
                     "enchantment/fortune": 1
@@ -220,7 +220,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/fierymetal"
             },
             {
@@ -232,7 +232,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/adze",
+                "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/knightmetal"
             }
         ]

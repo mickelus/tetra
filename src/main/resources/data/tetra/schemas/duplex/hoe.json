@@ -79,7 +79,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/copper"
             },
             {
@@ -90,7 +90,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/tin"
             },
             {
@@ -101,7 +101,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/silver"
             },
             {
@@ -112,7 +112,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/nickel"
             },
             {
@@ -123,7 +123,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/lead"
             },
             {
@@ -134,7 +134,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/bronze"
             },
             {
@@ -145,7 +145,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/electrum"
             },
             {
@@ -156,14 +156,14 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/steel"
             },
             {
                 "material": {
                     "item": "thaumcraft:thaumium_ingot"
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/thaumium"
             },
             {
@@ -171,7 +171,7 @@
                     "type": "forge:ore_dict",
                     "ore": "ingotIronwood"
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/ironwood_tf",
                 "improvements": {
                     "enchantment/efficiency": 1
@@ -185,7 +185,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/steeleaf",
                 "improvements": {
                     "enchantment/fortune": 1
@@ -194,12 +194,12 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal"
+                    "ore": "ingotFiery"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/fierymetal"
             },
             {
@@ -210,7 +210,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/hoe",
+                "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/knightmetal"
             }
         ]

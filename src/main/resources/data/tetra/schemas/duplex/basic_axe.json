@@ -83,7 +83,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/copper"
             },
             {
@@ -95,7 +95,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/tin"
             },
             {
@@ -107,7 +107,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/silver"
             },
             {
@@ -119,7 +119,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/nickel"
             },
             {
@@ -131,7 +131,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/lead"
             },
             {
@@ -143,7 +143,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/bronze"
             },
             {
@@ -155,7 +155,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/electrum"
             },
             {
@@ -167,7 +167,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/steel"
             },
             {
@@ -175,7 +175,7 @@
                     "item": "thaumcraft:thaumium_ingot",
                     "count": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/thaumium"
             },
             {
@@ -186,7 +186,7 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/ironwood",
                 "improvements": {
                     "enchantment/fortune": 1
@@ -201,7 +201,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/steeleaf",
                 "improvements": {
                     "enchantment/efficiency": 1
@@ -210,13 +210,13 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal",
+                    "ore": "ingotFiery",
                     "count": 2
                 },
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/fierymetal",
                 "improvements": {
                     "enchantment/fire_aspect": 1
@@ -231,7 +231,7 @@
                 "requiredCapabilities": {
                   "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_axe",
+                "moduleKey": "duplex/basic_axe",
                 "moduleVariant": "basic_axe/knightmetal",
                 "improvements": {
                     "duplex/head_left:basic_axe/severing": 1
