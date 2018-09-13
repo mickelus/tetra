@@ -98,6 +98,9 @@ public class RemoveSchema implements UpgradeSchema {
         ItemModule previousModule = item.getModuleFromSlot(upgradedStack, slot);
         if (previousModule != null) {
             previousModule.removeModule(upgradedStack);
+            if (consumeMaterials) {
+                previousModule.postRemove(upgradedStack, player);
+            }
         }
 
         return upgradedStack;
