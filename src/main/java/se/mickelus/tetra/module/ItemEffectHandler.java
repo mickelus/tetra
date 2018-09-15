@@ -10,8 +10,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -30,7 +32,9 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -38,6 +42,7 @@ import java.util.stream.Stream;
 public class ItemEffectHandler {
 
     private Cache<Block, Method> silkMethodCache;
+    private Cache<UUID, Boolean> alternateStrikeCache;
 
     public static ItemEffectHandler instance;
 
@@ -45,6 +50,11 @@ public class ItemEffectHandler {
          silkMethodCache = CacheBuilder.newBuilder()
                 .maximumSize(100)
                 .expireAfterWrite(5, TimeUnit.MINUTES)
+                .build();
+
+        alternateStrikeCache = CacheBuilder.newBuilder()
+                .maximumSize(100)
+                .expireAfterWrite(1, TimeUnit.MINUTES)
                 .build();
 
         instance = this;
@@ -272,38 +282,86 @@ public class ItemEffectHandler {
         }
     }
 
+    private static BlockPos[] sweepLeft1 = new BlockPos[] {
+            new BlockPos(0, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0),
+
+            new BlockPos(-2, 0, -1), new BlockPos(2, 0, -1),
+
+            new BlockPos(-2, 0, 0), new BlockPos(0, 0, 1), new BlockPos(2, 0, 0),
+
+            new BlockPos(-1, 0, 1), new BlockPos(-3, 0, -1), new BlockPos(1, 0, 4),
+    };
+
     /**
      * Breaks several blocks around the given blockpos.
      * todo: currently breaks all in a 3x3 area, improve to use better shapes and depend on sweeping level
      * @param world the world in which to break blocks
      * @param breakingPlayer the player which is breaking the blocks
      * @param toolStack the itemstack used to break the blocks
-     * @param pos the position which to break blocks around
+     * @param originPos the position which to break blocks around
      * @param tool a string representation used to break the center block, the tool required to break nearby blocks has
      *             to match this
      * @param sweepingLevel the level of the sweeping effect on the toolStack
      */
-    private void breakBlocksAround(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos,
+    private void breakBlocksAround(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos originPos,
                                    String tool, int sweepingLevel) {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    BlockPos offsetPos = pos.add(x, y, z);
-                    IBlockState blockState = world.getBlockState(offsetPos);
+        EnumFacing facing = breakingPlayer.getHorizontalFacing();
+        final boolean alternate = getToggleAlternateSide(breakingPlayer.getUniqueID());
 
-                    // make sure that only blocks which require the same tool are broken
-                    if (!tool.equals(ItemModularHandheld.getEffectiveTool(blockState))) {
-                        continue;
-                    }
+        BlockPos[] sweepLeft1 = new BlockPos[] {
+                new BlockPos(0, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0),
 
-                    // check that the tool level is high enough and break the block
-                    int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
-                    if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                            || toolStack.canHarvestBlock(blockState)) {
-                        breakBlock(world, breakingPlayer, toolStack, offsetPos, blockState);
+                new BlockPos(-2, 0, -1), new BlockPos(2, 0, -1),
+
+                new BlockPos(-2, 0, 0), new BlockPos(0, 0, 1), new BlockPos(2, 0, 0),
+
+                new BlockPos(-1, 0, 1), new BlockPos(-3, 0, -1), new BlockPos(1, 0, 4),
+        };
+
+
+        Arrays.stream(sweepLeft1)
+                .map(pos -> {
+                    if (alternate) {
+                        return new BlockPos(-pos.getX(), pos.getY(), pos.getZ());
                     }
-                }
-            }
+                    return pos;
+                })
+                .map(pos -> rotatePos(pos, facing))
+                .map(originPos::add)
+                .forEachOrdered(pos -> {
+                    world.setBlockState(pos, Blocks.STONE.getDefaultState());
+                });
+    }
+
+    /**
+     * Gets and then toggles the cached alternate side boolean used for alternating strike directions for sweeping
+     * strikes.
+     * @param entityId The ID of the responsible entity
+     * @return
+     */
+    private boolean getToggleAlternateSide(UUID entityId) {
+        boolean alternate = false;
+        try {
+            alternate = alternateStrikeCache.get(entityId, () -> false);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        alternateStrikeCache.put(entityId, !alternate);
+
+        return alternate;
+    }
+
+    private BlockPos rotatePos(BlockPos pos, EnumFacing facing) {
+        switch (facing) {
+            default:
+            case SOUTH:
+                return pos;
+            case WEST:
+                return new BlockPos(-pos.getZ(), pos.getY(), pos.getX());
+            case NORTH:
+                return new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
+            case EAST:
+                return new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
         }
     }
 }
