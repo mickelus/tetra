@@ -68,7 +68,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/copper"
             },
             {
@@ -79,7 +79,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/tin"
             },
             {
@@ -90,7 +90,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/silver"
             },
             {
@@ -101,7 +101,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/nickel"
             },
             {
@@ -112,7 +112,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/lead"
             },
             {
@@ -123,7 +123,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/bronze"
             },
             {
@@ -134,7 +134,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/electrum"
             },
             {
@@ -145,14 +145,14 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/steel"
             },
             {
                 "material": {
                     "item": "thaumcraft:thaumium_ingot"
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/thaumium"
             },
             {
@@ -160,7 +160,7 @@
                     "type": "forge:ore_dict",
                     "ore": "ingotIronwood"
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/ironwood"
             },
             {
@@ -171,18 +171,18 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/steeleaf"
             },
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal"
+                    "ore": "ingotFiery"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/fierymetal"
             },
             {
@@ -193,7 +193,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/butt",
+                "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/knightmetal"
             }
         ]

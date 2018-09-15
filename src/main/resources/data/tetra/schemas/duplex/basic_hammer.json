@@ -51,7 +51,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/copper"
             },
             {
@@ -63,7 +63,7 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/tin"
             },
             {
@@ -75,7 +75,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/nickel"
             },
             {
@@ -87,7 +87,7 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/lead"
             },
             {
@@ -99,7 +99,7 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/bronze"
             },
             {
@@ -111,7 +111,7 @@
                 "requiredCapabilities": {
                     "hammer": 3
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/electrum"
             },
             {
@@ -123,7 +123,7 @@
                 "requiredCapabilities": {
                     "hammer": 4
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/steel"
             },
             {
@@ -134,7 +134,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/thaumium"
             },
             {
@@ -146,7 +146,7 @@
                 "requiredCapabilities": {
                     "hammer": 1
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/ironwood"
             },
             {
@@ -158,19 +158,19 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/steeleaf"
             },
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal",
+                    "ore": "ingotFiery",
                     "count": 3
                 },
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/fierymetal"
             },
             {
@@ -182,7 +182,7 @@
                 "requiredCapabilities": {
                     "hammer": 2
                 },
-                "ModuleKey": "duplex/basic_hammer",
+                "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/knightmetal"
             }
         ]
