@@ -128,12 +128,12 @@ public class ConfigSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return definition.requirement.test(itemStack);
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         if (moduleSlot != null) {
             return moduleSlot.equals(slot);
         }

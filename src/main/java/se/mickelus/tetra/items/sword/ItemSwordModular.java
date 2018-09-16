@@ -7,7 +7,6 @@ import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.schema.*;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -88,7 +87,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
 
         new RepairSchema(this);
-        new RemoveSchema(this);
+        RemoveSchema.registerRemoveSchemas(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }

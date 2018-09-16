@@ -10,8 +10,10 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 
 public class RemoveSchema implements UpgradeSchema {
@@ -21,17 +23,26 @@ public class RemoveSchema implements UpgradeSchema {
     private String key = "remove_schema";
 
     private ItemModular item;
+    private String slot;
 
     private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 52, 32);
 
-    public RemoveSchema(ItemModular item) {
+    public RemoveSchema(ItemModular item, String slot) {
         this.item = item;
+        this.slot = slot;
+
         ItemUpgradeRegistry.instance.registerSchema(this);
+    }
+
+    public static void registerRemoveSchemas(ItemModular item) {
+        Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
+                .filter(slot -> !item.isModuleRequired(slot))
+                .forEach(slot -> new RemoveSchema(item, slot));
     }
 
     @Override
     public String getKey() {
-        return key + "/" + item.getUnlocalizedName();
+        return key + "/" + item.getUnlocalizedName() + "/" + slot;
     }
 
     @Override
@@ -65,19 +76,19 @@ public class RemoveSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return item.getClass().isInstance(itemStack.getItem());
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
-        return !item.isModuleRequired(slot);
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
+        return this.slot.equals(slot) && item.getModuleFromSlot(targetStack, this.slot) != null;
     }
 
     @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        ItemModular item = (ItemModular) itemStack.getItem();
-        return item.getModuleFromSlot(itemStack, slot) != null;
+        return !isIntegrityViolation(player, itemStack, materials, slot)
+                && checkCapabilities(player, itemStack, materials);
     }
 
     @Override
@@ -114,10 +125,11 @@ public class RemoveSchema implements UpgradeSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        // todo: use same capability as target module
         if (targetStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) targetStack.getItem();
-            return item.getRepairRequiredCapabilities(targetStack);
+            ItemModule module = item.getModuleFromSlot(targetStack, slot);
+            if (module != null) {
+                return module.getRepairRequiredCapabilities(targetStack);
+            }
         }
         return Collections.EMPTY_LIST;
     }
@@ -125,8 +137,10 @@ public class RemoveSchema implements UpgradeSchema {
     @Override
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
         if (targetStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) targetStack.getItem();
-            return item.getRepairRequiredCapabilityLevel(targetStack, capability);
+            ItemModule module = item.getModuleFromSlot(targetStack, slot);
+            if (module != null) {
+                return module.getRepairRequiredCapabilityLevel(targetStack, capability);
+            }
         }
         return 0;
     }

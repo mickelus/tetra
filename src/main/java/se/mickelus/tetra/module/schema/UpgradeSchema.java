@@ -36,8 +36,29 @@ public interface UpgradeSchema {
      */
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
 
-    public boolean canUpgrade(ItemStack itemStack);
-    public boolean isApplicableForSlot(String slot);
+    /**
+     * Returns true if this upgrade can be applied to the given item.
+     * @param itemStack the itemstack that is to be upgraded
+     * @return
+     */
+    public boolean isApplicableForItem(ItemStack itemStack);
+
+    /**
+     * Returns true if this upgrade can be applied to the given slot on the given item.
+     * @param slot the slot on which the schema will be applied
+     * @param itemStack the itemstack that is to be upgraded
+     * @return
+     */
+    public boolean isApplicableForSlot(String slot, ItemStack itemStack);
+
+    /**
+     * Returns true if all criterias are met (e.g. correct materials & tools) and the upgrade can be performed.
+     * @param player the player performing the upgrade
+     * @param itemStack the itemstack that is to be upgraded
+     * @param materials the materials to be used for the upgrade
+     * @param slot the slot on which the schema will be applied
+     * @return
+     */
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
     public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);

@@ -75,18 +75,20 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return item.getClass().isInstance(itemStack.getItem());
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         return slot == null;
     }
 
     @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        return acceptsMaterial(itemStack, 0, materials[0]);
+        return isMaterialsValid(itemStack, materials)
+                && !isIntegrityViolation(player, itemStack, materials, slot)
+                && checkCapabilities(player, itemStack, materials);
     }
 
     @Override
@@ -122,7 +124,6 @@ public class RepairSchema implements UpgradeSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        // todo: use same capability as target module
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();
             return item.getRepairRequiredCapabilities(targetStack);

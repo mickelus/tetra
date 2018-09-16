@@ -56,12 +56,12 @@ public abstract class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return item.equals(itemStack.getItem());
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         return module.getSlot().equals(slot);
     }
 

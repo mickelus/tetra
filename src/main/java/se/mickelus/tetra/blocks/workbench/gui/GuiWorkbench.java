@@ -194,9 +194,10 @@ public class GuiWorkbench extends GuiContainer {
 
     private void updateSchemaList() {
         if (selectedSlot != null) {
-            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, tileEntity.getTargetItemStack());
+            ItemStack targetStack = tileEntity.getTargetItemStack();
+            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, targetStack);
             schemas = Arrays.stream(schemas)
-                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot))
+                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot, targetStack))
                     .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
                     .toArray(UpgradeSchema[]::new);
             schemaList.setSchemas(schemas);

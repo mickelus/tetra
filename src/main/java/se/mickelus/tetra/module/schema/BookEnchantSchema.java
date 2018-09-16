@@ -81,7 +81,7 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         if (itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
             return item.hasModule(itemStack, module);
@@ -90,7 +90,7 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         return module.getSlot().equals(slot);
     }
 

@@ -13,6 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.NBTHelper;
@@ -115,7 +116,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public boolean isModuleRequired(String moduleSlot) {
-        return Arrays.stream(requiredModules).anyMatch(module -> module.equals(moduleSlot));
+        return ArrayUtils.contains(requiredModules, moduleSlot);
     }
 
     @Override
@@ -274,14 +275,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairRequiredCapabilities(getRepairMaterial(itemStack)))
+                .map(module -> module.getRepairRequiredCapabilities(itemStack))
                 .orElse(Collections.emptyList());
     }
 
     public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
         return getRepairModule(itemStack)
                 .map(module -> {
-                    int level = module.getRepairRequiredCapabilityLevel(getRepairMaterial(itemStack), capability);
+                    int level = module.getRepairRequiredCapabilityLevel(itemStack, capability);
                     return Math.max(1, level);
         })
             .orElse(0);

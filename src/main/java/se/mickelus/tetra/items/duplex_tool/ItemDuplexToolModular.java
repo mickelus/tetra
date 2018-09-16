@@ -1,15 +1,10 @@
 package se.mickelus.tetra.items.duplex_tool;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +23,6 @@ import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -142,7 +136,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
 
         new RepairSchema(this);
-        new RemoveSchema(this);
+        RemoveSchema.registerRemoveSchemas(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");

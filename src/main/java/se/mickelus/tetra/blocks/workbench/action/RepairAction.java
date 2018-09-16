@@ -23,7 +23,7 @@ public class RepairAction implements WorkbenchAction {
     public boolean canPerformOn(EntityPlayer player, ItemStack itemStack) {
         UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
         return Arrays.stream(schemas)
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null))
+                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
                 .anyMatch(upgradeSchema -> upgradeSchema instanceof RepairSchema);
 
     }
@@ -42,7 +42,7 @@ public class RepairAction implements WorkbenchAction {
     public void perform(EntityPlayer player, ItemStack itemStack, TileEntityWorkbench workbench) {
         UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
         Arrays.stream(schemas)
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null))
+                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
                 .filter(upgradeSchema -> upgradeSchema instanceof RepairSchema)
                 .findFirst()
                 .ifPresent(upgradeSchema -> workbench.setCurrentSchema(upgradeSchema, null));

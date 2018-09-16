@@ -3,7 +3,6 @@ package se.mickelus.tetra.items.toolbelt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -105,7 +104,7 @@ public class ItemToolbeltModular extends ItemModular {
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver");
 
-        new RemoveSchema(this);
+        RemoveSchema.registerRemoveSchemas(this);
     }
 
     @Override
