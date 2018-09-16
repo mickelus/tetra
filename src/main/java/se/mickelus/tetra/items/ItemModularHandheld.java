@@ -255,16 +255,28 @@ public class ItemModularHandheld extends ItemModular {
         }
     }
 
-    private void spawnSweepParticles(EntityLivingBase attacker) {
-        double d0 = (double)(-MathHelper.sin(attacker.rotationYaw * 0.017453292F));
-        double d1 = (double)MathHelper.cos(attacker.rotationYaw * 0.017453292F);
-
-        if (attacker.world instanceof WorldServer)
-        {
-            ((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, attacker.posX + d0,
-                    attacker.posY + attacker.height * 0.5D, attacker.posZ + d1, 0, d0,
-                    0.0D, d1, 0.0D);
+    /**
+     * Spawns sweeping particles in the given world at the given coordinates. Similar to the sweeping particle used
+     * by vanilla swords.
+     * @param world The world in which to spawn the particle
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
+     * @param xOffset x offset which is later multiplied by a random number (0-1)
+     * @param zOffset z offset which is later multiplied by a random number (0-1)
+     */
+    public static void spawnSweepParticles(World world, double x, double y, double z, double xOffset, double zOffset) {
+        if (world instanceof WorldServer) {
+            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, x, y, z,
+                    1, xOffset, 0, zOffset, 0);
         }
+    }
+
+    public static void spawnSweepParticles(EntityLivingBase attacker) {
+        double xOffset = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
+        double zOffset = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
+
+        spawnSweepParticles(attacker.world, attacker.posX + xOffset, attacker.posY + attacker.height * 0.5D, attacker.posZ + zOffset, xOffset, zOffset);
     }
 
     @Override

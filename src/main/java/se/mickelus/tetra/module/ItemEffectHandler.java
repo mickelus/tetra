@@ -9,10 +9,8 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -42,9 +40,59 @@ import java.util.stream.Stream;
 public class ItemEffectHandler {
 
     private Cache<Block, Method> silkMethodCache;
-    private Cache<UUID, Boolean> alternateStrikeCache;
+    private Cache<UUID, Integer> strikeCache;
 
     public static ItemEffectHandler instance;
+
+    private static final BlockPos[] sweep1 = new BlockPos[] {
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-1, 0, 0),
+            new BlockPos(0, 0, 0),
+            new BlockPos(1, 0, 0),
+            new BlockPos(2, 0, 0),
+            new BlockPos(-1, 0, 1),
+            new BlockPos(0, 0, 1),
+            new BlockPos(1, 0, 1),
+            new BlockPos(-3, 0, -1),
+            new BlockPos(-2, 0, -1),
+            new BlockPos(-1, 0, -1),
+            new BlockPos(0, 0, -1),
+            new BlockPos(3, 0, -1),
+            new BlockPos(-3, 0, -2),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(-1, 0, -2),
+            new BlockPos(-1, 1, 0),
+            new BlockPos(0, 1, 0),
+            new BlockPos(-2, 1, -1),
+            new BlockPos(-1, 1, -1),
+            new BlockPos(-1, -1, 0),
+            new BlockPos(0, -1, 0),
+            new BlockPos(-2, -1, -1),
+            new BlockPos(-1, -1, -1),
+    };
+
+    private static final BlockPos[] sweep2 = new BlockPos[] {
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-1, 0, 0),
+            new BlockPos(0, 0, 0),
+            new BlockPos(1, 0, 0),
+            new BlockPos(2, 0, 0),
+            new BlockPos(3, 0, 0),
+            new BlockPos(-1, 0, 1),
+            new BlockPos(0, 0, 1),
+            new BlockPos(1, 0, 1),
+            new BlockPos(2, 0, 1),
+            new BlockPos(-2, 0, -1),
+            new BlockPos(-1, 0, -1),
+            new BlockPos(0, 0, -1),
+            new BlockPos(4, 0, -1),
+            new BlockPos(-1, 1, 0),
+            new BlockPos(0, 1, 0),
+            new BlockPos(1, 1, 0),
+            new BlockPos(-1, -1, 0),
+            new BlockPos(0, -1, 0),
+            new BlockPos(1, -1, 0),
+    };
 
     public ItemEffectHandler() {
          silkMethodCache = CacheBuilder.newBuilder()
@@ -52,7 +100,7 @@ public class ItemEffectHandler {
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .build();
 
-        alternateStrikeCache = CacheBuilder.newBuilder()
+        strikeCache = CacheBuilder.newBuilder()
                 .maximumSize(100)
                 .expireAfterWrite(1, TimeUnit.MINUTES)
                 .build();
@@ -225,6 +273,7 @@ public class ItemEffectHandler {
                     World world = event.getWorld();
                     IBlockState blockState = world.getBlockState(pos);
                     String tool = ItemModularHandheld.getEffectiveTool(blockState);
+                    EntityPlayer breakingPlayer = event.getEntityPlayer();
 
                     if (tool != null) {
                         switch (tool) {
@@ -244,20 +293,21 @@ public class ItemEffectHandler {
                     }
 
                     if (strikingLevel > 0) {
-                        if (event.getEntityPlayer().getCooledAttackStrength(0) > 0.9) {
+                        if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {
 
                             if (sweepingLevel > 0) {
-                                breakBlocksAround(world, event.getEntityPlayer(), itemStack, pos, tool, sweepingLevel);
+                                breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
                             } else {
-                                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, event.getEntityPlayer(), blockState);
+                                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
                                 if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
                                         || itemStack.canHarvestBlock(blockState)) {
-                                    breakBlock(world, event.getEntityPlayer(), itemStack, pos, blockState);
+                                    world.playEvent(breakingPlayer, 2001, pos, Block.getStateId(blockState));
+                                    breakBlock(world, breakingPlayer, itemStack, pos, blockState);
                                 }
                             }
                         }
                         event.setCanceled(true);
-                        event.getEntityPlayer().resetCooldown();
+                        breakingPlayer.resetCooldown();
                     }
                 });
     }
@@ -271,8 +321,6 @@ public class ItemEffectHandler {
      * @param blockState the state of the block that is to broken
      */
     private void breakBlock(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
-        // todo: perhaps we don't want to play the event here to avoid noise when breaking blocks with sweeping
-        world.playEvent(breakingPlayer, 2001, pos, Block.getStateId(blockState));
         if (!world.isRemote) {
             boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
             if (canRemove) {
@@ -282,19 +330,9 @@ public class ItemEffectHandler {
         }
     }
 
-    private static BlockPos[] sweepLeft1 = new BlockPos[] {
-            new BlockPos(0, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0),
-
-            new BlockPos(-2, 0, -1), new BlockPos(2, 0, -1),
-
-            new BlockPos(-2, 0, 0), new BlockPos(0, 0, 1), new BlockPos(2, 0, 0),
-
-            new BlockPos(-1, 0, 1), new BlockPos(-3, 0, -1), new BlockPos(1, 0, 4),
-    };
-
     /**
      * Breaks several blocks around the given blockpos.
-     * todo: currently breaks all in a 3x3 area, improve to use better shapes and depend on sweeping level
+     * todo: add more variation and make it depend on sweeping level & block hardness
      * @param world the world in which to break blocks
      * @param breakingPlayer the player which is breaking the blocks
      * @param toolStack the itemstack used to break the blocks
@@ -305,21 +343,17 @@ public class ItemEffectHandler {
      */
     private void breakBlocksAround(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos originPos,
                                    String tool, int sweepingLevel) {
+        if (world.isRemote) {
+            return;
+        }
+
         EnumFacing facing = breakingPlayer.getHorizontalFacing();
-        final boolean alternate = getToggleAlternateSide(breakingPlayer.getUniqueID());
+        final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
+        final boolean alternate = strikeCounter % 2 == 0;
 
-        BlockPos[] sweepLeft1 = new BlockPos[] {
-                new BlockPos(0, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0),
+        ItemModularHandheld.spawnSweepParticles(world, originPos.getX(), originPos.getY() + 0.5, originPos.getZ(), 0, 0);
 
-                new BlockPos(-2, 0, -1), new BlockPos(2, 0, -1),
-
-                new BlockPos(-2, 0, 0), new BlockPos(0, 0, 1), new BlockPos(2, 0, 0),
-
-                new BlockPos(-1, 0, 1), new BlockPos(-3, 0, -1), new BlockPos(1, 0, 4),
-        };
-
-
-        Arrays.stream(sweepLeft1)
+        Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> {
                     if (alternate) {
                         return new BlockPos(-pos.getX(), pos.getY(), pos.getZ());
@@ -329,26 +363,38 @@ public class ItemEffectHandler {
                 .map(pos -> rotatePos(pos, facing))
                 .map(originPos::add)
                 .forEachOrdered(pos -> {
-                    world.setBlockState(pos, Blocks.STONE.getDefaultState());
+                    IBlockState blockState = world.getBlockState(pos);
+
+                    // make sure that only blocks which require the same tool are broken
+                    if (tool.equals(ItemModularHandheld.getEffectiveTool(blockState))) {
+
+                        // check that the tool level is high enough and break the block
+                        int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
+                        if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
+                                || toolStack.canHarvestBlock(blockState)) {
+                            world.playEvent(2001, pos, Block.getStateId(blockState));
+                            breakBlock(world, breakingPlayer, toolStack, pos, blockState);
+                        }
+                    }
+
                 });
     }
 
     /**
-     * Gets and then toggles the cached alternate side boolean used for alternating strike directions for sweeping
-     * strikes.
+     * Gets and increments counter for recurrent strike made by the given entity. Expires after a minute.
      * @param entityId The ID of the responsible entity
-     * @return
+     * @return The number of recurrent strikes
      */
-    private boolean getToggleAlternateSide(UUID entityId) {
-        boolean alternate = false;
+    private int getStrikeCounter(UUID entityId) {
+        int counter = 0;
         try {
-            alternate = alternateStrikeCache.get(entityId, () -> false);
+            counter = strikeCache.get(entityId, () -> 0);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        alternateStrikeCache.put(entityId, !alternate);
+        strikeCache.put(entityId, counter + 1);
 
-        return alternate;
+        return counter;
     }
 
     private BlockPos rotatePos(BlockPos pos, EnumFacing facing) {
