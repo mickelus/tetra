@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentDurability;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import org.lwjgl.input.Keyboard;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -208,6 +210,33 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         if (isBroken(itemStack)) {
             tooltip.add(TextFormatting.DARK_RED.toString() + TextFormatting.ITALIC + I18n.format("item.modular.broken"));
+        }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .forEach(module -> {
+                            tooltip.add("\u00BB " + module.getName(itemStack));
+                            Arrays.stream(module.getImprovements(itemStack))
+                                    .map(improvement -> String.format(" %s- %s %s",
+                                            ChatFormatting.DARK_GRAY,
+                                            I18n.format(improvement.key + ".name"),
+                                            improvement.level > 0 ? I18n.format("enchantment.level." + improvement.level) : ""))
+                                    .forEach(tooltip::add);
+                    });
+            Arrays.stream(getMinorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .map(module -> "* " + module.getName(itemStack))
+                    .forEach(tooltip::add);
+        } else {
+            Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
+                    .filter(improvement -> improvement.enchantment)
+                    .map(improvement -> I18n.format(improvement.key + ".name") + " "
+                            + I18n.format("enchantment.level." + improvement.level))
+                    .forEach(tooltip::add);
+
         }
     }
 
