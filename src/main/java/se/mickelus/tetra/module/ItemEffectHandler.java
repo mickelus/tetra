@@ -261,6 +261,21 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
+    public void onBlockBreak(BlockEvent.BreakEvent event) {
+        Optional.ofNullable(event.getPlayer())
+                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> getEffectLevel(itemStack, ItemEffect.silkTouch) > 0)
+                .ifPresent(itemStack -> {
+                    IBlockState state = event.getState();
+                    if (state.getBlock().canSilkHarvest(event.getWorld(), event.getPos(), state, event.getPlayer())) {
+                        event.setExpToDrop(0);
+                    }
+                });
+    }
+
+    @SubscribeEvent
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
 
         Optional.of(event.getItemStack())
