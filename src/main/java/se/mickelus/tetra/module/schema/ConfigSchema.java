@@ -58,7 +58,7 @@ public class ConfigSchema implements UpgradeSchema {
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
-                .filter(outcome -> outcome.material.craftPredicate != null&& outcome.material.craftPredicate.test(materialStack))
+                .filter(outcome -> outcome.material.craftPredicate != null && outcome.material.craftPredicate.test(materialStack))
                 .findAny();
     }
 

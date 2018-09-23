@@ -5,7 +5,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,6 +28,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
 public class GuiWorkbench extends GuiContainer {
@@ -46,7 +52,9 @@ public class GuiWorkbench extends GuiContainer {
     private GuiSchemaList schemaList;
 
     private GuiSchemaDetail schemaDetail;
+    private final GuiInventoryInfo inventoryInfo;
     private String selectedSlot;
+    private int previewMaterialSlot = -1;
 
     private GuiActionButton geodeActionButton;
     private final GuiActionButton repairActionButton;
@@ -89,6 +97,9 @@ public class GuiWorkbench extends GuiContainer {
         schemaDetail.setVisible(false);
         defaultGui.addChild(schemaDetail);
 
+        inventoryInfo = new GuiInventoryInfo(84, 164, viewingPlayer);
+        defaultGui.addChild(inventoryInfo);
+
         geodeActionButton = new GuiActionButton(140, 114, I18n.format("item.geode.label"), Capability.hammer, () -> {
             tileEntity.performAction(viewingPlayer, BreakAction.key);
         });
@@ -130,6 +141,8 @@ public class GuiWorkbench extends GuiContainer {
         if (tooltipLines !=null) {
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
         }
+
+        updateHoverPreview();
     }
 
     @Override
@@ -187,9 +200,44 @@ public class GuiWorkbench extends GuiContainer {
             schemaDetail.setVisible(true);
         }
 
-        moduleList.update(itemStack, previewStack, currentSlot != null ? currentSlot : selectedSlot);
+        inventoryInfo.update(currentSchema, targetStack);
+        updateItemDisplay(itemStack, previewStack);
+    }
+
+    @Override
+    public void updateScreen() {
+        super.updateScreen();
+        inventoryInfo.update(tileEntity.getCurrentSchema(), targetStack);
+    }
+
+    private void updateItemDisplay(ItemStack itemStack, ItemStack previewStack) {
+        moduleList.update(itemStack, previewStack, selectedSlot);
         statGroup.setItemStack(itemStack, previewStack, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
+    }
+
+    private void updateHoverPreview() {
+        int newPreviewMaterialSlot = -1;
+        Slot hoveredSlot = getSlotUnderMouse();
+        UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
+        if (currentSchema != null && hoveredSlot != null && hoveredSlot.getHasStack()) {
+            newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
+        }
+
+        if (newPreviewMaterialSlot != previewMaterialSlot) {
+            ItemStack[] materials = tileEntity.getMaterials();
+            if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
+                ItemStack previewStack = buildPreviewStack(currentSchema, tileEntity.getTargetItemStack(), new ItemStack[]{hoveredSlot.getStack()});
+                updateItemDisplay(tileEntity.getTargetItemStack(), previewStack);
+            } else {
+                ItemStack previewStack = ItemStack.EMPTY;
+                if (currentSchema != null) {
+                    previewStack = buildPreviewStack(currentSchema, tileEntity.getTargetItemStack(), materials);
+                }
+                updateItemDisplay(tileEntity.getTargetItemStack(), previewStack);
+            }
+            previewMaterialSlot = newPreviewMaterialSlot;
+        }
     }
 
     private void updateSchemaList() {
