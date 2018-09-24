@@ -8,52 +8,53 @@ import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.function.Consumer;
 
-public class GuiModuleMinor extends GuiClickable {
+public class GuiModule extends GuiClickable {
 
-    private final String slotKey;
-    private GuiModuleMinorBackdrop backdrop;
-    private GuiString moduleString;
+    protected String slotKey = null;
+    protected GuiModuleBackdrop backdrop;
+    protected GuiString moduleString;
 
-    private boolean isEmpty;
-    private boolean isHovered;
-    private boolean isUnselected;
-    private boolean isSelected;
-    private boolean isPreview;
-    private boolean isRemoving;
-    private boolean isAdding;
+    protected boolean isEmpty;
+    protected boolean isHovered;
+    protected boolean isUnselected;
+    protected boolean isSelected;
+    protected boolean isPreview;
+    protected boolean isRemoving;
+    protected boolean isAdding;
 
-    public GuiModuleMinor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack, String slotKey, String slotName,
-                          ItemModule module, ItemModule previewModule, Consumer<String> slotClickHandler) {
+    public GuiModule(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
+                     String slotKey, String slotName,
+                     ItemModule module, ItemModule previewModule,
+                     Consumer<String> slotClickHandler) {
         super(x, y, 0, 11, () -> slotClickHandler.accept(slotKey));
         this.slotKey = slotKey;
         setAttachmentPoint(attachmentPoint);
 
         if (module == null && previewModule == null) {
             isEmpty = true;
-            setupChildren(slotName, null);
+            setupChildren(null, null, slotName);
         } else if (previewModule == null) {
             isRemoving = true;
             ModuleData data = module.getData(itemStack);
-            setupChildren(slotName, data.glyph);
+            setupChildren(null, data.glyph, slotName);
         } else if (module == null) {
             isAdding = true;
             ModuleData previewData = previewModule.getData(previewStack);
-            setupChildren(previewModule.getName(previewStack), previewData.glyph);
+            setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName);
         } else {
             ModuleData data = module.getData(itemStack);
             ModuleData previewData = previewModule.getData(previewStack);
 
             if (data.equals(previewData)) {
-                setupChildren(module.getName(itemStack), data.glyph);
+                setupChildren(module.getName(itemStack), data.glyph, slotName);
             } else {
                 isPreview = true;
-                setupChildren(previewModule.getName(previewStack), previewData.glyph);
+                setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName);
             }
         }
-        updateColors();
     }
 
-    private void setupChildren(String moduleName, GlyphData glyphData) {
+    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
         backdrop = new GuiModuleMinorBackdrop(1, -1, GuiColors.normal);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             backdrop.setX(-1);
@@ -63,7 +64,7 @@ public class GuiModuleMinor extends GuiClickable {
         addChild(backdrop);
 
 
-        moduleString = new GuiString(-12, 1, moduleName);
+        moduleString = new GuiString(-12, 1, moduleName != null ? moduleName : slotName);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             moduleString.setX(12);
         }
@@ -113,7 +114,7 @@ public class GuiModuleMinor extends GuiClickable {
         }
     }
 
-    private void setColor(int color) {
+    protected void setColor(int color) {
         backdrop.setColor(color);
         moduleString.setColor(color);
     }

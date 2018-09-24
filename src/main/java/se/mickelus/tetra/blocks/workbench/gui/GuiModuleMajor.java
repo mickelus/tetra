@@ -1,29 +1,21 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class GuiModuleMajor extends GuiClickable {
+public class GuiModuleMajor extends GuiModule {
 
-    private int color;
-
-    private GuiModuleBackdrop backdrop;
     private GuiStringSmall slotString;
-    private GuiString moduleString;
-
-    private String slotKey;
-    private boolean isPreview;
-    private boolean isEmpty;
 
     private GuiModuleImprovement[] improvementElements;
 
@@ -31,95 +23,51 @@ public class GuiModuleMajor extends GuiClickable {
                           String slotKey, String slotName,
                           ItemModuleMajor module, ItemModuleMajor previewModule,
                           Consumer<String> slotClickHandler) {
-        super(x, y, 0, 16, () -> slotClickHandler.accept(slotKey));
+        super(x, y, attachmentPoint, itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler);
 
-        setAttachmentPoint(attachmentPoint);
-
-        ModuleData data = null;
-        ModuleData previewData = null;
-
-        this.slotKey = slotKey;
-
-        slotString = new GuiStringSmall(19, 0, slotName);
-        if (GuiAttachment.topRight.equals(attachmentPoint)) {
-            slotString.setX(-16);
-        }
-        slotString.setAttachmentAnchor(attachmentPoint);
-        slotString.setAttachmentPoint(attachmentPoint);
-        addChild(slotString);
+        this.height = 16;
 
         improvementElements = new GuiModuleImprovement[0];
-
-
-        if (module != null) {
-             data = module.getData(itemStack);
-        }
-
-        if (previewModule != null) {
-            previewData = previewModule.getData(previewStack);
-        }
-
-        if (previewData != null && !previewData.equals(data)) {
-            color = GuiColors.change;
-            isPreview = true;
-            setupModule(previewModule, previewData, previewStack, color);
-        } else if (data != null) {
-            color = GuiColors.normal;
-            setupModule(module, data, itemStack, color);
-        } else {
-            isEmpty = true;
-            color = GuiColors.muted;
-            setupModule(null, null, itemStack, color);
-        }
-
         if (module != null && previewModule != null) {
             setupImprovements(previewModule, previewStack, module, itemStack);
         }
     }
 
-    public void updateSelectedHighlight(String focusSlotKey) {
-        if(slotKey.equals(focusSlotKey)) {
-            color = GuiColors.normal;
-            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
-        } else if (!isEmpty && focusSlotKey == null) {
-            color = GuiColors.normal;
-            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
-        } else {
-            color = GuiColors.muted;
-            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(0.5f));
-        }
-        setColors(color);
-    }
-
-    private void setupModule(ItemModuleMajor module, ModuleData data, ItemStack itemStack, int color) {
-        String moduleName = "Empty";
-        backdrop = new GuiModuleBackdrop(1, 0, color);
+    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
+        backdrop = new GuiModuleBackdrop(1, 0, GuiColors.normal);
         backdrop.setAttachmentAnchor(attachmentPoint);
         backdrop.setAttachmentPoint(attachmentPoint);
         addChild(backdrop);
 
-        if (module != null) {
-            moduleName = module.getName(itemStack);
+        moduleString = new GuiString(19, 5, "");
+        if (moduleName != null) {
+            moduleString.setString(moduleName);
+        } else {
+            moduleString.setString(I18n.format("item.modular.empty_slot"));
         }
-        moduleString = new GuiString(19, 5, moduleName, color);
         if (GuiAttachment.topRight.equals(attachmentPoint)) {
             moduleString.setX(-16);
         }
-        moduleString.setAttachmentAnchor(attachmentPoint);
-        moduleString.setAttachmentPoint(attachmentPoint);
+        moduleString.setAttachment(attachmentPoint);
         addChild(moduleString);
 
-        width = Minecraft.getMinecraft().fontRenderer.getStringWidth(moduleName) + 19;
+        slotString = new GuiStringSmall(19, 0, slotName);
+        if (GuiAttachment.topRight.equals(attachmentPoint)) {
+            slotString.setX(-16);
+        }
+        slotString.setAttachment(attachmentPoint);
+        addChild(slotString);
 
-        if (data != null) {
+        width = moduleString.getWidth() + 19;
+
+        if (glyphData != null) {
             final GuiModuleGlyph guiModuleGlyph = new GuiModuleGlyph(0, 0, 16, 16,
-                    data.glyph.tint, data.glyph.textureX, data.glyph.textureY,
-                    data.glyph.textureLocation);
+                    glyphData.tint, glyphData.textureX, glyphData.textureY,
+                    glyphData.textureLocation);
             if (GuiAttachment.topRight.equals(attachmentPoint)) {
                 guiModuleGlyph.setX(1);
             }
-            guiModuleGlyph.setAttachmentAnchor(attachmentPoint);
-            guiModuleGlyph.setAttachmentPoint(attachmentPoint);
+            guiModuleGlyph.setAttachment(attachmentPoint);
             addChild(guiModuleGlyph);
         }
     }
@@ -156,25 +104,15 @@ public class GuiModuleMajor extends GuiClickable {
                 .toArray(String[]::new);
     }
 
-    private void setColors(int color) {
-        if (isPreview) {
-            backdrop.setColor(GuiColors.change);
-            moduleString.setColor(GuiColors.change);
-            slotString.setColor(GuiColors.normal);
+    protected void setColor(int color) {
+        super.setColor(color);
+
+        slotString.setColor(color);
+
+        if(GuiColors.muted == color) {
+            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(0.5f));
         } else {
-            backdrop.setColor(color);
-            moduleString.setColor(color);
-            slotString.setColor(color);
+            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
         }
-    }
-
-    @Override
-    protected void onFocus() {
-        setColors(GuiColors.hover);
-    }
-
-    @Override
-    protected void onBlur() {
-        setColors(color);
     }
 }
