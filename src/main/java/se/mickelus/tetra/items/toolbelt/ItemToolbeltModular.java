@@ -16,6 +16,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
@@ -30,7 +31,7 @@ import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
 
-@Optional.Interface(modid = "baubles", iface = "baubles.api.IBauble")
+@Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
 public class ItemToolbeltModular extends ItemModular implements IBauble {
     public static ItemToolbeltModular instance;
     private final static String unlocalizedName = "toolbelt_modular";
@@ -160,8 +161,12 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
                 .reduce(0, Integer::sum);
     }
 
-    @Optional.Method(modid = "baubles")
-    @Override
+    /**
+     * Tells baubles which slot this item can go into. Implements a method in the IBauble interface.
+     * @param itemstack The itemstack
+     * @return
+     */
+    @Optional.Method(modid = IntegrationHelper.baublesModId)
     public BaubleType getBaubleType(ItemStack itemstack) {
         return BaubleType.BELT;
     }

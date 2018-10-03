@@ -9,7 +9,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
+import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 
 public class UtilToolbelt {
@@ -115,16 +117,18 @@ public class UtilToolbelt {
     }
 
     public static ItemStack getBaubleToolbelt(EntityPlayer player) {
-        IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
+        if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
+            IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
 
-        if (handler != null) {
-            handler.setPlayer(player);
-            IInventory baubleInventory = new BaublesInventoryWrapper(handler, player);
+            if (handler != null) {
+                handler.setPlayer(player);
+                IInventory baubleInventory = new BaublesInventoryWrapper(handler, player);
 
-            for (int i = 0; i < baubleInventory.getSizeInventory(); i++) {
-                ItemStack itemStack = baubleInventory.getStackInSlot(i);
-                if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
-                    return itemStack;
+                for (int i = 0; i < baubleInventory.getSizeInventory(); i++) {
+                    ItemStack itemStack = baubleInventory.getStackInSlot(i);
+                    if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
+                        return itemStack;
+                    }
                 }
             }
         }
@@ -138,11 +142,12 @@ public class UtilToolbelt {
         new InventoryQuiver(itemStack).emptyOverflowSlots(player);
     }
 
-    @Optional.Method(modid = "baubles")
     public static void updateBauble(EntityPlayer player) {
-        int baubleSlot = BaublesApi.isBaubleEquipped(player, ItemToolbeltModular.instance);
-        if (baubleSlot != -1) {
-            BaublesApi.getBaublesHandler(player).setChanged(baubleSlot, true);
+        if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
+            int baubleSlot = BaublesApi.isBaubleEquipped(player, ItemToolbeltModular.instance);
+            if (baubleSlot != -1) {
+                BaublesApi.getBaublesHandler(player).setChanged(baubleSlot, true);
+            }
         }
     }
 }

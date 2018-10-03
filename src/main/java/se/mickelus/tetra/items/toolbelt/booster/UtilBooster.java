@@ -1,6 +1,5 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
-import baubles.api.BaublesApi;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
