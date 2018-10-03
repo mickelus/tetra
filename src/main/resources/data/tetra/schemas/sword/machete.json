@@ -1,0 +1,361 @@
+[
+    {
+        "key": "machete_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 1,
+        "displayType": "major",
+        "glyph": {
+            "textureY": 32,
+            "textureX": 48
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "count": 2,
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "count": 2,
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/steeleaf",
+                "improvements": {
+                    "sword/blade:enchantment/looting": 2
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/fierymetal",
+                "improvements": {
+                    "sword/blade:enchantment/fire_aspect": 2
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/knightmetal"
+            }
+        ]
+    }
+]

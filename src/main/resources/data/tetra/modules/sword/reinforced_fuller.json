@@ -1,0 +1,408 @@
+[
+    {
+        "key": "reinforced_fuller/oak",
+        "durability": 21,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/spruce",
+        "durability": 16,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/birch",
+        "durability": 21,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/jungle",
+        "durability": 21,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/acacia",
+        "durability": 78,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/dark_oak",
+        "durability": 21,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "3c2712",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/cobblestone",
+        "durability": 44,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/stone",
+        "durability": 48,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/granite",
+        "durability": 80,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "8a6658",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/diorite",
+        "durability": 42,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "b1b1b3",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/andesite",
+        "durability": 38,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "79797a",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/iron",
+        "durability": 65,
+        "integrity": 2,
+        "attackSpeed": -0.9,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/flint",
+        "durability": 55,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "343434",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/gold",
+        "durability": 14,
+        "integrity": 1,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/diamond",
+        "durability": 98,
+        "integrity": 2,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/obsidian",
+        "durability": 154,
+        "integrity": 3,
+        "attackSpeed": -1,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/copper",
+        "durability": 96,
+        "integrity": 1,
+        "attackSpeed": -0.5,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/tin",
+        "durability": 74,
+        "integrity": 1,
+        "attackSpeed": -0.5,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/silver",
+        "durability": 21,
+        "integrity": 1,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/nickel",
+        "durability": 74,
+        "integrity": 2,
+        "attackSpeed": -0.9,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/lead",
+        "durability": 129,
+        "integrity": 2,
+        "attackSpeed": -0.9,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/bronze",
+        "durability": 101,
+        "integrity": 2,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/electrum",
+        "durability": 16,
+        "integrity": 2,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/steel",
+        "durability": 122,
+        "integrity": 3,
+        "attackSpeed": -0.7,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "999999",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/thaumium",
+        "durability": 78,
+        "integrity": 2,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/ironwood",
+        "durability": 91,
+        "integrity": 2,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/steeleaf",
+        "durability": 28,
+        "integrity": 1,
+        "attackSpeed": -0.4,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "458430",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/fierymetal",
+        "durability": 99,
+        "integrity": 3,
+        "attackSpeed": -0.9,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 72,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "reinforced_fuller/knightmetal",
+        "durability": 77,
+        "integrity": 3,
+        "attackSpeed": -0.6,
+        "effects": {
+            "unbreaking": 1
+        },
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 72,
+            "textureY": 16
+        }
+    }
+]

@@ -11,9 +11,8 @@
                     "count": 2,
                     "data": 0
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/oak"
@@ -24,9 +23,8 @@
                     "count": 2,
                     "data": 1
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/spruce"
@@ -37,9 +35,8 @@
                     "count": 2,
                     "data": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/birch"
@@ -50,9 +47,8 @@
                     "count": 2,
                     "data": 3
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/jungle"
@@ -63,9 +59,8 @@
                     "count": 2,
                     "data": 4
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/acacia"
@@ -76,9 +71,8 @@
                     "count": 2,
                     "data": 5
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/dark_oak"
@@ -88,7 +82,6 @@
                     "item": "minecraft:cobblestone",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -101,7 +94,6 @@
                     "count": 2,
                     "data": 0
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 2
                 },
@@ -114,7 +106,6 @@
                     "count": 2,
                     "data": 1
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 2
                 },
@@ -127,7 +118,6 @@
                     "count": 2,
                     "data": 3
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -140,7 +130,6 @@
                     "count": 2,
                     "data": 5
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 2
                 },
@@ -152,7 +141,6 @@
                     "item": "minecraft:iron_ingot",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -164,7 +152,6 @@
                     "item": "minecraft:flint",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -176,7 +163,6 @@
                     "item": "minecraft:gold_ingot",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -188,7 +174,6 @@
                     "item": "minecraft:diamond",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 1
                 },
@@ -200,12 +185,172 @@
                     "item": "minecraft:obsidian",
                     "count": 2
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/steeleaf",
+                "improvements": {
+                    "sword/blade:enchantment/looting": 2
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/fierymetal",
+                "improvements": {
+                    "sword/blade:enchantment/fire_aspect": 2
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/knightmetal"
             }
         ]
     }

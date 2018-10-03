@@ -1,0 +1,356 @@
+[
+    {
+        "key": "wide_guard_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 40,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5,
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/knightmetal"
+            }
+        ]
+    }
+]

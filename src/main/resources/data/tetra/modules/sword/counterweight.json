@@ -1,0 +1,379 @@
+[
+    {
+        "key": "counterweight/oak",
+        "durability": 8,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/spruce",
+        "durability": 8,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/birch",
+        "durability": 10,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/jungle",
+        "durability": 8,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/acacia",
+        "durability": 10,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/dark_oak",
+        "durability": 8,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "3c2712",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/cobblestone",
+        "durability": 12,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/stone",
+        "durability": 13,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/granite",
+        "durability": 20,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "8a6658",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/diorite",
+        "durability": 18,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "b1b1b3",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/andesite",
+        "durability": 18,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "79797a",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/iron",
+        "durability": 21,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/flint",
+        "durability": 13,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "343434",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/gold",
+        "durability": 4,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/diamond",
+        "durability": 33,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/obsidian",
+        "durability": 38,
+        "integrity": -3,
+        "effects": {
+            "counterweight": 6
+        },
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/copper",
+        "durability": 17,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/tin",
+        "durability": 14,
+        "integrity": -1,
+        "effects": {
+            "counterweight": 2
+        },
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/silver",
+        "durability": 5,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/nickel",
+        "durability": 18,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/lead",
+        "durability": 12,
+        "integrity": -3,
+        "effects": {
+            "counterweight": 6
+        },
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/bronze",
+        "durability": 22,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/electrum",
+        "durability": 4,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/steel",
+        "durability": 28,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "999999",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/thaumium",
+        "durability": 28,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/ironwood",
+        "durability": 26,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/steeleaf",
+        "durability": 17,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "458430",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/fierymetal",
+        "durability": 29,
+        "integrity": -3,
+        "effects": {
+            "counterweight": 6
+        },
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 32,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "counterweight/knightmetal",
+        "durability": 19,
+        "integrity": -2,
+        "effects": {
+            "counterweight": 4
+        },
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 32,
+            "textureY": 16
+        }
+    }
+]

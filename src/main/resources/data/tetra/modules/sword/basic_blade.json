@@ -1,118 +1,408 @@
 [
     {
         "key": "basic_blade/oak",
-        "durability": 100,
-        "integrity": 0,
+        "durability": 50,
+        "integrity": -1,
         "damage": 3,
-        "glyph": { "tint": "9d804e" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "9d804e" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/spruce",
-        "durability": 100,
-        "integrity": 0,
+        "durability": 50,
+        "integrity": -1,
         "damage": 3,
-        "attackSpeed": 0.2,
-        "glyph": { "tint": "694f2f" }
+        "attackSpeed": 0.4,
+        "glyph": { "tint": "694f2f" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/birch",
-        "durability": 130,
-        "integrity": 0,
+        "durability": 72,
+        "integrity": -1,
         "damage": 3,
-        "glyph": { "tint": "c8b77d" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "c8b77d" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/jungle",
-        "durability": 100,
-        "integrity": 0,
+        "durability": 50,
+        "integrity": -1,
         "damage": 3,
-        "glyph": { "tint": "996e4c" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "996e4c" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/acacia",
-        "durability": 130,
+        "durability": 72,
         "integrity": -1,
         "damage": 4,
-        "attackSpeed": -0.2,
-        "glyph": { "tint": "ac5d33" }
+        "attackSpeed": 0,
+        "glyph": { "tint": "ac5d33" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/dark_oak",
-        "durability": 100,
-        "integrity": 0,
+        "durability": 50,
+        "integrity": -1,
         "damage": 3,
-        "glyph": { "tint": "3c2712" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "3c2712" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/cobblestone",
-        "durability": 150,
+        "durability": 102,
         "integrity": -1,
         "damage": 4,
-        "glyph": { "tint": "9a9a9a" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "9a9a9a" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/stone",
-        "durability": 300,
+        "durability": 180,
         "integrity": -1,
         "damage": 4,
-        "glyph": { "tint": "9a9a9a" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "9a9a9a" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/granite",
-        "durability": 400,
+        "durability": 240,
         "integrity": -1,
         "damage": 4,
-        "glyph": { "tint": "8a6658" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "8a6658" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/diorite",
-        "durability": 300,
-        "integrity": -1,
-        "damage": 4,
-        "glyph": { "tint": "b1b1b3" }
-    },
-    {
-        "key": "basic_blade/andesite",
-        "durability": 300,
-        "integrity": -1,
-        "damage": 5,
-        "glyph": { "tint": "79797a" }
-    },
-    {
-        "key": "basic_blade/iron",
-        "durability": 300,
-        "integrity": 0,
-        "damage": 5,
-        "glyph": { "tint": "d8d8d8" }
-    },
-    {
-        "key": "basic_blade/flint",
         "durability": 200,
         "integrity": -1,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "343434" }
+        "glyph": { "tint": "b1b1b3" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/andesite",
+        "durability": 200,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "79797a" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/iron",
+        "durability": 221,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "d8d8d8" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/flint",
+        "durability": 150,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 0.4,
+        "glyph": { "tint": "343434" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/gold",
-        "durability": 30,
-        "integrity": 0,
+        "durability": 15,
+        "integrity": -1,
         "damage": 3,
-        "glyph": { "tint": "eaee57" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "eaee57" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/diamond",
-        "durability": 540,
+        "durability": 1492,
         "integrity": -2,
         "damage": 6,
-        "glyph": { "tint": "33ebcb" }
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "33ebcb" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     },
     {
         "key": "basic_blade/obsidian",
-        "durability": 720,
+        "durability": 1628,
         "integrity": -3,
         "damage": 8,
-        "attackSpeed": -0.1,
-        "glyph": { "tint": "3c3056" }
+        "attackSpeed": 0.1,
+        "glyph": { "tint": "3c3056" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/copper",
+        "durability": 148,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "df7646" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/tin",
+        "durability": 126,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "b3c9c1" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/silver",
+        "durability": 60,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "d6f6ff" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/nickel",
+        "durability": 200,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "c2d3a6" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/lead",
+        "durability": 108,
+        "integrity": -2,
+        "damage": 6,
+        "attackSpeed": 0.1,
+        "glyph": { "tint": "897a9b" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/bronze",
+        "durability": 320,
+        "integrity": 0,
+        "damage": 5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "b2712c" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/electrum",
+        "durability": 53,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "e4da4c" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/steel",
+        "durability": 380,
+        "integrity": -1,
+        "damage": 6,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "999999" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/thaumium",
+        "durability": 470,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "4d3984" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/ironwood",
+        "durability": 482,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "5ea917" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/steeleaf",
+        "durability": 101,
+        "integrity": -1,
+        "damage": 6,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "458430" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/fierymetal",
+        "durability": 944,
+        "integrity": -5,
+        "damage": 7,
+        "attackSpeed": 0.2,
+        "glyph": { "tint": "fa9f00" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
+    },
+    {
+        "key": "basic_blade/knightmetal",
+        "durability": 230,
+        "integrity": -2,
+        "damage": 6,
+        "attackSpeed": 0.5,
+        "glyph": { "tint": "b8cf9c" },
+        "effects": {
+            "sweeping": 1
+        },
+        "capabilities": {
+            "cut": [1, 0.9375]
+        }
     }
 ]

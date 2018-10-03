@@ -1,0 +1,379 @@
+[
+    {
+        "key": "grip_loop/oak",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/spruce",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/birch",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/jungle",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/acacia",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/dark_oak",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "3c2712",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/cobblestone",
+        "durability": 23,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/stone",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/granite",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "8a6658",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/diorite",
+        "durability": 24,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "b1b1b3",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/andesite",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "79797a",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/iron",
+        "durability": 45,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/flint",
+        "durability": 28,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "343434",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/gold",
+        "durability": 9,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/diamond",
+        "durability": 55,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/obsidian",
+        "durability": 87,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/copper",
+        "durability": 58,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/tin",
+        "durability": 43,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/silver",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/nickel",
+        "durability": 41,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/lead",
+        "durability": 77,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/bronze",
+        "durability": 46,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/electrum",
+        "durability": 9,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/steel",
+        "durability": 68,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "999999",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/thaumium",
+        "durability": 42,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/ironwood",
+        "durability": 51,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/steeleaf",
+        "durability": 17,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "458430",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/fierymetal",
+        "durability": 59,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 56,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "grip_loop/knightmetal",
+        "durability": 41,
+        "integrity": -1,
+        "effects": {
+            "sweeping": [0, 2]
+        },
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 56,
+            "textureY": 16
+        }
+    }
+]

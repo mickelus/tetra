@@ -15,7 +15,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/oak"
@@ -59,6 +59,142 @@
                 },
                 "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/knightmetal"
             }
         ]
     }

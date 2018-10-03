@@ -1,38 +1,205 @@
 [
     {
         "key": "basic_handle/stick",
-        "material": "minecraft:stick",
         "durability": 20,
-        "integrity": 4,
+        "integrity": 3,
         "glyph": {
             "tint": "866526",
-            "textureX": 21,
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/oak",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/spruce",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/birch",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/jungle",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/acacia",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/dark_oak",
+        "durability": 31,
+        "integrity": 4,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "3c2712",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/maple",
+        "durability": 38,
+        "integrity": 5,
+        "glyph": {
+            "tint": "623913",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/cherry",
+        "durability": 39,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "684817",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/baobab",
+        "durability": 47,
+        "integrity": 8,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "444b2c",
+            "textureX": 24,
             "textureY": 16
         }
     },
     {
         "key": "basic_handle/bone",
-        "material": "minecraft:bone",
         "durability": 39,
-        "integrity": 5,
+        "integrity": 4,
         "glyph": {
             "tint": "edebca",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
         }
     },
     {
         "key": "basic_handle/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 58,
-        "integrity": 6,
+        "integrity": 5,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
-            "textureX": 21,
+            "textureX": 24,
             "textureY": 16
-        },
-        "requiredCapabilities": {
-            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_handle/bronze",
+        "durability": 18,
+        "integrity": 6,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/steel",
+        "durability": 244,
+        "integrity": 5,
+        "glyph": {
+            "tint": "383838",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/blaze_rod",
+        "durability": 80,
+        "integrity": 7,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "ffc100",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/end_rod",
+        "durability": 106,
+        "integrity": 8,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "bd9ab1",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/greatwood",
+        "durability": 22,
+        "integrity": 6,
+        "glyph": {
+            "tint": "33231e",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/treated_wood",
+        "durability": 124,
+        "integrity": 6,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "422114",
+            "textureX": 24,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "basic_handle/ironwood",
+        "durability": 63,
+        "integrity": 5,
+        "glyph": {
+            "tint": "8c714d",
+            "textureX": 24,
+            "textureY": 16
         }
     }
 ]

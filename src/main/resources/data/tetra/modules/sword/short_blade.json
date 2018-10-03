@@ -1,8 +1,6 @@
 [
     {
         "key": "short_blade/oak",
-        "material": "minecraft:planks",
-        "materialData": 0,
         "durability": 40,
         "integrity": -1,
         "damage": 1,
@@ -11,14 +9,12 @@
             "tint": "866526",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/spruce",
-        "material": "minecraft:planks",
-        "materialData": 1,
         "durability": 40,
         "integrity": -1,
         "damage": 1,
@@ -27,14 +23,12 @@
             "tint": "694f2f",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/birch",
-        "material": "minecraft:planks",
-        "materialData": 2,
         "durability": 50,
         "integrity": -1,
         "damage": 1,
@@ -43,14 +37,12 @@
             "tint": "c8b77d",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/jungle",
-        "material": "minecraft:planks",
-        "materialData": 3,
         "durability": 40,
         "integrity": -1,
         "damage": 2,
@@ -59,14 +51,12 @@
             "tint": "996e4c",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/acacia",
-        "material": "minecraft:planks",
-        "materialData": 4,
         "durability": 50,
         "integrity": -2,
         "damage": 2,
@@ -75,14 +65,12 @@
             "tint": "ac5d33",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/dark_oak",
-        "material": "minecraft:planks",
-        "materialData": 5,
         "durability": 40,
         "integrity": -1,
         "damage": 1,
@@ -91,13 +79,12 @@
             "tint": "3c2712",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/flint",
-        "material": "minecraft:flint",
         "durability": 66,
         "integrity": -1,
         "damage": 3,
@@ -106,13 +93,12 @@
             "tint": "343434",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 2
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 120,
         "integrity": -1,
         "damage": 4,
@@ -121,13 +107,12 @@
             "tint": "d8d8d8",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 3
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/gold",
-        "material": "minecraft:gold_ingot",
         "durability": 10,
         "integrity": -1,
         "damage": 4,
@@ -136,13 +121,12 @@
             "tint": "eaee57",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 3
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     },
     {
         "key": "short_blade/prismarine",
-        "material": "minecraft:prismarine_shard",
         "durability": 140,
         "integrity": -3,
         "damage": 5,
@@ -151,8 +135,190 @@
             "tint": "73b5aa",
             "textureX": 32
         },
-        "requiredCapabilities": {
-            "hammer": 3
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/copper",
+        "durability": 85,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 1.4,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/tin",
+        "durability": 77,
+        "integrity": 0,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/silver",
+        "durability": 36,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/nickel",
+        "durability": 133,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/lead",
+        "durability": 75,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/bronze",
+        "durability": 201,
+        "integrity": 0,
+        "damage": 4.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/electrum",
+        "durability": 41,
+        "integrity": -1,
+        "damage": 4,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/steel",
+        "durability": 311,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/thaumium",
+        "durability": 281,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/ironwood",
+        "durability": 260,
+        "integrity": -1,
+        "damage": 4.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/steeleaf",
+        "durability": 61,
+        "integrity": -1,
+        "damage": 5.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/fierymetal",
+        "durability": 450,
+        "integrity": -3,
+        "damage": 6.5,
+        "attackSpeed": 1.5,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
+        }
+    },
+    {
+        "key": "short_blade/knightmetal",
+        "durability": 150,
+        "integrity": -1,
+        "damage": 5,
+        "attackSpeed": 2.2,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 32
+        },
+        "capabilities": {
+            "cut": [2, 0.7]
         }
     }
 ]

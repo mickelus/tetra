@@ -53,5 +53,349 @@
             "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/diamond"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
         }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:copper_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/copper"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:tin_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/tin"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:silver_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/silver"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:nickel_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/nickel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:lead_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/lead"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:bronze_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:electrum_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/electrum"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:steel_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/steel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_copper"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/copper"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_tin"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/tin"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_silver"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/silver"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_nickel"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/nickel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_lead"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/lead"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_bronze"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:pickaxe_electrum"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/electrum"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:copper_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/copper"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:tin_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/tin"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:silver_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/silver"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:nickel_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/nickel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:lead_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/lead"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:bronze_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:electrum_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/electrum"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:steel_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/steel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "ic2:bronze_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "forestry:bronze_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thaumcraft:thaumium_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/thaumium"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/thaumium"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:ironwood_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/ironwood"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/ironwood"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:enchantment/fortune": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:steeleaf_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/steeleaf"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/steeleaf"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:enchantment/efficiency": 1,
+            "duplex/head_right:enchantment/efficiency": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:fiery_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/fierymetal"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/fierymetal"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/blaze_rod"]
+        },
+        "improvements": {
+            "duplex/head_left:basic_pickaxe/smelting": 0,
+            "duplex/head_right:basic_pickaxe/smelting": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:knightmetal_pickaxe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/knightmetal"],
+            "duplex/head_right": ["duplex/butt_right", "butt/knightmetal"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:basic_pickaxe/puncturing": 1
+        }
     }
 ]

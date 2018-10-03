@@ -1,0 +1,127 @@
+[
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 1.111111],
+            "shovel": [0, 1.111111]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 2.75],
+            "shovel": [0, 2.75]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 5.5],
+            "shovel": [0, 5.5]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 9.2],
+            "shovel": [0, 9.2]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 5,
+        "enchantment": true,
+        "capabilities": {
+            "axe": [0, 14.2],
+            "shovel": [0, 14.2]
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "fortune": 1
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "fortune": 2
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "fortune": 3
+        }
+    },
+    {
+        "key": "enchantment/silk_touch",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "silkTouch": 1
+        }
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "mending": 1
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "fiery": 1
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "fiery": 2
+        }
+    }
+]

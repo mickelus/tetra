@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
@@ -31,7 +32,7 @@ public class GuiSchemaDetail extends GuiElement {
         super(x, y, 224, 67);
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
-        addChild(new GuiButton(-4 , height - 2, 40, 8, "< back", backListener));
+        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("workbench.schema_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);
@@ -46,7 +47,7 @@ public class GuiSchemaDetail extends GuiElement {
         slotQuantities = new GuiString[MAX_NUM_SLOTS];
         slotBorders = new GuiTexture[MAX_NUM_SLOTS];
         for (int i = 0; i < MAX_NUM_SLOTS; i++) {
-            slotNames[i] = new GuiString(140, 9 + i * 17, "test");
+            slotNames[i] = new GuiString(140, 9 + i * 17, "");
             slotNames[i].setVisible(false);
             addChild(slotNames[i]);
 
@@ -62,7 +63,7 @@ public class GuiSchemaDetail extends GuiElement {
         capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
 
-        craftButton = new GuiButton(138, 44, 30, 8, "Craft", craftListener);
+        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("workbench.schema_detail.craft"), craftListener);
         addChild(craftButton);
     }
 

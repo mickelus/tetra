@@ -1,0 +1,379 @@
+[
+    {
+        "key": "forefinger_ring/oak",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "9d804e",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/spruce",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "694f2f",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/birch",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "c8b77d",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/jungle",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "996e4c",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/acacia",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "ac5d33",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/dark_oak",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "3c2712",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/cobblestone",
+        "durability": 23,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/stone",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/granite",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "8a6658",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/diorite",
+        "durability": 24,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "b1b1b3",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/andesite",
+        "durability": 25,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "79797a",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/iron",
+        "durability": 45,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/flint",
+        "durability": 28,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "343434",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/gold",
+        "durability": 9,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/diamond",
+        "durability": 55,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/obsidian",
+        "durability": 87,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "3c3056",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/copper",
+        "durability": 58,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/tin",
+        "durability": 43,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/silver",
+        "durability": 12,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/nickel",
+        "durability": 41,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/lead",
+        "durability": 77,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/bronze",
+        "durability": 46,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/electrum",
+        "durability": 9,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/steel",
+        "durability": 68,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "999999",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/thaumium",
+        "durability": 42,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/ironwood",
+        "durability": 51,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/steeleaf",
+        "durability": 17,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "458430",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/fierymetal",
+        "durability": 59,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 48,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "forefinger_ring/knightmetal",
+        "durability": 41,
+        "integrity": -1,
+        "effects": {
+            "quickStrike": 4
+        },
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 48,
+            "textureY": 16
+        }
+    }
+]

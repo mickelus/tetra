@@ -20,6 +20,7 @@ public class ConfigHandler {
             "minecraft:emerald", "1", "1",
     };
 
+    public static boolean workbenchDropTable = true;
 
     @Mod.EventBusSubscriber
     private static class EventHandler {

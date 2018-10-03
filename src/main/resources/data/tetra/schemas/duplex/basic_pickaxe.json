@@ -14,7 +14,7 @@
                     "data": 0
                 },
                 "requiredCapabilities": {
-                    "hammer": 1
+                    "axe": 1
                 },
                 "moduleKey": "duplex/basic_pickaxe",
                 "moduleVariant": "basic_pickaxe/oak"
@@ -73,6 +73,166 @@
                 },
                 "moduleKey": "duplex/basic_pickaxe",
                 "moduleVariant": "basic_pickaxe/gold"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/ironwood",
+                "improvements": {
+                    "enchantment/efficiency": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/steeleaf",
+                "improvements": {
+                    "enchantment/fortune": 1
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/fierymetal",
+                "improvements": {
+                    "duplex/head_left:basic_pickaxe/smelting": 0
+                }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_pickaxe",
+                "moduleVariant": "basic_pickaxe/knightmetal",
+                "improvements": {
+                    "duplex/head_left:basic_pickaxe/puncturing": 1
+                }
             }
         ]
     }

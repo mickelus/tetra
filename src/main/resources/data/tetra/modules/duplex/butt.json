@@ -1,8 +1,6 @@
 [
     {
         "key": "butt/oak",
-        "material": "minecraft:plank",
-        "materialData": 0,
         "durability": 12,
         "integrity": -1,
         "damage": 1,
@@ -10,14 +8,21 @@
         "glyph": {
             "tint": "866526",
             "textureX": 160
-        },
-        "requiredCapabilities": {
-            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/flint",
+        "durability": 15,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "343434",
+            "textureX": 160
         }
     },
     {
         "key": "butt/cobblestone",
-        "material": "minecraft:cobblestone",
         "durability": 18,
         "integrity": -1,
         "damage": 1,
@@ -25,14 +30,10 @@
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 160
-        },
-        "requiredCapabilities": {
-            "hammer": 1
         }
     },
     {
         "key": "butt/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 26,
         "integrity": -1,
         "damage": 1,
@@ -41,16 +42,12 @@
             "tint": "d8d8d8",
             "textureX": 160
         },
-        "requiredCapabilities": {
-            "hammer": 1
-        },
         "capabilities": {
             "hammer": 1
         }
     },
     {
         "key": "butt/diamond",
-        "material": "minecraft:diamond",
         "durability": 548,
         "integrity": -1,
         "damage": 1,
@@ -59,16 +56,12 @@
             "tint": "33ebcb",
             "textureX": 160
         },
-        "requiredCapabilities": {
-            "hammer": 1
-        },
         "capabilities": {
             "hammer": 1
         }
     },
     {
         "key": "butt/gold",
-        "material": "minecraft:gold_ingot",
         "durability": 11,
         "integrity": -1,
         "damage": 1,
@@ -76,8 +69,192 @@
         "glyph": {
             "tint": "eaee57",
             "textureX": 160
+        }
+    },
+    {
+        "key": "butt/copper",
+        "durability": 18,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 160
         },
-        "requiredCapabilities": {
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/tin",
+        "durability": 15,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/silver",
+        "durability": 17,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/nickel",
+        "durability": 31,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/lead",
+        "durability": 16,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/bronze",
+        "durability": 47,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/electrum",
+        "durability": 8,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/steel",
+        "durability": 53,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/thaumium",
+        "durability": 61,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.23,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/ironwood",
+        "durability": 66,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/steeleaf",
+        "durability": 15,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.15,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 160
+        }
+    },
+    {
+        "key": "butt/fierymetal",
+        "durability": 235,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.22,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 160
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "butt/knightmetal",
+        "durability": 86,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 160
+        },
+        "capabilities": {
+            "axe": [1, 2]
+        }
+    },
+    {
+        "key": "butt/knightmetal2",
+        "durability": 86,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 160
+        },
+        "capabilities": {
             "hammer": 1
         }
     }

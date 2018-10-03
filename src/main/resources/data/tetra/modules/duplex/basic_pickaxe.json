@@ -1,11 +1,9 @@
 [
     {
         "key": "basic_pickaxe/oak",
-        "material": "minecraft:planks",
-        "materialCount": 2,
-        "materialData": 0,
         "durability": 20,
         "integrity": -1,
+        "damage": 0.5,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "866526",
@@ -13,15 +11,10 @@
         },
         "capabilities": {
             "pickaxe": [1, 1.6667]
-        },
-        "requiredCapabilities": {
-            "hammer": 1
         }
     },
     {
         "key": "basic_pickaxe/cobblestone",
-        "material": "minecraft:cobblestone",
-        "materialCount": 2,
         "durability": 56,
         "integrity": -1,
         "damage": 1,
@@ -32,15 +25,10 @@
         },
         "capabilities": {
             "pickaxe": [1, 3.33333]
-        },
-        "requiredCapabilities": {
-            "hammer": 1
         }
     },
     {
         "key": "basic_pickaxe/flint",
-        "material": "minecraft:flint",
-        "materialCount": 2,
         "durability": 78,
         "integrity": -1,
         "damage": 1,
@@ -50,16 +38,11 @@
             "textureX": 176
         },
         "capabilities": {
-            "pickaxe": [2, 3.33333]
-        },
-        "requiredCapabilities": {
-            "hammer": 2
+            "pickaxe": [2, 3.5]
         }
     },
     {
         "key": "basic_pickaxe/iron",
-        "material": "minecraft:iron_ingot",
-        "materialCount": 2,
         "durability": 115,
         "integrity": -2,
         "damage": 1,
@@ -70,15 +53,10 @@
         },
         "capabilities": {
             "pickaxe": [3, 5]
-        },
-        "requiredCapabilities": {
-            "hammer": 1
         }
     },
     {
         "key": "basic_pickaxe/diamond",
-        "material": "minecraft:diamond",
-        "materialCount": 2,
         "durability": 771,
         "integrity": -2,
         "damage": 2,
@@ -89,17 +67,13 @@
         },
         "capabilities": {
             "pickaxe": [3, 6.6667]
-        },
-        "requiredCapabilities": {
-            "hammer": 1
         }
     },
     {
         "key": "basic_pickaxe/gold",
-        "material": "minecraft:gold_ingot",
-        "materialCount": 2,
         "durability": 6,
         "integrity": -2,
+        "damage": 0.5,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "eaee57",
@@ -107,9 +81,188 @@
         },
         "capabilities": {
             "pickaxe": [1, 10]
+        }
+    },
+    {
+        "key": "basic_pickaxe/copper",
+        "durability": 70,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 176
         },
-        "requiredCapabilities": {
-            "hammer": 1
+        "capabilities": {
+            "pickaxe": [3, 4.5]
+        }
+    },
+    {
+        "key": "basic_pickaxe/tin",
+        "durability": 50,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [2, 5.4]
+        }
+    },
+    {
+        "key": "basic_pickaxe/silver",
+        "durability": 26,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 10]
+        }
+    },
+    {
+        "key": "basic_pickaxe/nickel",
+        "durability": 130,
+        "integrity": -2,
+        "damage": 1.5,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [2, 5.2]
+        }
+    },
+    {
+        "key": "basic_pickaxe/lead",
+        "durability": 45,
+        "integrity": -1,
+        "damage": 1.5,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [2, 4.6]
+        }
+    },
+    {
+        "key": "basic_pickaxe/bronze",
+        "durability": 180,
+        "integrity": 0,
+        "damage": 1.5,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 6.2]
+        }
+    },
+    {
+        "key": "basic_pickaxe/electrum",
+        "durability": 91,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [1, 9]
+        }
+    },
+    {
+        "key": "basic_pickaxe/steel",
+        "durability": 202,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 6.5]
+        }
+    },
+    {
+        "key": "basic_pickaxe/thaumium",
+        "durability": 240,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 6.67]
+        }
+    },
+    {
+        "key": "basic_pickaxe/ironwood",
+        "durability": 246,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 5.42]
+        }
+    },
+    {
+        "key": "basic_pickaxe/steeleaf",
+        "durability": 55,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 6.67]
+        }
+    },
+    {
+        "key": "basic_pickaxe/fierymetal",
+        "durability": 502,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 7.5]
+        }
+    },
+    {
+        "key": "basic_pickaxe/knightmetal",
+        "durability": 246,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 176
+        },
+        "capabilities": {
+            "pickaxe": [3, 6.67]
         }
     }
 ]

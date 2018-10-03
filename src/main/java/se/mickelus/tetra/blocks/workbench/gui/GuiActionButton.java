@@ -65,7 +65,7 @@ public class GuiActionButton extends GuiElement {
             }
         };
 
-        iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 52, 32, WORKBENCH_TEXTURE));
+        iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, WORKBENCH_TEXTURE));
         addChild(iconClickable);
 
         capabilityIndicator = new GuiCapabilityRequirement(6, 7, capability);

@@ -1,0 +1,326 @@
+[
+    {
+        "key": "grip_loop_schema",
+        "slots": ["sword/pommel"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 56,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/grip_loop",
+                "moduleVariant": "grip_loop/knightmetal"
+            }
+        ]
+    }
+]

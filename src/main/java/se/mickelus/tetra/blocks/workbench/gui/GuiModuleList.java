@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.ItemModular;
@@ -15,13 +14,13 @@ public class GuiModuleList extends GuiElement {
     private final Consumer<String> slotClickHandler;
     
     private GuiModuleMajor[] majorModuleElements;
-    private GuiModuleMinor[] minorModuleElements;
+    private GuiModule[] minorModuleElements;
 
     public GuiModuleList(int x, int y, Consumer<String> slotClickHandler) {
         super(x, y, 0, 0);
 
         majorModuleElements = new GuiModuleMajor[0];
-        minorModuleElements = new GuiModuleMinor[0];
+        minorModuleElements = new GuiModule[0];
 
         this.slotClickHandler = slotClickHandler;
     }
@@ -41,12 +40,12 @@ public class GuiModuleList extends GuiElement {
     public void setFocus(String slotKey) {
         for (GuiModuleMajor element :
                 majorModuleElements) {
-            element.setFocusSlot(slotKey);
+            element.updateSelectedHighlight(slotKey);
         }
 
-        for (GuiModuleMinor element :
+        for (GuiModule element :
                 minorModuleElements) {
-            element.setFocusSlot(slotKey);
+            element.updateSelectedHighlight(slotKey);
         }
     }
 
@@ -84,7 +83,7 @@ public class GuiModuleList extends GuiElement {
         ItemModule[] minorModules = item.getMinorModules(itemStack);
         Offsets offsets = Offsets.getMinorOffsets(item);
 
-        minorModuleElements = new GuiModuleMinor[minorModules.length];
+        minorModuleElements = new GuiModule[minorModules.length];
 
         if (!previewStack.isEmpty()) {
             ItemModule[] minorModulesPreview = item.getMinorModules(previewStack);
@@ -104,11 +103,11 @@ public class GuiModuleList extends GuiElement {
         }
     }
 
-    private GuiModuleMinor getMinorModule(int index, Offsets offsets, ItemStack itemStack, ItemStack previewStack,
-                                          String slotKey, String slotName,
-                                          ItemModule module, ItemModule previewModule) {
+    private GuiModule getMinorModule(int index, Offsets offsets, ItemStack itemStack, ItemStack previewStack,
+                                     String slotKey, String slotName,
+                                     ItemModule module, ItemModule previewModule) {
         final int x = offsets.getX(index);
-        return new GuiModuleMinor(x, offsets.getY(index), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
+        return new GuiModule(x, offsets.getY(index), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
                 itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler);
     }
     

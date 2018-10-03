@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentDurability;
@@ -9,12 +10,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import se.mickelus.tetra.DataHandler;
+import org.lwjgl.input.Keyboard;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -26,10 +29,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
-import se.mickelus.tetra.module.schema.ConfigSchema;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -37,10 +37,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     protected static final String cooledStrengthKey = "cooledStrength";
 
-    protected String[] majorModuleNames;
     protected String[] majorModuleKeys;
-    protected String[] minorModuleNames;
     protected String[] minorModuleKeys;
+
+    protected String[] requiredModules = new String[0];
 
     protected int baseDurability = 0;
     protected int baseIntegrity = 0;
@@ -117,8 +117,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
+    public boolean isModuleRequired(String moduleSlot) {
+        return ArrayUtils.contains(requiredModules, moduleSlot);
+    }
+
+    @Override
     public int getNumMajorModules() {
-        return majorModuleNames.length;
+        return majorModuleKeys.length;
     }
 
     @Override
@@ -128,12 +133,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public String[] getMajorModuleNames() {
-        return majorModuleNames;
+        return Arrays.stream(majorModuleKeys)
+                .map(key -> I18n.format(key))
+                .toArray(String[]::new);
     }
 
     @Override
     public int getNumMinorModules() {
-        return minorModuleNames.length;
+        return minorModuleKeys.length;
     }
 
     @Override
@@ -143,7 +150,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public String[] getMinorModuleNames() {
-        return minorModuleNames;
+        return Arrays.stream(minorModuleKeys)
+                .map(key -> I18n.format(key))
+                .toArray(String[]::new);
     }
 
     @Override
@@ -200,7 +209,34 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         if (isBroken(itemStack)) {
-            tooltip.add("§4§o" + I18n.format("item.modular.broken"));
+            tooltip.add(TextFormatting.DARK_RED.toString() + TextFormatting.ITALIC + I18n.format("item.modular.broken"));
+        }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .forEach(module -> {
+                            tooltip.add("\u00BB " + module.getName(itemStack));
+                            Arrays.stream(module.getImprovements(itemStack))
+                                    .map(improvement -> String.format(" %s- %s %s",
+                                            ChatFormatting.DARK_GRAY,
+                                            I18n.format(improvement.key + ".name"),
+                                            improvement.level > 0 ? I18n.format("enchantment.level." + improvement.level) : ""))
+                                    .forEach(tooltip::add);
+                    });
+            Arrays.stream(getMinorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .map(module -> "* " + module.getName(itemStack))
+                    .forEach(tooltip::add);
+        } else {
+            Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
+                    .filter(improvement -> improvement.enchantment)
+                    .map(improvement -> I18n.format(improvement.key + ".name") + " "
+                            + I18n.format("enchantment.level." + improvement.level))
+                    .forEach(tooltip::add);
+
         }
     }
 
@@ -268,14 +304,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairRequiredCapabilities(getRepairMaterial(itemStack)))
+                .map(module -> module.getRepairRequiredCapabilities(itemStack))
                 .orElse(Collections.emptyList());
     }
 
     public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
         return getRepairModule(itemStack)
                 .map(module -> {
-                    int level = module.getRepairRequiredCapabilityLevel(getRepairMaterial(itemStack), capability);
+                    int level = module.getRepairRequiredCapabilityLevel(itemStack, capability);
                     return Math.max(1, level);
         })
             .orElse(0);
@@ -321,6 +357,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         return getAllModules(itemStack).stream()
                 .mapToInt(module -> module.getEffectLevel(itemStack, effect))
+                .sum();
+    }
+
+    public double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return getAllModules(itemStack).stream()
+                .mapToDouble(module -> module.getEffectEfficiency(itemStack, effect))
                 .sum();
     }
 

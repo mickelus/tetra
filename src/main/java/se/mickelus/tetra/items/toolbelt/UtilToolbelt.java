@@ -10,8 +10,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
 import se.mickelus.tetra.IntegrationHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 
 public class UtilToolbelt {
@@ -39,11 +39,17 @@ public class UtilToolbelt {
         }
 
         ItemStack heldItemStack = player.getHeldItem(hand);
-
         player.setHeldItem(hand, inventory.takeItemStack(index));
 
+
         if (!heldItemStack.isEmpty()) {
-            storeItemInToolbelt(toolbeltStack, heldItemStack);
+            if (!storeItemInToolbelt(toolbeltStack, heldItemStack)) {
+                if (!player.inventory.addItemStackToInventory(heldItemStack)) {
+                    inventory.storeItemInInventory(player.getHeldItem(hand));
+                    player.setHeldItem(hand, heldItemStack);
+                    player.sendStatusMessage(new TextComponentTranslation("toolbelt.blocked"), true);
+                }
+            }
         }
     }
 

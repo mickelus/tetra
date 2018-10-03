@@ -63,7 +63,9 @@ public class DataHandler {
     }
 
     public ReplacementDefinition[] getReplacementDefinition(String path) {
-        return getData(String.format("replacements/%s", path), ReplacementDefinition[].class);
+        return Arrays.stream(getData(String.format("replacements/%s", path), ReplacementDefinition[].class))
+                .filter(replacementDefinition -> replacementDefinition.predicate != null)
+                .toArray(ReplacementDefinition[]::new);
     }
 
     public <T> T getData(String path, Class<T> dataClass) {

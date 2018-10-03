@@ -1,9 +1,8 @@
 [
     {
         "key": "decorative_pommel/oak",
-        "material": "minecraft:oak",
-        "durability": 8,
-        "integrity": 0,
+        "durability": 4,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "9d804e",
             "textureX": 14,
@@ -12,9 +11,8 @@
     },
     {
         "key": "decorative_pommel/cobblestone",
-        "material": "minecraft:cobblestone",
         "durability": 8,
-        "integrity": 0,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "9a9a9a",
             "textureX": 14,
@@ -23,9 +21,8 @@
     },
     {
         "key": "decorative_pommel/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 8,
-        "integrity": 0,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 14,
@@ -34,9 +31,8 @@
     },
     {
         "key": "decorative_pommel/gold",
-        "material": "minecraft:gold",
-        "durability": 8,
-        "integrity": 0,
+        "durability": 2,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "eaee57",
             "textureX": 14,
@@ -45,11 +41,140 @@
     },
     {
         "key": "decorative_pommel/diamond",
-        "material": "minecraft:diamond_ingot",
-        "durability": 8,
-        "integrity": 0,
+        "durability": 18,
+        "attackSpeed": -0.5,
         "glyph": {
             "tint": "33ebcb",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/copper",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/tin",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/silver",
+        "durability": 4,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/nickel",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/lead",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/bronze",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/electrum",
+        "durability": 5,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/steel",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/thaumium",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/ironwood",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/steeleaf",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/fierymetal",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 14,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "decorative_pommel/knightmetal",
+        "durability": 8,
+        "attackSpeed": -0.5,
+        "glyph": {
+            "tint": "b8cf9c",
             "textureX": 14,
             "textureY": 16
         }

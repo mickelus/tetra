@@ -1,0 +1,355 @@
+[
+    {
+        "key": "reinforced_fuller_schema",
+        "slots": ["sword/fuller"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 72,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5,
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_fuller",
+                "moduleVariant": "reinforced_fuller/knightmetal"
+            }
+        ]
+    }
+]

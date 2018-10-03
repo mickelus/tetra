@@ -1,0 +1,287 @@
+[
+    {
+        "key": "adze/oak",
+        "durability": 20,
+        "integrity": -1,
+        "damage": 0,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "866526",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 1.5],
+            "shovel": [1, 1.5]
+        }
+    },
+    {
+        "key": "adze/cobblestone",
+        "durability": 81,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 2.7],
+            "shovel": [1, 2.7]
+        }
+    },
+    {
+        "key": "adze/flint",
+        "durability": 115,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": 0,
+        "glyph": {
+            "tint": "343434",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 2.9],
+            "shovel": [1, 2.9]
+        }
+    },
+    {
+        "key": "adze/iron",
+        "durability": 143,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 3.4],
+            "shovel": [1, 3.4]
+        }
+    },
+    {
+        "key": "adze/diamond",
+        "durability": 742,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "33ebcb",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 4.1],
+            "shovel": [1, 4.1]
+        }
+    },
+    {
+        "key": "adze/gold",
+        "durability": 8,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "eaee57",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 6.2],
+            "shovel": [1, 6.2]
+        }
+    },
+    {
+        "key": "adze/copper",
+        "durability": 87,
+        "integrity": 0,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "df7646",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 2.6],
+            "shovel": [1, 2.6]
+        }
+    },
+    {
+        "key": "adze/tin",
+        "durability": 35,
+        "integrity": 0,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 3.4],
+            "shovel": [1, 3.4]
+        }
+    },
+    {
+        "key": "adze/silver",
+        "durability": 21,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 5.7],
+            "shovel": [1, 5.7]
+        }
+    },
+    {
+        "key": "adze/nickel",
+        "durability": 128,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [2, 3.7],
+            "shovel": [2, 3.7]
+        }
+    },
+    {
+        "key": "adze/lead",
+        "durability": 45,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "897a9b",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 2.7],
+            "shovel": [1, 2.7]
+        }
+    },
+    {
+        "key": "adze/bronze",
+        "durability": 310,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b2712c",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [2, 3.7],
+            "shovel": [2, 3.7]
+        }
+    },
+    {
+        "key": "adze/electrum",
+        "durability": 66,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 6.7],
+            "shovel": [1, 6.7]
+        }
+    },
+    {
+        "key": "adze/steel",
+        "durability": 352,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "999999",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [2, 4.2],
+            "shovel": [2, 4.2]
+        }
+    },
+    {
+        "key": "adze/thaumium",
+        "durability": 359,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "4d3984",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 3.4],
+            "shovel": [1, 3.4]
+        }
+    },
+    {
+        "key": "adze/ironwood_tf",
+        "durability": 355,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "5ea917",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 3.8],
+            "shovel": [1, 3.8]
+        }
+    },
+    {
+        "key": "adze/steeleaf",
+        "durability": 76,
+        "integrity": -1,
+        "damage": 0.5,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "458430",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [2, 4.6],
+            "shovel": [2, 4.6]
+        }
+    },
+    {
+        "key": "adze/fierymetal",
+        "durability": 634,
+        "integrity": -2,
+        "damage": 0.5,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 5.2],
+            "shovel": [1, 5.2]
+        }
+    },
+    {
+        "key": "adze/knightmetal",
+        "durability": 346,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureY": 32
+        },
+        "capabilities": {
+            "axe": [1, 4.7],
+            "shovel": [1, 4.7]
+        }
+    }
+]

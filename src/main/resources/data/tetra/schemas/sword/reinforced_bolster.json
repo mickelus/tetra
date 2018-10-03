@@ -1,0 +1,327 @@
+[
+    {
+        "key": "reinforced_bolster_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 64,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/spruce"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/birch"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/jungle"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 4
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/acacia"
+            },
+            {
+                "material": {
+                    "item": "minecraft:planks",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/dark_oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/cobblestone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 0
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 1
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/granite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/diorite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone",
+                    "data": 5
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/andesite"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/iron"
+            },
+            {
+                "material": {
+                    "item": "minecraft:flint",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/flint"
+            },
+            {
+                "material": {
+                    "item": "minecraft:gold_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/gold"
+            },
+            {
+                "material": {
+                    "item": "minecraft:diamond"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/diamond"
+            },
+            {
+                "material": {
+                    "item": "minecraft:obsidian"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/obsidian"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotCopper"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/copper"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotTin"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/tin"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSilver"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/silver"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotNickel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/nickel"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotLead"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/lead"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotBronze"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/bronze"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotElectrum"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/electrum"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteel"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/steel"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:thaumium_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/thaumium"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotIronwood"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotSteeleaf"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/steeleaf"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotFiery"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/fierymetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "ingotKnightmetal"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/knightmetal"
+            }
+        ]
+    }
+]

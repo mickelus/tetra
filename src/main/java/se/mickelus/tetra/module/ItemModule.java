@@ -3,20 +3,16 @@ package se.mickelus.tetra.module;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 
@@ -48,36 +44,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return slotKey;
     }
 
-    public void addModule(ItemStack targetStack, ItemStack[] materials, boolean consumeMaterials, EntityPlayer player) {
-        NBTTagCompound tag = NBTHelper.getTag(targetStack);
-        ModuleData data = getDataByMaterial(materials[0]);
-
-        tag.setString(slotKey, moduleKey);
-        tag.setString(dataKey, data.key);
-
-        if (consumeMaterials) {
-            materials[0].shrink(data.materialCount);
-        }
-    }
-
     public void addModule(ItemStack targetStack, String variantKey, EntityPlayer player) {
         NBTTagCompound tag = NBTHelper.getTag(targetStack);
 
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, variantKey);
-    }
-
-    public T getDataByMaterial(ItemStack materialStack) {
-        String materialName = Item.REGISTRY.getNameForObject(materialStack.getItem()).toString();
-
-        return Arrays.stream(data)
-                .filter(moduleData -> {
-                    if (moduleData.materialData != -1 && moduleData.materialData != materialStack.getItemDamage()) {
-                        return false;
-                    }
-                    return materialName.equals(moduleData.material);
-                })
-                .findAny().orElse(getDefaultData());
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
@@ -233,6 +204,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         return getData(itemStack).effects.getLevel(effect);
+    }
+
+    public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return getData(itemStack).effects.getEfficiency(effect);
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {

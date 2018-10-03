@@ -110,8 +110,17 @@ public class ConfigSchema implements UpgradeSchema {
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        for (int i = 0; i < materials.length; i++) {
-            if (i < definition.materialSlotCount && !acceptsMaterial(itemStack, i, materials[i])) {
+        if (getNumMaterialSlots() == 0) {
+            return true;
+        }
+
+        if (materials.length < definition.materialSlotCount) {
+            return false;
+        }
+
+        for (int i = 0; i < definition.materialSlotCount; i++) {
+            if (!acceptsMaterial(itemStack, i, materials[i])
+                    || materials[i].getCount() < getOutcomeFromMaterial(materials[i], i).map(outcome -> outcome.material.count).orElse(0)) {
                 return false;
             }
         }
@@ -119,12 +128,12 @@ public class ConfigSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return definition.requirement.test(itemStack);
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         if (moduleSlot != null) {
             return moduleSlot.equals(slot);
         }

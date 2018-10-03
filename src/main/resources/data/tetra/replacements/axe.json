@@ -53,5 +53,323 @@
             "duplex/head_right": ["duplex/butt_right", "butt/diamond"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
         }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:copper_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/copper"],
+            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:tin_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/tin"],
+            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:silver_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/silver"],
+            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:nickel_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/nickel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:lead_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/lead"],
+            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:bronze_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/bronze"],
+            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:electrum_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/electrum"],
+            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "basemetals:steel_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/steel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_copper"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/copper"],
+            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_tin"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/tin"],
+            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_silver"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/silver"],
+            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_nickel"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/nickel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_lead"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/lead"],
+            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_bronze"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/bronze"],
+            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "embers:axe_electrum"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/electrum"],
+            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:copper_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/copper"],
+            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:tin_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/tin"],
+            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:silver_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/silver"],
+            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:nickel_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/nickel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:lead_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/lead"],
+            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:bronze_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/bronze"],
+            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:electrum_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/electrum"],
+            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thermalfoundation:steel_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/steel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "ic2:bronze_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/bronze"],
+            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "thaumcraft:thaumium_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/thaumium"],
+            "duplex/head_right": ["duplex/butt_right", "butt/thaumium"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:ironwood_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/ironwood"],
+            "duplex/head_right": ["duplex/butt_right", "butt/ironwood"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:enchantment/fortune": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:steeleaf_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/steeleaf"],
+            "duplex/head_right": ["duplex/butt_right", "butt/steeleaf"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:enchantment/efficiency": 1,
+            "duplex/head_right:enchantment/efficiency": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "twilightforest:knightmetal_axe"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/knightmetal"],
+            "duplex/head_right": ["duplex/butt_right", "butt/knightmetal2"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:basic_axe/severing": 1
+        }
     }
 ]

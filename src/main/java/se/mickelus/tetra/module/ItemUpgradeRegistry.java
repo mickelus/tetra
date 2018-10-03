@@ -3,8 +3,6 @@ package se.mickelus.tetra.module;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.DataHandler;
@@ -38,7 +36,7 @@ public class ItemUpgradeRegistry {
     public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
         return schemaMap.values().stream()
                 .filter(upgradeSchema -> playerHasSchema(player, upgradeSchema))
-                .filter(upgradeSchema -> upgradeSchema.canUpgrade(itemStack))
+                .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
                 .toArray(UpgradeSchema[]::new);
     }
 

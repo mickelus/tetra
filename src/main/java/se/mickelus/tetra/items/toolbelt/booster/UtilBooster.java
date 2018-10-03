@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
-import se.mickelus.tetra.items.ItemEffect;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;

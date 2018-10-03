@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.items.ItemEffect;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
@@ -30,6 +30,7 @@ public class GuiStatGroup extends GuiElement {
     private GuiStatBar storageBar;
     private GuiStatBar quiverBar;
     private GuiStatBar boosterBar;
+    private GuiStatBar armorBar;
 
     private GuiElement barGroup;
     private GuiElement capabilityGroup;
@@ -44,6 +45,7 @@ public class GuiStatGroup extends GuiElement {
         damageBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackDamage"), 0, 40);
         speedBar = new GuiStatBar(0, 0, I18n.format("item.modular.speed"), -4, 4);
         durabilityBar = new GuiStatBar(0, 0, I18n.format("item.modular.durability"), 0, 2024);
+        armorBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.armor"), 0, 20);
 
         quickslotBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quickslot"),
                 0, InventoryQuickslot.maxSize);
@@ -88,6 +90,7 @@ public class GuiStatGroup extends GuiElement {
                 durabilityBar.setValue(itemStack.getMaxDamage(), itemStack.getMaxDamage());
             }
 
+            updateArmorBar(itemStack, previewStack);
             updateToolbeltBars(itemStack, previewStack);
 
             updateCapabilityIndicators(itemStack, previewStack);
@@ -107,6 +110,24 @@ public class GuiStatGroup extends GuiElement {
             bar.setAlignment(GuiAlignment.right);
         }
         barGroup.addChild(bar);
+    }
+
+
+    private void updateArmorBar(ItemStack itemStack, ItemStack previewStack) {
+        if (itemStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) itemStack.getItem();
+            int currentArmor = item.getEffectLevel(itemStack, ItemEffect.armor);
+            int previewArmor = currentArmor;
+
+            if (!previewStack.isEmpty()) {
+                previewArmor = item.getEffectLevel(previewStack, ItemEffect.armor);
+            }
+
+            if (currentArmor != 0 || previewArmor != 0) {
+                armorBar.setValue(currentArmor, previewArmor);
+                showBar(armorBar);
+            }
+        }
     }
 
     private void updateToolbeltBars(ItemStack itemStack, ItemStack previewStack) {

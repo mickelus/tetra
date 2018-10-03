@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.0"
+version = "0.19.0"
 group= "se.mickelus.tetra" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tetra-1.12.2"
 
@@ -31,6 +31,9 @@ minecraft {
     // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = "snapshot_20171003"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+    replaceIn "TetraMod.java"
+    replace "#VERSION", project.version
 }
 
 repositories {

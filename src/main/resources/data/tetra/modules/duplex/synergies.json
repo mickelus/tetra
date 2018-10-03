@@ -16,6 +16,14 @@
         "name": "duplex/hammer_pickaxe"
     },
     {
+        "modules": ["duplex/adze", "duplex/basic_pickaxe"],
+        "name": "duplex/adze_pickaxe"
+    },
+    {
+        "modules": ["duplex/adze", "duplex/basic_axe"],
+        "name": "duplex/adze_axe"
+    },
+    {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
         "capabilities": {
             "hammer": 1
@@ -29,8 +37,51 @@
         }
     },
     {
-        "moduleVariants": ["basic_pickaxe/oak", "basic_pickaxe/oak"],
-        "damage": 1
+        "moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
+        "integrity": 1
+    },
+    {
+        "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
+        "integrity": 1,
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/obsidian", "basic_hammer/obsidian"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
+        "capabilities": {
+            "hammer": 1
+        }
     },
     {
         "moduleVariants": ["basic_pickaxe/cobblestone", "basic_pickaxe/cobblestone"],
@@ -39,17 +90,9 @@
         }
     },
     {
-        "moduleVariants": ["basic_pickaxe/iron", "basic_pickaxe/iron"],
-        "damage": 1
-    },
-    {
         "moduleVariants": ["basic_pickaxe/diamond", "basic_pickaxe/diamond"],
         "capabilities": {
             "pickaxe": 1
         }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/gold", "basic_pickaxe/gold"],
-        "damage": 1
     }
 ]

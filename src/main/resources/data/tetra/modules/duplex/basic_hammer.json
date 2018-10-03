@@ -1,7 +1,6 @@
 [
     {
         "key": "basic_hammer/log",
-        "material": "minecraft:log",
         "durability": 100,
         "integrity": -1,
         "damage": 2,
@@ -16,7 +15,6 @@
     },
     {
         "key": "basic_hammer/stone",
-        "material": "minecraft:stone",
         "durability": 300,
         "integrity": -1,
         "damage": 3,
@@ -31,7 +29,6 @@
     },
     {
         "key": "basic_hammer/iron",
-        "material": "minecraft:iron_ingot",
         "durability": 300,
         "integrity": -2,
         "damage": 4,
@@ -42,17 +39,13 @@
         },
         "capabilities": {
             "hammer": 2
-        },
-        "requiredCapabilities": {
-            "hammer": 2
         }
     },
     {
         "key": "basic_hammer/obsidian",
-        "material": "minecraft:obsidian",
         "durability": 720,
         "integrity": -3,
-        "damage": 4,
+        "damage": 5,
         "attackSpeed": -0.6,
         "glyph": {
             "tint": "3c3056",
@@ -60,8 +53,173 @@
         },
         "capabilities": {
             "hammer": 4
+        }
+    },
+    {
+        "key": "basic_hammer/copper",
+        "durability": 221,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 64
         },
-        "requiredCapabilities": {
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/tin",
+        "durability": 120,
+        "integrity": -1,
+        "damage": 3,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_hammer/nickel",
+        "durability": 240,
+        "integrity": -4,
+        "damage": 5,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/lead",
+        "durability": 120,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/bronze",
+        "durability": 465,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/electrum",
+        "durability": 102,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 1
+        }
+    },
+    {
+        "key": "basic_hammer/steel",
+        "durability": 521,
+        "integrity": -5,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 4
+        }
+    },
+    {
+        "key": "basic_hammer/thaumium",
+        "durability": 634,
+        "integrity": -3,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/ironwood",
+        "durability": 591,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 2
+        }
+    },
+    {
+        "key": "basic_hammer/steeleaf",
+        "durability": 111,
+        "integrity": -3,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/fierymetal",
+        "durability": 947,
+        "integrity": -3,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 64
+        },
+        "capabilities": {
+            "hammer": 3
+        }
+    },
+    {
+        "key": "basic_hammer/knightmetal",
+        "durability": 512,
+        "integrity": -2,
+        "damage": 4,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 64
+        },
+        "capabilities": {
             "hammer": 3
         }
     }

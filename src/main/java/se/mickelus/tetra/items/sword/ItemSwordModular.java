@@ -1,20 +1,14 @@
 package se.mickelus.tetra.items.sword;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
+import se.mickelus.tetra.items.BasicMajorModule;
+import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
+import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.*;
 import se.mickelus.tetra.network.PacketHandler;
-
-import java.util.Map;
 
 public class ItemSwordModular extends ItemModularHandheld {
 
@@ -28,58 +22,74 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     static final String unlocalizedName = "sword_modular";
 
+    private final ItemModuleMajor basicBladeModule;
+    private final ItemModuleMajor shortBladeModule;
+    private final ItemModuleMajor heavyBladeModule;
+    private final ItemModuleMajor macheteModule;
+
     public ItemSwordModular() {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         setMaxStackSize(1);
 
-        majorModuleNames = new String[]{"Blade", "Hilt"};
+        blockDestroyDamage = 2;
+
         majorModuleKeys = new String[]{bladeKey, hiltKey};
-        minorModuleNames = new String[]{"Fuller", "Guard", "Pommel"};
         minorModuleKeys = new String[]{fullerKey, guardKey, pommelKey};
 
-        new BladeModule(bladeKey);
-        new ShortBladeModule(bladeKey);
-        new HeavyBladeModule(bladeKey);
+        requiredModules = new String[]{bladeKey, hiltKey};
+
+        basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
+                "sword/improvements/blade_enchants", "sword/improvements/basic_blade");
+        shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
+                "sword/improvements/blade_enchants", "sword/improvements/short_blade");
+        heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
+                "sword/improvements/blade_enchants", "sword/improvements/heavy_blade");
+        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/blade_enchants");
+
         new HiltModule(hiltKey);
 
-        new MakeshiftGuardModule(guardKey);
-        new DecorativePommelModule(pommelKey);
+        new BasicModule(guardKey, "sword/makeshift_guard");
+        new BasicModule(guardKey, "sword/wide_guard");
+
+        new BasicModule(pommelKey, "sword/decorative_pommel");
+        new BasicModule(pommelKey, "sword/counterweight");
+        new BasicModule(pommelKey, "sword/grip_loop");
+        new BasicModule(guardKey, "sword/forefinger_ring");
+        new BasicModule(guardKey, "sword/reinforced_bolster");
+        new BasicModule(fullerKey, "sword/reinforced_fuller");
     }
 
     @Override
     public void init(PacketHandler packetHandler) {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade_improvements");
-        new BookEnchantSchema(BladeModule.instance);
+        new BookEnchantSchema(basicBladeModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade_improvements");
-        new BookEnchantSchema(ShortBladeModule.instance);
+        new BookEnchantSchema(shortBladeModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/heavy_blade");
-        new BookEnchantSchema(HeavyBladeModule.instance);
+        new BookEnchantSchema(heavyBladeModule);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/machete");
+        new BookEnchantSchema(macheteModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
         new BookEnchantSchema(HiltModule.instance);
 
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/counterweight");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/grip_loop");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/forefinger_ring");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_bolster");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
+
         new RepairSchema(this);
+        RemoveSchema.registerRemoveSchemas(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
-    }
-
-    private ItemStack createItemStack(String material) {
-        ItemStack itemStack = new ItemStack(this);
-        itemStack.setTagCompound(new NBTTagCompound());
-
-        ItemStack bladeMaterial = getStackFromMaterialString(material);
-
-        BladeModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-        HiltModule.instance.addModule(itemStack, new ItemStack[] {new ItemStack(Items.STICK)}, false, null);
-        MakeshiftGuardModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-        DecorativePommelModule.instance.addModule(itemStack, new ItemStack[] {bladeMaterial}, false, null);
-
-        return itemStack;
     }
 
     @Override

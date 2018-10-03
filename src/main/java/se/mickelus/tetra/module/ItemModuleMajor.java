@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.ItemEffect;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 
@@ -99,6 +98,14 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         return Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.effects)
                 .mapToInt(effects -> effects.getLevel(effect))
+                .sum() + super.getEffectLevel(itemStack, effect);
+    }
+
+    @Override
+    public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        return (float) Arrays.stream(getImprovements(itemStack))
+                .map(improvement -> improvement.effects)
+                .mapToDouble(effects -> effects.getEfficiency(effect))
                 .sum() + super.getEffectLevel(itemStack, effect);
     }
 

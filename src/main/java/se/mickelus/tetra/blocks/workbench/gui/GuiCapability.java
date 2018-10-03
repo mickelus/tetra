@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiString;
+import se.mickelus.tetra.gui.GuiStringOutline;
 import se.mickelus.tetra.gui.GuiTexture;
 
 public class GuiCapability extends GuiElement {
@@ -17,10 +18,10 @@ public class GuiCapability extends GuiElement {
         super(x, y, 16, 16);
         this.capability = capability;
 
-        levelIndicator = new GuiString(10, 8, "");
-        addChild(levelIndicator);
-
         addChild(new GuiTexture(0, 0, 16, 16, capability.ordinal() * 16, 52, texture));
+
+        levelIndicator = new GuiStringOutline(10, 8, "");
+        addChild(levelIndicator);
     }
 
     public void update(int level, int color) {

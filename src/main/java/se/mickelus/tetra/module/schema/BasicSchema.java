@@ -1,12 +1,9 @@
 package se.mickelus.tetra.module.schema;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -14,7 +11,6 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
-import java.util.Collection;
 
 public abstract class BasicSchema implements UpgradeSchema {
 
@@ -60,12 +56,12 @@ public abstract class BasicSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canUpgrade(ItemStack itemStack) {
+    public boolean isApplicableForItem(ItemStack itemStack) {
         return item.equals(itemStack.getItem());
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot) {
+    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         return module.getSlot().equals(slot);
     }
 
@@ -85,24 +81,6 @@ public abstract class BasicSchema implements UpgradeSchema {
     public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials) {
         return getRequiredCapabilities(targetStack, materials).stream()
                 .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
-    }
-    @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
-        ItemStack upgradedStack = itemStack.copy();
-
-        ItemModule previousModule = removePreviousModule(upgradedStack);
-        module.addModule(upgradedStack, materials, consumeMaterials, player);
-
-        if (previousModule != null && consumeMaterials) {
-            previousModule.postRemove(upgradedStack, player);
-        }
-
-        if (consumeMaterials && player instanceof EntityPlayerMP) {
-            // todo: add proper criteria
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
-        }
-
-        return upgradedStack;
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack) {

@@ -3,12 +3,8 @@ package se.mickelus.tetra.items.duplex_tool;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -22,11 +18,11 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
+import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -53,6 +49,15 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public static DuplexHeadModule basicPickaxeLeft;
     public static DuplexHeadModule basicPickaxeRight;
 
+    public static DuplexHeadModule hoeLeft;
+    public static DuplexHeadModule hoeRight;
+
+    public static DuplexHeadModule adzeLeft;
+    public static DuplexHeadModule adzeRight;
+
+    public static DuplexHeadModule sickleLeft;
+    public static DuplexHeadModule sickleRight;
+
     public static DuplexHeadModule butt;
 
     public static ItemDuplexToolModular instance;
@@ -64,10 +69,12 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         setMaxStackSize(1);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        majorModuleNames = new String[]{"Head §7(left)", "Head §7(right)"};
-        majorModuleKeys = new String[]{headLeftKey,headRightKey};
-        minorModuleNames = new String[]{"Binding", "Handle", "Accessory"};
+        entityHitDamage = 2;
+
+        majorModuleKeys = new String[]{headLeftKey, headRightKey};
         minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
+
+        requiredModules = new String[]{headLeftKey, headRightKey, handleKey};
 
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
@@ -79,6 +86,15 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "basic_pickaxe", leftSuffix);
         basicPickaxeRight = new DuplexHeadModule(headRightKey, "basic_pickaxe", rightSuffix);
+
+        hoeLeft = new DuplexHeadModule(headLeftKey, "hoe", leftSuffix);
+        hoeRight = new DuplexHeadModule(headRightKey, "hoe", rightSuffix);
+
+        adzeLeft = new DuplexHeadModule(headLeftKey, "adze", leftSuffix);
+        adzeRight = new DuplexHeadModule(headRightKey, "adze", rightSuffix);
+
+        sickleLeft = new DuplexHeadModule(headLeftKey, "sickle", leftSuffix);
+        sickleRight = new DuplexHeadModule(headRightKey, "sickle", rightSuffix);
 
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
@@ -102,32 +118,46 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/hoe");
+        new BookEnchantSchema(hoeLeft);
+        new BookEnchantSchema(hoeRight);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/adze");
+        new BookEnchantSchema(adzeLeft);
+        new BookEnchantSchema(adzeRight);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/sickle");
+        new BookEnchantSchema(sickleLeft);
+        new BookEnchantSchema(sickleRight);
+
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
         new BookEnchantSchema(butt);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
 
         new RepairSchema(this);
+        RemoveSchema.registerRemoveSchemas(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("hoe");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createHammerStack(new ItemStack(Blocks.LOG), new ItemStack(Items.STICK)));
-            itemList.add(createHammerStack(new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.IRON_INGOT)));
+            itemList.add(createHammerStack("log", "stick"));
+            itemList.add(createHammerStack("obsidian", "iron"));
         }
     }
 
-    public ItemStack createHammerStack(ItemStack headMaterial, ItemStack handleMaterial) {
+    public ItemStack createHammerStack(String headMaterial, String handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
-        basicHammerHeadLeft.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
-        basicHammerHeadRight.addModule(itemStack, new ItemStack[]{headMaterial}, false, null);
-        BasicHandleModule.instance.addModule(itemStack, new ItemStack[]{handleMaterial}, false, null);
+        basicHammerHeadLeft.addModule(itemStack, "basic_hammer/" + headMaterial, null);
+        basicHammerHeadRight.addModule(itemStack, "basic_hammer/" + headMaterial, null);
+        BasicHandleModule.instance.addModule(itemStack, "basic_handle/" + handleMaterial, null);
         return itemStack;
     }
 
