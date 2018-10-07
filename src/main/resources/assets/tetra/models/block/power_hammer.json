@@ -1,0 +1,21 @@
+{
+    "textures": {
+        "0": "tetra:blocks/power_hammer_side",
+        "1": "tetra:blocks/power_hammer_face"
+    },
+    "elements": [
+        {
+            "name": "head",
+            "from": [ 2, 0, 2 ],
+            "to": [ 14, 16, 14 ],
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12, 16 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 12, 16 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 12, 16 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 12, 16 ] },
+                "up": { "texture": "#1", "uv": [ 0, 0, 12, 12 ] },
+                "down": { "texture": "#1", "uv": [ 0, 0, 12, 12 ] }
+            }
+        }
+    ]
+}

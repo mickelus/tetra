@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.forgehammer.BlockPowerHammer;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
@@ -60,7 +61,8 @@ public class TetraMod {
 
         blocks = new TetraBlock[] {
                 new BlockWorkbench(),
-                new BlockGeode()
+                new BlockGeode(),
+                new BlockPowerHammer()
         };
 
         items = new Item[] {
@@ -76,6 +78,7 @@ public class TetraMod {
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
 
         ForgeRegistries.ITEMS.register(new ItemBlock(BlockWorkbench.instance).setRegistryName(BlockWorkbench.instance.getRegistryName()));
+        ForgeRegistries.ITEMS.register(new ItemBlock(BlockPowerHammer.instance).setRegistryName(BlockPowerHammer.instance.getRegistryName()));
 
         proxy.preInit(event,
                 Arrays.stream(items)
