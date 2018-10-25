@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "half_slab_brick",
+    "textures": {
+      "bottom": "tetra:blocks/forged_platform_bottom",
+      "top": "tetra:blocks/forged_platform_alternate",
+      "side": "tetra:blocks/forged_platform_side"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "half": {
+      "bottom": { "model": "tetra:half_slab" },
+      "top": { "model": "upper_slab" }
+    }
+
+  }
+}

@@ -9,7 +9,6 @@ public class TetraItem extends Item implements ITetraItem {
 
     @Override
     public void clientPreInit() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
     @Override

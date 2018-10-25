@@ -5,8 +5,8 @@
         "end_cycle": [ "-", "#activation_time" ]
     },
     "clips": {
-        "default": [ "apply", "tetra:block/power_hammer@default", 0],
-        "active": [ "apply", "tetra:block/power_hammer@default", "#cycle"]
+        "default": [ "apply", "tetra:block/hammer_head@default", 0],
+        "active": [ "apply", "tetra:block/hammer_head@default", "#cycle"]
     },
     "states": [
         "default",

@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tetra:forged_wall"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

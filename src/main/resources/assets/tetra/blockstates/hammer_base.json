@@ -1,0 +1,61 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tetra:hammer_base",
+    "textures": {
+      "socket1": "tetra:blocks/hammer_base_socket",
+      "socket2": "tetra:blocks/hammer_base_socket",
+      "cell_side1": "tetra:blocks/cell_side",
+      "cell_side2": "tetra:blocks/cell_side",
+      "cell_top1": "tetra:blocks/cell_top",
+      "cell_top2": "tetra:blocks/cell_top"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "facing": {
+      "north":  {},
+      "south":  { "y": 180 },
+      "west":  { "y": -90 },
+      "east":  { "y": 90 }
+    },
+    "cell1": {
+      "true": {
+        "submodel": {
+          "cell1": { "model": "tetra:cell_protude1", "x": 90 }
+        }
+      },
+      "false": {}
+    },
+    "cell2": {
+      "true": {
+        "submodel": {
+          "cell2": { "model": "tetra:cell_protude2", "x": -90 }
+        }
+      },
+      "false": {}
+    },
+    "cell1charged": {
+      "true": {
+        "textures": {
+          "socket1": "tetra:blocks/hammer_base_socket_charged",
+          "cell_side1": "tetra:blocks/cell_side_charged",
+          "cell_top1": "tetra:blocks/cell_top_charged"
+        }
+      },
+      "false": {}
+    },
+    "cell2charged": {
+      "true": {
+        "textures": {
+          "socket2": "tetra:blocks/hammer_base_socket_charged",
+          "cell_side2": "tetra:blocks/cell_side_charged",
+          "cell_top2": "tetra:blocks/cell_top_charged"
+        }
+      },
+      "false": {}
+    }
+
+  }
+}

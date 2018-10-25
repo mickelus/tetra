@@ -288,10 +288,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             for (int i = 1; i < stacks.size(); i++) {
                 ItemStack materialStack = removeStackFromSlot(i);
                 if (!materialStack.isEmpty()) {
-                    double d0 = (double)(world.rand.nextFloat() * 0.5F) + 0.25D;
-                    double d1 = (double)(world.rand.nextFloat() * 0.5F) + 1.25D;
-                    double d2 = (double)(world.rand.nextFloat() * 0.5F) + 0.25D;
-                    EntityItem entityitem = new EntityItem(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, materialStack);
+                    EntityItem entityitem = new EntityItem(world, (double)pos.getX() + 0.5, (double)pos.getY() + 1.1, (double)pos.getZ() + 0.5, materialStack);
                     entityitem.setDefaultPickupDelay();
                     world.spawnEntity(entityitem);
                 }

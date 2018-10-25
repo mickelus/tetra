@@ -36,13 +36,10 @@ public class BlockGeode extends TetraBlock {
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         instance = this;
-
-        this.setDefaultState(this.blockState.getBaseState());
     }
 
     @Override
     public int getExpDrop(final IBlockState state, final IBlockAccess world, final BlockPos pos, final int fortune) {
-
         return super.getExpDrop(state, world, pos, fortune);
     }
 

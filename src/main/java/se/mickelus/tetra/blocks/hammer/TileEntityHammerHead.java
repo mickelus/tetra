@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.forgehammer;
+package se.mickelus.tetra.blocks.hammer;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.tileentity.TileEntity;
@@ -16,16 +16,16 @@ import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
 
-public class TileEntityPowerHammer extends TileEntity {
+public class TileEntityHammerHead extends TileEntity {
 
     private final TimeValues.VariableValue activationTime = new TimeValues.VariableValue(Float.NEGATIVE_INFINITY);
 
     @Nullable
     private final IAnimationStateMachine asm;
 
-    public TileEntityPowerHammer() {
+    public TileEntityHammerHead() {
         if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) {
-            asm = ModelLoaderRegistry.loadASM(new ResourceLocation(TetraMod.MOD_ID, "asms/block/power_hammer.json"),
+            asm = ModelLoaderRegistry.loadASM(new ResourceLocation(TetraMod.MOD_ID, "asms/block/hammer_head.json"),
                     ImmutableMap.of("activation_time", activationTime));
         } else {
             asm = null;

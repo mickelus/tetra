@@ -28,7 +28,7 @@ public class ReplacementDefinition {
             try {
                 replacement.predicate = ItemPredicate.deserialize(JsonUtils.getJsonObject(jsonObject, "predicate"));
             } catch (JsonSyntaxException e) {
-                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JsonUtils.getJsonObject(jsonObject, "predicate").toString()));
+//                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JsonUtils.getJsonObject(jsonObject, "predicate").toString()));
                 return replacement;
             }
 

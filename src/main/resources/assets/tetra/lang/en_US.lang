@@ -35,6 +35,16 @@ item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
 item.geode.label=crack open
 
 ###############################
+# MAGMATIC CELL
+###############################
+item.magmatic_cell.name=Magmatic cell
+item.magmatic_cell.charge=Charge: %s
+item.magmatic_cell.charge_full=§aFull
+item.magmatic_cell.charge_good=§aGood
+item.magmatic_cell.charge_low=§eLow
+item.magmatic_cell.charge_empty=§cEmpty
+
+###############################
 # SWORD
 ###############################
 sword/blade=Blade

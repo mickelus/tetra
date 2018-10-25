@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.forgehammer.TileEntityPowerHammer;
+import se.mickelus.tetra.blocks.hammer.TileEntityHammerHead;
 import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
@@ -35,7 +35,7 @@ public class ClientProxy implements IProxy {
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPowerHammer.class, new AnimationTESR<>());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHammerHead.class, new AnimationTESR<>());
     }
 
     @Override

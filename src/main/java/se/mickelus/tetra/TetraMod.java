@@ -1,26 +1,40 @@
 package se.mickelus.tetra;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.blocks.forgehammer.BlockPowerHammer;
+import se.mickelus.tetra.blocks.forged.BlockForgedPillar;
+import se.mickelus.tetra.blocks.forged.BlockForgedPlatform;
+import se.mickelus.tetra.blocks.forged.BlockForgedPlatformSlab;
+import se.mickelus.tetra.blocks.forged.BlockForgedWall;
+import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
+import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemModularPredicate;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
@@ -43,7 +57,7 @@ public class TetraMod {
     public static TetraMod instance;
 
     private Item[] items;
-    private TetraBlock[] blocks;
+    private Block[] blocks;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -58,33 +72,36 @@ public class TetraMod {
         new GuiHandlerRegistry();
 
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
+        MinecraftForge.EVENT_BUS.register(this);
 
-        blocks = new TetraBlock[] {
+        blocks = new Block[] {
                 new BlockWorkbench(),
                 new BlockGeode(),
-                new BlockPowerHammer()
+                new BlockHammerHead(),
+                new BlockHammerBase(),
+                new BlockForgedWall(),
+                new BlockForgedPillar(),
+                new BlockForgedPlatform(),
+                new BlockForgedPlatformSlab()
         };
 
         items = new Item[] {
-            new ItemSwordModular(),
-            new ItemGeode(),
-            new ItemToolbeltModular(),
-            new ItemDuplexToolModular()
+                new ItemSwordModular(),
+                new ItemGeode(),
+                new ItemToolbeltModular(),
+                new ItemDuplexToolModular(),
+                new ItemCellMagmatic()
         };
 
-
-        ForgeRegistries.ITEMS.registerAll(items);
-        ForgeRegistries.BLOCKS.registerAll(blocks);
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
-
-        ForgeRegistries.ITEMS.register(new ItemBlock(BlockWorkbench.instance).setRegistryName(BlockWorkbench.instance.getRegistryName()));
-        ForgeRegistries.ITEMS.register(new ItemBlock(BlockPowerHammer.instance).setRegistryName(BlockPowerHammer.instance.getRegistryName()));
 
         proxy.preInit(event,
                 Arrays.stream(items)
-                    .filter(item -> item instanceof ITetraItem)
-                    .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
-                blocks);
+                        .filter(item -> item instanceof ITetraItem)
+                        .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
+                Arrays.stream(blocks)
+                        .filter(block -> block instanceof ITetraBlock)
+                        .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
     }
     
     @EventHandler
@@ -99,11 +116,38 @@ public class TetraMod {
                 .filter(item -> item instanceof ITetraItem)
                 .map(item -> (ITetraItem) item)
                 .forEach(item -> item.init(packetHandler));
-        Arrays.stream(blocks).forEach(block -> block.init(packetHandler));
+        Arrays.stream(blocks)
+                .filter(block -> block instanceof ITetraBlock)
+                .map(block -> (ITetraBlock) block)
+                .forEach(block -> block.init(packetHandler));
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+
+    @SubscribeEvent
+    public void registerBlocks(RegistryEvent.Register<Block> event) {
+        event.getRegistry().registerAll(blocks);
+    }
+
+    @SubscribeEvent
+    public void registerItems(RegistryEvent.Register<Item> event) {
+        event.getRegistry().registerAll(items);
+
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            Arrays.stream(items)
+                    .forEach(item -> {
+                        ModelLoader.setCustomModelResourceLocation(item, 0,
+                                new ModelResourceLocation(item.getRegistryName(), "inventory"));
+                    });
+        }
+
+        Arrays.stream(blocks)
+                .filter(block -> block instanceof ITetraBlock)
+                .map(block -> (ITetraBlock) block)
+                .filter(ITetraBlock::hasItem)
+                .forEach(block -> block.registerItem(event.getRegistry()));
     }
 }

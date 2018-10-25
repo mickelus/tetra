@@ -49,6 +49,8 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityWorkbench.class, unlocalizedName);
 
+        hasItem = true;
+
         instance = this;
 
         this.setDefaultState(this.blockState.getBaseState());

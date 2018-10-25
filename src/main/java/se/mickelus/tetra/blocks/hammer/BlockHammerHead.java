@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.forgehammer;
+package se.mickelus.tetra.blocks.hammer;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -28,22 +28,23 @@ import se.mickelus.tetra.network.PacketHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockPowerHammer extends TetraBlock implements ITileEntityProvider {
+public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
 
-    static final String unlocalizedName = "power_hammer";
+    static final String unlocalizedName = "hammer_head";
     public static final AxisAlignedBB boundingBox = new AxisAlignedBB(0.125, 0.8125, 0.125, 0.875, 1, 0.875);
 
-    public static BlockPowerHammer instance;
+    public static BlockHammerHead instance;
 
-    public BlockPowerHammer() {
-        super(Material.WOOD);
-
-        setHardness(2.5f);
+    public BlockHammerHead() {
+        super(Material.IRON);
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        GameRegistry.registerTileEntity(TileEntityPowerHammer.class, TetraMod.MOD_ID + ":" + "tile_" +unlocalizedName);
+        GameRegistry.registerTileEntity(TileEntityHammerHead.class, TetraMod.MOD_ID + ":" + "tile_" +unlocalizedName);
         setCreativeTab(TetraCreativeTabs.getInstance());
+        setBlockUnbreakable();
+
+        hasItem = true;
 
         instance = this;
 
@@ -53,7 +54,7 @@ public class BlockPowerHammer extends TetraBlock implements ITileEntityProvider 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
                                     EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ((TileEntityPowerHammer) worldIn.getTileEntity(pos)).activate();
+        ((TileEntityHammerHead) worldIn.getTileEntity(pos)).activate();
         worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, 0.5f);
         return true;
     }
@@ -81,7 +82,7 @@ public class BlockPowerHammer extends TetraBlock implements ITileEntityProvider 
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntityPowerHammer();
+        return new TileEntityHammerHead();
     }
 
     @Override
@@ -109,10 +110,4 @@ public class BlockPowerHammer extends TetraBlock implements ITileEntityProvider 
 
     @Override
     public boolean isFullCube(IBlockState state) { return false; }
-
-
-    @Override
-    public void init(PacketHandler packetHandler) {
-        super.init(packetHandler);
-    }
 }
