@@ -294,7 +294,8 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:thaumium_ingot",
+                    "item": "thaumcraft:ingot",
+                    "data": 0,
                     "count": 3
                 },
                 "requiredCapabilities": {

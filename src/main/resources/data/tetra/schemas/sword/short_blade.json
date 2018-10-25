@@ -220,7 +220,8 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:thaumium_ingot"
+                    "item": "thaumcraft:ingot",
+                    "data": 0
                 },
                 "materialSlot": 0,
                 "requiredCapabilities": {

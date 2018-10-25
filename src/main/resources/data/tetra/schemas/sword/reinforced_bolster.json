@@ -270,7 +270,8 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:thaumium_ingot"
+                    "item": "thaumcraft:ingot",
+                    "data": 0
                 },
                 "requiredCapabilities": {
                     "hammer": 2

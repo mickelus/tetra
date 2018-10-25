@@ -161,7 +161,8 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:thaumium_ingot"
+                    "item": "thaumcraft:ingot",
+                    "data": 0
                 },
                 "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/thaumium"
