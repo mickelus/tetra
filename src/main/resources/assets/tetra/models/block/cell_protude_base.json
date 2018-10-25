@@ -1,0 +1,23 @@
+{
+    "textures": {
+        "cell_side_solid": "tetra:blocks/cell_side_solid",
+        "cell_side": "tetra:blocks/cell_side",
+        "cell_top": "tetra:blocks/cell_top",
+        "particle": "tetra:blocks/cell_side"
+    },
+    "elements": [
+        {
+            "name": "cell",
+            "from": [ 5.5, 16, 5.5 ],
+            "to": [ 10.5, 19, 10.5 ],
+            "faces": {
+                "north": { "texture": "#cell_side_solid", "uv": [ 0.0, 0.0, 5, 3 ] },
+                "east": { "texture": "#cell_side", "uv": [ 0.0, 0.0, 5, 3 ] },
+                "south": { "texture": "#cell_side_solid", "uv": [ 0.0, 0.0, 5, 3 ] },
+                "west": { "texture": "#cell_side", "uv": [ 0.0, 0.0, 5, 3 ] },
+                "up": { "texture": "#cell_top", "uv": [ 0, 0, 5, 5 ] },
+                "down": { "texture": "#cell_top", "uv": [ 0, 0, 5, 5 ] }
+            }
+        }
+    ]
+}

@@ -1,7 +1,8 @@
 {
     "textures": {
-        "0": "tetra:blocks/power_hammer_side",
-        "1": "tetra:blocks/power_hammer_face"
+        "0": "tetra:blocks/hammer_head_side",
+        "1": "tetra:blocks/hammer_head_face",
+        "particle": "tetra:blocks/hammer_head_side"
     },
     "elements": [
         {

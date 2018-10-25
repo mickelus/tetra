@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tetra:items/magmatic_cell"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "tetra:charged": 1
+      },
+      "model": "tetra:item/magmatic_cell_charged"
+    }
+  ]
+}

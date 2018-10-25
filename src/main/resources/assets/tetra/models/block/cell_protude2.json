@@ -1,0 +1,7 @@
+{
+    "parent": "tetra:block/cell_protude_base",
+    "textures": {
+        "cell_side": "#cell_side2",
+        "cell_top": "#cell_top2"
+    }
+}

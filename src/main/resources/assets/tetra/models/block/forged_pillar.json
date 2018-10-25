@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "tetra:blocks/forged_pillar_side",
+        "down": "tetra:blocks/forged_pillar",
+        "up": "tetra:blocks/forged_pillar",
+        "north": "tetra:blocks/forged_pillar_side",
+        "east": "tetra:blocks/forged_pillar_side",
+        "south": "tetra:blocks/forged_pillar_side",
+        "west": "tetra:blocks/forged_pillar_side"
+    }
+}
