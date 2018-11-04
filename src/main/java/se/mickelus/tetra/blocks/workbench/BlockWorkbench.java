@@ -3,7 +3,10 @@ package se.mickelus.tetra.blocks.workbench;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -13,10 +16,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -40,6 +40,8 @@ import java.util.Random;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
+    public static final PropertyEnum<Variant> propVariant = PropertyEnum.create("variant", Variant.class);
+
     static final String unlocalizedName = "workbench";
 
     public static final AxisAlignedBB BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 2.0D, 1.0D);
@@ -59,7 +61,13 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         instance = this;
 
-        this.setDefaultState(this.blockState.getBaseState());
+        this.setDefaultState(this.blockState.getBaseState().withProperty(propVariant, Variant.wood));
+    }
+
+    @Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
+        items.add(new ItemStack(this, 1, 1));
     }
 
     @Override
@@ -156,5 +164,43 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, Side.SERVER);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, propVariant);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        if (meta < Variant.values().length) {
+            return this.getDefaultState().withProperty(propVariant, Variant.values()[meta]);
+        }
+        return this.getDefaultState();
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(propVariant).ordinal();
+    }
+
+    public static enum Variant implements IStringSerializable {
+        wood(Material.WOOD),
+        forged(Material.IRON);
+
+        private final Material material;
+
+        Variant( Material material) {
+            this.material = material;
+        }
+
+        Material getMaterial() {
+            return material;
+        }
+
+        @Override
+        public String getName() {
+            return toString();
+        }
     }
 }
