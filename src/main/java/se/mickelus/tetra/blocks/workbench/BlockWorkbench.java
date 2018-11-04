@@ -25,11 +25,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
@@ -110,6 +116,36 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         }
 
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
+        IBlockState accessoryBlockState = world.getBlockState(pos.offset(EnumFacing.UP));
+        if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
+            ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
+            return block.getCapabilities(world, pos.offset(EnumFacing.UP), accessoryBlockState);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
+        IBlockState accessoryBlockState = world.getBlockState(pos.offset(EnumFacing.UP));
+        if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
+            ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
+            return block.getCapabilityLevel(world, pos.offset(EnumFacing.UP), accessoryBlockState, capability);
+        }
+        return -1;
+    }
+
+    @Override
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        BlockPos topPos = pos.offset(EnumFacing.UP);
+        if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
+            BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
+            return hammer.onCraftConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+        }
+        return targetStack;
     }
 
     @Override

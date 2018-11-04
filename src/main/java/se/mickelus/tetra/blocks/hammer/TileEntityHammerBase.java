@@ -1,14 +1,11 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
@@ -30,6 +27,15 @@ public class TileEntityHammerBase extends TileEntity {
             }
         }
         return true;
+    }
+
+    public void consumePower() {
+        for (ItemStack slot : slots) {
+            if (slot != null && (slot.getItem() instanceof ItemCellMagmatic)) {
+                ItemCellMagmatic item = (ItemCellMagmatic) slot.getItem();
+                item.reduceCharge(slot, 1);
+            }
+        }
     }
 
     public boolean hasCellInSlot(int index){

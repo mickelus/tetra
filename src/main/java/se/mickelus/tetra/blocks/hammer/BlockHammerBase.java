@@ -25,6 +25,9 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
     public static final PropertyBool propCell1 = PropertyBool.create("cell1");
@@ -56,6 +59,23 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
                 .withProperty(propCell1Charged, false)
                 .withProperty(propCell2, false)
                 .withProperty(propCell2Charged, false));
+    }
+
+    public boolean isPowered(World world, BlockPos pos) {
+        return Optional.ofNullable(getTileEntity(world, pos))
+                .filter(Objects::nonNull)
+                .map(TileEntityHammerBase::isPowered)
+                .orElse(false);
+    }
+
+    public void consumePower(World world, BlockPos pos) {
+        TileEntityHammerBase te = getTileEntity(world, pos);
+        if (te != null) {
+            IBlockState blockState = world.getBlockState(pos);
+            te.consumePower();
+
+            world.notifyBlockUpdate(pos, blockState, blockState, 3);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentDurability;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -83,7 +84,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .collect(Collectors.toList());
         }
 
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @Override
@@ -352,6 +353,20 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sum();
 
         return base + synergyBonus;
+    }
+
+    /**
+     * Apply special effects and possibly consume required resources after this item has been used to craft or upgrade
+     * another item.
+     * @param providerStack The providing stack, the itemstack for this item
+     * @param targetStack The itemstack which is being upgraded/crafted/altered in some way
+     * @param player The player performing the actions
+     * @param consumeResources
+     */
+    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        ItemStack result = targetStack.copy();
+
+        return result;
     }
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {

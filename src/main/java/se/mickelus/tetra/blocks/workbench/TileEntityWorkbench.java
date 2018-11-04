@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -16,7 +16,9 @@ import se.mickelus.tetra.blocks.workbench.action.BreakAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
@@ -83,7 +85,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private boolean checkActionCapabilities(EntityPlayer player, WorkbenchAction action, ItemStack itemStack) {
         return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
-                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= action.getCapabilityLevel(itemStack, capability));
+                .allMatch(capability -> CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
+                            >= action.getCapabilityLevel(itemStack, capability));
     }
 
     public UpgradeSchema getCurrentSchema() {
@@ -163,14 +166,36 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     public void craft(EntityPlayer player) {
-        ItemStack itemStack = getTargetItemStack();
+        ItemStack targetStack = getTargetItemStack();
+        ItemStack upgradedStack = ItemStack.EMPTY;
 
-        if (currentSchema != null && currentSchema.canApplyUpgrade(player, itemStack, getMaterials(), currentSlot)) {
-            itemStack = currentSchema.applyUpgrade(itemStack, getMaterials(), true, currentSlot, player);
+        IBlockState blockState = world.getBlockState(getPos());
+
+        int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, getWorld(), getPos(), blockState);
+
+        // used when calculating crafting effects (from tools etc) as the upgrade may have consumed all materials
+        ItemStack[] materialsCopy = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
+
+        if (currentSchema != null && currentSchema.canApplyUpgrade(player, targetStack, getMaterials(), currentSlot, availableCapabilities)) {
+            upgradedStack = currentSchema.applyUpgrade(targetStack, getMaterials(), true, currentSlot, player);
+            for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materialsCopy)) {
+                int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materialsCopy, capability);
+                ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);
+                if (!providingStack.isEmpty()) {
+                    if (providingStack.getItem() instanceof ItemModular) {
+                        upgradedStack = ((ItemModular) providingStack.getItem())
+                                .onCraftConsumeCapability(providingStack, upgradedStack, player, true);
+                    }
+                } else {
+                    if (getBlockType() instanceof BlockWorkbench) {
+                        ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState, upgradedStack, player, true);
+                    }
+                }
+            }
+
         }
 
-
-        setInventorySlotContents(0, itemStack);
+        setInventorySlotContents(0, upgradedStack);
     }
 
     public void addChangeListener(String key, Runnable runnable) {
@@ -198,6 +223,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
     }
 
+    @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
     }

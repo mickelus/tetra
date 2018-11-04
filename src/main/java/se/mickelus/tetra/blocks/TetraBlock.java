@@ -2,15 +2,23 @@ package se.mickelus.tetra.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.network.PacketHandler;
+
+import java.util.Collection;
+import java.util.Collections;
 
 public class TetraBlock extends Block implements ITetraBlock {
 
@@ -45,4 +53,18 @@ public class TetraBlock extends Block implements ITetraBlock {
 
     }
 
+    @Override
+    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
+        return -1;
+    }
+
+
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        return targetStack;
+    }
 }

@@ -7,10 +7,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -20,12 +20,15 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import scala.actors.threadpool.Arrays;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
@@ -52,11 +55,42 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-                                    EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ((TileEntityHammerHead) worldIn.getTileEntity(pos)).activate();
-        worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, 0.5f);
-        return true;
+    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
+        BlockPos basePos = pos.offset(EnumFacing.UP);
+        if (world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
+            BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
+
+            if (baseBlock.isPowered(world, basePos)) {
+                return Collections.singletonList(Capability.hammer);
+            }
+        }
+        return super.getCapabilities(world, pos, blockState);
+    }
+
+    @Override
+    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
+        BlockPos basePos = pos.offset(EnumFacing.UP);
+        if (Capability.hammer.equals(capability) && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
+            BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
+
+            if (baseBlock.isPowered(world, basePos)) {
+                return 4;
+            }
+        }
+        return super.getCapabilityLevel(world, pos, blockState, capability);
+    }
+
+    @Override
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        BlockPos basePos = pos.offset(EnumFacing.UP);
+        if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
+            BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
+            baseBlock.consumePower(world, basePos);
+
+            ((TileEntityHammerHead) world.getTileEntity(pos)).activate();
+            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
+        }
+        return targetStack;
     }
 
     @Override

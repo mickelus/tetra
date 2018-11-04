@@ -386,7 +386,7 @@ public class ItemModularHandheld extends ItemModular {
                 .map(Enum::toString)
                 .collect(Collectors.toSet());
         }
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
 
     @Override
