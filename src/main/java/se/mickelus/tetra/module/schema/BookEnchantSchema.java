@@ -95,7 +95,7 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return isMaterialsValid(itemStack, materials);
     }
 
@@ -129,13 +129,13 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean checkCapabilities(EntityPlayer player, ItemStack targetStack, ItemStack[] materials) {
+    public boolean checkCapabilities(ItemStack targetStack, ItemStack[] materials, int[] availableCapabilities) {
         return true;
     }
 
     @Override
     public Collection<Capability> getRequiredCapabilities(ItemStack targetStack, ItemStack[] materials) {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @Override

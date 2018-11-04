@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
@@ -67,7 +68,7 @@ public class GuiSchemaDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void update(EntityPlayer player, UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials) {
+    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials, int[] availableCapabilities) {
         this.schema = schema;
 
         title.setString(schema.getName());
@@ -112,7 +113,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotBorders[i].setVisible(false);
         }
 
-        capabilityIndicatorList.update(player, schema, itemStack, materials);
+        capabilityIndicatorList.update(schema, itemStack, materials, availableCapabilities);
     }
 
     public void toggleButton(boolean enabled) {

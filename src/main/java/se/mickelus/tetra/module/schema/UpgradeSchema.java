@@ -57,13 +57,14 @@ public interface UpgradeSchema {
      * @param itemStack the itemstack that is to be upgraded
      * @param materials the materials to be used for the upgrade
      * @param slot the slot on which the schema will be applied
+     * @param availableCapabilities
      * @return
      */
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities);
     public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
 
-    public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials);
+    public boolean checkCapabilities(final ItemStack targetStack, final ItemStack[] materials, int[] availableCapabilities);
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
 

@@ -12,7 +12,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 
-public abstract class BasicSchema implements UpgradeSchema {
+public abstract class BasicSchema extends BaseSchema {
 
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
@@ -63,24 +63,6 @@ public abstract class BasicSchema implements UpgradeSchema {
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         return module.getSlot().equals(slot);
-    }
-
-    @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        return isMaterialsValid(itemStack, materials)
-                && !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(player, itemStack, materials);
-    }
-    @Override
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
-        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, module.getSlot(), null);
-        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
-    }
-
-    @Override
-    public boolean checkCapabilities(EntityPlayer player, final ItemStack targetStack, final ItemStack[] materials) {
-        return getRequiredCapabilities(targetStack, materials).stream()
-                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack) {

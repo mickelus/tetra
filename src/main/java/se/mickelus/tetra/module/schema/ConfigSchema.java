@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ConfigSchema implements UpgradeSchema {
+public class ConfigSchema extends BaseSchema {
 
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
@@ -140,25 +140,6 @@ public class ConfigSchema implements UpgradeSchema {
 
         return Arrays.stream(definition.slots)
                 .anyMatch(s -> s.equals(slot));
-    }
-
-    @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        return isMaterialsValid(itemStack, materials)
-                && !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(player, itemStack, materials);
-    }
-
-    @Override
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, slot, null);
-        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
-    }
-
-    @Override
-    public boolean checkCapabilities(EntityPlayer player, ItemStack targetStack, ItemStack[] materials) {
-        return getRequiredCapabilities(targetStack, materials).stream()
-                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
 
     @Override

@@ -3,12 +3,14 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 
 public class GuiActionButton extends GuiElement {
 
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
+    private Capability capability;
     private GuiCapabilityRequirement capabilityIndicator;
 
     private GuiClickable iconClickable;
@@ -68,6 +70,7 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, WORKBENCH_TEXTURE));
         addChild(iconClickable);
 
+        this.capability = capability;
         capabilityIndicator = new GuiCapabilityRequirement(6, 7, capability);
         iconClickable.addChild(capabilityIndicator);
     }
@@ -79,7 +82,7 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(EntityPlayer entityPlayer, int requiredLevel) {
-        capabilityIndicator.update(entityPlayer, requiredLevel);
+    public void update(int requiredLevel, int[] availableCapabilities) {
+        capabilityIndicator.update(requiredLevel, availableCapabilities[capability.ordinal()]);
     }
 }

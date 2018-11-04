@@ -5,12 +5,10 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,6 +17,7 @@ import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.blocks.workbench.action.BreakAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
 public class GuiWorkbench extends GuiContainer {
@@ -193,8 +191,12 @@ public class GuiWorkbench extends GuiContainer {
         } else if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
             previewStack = buildPreviewStack(currentSchema, itemStack, tileEntity.getMaterials());
 
-            schemaDetail.update(viewingPlayer, currentSchema, itemStack, tileEntity.getMaterials());
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(), currentSlot));
+            World world = tileEntity.getWorld();
+            BlockPos pos = tileEntity.getPos();
+            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
+
+            schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities);
+            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(), currentSlot, availableCapabilities));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);
@@ -253,13 +255,16 @@ public class GuiWorkbench extends GuiContainer {
         } else {
             schemaList.setVisible(false);
 
+            World world = tileEntity.getWorld();
+            BlockPos pos = tileEntity.getPos();
+            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
             if (tileEntity.canPerformAction(viewingPlayer, BreakAction.key)) {
-                geodeActionButton.update(viewingPlayer, 2);
+                geodeActionButton.update(2, availableCapabilities);
                 geodeActionButton.setVisible(true);
             }
 
             if (tileEntity.canPerformAction(viewingPlayer, RepairAction.key)) {
-                repairActionButton.update(viewingPlayer, -1);
+                repairActionButton.update(-1, availableCapabilities);
                 repairActionButton.setVisible(true);
             }
         }

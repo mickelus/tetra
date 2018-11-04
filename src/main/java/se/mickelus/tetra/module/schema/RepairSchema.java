@@ -12,7 +12,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import java.util.Collection;
 import java.util.Collections;
 
-public class RepairSchema implements UpgradeSchema {
+public class RepairSchema extends BaseSchema {
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
@@ -85,23 +85,6 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
-        return isMaterialsValid(itemStack, materials)
-                && !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(player, itemStack, materials);
-    }
-
-    @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return acceptsMaterial(itemStack, 0, materials[0]);
-    }
-
-    @Override
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
-        return false;
-    }
-
-    @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) upgradedStack.getItem();
@@ -117,9 +100,13 @@ public class RepairSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean checkCapabilities(EntityPlayer player,final ItemStack targetStack,  final ItemStack[] materials) {
-        return getRequiredCapabilities(targetStack, materials).stream()
-                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
+    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
+        return acceptsMaterial(itemStack, 0, materials[0]);
+    }
+
+    @Override
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
+        return false;
     }
 
     @Override
@@ -128,7 +115,7 @@ public class RepairSchema implements UpgradeSchema {
             ItemModular item = (ItemModular) targetStack.getItem();
             return item.getRepairRequiredCapabilities(targetStack);
         }
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @Override

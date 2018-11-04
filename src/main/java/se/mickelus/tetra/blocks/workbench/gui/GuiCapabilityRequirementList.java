@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
@@ -25,17 +26,17 @@ public class GuiCapabilityRequirementList extends GuiElement {
         }
     }
 
-    public void update(EntityPlayer player, UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
+    public void update(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials, int[] availableCapabilities) {
         setVisible(schema.isMaterialsValid(targetStack, materials));
 
         int visibleCount = 0;
         Capability[] capabilities = Capability.values();
         Collection<Capability> requiredCapabilities = schema.getRequiredCapabilities(targetStack, materials);
         for (int i = 0; i < capabilities.length; i++) {
-            if (requiredCapabilities.contains(capabilities[i])
-                    && schema.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]) > 0) {
+            int requiredLevel = schema.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
+            if (requiredCapabilities.contains(capabilities[i]) && requiredLevel > 0) {
                 indicators[i].setX(-visibleCount * indicators[i].getWidth());
-                indicators[i].update(player, schema, targetStack, materials);
+                indicators[i].updateRequirement(requiredLevel, availableCapabilities[i]);
                 indicators[i].setVisible(true);
                 visibleCount++;
             } else {

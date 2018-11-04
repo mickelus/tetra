@@ -4,7 +4,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -16,7 +15,7 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 
-public class RemoveSchema implements UpgradeSchema {
+public class RemoveSchema extends BaseSchema {
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
@@ -86,20 +85,14 @@ public class RemoveSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
+    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(player, itemStack, materials);
+                && checkCapabilities(itemStack, materials, availableCapabilities);
     }
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
         return true;
-    }
-
-    @Override
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, final ItemStack[] materials, String slot) {
-        ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, slot, null);
-        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
     }
 
     @Override
@@ -118,12 +111,6 @@ public class RemoveSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean checkCapabilities(EntityPlayer player,final ItemStack targetStack,  final ItemStack[] materials) {
-        return getRequiredCapabilities(targetStack, materials).stream()
-                .allMatch(capability -> CapabilityHelper.getCapabilityLevel(player, capability) >= getRequiredCapabilityLevel(targetStack, materials, capability));
-    }
-
-    @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModule module = item.getModuleFromSlot(targetStack, slot);
@@ -131,7 +118,7 @@ public class RemoveSchema implements UpgradeSchema {
                 return module.getRepairRequiredCapabilities(targetStack);
             }
         }
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @Override
