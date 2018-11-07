@@ -4,8 +4,10 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,15 +16,20 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.registries.IForgeRegistry;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ITetraBlock;
@@ -30,10 +37,10 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
@@ -44,18 +51,17 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     static final String unlocalizedName = "workbench";
 
-    public static final AxisAlignedBB BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 2.0D, 1.0D);
+    public static final AxisAlignedBB forgedAABB = new AxisAlignedBB(0.125, 0, 0, 0.875, 1, 1);
 
     public static BlockWorkbench instance;
 
     public BlockWorkbench() {
         super(Material.WOOD);
 
-        setHardness(2.5f);
-
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityWorkbench.class, unlocalizedName);
+        setCreativeTab(TetraCreativeTabs.getInstance());
 
         hasItem = true;
 
@@ -64,10 +70,58 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         this.setDefaultState(this.blockState.getBaseState().withProperty(propVariant, Variant.wood));
     }
 
+
+
+    public static EnumActionResult upgradeWorkbench(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+        ItemStack itemStack = player.getHeldItem(hand);
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
+            return EnumActionResult.FAIL;
+        }
+
+        if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
+
+            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
+
+            if (!world.isRemote) {
+                world.setBlockState(pos, instance.getDefaultState());
+
+                // todo: add proper criteria ?
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemStack);
+            }
+            return EnumActionResult.SUCCESS;
+        }
+
+        return EnumActionResult.PASS;
+    }
+
+    /**
+     * Special item regististration to handle multiple variants registered in the creative menu.
+     * @param registry Item registry
+     */
     @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this, 1, 0));
-        items.add(new ItemStack(this, 1, 1));
+    public void registerItem(IForgeRegistry<Item> registry) {
+        Item item = new ItemBlock(this) {
+            @Override
+            public int getMetadata(int damage) {
+                return damage;
+            }
+        };
+        item.setRegistryName(getRegistryName());
+        registry.register(item);
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            for (Variant variant : Variant.values()) {
+                ModelLoader.setCustomModelResourceLocation(item, variant.ordinal(), new ModelResourceLocation(getRegistryName(), "variant=" + variant.toString()));
+            }
+        }
+    }
+
+    @Override
+    public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> items) {
+        if (TetraCreativeTabs.getInstance().equals(creativeTabs)) {
+            for (Variant variant : Variant.values()) {
+                items.add(new ItemStack(this, 1, variant.ordinal()));
+            }
+        }
     }
 
     @Override
@@ -91,6 +145,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         }
     }
 
+    @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
@@ -102,28 +157,6 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return Blocks.CRAFTING_TABLE.getPickBlock(state, target, world, pos, player);
-    }
-
-    public static EnumActionResult upgradeWorkbench(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return EnumActionResult.FAIL;
-        }
-
-        if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
-
-            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
-
-            if (!world.isRemote) {
-                world.setBlockState(pos, instance.getDefaultState());
-
-                // todo: add proper criteria ?
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemStack);
-            }
-            return EnumActionResult.SUCCESS;
-        }
-
-        return EnumActionResult.PASS;
     }
 
     @Override
@@ -174,9 +207,9 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         if (meta < Variant.values().length) {
-            return this.getDefaultState().withProperty(propVariant, Variant.values()[meta]);
+            return getDefaultState().withProperty(propVariant, Variant.values()[meta]);
         }
-        return this.getDefaultState();
+        return getDefaultState();
     }
 
     @Override
@@ -184,18 +217,64 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         return state.getValue(propVariant).ordinal();
     }
 
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return state.getValue(propVariant).equals(Variant.wood);
+    }
+
+    @Override
+    public boolean causesSuffocation(IBlockState state) {
+        return isFullCube(state);
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return state.getValue(propVariant).equals(Variant.wood) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return state.getValue(propVariant).equals(Variant.wood);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return state.getValue(propVariant).equals(Variant.wood) ? FULL_BLOCK_AABB : forgedAABB;
+    }
+
+    @Override
+    public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(propVariant).equals(Variant.wood) ? lightOpacity : 0;
+    }
+
+    @Override
+    public Material getMaterial(IBlockState state) {
+        return state.getValue(propVariant).getMaterial();
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
+        return state.getValue(propVariant).getHardness();
+    }
+
     public static enum Variant implements IStringSerializable {
-        wood(Material.WOOD),
-        forged(Material.IRON);
+        wood(Material.WOOD, 2.5f),
+        forged(Material.ANVIL, -1);
 
         private final Material material;
+        private final float hardness;
 
-        Variant( Material material) {
+        Variant( Material material, float hardness) {
             this.material = material;
+            this.hardness = hardness;
         }
 
         Material getMaterial() {
             return material;
+        }
+
+        public float getHardness() {
+            return hardness;
         }
 
         @Override

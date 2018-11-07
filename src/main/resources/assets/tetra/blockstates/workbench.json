@@ -4,7 +4,9 @@
         "model": "tetra:workbench"
     },
     "variants": {
-          "normal": [{}],
-          "inventory": [{}]
+        "variant": {
+            "wood": { "model": "tetra:workbench" },
+            "forged": { "model": "tetra:workbench_forged" }
+        }
     }
 }

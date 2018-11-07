@@ -50,7 +50,6 @@ public class TetraBlock extends Block implements ITetraBlock {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
         }
-
     }
 
     @Override
