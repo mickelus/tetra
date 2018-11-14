@@ -25,6 +25,7 @@ public class GuiRect extends GuiElement {
 
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         if (offset) {
             GlStateManager.translate(0.5F, 0.5F, 0);
             drawRect(refX + x, refY + y, refX + x + width - 1, refY + y + height - 1, colorWithOpacity(color, opacity * getOpacity()));

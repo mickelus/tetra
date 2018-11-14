@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiTexture;
@@ -12,7 +11,6 @@ public class GuiHudWorkbench extends GuiRootHud {
     TileEntityWorkbench te;
 
     public GuiHudWorkbench() {
-        super(Minecraft.getMinecraft());
     }
 
     @Override
@@ -25,8 +23,6 @@ public class GuiHudWorkbench extends GuiRootHud {
         ItemStack itemStack = te.getStackInSlot(0);
         if (itemStack != null) {
             String itemName = itemStack.getDisplayName();
-            int width = mc.fontRenderer.getStringWidth(itemName);
-            mc.fontRenderer.drawString(itemName, - width / 2, -30, 0xffffffff);
         }
 
 //        GlStateManager.depthMask(true);

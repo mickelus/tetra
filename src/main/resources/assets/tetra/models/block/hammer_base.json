@@ -5,8 +5,8 @@
         "down": "tetra:blocks/hammer_base",
         "up": "tetra:blocks/hammer_base",
         "north": "#socket1",
-        "east": "tetra:blocks/hammer_base_side",
+        "east": "#plate1",
         "south": "#socket2",
-        "west": "tetra:blocks/hammer_base_side"
+        "west": "#plate2"
     }
 }

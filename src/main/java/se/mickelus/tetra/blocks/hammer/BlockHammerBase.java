@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -22,20 +21,36 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
+import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
+public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
     public static final PropertyBool propCell1 = PropertyBool.create("cell1");
     public static final PropertyBool propCell1Charged = PropertyBool.create("cell1charged");
     public static final PropertyBool propCell2 = PropertyBool.create("cell2");
     public static final PropertyBool propCell2Charged = PropertyBool.create("cell2charged");
 
+
+    public static final PropertyBool propPlate1 = PropertyBool.create("plate1");
+    public static final PropertyBool propPlate2 = PropertyBool.create("plate2");
+
     static final String unlocalizedName = "hammer_base";
+
+    public static final BlockInteraction[] interactions = new BlockInteraction[] {
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 5, 9, 11, 12,
+                    propPlate1, true, (world, pos, blockState, player) -> blockState.withProperty(propPlate1, false)),
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 5, 9, 11, 12,
+                    propPlate2, true, (world, pos, blockState, player) -> blockState.withProperty(propPlate2, false))
+    };
 
     public static BlockHammerBase instance;
 
@@ -58,7 +73,9 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
                 .withProperty(propCell1, false)
                 .withProperty(propCell1Charged, false)
                 .withProperty(propCell2, false)
-                .withProperty(propCell2Charged, false));
+                .withProperty(propCell2Charged, false)
+                .withProperty(propPlate1, true)
+                .withProperty(propPlate2, false));
     }
 
     public boolean isPowered(World world, BlockPos pos) {
@@ -140,7 +157,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, propFacing, propCell1, propCell1Charged, propCell2 , propCell2Charged);
+        return new BlockStateContainer(this, propFacing, propCell1, propCell1Charged, propCell2 , propCell2Charged, propPlate1, propPlate2);
     }
 
     @Override
@@ -167,7 +184,10 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
                     .withProperty(propCell1, te.hasCellInSlot(0))
                     .withProperty(propCell1Charged, te.getCellPower(0) > 0)
                     .withProperty(propCell2, te.hasCellInSlot(1))
-                    .withProperty(propCell2Charged, te.getCellPower(1) > 0);
+                    .withProperty(propCell2Charged, te.getCellPower(1) > 0)
+                    .withProperty(propPlate1, true)
+                    .withProperty(propPlate2, false);
+
         }
         return state;
     }
@@ -180,5 +200,14 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider {
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(propFacing)));
+    }
+
+    @Override
+    public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
+        final EnumFacing adjustedFace = state.getValue(propFacing).getAxis().equals(EnumFacing.Axis.X) ? Rotation.CLOCKWISE_90.rotate(face) : face;
+
+        return Arrays.stream(interactions)
+                .filter(interaction -> interaction.isPotentialInteraction(state, adjustedFace, capabilities))
+                .toArray(BlockInteraction[]::new);
     }
 }

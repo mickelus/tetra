@@ -5,6 +5,8 @@
     "textures": {
       "socket1": "tetra:blocks/hammer_base_socket",
       "socket2": "tetra:blocks/hammer_base_socket",
+      "plate1": "tetra:blocks/hammer_base_side",
+      "plate2": "tetra:blocks/hammer_base_side",
       "cell_side1": "tetra:blocks/cell_side",
       "cell_side2": "tetra:blocks/cell_side",
       "cell_top1": "tetra:blocks/cell_top",
@@ -55,7 +57,22 @@
         }
       },
       "false": {}
+    },
+    "plate1": {
+      "true": {},
+      "false": {
+        "textures": {
+          "plate1": "tetra:blocks/hammer_base_side_open"
+        }
+      }
+    },
+    "plate2": {
+      "true": {},
+      "false": {
+        "textures": {
+          "plate2": "tetra:blocks/hammer_base_side_open"
+        }
+      }
     }
-
   }
 }
