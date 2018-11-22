@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 public class BlockInteraction {
@@ -57,5 +59,23 @@ public class BlockInteraction {
 
     public void applyOutcome(World world, BlockPos pos, IBlockState blockState, EntityPlayer player) {
         outcome.apply(world, pos, blockState, player);
+    }
+
+    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos,EntityPlayer player,
+                                             EnumFacing facing, float hitX, float hitY, float hitZ) {
+        BlockInteraction interaction;
+
+        BlockInteraction[] potentialInteractions = Optional.of(blockState)
+
+        interaction = Arrays.stream(getPotentialInteractions(blockState, facing, CapabilityHelper.getPlayerCapabilities(player)))
+                .filter(potentialInteraction -> potentialInteraction.isWithinBounds(facing, hitX * 16, hitY * 16))
+                .findFirst()
+                .orElse(null);
+
+        if (interaction != null) {
+            interaction.applyOutcome(world, pos, blockState, player);
+            return true;
+        }
+        return false;
     }
 }

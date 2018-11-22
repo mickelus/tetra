@@ -23,7 +23,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.blocks.salvage.TileEntityOutcome;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
@@ -47,9 +49,9 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 5, 9, 11, 12,
-                    propPlate1, true, (world, pos, blockState, player) -> blockState.withProperty(propPlate1, false)),
+                    propPlate1, true, new TileEntityOutcome<>(TileEntityHammerBase.class, te -> te.detachPlate(1))),
             new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 5, 9, 11, 12,
-                    propPlate2, true, (world, pos, blockState, player) -> blockState.withProperty(propPlate2, false))
+                    propPlate2, true, new TileEntityOutcome<>(TileEntityHammerBase.class, te -> te.detachPlate(2)))
     };
 
     public static BlockHammerBase instance;
@@ -96,9 +98,12 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+                                    EnumFacing facing, float hitX, float hitY, float hitZ) {
         EnumFacing blockFacing = state.getValue(propFacing);
         TileEntityHammerBase te = getTileEntity(world, pos);
+        IBlockState blockState = world.getBlockState(pos);
+
         if (te != null && blockFacing.getAxis().equals(facing.getAxis())) {
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
             ItemStack heldStack = player.getHeldItem(hand);
@@ -115,11 +120,20 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 return true;
             }
         }
-        return false;
+
+        BlockInteraction[] potentialInteractions = getPotentialInteractions(blockState, facing, CapabilityHelper.getPlayerCapabilities(player));
+        for (BlockInteraction potentialInteraction: potentialInteractions) {
+            if (potentialInteraction.isWithinBounds(facing, hitX, hitY)) {
+                potentialInteraction.applyOutcome(world, pos, blockState, player);
+                return true;
+            }
+        }
+
+
     }
 
     public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack) {
-        if (!worldIn.isRemote && !stack.isEmpty() && worldIn.getGameRules().getBoolean("doTileDrops")&& !worldIn.restoringBlockSnapshots) { // do not drop items while restoring blockstates, prevents item dupe
+        if (!worldIn.isRemote && !stack.isEmpty() && worldIn.getGameRules().getBoolean("doTileDrops") && !worldIn.restoringBlockSnapshots) { // do not drop items while restoring blockstates, prevents item dupe
             if (captureDrops.get()) {
                 capturedDrops.get().add(stack);
                 return;

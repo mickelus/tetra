@@ -16,6 +16,12 @@ public class TileEntityHammerBase extends TileEntity {
     private static final String indexKey = "slot";
     private ItemStack[] slots;
 
+    private static final String plateKey1 = "plate1";
+    private static final String plateKey2 = "plate2";
+    private boolean hasPlate1 = true;
+    private boolean hasPlate2 = true;
+
+
     public TileEntityHammerBase() {
         slots = new ItemStack[2];
     }
@@ -70,6 +76,28 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
+    public void detachPlate(int index) {
+        switch (index) {
+            case 0:
+                hasPlate1 = false;
+                break;
+            case 1:
+                hasPlate2 = false;
+                break;
+        }
+        markDirty();
+    }
+
+    public boolean hasPlate(int index) {
+        switch (index) {
+            case 0:
+                return hasPlate1;
+            case 1:
+                return hasPlate2;
+        }
+        return false;
+    }
+
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
@@ -101,6 +129,8 @@ public class TileEntityHammerBase extends TileEntity {
                 }
             }
         }
+        hasPlate1 = compound.getBoolean(plateKey1);
+        hasPlate2 = compound.getBoolean(plateKey2);
     }
 
     @Override
@@ -119,6 +149,9 @@ public class TileEntityHammerBase extends TileEntity {
             }
         }
         compound.setTag(slotsKey, nbttaglist);
+
+        compound.setBoolean(plateKey1, hasPlate1);
+        compound.setBoolean(plateKey2, hasPlate2);
 
         return compound;
     }
