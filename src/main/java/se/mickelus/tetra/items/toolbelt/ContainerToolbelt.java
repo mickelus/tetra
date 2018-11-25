@@ -200,6 +200,8 @@ public class ContainerToolbelt extends Container {
                         return ItemStack.EMPTY;
                     }
                 }
+
+                slot.onSlotChanged();
             } else {
                 if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, 0,  numPotionSlots)) {
                     return itemStack;
