@@ -184,11 +184,21 @@ public class ContainerToolbelt extends Container {
             int playerInventoryStart = numQuickslots + numStorageSlots + numPotionSlots + numQuiverSlots;
 
             if (slot.inventory instanceof InventoryToolbelt) {
+                // handle moving from potion slots separately
                 if (slot.isHere(potionsInventory, index)) {
+                    int count = slot.getStack().getCount();
                     itemStack = slot.decrStackSize(64);
-                }
-                if (numPotionSlots > 0 && !this.mergeItemStack(itemStack, playerInventoryStart,  inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
+                    if (!this.mergeItemStack(itemStack, playerInventoryStart,  inventorySlots.size(), true)) {
+                        // reset count if it was not possible to move the itemstack
+                        itemStack.setCount(count);
+                        slot.putStack(itemStack);
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    // move item from slot into player inventory
+                    if (!this.mergeItemStack(itemStack, playerInventoryStart,  inventorySlots.size(), true)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             } else {
                 if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, 0,  numPotionSlots)) {
