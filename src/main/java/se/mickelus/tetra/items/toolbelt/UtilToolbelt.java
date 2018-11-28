@@ -104,7 +104,7 @@ public class UtilToolbelt {
      * Attempts to find the first itemstack containing a toolbelt in the given players inventory.
      * todo: add baubles support
      * @param player A player
-     * @return A toolbelt itemstack, or an empty itemstack if the player has to toolbelt
+     * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(EntityPlayer player) {
         ItemStack baubleToolbelt = getBaubleToolbelt(player);
