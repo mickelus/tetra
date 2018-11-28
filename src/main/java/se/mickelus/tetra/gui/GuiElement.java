@@ -25,6 +25,8 @@ public class GuiElement extends Gui {
 
     protected boolean isVisible = true;
 
+    protected boolean shouldRemove = false;
+
     protected ArrayList<GuiElement> elements;
 
     protected Set<KeyframeAnimation> activeAnimations;
@@ -48,6 +50,7 @@ public class GuiElement extends Gui {
     }
 
     protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        elements.removeIf(GuiElement::shouldRemove);
         elements.stream()
                 .filter(GuiElement::isVisible)
                 .forEach((element -> element.draw(
@@ -216,6 +219,14 @@ public class GuiElement extends Gui {
 
     public void removeAnimation(KeyframeAnimation animation) {
         activeAnimations.remove(animation);
+    }
+
+    public void remove() {
+        shouldRemove = true;
+    }
+
+    public boolean shouldRemove() {
+        return shouldRemove;
     }
 
     public void addChild(GuiElement child) {
