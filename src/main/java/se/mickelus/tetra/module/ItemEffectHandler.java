@@ -31,6 +31,7 @@ import se.mickelus.tetra.items.ItemModularHandheld;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -226,6 +227,10 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onBlockHarvest(BlockEvent.HarvestDropsEvent event) {
+        if (event.isCanceled()) {
+            return;
+        }
+
         Optional.ofNullable(event.getHarvester())
                 .map(EntityLivingBase::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
@@ -251,9 +256,10 @@ public class ItemEffectHandler {
                     } else {
                         int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
                         if (fortuneLevel > 0) {
-                            NonNullList<ItemStack> list = NonNullList.create();
                             event.getDrops().clear();
-                            state.getBlock().getDrops(list, event.getWorld(), event.getPos(), state, fortuneLevel);
+                            // calling the new getDrops method directly cause some mod compatibility issues
+                            // state.getBlock().getDrops(list, event.getWorld(), event.getPos(), state, fortuneLevel);
+                            List<ItemStack> list = state.getBlock().getDrops(event.getWorld(), event.getPos(), state, fortuneLevel);
                             event.getDrops().addAll(list);
                         }
                     }
