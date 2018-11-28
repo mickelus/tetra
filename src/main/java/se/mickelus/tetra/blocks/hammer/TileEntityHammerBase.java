@@ -76,7 +76,7 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
-    public void detachPlate(int index) {
+    public void removePlate(int index) {
         switch (index) {
             case 0:
                 hasPlate1 = false;
@@ -85,7 +85,6 @@ public class TileEntityHammerBase extends TileEntity {
                 hasPlate2 = false;
                 break;
         }
-        markDirty();
     }
 
     public boolean hasPlate(int index) {

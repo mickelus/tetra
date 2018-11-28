@@ -17,6 +17,24 @@ import java.util.stream.Stream;
 
 public class CapabilityHelper {
 
+    public static int getItemCapabilityLevel(ItemStack itemStack, Capability capability) {
+        return Optional.of(itemStack)
+                .filter(stack -> !stack.isEmpty())
+                .map(CapabilityHelper::getReplacement)
+                .filter(stack -> stack.getItem() instanceof ICapabilityProvider)
+                .map(stack -> ((ICapabilityProvider) stack.getItem()).getCapabilityLevel(stack, capability))
+                .orElse(0);
+    }
+
+    public static Collection<Capability> getItemCapabilities(ItemStack itemStack) {
+        return Optional.of(itemStack)
+                .filter(stack -> !stack.isEmpty())
+                .map(CapabilityHelper::getReplacement)
+                .filter(stack -> stack.getItem() instanceof ICapabilityProvider)
+                .map(stack -> ((ICapabilityProvider) stack.getItem()).getCapabilities(stack))
+                .orElse(Collections.emptyList());
+    }
+
     public static int getPlayerCapabilityLevel(EntityPlayer player, Capability capability) {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())

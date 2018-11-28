@@ -23,6 +23,7 @@ public class TileEntityOutcome<T extends TileEntity> implements InteractionOutco
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntityClass.isInstance(tileEntity)) {
             outcome.accept(tileEntityClass.cast(tileEntity));
+            world.notifyBlockUpdate(pos, blockState, blockState, 3);
         }
     }
 }

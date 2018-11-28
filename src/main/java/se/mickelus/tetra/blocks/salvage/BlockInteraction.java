@@ -4,7 +4,9 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
@@ -13,6 +15,8 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class BlockInteraction {
     public Capability requiredCapability;
@@ -42,7 +46,7 @@ public class BlockInteraction {
         this.property = property;
         this.propertyValue = propertyValue;
 
-        outcome = ((world, pos, blockState, player) -> blockState.withProperty(BlockHammerBase.propFacing, EnumFacing.WEST));
+        this.outcome = outcome;
     }
 
     public boolean applicableForState(IBlockState blockState) {
@@ -61,21 +65,69 @@ public class BlockInteraction {
         outcome.apply(world, pos, blockState, player);
     }
 
-    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos,EntityPlayer player,
-                                             EnumFacing facing, float hitX, float hitY, float hitZ) {
-        BlockInteraction interaction;
+    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, EntityPlayer player,
+                                             EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack heldStack = player.getHeldItem(hand);
+        Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
-        BlockInteraction[] potentialInteractions = Optional.of(blockState)
+        float hitU = getHitU(facing, hitX, hitY, hitZ);
+        float hitV = getHitV(facing, hitX, hitY, hitZ);
 
-        interaction = Arrays.stream(getPotentialInteractions(blockState, facing, CapabilityHelper.getPlayerCapabilities(player)))
-                .filter(potentialInteraction -> potentialInteraction.isWithinBounds(facing, hitX * 16, hitY * 16))
+        BlockInteraction possibleInteraction = Optional.of(blockState.getBlock())
+                .filter(block -> block instanceof IBlockCapabilityInteractive)
+                .map(block -> (IBlockCapabilityInteractive) block)
+                .map(block -> block.getPotentialInteractions(blockState, facing, availableCapabilities))
+                .map(Arrays::stream).orElseGet(Stream::empty)
+                .filter(interaction -> interaction.isWithinBounds(facing, hitU * 16, hitV * 16))
+                .filter(interaction -> CapabilityHelper.getItemCapabilityLevel(heldStack, interaction.requiredCapability) >= interaction.requiredLevel)
                 .findFirst()
                 .orElse(null);
 
-        if (interaction != null) {
-            interaction.applyOutcome(world, pos, blockState, player);
+        if (possibleInteraction != null) {
+            possibleInteraction.applyOutcome(world, pos, blockState, player);
+
+            if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isItemStackDamageable()) {
+                heldStack.damageItem(2, player);
+            }
+
             return true;
         }
         return false;
+    }
+
+    private static float getHitU(EnumFacing facing, float hitX, float hitY, float hitZ) {
+        switch (facing) {
+            case DOWN:
+                return hitX;
+            case UP:
+                return 1 - hitX;
+            case NORTH:
+                return 1 - hitX;
+            case SOUTH:
+                return hitX;
+            case WEST:
+                return hitZ;
+            case EAST:
+                return 1 - hitZ;
+        }
+        return 0;
+    }
+
+    private static float getHitV(EnumFacing facing, float hitX, float hitY, float hitZ) {
+        switch (facing) {
+            case DOWN:
+                return 1 - hitZ;
+            case UP:
+                return 1 - hitZ;
+            case NORTH:
+                return 1 - hitY;
+            case SOUTH:
+                return 1 - hitY;
+            case WEST:
+                return 1 - hitY;
+            case EAST:
+                return 1 - hitY;
+        }
+        return 0;
     }
 }
