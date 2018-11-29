@@ -16,10 +16,8 @@ public class TileEntityHammerBase extends TileEntity {
     private static final String indexKey = "slot";
     private ItemStack[] slots;
 
-    private static final String plateKey1 = "plate1";
-    private static final String plateKey2 = "plate2";
-    private boolean hasPlate1 = true;
-    private boolean hasPlate2 = true;
+    private boolean hasPlateWest = true;
+    private boolean hasPlateEast = false;
 
 
     public TileEntityHammerBase() {
@@ -76,23 +74,23 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
-    public void removePlate(int index) {
-        switch (index) {
-            case 0:
-                hasPlate1 = false;
+    public void removePlate(EnumHammerPlate plate) {
+        switch (plate) {
+            case EAST:
+                hasPlateEast = false;
                 break;
-            case 1:
-                hasPlate2 = false;
+            case WEST:
+                hasPlateWest = false;
                 break;
         }
     }
 
-    public boolean hasPlate(int index) {
-        switch (index) {
-            case 0:
-                return hasPlate1;
-            case 1:
-                return hasPlate2;
+    public boolean hasPlate(EnumHammerPlate plate) {
+        switch (plate) {
+            case EAST:
+                return hasPlateEast;
+            case WEST:
+                return hasPlateWest;
         }
         return false;
     }
@@ -128,8 +126,8 @@ public class TileEntityHammerBase extends TileEntity {
                 }
             }
         }
-        hasPlate1 = compound.getBoolean(plateKey1);
-        hasPlate2 = compound.getBoolean(plateKey2);
+        hasPlateEast = compound.getBoolean(EnumHammerPlate.EAST.key);
+        hasPlateWest = compound.getBoolean(EnumHammerPlate.WEST.key);
     }
 
     @Override
@@ -149,8 +147,8 @@ public class TileEntityHammerBase extends TileEntity {
         }
         compound.setTag(slotsKey, nbttaglist);
 
-        compound.setBoolean(plateKey1, hasPlate1);
-        compound.setBoolean(plateKey2, hasPlate2);
+        compound.setBoolean(EnumHammerPlate.EAST.key, hasPlateEast);
+        compound.setBoolean(EnumHammerPlate.WEST.key, hasPlateWest);
 
         return compound;
     }
