@@ -10,6 +10,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 
@@ -64,29 +65,12 @@ public class BlockInteraction {
     public boolean isPotentialInteraction(IBlockState blockState, EnumFacing blockFacing, EnumFacing hitFace,
                                           Collection<Capability> availableCapabilities) {
         return applicableForState(blockState)
-                && face.equals(rotationFromFacing(blockFacing).rotate(hitFace))
+                && face.equals(RotationHelper.rotationFromFacing(blockFacing).rotate(hitFace))
                 && availableCapabilities.contains(requiredCapability);
     }
 
     public void applyOutcome(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumFacing hitFace) {
         outcome.apply(world, pos, blockState, player, hitFace);
-    }
-
-    public static Rotation rotationFromFacing(EnumFacing facing) {
-        switch (facing) {
-            case UP:
-            case DOWN:
-            case NORTH:
-                return Rotation.NONE;
-            case SOUTH:
-                return Rotation.CLOCKWISE_180;
-            case EAST:
-                return Rotation.CLOCKWISE_90;
-            case WEST:
-                return Rotation.COUNTERCLOCKWISE_90;
-            default:
-                return Rotation.NONE;
-        }
     }
 
     public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, EntityPlayer player,

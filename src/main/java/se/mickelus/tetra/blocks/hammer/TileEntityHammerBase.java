@@ -17,7 +17,7 @@ public class TileEntityHammerBase extends TileEntity {
     private ItemStack[] slots;
 
     private boolean hasPlateWest = true;
-    private boolean hasPlateEast = false;
+    private boolean hasPlateEast = true;
 
 
     public TileEntityHammerBase() {

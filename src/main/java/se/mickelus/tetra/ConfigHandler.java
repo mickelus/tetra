@@ -10,6 +10,8 @@ import se.mickelus.tetra.blocks.geode.ItemGeode;
 @Config(modid = TetraMod.MOD_ID, name = TetraMod.MOD_ID + "/" + TetraMod.MOD_ID)
 public class ConfigHandler {
 
+    public static boolean development = false;
+
     public static boolean geode_generate = true;
     public static String[] geode_contents = new String[] {
             "minecraft:iron_nugget", "9", "30",
@@ -19,6 +21,9 @@ public class ConfigHandler {
             "minecraft:diamond", "1", "2",
             "minecraft:emerald", "1", "1",
     };
+
+    public static boolean feature_generate = true;
+    public static int max_feature_depth = 8;
 
     public static boolean workbenchDropTable = true;
 

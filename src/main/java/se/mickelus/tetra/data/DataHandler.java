@@ -1,9 +1,14 @@
-package se.mickelus.tetra;
+package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Loader;
+import org.apache.commons.io.FilenameUtils;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.generation.GenerationFeature;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
@@ -18,6 +23,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class DataHandler {
     private final File source;
@@ -40,6 +46,8 @@ public class DataHandler {
                 .registerTypeAdapter(ItemPredicate.class, new PredicateDeserializer())
                 .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
                 .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDefinition.ReplacementDeserializer())
+                .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
+                .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
                 .create();
 
         instance = this;
@@ -69,11 +77,12 @@ public class DataHandler {
     }
 
     public <T> T getData(String path, Class<T> dataClass) {
-        String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
-        try {
-            Path fPath = null;
+        Path fPath = null;
 
-            File configOverride = new File (configDir, String.format("%s/%s.json", TetraMod.MOD_ID, path));
+        String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
+        File configOverride = new File (configDir, String.format("%s/%s.json", TetraMod.MOD_ID, path));
+
+        try {
             if (configOverride.exists()) {
                 fPath = configOverride.toPath();
             } else if (source.isFile()) {
@@ -84,13 +93,61 @@ public class DataHandler {
             }
 
             if (fPath != null && Files.exists(fPath)) {
-                BufferedReader reader = Files.newBufferedReader(fPath);
-                return gson.fromJson(reader, dataClass);
+                try (BufferedReader reader = Files.newBufferedReader(fPath)) {
+                    return gson.fromJson(reader, dataClass);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.err.printf("Could not read data from '%s'. Initializing from empty array.\n", path);
         return gson.fromJson("[]", dataClass);
+    }
+
+    public GenerationFeature[] getGenerationFeatures() {
+        Path structuresPath = null;
+
+        String pathString = String.format("assets/%s/structures", TetraMod.MOD_ID);
+
+        try {
+            if (source.isFile()) {
+                FileSystem fs = FileSystems.newFileSystem(source.toPath(), null);
+                structuresPath = fs.getPath(pathString);
+            } else if (source.isDirectory()) {
+                structuresPath = source.toPath().resolve(pathString);
+            }
+
+            if (structuresPath != null && Files.exists(structuresPath)) {
+                return Files.list(structuresPath)
+                        .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
+                        .map(this::getGenerationFeature)
+                        .filter(Objects::nonNull)
+                        .toArray(GenerationFeature[]::new);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new GenerationFeature[0];
+    }
+
+    private GenerationFeature getGenerationFeature(Path path) {
+
+        try (BufferedReader reader = Files.newBufferedReader(path)){
+            GenerationFeature generationFeature = gson.fromJson(reader, GenerationFeature.class);
+
+            if (generationFeature != null) {
+                generationFeature.location = new ResourceLocation(TetraMod.MOD_ID, FilenameUtils.removeExtension(path.getFileName().toString()));
+            }
+
+
+            return generationFeature;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.err.println("Failed to read generation feature from: " + path);
+        return null;
     }
 }

@@ -1,0 +1,6 @@
+{
+    "biomes": ["plains", "taiga"],
+    "minY": 4,
+    "maxY": 4,
+    "transform": false
+}

@@ -1,0 +1,10 @@
+{
+    "origin": [1, 2, 3],
+    "children": [
+        {
+            "offset": [6, 3, 1],
+            "facing": "EAST",
+            "features": ["tetra:ancient_intersection_wall_chest", "tetra:ancient_intersection_wall", "tetra:ancient_intersection_hallway"]
+        }
+    ]
+}

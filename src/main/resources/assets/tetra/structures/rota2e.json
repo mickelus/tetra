@@ -1,0 +1,6 @@
+{
+    "origin": [1, 0, 2],
+    "loot": [
+        { "position": [1, 1, 1], "table": "tetra:ancient/chest_small" }
+    ]
+}

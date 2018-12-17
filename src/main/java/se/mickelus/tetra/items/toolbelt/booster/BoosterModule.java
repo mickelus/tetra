@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.MultiSlotModule;
 import se.mickelus.tetra.module.data.ModuleData;

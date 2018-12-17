@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.toolbelt.module;
 
-import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ModuleData;

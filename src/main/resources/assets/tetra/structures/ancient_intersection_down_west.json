@@ -1,0 +1,20 @@
+{
+    "origin": [1, 4, 4],
+    "children": [
+        {
+            "offset": [3, 1, 7],
+            "facing": "EAST",
+            "features": ["tetra:ancient_chest_small", "tetra:ancient_chest_medium"]
+        },
+        {
+            "offset": [6, 1, 6],
+            "facing": "WEST",
+            "features": ["tetra:ancient_chest_small", "tetra:ancient_chest_medium"]
+        },
+        {
+            "offset": [5, 1, 8],
+            "facing": "NORTH",
+            "features": ["tetra:ancient_chest_small", "tetra:ancient_chest_medium"]
+        }
+    ]
+}

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.duplex_tool;
 
-import org.apache.commons.lang3.ArrayUtils;
-import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.module.data.HandheldModuleData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.MultiSlotModule;

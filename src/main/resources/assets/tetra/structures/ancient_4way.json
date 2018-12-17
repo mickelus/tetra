@@ -1,0 +1,63 @@
+{
+    "biomes": ["plains"],
+    "origin": [3, 0, 3],
+    "minY": 7,
+    "maxY": 22,
+    "integrityMin": 0.95,
+    "children": [
+        {
+            "offset": [3, 1, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:ancient_hammer",
+                "tetra:ancient_hammer_benchless",
+                "tetra:ancient_chest_small",
+                "tetra:ancient_workbench",
+                "tetra:ancient_shaft",
+                "tetra:collapse_gravel"
+            ]
+        },
+        {
+            "offset": [3, 2, 0],
+            "features": ["tetra:ancient_hallway_1", "tetra:ancient_collapse_1"]
+        },
+        {
+            "offset": [3, 2, 6],
+            "facing": "SOUTH",
+            "features": [
+                "tetra:ancient_hallway_1",
+                "tetra:ancient_collapse_1",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2"
+            ]
+        },
+        {
+            "offset": [0, 2, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:ancient_hallway_1",
+                "tetra:ancient_collapse_1",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2",
+                "tetra:ancient_intersection_1"
+            ]
+        },
+        {
+            "offset": [6, 2, 3],
+            "facing": "EAST",
+            "features": [
+                "tetra:ancient_hallway_1",
+                "tetra:ancient_collapse_1",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2",
+                "tetra:ancient_wall_1",
+                "tetra:ancient_wall_2",
+                "tetra:ancient_intersection_1"
+            ]
+        }
+    ]
+}

@@ -1,6 +1,8 @@
 package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.tileentity.TileEntityStructure;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.animation.AnimationTESR;
 import net.minecraftforge.common.MinecraftForge;
@@ -8,12 +10,15 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.hammer.TileEntityHammerHead;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
 import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
+import se.mickelus.tetra.generation.ExtendedStructureTESR;
+import se.mickelus.tetra.generation.WorldGenFeatures;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
@@ -35,8 +40,11 @@ public class ClientProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
-
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHammerHead.class, new AnimationTESR<>());
+
+        if (ConfigHandler.development) {
+            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStructure.class, new ExtendedStructureTESR());
+        }
     }
 
     @Override

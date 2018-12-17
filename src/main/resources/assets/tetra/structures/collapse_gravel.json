@@ -1,0 +1,6 @@
+{
+    "origin": [4, 2, 4],
+    "integrityMin": 0.1,
+    "integrityMax": 0.5,
+    "children": [{ "offset": [4, 2, 4], "features": ["tetra:collapse_air"] }]
+}

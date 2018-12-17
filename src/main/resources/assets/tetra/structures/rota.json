@@ -1,0 +1,30 @@
+{
+    "minY": 5,
+    "maxY": 5,
+    "origin": [1, 1, 2],
+    "children": [
+        {
+            "offset": [1, 1, -1],
+            "facing": "NORTH",
+            "features": ["tetra:rota1n"]
+        },
+        {
+            "offset": [1, 1, 4],
+            "facing": "SOUTH",
+            "features": ["tetra:rota1s"]
+        },
+        {
+            "offset": [4, 1, 2],
+            "facing": "EAST",
+            "features": ["tetra:rota1e"]
+        },
+        {
+            "offset": [-1, 1, 2],
+            "facing": "WEST",
+            "features": ["tetra:rota1w"]
+        }
+    ],
+    "loot": [
+        { "position": [3, 1, 1], "table": "tetra:ancient/chest_small" }
+    ]
+}

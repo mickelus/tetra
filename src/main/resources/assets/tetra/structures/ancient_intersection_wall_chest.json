@@ -1,0 +1,10 @@
+{
+    "origin": [0, 1, 0],
+    "children": [
+        {
+            "offset": [0, 1, 1],
+            "facing": "SOUTH",
+            "features": ["tetra:ancient_chest_medium", "tetra:ancient_chest_small", "tetra:collapse_gravel"]
+        }
+    ]
+}

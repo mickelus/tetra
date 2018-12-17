@@ -5,7 +5,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.*;
 

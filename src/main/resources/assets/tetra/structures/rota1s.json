@@ -1,0 +1,10 @@
+{
+    "origin": [0, 0, 1],
+    "children": [
+        {
+            "offset": [0, 0, 0],
+            "facing": "EAST",
+            "features": ["tetra:rota2s"]
+        }
+    ]
+}

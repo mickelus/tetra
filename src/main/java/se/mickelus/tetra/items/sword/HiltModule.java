@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.sword;
 
-import se.mickelus.tetra.DataHandler;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.data.HandheldModuleData;
 import se.mickelus.tetra.module.data.ImprovementData;

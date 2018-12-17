@@ -1,7 +1,9 @@
 package se.mickelus.tetra;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
@@ -15,9 +17,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.BlockForgedPillar;
@@ -29,6 +33,9 @@ import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.generation.TGenCommand;
+import se.mickelus.tetra.generation.WorldGenFeatures;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemModularPredicate;
 import se.mickelus.tetra.items.TetraCreativeTabs;
@@ -106,6 +113,11 @@ public class TetraMod {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
+        if (ConfigHandler.feature_generate) {
+            WorldGenFeatures worldGenFeatures = new WorldGenFeatures();
+            GameRegistry.registerWorldGenerator(worldGenFeatures, 11);
+        }
+
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, GuiHandlerRegistry.instance);
 
         PacketHandler packetHandler = new PacketHandler();
@@ -123,6 +135,11 @@ public class TetraMod {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new TGenCommand());
     }
 
     @SubscribeEvent
