@@ -24,24 +24,26 @@ public class CapabililtyInteractiveOverlay {
     @SubscribeEvent
     public void renderOverlay(DrawBlockHighlightEvent event) {
         RayTraceResult target = event.getTarget();
-        EntityPlayer player = event.getPlayer();
-        World world = player.getEntityWorld();
-        BlockPos blockPos = target.getBlockPos();
-        EnumFacing face = target.sideHit;
+        if (target.typeOfHit == RayTraceResult.Type.BLOCK) {
+            EntityPlayer player = event.getPlayer();
+            World world = player.getEntityWorld();
+            BlockPos blockPos = target.getBlockPos();
+            EnumFacing face = target.sideHit;
 
-        IBlockState blockState = world.getBlockState(blockPos);
-        blockState = blockState.getActualState(world, blockPos);
+            IBlockState blockState = world.getBlockState(blockPos);
+            blockState = blockState.getActualState(world, blockPos);
 
-        if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
-            gui.update(blockState, face, player, blockPos.equals(previousPos) && face.equals(previousFace));
+            if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
+                gui.update(blockState, face, player, blockPos.equals(previousPos) && face.equals(previousFace));
 
-            previousPos = blockPos;
-            previousFace = face;
-            previousState = blockState;
-        }
+                previousPos = blockPos;
+                previousFace = face;
+                previousState = blockState;
+            }
 
-        if (blockState.getBlock() instanceof IBlockCapabilityInteractive) {
-            gui.draw(player, blockPos, target.sideHit, event.getPartialTicks());
+            if (blockState.getBlock() instanceof IBlockCapabilityInteractive) {
+                gui.draw(player, blockPos, target.sideHit, event.getPartialTicks());
+            }
         }
     }
 }
