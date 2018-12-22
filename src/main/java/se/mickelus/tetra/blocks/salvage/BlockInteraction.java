@@ -6,10 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
@@ -34,8 +32,8 @@ public class BlockInteraction {
 
     public InteractionOutcome outcome;
 
-    public BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float minY,
-                            float maxX, float maxY, IProperty property, Object propertyValue, InteractionOutcome outcome) {
+    public BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
+                            float maxY, IProperty property, Object propertyValue, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -65,7 +63,7 @@ public class BlockInteraction {
     public boolean isPotentialInteraction(IBlockState blockState, EnumFacing blockFacing, EnumFacing hitFace,
                                           Collection<Capability> availableCapabilities) {
         return applicableForState(blockState)
-                && face.equals(RotationHelper.rotationFromFacing(blockFacing).rotate(hitFace))
+                && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
                 && availableCapabilities.contains(requiredCapability);
     }
 

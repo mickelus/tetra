@@ -7,8 +7,10 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import sun.security.util.BitArray;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class TileEntityHammerBase extends TileEntity {
 
@@ -19,9 +21,14 @@ public class TileEntityHammerBase extends TileEntity {
     private boolean hasPlateWest = true;
     private boolean hasPlateEast = true;
 
+    private static final String cablesKey = "cables";
+    private boolean[] cables;
 
     public TileEntityHammerBase() {
         slots = new ItemStack[2];
+
+        cables = new boolean[EnumHammerCable.values().length];
+        Arrays.fill(cables, true);
     }
 
     public boolean isPowered() {
@@ -95,6 +102,14 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
+    public void cutCable(EnumHammerCable cable) {
+        cables[cable.ordinal()] = false;
+    }
+
+    public boolean hasCable(EnumHammerCable cable) {
+        return cables[cable.ordinal()];
+    }
+
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
@@ -126,8 +141,17 @@ public class TileEntityHammerBase extends TileEntity {
                 }
             }
         }
+
         hasPlateEast = compound.getBoolean(EnumHammerPlate.EAST.key);
         hasPlateWest = compound.getBoolean(EnumHammerPlate.WEST.key);
+
+        if (compound.hasKey(cablesKey)) {
+            byte storedCables = compound.getByte(cablesKey);
+            cables[0] = ((storedCables & 0x01) != 0);
+            cables[1] = ((storedCables & 0x02) != 0);
+            cables[2] = ((storedCables & 0x04) != 0);
+            cables[3] = ((storedCables & 0x08) != 0);
+        }
     }
 
     @Override
@@ -149,6 +173,16 @@ public class TileEntityHammerBase extends TileEntity {
 
         compound.setBoolean(EnumHammerPlate.EAST.key, hasPlateEast);
         compound.setBoolean(EnumHammerPlate.WEST.key, hasPlateWest);
+
+        byte cablesByte = 0;
+        for (boolean cable : cables) {
+            cablesByte <<= 1;
+            if (cable) {
+                cablesByte |= 1;
+            }
+        }
+
+        compound.setByte(cablesKey, cablesByte);
 
         return compound;
     }

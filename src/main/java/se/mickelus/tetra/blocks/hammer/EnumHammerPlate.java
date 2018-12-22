@@ -4,8 +4,8 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.util.EnumFacing;
 
 public enum EnumHammerPlate {
-    EAST(EnumFacing.EAST, "plate1"),
-    WEST(EnumFacing.WEST, "plate2");
+    EAST(EnumFacing.EAST, "platee"),
+    WEST(EnumFacing.WEST, "platew");
 
     public EnumFacing face;
     public PropertyBool prop;

@@ -1,12 +1,66 @@
 {
-    "parent": "block/cube",
+    "parent": "block/block",
     "textures": {
         "particle": "tetra:blocks/hammer_base",
         "down": "tetra:blocks/hammer_base",
         "up": "tetra:blocks/hammer_base",
         "north": "#socket1",
-        "east": "#plate1",
         "south": "#socket2",
-        "west": "#plate2"
-    }
+        "east": "tetra:blocks/hammer_base_side",
+        "west": "tetra:blocks/hammer_base_side"
+    },
+    "elements": [
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#down", "cullface": "down" },
+                "up":    { "texture": "#up", "cullface": "up" },
+                "north": { "texture": "#north", "cullface": "north" },
+                "south": { "texture": "#south", "cullface": "south" },
+                "west":  { "texture": "#west", "cullface": "west" },
+                "east":  { "texture": "#east", "cullface": "east" }
+            }
+        },
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#cable1_west", "cullface": "west" },
+                "east":  { "texture": "#cable1_east", "cullface": "east" }
+            }
+        },
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#cable2_west", "cullface": "west" },
+                "east":  { "texture": "#cable2_east", "cullface": "east" }
+            }
+        },
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#cable3_west", "cullface": "west" },
+                "east":  { "texture": "#cable3_east", "cullface": "east" }
+            }
+        },
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#cable4_west", "cullface": "west" },
+                "east":  { "texture": "#cable4_east", "cullface": "east" }
+            }
+        },
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#plate_west", "cullface": "west" },
+                "east":  { "texture": "#plate_east", "cullface": "east" }
+            }
+        }
+    ]
 }
