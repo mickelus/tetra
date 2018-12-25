@@ -26,32 +26,8 @@
             "from": [ 0, 0, 0 ],
             "to": [ 16, 16, 16 ],
             "faces": {
-                "west":  { "texture": "#cable1_west", "cullface": "west" },
-                "east":  { "texture": "#cable1_east", "cullface": "east" }
-            }
-        },
-        {
-            "from": [ 0, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-                "west":  { "texture": "#cable2_west", "cullface": "west" },
-                "east":  { "texture": "#cable2_east", "cullface": "east" }
-            }
-        },
-        {
-            "from": [ 0, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-                "west":  { "texture": "#cable3_west", "cullface": "west" },
-                "east":  { "texture": "#cable3_east", "cullface": "east" }
-            }
-        },
-        {
-            "from": [ 0, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-                "west":  { "texture": "#cable4_west", "cullface": "west" },
-                "east":  { "texture": "#cable4_east", "cullface": "east" }
+                "west":  { "texture": "#config_west", "cullface": "west" },
+                "east":  { "texture": "#config_east", "cullface": "east" }
             }
         },
         {

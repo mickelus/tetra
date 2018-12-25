@@ -20,6 +20,7 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -43,19 +44,19 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     static final String unlocalizedName = "hammer_base";
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.EAST.face, 5, 11, 9, 12, EnumHammerPlate.EAST.prop,
-                    true, (world, pos, blockState, player, hitFace) -> removePlate(world, pos, blockState, player, EnumHammerPlate.EAST, hitFace)),
-            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.WEST.face, 5, 11, 9, 12, EnumHammerPlate.WEST.prop,
-                    true, (world, pos, blockState, player, hitFace) -> removePlate(world, pos, blockState, player, EnumHammerPlate.WEST, hitFace)),
+            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.EAST.face, 5, 11, 9, 11,
+                    EnumHammerPlate.EAST.prop, true, (world, pos, blockState, player, hitFace) ->
+                    removePlate(world, pos, blockState, player, EnumHammerPlate.EAST, hitFace)),
+            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.WEST.face, 5, 11, 9, 11,
+                    EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hitFace) ->
+                    removePlate(world, pos, blockState, player, EnumHammerPlate.WEST, hitFace)),
 
-            new BlockInteraction(Capability.axe, 1, EnumHammerCable.WEST1.face, 5, 11, 1, 3, EnumHammerCable.WEST1.prop,
-                    true, (world, pos, blockState, player, hitFace) -> cutCable(world, pos, blockState, player, EnumHammerCable.WEST1, hitFace)),
-            new BlockInteraction(Capability.axe, 1, EnumHammerCable.WEST2.face, 5, 11, 4, 5, EnumHammerCable.WEST2.prop,
-                    true, (world, pos, blockState, player, hitFace) -> cutCable(world, pos, blockState, player, EnumHammerCable.WEST2, hitFace)),
-            new BlockInteraction(Capability.axe, 1, EnumHammerCable.WEST3.face, 5, 11, 6, 7, EnumHammerCable.WEST3.prop,
-                    true, (world, pos, blockState, player, hitFace) -> cutCable(world, pos, blockState, player, EnumHammerCable.WEST3, hitFace)),
-            new BlockInteraction(Capability.axe, 1, EnumHammerCable.WEST4.face, 5, 11, 10, 12, EnumHammerCable.WEST4.prop,
-                    true, (world, pos, blockState, player, hitFace) -> cutCable(world, pos, blockState, player, EnumHammerCable.WEST4, hitFace))
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 6, 10, 3, 9,
+                    EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hitFace) ->
+                    reconfigure(world, pos, blockState, player, EnumFacing.EAST)),
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 6, 10, 3, 9,
+                    EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hitFace) ->
+                    reconfigure(world, pos, blockState, player, EnumFacing.WEST))
     };
 
     public BlockHammerBase() {
@@ -89,53 +90,45 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                     .withProperty(propCell2Charged, te.getCellPower(1) > 0)
                     .withProperty(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
                     .withProperty(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
-                    .withProperty(EnumHammerCable.WEST1.prop, !te.hasPlate(EnumHammerPlate.WEST) && te.hasCable(EnumHammerCable.WEST1))
-                    .withProperty(EnumHammerCable.WEST2.prop, !te.hasPlate(EnumHammerPlate.WEST) && te.hasCable(EnumHammerCable.WEST2))
-                    .withProperty(EnumHammerCable.WEST3.prop, !te.hasPlate(EnumHammerPlate.WEST) && te.hasCable(EnumHammerCable.WEST3))
-                    .withProperty(EnumHammerCable.WEST4.prop, !te.hasPlate(EnumHammerPlate.WEST) && te.hasCable(EnumHammerCable.WEST4))
-                    .withProperty(EnumHammerCable.EAST1.prop, !te.hasPlate(EnumHammerPlate.EAST) && te.hasCable(EnumHammerCable.EAST1))
-                    .withProperty(EnumHammerCable.EAST2.prop, !te.hasPlate(EnumHammerPlate.EAST) && te.hasCable(EnumHammerCable.EAST2))
-                    .withProperty(EnumHammerCable.EAST3.prop, !te.hasPlate(EnumHammerPlate.EAST) && te.hasCable(EnumHammerCable.EAST3))
-                    .withProperty(EnumHammerCable.EAST4.prop, !te.hasPlate(EnumHammerPlate.EAST) && te.hasCable(EnumHammerCable.EAST4));
+                    .withProperty(EnumHammerConfig.propE, te.getConfiguration(EnumFacing.EAST))
+                    .withProperty(EnumHammerConfig.propW, te.getConfiguration(EnumFacing.WEST));
         }
         return state;
     }
 
     public boolean isPowered(World world, BlockPos pos) {
         return Optional.ofNullable(getTileEntity(world, pos))
-                .filter(Objects::nonNull)
                 .map(TileEntityHammerBase::isPowered)
                 .orElse(false);
     }
 
     public void consumePower(World world, BlockPos pos) {
-        TileEntityHammerBase te = getTileEntity(world, pos);
-        if (te != null) {
-            IBlockState blockState = world.getBlockState(pos);
-            te.consumePower();
+        Optional.ofNullable(getTileEntity(world, pos))
+                .ifPresent(te -> {
+                    IBlockState blockState = world.getBlockState(pos);
+                    te.consumePower();
 
-            world.notifyBlockUpdate(pos, blockState, blockState, 3);
-        }
+                    world.notifyBlockUpdate(pos, blockState, blockState, 3);
+                });
     }
 
     public static void removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
-        TileEntityHammerBase te = getTileEntity(world, pos);
-        if (te != null) {
-            te.removePlate(plate);
-            spawnAsEntity(world, pos.offset(face), new ItemStack(Items.IRON_NUGGET, world.rand.nextInt(16) + 1));
-            world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
-            world.notifyBlockUpdate(pos, state, state, 3);
-        }
+        Optional.ofNullable(getTileEntity(world, pos))
+                .ifPresent(te -> {
+                    te.removePlate(plate);
+                    spawnAsEntity(world, pos.offset(face), new ItemStack(Items.IRON_NUGGET, world.rand.nextInt(16) + 1));
+                    world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
+                    world.notifyBlockUpdate(pos, state, state, 3);
+        });
     }
 
-    public static void cutCable(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerCable cable, EnumFacing face) {
-        TileEntityHammerBase te = getTileEntity(world, pos);
-        if (te != null) {
-            te.cutCable(cable);
-            // spawnAsEntity(world, pos.offset(face), new ItemStack(Items.IRON_NUGGET, world.rand.nextInt(16) + 1));
-            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 0.5f);
-            world.notifyBlockUpdate(pos, state, state, 3);
-        }
+    public static void reconfigure(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing adjustedFace) {
+        Optional.ofNullable(getTileEntity(world, pos))
+                .ifPresent(te -> {
+                    te.reconfigure(adjustedFace);
+                    world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
+                    world.notifyBlockUpdate(pos, state, state, 3);
+        });
     }
 
     @Override
@@ -216,10 +209,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, propFacing, propCell1, propCell1Charged, propCell2 , propCell2Charged,
-                EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerCable.WEST1.prop,
-                EnumHammerCable.WEST2.prop, EnumHammerCable.WEST3.prop, EnumHammerCable.WEST4.prop,
-                EnumHammerCable.EAST1.prop, EnumHammerCable.EAST2.prop, EnumHammerCable.EAST3.prop,
-                EnumHammerCable.EAST4.prop);
+                EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerConfig.propE, EnumHammerConfig.propW);
     }
 
     @Override

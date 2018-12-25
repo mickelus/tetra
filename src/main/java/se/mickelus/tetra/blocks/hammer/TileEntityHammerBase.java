@@ -6,11 +6,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import sun.security.util.BitArray;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import org.apache.commons.lang3.EnumUtils;
 
 public class TileEntityHammerBase extends TileEntity {
 
@@ -21,14 +22,21 @@ public class TileEntityHammerBase extends TileEntity {
     private boolean hasPlateWest = true;
     private boolean hasPlateEast = true;
 
-    private static final String cablesKey = "cables";
-    private boolean[] cables;
+    private EnumHammerConfig configEast = EnumHammerConfig.A;
+    private EnumHammerConfig configWest = EnumHammerConfig.A;
+
 
     public TileEntityHammerBase() {
         slots = new ItemStack[2];
+    }
 
-        cables = new boolean[EnumHammerCable.values().length];
-        Arrays.fill(cables, true);
+    private boolean hasEffect(EnumHammerEffect effect) {
+        if (effect.requiresBoth) {
+            return effect.equals(EnumHammerEffect.fromConfig(configEast, getWorld().getSeed()))
+                    && effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
+        }
+        return effect.equals(EnumHammerEffect.fromConfig(configEast, getWorld().getSeed()))
+                || effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
     }
 
     public boolean isPowered() {
@@ -44,9 +52,29 @@ public class TileEntityHammerBase extends TileEntity {
         for (ItemStack slot : slots) {
             if (slot != null && (slot.getItem() instanceof ItemCellMagmatic)) {
                 ItemCellMagmatic item = (ItemCellMagmatic) slot.getItem();
-                item.reduceCharge(slot, 1);
+                item.reduceCharge(slot, powerUsage());
             }
         }
+    }
+
+    private int powerUsage() {
+        int usage = 5;
+        if (!hasPlateEast) {
+            usage+=2;
+        }
+        if (!hasPlateWest) {
+            usage+=2;
+        }
+
+        if (hasEffect(EnumHammerEffect.EFFICIENT)) {
+            usage-=3;
+        }
+
+        if (hasEffect(EnumHammerEffect.SEALABLE) && getWorld().isBlockPowered(getPos())) {
+            usage = 1;
+        }
+
+        return Math.max(usage, 1);
     }
 
     public boolean hasCellInSlot(int index){
@@ -102,12 +130,22 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
-    public void cutCable(EnumHammerCable cable) {
-        cables[cable.ordinal()] = false;
+    public void reconfigure(EnumFacing side) {
+        if (EnumFacing.EAST.equals(side)) {
+            configEast = EnumHammerConfig.getNextConfiguration(configEast);
+        } else if (EnumFacing.EAST.equals(side)) {
+            configWest = EnumHammerConfig.getNextConfiguration(configWest);
+        }
     }
 
-    public boolean hasCable(EnumHammerCable cable) {
-        return cables[cable.ordinal()];
+    public EnumHammerConfig getConfiguration(EnumFacing side) {
+        if (EnumFacing.EAST.equals(side)) {
+            return configEast;
+        } else if (EnumFacing.EAST.equals(side)) {
+            return configWest;
+        }
+
+        return EnumHammerConfig.A;
     }
 
     @Nullable
@@ -145,12 +183,18 @@ public class TileEntityHammerBase extends TileEntity {
         hasPlateEast = compound.getBoolean(EnumHammerPlate.EAST.key);
         hasPlateWest = compound.getBoolean(EnumHammerPlate.WEST.key);
 
-        if (compound.hasKey(cablesKey)) {
-            byte storedCables = compound.getByte(cablesKey);
-            cables[0] = ((storedCables & 0x01) != 0);
-            cables[1] = ((storedCables & 0x02) != 0);
-            cables[2] = ((storedCables & 0x04) != 0);
-            cables[3] = ((storedCables & 0x08) != 0);
+        if (compound.hasKey(EnumHammerConfig.propE.getName())) {
+            String enumName = compound.getString(EnumHammerConfig.propE.getName());
+            if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
+                configEast = EnumHammerConfig.valueOf(enumName);
+            }
+        }
+
+        if (compound.hasKey(EnumHammerConfig.propW.getName())) {
+            String enumName = compound.getString(EnumHammerConfig.propW.getName());
+            if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
+                configWest = EnumHammerConfig.valueOf(enumName);
+            }
         }
     }
 
@@ -174,15 +218,8 @@ public class TileEntityHammerBase extends TileEntity {
         compound.setBoolean(EnumHammerPlate.EAST.key, hasPlateEast);
         compound.setBoolean(EnumHammerPlate.WEST.key, hasPlateWest);
 
-        byte cablesByte = 0;
-        for (boolean cable : cables) {
-            cablesByte <<= 1;
-            if (cable) {
-                cablesByte |= 1;
-            }
-        }
-
-        compound.setByte(cablesKey, cablesByte);
+        compound.setString(EnumHammerConfig.propE.getName(), configEast.getName());
+        compound.setString(EnumHammerConfig.propW.getName(), configWest.getName());
 
         return compound;
     }

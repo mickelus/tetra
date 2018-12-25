@@ -5,20 +5,14 @@
     "textures": {
       "socket1": "tetra:blocks/hammer_base_socket",
       "socket2": "tetra:blocks/hammer_base_socket",
-      "cable1_east": "tetra:blocks/hammer_cable1",
-      "cable1_west": "tetra:blocks/hammer_cable1",
-      "cable2_east": "tetra:blocks/hammer_cable2",
-      "cable2_west": "tetra:blocks/hammer_cable2",
-      "cable3_east": "tetra:blocks/hammer_cable3",
-      "cable3_west": "tetra:blocks/hammer_cable3",
-      "cable4_east": "tetra:blocks/hammer_cable4",
-      "cable4_west": "tetra:blocks/hammer_cable4",
-      "plate_east": "tetra:blocks/hammer_base_plate",
-      "plate_west": "tetra:blocks/hammer_base_plate",
       "cell_side1": "tetra:blocks/cell_side",
       "cell_side2": "tetra:blocks/cell_side",
       "cell_top1": "tetra:blocks/cell_top",
-      "cell_top2": "tetra:blocks/cell_top"
+      "cell_top2": "tetra:blocks/cell_top",
+      "plate_east": "tetra:blocks/hammer_base_plate",
+      "plate_west": "tetra:blocks/hammer_base_plate",
+      "config_east": "tetra:blocks/hammer_config0",
+      "config_west": "tetra:blocks/hammer_config0"
     }
   },
   "variants": {
@@ -67,84 +61,24 @@
       "false": {}
     },
     "platee": {
-      "true": {},
-      "false": {
-        "textures": {
-          "plate_east": "tetra:blocks/transparent"
-        }
-      }
+      "true": { "textures": { "plate_east": "tetra:blocks/hammer_base_plate" } },
+      "false": { "textures": { "plate_east": "tetra:blocks/transparent" } }
     },
     "platew": {
-      "true": {},
-      "false": {
-        "textures": {
-          "plate_west": "tetra:blocks/transparent"
-        }
-      }
+      "true": { "textures": { "plate_west": "tetra:blocks/hammer_base_plate" } },
+      "false": { "textures": { "plate_west": "tetra:blocks/transparent" } }
     },
-    "cablee1": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable1_east": "tetra:blocks/hammer_cable1_cut"
-        }
-      }
+    "confige": {
+      "a": { "textures": { "config_east": "tetra:blocks/hammer_config0" } },
+      "b": { "textures": { "config_east": "tetra:blocks/hammer_config1" } },
+      "c": { "textures": { "config_east": "tetra:blocks/hammer_config2" } },
+      "d": { "textures": { "config_east": "tetra:blocks/hammer_config3" } }
     },
-    "cablee2": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable2_east": "tetra:blocks/hammer_cable2_cut"
-        }
-      }
-    },
-    "cablee3": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable3_east": "tetra:blocks/hammer_cable3_cut"
-        }
-      }
-    },
-    "cablee4": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable4_east": "tetra:blocks/hammer_cable4_cut"
-        }
-      }
-    },
-    "cablew1": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable1_west": "tetra:blocks/hammer_cable1_cut"
-        }
-      }
-    },
-    "cablew2": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable2_west": "tetra:blocks/hammer_cable2_cut"
-        }
-      }
-    },
-    "cablew3": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable3_west": "tetra:blocks/hammer_cable3_cut"
-        }
-      }
-    },
-    "cablew4": {
-      "true": {},
-      "false": {
-        "textures": {
-          "cable4_west": "tetra:blocks/hammer_cable4_cut"
-        }
-      }
+    "configw": {
+      "a": { "textures": { "config_west": "tetra:blocks/hammer_config0" } },
+      "b": { "textures": { "config_west": "tetra:blocks/hammer_config1" } },
+      "c": { "textures": { "config_west": "tetra:blocks/hammer_config2" } },
+      "d": { "textures": { "config_west": "tetra:blocks/hammer_config3" } }
     }
   }
 }
