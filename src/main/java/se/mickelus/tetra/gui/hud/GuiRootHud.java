@@ -61,9 +61,9 @@ public class GuiRootHud extends GuiElement {
                 break;
         }
 
-        // 0.0625 = 1/16
-        GlStateManager.scale(0.0625, -0.0625, 0.0625);
-        drawChildren(0, 0, 16, 16, 0, 0, 1);
+        // 0.03125 = 1/32
+        GlStateManager.scale(0.03125, -0.03125, 0.03125);
+        drawChildren(0, 0, 32, 32, 0, 0, 1);
         GlStateManager.popMatrix();
 
         GlStateManager.depthMask(true);

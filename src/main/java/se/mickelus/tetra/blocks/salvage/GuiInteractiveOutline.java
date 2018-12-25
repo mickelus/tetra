@@ -16,9 +16,9 @@ public class GuiInteractiveOutline extends GuiElement {
     private GuiTexture bottomRight;
 
     public GuiInteractiveOutline(BlockInteraction blockInteraction) {
-        super((int) blockInteraction.minX, (int) blockInteraction.minY,
-                (int) (blockInteraction.maxX - blockInteraction.minX),
-                (int) (blockInteraction.maxY - blockInteraction.minY));
+        super((int) blockInteraction.minX * 2, (int) blockInteraction.minY * 2,
+                (int) (blockInteraction.maxX - blockInteraction.minX) * 2,
+                (int) (blockInteraction.maxY - blockInteraction.minY) * 2);
 
         this.blockInteraction = blockInteraction;
 
