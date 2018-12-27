@@ -83,16 +83,13 @@ public class WorldGenFeatures implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        if (chunkX % 10 != 0 || chunkZ % 10 != 0) {
-            return;
-        }
-
         Arrays.stream(features)
                 .filter(feature -> {
                     Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
                     Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biome);
                     return types.stream().anyMatch(type -> Arrays.stream(feature.biomes).anyMatch(biomeName -> biomeName.equals(type.getName().toLowerCase())));
                 })
+                .filter(feature -> random.nextFloat() < feature.probability)
                 .forEach(feature -> generateFeatureRoot(feature, chunkX, chunkZ, world, random));
     }
 

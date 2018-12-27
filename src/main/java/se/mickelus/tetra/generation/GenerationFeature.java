@@ -6,13 +6,20 @@ import net.minecraft.util.math.BlockPos;
 public class GenerationFeature {
 
     /**
-     * A list of biome types that this feature can generate in. Biomes have a primary type and if that type matches any
-     * of the types in this list then the feature is allowed to generate in the biome. Mods may add additional types,
-     * but the following types are possible in vanilla:
-     * hot, cold, sparse, dense, wet, dry, savanna, coniferous, jungle, spooky, dead, lush, nether, end, mushroom, void,
-     * magical, rare, ocean, river, water, mesa, forest, plains, mountain, hills, swamp, sandy, snowy, wasteland, beach
+     * A list of biome types that this feature can generate in. Biomes have a primary type and if that type matches any of the types
+     * in this list then the feature is allowed to generate in the biome. Mods may add additional types, but the following types are
+     * possible in vanilla:
+     * hot, cold, sparse, dense, wet, dry, savanna, coniferous, jungle, spooky, dead, lush, nether, end, mushroom, void, magical,
+     * rare, ocean, river, water, mesa, forest, plains, mountain, hills, swamp, sandy, snowy, wasteland, beach
      */
     String[] biomes = new String[0];
+
+    /**
+     * The probability that this feature will generate in applicable chunks. Should be between 0 and 1, where a value of 1 would
+     * cause it to generate in every chunk, 0.5 would cause it to generate in 50% of the chunks and a value of 0 would cause it to
+     * never generate.
+     */
+    float probability = 0.01f;
 
     /**
      * The minimum Y level that this feature is allowed to generate at.
