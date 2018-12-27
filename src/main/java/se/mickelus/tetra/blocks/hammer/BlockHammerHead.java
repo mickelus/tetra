@@ -4,7 +4,6 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -20,16 +19,13 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import scala.actors.threadpool.Arrays;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
 
@@ -60,7 +56,7 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
         if (world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
 
-            if (baseBlock.isPowered(world, basePos)) {
+            if (baseBlock.isFueled(world, basePos)) {
                 return Collections.singletonList(Capability.hammer);
             }
         }
@@ -73,8 +69,8 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
         if (Capability.hammer.equals(capability) && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
 
-            if (baseBlock.isPowered(world, basePos)) {
-                return 4;
+            if (baseBlock.isFueled(world, basePos)) {
+                return baseBlock.getHammerLevel(world, basePos);
             }
         }
         return super.getCapabilityLevel(world, pos, blockState, capability);
@@ -85,7 +81,9 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
         BlockPos basePos = pos.offset(EnumFacing.UP);
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
-            baseBlock.consumePower(world, basePos);
+            baseBlock.consumeFuel(world, basePos);
+
+            baseBlock.applyEffects(world, basePos, targetStack, player);
 
             ((TileEntityHammerHead) world.getTileEntity(pos)).activate();
             world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));

@@ -1,5 +1,10 @@
 package se.mickelus.tetra.blocks.hammer;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -7,10 +12,13 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.WorldServer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import org.apache.commons.lang3.EnumUtils;
 
 public class TileEntityHammerBase extends TileEntity {
@@ -30,7 +38,7 @@ public class TileEntityHammerBase extends TileEntity {
         slots = new ItemStack[2];
     }
 
-    private boolean hasEffect(EnumHammerEffect effect) {
+    public boolean hasEffect(EnumHammerEffect effect) {
         if (effect.requiresBoth) {
             return effect.equals(EnumHammerEffect.fromConfig(configEast, getWorld().getSeed()))
                     && effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
@@ -39,39 +47,96 @@ public class TileEntityHammerBase extends TileEntity {
                 || effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
     }
 
-    public boolean isPowered() {
+    public int getHammerLevel() {
+        return hasEffect(EnumHammerEffect.OVERCHARGED) ? 5 : 4;
+    }
+
+    public boolean isFueled() {
         for (int i = 0; i < slots.length; i++) {
-            if (getCellPower(i) <= 0) {
+            if (getCellFuel(i) <= 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public void consumePower() {
-        for (ItemStack slot : slots) {
-            if (slot != null && (slot.getItem() instanceof ItemCellMagmatic)) {
-                ItemCellMagmatic item = (ItemCellMagmatic) slot.getItem();
-                item.reduceCharge(slot, powerUsage());
+    public void consumeFuel() {
+        int fuelUsage = fuelUsage();
+
+        for (int i = 0; i < slots.length; i++) {
+            consumeFuel(i, fuelUsage);
+        }
+
+        applyConsumeEffect();
+    }
+
+    public void consumeFuel(int index, int amount) {
+        if (index > 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
+            ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
+            item.reduceCharge(slots[index], amount);
+        }
+    }
+
+    private void applyConsumeEffect() {
+        EnumFacing facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
+        Vec3d pos = new Vec3d(getPos());
+        pos = pos.addVector(0.5, 0.5, 0.5);
+
+        if (!world.isRemote && hasEffect(EnumHammerEffect.LEAKY)) {
+            int countCell0 = world.rand.nextInt(Math.min(16, getCellFuel(0)));
+            int countCell1 = world.rand.nextInt(Math.min(16, getCellFuel(1)));
+            consumeFuel(0, countCell0);
+            consumeFuel(1, countCell1);
+
+            if (countCell0 > 0 || countCell1 > 0) {
+
+                // particles cell 1
+                Vec3d posCell0 = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.LAVA, posCell0, countCell0 * 2, 0.06f);
+                spawnParticle(EnumParticleTypes.SMOKE_LARGE, posCell0, 2, 0f);
+
+                // particles cell 2
+                Vec3d posCell1 = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.LAVA, posCell1, countCell1 * 2, 0.06f);
+                spawnParticle(EnumParticleTypes.SMOKE_LARGE, posCell1, 2, 0f);
+
+                // gather flammable blocks
+                LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
+                for (int x = -3; x < 3; x++) {
+                    for (int y = -3; y < 2; y++) {
+                        for (int z = -3; z < 3; z++) {
+                            BlockPos firePos = getPos().add(x, y, z);
+                            if (world.isAirBlock(firePos)) {
+                                flammableBlocks.add(firePos);
+                            }
+                        }
+                    }
+                }
+
+                // set blocks on fire
+                Collections.shuffle(flammableBlocks);
+                flammableBlocks.stream()
+                        .limit(countCell0 + countCell1)
+                        .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
             }
         }
     }
 
-    private int powerUsage() {
+    private int fuelUsage() {
         int usage = 5;
         if (!hasPlateEast) {
-            usage+=2;
+            usage += 2;
         }
         if (!hasPlateWest) {
-            usage+=2;
+            usage += 2;
+        }
+
+        if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
+            usage += 4;
         }
 
         if (hasEffect(EnumHammerEffect.EFFICIENT)) {
-            usage-=3;
-        }
-
-        if (hasEffect(EnumHammerEffect.SEALABLE) && getWorld().isBlockPowered(getPos())) {
-            usage = 1;
+            usage -= 3;
         }
 
         return Math.max(usage, 1);
@@ -81,7 +146,7 @@ public class TileEntityHammerBase extends TileEntity {
         return index >= 0 && index < slots.length && slots[index] != null;
     }
 
-    public int getCellPower(int index){
+    public int getCellFuel(int index){
         if (index >= 0 && index < slots.length && slots[index] != null) {
             if (slots[index].getItem() instanceof ItemCellMagmatic) {
                 ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
@@ -118,6 +183,7 @@ public class TileEntityHammerBase extends TileEntity {
                 hasPlateWest = false;
                 break;
         }
+        markDirty();
     }
 
     public boolean hasPlate(EnumHammerPlate plate) {
@@ -133,8 +199,43 @@ public class TileEntityHammerBase extends TileEntity {
     public void reconfigure(EnumFacing side) {
         if (EnumFacing.EAST.equals(side)) {
             configEast = EnumHammerConfig.getNextConfiguration(configEast);
+            applyReconfigurationEffect(EnumHammerEffect.fromConfig(configEast, world.getSeed()));
         } else if (EnumFacing.EAST.equals(side)) {
             configWest = EnumHammerConfig.getNextConfiguration(configWest);
+            applyReconfigurationEffect(EnumHammerEffect.fromConfig(configWest, world.getSeed()));
+        }
+        markDirty();
+    }
+
+    private void applyReconfigurationEffect(EnumHammerEffect effect) {
+        EnumFacing facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
+        Vec3d pos = new Vec3d(getPos());
+        pos = pos.addVector(0.5, 0.5, 0.5);
+
+        if (EnumHammerEffect.OVERCHARGED.equals(effect)) {
+            if (!hasCellInSlot(0)) {
+                Vec3d rotPos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, rotPos, 15, 0.02f);
+            }
+
+            if (!hasCellInSlot(1)) {
+                Vec3d rotPos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, rotPos, 15, 0.02f);
+            }
+        }
+
+        if (EnumHammerEffect.LEAKY.equals(effect)) {
+            if (getCellFuel(0) > 0) {
+                Vec3d rotPos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.LAVA, rotPos, 3, 0.06f);
+                spawnParticle(EnumParticleTypes.SMOKE_LARGE, rotPos, 3, 0f);
+            }
+
+            if (getCellFuel(1) > 0) {
+                Vec3d rotPos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
+                spawnParticle(EnumParticleTypes.LAVA, rotPos, 3, 0.06f);
+                spawnParticle(EnumParticleTypes.SMOKE_LARGE, rotPos, 3, 0f);
+            }
         }
     }
 
@@ -146,6 +247,15 @@ public class TileEntityHammerBase extends TileEntity {
         }
 
         return EnumHammerConfig.A;
+    }
+
+    /**
+     * Utility for spawning particles from the server
+     */
+    private void spawnParticle(EnumParticleTypes particle, Vec3d pos, int count, float speed) {
+        if (world instanceof WorldServer) {
+            ((WorldServer) world).spawnParticle(particle, pos.x, pos.y, pos.z, count,  0, 0, 0, speed);
+        }
     }
 
     @Nullable
@@ -218,8 +328,8 @@ public class TileEntityHammerBase extends TileEntity {
         compound.setBoolean(EnumHammerPlate.EAST.key, hasPlateEast);
         compound.setBoolean(EnumHammerPlate.WEST.key, hasPlateWest);
 
-        compound.setString(EnumHammerConfig.propE.getName(), configEast.getName());
-        compound.setString(EnumHammerConfig.propW.getName(), configWest.getName());
+        compound.setString(EnumHammerConfig.propE.getName(), configEast.toString());
+        compound.setString(EnumHammerConfig.propW.getName(), configWest.toString());
 
         return compound;
     }

@@ -20,19 +20,19 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
@@ -51,10 +51,10 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                     EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hitFace) ->
                     removePlate(world, pos, blockState, player, EnumHammerPlate.WEST, hitFace)),
 
-            new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 6, 10, 3, 9,
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 6, 10, 2, 9,
                     EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hitFace) ->
                     reconfigure(world, pos, blockState, player, EnumFacing.EAST)),
-            new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 6, 10, 3, 9,
+            new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 6, 10, 2, 9,
                     EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hitFace) ->
                     reconfigure(world, pos, blockState, player, EnumFacing.WEST))
     };
@@ -85,9 +85,9 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         if (te != null) {
             return state
                     .withProperty(propCell1, te.hasCellInSlot(0))
-                    .withProperty(propCell1Charged, te.getCellPower(0) > 0)
+                    .withProperty(propCell1Charged, te.getCellFuel(0) > 0)
                     .withProperty(propCell2, te.hasCellInSlot(1))
-                    .withProperty(propCell2Charged, te.getCellPower(1) > 0)
+                    .withProperty(propCell2Charged, te.getCellFuel(1) > 0)
                     .withProperty(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
                     .withProperty(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
                     .withProperty(EnumHammerConfig.propE, te.getConfiguration(EnumFacing.EAST))
@@ -96,20 +96,37 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         return state;
     }
 
-    public boolean isPowered(World world, BlockPos pos) {
+    public boolean isFueled(World world, BlockPos pos) {
         return Optional.ofNullable(getTileEntity(world, pos))
-                .map(TileEntityHammerBase::isPowered)
+                .map(TileEntityHammerBase::isFueled)
                 .orElse(false);
     }
 
-    public void consumePower(World world, BlockPos pos) {
+    public void consumeFuel(World world, BlockPos pos) {
         Optional.ofNullable(getTileEntity(world, pos))
                 .ifPresent(te -> {
                     IBlockState blockState = world.getBlockState(pos);
-                    te.consumePower();
+                    te.consumeFuel();
 
                     world.notifyBlockUpdate(pos, blockState, blockState, 3);
                 });
+    }
+
+    public void applyEffects(World world, BlockPos pos, ItemStack itemStack, EntityPlayer player) {
+        Optional.ofNullable(getTileEntity(world, pos))
+                .ifPresent(te -> {
+                    if (te.hasEffect(EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
+                        ItemModular item = (ItemModular) itemStack.getItem();
+                        int damage = (int) (itemStack.getMaxDamage() * 0.1);
+                        item.applyDamage(damage, itemStack, player);
+                    }
+                });
+    }
+
+    public int getHammerLevel(World world, BlockPos pos) {
+        return Optional.ofNullable(getTileEntity(world, pos))
+                .map(TileEntityHammerBase::getHammerLevel)
+                .orElse(0);
     }
 
     public static void removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
