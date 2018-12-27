@@ -22,7 +22,7 @@ public class ConfigHandler {
             "minecraft:emerald", "1", "1",
     };
 
-    public static boolean feature_generate = true;
+    public static boolean feature_generate = false;
     public static int max_feature_depth = 8;
 
     public static boolean workbenchDropTable = true;
