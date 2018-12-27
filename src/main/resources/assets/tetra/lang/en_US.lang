@@ -45,6 +45,16 @@ item.magmatic_cell.charge_low=§eLow
 item.magmatic_cell.charge_empty=§cEmpty
 
 ###############################
+# ANCIENT TILESET
+###############################
+tile.forged_pillar.name=Forged Pillar
+tile.forged_platform.name=Forged platform
+tile.forged_platform_slab.name=Forged platform
+tile.forged_wall.name=Forged wall
+tile.hammer_base.name=Hammer base
+tile.hammer_head.name=Hammer head
+
+###############################
 # SWORD
 ###############################
 sword/blade=Blade
