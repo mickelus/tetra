@@ -76,6 +76,11 @@ public class BlockInteraction {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
+        if (player.getCooledAttackStrength(0) < 0.8) {
+            player.resetCooldown();
+            return false;
+        }
+
         float hitU = getHitU(hitFace, hitX, hitY, hitZ);
         float hitV = getHitV(hitFace, hitX, hitY, hitZ);
 
@@ -96,6 +101,7 @@ public class BlockInteraction {
                 heldStack.damageItem(2, player);
             }
 
+            player.resetCooldown();
             return true;
         }
         return false;
