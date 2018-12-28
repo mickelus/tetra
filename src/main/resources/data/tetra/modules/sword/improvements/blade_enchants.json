@@ -30,6 +30,36 @@
         "enchantment": true
     },
     {
+        "key": "enchantment/sharpness",
+        "level": 6,
+        "damage": 3.5,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 7,
+        "damage": 4,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 8,
+        "damage": 4.5,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 9,
+        "damage": 5,
+        "enchantment": true
+    },
+    {
+        "key": "enchantment/sharpness",
+        "level": 10,
+        "damage": 5.5,
+        "enchantment": true
+    },
+    {
         "key": "enchantment/smite",
         "level": 1,
         "enchantment": true,
@@ -67,6 +97,46 @@
         "enchantment": true,
         "effects": {
             "smite": 5
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 6,
+        "enchantment": true,
+        "effects": {
+            "smite": 6
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 7,
+        "enchantment": true,
+        "effects": {
+            "smite": 7
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 8,
+        "enchantment": true,
+        "effects": {
+            "smite": 8
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 9,
+        "enchantment": true,
+        "effects": {
+            "smite": 9
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 10,
+        "enchantment": true,
+        "effects": {
+            "smite": 10
         }
     },
     {
@@ -110,6 +180,46 @@
         }
     },
     {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 6,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 6
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 7,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 7
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 8,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 8
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 9,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 9
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 10,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 10
+        }
+    },
+    {
         "key": "enchantment/unbreaking",
         "level": 1,
         "enchantment": true,
@@ -134,6 +244,22 @@
         }
     },
     {
+        "key": "enchantment/unbreaking",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 4
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 5
+        }
+    },
+    {
         "key": "enchantment/fire_aspect",
         "level": 1,
         "enchantment": true,
@@ -147,6 +273,30 @@
         "enchantment": true,
         "effects": {
             "fiery": 2
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "fiery": 3
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "fiery": 4
+        }
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "fiery": 5
         }
     },
     {
@@ -174,6 +324,22 @@
         }
     },
     {
+        "key": "enchantment/looting",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "looting": 4
+        }
+    },
+    {
+        "key": "enchantment/looting",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "looting": 5
+        }
+    },
+    {
         "key": "enchantment/sweeping",
         "level": 1,
         "enchantment": true,
@@ -195,6 +361,22 @@
         "enchantment": true,
         "effects": {
             "sweeping": 5
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "sweeping": 6
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "sweeping": 7
         }
     }
 ]

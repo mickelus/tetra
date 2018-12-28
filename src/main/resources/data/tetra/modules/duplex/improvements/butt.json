@@ -24,6 +24,22 @@
         }
     },
     {
+        "key": "enchantment/unbreaking",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 4
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 5
+        }
+    },
+    {
         "key": "enchantment/fortune",
         "level": 1,
         "enchantment": true,
@@ -48,11 +64,35 @@
         }
     },
     {
+        "key": "enchantment/fortune",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "fortune": 4
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "fortune": 5
+        }
+    },
+    {
         "key": "enchantment/mending",
         "level": 1,
         "enchantment": true,
         "effects": {
             "mending": 1
+        }
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "mending": 2
         }
     }
 ]
