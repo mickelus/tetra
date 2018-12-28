@@ -45,6 +45,12 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 .anyMatch(improvementKey::equals);
     }
 
+    public boolean acceptsImprovementLevel(String improvementKey, int level) {
+        return Arrays.stream(improvements)
+                .filter(improvement -> improvementKey.equals(improvement.key))
+                .anyMatch(improvement -> level == improvement.level);
+    }
+
     public void addImprovement(ItemStack itemStack, String improvement, int level) {
         addImprovement(itemStack, slotKey, improvement, level);
     }

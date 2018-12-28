@@ -133,9 +133,13 @@ public class ItemUpgradeRegistry {
 
                     for (int i = 0; i < modules.length; i++) {
                         if (i == 0) {
-                            modules[i].addImprovement(modularStack, improvement, (int) Math.ceil(level));
+                            if (modules[i].acceptsImprovementLevel(improvement, (int) Math.ceil(level))) {
+                                modules[i].addImprovement(modularStack, improvement, (int) Math.ceil(level));
+                            }
                         } else {
-                            modules[i].addImprovement(modularStack, improvement, (int) level);
+                            if (modules[i].acceptsImprovementLevel(improvement, (int) level)) {
+                                modules[i].addImprovement(modularStack, improvement, (int) level);
+                            }
                         }
                     }
                 }

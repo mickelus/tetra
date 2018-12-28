@@ -73,9 +73,11 @@ public class BookEnchantSchema implements UpgradeSchema {
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
         if (acceptsMaterial(itemStack, 0, materials[0])) {
-            return EnchantmentHelper.getEnchantments(materials[0]).keySet().stream()
-                    .map(ItemUpgradeRegistry.instance::getImprovementFromEnchantment)
-                    .anyMatch(module::acceptsImprovement);
+            return EnchantmentHelper.getEnchantments(materials[0]).entrySet().stream()
+                    .anyMatch(entry -> {
+                        String improvementKey = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+                        return module.acceptsImprovementLevel(improvementKey, entry.getValue());
+                    });
         }
         return false;
     }
@@ -111,7 +113,7 @@ public class BookEnchantSchema implements UpgradeSchema {
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (module.acceptsImprovement(improvement)) {
+            if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
                 module.addImprovement(upgradedStack, improvement, entry.getValue());
             }
         }
