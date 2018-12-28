@@ -211,14 +211,16 @@ public class ItemEffectHandler {
                 .filter(itemStack -> getEffectLevel(itemStack, ItemEffect.mending) > 0)
                 .findAny()
                 .ifPresent(itemStack -> {
+                    int multiplier = getEffectLevel(itemStack, ItemEffect.mending) + 1;
                     EntityXPOrb orb = event.getOrb();
-                    int i = Math.min(orb.xpValue * 2, itemStack.getItemDamage());
-                    orb.xpValue -= i * 2;
-                    itemStack.setItemDamage(itemStack.getItemDamage() - i);
+                    int durabilityGain = Math.min(orb.xpValue * multiplier, itemStack.getItemDamage());
+                    orb.xpValue -= durabilityGain / multiplier;
+                    itemStack.setItemDamage(itemStack.getItemDamage() - durabilityGain);
 
-                    if (orb.xpValue == 0) {
+                    if (orb.xpValue <= 0) {
+                        orb.xpValue = 0;
                         player.xpCooldown = 2;
-                        player.onItemPickup(event.getOrb(), 1);
+                        player.onItemPickup(orb, 1);
                         orb.setDead();
                         event.setCanceled(true);
                     }
