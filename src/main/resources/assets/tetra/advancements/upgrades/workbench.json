@@ -4,7 +4,7 @@
             "item": "minecraft:crafting_table"
         },
         "title": "Bench mk II",
-        "description": "Upgrade a crafting table by rightclicking it with a mallet",
+        "description": "Upgrade a crafting table by right-clicking it with a mallet",
         "announce_to_chat": false
     },
     "parent": "tetra:upgrades/root",
