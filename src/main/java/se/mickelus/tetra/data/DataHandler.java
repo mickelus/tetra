@@ -41,11 +41,11 @@ public class DataHandler {
         gson = new GsonBuilder()
                 .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
                 .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
-                .registerTypeAdapter(GlyphData.class, new GlyphData.GlyphTypeAdapter())
+                .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
                 .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
                 .registerTypeAdapter(ItemPredicate.class, new PredicateDeserializer())
                 .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
-                .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDefinition.ReplacementDeserializer())
+                .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
                 .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
                 .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
                 .create();
