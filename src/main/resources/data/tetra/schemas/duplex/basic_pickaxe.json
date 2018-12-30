@@ -217,7 +217,7 @@
                 "moduleKey": "duplex/basic_pickaxe",
                 "moduleVariant": "basic_pickaxe/fierymetal",
                 "improvements": {
-                    "duplex/head_left:basic_pickaxe/smelting": 0
+                    "basic_pickaxe/smelting": 0
                 }
             },
             {
@@ -232,7 +232,7 @@
                 "moduleKey": "duplex/basic_pickaxe",
                 "moduleVariant": "basic_pickaxe/knightmetal",
                 "improvements": {
-                    "duplex/head_left:basic_pickaxe/puncturing": 1
+                    "basic_pickaxe/puncturing": 1
                 }
             }
         ]

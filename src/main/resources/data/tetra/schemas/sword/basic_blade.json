@@ -323,7 +323,7 @@
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/steeleaf",
                 "improvements": {
-                    "sword/blade:enchantment/looting": 2
+                    "enchantment/looting": 2
                 }
             },
             {
@@ -338,7 +338,7 @@
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/fierymetal",
                 "improvements": {
-                    "sword/blade:enchantment/fire_aspect": 2
+                    "enchantment/fire_aspect": 2
                 }
             },
             {

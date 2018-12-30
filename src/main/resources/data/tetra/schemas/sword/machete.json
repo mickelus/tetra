@@ -327,7 +327,7 @@
                 "moduleKey": "sword/machete",
                 "moduleVariant": "machete/steeleaf",
                 "improvements": {
-                    "sword/blade:enchantment/looting": 2
+                    "enchantment/looting": 2
                 }
             },
             {
@@ -342,7 +342,7 @@
                 "moduleKey": "sword/machete",
                 "moduleVariant": "machete/fierymetal",
                 "improvements": {
-                    "sword/blade:enchantment/fire_aspect": 2
+                    "enchantment/fire_aspect": 2
                 }
             },
             {
