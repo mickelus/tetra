@@ -38,7 +38,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [1, 5]
+            "axe": [2, 5]
         }
     },
     {
@@ -52,7 +52,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 6.6666667]
+            "axe": [3, 6.6666667]
         }
     },
     {
@@ -66,7 +66,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 8]
+            "axe": [4, 8]
         }
     },
     {
@@ -136,7 +136,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 7]
+            "axe": [3, 7]
         }
     },
     {
@@ -150,7 +150,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 5]
+            "axe": [3, 5]
         }
     },
     {
@@ -192,7 +192,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [3, 8.2]
+            "axe": [4, 8.2]
         }
     },
     {
@@ -206,7 +206,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 6.7]
+            "axe": [3, 6.7]
         }
     },
     {
@@ -234,7 +234,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 8.88]
+            "axe": [4, 8.88]
         }
     },
     {
@@ -248,7 +248,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 10]
+            "axe": [5, 10]
         }
     },
     {
@@ -262,7 +262,7 @@
             "textureX": 144
         },
         "capabilities": {
-            "axe": [2, 8.88]
+            "axe": [4, 8.88]
         }
     }
 ]

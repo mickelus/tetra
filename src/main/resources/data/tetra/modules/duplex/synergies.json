@@ -94,5 +94,17 @@
         "capabilities": {
             "pickaxe": 1
         }
+    },
+    {
+        "moduleVariants": ["basic_pickaxe/steeleaf", "basic_pickaxe/steeleaf"],
+        "capabilities": {
+            "pickaxe": 1
+        }
+    },
+    {
+        "moduleVariants": ["basic_pickaxe/fierymetal", "basic_pickaxe/fierymetal"],
+        "capabilities": {
+            "pickaxe": 1
+        }
     }
 ]
