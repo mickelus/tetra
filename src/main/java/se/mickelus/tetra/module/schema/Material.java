@@ -11,6 +11,16 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.lang.reflect.Type;
 
+/**
+ * Materials define a required item in a schema outcome. It's parsed (and mostly it behaves) as if it was an
+ * item predicate. Count is stored separately and has to be smaller than size of a provided itemstack for it to match.
+ * Example json:
+ * {
+ *     "item": "minecraft:planks",
+ *     "count": 2,
+ *     "data": 0
+ * }
+ */
 public class Material {
     public ItemStack repairMaterial = ItemStack.EMPTY;
     public ItemStack salvageMaterial = ItemStack.EMPTY;

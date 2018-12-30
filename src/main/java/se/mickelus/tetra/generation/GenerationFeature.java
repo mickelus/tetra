@@ -3,6 +3,38 @@ package se.mickelus.tetra.generation;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
+/**
+ * Used to specify additional details for feature generation, containing information about where and how a feature is to
+ * be generated. All json files in the structures resource folder are deserialized into this class. The name of the
+ * structure template defaults to the same name as the json file.
+ *
+ * Example json:
+ * {
+ *     "biomes": ["cold", "snowy"],
+ *     "origin": [3, 0, 3],
+ *     "probability": 0.05,
+ *     "minY": 7,
+ *     "maxY": 22,
+ *     "integrityMin": 0.95,
+ *     "children": [
+ *         {
+ *             "offset": [3, 1, 3],
+ *             "facing": "WEST",
+ *             "features": ["tetra:ancient_hammer", "tetra:collapse_gravel"]
+ *         },
+ *         {
+ *             "offset": [3, 2, 0],
+ *             "features": ["tetra:ancient_hallway_1", "tetra:ancient_collapse_1"]
+ *         }
+ *     ],
+ *     "loot": [
+ *         {
+ *             "position": [0, 0, 0],
+ *             "table": "tetra:ancient/chest_large"
+ *         }
+ *     ]
+ * }
+ */
 public class GenerationFeature {
 
     /**
@@ -11,6 +43,9 @@ public class GenerationFeature {
      * possible in vanilla:
      * hot, cold, sparse, dense, wet, dry, savanna, coniferous, jungle, spooky, dead, lush, nether, end, mushroom, void, magical,
      * rare, ocean, river, water, mesa, forest, plains, mountain, hills, swamp, sandy, snowy, wasteland, beach
+     * Optional, but can only generate as child feature if not present.
+     *
+     * Example json: ["hot", "water", "rare"]
      */
     String[] biomes = new String[0];
 
@@ -39,7 +74,10 @@ public class GenerationFeature {
     float integrityMax = 1;
 
     /**
+     * The origin of this feature. Primarily used in child features, to adjust positioning and rotation relative to the
+     * parent.
      *
+     * Json format: [x, y, z]
      */
     public BlockPos origin = new BlockPos(0, 0, 0);
 
