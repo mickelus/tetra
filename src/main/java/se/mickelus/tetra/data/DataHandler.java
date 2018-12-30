@@ -137,7 +137,7 @@ public class DataHandler {
         try (BufferedReader reader = Files.newBufferedReader(path)){
             GenerationFeature generationFeature = gson.fromJson(reader, GenerationFeature.class);
 
-            if (generationFeature != null) {
+            if (generationFeature != null && generationFeature.location == null) {
                 generationFeature.location = new ResourceLocation(TetraMod.MOD_ID, FilenameUtils.removeExtension(path.getFileName().toString()));
             }
 
