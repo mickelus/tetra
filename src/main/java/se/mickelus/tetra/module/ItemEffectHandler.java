@@ -167,8 +167,8 @@ public class ItemEffectHandler {
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int penetratingLevel = getEffectLevel(itemStack, ItemEffect.armorPenetration);
-                    if (penetratingLevel > 0 && event.getAmount() < penetratingLevel * 2) {
-                        event.setAmount(penetratingLevel * 2);
+                    if (penetratingLevel > 0 && event.getAmount() < penetratingLevel) {
+                        event.setAmount(penetratingLevel);
                     }
 
                     int unarmoredBonusLevel = getEffectLevel(itemStack, ItemEffect.unarmoredDamage);
@@ -355,7 +355,6 @@ public class ItemEffectHandler {
 
     /**
      * Breaks several blocks around the given blockpos.
-     * todo: add more variation and make it depend on sweeping level & block hardness
      * @param world the world in which to break blocks
      * @param breakingPlayer the player which is breaking the blocks
      * @param toolStack the itemstack used to break the blocks

@@ -12,7 +12,7 @@
         "textured": true,
         "integrity": -1,
         "effects": {
-            "armorPenetration": 1
+            "armorPenetration": 2
         }
     },
     {
