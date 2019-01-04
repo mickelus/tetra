@@ -416,7 +416,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
         float efficiency = getAllModules(itemStack).stream()
                 .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
-                .map(module -> getModuleEfficiency(module, itemStack, capability))
+                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
                 .max(Float::compare)
                 .orElse(1f);
 
@@ -424,17 +424,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .map(synergyData -> synergyData.capabilities)
                 .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
                 .sum();
-    }
-
-    private float getModuleEfficiency(ItemModule module, ItemStack itemStack, Capability capability) {
-        float efficiency = module.getCapabilityEfficiency(itemStack, capability);
-        if (module instanceof ItemModuleMajor) {
-            efficiency += Arrays.stream(((ItemModuleMajor)module).getImprovements(itemStack))
-                    .map(improvementData -> improvementData.capabilities)
-                    .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
-                    .sum();
-        }
-        return efficiency;
     }
 
     @Override

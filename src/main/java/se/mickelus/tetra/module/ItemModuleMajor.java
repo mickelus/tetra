@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 
@@ -124,7 +125,33 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                         .flatMap(effects -> effects.getValues().stream()))
                 .distinct()
                 .collect(Collectors.toSet());
+    }
 
+    @Override
+    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+        return Arrays.stream(getImprovements(itemStack))
+                .map(improvementData -> improvementData.capabilities)
+                .mapToInt(capabilityData -> capabilityData.getLevel(capability))
+                .sum() + super.getCapabilityLevel(itemStack, capability);
+    }
+
+    @Override
+    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
+        return (float) Arrays.stream(getImprovements(itemStack))
+                .map(improvementData -> improvementData.capabilities)
+                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
+                .sum() + super.getCapabilityEfficiency(itemStack, capability);
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+        return Streams.concat(
+                super.getCapabilities(itemStack).stream(),
+                Arrays.stream(getImprovements(itemStack))
+                        .map(improvement -> improvement.capabilities)
+                        .flatMap(capabilities -> capabilities.getValues().stream()))
+                .distinct()
+                .collect(Collectors.toSet());
     }
 
     @Override
