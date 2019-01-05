@@ -195,6 +195,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
         }
 
+        emptyMaterialSlots(player);
+
         setInventorySlotContents(0, upgradedStack);
     }
 
@@ -304,6 +306,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         for (int i = 1; i < stacks.size(); i++) {
             transferStackToPlayer(player, i);
         }
+        markDirty();
     }
 
     /**
