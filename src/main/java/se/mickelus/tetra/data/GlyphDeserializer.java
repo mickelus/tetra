@@ -11,10 +11,13 @@ import se.mickelus.tetra.module.data.GlyphData;
 public class GlyphDeserializer implements JsonDeserializer<GlyphData> {
 
     @Override
-    public GlyphData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
-            JsonParseException {
+    public GlyphData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         GlyphData data = new GlyphData();
+
+        if (jsonObject.has("textureLocation")) {
+            data.textureLocation = ResourceLocationDeserializer.deserialize(jsonObject.get("textureLocation"));
+        }
 
         if (jsonObject.has("textureX")) {
             data.textureX = jsonObject.get("textureX").getAsInt();
