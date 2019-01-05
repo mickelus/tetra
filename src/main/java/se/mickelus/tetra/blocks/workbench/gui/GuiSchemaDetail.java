@@ -116,6 +116,10 @@ public class GuiSchemaDetail extends GuiElement {
         capabilityIndicatorList.update(schema, itemStack, materials, availableCapabilities);
     }
 
+    public void updateAvailableCapabilities(int[] availableCapabilities) {
+        capabilityIndicatorList.updateAvailableCapabilities(availableCapabilities);
+    }
+
     public void toggleButton(boolean enabled) {
         craftButton.setEnabled(enabled);
     }

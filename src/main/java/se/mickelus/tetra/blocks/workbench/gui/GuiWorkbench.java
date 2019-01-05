@@ -193,10 +193,12 @@ public class GuiWorkbench extends GuiContainer {
 
             World world = tileEntity.getWorld();
             BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
+            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
+                    world.getBlockState(pos));
 
             schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities);
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(), currentSlot, availableCapabilities));
+            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(),
+                    currentSlot, availableCapabilities));
 
             schemaList.setVisible(false);
             schemaDetail.setVisible(true);
@@ -210,6 +212,22 @@ public class GuiWorkbench extends GuiContainer {
     public void updateScreen() {
         super.updateScreen();
         inventoryInfo.update(tileEntity.getCurrentSchema(), targetStack);
+
+        if (tileEntity.getCurrentSchema() != null && schemaDetail.isVisible()) {
+            World world = tileEntity.getWorld();
+            BlockPos pos = tileEntity.getPos();
+            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
+                    world.getBlockState(pos));
+            schemaDetail.updateAvailableCapabilities(availableCapabilities);
+
+            schemaDetail.toggleButton(
+                    tileEntity.getCurrentSchema().canApplyUpgrade(
+                            viewingPlayer,
+                            tileEntity.getTargetItemStack(),
+                            tileEntity.getMaterials(),
+                            tileEntity.getCurrentSlot(),
+                            availableCapabilities));
+        }
     }
 
     private void updateItemDisplay(ItemStack itemStack, ItemStack previewStack) {

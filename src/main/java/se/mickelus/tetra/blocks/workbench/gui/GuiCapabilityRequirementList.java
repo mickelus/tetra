@@ -1,8 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
@@ -13,6 +11,7 @@ import java.util.Collection;
 public class GuiCapabilityRequirementList extends GuiElement {
 
     private GuiCapabilityRequirement[] indicators;
+    private int[] requiredLevels;
 
     public GuiCapabilityRequirementList(int x, int y) {
         super(x, y, 54, 18);
@@ -24,6 +23,8 @@ public class GuiCapabilityRequirementList extends GuiElement {
             indicators[i].setAttachment(GuiAttachment.topRight);
             addChild(indicators[i]);
         }
+
+        requiredLevels = new int[indicators.length];
     }
 
     public void update(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials, int[] availableCapabilities) {
@@ -33,14 +34,22 @@ public class GuiCapabilityRequirementList extends GuiElement {
         Capability[] capabilities = Capability.values();
         Collection<Capability> requiredCapabilities = schema.getRequiredCapabilities(targetStack, materials);
         for (int i = 0; i < capabilities.length; i++) {
-            int requiredLevel = schema.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
-            if (requiredCapabilities.contains(capabilities[i]) && requiredLevel > 0) {
+            requiredLevels[i] = schema.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
+            if (requiredCapabilities.contains(capabilities[i]) && requiredLevels[i] > 0) {
                 indicators[i].setX(-visibleCount * indicators[i].getWidth());
-                indicators[i].updateRequirement(requiredLevel, availableCapabilities[i]);
+                indicators[i].updateRequirement(requiredLevels[i], availableCapabilities[i]);
                 indicators[i].setVisible(true);
                 visibleCount++;
             } else {
                 indicators[i].setVisible(false);
+            }
+        }
+    }
+
+    public void updateAvailableCapabilities(int[] availableCapabilities) {
+        for (int i = 0; i < indicators.length; i++) {
+            if (requiredLevels[i] > 0) {
+                indicators[i].updateRequirement(requiredLevels[i], availableCapabilities[i]);
             }
         }
     }
