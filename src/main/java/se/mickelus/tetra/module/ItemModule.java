@@ -14,6 +14,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 
 public abstract class ItemModule<T extends ModuleData> implements ICapabilityProvider {
@@ -145,10 +146,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return getData(itemStack).durability;
     }
 
-    public ItemStack getRepairMaterial(ItemStack itemStack) {
+    public Material getRepairMaterial(ItemStack itemStack) {
         RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getData(itemStack).key);
         if (definition != null) {
-            return definition.material.repairMaterial;
+            return definition.material;
         }
         return null;
     }

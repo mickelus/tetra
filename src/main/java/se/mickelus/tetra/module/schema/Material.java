@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.lang.reflect.Type;
@@ -22,11 +24,11 @@ import java.lang.reflect.Type;
  * }
  */
 public class Material {
-    public ItemStack repairMaterial = ItemStack.EMPTY;
-    public ItemStack salvageMaterial = ItemStack.EMPTY;
-    public ItemPredicate craftPredicate;
-
+    public ItemPredicate predicate;
     public int count = 1;
+
+    private ItemStack itemStack;
+    private String ore;
 
     public static class MaterialDeserializer implements JsonDeserializer<Material> {
 
@@ -35,39 +37,42 @@ public class Material {
             Material material = new Material();
 
             if (element != null && !element.isJsonNull()) {
-
                 JsonObject jsonObject = JsonUtils.getJsonObject(element, "material");
                 String type = JsonUtils.getString(jsonObject, "type", "");
-                Item item = null;
-                int data = 0;
-                if ("forge:ore_dict".equals(type)) {
-                    String oreName = JsonUtils.getString(jsonObject, "ore");
-                    if (OreDictionary.doesOreNameExist(oreName)) {
-                        NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreName);
-                        if (!itemStacks.isEmpty()) {
-                            ItemStack itemStack = itemStacks.get(0);
-                            data = itemStack.getMetadata();
-                            item = itemStack.getItem();
-                        }
-                    }
-                } else if (jsonObject.has("item")) {
+
+                material.count = JsonUtils.getInt(jsonObject, "count", 1);
+                jsonObject.remove("count");
+
+                if (jsonObject.has("item")) {
                     ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "item"));
-                    item = Item.REGISTRY.getObject(resourcelocation);
+                    Item item = Item.REGISTRY.getObject(resourcelocation);
+                    int data = JsonUtils.getInt(jsonObject, "data", 0);
+                    material.itemStack = new ItemStack(item, material.count, data);
+                } else if ("forge:ore_dict".equals(type) && jsonObject.has("ore")) {
+                    material.ore = JsonUtils.getString(jsonObject, "ore");
                 }
 
-                if (item != null) {
-                    material.count = JsonUtils.getInt(jsonObject, "count", 1);
-                    if (data != 0) {
-                        data = JsonUtils.getInt(jsonObject, "data", 0);
-                    }
-                    material.repairMaterial = new ItemStack(item, material.count, data);
-                    material.salvageMaterial = new ItemStack(item, material.count, data);
-
-                    jsonObject.remove("count");
-                    material.craftPredicate = ItemPredicate.deserialize(element);
+                try {
+                    material.predicate = ItemPredicate.deserialize(element);
+                } catch (JsonSyntaxException e) {
+                    // skips setting craft predicate, material will be treated as invalid
                 }
             }
             return material;
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public String getDisplayName() {
+        if (itemStack != null) {
+            return itemStack.getDisplayName();
+        } else if (ore != null) {
+            NonNullList<ItemStack> itemStacks = OreDictionary.getOres(ore);
+            if (!itemStacks.isEmpty()) {
+                return itemStacks.get(0).getDisplayName();
+            }
+        }
+
+        return "Unknown material";
     }
 }

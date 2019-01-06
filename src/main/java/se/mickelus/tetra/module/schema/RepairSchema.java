@@ -4,7 +4,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -60,7 +59,7 @@ public class RepairSchema extends BaseSchema {
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
-            return item.getRepairMaterial(itemStack).getCount();
+            return item.getRepairMaterialCount(itemStack);
         }
         return 0;
     }
@@ -69,7 +68,7 @@ public class RepairSchema extends BaseSchema {
     public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
-            return materialStack.isItemEqual(item.getRepairMaterial(itemStack));
+            return item.getRepairMaterial(itemStack).predicate.test(materialStack);
         }
         return false;
     }

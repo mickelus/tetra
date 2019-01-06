@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.schema.Material;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -273,20 +274,37 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      * Returns an itemstack with the material required for the next repair attempt. Rotates between materials required
      * for different modules
      * @param itemStack The itemstack for the modular item
-     * @return An itemstack representing the material required for the repair
+     * @return The material definition for the material required for the next repair attempt
      */
-    public ItemStack getRepairMaterial(ItemStack itemStack) {
+    public Material getRepairMaterial(ItemStack itemStack) {
         return getRepairModule(itemStack)
                 .map(module -> {
-                    ItemStack material = module.getRepairMaterial(itemStack).copy();
+                    Material material = module.getRepairMaterial(itemStack);
                     int repairCount = getRepairCount(itemStack);
 
-                    if (material.getCount() > 1) {
-                        material.setCount(Math.max(1, (int)(getRepairMultiplier(repairCount) * material.getCount())));
-                    }
                     return material;
                 })
-                .orElse(ItemStack.EMPTY);
+                .orElse(null);
+    }
+
+    /**
+     * Returns the required size of the repair material itemstack for the next repair attempt.
+     * @param itemStack The itemstack for the modular item
+     * @return
+     */
+    public int getRepairMaterialCount(ItemStack itemStack) {
+        return getRepairModule(itemStack)
+                .map(module -> {
+                    Material material = module.getRepairMaterial(itemStack);
+                    int repairCount = getRepairCount(itemStack);
+
+                    if (material.count > 1) {
+                        return Math.max(1, (int)(getRepairMultiplier(repairCount) * material.count));
+                    }
+
+                    return material.count;
+                })
+                .orElse(0);
     }
 
     /**
@@ -311,13 +329,17 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
         return getRepairModule(itemStack)
-                .map(module -> {
-                    int level = module.getRepairRequiredCapabilityLevel(itemStack, capability);
-                    return Math.max(1, level);
-        })
-            .orElse(0);
+                .filter(module -> module.getRepairRequiredCapabilities(itemStack).contains(capability))
+                .map(module -> module.getRepairRequiredCapabilityLevel(itemStack, capability))
+                .map(level -> Math.max(1, level))
+                .orElse(0);
     }
 
+    /**
+     * Returns the number of times this item has been repaired.
+     * @param itemStack The itemstack for the modular item
+     * @return
+     */
     private int getRepairCount(ItemStack itemStack) {
         return NBTHelper.getTag(itemStack).getInteger(repairCountKey);
     }

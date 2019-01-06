@@ -77,7 +77,7 @@ public class ItemUpgradeRegistry {
 
         if (definition.repair) {
             for (OutcomeDefinition outcomeDefinition: definition.outcomes) {
-                if (!outcomeDefinition.material.repairMaterial.isEmpty() && outcomeDefinition.moduleVariant != null) {
+                if (outcomeDefinition.moduleVariant != null) {
                     registerRepairDefinition(new RepairDefinition(outcomeDefinition));
                 }
             }
