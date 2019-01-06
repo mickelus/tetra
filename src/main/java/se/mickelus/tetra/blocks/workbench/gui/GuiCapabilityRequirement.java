@@ -12,10 +12,12 @@ public class GuiCapabilityRequirement extends GuiCapability {
     public void updateRequirement(int requiredLevel, int availableLevel) {
         setVisible(requiredLevel != 0);
 
-        if (requiredLevel > availableLevel) {
-            update(requiredLevel, GuiColors.remove);
-        } else {
-            update(requiredLevel, GuiColors.add);
+        if (isVisible()) {
+            if (requiredLevel > availableLevel) {
+                update(requiredLevel, GuiColors.remove);
+            } else {
+                update(requiredLevel, GuiColors.add);
+            }
         }
     }
 }
