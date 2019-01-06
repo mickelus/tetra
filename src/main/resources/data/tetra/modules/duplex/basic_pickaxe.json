@@ -3,7 +3,7 @@
         "key": "basic_pickaxe/oak",
         "durability": 20,
         "integrity": -1,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "866526",
@@ -17,7 +17,7 @@
         "key": "basic_pickaxe/cobblestone",
         "durability": 56,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "9a9a9a",
@@ -31,7 +31,7 @@
         "key": "basic_pickaxe/flint",
         "durability": 78,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": 0.1,
         "glyph": {
             "tint": "343434",
@@ -45,7 +45,7 @@
         "key": "basic_pickaxe/iron",
         "durability": 115,
         "integrity": -2,
-        "damage": 1,
+        "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
@@ -59,7 +59,7 @@
         "key": "basic_pickaxe/diamond",
         "durability": 771,
         "integrity": -2,
-        "damage": 2,
+        "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "33ebcb",
@@ -73,7 +73,7 @@
         "key": "basic_pickaxe/gold",
         "durability": 6,
         "integrity": -2,
-        "damage": 0.5,
+        "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "eaee57",
@@ -87,7 +87,7 @@
         "key": "basic_pickaxe/copper",
         "durability": 70,
         "integrity": 0,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "df7646",
@@ -101,7 +101,7 @@
         "key": "basic_pickaxe/tin",
         "durability": 50,
         "integrity": 0,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "b3c9c1",
@@ -115,7 +115,7 @@
         "key": "basic_pickaxe/silver",
         "durability": 26,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "d6f6ff",
@@ -129,7 +129,7 @@
         "key": "basic_pickaxe/nickel",
         "durability": 130,
         "integrity": -2,
-        "damage": 1.5,
+        "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "c2d3a6",
@@ -143,7 +143,7 @@
         "key": "basic_pickaxe/lead",
         "durability": 45,
         "integrity": -1,
-        "damage": 1.5,
+        "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "897a9b",
@@ -157,7 +157,7 @@
         "key": "basic_pickaxe/bronze",
         "durability": 180,
         "integrity": 0,
-        "damage": 1.5,
+        "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "b2712c",
@@ -171,7 +171,7 @@
         "key": "basic_pickaxe/electrum",
         "durability": 91,
         "integrity": -2,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "e4da4c",
@@ -185,7 +185,7 @@
         "key": "basic_pickaxe/steel",
         "durability": 202,
         "integrity": -2,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "999999",
@@ -199,7 +199,7 @@
         "key": "basic_pickaxe/thaumium",
         "durability": 240,
         "integrity": -2,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "4d3984",
@@ -213,7 +213,7 @@
         "key": "basic_pickaxe/ironwood",
         "durability": 246,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "5ea917",
@@ -227,7 +227,7 @@
         "key": "basic_pickaxe/steeleaf",
         "durability": 55,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "458430",
@@ -241,7 +241,7 @@
         "key": "basic_pickaxe/fierymetal",
         "durability": 502,
         "integrity": -2,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "fa9f00",
@@ -255,7 +255,7 @@
         "key": "basic_pickaxe/knightmetal",
         "durability": 246,
         "integrity": -1,
-        "damage": 1,
+        "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "b8cf9c",

@@ -320,16 +320,20 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         double damageModifier = getAllModules(itemStack).stream()
-            .map(itemModule -> itemModule.getDamageModifier(itemStack))
-            .reduce(0d, Double::sum);
+                .mapToDouble(itemModule -> itemModule.getDamageModifier(itemStack))
+                .sum();
 
         damageModifier = Arrays.stream(getSynergyData(itemStack))
-            .map(synergyData -> synergyData.damage)
-            .reduce(damageModifier, Double::sum);
+                .mapToDouble(synergyData -> synergyData.damage)
+                .reduce(damageModifier, Double::sum);
+
+        damageModifier = Arrays.stream(getSynergyData(itemStack))
+                .mapToDouble(synergyData -> synergyData.damageMultiplier)
+                .reduce(damageModifier, (a, b) -> a * b);
 
         return getAllModules(itemStack).stream()
-            .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
-            .reduce(damageModifier, (a, b) -> a*b);
+                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
+                .reduce(damageModifier, (a, b) -> a * b);
     }
 
     public static double getDamageModifierStatic(ItemStack itemStack) {
@@ -341,16 +345,20 @@ public class ItemModularHandheld extends ItemModular {
 
     public double getSpeedModifier(ItemStack itemStack) {
         double speedModifier = getAllModules(itemStack).stream()
-            .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-            .reduce(-2.4d, Double::sum);
+                .map(itemModule -> itemModule.getSpeedModifier(itemStack))
+                .reduce(-2.4d, Double::sum);
 
         speedModifier = Arrays.stream(getSynergyData(itemStack))
-            .map(synergyData -> synergyData.speed)
-            .reduce(speedModifier, Double::sum);
+                .mapToDouble(synergyData -> synergyData.attackSpeed)
+                .reduce(speedModifier, Double::sum);
+
+        speedModifier = Arrays.stream(getSynergyData(itemStack))
+                .mapToDouble(synergyData -> synergyData.attackSpeedMultiplier)
+                .reduce(speedModifier, (a, b) -> a * b);
 
         speedModifier = getAllModules(itemStack).stream()
-            .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
-            .reduce(speedModifier, (a, b) -> a*b);
+                .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
+                .reduce(speedModifier, (a, b) -> a * b);
 
         speedModifier *= getCounterWeightMultiplier(itemStack);
 

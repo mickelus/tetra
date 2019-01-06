@@ -194,6 +194,35 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 .map(prefix -> prefix + " " + modulePrefix)
                 .orElse(modulePrefix);
     }
+
+    @Override
+    public double getDamageModifier(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
+        // only use the damage from the highest damaging head
+        double damageModifier = Math.max(
+                getModuleFromSlot(itemStack, headLeftKey).getDamageModifier(itemStack),
+                getModuleFromSlot(itemStack, headRightKey).getDamageModifier(itemStack));
+
+        damageModifier = getAllModules(itemStack).stream()
+                .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
+                .map(itemModule -> itemModule.getDamageModifier(itemStack))
+                .reduce(damageModifier, Double::sum);
+
+        damageModifier = Arrays.stream(getSynergyData(itemStack))
+                .mapToDouble(synergyData -> synergyData.damage)
+                .reduce(damageModifier, Double::sum);
+
+        damageModifier = Arrays.stream(getSynergyData(itemStack))
+                .mapToDouble(synergyData -> synergyData.damageMultiplier)
+                .reduce(damageModifier, (a, b) -> a * b);
+
+        return getAllModules(itemStack).stream()
+                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
+                .reduce(damageModifier, (a, b) -> a * b);
+    }
 }
 
 

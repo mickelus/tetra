@@ -3,7 +3,7 @@
         "key": "basic_axe/oak",
         "durability": 26,
         "integrity": -1,
-        "damage": 5,
+        "damage": 6,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "866526",
@@ -17,7 +17,7 @@
         "key": "basic_axe/cobblestone",
         "durability": 92,
         "integrity": -1,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "9a9a9a",
@@ -31,7 +31,7 @@
         "key": "basic_axe/flint",
         "durability": 145,
         "integrity": -1,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "343434",
@@ -45,7 +45,7 @@
         "key": "basic_axe/iron",
         "durability": 193,
         "integrity": -2,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "d8d8d8",
@@ -59,7 +59,7 @@
         "key": "basic_axe/diamond",
         "durability": 992,
         "integrity": -2,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "33ebcb",
@@ -73,7 +73,7 @@
         "key": "basic_axe/gold",
         "durability": 11,
         "integrity": -2,
-        "damage": 5,
+        "damage": 6,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "eaee57",
@@ -87,7 +87,7 @@
         "key": "basic_axe/copper",
         "durability": 113,
         "integrity": 0,
-        "damage": 6,
+        "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "df7646",
@@ -101,7 +101,7 @@
         "key": "basic_axe/tin",
         "durability": 44,
         "integrity": 0,
-        "damage": 5.5,
+        "damage": 6.5,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "b3c9c1",
@@ -115,7 +115,7 @@
         "key": "basic_axe/silver",
         "durability": 29,
         "integrity": -1,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "d6f6ff",
@@ -129,7 +129,7 @@
         "key": "basic_axe/nickel",
         "durability": 156,
         "integrity": -2,
-        "damage": 6,
+        "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "c2d3a6",
@@ -143,7 +143,7 @@
         "key": "basic_axe/lead",
         "durability": 64,
         "integrity": -1,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "897a9b",
@@ -157,7 +157,7 @@
         "key": "basic_axe/bronze",
         "durability": 357,
         "integrity": -1,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "b2712c",
@@ -171,7 +171,7 @@
         "key": "basic_axe/electrum",
         "durability": 89,
         "integrity": -1,
-        "damage": 6,
+        "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "e4da4c",
@@ -185,7 +185,7 @@
         "key": "basic_axe/steel",
         "durability": 394,
         "integrity": -2,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "999999",
@@ -199,7 +199,7 @@
         "key": "basic_axe/thaumium",
         "durability": 419,
         "integrity": -2,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "4d3984",
@@ -213,7 +213,7 @@
         "key": "basic_axe/ironwood",
         "durability": 416,
         "integrity": -2,
-        "damage": 5,
+        "damage": 6,
         "attackSpeed": -0.6,
         "glyph": {
             "tint": "5ea917",
@@ -227,7 +227,7 @@
         "key": "basic_axe/steeleaf",
         "durability": 96,
         "integrity": -1,
-        "damage": 6,
+        "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "458430",
@@ -241,7 +241,7 @@
         "key": "basic_axe/fierymetal",
         "durability": 756,
         "integrity": -2,
-        "damage": 7,
+        "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
             "tint": "fa9f00",
@@ -255,7 +255,7 @@
         "key": "basic_axe/knightmetal",
         "durability": 396,
         "integrity": -2,
-        "damage": 6,
+        "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
             "tint": "b8cf9c",

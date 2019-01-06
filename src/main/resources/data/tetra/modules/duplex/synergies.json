@@ -5,7 +5,9 @@
     },
     {
         "modules": ["duplex/basic_axe", "duplex/basic_axe"],
-        "name": "duplex/axe_axe"
+        "name": "duplex/axe_axe",
+        "damageMultiplier": 1.2,
+        "attackSpeedMultiplier": 0.9
     },
     {
         "modules": ["duplex/basic_axe", "duplex/basic_pickaxe"],
