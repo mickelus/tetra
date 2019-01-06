@@ -9,18 +9,6 @@
                 "material": {
                     "item": "minecraft:planks",
                     "count": 2,
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
                     "data": 1
                 },
                 "requiredCapabilities": {
@@ -76,29 +64,6 @@
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/dark_oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/cobblestone"
-            },
-            {
-                "material": {
-                    "item": "minecraft:stone",
-                    "count": 2,
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/stone"
             },
             {
                 "material": {
@@ -352,6 +317,42 @@
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/stone"
             }
         ]
     }

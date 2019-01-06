@@ -9,20 +9,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:log"
-                },
-                "moduleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/log"
-            },
-            {
-                "material": {
-                    "item": "minecraft:stone"
-                },
-                "moduleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/stone"
-            },
-            {
-                "material": {
                     "item": "minecraft:iron_ingot",
                     "count": 3
                 },
@@ -185,6 +171,22 @@
                 },
                 "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "logWood"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/log"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/stone"
             }
         ]
     }

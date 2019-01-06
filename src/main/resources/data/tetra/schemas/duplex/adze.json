@@ -9,29 +9,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 0,
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/adze",
-                "moduleVariant": "adze/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "duplex/adze",
-                "moduleVariant": "adze/cobblestone"
-            },
-            {
-                "material": {
                     "item": "minecraft:flint",
                     "count": 2
                 },
@@ -235,6 +212,42 @@
                 },
                 "moduleKey": "duplex/adze",
                 "moduleVariant": "adze/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/adze",
+                "moduleVariant": "adze/cobblestone"
             }
         ]
     }

@@ -81,17 +81,6 @@
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:planks",
                     "data": 1
                 },
                 "requiredCapabilities": {
@@ -208,6 +197,17 @@
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/oak"
             }
         ]
     }

@@ -11,27 +11,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:plank",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/butt",
-                "moduleVariant": "butt/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone"
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "duplex/butt",
-                "moduleVariant": "butt/cobblestone"
-            },
-            {
-                "material": {
                     "item": "minecraft:iron_ingot"
                 },
                 "requiredCapabilities": {
@@ -196,6 +175,39 @@
                 },
                 "moduleKey": "duplex/butt",
                 "moduleVariant": "butt/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/cobblestone"
             }
         ]
     }

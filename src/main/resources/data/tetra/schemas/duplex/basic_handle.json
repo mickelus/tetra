@@ -78,17 +78,6 @@
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/basic_handle",
-                "moduleVariant": "basic_handle/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:planks",
                     "data": 1
                 },
                 "requiredCapabilities": {
@@ -205,6 +194,17 @@
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/ironwood"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/oak"
             }
         ]
     }

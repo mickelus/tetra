@@ -12,27 +12,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/hoe",
-                "moduleVariant": "hoe/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone"
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "duplex/hoe",
-                "moduleVariant": "hoe/cobblestone"
-            },
-            {
-                "material": {
                     "item": "minecraft:flint"
                 },
                 "requiredCapabilities": {
@@ -213,6 +192,39 @@
                 },
                 "moduleKey": "duplex/hoe",
                 "moduleVariant": "hoe/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/hoe",
+                "moduleVariant": "hoe/cobblestone"
             }
         ]
     }

@@ -9,29 +9,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "duplex/basic_axe",
-                "moduleVariant": "basic_axe/cobblestone"
-            },
-            {
-                "material": {
                     "item": "minecraft:flint",
                     "count": 2
                 },
@@ -237,6 +214,42 @@
                 "improvements": {
                     "basic_axe/severing": 1
                 }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/basic_axe",
+                "moduleVariant": "basic_axe/cobblestone"
             }
         ]
     }

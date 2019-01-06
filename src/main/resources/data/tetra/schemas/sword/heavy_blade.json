@@ -9,18 +9,6 @@
             {
                 "material": {
                     "item": "minecraft:log",
-                    "data": 0,
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/oak_log"
-            },
-            {
-                "material": {
-                    "item": "minecraft:log",
                     "data": 1,
                     "count": 8
                 },
@@ -77,29 +65,6 @@
                 },
                 "moduleKey": "sword/heavy_blade",
                 "moduleVariant": "heavy_blade/dark_oak_log"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/cobblestone"
-            },
-            {
-                "material": {
-                    "item": "minecraft:stone",
-                    "data": 0,
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/stone"
             },
             {
                 "material": {
@@ -176,7 +141,6 @@
                     "ore": "ingotCopper",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -189,7 +153,6 @@
                     "ore": "ingotTin",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -202,7 +165,6 @@
                     "ore": "ingotSilver",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -215,7 +177,6 @@
                     "ore": "ingotNickel",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -228,7 +189,6 @@
                     "ore": "ingotLead",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -241,7 +201,6 @@
                     "ore": "ingotBronze",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -254,7 +213,6 @@
                     "ore": "ingotElectrum",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -267,7 +225,6 @@
                     "ore": "ingotSteel",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -280,7 +237,6 @@
                     "data": 0,
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -293,7 +249,6 @@
                     "ore": "ingotIronwood",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -306,7 +261,6 @@
                     "ore": "ingotSteeleaf",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -322,7 +276,6 @@
                     "ore": "ingotFiery",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -338,7 +291,6 @@
                     "ore": "ingotKnightmetal",
                     "count": 8
                 },
-                "materialSlot": 0,
                 "requiredCapabilities": {
                     "hammer": 3
                 },
@@ -347,6 +299,42 @@
                 "improvements": {
                     "heavy_blade/crushing": 1
                 }
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "logWood",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/oak_log"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/stone"
             }
         ]
     }

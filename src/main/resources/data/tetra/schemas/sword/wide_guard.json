@@ -13,18 +13,6 @@
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "data": 0,
-                    "count": 3
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/wide_guard",
-                "moduleVariant": "wide_guard/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:planks",
                     "data": 1,
                     "count": 3
                 },
@@ -81,29 +69,6 @@
                 },
                 "moduleKey": "sword/wide_guard",
                 "moduleVariant": "wide_guard/dark_oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 3
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/wide_guard",
-                "moduleVariant": "wide_guard/cobblestone"
-            },
-            {
-                "material": {
-                    "item": "minecraft:stone",
-                    "data": 0,
-                    "count": 3
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/wide_guard",
-                "moduleVariant": "wide_guard/stone"
             },
             {
                 "material": {
@@ -351,6 +316,42 @@
                 },
                 "moduleKey": "sword/wide_guard",
                 "moduleVariant": "wide_guard/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 3
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/wide_guard",
+                "moduleVariant": "wide_guard/stone"
             }
         ]
     }

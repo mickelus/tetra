@@ -12,29 +12,6 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 0,
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/sickle",
-                "moduleVariant": "sickle/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "duplex/sickle",
-                "moduleVariant": "sickle/cobblestone"
-            },
-            {
-                "material": {
                     "item": "minecraft:flint",
                     "count": 2
                 },
@@ -238,6 +215,42 @@
                 },
                 "moduleKey": "duplex/sickle",
                 "moduleVariant": "sickle/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/sickle",
+                "moduleVariant": "sickle/cobblestone"
             }
         ]
     }

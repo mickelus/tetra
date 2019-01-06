@@ -12,17 +12,6 @@
             {
                 "material": {
                     "item": "minecraft:planks",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:planks",
                     "data": 1
                 },
                 "requiredCapabilities": {
@@ -74,27 +63,6 @@
                 },
                 "moduleKey": "sword/reinforced_bolster",
                 "moduleVariant": "reinforced_bolster/dark_oak"
-            },
-            {
-                "material": {
-                    "item": "minecraft:cobblestone"
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/cobblestone"
-            },
-            {
-                "material": {
-                    "item": "minecraft:stone",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/reinforced_bolster",
-                "moduleVariant": "reinforced_bolster/stone"
             },
             {
                 "material": {
@@ -322,6 +290,39 @@
                 },
                 "moduleKey": "sword/reinforced_bolster",
                 "moduleVariant": "reinforced_bolster/knightmetal"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "plankWood"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/oak"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "cobblestone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/cobblestone"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "stone"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/reinforced_bolster",
+                "moduleVariant": "reinforced_bolster/stone"
             }
         ]
     }
