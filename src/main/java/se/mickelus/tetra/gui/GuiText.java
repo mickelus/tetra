@@ -18,7 +18,7 @@ public class GuiText extends GuiElement {
     }
 
     public void setString(String string) {
-        this.string = string;
+        this.string = string.replace("\\n", "\n");
     }
 
     @Override

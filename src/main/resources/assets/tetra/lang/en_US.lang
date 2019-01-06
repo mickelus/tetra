@@ -780,7 +780,7 @@ basic_handle/ironwood=Ironwood handle
 # AXE HEAD
 ##############################
 basic_axe_schema.name=Axe head
-basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.
+basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.\n\nDouble axe heads provide synergy bonuses.
 basic_axe_schema.slot1=Head material
 
 basic_axe/severing.name=Severing
@@ -848,7 +848,7 @@ basic_axe/knightmetal.prefix=Knightmetal
 # PICKAXE HEAD
 ###############################
 basic_pickaxe_schema.name=Pickaxe head
-basic_pickaxe_schema.description=Forge a pickaxe head from the given material.
+basic_pickaxe_schema.description=Forge a pickaxe head from the given material.\n\nDouble pickaxe heads may provide synergy bonuses.
 basic_pickaxe_schema.slot1=Head material
 
 basic_pickaxe/smelting.name=Smelting
@@ -947,7 +947,7 @@ butt/knightmetal=Knightmetal butt
 # HAMMER HEAD
 ###############################
 basic_hammer_schema.name=Mallet head
-basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for upgrading other things.
+basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for upgrading other things.\n\nDouble hammer heads may provide synergy bonuses.
 basic_hammer_schema.slot1=Head material
 
 
