@@ -181,12 +181,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
-        amount = getReducedDamage(amount, itemStack, responsibleEntity);
-        if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
-            itemStack.damageItem(amount, responsibleEntity);
-        } else {
-            setDamage(itemStack, itemStack.getMaxDamage());
-        }
+        itemStack.damageItem(getReducedDamage(amount, itemStack, responsibleEntity), responsibleEntity);
+    }
+
+    @Override
+    public void setDamage(ItemStack itemStack, int damage) {
+        super.setDamage(itemStack, Math.min(itemStack.getMaxDamage(), damage));
     }
 
     private int getReducedDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
