@@ -54,6 +54,8 @@ tile.forged_wall.name=Forged wall
 tile.hammer_base.name=Hammer base
 tile.hammer_head.name=Hammer head
 
+ancient_description=Found in structures deep underground in snowy biomes
+
 ###############################
 # SWORD
 ###############################

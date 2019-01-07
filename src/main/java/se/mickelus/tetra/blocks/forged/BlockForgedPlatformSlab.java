@@ -6,7 +6,10 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +21,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 
 public class BlockForgedPlatformSlab extends TetraBlock {
@@ -43,6 +49,12 @@ public class BlockForgedPlatformSlab extends TetraBlock {
         fullBlock = false;
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(halfProp, BlockSlab.EnumBlockHalf.BOTTOM));
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+        tooltip.add(I18n.format("ancient_description"));
     }
 
     @Override
