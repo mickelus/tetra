@@ -34,7 +34,8 @@ public class GeodeGenerator implements IWorldGenerator {
             final BlockPos blockPos = chunkPos.getBlock(random.nextInt(16),
                     minY + random.nextInt(rangeY), random.nextInt(16));
             final IBlockState state = world.getBlockState(blockPos);
-            if (state.getBlock().isReplaceableOreGen(state, world, blockPos, predicate)) {
+            // if (state.getBlock().isReplaceableOreGen(state, world, blockPos, predicate)) { todo: add support for other stones?
+            if (predicate.apply(state)) {
                 world.setBlockState(blockPos, BlockGeode.instance.getDefaultState(), 16);
             }
         }

@@ -5,10 +5,14 @@ import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -27,10 +31,11 @@ public class BlockGeode extends TetraBlock {
         setHardness(1.5F);
         setResistance(10.0F);
         setSoundType(SoundType.STONE);
+        setHarvestLevel("pickaxe", 0);
 
         this.setDefaultState(this.blockState.getBaseState());
 
-        setUnlocalizedName(unlocalizedName);
+        setUnlocalizedName("stone.stone.name");
         setRegistryName(unlocalizedName);
 
         setCreativeTab(TetraCreativeTabs.getInstance());
@@ -43,6 +48,11 @@ public class BlockGeode extends TetraBlock {
         return super.getExpDrop(state, world, pos, fortune);
     }
 
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(Blocks.STONE);
+    }
+
     @Nullable
     @Override
     public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
@@ -50,14 +60,14 @@ public class BlockGeode extends TetraBlock {
     }
 
     @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        return new ItemStack(Blocks.STONE);
+    }
+
+    @Override
     public void init(PacketHandler packetHandler) {
         if (ConfigHandler.geode_generate) {
             GameRegistry.registerWorldGenerator(new GeodeGenerator(), 10);
         }
-    }
-
-    @Override
-    public String getLocalizedName() {
-        return I18n.format("tile.stone.stone.name");
     }
 }
