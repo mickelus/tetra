@@ -92,7 +92,7 @@
         }
     },
     {
-        "moduleVariants": ["basic_pickaxe/diamond", "basic_pickaxe/diamond"],
+        "moduleVariants": ["basic_pickaxe/steel", "basic_pickaxe/steel"],
         "capabilities": {
             "pickaxe": 1
         }
