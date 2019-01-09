@@ -338,9 +338,6 @@
             "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/ironwood"],
             "duplex/head_right": ["duplex/butt_right", "butt/ironwood"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
-        },
-        "improvements": {
-            "duplex/head_left:enchantment/fortune": 1
         }
     },
     {
@@ -352,10 +349,6 @@
             "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/steeleaf"],
             "duplex/head_right": ["duplex/butt_right", "butt/steeleaf"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
-        },
-        "improvements": {
-            "duplex/head_left:enchantment/efficiency": 1,
-            "duplex/head_right:enchantment/efficiency": 1
         }
     },
     {

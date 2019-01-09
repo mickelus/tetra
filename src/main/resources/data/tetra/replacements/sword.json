@@ -69,9 +69,6 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/ironwood"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/ironwood"]
-        },
-        "improvements": {
-            "sword/hilt:enchantment/knockback": 1
         }
     },
     {
@@ -84,9 +81,6 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/steeleaf"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/steeleaf"]
-        },
-        "improvements": {
-            "sword/blade:enchantment/looting": 2
         }
     },
     {
@@ -99,9 +93,6 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/blaze_rod"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/fierymetal"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/fierymetal"]
-        },
-        "improvements": {
-            "sword/blade:enchantment/fire_aspect": 2
         }
     },
     {

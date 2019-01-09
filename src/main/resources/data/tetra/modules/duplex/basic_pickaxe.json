@@ -227,7 +227,7 @@
         "key": "basic_pickaxe/steeleaf",
         "durability": 55,
         "integrity": -1,
-        "damage": 2,
+        "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "458430",
@@ -241,7 +241,7 @@
         "key": "basic_pickaxe/fierymetal",
         "durability": 502,
         "integrity": -2,
-        "damage": 2,
+        "damage": 5,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "fa9f00",
@@ -255,7 +255,7 @@
         "key": "basic_pickaxe/knightmetal",
         "durability": 246,
         "integrity": -1,
-        "damage": 2,
+        "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "b8cf9c",

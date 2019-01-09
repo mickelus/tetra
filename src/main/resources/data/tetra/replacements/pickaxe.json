@@ -331,7 +331,7 @@
     },
     {
         "predicate": {
-            "item": "thaumcraft:thaumium_pickaxe"
+            "item": "thaumcraft:thaumium_pick"
         },
         "item": "tetra:duplex_tool_modular",
         "modules": {
@@ -349,9 +349,6 @@
             "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/ironwood"],
             "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/ironwood"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
-        },
-        "improvements": {
-            "duplex/head_left:enchantment/fortune": 1
         }
     },
     {
@@ -363,10 +360,6 @@
             "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/steeleaf"],
             "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/steeleaf"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
-        },
-        "improvements": {
-            "duplex/head_left:enchantment/efficiency": 1,
-            "duplex/head_right:enchantment/efficiency": 1
         }
     },
     {
