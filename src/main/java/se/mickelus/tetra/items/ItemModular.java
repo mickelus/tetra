@@ -175,11 +175,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return ItemUpgradeRegistry.instance.getModule(NBTHelper.getTag(itemStack).getString(slot));
     }
 
-    @Override
-    public int getItemEnchantability(ItemStack stack) {
-        return super.getItemEnchantability(stack);
-    }
-
     public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
         itemStack.damageItem(getReducedDamage(amount, itemStack, responsibleEntity), responsibleEntity);
     }

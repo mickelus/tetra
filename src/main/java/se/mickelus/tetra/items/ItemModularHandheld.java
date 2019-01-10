@@ -437,6 +437,16 @@ public class ItemModularHandheld extends ItemModular {
         return 1;
     }
 
+    @Override
+    public boolean isEnchantable(final ItemStack stack) {
+        return false;
+    }
+
+    @Override
+    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
+        return false;
+    }
+
     public static String getEffectiveTool(IBlockState blockState) {
         String tool = blockState.getBlock().getHarvestTool(blockState);
 
