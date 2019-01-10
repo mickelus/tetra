@@ -6,11 +6,11 @@ about: Suggest new functionality, new content or balancing changes
 
 ## Feature Request
 
-**Present your request**
+**Feature description**
 <!--- A clear and concise description of what you want to improve --->
 
-**How does this improve the player experience?**
+**How it improves the player experience**
 <!--- Describe how this would make the game more fun, deep, intuitive, interesting or immersive --->
 
-**Why does this fit into tetra?**
+**Tetra synergies**
 <!--- How does this synergize with current features in tetra, or how does it align the the goals of tetra --->
