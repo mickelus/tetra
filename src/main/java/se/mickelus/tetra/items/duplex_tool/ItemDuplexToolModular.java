@@ -23,7 +23,9 @@ import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 public class ItemDuplexToolModular extends ItemModularHandheld {
@@ -202,9 +204,11 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         }
 
         // only use the damage from the highest damaging head
-        double damageModifier = Math.max(
-                getModuleFromSlot(itemStack, headLeftKey).getDamageModifier(itemStack),
-                getModuleFromSlot(itemStack, headRightKey).getDamageModifier(itemStack));
+        double damageModifier = Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
+                .filter(Objects::nonNull)
+                .mapToDouble(module -> module.getDamageModifier(itemStack))
+                .max()
+                .orElse(0);
 
         damageModifier = getAllModules(itemStack).stream()
                 .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
