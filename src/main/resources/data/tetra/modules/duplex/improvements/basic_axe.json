@@ -283,6 +283,168 @@
             "fiery": 5
         }
     },
+
+    {
+        "key": "enchantment/smite",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "smite": 1
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "smite": 2
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "smite": 3
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "smite": 4
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "smite": 5
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 6,
+        "enchantment": true,
+        "effects": {
+            "smite": 6
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 7,
+        "enchantment": true,
+        "effects": {
+            "smite": 7
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 8,
+        "enchantment": true,
+        "effects": {
+            "smite": 8
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 9,
+        "enchantment": true,
+        "effects": {
+            "smite": 9
+        }
+    },
+    {
+        "key": "enchantment/smite",
+        "level": 10,
+        "enchantment": true,
+        "effects": {
+            "smite": 10
+        }
+    },
+
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 1
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 2
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 3
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 4
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 5
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 6,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 6
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 7,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 7
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 8,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 8
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 9,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 9
+        }
+    },
+    {
+        "key": "enchantment/bane_of_arthropods",
+        "level": 10,
+        "enchantment": true,
+        "effects": {
+            "arthropod": 10
+        }
+    },
     {
         "key": "basic_axe/severing",
         "level": 1,
