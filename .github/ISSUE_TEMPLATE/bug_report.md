@@ -6,7 +6,7 @@ about: Something is not working as expected
 
 ## Bug Report
 
-**Current Behaviour**
+**Observed Behaviour**
 
 **Expected Behaviour**
 
