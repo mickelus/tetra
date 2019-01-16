@@ -1,21 +1,27 @@
 package se.mickelus.tetra.blocks.geode;
 
+import java.util.Arrays;
 import java.util.Random;
 import javax.annotation.Nullable;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -23,45 +29,83 @@ public class BlockGeode extends TetraBlock {
 
     static final String unlocalizedName = "block_geode";
 
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockGeode instance;
+
+    // hacky, but avoids some log warnings
+    public static PropertyInteger variantProp = PropertyInteger.create("variant", 0,
+            (int) Arrays.stream(DataHandler.instance.getData("geode/variants", GeodeVariant[].class)).count() - 1);
+
+    public GeodeVariant[] variants;
+
 
     public BlockGeode() {
         super(Material.ROCK);
-
-        setHardness(1.5F);
-        setResistance(10.0F);
         setSoundType(SoundType.STONE);
         setHarvestLevel("pickaxe", 0);
 
-        this.setDefaultState(this.blockState.getBaseState());
 
-        setUnlocalizedName("stone.stone.name");
+        setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
 
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        instance = this;
+        this.setDefaultState(this.blockState.getBaseState().withProperty(variantProp, 0));
     }
 
     @Override
-    public int getExpDrop(final IBlockState state, final IBlockAccess world, final BlockPos pos, final int fortune) {
-        return super.getExpDrop(state, world, pos, fortune);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, variantProp);
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(Blocks.STONE);
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(variantProp, meta);
     }
 
-    @Nullable
     @Override
-    public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
+    public int getMetaFromState(IBlockState blockState) {
+        return blockState.getValue(variantProp);
+    }
+
+    private GeodeVariant getVariant(IBlockState state) {
+        int index = state.getValue(variantProp);
+        if (index < variants.length) {
+            return variants[index];
+        }
+
+        return variants[0];
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState blockState, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return getSilkTouchDrop(blockState);
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ItemGeode.instance;
     }
 
     @Override
+    public int damageDropped(IBlockState blockState) {
+        return getVariant(blockState).dropMeta;
+    }
+
+    @Override
     protected ItemStack getSilkTouchDrop(IBlockState state) {
-        return new ItemStack(Blocks.STONE);
+        GeodeVariant variant = getVariant(state);
+        return new ItemStack(variant.block, 1, variant.blockMeta);
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+        return getVariant(blockState).hardness;
+    }
+
+    @Override
+    public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
+        return getVariant(world.getBlockState(pos)).resistance;
     }
 
     @Override
@@ -69,5 +113,9 @@ public class BlockGeode extends TetraBlock {
         if (ConfigHandler.geode_generate) {
             GameRegistry.registerWorldGenerator(new GeodeGenerator(), 10);
         }
+
+        variants = Arrays.stream(DataHandler.instance.getData("geode/variants", GeodeVariant[].class))
+                .filter(variant -> variant.block != null)
+                .toArray(GeodeVariant[]::new);
     }
 }

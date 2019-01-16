@@ -3,6 +3,7 @@ package se.mickelus.tetra.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Loader;
@@ -27,7 +28,7 @@ import java.util.Objects;
 
 public class DataHandler {
     private final File source;
-    private final Gson gson;
+    public final Gson gson;
 
     private File configDir;
 
@@ -47,6 +48,7 @@ public class DataHandler {
                 .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
                 .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
                 .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
+                .registerTypeAdapter(Block.class, new BlockDeserializer())
                 .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
                 .create();
 

@@ -1,0 +1,42 @@
+[
+    {
+        "minY": 5,
+        "maxY": 25,
+        "density": 8,
+        "block": "minecraft:stone",
+        "blockMeta": 0,
+        "hardness": 1.5,
+        "resistance": 10,
+        "dropMeta": 0
+    },
+    {
+        "minY": 5,
+        "maxY": 25,
+        "density": 10,
+        "block": "minecraft:stone",
+        "blockMeta": 1,
+        "hardness": 1.5,
+        "resistance": 10,
+        "dropMeta": 0
+    },
+    {
+        "minY": 5,
+        "maxY": 25,
+        "density": 12,
+        "block": "minecraft:stone",
+        "blockMeta": 3,
+        "hardness": 1.5,
+        "resistance": 10,
+        "dropMeta": 0
+    },
+    {
+        "minY": 5,
+        "maxY": 25,
+        "density": 16,
+        "block": "minecraft:stone",
+        "blockMeta": 5,
+        "hardness": 1.5,
+        "resistance": 10,
+        "dropMeta": 0
+    }
+]
