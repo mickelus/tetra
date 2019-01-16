@@ -104,6 +104,19 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+    BlockPos basePos = pos.offset(EnumFacing.UP);
+        if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
+            BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
+            baseBlock.consumeFuel(world, basePos);
+
+            ((TileEntityHammerHead) world.getTileEntity(pos)).activate();
+            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
+        }
+        return targetStack;
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return boundingBox;
     }

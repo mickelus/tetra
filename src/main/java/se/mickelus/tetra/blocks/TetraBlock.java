@@ -66,4 +66,8 @@ public class TetraBlock extends Block implements ITetraBlock {
     public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
         return targetStack;
     }
+
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        return targetStack;
+    }
 }

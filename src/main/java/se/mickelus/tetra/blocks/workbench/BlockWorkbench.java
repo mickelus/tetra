@@ -192,6 +192,16 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+        BlockPos topPos = pos.offset(EnumFacing.UP);
+        if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
+            BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
+            return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+        }
+        return targetStack;
+    }
+
+    @Override
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 

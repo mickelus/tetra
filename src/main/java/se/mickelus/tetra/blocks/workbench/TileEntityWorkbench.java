@@ -79,6 +79,22 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 .filter(action -> action.canPerformOn(player, targetStack))
                 .filter(action -> checkActionCapabilities(player, action, targetStack))
                 .ifPresent(action -> {
+                    for (Capability capability : action.getRequiredCapabilitiesFor(targetStack)) {
+                        int requiredLevel = action.getCapabilityLevel(targetStack, capability);
+                        ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);
+                        if (!providingStack.isEmpty()) {
+                            if (providingStack.getItem() instanceof ItemModular) {
+                                ((ItemModular) providingStack.getItem()).onActionConsumeCapability(providingStack,
+                                        targetStack, player, capability, requiredLevel,true);
+                            }
+                        } else {
+                            if (getBlockType() instanceof BlockWorkbench) {
+                                ((BlockWorkbench) getBlockType()).onActionConsumeCapability(world, getPos(), blockState,
+                                        targetStack, player, true);
+                            }
+                        }
+                    }
+
                     action.perform(player, targetStack, this);
                 });
     }
@@ -86,6 +102,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     private boolean checkActionCapabilities(EntityPlayer player, WorkbenchAction action, ItemStack itemStack) {
         return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
                 .allMatch(capability ->
+                        CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
+                        >= action.getCapabilityLevel(itemStack, capability));
     }
 
     public UpgradeSchema getCurrentSchema() {
@@ -182,7 +200,6 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);
                 if (!providingStack.isEmpty()) {
                     if (providingStack.getItem() instanceof ItemModular) {
-                        upgradedStack = ((ItemModular) providingStack.getItem())
                         upgradedStack = ((ItemModular) providingStack.getItem()).onCraftConsumeCapability(providingStack,
                                 upgradedStack, player, capability, requiredLevel,true);
                     }

@@ -28,6 +28,7 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.PotionBleeding;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
 
@@ -437,16 +438,6 @@ public class ItemModularHandheld extends ItemModular {
         return 1;
     }
 
-    @Override
-    public boolean isEnchantable(final ItemStack stack) {
-        return false;
-    }
-
-    @Override
-    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
-        return false;
-    }
-
     public static String getEffectiveTool(IBlockState blockState) {
         String tool = blockState.getBlock().getHarvestTool(blockState);
 
@@ -468,5 +459,33 @@ public class ItemModularHandheld extends ItemModular {
             return "shovel";
         }
         return null;
+    }
+
+    @Override
+    public boolean isEnchantable(final ItemStack stack) {
+        return false;
+    }
+
+    @Override
+    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
+        return false;
+    }
+
+    @Override
+    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, EntityPlayer player,
+            Capability capability, int capabilityLevel, boolean consumeResources) {
+        if (consumeResources) {
+            applyDamage(capabilityLevel, providerStack, player);
+        }
+        return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
+    }
+
+    @Override
+    public ItemStack onActionConsumeCapability(ItemStack providerStack, ItemStack targetStack, EntityPlayer player,
+            Capability capability, int capabilityLevel, boolean consumeResources) {
+        if (consumeResources) {
+            applyDamage(capabilityLevel, providerStack, player);
+        }
+        return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }
 }
