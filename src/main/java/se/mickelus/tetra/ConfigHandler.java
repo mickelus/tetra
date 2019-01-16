@@ -13,14 +13,6 @@ public class ConfigHandler {
     public static boolean development = false;
 
     public static boolean geode_generate = true;
-    public static String[] geode_contents = new String[] {
-            "minecraft:iron_nugget", "9", "30",
-            "minecraft:gold_nugget", "4", "20",
-            "minecraft:redstone", "6", "20",
-            "minecraft:flint", "3", "20",
-            "minecraft:diamond", "1", "2",
-            "minecraft:emerald", "1", "1",
-    };
 
     public static boolean feature_generate = false;
     public static int max_feature_depth = 8;
@@ -33,7 +25,6 @@ public class ConfigHandler {
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if (event.getModID().equals(TetraMod.MOD_ID)) {
                 ConfigManager.sync(TetraMod.MOD_ID, Config.Type.INSTANCE);
-                ItemGeode.instance.initContent();
             }
         }
     }

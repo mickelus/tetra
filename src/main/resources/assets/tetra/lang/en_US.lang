@@ -4,7 +4,7 @@ itemGroup.tetra=Tetra
 # WORKBENCH
 ###############################
 workbench.schema_list.empty=No upgrades available for the selected slot.
-workbench.repair=Repair
+repair_action.label=Repair
 workbench.schema_detail.craft=Craft
 workbench.schema_detail.back=back
 
@@ -32,7 +32,7 @@ tetra.general.geode_contents=Geode contents
 tetra.general.geode_contents.tooltip=Configure which items may be found when breaking a geode. Config values should be entered in groups of 3: itemId, maxCount, weight, where maxCount is the maximum amount that can be found when breaking a geode, and weight affects the probability that this item will be found.
 item.geode.name=Geode
 item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
-item.geode.label=crack open
+break_geode_action.label=Break open
 
 ###############################
 # MAGMATIC CELL

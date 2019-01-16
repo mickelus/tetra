@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class RepairAction implements WorkbenchAction {
 
-    public static final String key = "repair";
+    public static final String key = "repair_action";
 
     @Override
     public String getKey() {

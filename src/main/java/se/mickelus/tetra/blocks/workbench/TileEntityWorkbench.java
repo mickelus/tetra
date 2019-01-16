@@ -12,7 +12,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import se.mickelus.tetra.blocks.workbench.action.BreakAction;
+import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
@@ -43,8 +43,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     private Map<String, Runnable> changeListeners;
 
-    private static final WorkbenchAction[] actions = new WorkbenchAction[] {
-            new BreakAction(),
+    private static WorkbenchAction[] actions = new WorkbenchAction[] {
             new RepairAction()
     };
 
@@ -54,18 +53,15 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         changeListeners = new HashMap<>();
     }
 
+    public static void initConfigActions(WorkbenchAction[] actions) {
+        TileEntityWorkbench.actions = ArrayUtils.addAll(TileEntityWorkbench.actions, actions);
+    }
+
     public WorkbenchAction[] getAvailableActions(EntityPlayer player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
                 .filter(action -> action.canPerformOn(player, itemStack))
                 .toArray(WorkbenchAction[]::new);
-    }
-
-    public boolean canPerformAction(EntityPlayer player, String actionKey) {
-        ItemStack itemStack = getTargetItemStack();
-        return Arrays.stream(actions)
-                .filter(action -> action.getKey().equals(actionKey))
-                .anyMatch(action -> action.canPerformOn(player, itemStack));
     }
 
     public void performAction(EntityPlayer player, String actionKey) {
@@ -74,19 +70,22 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             return;
         }
 
-        ItemStack itemStack = getTargetItemStack();
+        IBlockState blockState = world.getBlockState(getPos());
+        ItemStack targetStack = getTargetItemStack();
+
         Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
-                .filter(action -> action.canPerformOn(player, itemStack))
-                .filter(action -> checkActionCapabilities(player, action, itemStack))
-                .ifPresent(action -> action.perform(player, itemStack, this));
+                .filter(action -> action.canPerformOn(player, targetStack))
+                .filter(action -> checkActionCapabilities(player, action, targetStack))
+                .ifPresent(action -> {
+                    action.perform(player, targetStack, this);
+                });
     }
 
     private boolean checkActionCapabilities(EntityPlayer player, WorkbenchAction action, ItemStack itemStack) {
         return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
-                .allMatch(capability -> CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
-                            >= action.getCapabilityLevel(itemStack, capability));
+                .allMatch(capability ->
     }
 
     public UpgradeSchema getCurrentSchema() {
@@ -184,15 +183,16 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 if (!providingStack.isEmpty()) {
                     if (providingStack.getItem() instanceof ItemModular) {
                         upgradedStack = ((ItemModular) providingStack.getItem())
-                                .onCraftConsumeCapability(providingStack, upgradedStack, player, true);
+                        upgradedStack = ((ItemModular) providingStack.getItem()).onCraftConsumeCapability(providingStack,
+                                upgradedStack, player, capability, requiredLevel,true);
                     }
                 } else {
                     if (getBlockType() instanceof BlockWorkbench) {
-                        ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState, upgradedStack, player, true);
+                        ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState,
+                                upgradedStack, player, true);
                     }
                 }
             }
-
         }
 
         emptyMaterialSlots(player);

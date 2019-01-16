@@ -1,16 +1,23 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
+
+import java.util.function.Consumer;
 
 public class GuiActionButton extends GuiElement {
 
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
-    private Capability capability;
+    private WorkbenchAction action;
+    private ItemStack targetStack;
+
     private GuiCapabilityRequirement capabilityIndicator;
 
     private GuiClickable iconClickable;
@@ -21,12 +28,21 @@ public class GuiActionButton extends GuiElement {
     private GuiRect borderTop;
     private GuiRect borderBottom;
 
-    public GuiActionButton(int x, int y, String label, Capability capability, Runnable onClickHandler) {
+    public GuiActionButton(int x, int y, WorkbenchAction action, ItemStack targetStack, Consumer<WorkbenchAction> clickHandler) {
+        this(x, y, action, targetStack, GuiAlignment.left, clickHandler);
+    }
+
+    public GuiActionButton(int x, int y, WorkbenchAction action, ItemStack targetStack, GuiAlignment alignment,
+            Consumer<WorkbenchAction> clickHandler) {
         super(x, y, 0, 11);
 
+        this.action = action;
+        this.targetStack = targetStack;
+
+        String label = I18n.format(action.getKey() + ".label");
         width = Minecraft.getMinecraft().fontRenderer.getStringWidth(label) + 42;
 
-        labelClickable = new GuiClickable(0, 0, width, height, onClickHandler) {
+        labelClickable = new GuiClickable(0, 0, width, height, () -> clickHandler.accept(action)) {
             protected void onFocus() {
                 setBorderColors(GuiColors.hoverMuted);
             }
@@ -50,12 +66,16 @@ public class GuiActionButton extends GuiElement {
         borderBottom = new GuiRect(9, 9, width - 18, 1, GuiColors.muted);
         labelClickable.addChild(borderBottom);
 
-        labelClickable.addChild(new GuiStringOutline(35, 1, label));
+        GuiString labelString = new GuiStringOutline(7, 1, label);
+        labelString.setAttachment(alignment.flip().toAttachment());
+        if (GuiAlignment.left.equals(alignment)) {
+            labelString.setX(-labelString.getX());
+        }
+        labelClickable.addChild(labelString);
 
         addChild(labelClickable);
 
-
-        iconClickable = new GuiClickable(6, -9, 29, 29, onClickHandler) {
+        iconClickable = new GuiClickable(6, -9, 29, 29, () -> clickHandler.accept(action)) {
             protected void onFocus() {
                 setBorderColors(GuiColors.hoverMuted);
             }
@@ -66,12 +86,16 @@ public class GuiActionButton extends GuiElement {
                 }
             }
         };
+        iconClickable.setAttachment(alignment.toAttachment());
+        if (GuiAlignment.right.equals(alignment)) {
+            iconClickable.setX(-iconClickable.getX());
+        }
 
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, WORKBENCH_TEXTURE));
         addChild(iconClickable);
 
-        this.capability = capability;
-        capabilityIndicator = new GuiCapabilityRequirement(6, 7, capability);
+        Capability[] capabilities = action.getRequiredCapabilitiesFor(targetStack);
+        capabilityIndicator = new GuiCapabilityRequirement(6, 7, capabilities.length > 0 ? capabilities[0] : Capability.hammer);
         iconClickable.addChild(capabilityIndicator);
     }
 
@@ -82,7 +106,13 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(int requiredLevel, int[] availableCapabilities) {
-        capabilityIndicator.update(requiredLevel, availableCapabilities[capability.ordinal()]);
+    public void update(int[] availableCapabilities) {
+        Capability[] capabilities = action.getRequiredCapabilitiesFor(targetStack);
+
+        if (capabilities.length > 0) {
+            capabilityIndicator.updateRequirement(action.getCapabilityLevel(targetStack, capabilities[0]),
+                    availableCapabilities[capabilities[0].ordinal()]);
+
+        }
     }
 }

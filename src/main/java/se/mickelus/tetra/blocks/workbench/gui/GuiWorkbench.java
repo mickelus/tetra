@@ -3,7 +3,6 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,9 +13,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.blocks.workbench.ContainerWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
-import se.mickelus.tetra.blocks.workbench.action.BreakAction;
-import se.mickelus.tetra.blocks.workbench.action.RepairAction;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
@@ -48,14 +44,12 @@ public class GuiWorkbench extends GuiContainer {
     private GuiStatGroup statGroup;
     private GuiIntegrityBar integrityBar;
     private GuiSchemaList schemaList;
+    private GuiActionList actionList;
 
     private GuiSchemaDetail schemaDetail;
     private final GuiInventoryInfo inventoryInfo;
     private String selectedSlot;
     private int previewMaterialSlot = -1;
-
-    private GuiActionButton geodeActionButton;
-    private final GuiActionButton repairActionButton;
 
 
     private ItemStack targetStack = ItemStack.EMPTY;
@@ -98,17 +92,10 @@ public class GuiWorkbench extends GuiContainer {
         inventoryInfo = new GuiInventoryInfo(84, 164, viewingPlayer);
         defaultGui.addChild(inventoryInfo);
 
-        geodeActionButton = new GuiActionButton(140, 114, I18n.format("item.geode.label"), Capability.hammer, () -> {
-            tileEntity.performAction(viewingPlayer, BreakAction.key);
-        });
-        geodeActionButton.setVisible(false);
-        defaultGui.addChild(geodeActionButton);
-
-        repairActionButton = new GuiActionButton(140, 114, I18n.format("workbench.repair"), Capability.hammer, () -> {
-            tileEntity.performAction(viewingPlayer, RepairAction.key);
-        });
-        repairActionButton.setVisible(false);
-        defaultGui.addChild(repairActionButton);
+        actionList = new GuiActionList(0, 120);
+        actionList.setAttachmentAnchor(GuiAttachment.topCenter);
+        actionList.setAttachmentPoint(GuiAttachment.middleCenter);
+        defaultGui.addChild(actionList);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
 
@@ -182,8 +169,13 @@ public class GuiWorkbench extends GuiContainer {
 
         container.updateSlots();
 
-        geodeActionButton.setVisible(false);
-        repairActionButton.setVisible(false);
+        if (!itemStack.isEmpty() && tileEntity.getCurrentSchema() == null && selectedSlot == null) {
+            actionList.updateActions(targetStack, tileEntity.getAvailableActions(viewingPlayer), viewingPlayer,
+                    action -> tileEntity.performAction(viewingPlayer, action.getKey()));
+            actionList.setVisible(true);
+        } else {
+            actionList.setVisible(false);
+        }
 
         if (currentSchema == null) {
             updateSchemaList();
@@ -211,13 +203,15 @@ public class GuiWorkbench extends GuiContainer {
     @Override
     public void updateScreen() {
         super.updateScreen();
+
+        World world = tileEntity.getWorld();
+        BlockPos pos = tileEntity.getPos();
+        int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
+                world.getBlockState(pos));
+
         inventoryInfo.update(tileEntity.getCurrentSchema(), targetStack);
 
         if (tileEntity.getCurrentSchema() != null && schemaDetail.isVisible()) {
-            World world = tileEntity.getWorld();
-            BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
-                    world.getBlockState(pos));
             schemaDetail.updateAvailableCapabilities(availableCapabilities);
 
             schemaDetail.toggleButton(
@@ -227,6 +221,10 @@ public class GuiWorkbench extends GuiContainer {
                             tileEntity.getMaterials(),
                             tileEntity.getCurrentSlot(),
                             availableCapabilities));
+        }
+
+        if (actionList.isVisible()) {
+            actionList.updateCapabilities(availableCapabilities);
         }
     }
 
@@ -272,19 +270,6 @@ public class GuiWorkbench extends GuiContainer {
             schemaList.setVisible(true);
         } else {
             schemaList.setVisible(false);
-
-            World world = tileEntity.getWorld();
-            BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
-            if (tileEntity.canPerformAction(viewingPlayer, BreakAction.key)) {
-                geodeActionButton.update(2, availableCapabilities);
-                geodeActionButton.setVisible(true);
-            }
-
-            if (tileEntity.canPerformAction(viewingPlayer, RepairAction.key)) {
-                repairActionButton.update(-1, availableCapabilities);
-                repairActionButton.setVisible(true);
-            }
         }
 
     }

@@ -1,11 +1,11 @@
 package se.mickelus.tetra;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -43,6 +43,9 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.loot.FortuneBonusFunction;
+import se.mickelus.tetra.loot.SetMetadataFunction;
+import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
@@ -67,6 +70,9 @@ public class TetraMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemModularPredicate::new);
+        LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
+        LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
+        LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());
 
         new DataHandler(event.getSourceFile());
 

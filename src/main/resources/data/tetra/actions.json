@@ -1,0 +1,12 @@
+[
+    {
+        "key": "break_geode_action",
+        "requirement": {
+            "item": "tetra:geode"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:geode"
+    }
+]

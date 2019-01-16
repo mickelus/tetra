@@ -35,8 +35,10 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
+import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
@@ -192,6 +194,8 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     @Override
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
+
+        TileEntityWorkbench.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
 
         GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
         PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, Side.SERVER);
