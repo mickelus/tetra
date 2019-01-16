@@ -60,7 +60,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        GameRegistry.registerTileEntity(TileEntityWorkbench.class, unlocalizedName);
+        GameRegistry.registerTileEntity(TileEntityWorkbench.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         hasItem = true;

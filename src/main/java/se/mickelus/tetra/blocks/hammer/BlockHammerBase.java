@@ -25,6 +25,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -73,7 +74,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         setCreativeTab(TetraCreativeTabs.getInstance());
         setBlockUnbreakable();
 
-        GameRegistry.registerTileEntity(TileEntityHammerBase.class, unlocalizedName);
+        GameRegistry.registerTileEntity(TileEntityHammerBase.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
 
         hasItem = true;
 
