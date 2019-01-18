@@ -8,6 +8,8 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -43,8 +45,10 @@ import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
@@ -120,9 +124,18 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     @Override
     public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> items) {
         if (TetraCreativeTabs.getInstance().equals(creativeTabs)) {
-            for (Variant variant : Variant.values()) {
-                items.add(new ItemStack(this, 1, variant.ordinal()));
+            items.add(new ItemStack(this, 1, Variant.wood.ordinal()));
+            if (ConfigHandler.feature_generate) {
+                items.add(new ItemStack(this, 1, Variant.forged.ordinal()));
             }
+        }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        if (stack.getItemDamage() == Variant.forged.ordinal()) {
+            tooltip.add(I18n.format("ancient_description"));
         }
     }
 

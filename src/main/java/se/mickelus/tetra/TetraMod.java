@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.BlockForgedPillar;
 import se.mickelus.tetra.blocks.forged.BlockForgedPlatform;
@@ -88,21 +89,31 @@ public class TetraMod {
         blocks = new Block[] {
                 new BlockWorkbench(),
                 new BlockGeode(),
-                new BlockHammerHead(),
-                new BlockHammerBase(),
-                new BlockForgedWall(),
-                new BlockForgedPillar(),
-                new BlockForgedPlatform(),
-                new BlockForgedPlatformSlab()
         };
+
+        if (ConfigHandler.feature_generate) {
+            blocks = ArrayUtils.addAll(blocks,
+                    new BlockHammerHead(),
+                    new BlockHammerBase(),
+                    new BlockForgedWall(),
+                    new BlockForgedPillar(),
+                    new BlockForgedPlatform(),
+                    new BlockForgedPlatformSlab()
+            );
+        }
 
         items = new Item[] {
                 new ItemSwordModular(),
                 new ItemGeode(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
-                new ItemCellMagmatic()
         };
+
+        if (ConfigHandler.feature_generate) {
+            items = ArrayUtils.addAll(items,
+                    new ItemCellMagmatic()
+            );
+        }
 
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
 

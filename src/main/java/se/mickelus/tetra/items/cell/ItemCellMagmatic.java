@@ -58,6 +58,7 @@ public class ItemCellMagmatic extends TetraItem {
             tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_empty")));
         }
 
+        tooltip.add(I18n.format("ancient_description"));
     }
 
     @Override
