@@ -15,9 +15,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
-import net.minecraft.world.gen.structure.template.TemplateManager;
+import net.minecraft.world.gen.structure.template.*;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -28,6 +26,8 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.generation.processor.CompoundProcessor;
+import se.mickelus.tetra.generation.processor.HammerProcessor;
 
 import java.util.*;
 
@@ -127,7 +127,11 @@ public class WorldGenFeatures implements IWorldGenerator {
             pos = adjustRootPosition(feature, world, pos, rotation);
         }
 
-        template.addBlocksToWorld(world, pos, settings);
+        ITemplateProcessor processors = new CompoundProcessor(
+                new BlockRotationProcessor(pos, settings),
+                new HammerProcessor(settings.getRandom(pos)));
+
+        template.addBlocksToWorld(world, pos, processors, settings, 2);
 
         generateLoot(feature, template, world, pos, settings, random);
 

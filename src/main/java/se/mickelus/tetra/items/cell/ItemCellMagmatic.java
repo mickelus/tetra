@@ -23,7 +23,7 @@ public class ItemCellMagmatic extends TetraItem {
     private final String unlocalizedName = "magmatic_cell";
     private final String chargedPropKey = "tetra:charged";
 
-    private final int maxCharge = 128;
+    public final int maxCharge = 128;
 
     public ItemCellMagmatic() {
         setRegistryName(unlocalizedName);

@@ -200,7 +200,7 @@ public class TileEntityHammerBase extends TileEntity {
         if (EnumFacing.EAST.equals(side)) {
             configEast = EnumHammerConfig.getNextConfiguration(configEast);
             applyReconfigurationEffect(EnumHammerEffect.fromConfig(configEast, world.getSeed()));
-        } else if (EnumFacing.EAST.equals(side)) {
+        } else if (EnumFacing.WEST.equals(side)) {
             configWest = EnumHammerConfig.getNextConfiguration(configWest);
             applyReconfigurationEffect(EnumHammerEffect.fromConfig(configWest, world.getSeed()));
         }
@@ -242,7 +242,7 @@ public class TileEntityHammerBase extends TileEntity {
     public EnumHammerConfig getConfiguration(EnumFacing side) {
         if (EnumFacing.EAST.equals(side)) {
             return configEast;
-        } else if (EnumFacing.EAST.equals(side)) {
+        } else if (EnumFacing.WEST.equals(side)) {
             return configWest;
         }
 
@@ -280,7 +280,7 @@ public class TileEntityHammerBase extends TileEntity {
         if (compound.hasKey(slotsKey)) {
             NBTTagList tagList = compound.getTagList(slotsKey, 10);
 
-            for (int i = 0; i < tagList.tagCount(); ++i) {
+            for (int i = 0; i < tagList.tagCount(); i++) {
                 NBTTagCompound nbttagcompound = tagList.getCompoundTagAt(i);
                 int slot = nbttagcompound.getByte(indexKey) & 255;
 
@@ -311,27 +311,39 @@ public class TileEntityHammerBase extends TileEntity {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < this.slots.length; ++i) {
-            if (this.slots[i] != null) {
+        writeCells(compound, slots);
+
+        writePlate(compound, EnumHammerPlate.EAST, hasPlateEast);
+        writePlate(compound, EnumHammerPlate.WEST, hasPlateWest);
+
+        writeConfig(compound, configEast, configWest);
+
+        return compound;
+    }
+
+    public static void writeCells(NBTTagCompound compound, ItemStack... cells) {
+        NBTTagList nbttaglist = new NBTTagList();
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != null) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
 
                 nbttagcompound.setByte(indexKey, (byte) i);
-                this.slots[i].writeToNBT(nbttagcompound);
+                cells[i].writeToNBT(nbttagcompound);
 
                 nbttaglist.appendTag(nbttagcompound);
             }
         }
         compound.setTag(slotsKey, nbttaglist);
+    }
 
-        compound.setBoolean(EnumHammerPlate.EAST.key, hasPlateEast);
-        compound.setBoolean(EnumHammerPlate.WEST.key, hasPlateWest);
+    public static void writePlate(NBTTagCompound compound, EnumHammerPlate plate, boolean hasPlate) {
+        compound.setBoolean(plate.key, hasPlate);
+    }
 
+    public static void writeConfig(NBTTagCompound compound, EnumHammerConfig configEast, EnumHammerConfig configWest) {
         compound.setString(EnumHammerConfig.propE.getName(), configEast.toString());
         compound.setString(EnumHammerConfig.propW.getName(), configWest.toString());
-
-        return compound;
     }
 
 }
