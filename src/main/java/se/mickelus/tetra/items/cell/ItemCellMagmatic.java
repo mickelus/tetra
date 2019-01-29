@@ -10,8 +10,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.TetraItem;
 
@@ -19,8 +21,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemCellMagmatic extends TetraItem {
+
+    private static final String unlocalizedName = "magmatic_cell";
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemCellMagmatic instance;
-    private final String unlocalizedName = "magmatic_cell";
+
     private final String chargedPropKey = "tetra:charged";
 
     public final int maxCharge = 128;
@@ -38,8 +43,6 @@ public class ItemCellMagmatic extends TetraItem {
                 return getCharge(itemStack) > 0 ? 1 : 0;
             }
         });
-
-        instance = this;
     }
 
     @Override
