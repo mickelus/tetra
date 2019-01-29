@@ -1,0 +1,287 @@
+[
+    {
+        "key": "claw/oak",
+        "durability": 20,
+        "integrity": -1,
+        "damage": 0,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "866526",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 1.5]
+        }
+    },
+    {
+        "key": "claw/cobblestone",
+        "durability": 81,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "9a9a9a",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 2.7]
+        }
+    },
+    {
+        "key": "claw/flint",
+        "durability": 115,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": 0,
+        "glyph": {
+            "tint": "343434",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 2.9]
+        }
+    },
+    {
+        "key": "claw/iron",
+        "durability": 143,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d8d8d8",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 3.4]
+        }
+    },
+    {
+        "key": "claw/diamond",
+        "durability": 742,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "33ebcb",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 4.1]
+        }
+    },
+    {
+        "key": "claw/gold",
+        "durability": 8,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "eaee57",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 6.2]
+        }
+    },
+    {
+        "key": "claw/copper",
+        "durability": 87,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "df7646",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 2.6]
+        }
+    },
+    {
+        "key": "claw/tin",
+        "durability": 35,
+        "integrity": 0,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b3c9c1",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 3.4]
+        }
+    },
+    {
+        "key": "claw/silver",
+        "durability": 21,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "d6f6ff",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 5.7]
+        }
+    },
+    {
+        "key": "claw/nickel",
+        "durability": 128,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "c2d3a6",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [2, 3.7]
+        }
+    },
+    {
+        "key": "claw/lead",
+        "durability": 45,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "897a9b",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 2.7]
+        }
+    },
+    {
+        "key": "claw/bronze",
+        "durability": 310,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "b2712c",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [2, 3.7]
+        }
+    },
+    {
+        "key": "claw/electrum",
+        "durability": 66,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "e4da4c",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 6.7]
+        }
+    },
+    {
+        "key": "claw/steel",
+        "durability": 352,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "999999",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [2, 4.2]
+        }
+    },
+    {
+        "key": "claw/thaumium",
+        "durability": 359,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "4d3984",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 3.4]
+        }
+    },
+    {
+        "key": "claw/ironwood_tf",
+        "durability": 355,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "5ea917",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 3.8]
+        }
+    },
+    {
+        "key": "claw/steeleaf",
+        "durability": 76,
+        "integrity": -1,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "458430",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [2, 4.6]
+        }
+    },
+    {
+        "key": "claw/fierymetal",
+        "durability": 634,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "fa9f00",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 5.2]
+        }
+    },
+    {
+        "key": "claw/knightmetal",
+        "durability": 346,
+        "integrity": -2,
+        "damage": 1,
+        "attackSpeed": -0.25,
+        "glyph": {
+            "tint": "b8cf9c",
+            "textureX": 64,
+            "textureY": 32
+        },
+        "capabilities": {
+            "pry": [1, 4.7]
+        }
+    }
+]

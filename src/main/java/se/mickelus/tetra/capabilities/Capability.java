@@ -51,5 +51,10 @@ public enum Capability {
      * todo: make harvest level affect what can be harvested
      * todo: drop leaf blocks if harvest level is high enough
      */
-    cut
+    cut,
+
+    /**
+     * Pry: Used for salvaging blocks.
+     */
+    pry
 }

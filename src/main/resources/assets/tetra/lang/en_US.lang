@@ -1085,6 +1085,72 @@ adze/knightmetal.name=Adze
 adze/knightmetal.prefix=Knightmetal
 
 ###############################
+# CLAW HEAD
+###############################
+claw_schema.name=Claw
+claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open, and to quickly break some wooden blocks.
+claw_schema.slot1=Claw material
+
+
+claw/oak=Wooden claw
+claw/oak.name=Claw
+claw/oak.prefix=Wooden
+claw/cobblestone=Stone claw
+claw/cobblestone.name=Claw
+claw/cobblestone.prefix=Cobblestone
+claw/flint=Flint claw
+claw/flint.name=Claw
+claw/flint.prefix=Flint
+claw/iron=Iron claw
+claw/iron.name=Claw
+claw/iron.prefix=Iron
+claw/diamond=Diamond claw
+claw/diamond.name=Claw
+claw/diamond.prefix=Diamond
+claw/gold=Gold claw
+claw/gold.name=Claw
+claw/gold.prefix=Gold
+claw/copper=Copper claw
+claw/copper.name=Claw
+claw/copper.prefix=Copper
+claw/tin=Tin claw
+claw/tin.name=Claw
+claw/tin.prefix=Tin
+claw/silver=Silver claw
+claw/silver.name=Claw
+claw/silver.prefix=Silver
+claw/nickel=Nickel claw
+claw/nickel.name=Claw
+claw/nickel.prefix=Nickel
+claw/lead=Lead claw
+claw/lead.name=Claw
+claw/lead.prefix=Lead
+claw/bronze=Bronze claw
+claw/bronze.name=Claw
+claw/bronze.prefix=Bronze
+claw/electrum=Electrum claw
+claw/electrum.name=Claw
+claw/electrum.prefix=Electrum
+claw/steel=Steel claw
+claw/steel.name=Claw
+claw/steel.prefix=Steel
+claw/thaumium=Thaumium claw
+claw/thaumium.name=Claw
+claw/thaumium.prefix=Thaumium
+claw/ironwood=Ironwood claw
+claw/ironwood.name=Claw
+claw/ironwood.prefix=Ironwood
+claw/steeleaf=Steeleaf claw
+claw/steeleaf.name=Claw
+claw/steeleaf.prefix=Steeleaf
+claw/fierymetal=Fiery claw
+claw/fierymetal.name=Claw
+claw/fierymetal.prefix=Fiery
+claw/knightmetal=Knightmetal claw
+claw/knightmetal.name=Claw
+claw/knightmetal.prefix=Knightmetal
+
+###############################
 # HOE HEAD
 ###############################
 hoe_schema.name=Hoe
