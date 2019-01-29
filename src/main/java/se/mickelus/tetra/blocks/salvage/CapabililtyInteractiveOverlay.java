@@ -11,11 +11,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabililtyInteractiveOverlay {
 
-    GuiCapabilityInteractiveOverlay gui;
+    private GuiCapabilityInteractiveOverlay gui;
 
-    BlockPos previousPos;
-    EnumFacing previousFace;
-    IBlockState previousState;
+    private BlockPos previousPos;
+    private EnumFacing previousFace;
+    private IBlockState previousState;
 
     public CapabililtyInteractiveOverlay() {
         gui = new GuiCapabilityInteractiveOverlay();
@@ -33,6 +33,7 @@ public class CapabililtyInteractiveOverlay {
             IBlockState blockState = world.getBlockState(blockPos);
             blockState = blockState.getActualState(world, blockPos);
 
+
             if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
                 gui.update(blockState, face, player, blockPos.equals(previousPos) && face.equals(previousFace));
 
@@ -42,7 +43,7 @@ public class CapabililtyInteractiveOverlay {
             }
 
             if (blockState.getBlock() instanceof IBlockCapabilityInteractive) {
-                gui.draw(player, blockPos, target.sideHit, event.getPartialTicks());
+                gui.draw(player, blockPos, target, blockState.getBoundingBox(world, blockPos), event.getPartialTicks());
             }
         }
     }
