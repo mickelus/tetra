@@ -30,7 +30,7 @@ import net.minecraft.util.math.BlockPos;
  *     "loot": [
  *         {
  *             "position": [0, 0, 0],
- *             "table": "tetra:ancient/chest_large"
+ *             "table": "tetra:forged/chest_large"
  *         }
  *     ]
  * }

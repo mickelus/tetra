@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
  * Example json:
  * {
  *     position: [1, 4, 1],
- *     table: "tetra:ancient/chest_small"
+ *     table: "tetra:forged/chest_small"
  * }
  */
 public class FeatureLoot {
