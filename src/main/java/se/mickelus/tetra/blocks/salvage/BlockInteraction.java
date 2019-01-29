@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
+import com.google.common.base.Predicates;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,12 +10,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.RotationHelper;
+import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class BlockInteraction {
@@ -27,13 +30,14 @@ public class BlockInteraction {
     public float maxX;
     public float maxY;
 
-    public IProperty property;
-    public Object propertyValue;
+    public Predicate<IBlockState> predicate;
 
     public InteractionOutcome outcome;
 
-    public BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
-                            float maxY, IProperty property, Object propertyValue, InteractionOutcome outcome) {
+    public float successChance = 1;
+
+    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
+            float maxY, IProperty<V> property, V propertyValue, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -42,14 +46,29 @@ public class BlockInteraction {
         this.minY = minY;
         this.maxX = maxX;
         this.maxY = maxY;
-        this.property = property;
-        this.propertyValue = propertyValue;
+        this.predicate = new PropertyMatcher().where(property, Predicates.equalTo(propertyValue));
 
         this.outcome = outcome;
     }
 
+    public BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
+                            float maxY, Predicate<IBlockState> predicate, InteractionOutcome outcome) {
+
+        this.requiredCapability = requiredCapability;
+        this.requiredLevel = requiredLevel;
+        this.face = face;
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.predicate = predicate;
+
+        this.outcome = outcome;
+    }
+
+
     public boolean applicableForState(IBlockState blockState) {
-        return propertyValue.equals(blockState.getValue(property));
+        return predicate.test(blockState);
     }
 
     public boolean isWithinBounds(float x, float y) {
@@ -67,8 +86,8 @@ public class BlockInteraction {
                 && availableCapabilities.contains(requiredCapability);
     }
 
-    public void applyOutcome(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumFacing hitFace) {
-        outcome.apply(world, pos, blockState, player, hitFace);
+    public void applyOutcome(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, EnumFacing hitFace) {
+        outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
     public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, EntityPlayer player,
@@ -95,7 +114,7 @@ public class BlockInteraction {
                 .orElse(null);
 
         if (possibleInteraction != null) {
-            possibleInteraction.applyOutcome(world, pos, blockState, player, hitFace);
+            possibleInteraction.applyOutcome(world, pos, blockState, player, hand, hitFace);
 
             if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isItemStackDamageable()) {
                 heldStack.damageItem(2, player);

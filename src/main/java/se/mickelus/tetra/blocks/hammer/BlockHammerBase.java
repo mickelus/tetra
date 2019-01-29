@@ -39,7 +39,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
@@ -49,20 +48,22 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     public static final PropertyBool propCell2Charged = PropertyBool.create("cell2charged");
 
     static final String unlocalizedName = "hammer_base";
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static BlockHammerBase instance;
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.EAST.face, 5, 11, 9, 11,
-                    EnumHammerPlate.EAST.prop, true, (world, pos, blockState, player, hitFace) ->
+            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.EAST.face, 5, 11, 9, 11,
+                    EnumHammerPlate.EAST.prop, true, (world, pos, blockState, player, hand, hitFace) ->
                     removePlate(world, pos, blockState, player, EnumHammerPlate.EAST, hitFace)),
-            new BlockInteraction(Capability.hammer, 1, EnumHammerPlate.WEST.face, 5, 11, 9, 11,
-                    EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hitFace) ->
+            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.WEST.face, 5, 11, 9, 11,
+                    EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hand, hitFace) ->
                     removePlate(world, pos, blockState, player, EnumHammerPlate.WEST, hitFace)),
 
             new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 6, 10, 2, 9,
-                    EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hitFace) ->
+                    EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, EnumFacing.EAST)),
             new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 6, 10, 2, 9,
-                    EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hitFace) ->
+                    EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, EnumFacing.WEST))
     };
 
@@ -142,7 +143,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 .orElse(0);
     }
 
-    public static void removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
+    public static boolean removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
         Optional.ofNullable(getTileEntity(world, pos))
                 .ifPresent(te -> {
                     te.removePlate(plate);
@@ -150,15 +151,19 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                     world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
                     world.notifyBlockUpdate(pos, state, state, 3);
         });
+
+        return true;
     }
 
-    public static void reconfigure(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing adjustedFace) {
+    public static boolean reconfigure(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing adjustedFace) {
         Optional.ofNullable(getTileEntity(world, pos))
                 .ifPresent(te -> {
                     te.reconfigure(adjustedFace);
                     world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
                     world.notifyBlockUpdate(pos, state, state, 3);
         });
+
+        return true;
     }
 
     @Override
