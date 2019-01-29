@@ -47,13 +47,13 @@ public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
                         .filter(interaction -> previousOutlines.stream()
                                 .map(GuiInteractiveOutline::getBlockInteraction)
                                 .noneMatch(interaction::equals))
-                        .map(GuiInteractiveOutline::new)
+                        .map(interaction -> new GuiInteractiveOutline(interaction, player))
                         .forEach(this::addChild);
             } else {
                 clearChildren();
 
                 Arrays.stream(interactions)
-                        .map(GuiInteractiveOutline::new)
+                        .map(interaction -> new GuiInteractiveOutline(interaction, player))
                         .forEach(this::addChild);
 
             }

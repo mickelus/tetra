@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
+import net.minecraft.entity.player.EntityPlayer;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
@@ -15,7 +16,9 @@ public class GuiInteractiveOutline extends GuiElement {
     private GuiTexture bottomLeft;
     private GuiTexture bottomRight;
 
-    public GuiInteractiveOutline(BlockInteraction blockInteraction) {
+    private GuiInteractiveCapability capability;
+
+    public GuiInteractiveOutline(BlockInteraction blockInteraction, EntityPlayer player) {
         super((int) blockInteraction.minX * 2, (int) blockInteraction.minY * 2,
                 (int) (blockInteraction.maxX - blockInteraction.minX) * 2,
                 (int) (blockInteraction.maxY - blockInteraction.minY) * 2);
@@ -61,7 +64,51 @@ public class GuiInteractiveOutline extends GuiElement {
                         new Applier.TranslateX(0, 2),
                         new Applier.TranslateY(0, 2))
                 .withDelay(650)
+                .onStop(complete -> {
+                    if (capability != null) capability.updateFadeTime();
+                })
                 .start();
+
+        if (blockInteraction.requiredCapability != null) {
+            capability = new GuiInteractiveCapability(0, 0,
+                    blockInteraction.requiredCapability, blockInteraction.requiredLevel, player);
+            addChild(capability);
+            if (width > height) {
+                if (y + width / 2 > 16) {
+                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
+                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
+                } else {
+                    capability.setAttachmentPoint(GuiAttachment.topCenter);
+                    capability.setAttachmentAnchor(GuiAttachment.bottomCenter);
+                }
+            } else {
+                if (x + height / 2 < 16) {
+                    capability.setAttachmentPoint(GuiAttachment.middleLeft);
+                    capability.setAttachmentAnchor(GuiAttachment.middleRight);
+                } else {
+                    capability.setAttachmentPoint(GuiAttachment.middleRight);
+                    capability.setAttachmentAnchor(GuiAttachment.middleLeft);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onFocus() {
+        super.onFocus();
+
+        if (capability != null) {
+            capability.show();
+        }
+    }
+
+    @Override
+    protected void onBlur() {
+        super.onBlur();
+
+        if (capability != null) {
+            capability.hide();
+        }
     }
 
     public BlockInteraction getBlockInteraction() {
