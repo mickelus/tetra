@@ -89,7 +89,7 @@ public class CapabilityHelper {
     }
 
     public static ItemStack getProvidingItemStack(Capability capability, int level, EntityPlayer player) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(Stream.of(player.getHeldItemMainhand(), player.getHeldItemOffhand()), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)
