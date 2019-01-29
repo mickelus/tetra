@@ -25,10 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.forged.BlockForgedPillar;
-import se.mickelus.tetra.blocks.forged.BlockForgedPlatform;
-import se.mickelus.tetra.blocks.forged.BlockForgedPlatformSlab;
-import se.mickelus.tetra.blocks.forged.BlockForgedWall;
+import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
@@ -42,6 +39,9 @@ import se.mickelus.tetra.items.ItemModularPredicate;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
+import se.mickelus.tetra.items.forged.ItemBeam;
+import se.mickelus.tetra.items.forged.ItemBolt;
+import se.mickelus.tetra.items.forged.ItemMesh;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.loot.FortuneBonusFunction;
@@ -98,7 +98,8 @@ public class TetraMod {
                     new BlockForgedWall(),
                     new BlockForgedPillar(),
                     new BlockForgedPlatform(),
-                    new BlockForgedPlatformSlab()
+                    new BlockForgedPlatformSlab(),
+                    new BlockForgedVent()
             );
         }
 
@@ -107,6 +108,9 @@ public class TetraMod {
                 new ItemGeode(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
+                new ItemBolt(),
+                new ItemBeam(),
+                new ItemMesh()
         };
 
         if (ConfigHandler.feature_generate) {

@@ -66,6 +66,7 @@ tile.forged_pillar.name=Forged Pillar
 tile.forged_platform.name=Forged platform
 tile.forged_platform_slab.name=Forged platform
 tile.forged_wall.name=Forged wall
+tile.forged_vent.name=Forged Vent
 tile.hammer_base.name=Hammer base
 tile.hammer_head.name=Hammer head
 

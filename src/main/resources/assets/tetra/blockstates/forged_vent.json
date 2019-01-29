@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tetra:forged_vent0",
+    "textures": {
+      "face1": "tetra:blocks/forged_vent1",
+      "face2": "tetra:blocks/forged_vent2"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "rotation": {
+      "0": { "model": "tetra:forged_vent0" },
+      "1": { "model": "tetra:forged_vent1" },
+      "2": { "model": "tetra:forged_vent2" },
+      "3": { "model": "tetra:forged_vent3" }
+    },
+    "x": {
+      "true": { "y":  270 },
+      "false": {}
+    },
+    "broken": {
+      "true": {
+        "textures": {
+          "face1": "tetra:blocks/forged_vent1_broken",
+          "face2": "tetra:blocks/forged_vent2_broken"
+        }
+      },
+      "false": {}
+    }
+  }
+}
