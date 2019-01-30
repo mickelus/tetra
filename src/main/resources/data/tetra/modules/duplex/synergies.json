@@ -26,6 +26,14 @@
         "name": "duplex/adze_axe"
     },
     {
+        "modules": ["duplex/claw", "duplex/basic_hammer"],
+        "name": "duplex/claw_hammer"
+    },
+    {
+        "modules": ["duplex/claw", "duplex/basic_axe"],
+        "name": "duplex/claw_axe"
+    },
+    {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
         "capabilities": {
             "hammer": 1

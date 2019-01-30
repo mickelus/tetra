@@ -166,6 +166,14 @@ public enum ItemEffect {
      */
     softStrike,
 
+    /**
+     * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
+     * plank slabs, bookshelves, doors etc.
+     * todo: move to ability once implemented
+     * todo: make possible blocks configurable
+     */
+    denailing,
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

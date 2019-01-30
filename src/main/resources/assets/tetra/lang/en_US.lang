@@ -765,6 +765,8 @@ duplex/axe_pickaxe=Dolabra
 duplex/hammer_pickaxe=Geologist's hammer
 duplex/adze_pickaxe=Pick mattock
 duplex/adze_axe=Cutter mattock
+duplex/claw_hammer=Claw hammer
+duplex/claw_axe=Carpenter's axe
 
 ###############################
 # HAMMER HANDLE
@@ -1088,7 +1090,7 @@ adze/knightmetal.prefix=Knightmetal
 # CLAW HEAD
 ###############################
 claw_schema.name=Claw
-claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open, and to quickly break some wooden blocks.
+claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open and to quickly break some wooden blocks.
 claw_schema.slot1=Claw material
 
 

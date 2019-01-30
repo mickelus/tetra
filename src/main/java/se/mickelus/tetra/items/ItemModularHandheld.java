@@ -1,11 +1,15 @@
 package se.mickelus.tetra.items;
 
+import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.pattern.BlockMatcher;
+import net.minecraft.block.state.pattern.BlockStateMatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -23,21 +27,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.advancements.critereon.OredictItemPredicate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.oredict.OreDictionary;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.PotionBleeding;
+import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemModularHandheld extends ItemModular {
 
@@ -50,6 +56,29 @@ public class ItemModularHandheld extends ItemModular {
     private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
 
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.CLOTH);
+
+    private static final String[] denailOreDict = new String[] { "plankWood", "slabWood", "stairWood", "fenceWood", "fenceGateWood", "doorWood", "chestWood"};
+    private static final List<Predicate<IBlockState>> denailBlocks = ImmutableList.of(
+            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
+            BlockStateMatcher.forBlock(BlockWorkbench.instance).where(BlockWorkbench.propVariant, Predicates.equalTo(BlockWorkbench.Variant.wood)),
+            BlockMatcher.forBlock(Blocks.BOOKSHELF),
+            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST),
+            BlockMatcher.forBlock(Blocks.RAIL),
+            BlockMatcher.forBlock(Blocks.ACTIVATOR_RAIL),
+            BlockMatcher.forBlock(Blocks.DETECTOR_RAIL),
+            BlockMatcher.forBlock(Blocks.GOLDEN_RAIL),
+            BlockMatcher.forBlock(Blocks.STANDING_SIGN),
+            BlockMatcher.forBlock(Blocks.WALL_SIGN),
+            BlockMatcher.forBlock(Blocks.BED),
+            BlockMatcher.forBlock(Blocks.LADDER),
+            BlockMatcher.forBlock(Blocks.JUKEBOX),
+            BlockMatcher.forBlock(Blocks.NOTEBLOCK),
+            BlockMatcher.forBlock(Blocks.TRAPDOOR),
+            BlockMatcher.forBlock(Blocks.WOODEN_PRESSURE_PLATE),
+            BlockMatcher.forBlock(Blocks.WOODEN_BUTTON),
+            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR),
+            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR_INVERTED)
+            );
 
     protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
 
@@ -119,6 +148,18 @@ public class ItemModularHandheld extends ItemModular {
             return flattenPath(player, world, pos, hand, facing);
         } else if (tillingLevel > 0) {
             return tillBlock(player, world, pos, hand, facing);
+        }
+
+
+        int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
+        if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
+            EnumActionResult result = denailBlock(player, world, pos, hand, facing);
+
+            if (result.equals(EnumActionResult.SUCCESS)) {
+                player.resetCooldown();
+            }
+
+            return result;
         }
 
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -211,6 +252,54 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return EnumActionResult.PASS;
+    }
+
+    /**
+     * Instantly break plank based blocks.
+     * @param player the responsible player entity
+     * @param world the world in which the action takes place
+     * @param pos the position in the world
+     * @param hand the hand holding the tool
+     * @param facing the clicked face
+     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
+     * otherwise EnumActionResult.PASS
+     */
+    public EnumActionResult denailBlock(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
+            return EnumActionResult.FAIL;
+        }
+
+        IBlockState blockState = world.getBlockState(pos);
+        if (canDenail(blockState, world, pos)) {
+            boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState);
+            if (success) {
+                applyDamage(blockDestroyDamage, itemStack, player);
+                world.playEvent(player, 2001, pos, Block.getStateId(blockState));
+                player.resetCooldown();
+                return EnumActionResult.SUCCESS;
+            }
+        }
+
+        return EnumActionResult.PASS;
+    }
+
+    private boolean canDenail(IBlockState blockState, World world, BlockPos pos) {
+        boolean matchOre = Optional.of(blockState.getBlock().getPickBlock(blockState, null, world, pos, null))
+                .map(OreDictionary::getOreIDs)
+                .map(Stream::of)
+                .orElseGet(Stream::empty)
+                .flatMapToInt(Arrays::stream)
+                .mapToObj(OreDictionary::getOreName)
+                .anyMatch(ore1 -> Arrays.asList(denailOreDict).contains(ore1));
+
+        if (matchOre) {
+            return true;
+        }
+
+        return denailBlocks.stream()
+                .anyMatch(predicate -> predicate.test(blockState));
     }
 
     /**

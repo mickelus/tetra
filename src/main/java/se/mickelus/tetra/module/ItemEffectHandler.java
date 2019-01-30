@@ -342,15 +342,16 @@ public class ItemEffectHandler {
      * @param toolStack the itemstack used to break the blocks
      * @param pos the position which to break blocks around
      * @param blockState the state of the block that is to broken
+     * @return True if the player was allowed to break the block, otherwise false
      */
-    private void breakBlock(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
-        if (!world.isRemote) {
-            boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
-            if (canRemove) {
-                blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
-                blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
-            }
+    public static boolean breakBlock(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
+        boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
+        if (canRemove && !world.isRemote) {
+            blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
+            blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
         }
+
+        return canRemove;
     }
 
     /**
