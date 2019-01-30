@@ -12,8 +12,7 @@ public class PropertyMatcher implements Predicate<IBlockState> {
     @Override
     public boolean test(IBlockState blockState) {
         for (Map.Entry<IProperty<?>, Predicate<?>> entry : this.propertyPredicates.entrySet()) {
-            if (!matches(blockState, (IProperty) entry.getKey(), (Predicate) entry.getValue()))
-            {
+            if (!matches(blockState, (IProperty) entry.getKey(), (Predicate) entry.getValue())) {
                 return false;
             }
         }
@@ -26,10 +25,7 @@ public class PropertyMatcher implements Predicate<IBlockState> {
     }
 
     public <V extends Comparable<V>> PropertyMatcher where(IProperty<V> property, Predicate<? extends V> is) {
-
-        {
-            this.propertyPredicates.put(property, is);
-            return this;
-        }
+         this.propertyPredicates.put(property, is);
+         return this;
     }
 }

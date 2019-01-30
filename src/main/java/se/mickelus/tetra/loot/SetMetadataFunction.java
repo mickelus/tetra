@@ -15,6 +15,10 @@ import net.minecraft.world.storage.loot.functions.LootFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Allows more precise setting of metadata for items in a loot table. Allows allows altering metadata for items
+ * which cannot be damaged.
+ */
 public class SetMetadataFunction extends LootFunction {
     private final RandomValueRange meta;
 
