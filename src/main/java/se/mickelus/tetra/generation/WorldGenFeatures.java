@@ -143,6 +143,7 @@ public class WorldGenFeatures implements IWorldGenerator {
     private void generateChildren(GenerationFeature feature, World world, BlockPos pos, Rotation rotation, Mirror mirror,
                                   Random random, int depth) {
         Arrays.stream(feature.children)
+                .filter(child -> child.chance == 1 || random.nextFloat() < child.chance)
                 .forEach(child -> {
                     ResourceLocation selectedLocation = child.features[random.nextInt(child.features.length)];
                     GenerationFeature selectedFeature = getFeature(selectedLocation);

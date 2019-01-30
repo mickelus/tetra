@@ -15,6 +15,11 @@
             "offset": [3, 1, 8],
             "facing": "NORTH",
             "features": ["tetra:ancient_chest_small", "tetra:ancient_chest_medium"]
+        },
+        {
+            "features": ["tetra:ancient_vent"],
+            "chance": 0.3,
+            "offset": [5, 3, 5]
         }
     ]
 }

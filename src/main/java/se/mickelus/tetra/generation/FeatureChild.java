@@ -30,6 +30,12 @@ public class FeatureChild {
     public EnumFacing facing = EnumFacing.NORTH;
 
     /**
+     * The chance for this child feature to generate. Has to be a decimal number between 0.0 and 1.1, where a value of
+     * 1.0 would cause it to always generate.
+     */
+    public float chance = 1;
+
+    /**
      * An array of resource locations for features that can be used as child features at this position.
      * Json format: ["domain:path"]
      */

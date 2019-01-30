@@ -1,4 +1,9 @@
 {
     "origin": [1, 2, 9],
-    "integrityMin": 0.7
+    "integrityMin": 0.7,
+    "children": [{
+        "features": ["tetra:ancient_vent"],
+        "chance": 0.3,
+        "offset": [1, 1, 9]
+    }]
 }
