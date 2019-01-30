@@ -317,7 +317,6 @@ public class ItemEffectHandler {
 
                     if (strikingLevel > 0) {
                         if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {
-
                             if (sweepingLevel > 0) {
                                 breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
                             } else {
@@ -328,6 +327,7 @@ public class ItemEffectHandler {
                                     breakBlock(world, breakingPlayer, itemStack, pos, blockState);
                                 }
                             }
+                            itemStack.damageItem(2, breakingPlayer);
                         }
                         event.setCanceled(true);
                         breakingPlayer.resetCooldown();
