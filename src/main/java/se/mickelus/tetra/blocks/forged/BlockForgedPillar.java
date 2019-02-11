@@ -12,8 +12,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 
@@ -25,6 +27,7 @@ public class BlockForgedPillar extends TetraBlock {
 
     static final String unlocalizedName = "forged_pillar";
 
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedPillar instance;
 
     public BlockForgedPillar() {
@@ -37,7 +40,6 @@ public class BlockForgedPillar extends TetraBlock {
 
         hasItem = true;
 
-        instance = this;
         this.setDefaultState(this.blockState.getBaseState().withProperty(propAxis, EnumFacing.Axis.Y));
     }
 

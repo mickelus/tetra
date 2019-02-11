@@ -5,8 +5,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class BlockForgedWall extends TetraBlock {
     static final String unlocalizedName = "forged_wall";
 
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedWall instance;
 
     public BlockForgedWall() {
@@ -27,8 +30,6 @@ public class BlockForgedWall extends TetraBlock {
         setBlockUnbreakable();
 
         hasItem = true;
-
-        instance = this;
     }
 
     @SideOnly(Side.CLIENT)
