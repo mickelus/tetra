@@ -8,9 +8,6 @@ import se.mickelus.tetra.items.toolbelt.gui.GuiToolbelt;
 import se.mickelus.tetra.network.TetraGuiHandler;
 
 public class GuiHandlerToolbelt implements TetraGuiHandler {
-
-    public static final int GUI_TOOLBELT_ID = 0;
-
     @Override
     public Object getServerGuiElement(EntityPlayer player, World world, int hand, int y, int z) {
         return new ContainerToolbelt(player.inventory, getItem(player, hand), player);

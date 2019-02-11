@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
@@ -99,7 +100,8 @@ public class TetraMod {
                     new BlockForgedPillar(),
                     new BlockForgedPlatform(),
                     new BlockForgedPlatformSlab(),
-                    new BlockForgedVent()
+                    new BlockForgedVent(),
+                    new BlockForgedContainer()
             );
         }
 
