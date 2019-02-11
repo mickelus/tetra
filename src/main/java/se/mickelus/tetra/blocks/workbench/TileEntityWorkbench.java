@@ -13,6 +13,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
@@ -49,8 +50,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
 
     public TileEntityWorkbench() {
-        stacks = NonNullList.withSize(4, ItemStack.EMPTY);
-        changeListeners = new HashMap<>();
+        stacks = NonNullList.withSize(4, ItemStack.EMPTY);changeListeners = new HashMap<>();
     }
 
     public static void initConfigActions(WorkbenchAction[] actions) {
@@ -260,18 +260,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey(STACKS_KEY)) {
-            NBTTagList tagList = compound.getTagList(STACKS_KEY, 10);
 
-            for (int i = 0; i < tagList.tagCount(); ++i) {
-                NBTTagCompound nbttagcompound = tagList.getCompoundTagAt(i);
-                int slot = nbttagcompound.getByte(SLOT_KEY) & 255;
-
-                if (slot < this.stacks.size()) {
-                    this.stacks.set(slot, new ItemStack(nbttagcompound));
-                }
-            }
-        }
+        NBTHelper.readItemStacks(compound, stacks);
 
         String schemaKey = compound.getString(SCHEMA_KEY);
         currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
@@ -289,20 +279,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < this.stacks.size(); ++i) {
-            if (!this.stacks.get(i).isEmpty()) {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-
-                nbttagcompound.setByte(SLOT_KEY, (byte) i);
-                this.stacks.get(i).writeToNBT(nbttagcompound);
-
-                nbttaglist.appendTag(nbttagcompound);
-            }
-        }
-
-        compound.setTag(STACKS_KEY, nbttaglist);
+        NBTHelper.writeItemStacks(stacks, compound);
 
         if (currentSchema != null) {
             compound.setString(SCHEMA_KEY, currentSchema.getKey());
