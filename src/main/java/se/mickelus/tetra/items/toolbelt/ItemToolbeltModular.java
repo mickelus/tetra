@@ -16,14 +16,13 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.IntegrationHelper;
+import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.toolbelt.booster.BoosterModule;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
-import se.mickelus.tetra.items.toolbelt.module.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -46,6 +45,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
+    ItemModule defaultBelt;
     ItemModule defaultStrap;
 
     public ItemToolbeltModular() {
@@ -65,27 +65,27 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
         instance = this;
 
-        new BeltModule(beltKey);
+        defaultBelt = new BasicModule(beltKey, beltKey);
 
-        defaultStrap = new QuickAccessModule(slot1Key, "toolbelt/strap", slot1Suffix);
-        new QuickAccessModule(slot2Key, "toolbelt/strap", slot2Suffix);
-        new QuickAccessModule(slot3Key, "toolbelt/strap", slot3Suffix);
+        defaultStrap = new ToolbeltModule(slot1Key, "strap", slot1Suffix);
+        new ToolbeltModule(slot2Key, "strap", slot2Suffix);
+        new ToolbeltModule(slot3Key, "strap", slot3Suffix);
 
-        new PotionStorageModule(slot1Key, "toolbelt/potion_storage", slot1Suffix);
-        new PotionStorageModule(slot2Key, "toolbelt/potion_storage", slot2Suffix);
-        new PotionStorageModule(slot3Key, "toolbelt/potion_storage", slot3Suffix);
+        new ToolbeltModule(slot1Key, "potion_storage", slot1Suffix);
+        new ToolbeltModule(slot2Key, "potion_storage", slot2Suffix);
+        new ToolbeltModule(slot3Key, "potion_storage", slot3Suffix);
 
-        new StorageModule(slot1Key, "toolbelt/storage", slot1Suffix);
-        new StorageModule(slot2Key, "toolbelt/storage", slot2Suffix);
-        new StorageModule(slot3Key, "toolbelt/storage", slot3Suffix);
+        new ToolbeltModule(slot1Key, "storage", slot1Suffix);
+        new ToolbeltModule(slot2Key, "storage", slot2Suffix);
+        new ToolbeltModule(slot3Key, "storage", slot3Suffix);
 
-        new QuiverModule(slot1Key, "toolbelt/quiver", slot1Suffix);
-        new QuiverModule(slot2Key, "toolbelt/quiver", slot2Suffix);
-        new QuiverModule(slot3Key, "toolbelt/quiver", slot3Suffix);
+        new ToolbeltModule(slot1Key, "quiver", slot1Suffix);
+        new ToolbeltModule(slot2Key, "quiver", slot2Suffix);
+        new ToolbeltModule(slot3Key, "quiver", slot3Suffix);
 
-        new BoosterModule(slot1Key, "toolbelt/booster", slot1Suffix);
-        new BoosterModule(slot2Key, "toolbelt/booster", slot2Suffix);
-        new BoosterModule(slot3Key, "toolbelt/booster", slot3Suffix);
+        new ToolbeltModule(slot1Key, "booster", slot1Suffix);
+        new ToolbeltModule(slot2Key, "booster", slot2Suffix);
+        new ToolbeltModule(slot3Key, "booster", slot3Suffix);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     private ItemStack createDefaultStack() {
         ItemStack itemStack = new ItemStack(this);
-        BeltModule.instance.addModule(itemStack, "belt/rope", null);
+        defaultBelt.addModule(itemStack, "belt/rope", null);
         defaultStrap.addModule(itemStack, "strap1/leather", null);
         return itemStack;
     }
