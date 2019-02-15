@@ -24,6 +24,7 @@ import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.module.*;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
@@ -136,29 +137,25 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     public int getNumQuickslots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
-                .filter(module -> module instanceof QuickAccessModule)
-                .map(module -> module.getSize(itemStack))
+                .map(module -> module.getEffectLevel(itemStack, ItemEffect.quickSlot))
                 .reduce(0, Integer::sum);
     }
 
     public int getNumStorageSlots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
-                .filter(module -> module instanceof StorageModule)
-                .map(module -> module.getSize(itemStack))
+                .map(module -> module.getEffectLevel(itemStack, ItemEffect.storageSlot))
                 .reduce(0, Integer::sum);
     }
 
     public int getNumPotionSlots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
-                .filter(module -> module instanceof PotionStorageModule)
-                .map(module -> module.getSize(itemStack))
+                .map(module -> module.getEffectLevel(itemStack, ItemEffect.potionSlot))
                 .reduce(0, Integer::sum);
     }
 
     public int getNumQuiverSlots(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
-                .filter(module -> module instanceof QuiverModule)
-                .map(module -> module.getSize(itemStack))
+                .map(module -> module.getEffectLevel(itemStack, ItemEffect.quiverSlot))
                 .reduce(0, Integer::sum);
     }
 

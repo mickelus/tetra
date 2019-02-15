@@ -2,7 +2,9 @@
     {
         "key": "quiver/leather",
         "integrity": -3,
-        "size": 9,
+        "effects": {
+            "quiverSlot": 9
+        },
         "glyph": {
             "tint": "fefefe",
             "textureX": 224
@@ -11,7 +13,9 @@
     {
         "key": "quiver/wool",
         "integrity": -1,
-        "size": 6,
+        "effects": {
+            "quiverSlot": 6
+        },
         "glyph": {
             "tint": "fefefe",
             "textureX": 224
@@ -20,7 +24,9 @@
     {
         "key": "quiver/hide",
         "integrity": 0,
-        "size": 4,
+        "effects": {
+            "quiverSlot": 4
+        },
         "glyph": {
             "tint": "fefefe",
             "textureX": 224

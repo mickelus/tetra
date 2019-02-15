@@ -2,7 +2,9 @@
     {
         "key": "storage/leather",
         "integrity": -5,
-        "size": 8,
+        "effects": {
+            "storageSlot": 8
+        },
         "glyph": {
             "tint": "866526",
             "textureX": 192
@@ -11,7 +13,9 @@
     {
         "key": "storage/wool",
         "integrity": -3,
-        "size": 4,
+        "effects": {
+            "storageSlot": 4
+        },
         "glyph": {
             "tint": "fefefe",
             "textureX": 192
@@ -20,7 +24,9 @@
     {
         "key": "storage/hide",
         "integrity": 0,
-        "size": 2,
+        "effects": {
+            "storageSlot": 2
+        },
         "glyph": {
             "tint": "a88054",
             "textureX": 192

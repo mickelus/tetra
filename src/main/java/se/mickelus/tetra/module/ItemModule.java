@@ -229,8 +229,4 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     public Collection<Capability> getCapabilities(ItemStack itemStack) {
         return getData(itemStack).capabilities.getValues();
     }
-
-    public int getSize(ItemStack itemStack) {
-        return getData(itemStack).size;
-    }
 }

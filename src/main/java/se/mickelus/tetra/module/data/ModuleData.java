@@ -118,12 +118,6 @@ public class ModuleData {
     public EffectData effects = new EffectData();
 
     /**
-     * Size field used for toolbelt inventories. The file the data is parsed affects which inventory size this effects.
-     * todo: change this to item effects instead
-     */
-    public int size = 0;
-
-    /**
      * The glyph displayed for this module variation, preferrably the same glyph texture is used for all variations of
      * one module while the color differs based on material.
      */

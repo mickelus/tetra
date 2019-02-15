@@ -2,7 +2,9 @@
     {
         "key": "strap1/leather",
         "integrity": -1,
-        "size": 1,
+        "effects": {
+            "quickSlot": 1
+        },
         "glyph": {
             "tint": "866526",
             "textureX": 80
@@ -11,7 +13,9 @@
     {
         "key": "strap1/iron",
         "integrity": 0,
-        "size": 1,
+        "effects": {
+            "quickSlot": 1
+        },
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 80
@@ -20,7 +24,9 @@
     {
         "key": "strap2/leather",
         "integrity": -3,
-        "size": 2,
+        "effects": {
+            "quickSlot": 2
+        },
         "glyph": {
             "tint": "866526",
             "textureX": 96
@@ -29,7 +35,9 @@
     {
         "key": "strap2/iron",
         "integrity": -1,
-        "size": 2,
+        "effects": {
+            "quickSlot": 2
+        },
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 96
@@ -38,7 +46,9 @@
     {
         "key": "strap3/leather",
         "integrity": -4,
-        "size": 3,
+        "effects": {
+            "quickSlot": 3
+        },
         "glyph": {
             "tint": "866526",
             "textureX": 112
@@ -47,7 +57,9 @@
     {
         "key": "strap3/iron",
         "integrity": -2,
-        "size": 3,
+        "effects": {
+            "quickSlot": 3
+        },
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 112
@@ -56,7 +68,9 @@
     {
         "key": "strap4/leather",
         "integrity": -6,
-        "size": 4,
+        "effects": {
+            "quickSlot": 4
+        },
         "glyph": {
             "tint": "866526",
             "textureX": 128
@@ -65,7 +79,9 @@
     {
         "key": "strap4/iron",
         "integrity": -4,
-        "size": 4,
+        "effects": {
+            "quickSlot": 4
+        },
         "glyph": {
             "tint": "d8d8d8",
             "textureX": 128

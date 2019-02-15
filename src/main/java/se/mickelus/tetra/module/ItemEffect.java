@@ -185,5 +185,33 @@ public enum ItemEffect {
      * the player to hover, each level increases the strength of the boost.
      * todo: split behaviours into separate item effects
      */
-    booster
+    booster,
+
+    /**
+     * Adds quick access slots to a toolbelt, the effect level decides the number of slots at a 1:1 ratio.
+     * Any item can be put into a quick access slot and can quickly be placed into the players hand using
+     * the toolbelt quick access ui.
+     */
+    quickSlot,
+
+    /**
+     * Adds storage slots to a toolbelt, the effect level decides the number of slots at a 1:1 ratio.
+     * Any item can be put into a storage slot, players cannot quickly pull items from storage slots
+     * but items can be quickly stored as with other slot types.
+     */
+    storageSlot,
+
+    /**
+     * Adds potion slots to a toolbelt, the effect level decides the number of slots at a 1:1 ratio.
+     * Potion items can be put into a potion slot, and can quickly be placed into the players hand using
+     * the toolbelt quick access ui.
+     */
+    potionSlot,
+
+    /**
+     * Adds quiver slots to a toolbelt, the effect level decides the number of slots at a 1:1 ratio.
+     * Different types of arrows can be put into a quiver slot, and can quickly be placed into the players hand using
+     * the toolbelt quick access ui.
+     */
+    quiverSlot
 }

@@ -2,7 +2,9 @@
     {
         "key": "potion_storage/leather",
         "integrity": -3,
-        "size": 3,
+        "effects": {
+            "potionSlot": 3
+        },
         "glyph": {
             "tint": "cfcfcf",
             "textureX": 208
@@ -11,7 +13,9 @@
     {
         "key": "potion_storage/wool",
         "integrity": -1,
-        "size": 2,
+        "effects": {
+            "potionSlot": 2
+        },
         "glyph": {
             "tint": "cfcfcf",
             "textureX": 208
@@ -20,7 +24,9 @@
     {
         "key": "potion_storage/hide",
         "integrity": 0,
-        "size": 1,
+        "effects": {
+            "potionSlot": 1
+        },
         "glyph": {
             "tint": "cfcfcf",
             "textureX": 208
