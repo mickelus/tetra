@@ -13,6 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.IntegrationHelper;
@@ -33,8 +34,11 @@ import se.mickelus.tetra.network.PacketHandler;
 
 @Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
 public class ItemToolbeltModular extends ItemModular implements IBauble {
-    public static ItemToolbeltModular instance;
+
+
     private final static String unlocalizedName = "toolbelt_modular";
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ItemToolbeltModular instance;
 
     public final static String slot1Key = "toolbelt/slot1";
     public final static String slot2Key = "toolbelt/slot2";
@@ -45,8 +49,8 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
-    ItemModule defaultBelt;
-    ItemModule defaultStrap;
+    private ItemModule defaultBelt;
+    private ItemModule defaultStrap;
 
     public ItemToolbeltModular() {
         super();
@@ -58,12 +62,10 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
-        minorModuleKeys = new String[]{beltKey};
+        majorModuleKeys = new String[] { slot1Key, slot2Key, slot3Key };
+        minorModuleKeys = new String[] { beltKey };
 
-        requiredModules = new String[]{beltKey};
-
-        instance = this;
+        requiredModules = new String[] { beltKey };
 
         defaultBelt = new BasicModule(beltKey, beltKey);
 
