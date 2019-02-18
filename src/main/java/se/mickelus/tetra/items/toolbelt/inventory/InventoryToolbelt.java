@@ -11,20 +11,29 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.toolbelt.SlotType;
+import se.mickelus.tetra.module.ItemEffect;
+
+import java.util.Collection;
 
 public class InventoryToolbelt implements IInventory {
     protected static final String slotKey = "slot";
 
     protected ItemStack toolbeltItemStack;
 
+    protected SlotType inventoryType;
+
     protected final String inventoryKey;
     protected NonNullList<ItemStack> inventoryContents;
     protected int numSlots = 0;
     protected int maxSize = 0;
 
-    public InventoryToolbelt(String inventoryKey, ItemStack stack, int maxSize) {
+    public InventoryToolbelt(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
         this.inventoryKey = inventoryKey;
         toolbeltItemStack = stack;
+
+        this.inventoryType = inventoryType;
 
         this.maxSize = maxSize;
         inventoryContents = NonNullList.withSize(maxSize, ItemStack.EMPTY);
@@ -234,5 +243,9 @@ public class InventoryToolbelt implements IInventory {
             }
         }
         return -1;
+    }
+
+    public Collection<Collection<ItemEffect>> getSlotEffects() {
+        return ItemToolbeltModular.instance.getSlotEffects(toolbeltItemStack, inventoryType);
     }
 }

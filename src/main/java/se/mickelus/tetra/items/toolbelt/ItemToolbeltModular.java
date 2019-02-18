@@ -31,6 +31,9 @@ import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
 public class ItemToolbeltModular extends ItemModular implements IBauble {
@@ -137,28 +140,38 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
-    public int getNumQuickslots(ItemStack itemStack) {
+    public int getNumSlots(ItemStack itemStack, SlotType slotType) {
         return getAllModules(itemStack).stream()
-                .map(module -> module.getEffectLevel(itemStack, ItemEffect.quickSlot))
+                .map(module -> module.getEffectLevel(itemStack, slotType.effect))
                 .reduce(0, Integer::sum);
     }
 
-    public int getNumStorageSlots(ItemStack itemStack) {
+    public Collection<Collection<ItemEffect>> getSlotEffects(ItemStack itemStack, SlotType slotType) {
         return getAllModules(itemStack).stream()
-                .map(module -> module.getEffectLevel(itemStack, ItemEffect.storageSlot))
-                .reduce(0, Integer::sum);
-    }
+                .filter(module -> module.getEffects(itemStack).contains(slotType.effect))
+                .map(module -> {
+                    EnumMap<ItemEffect, Integer> effectLevelMap = new EnumMap<>(ItemEffect.class);
+                    ((Collection<ItemEffect>) module.getEffects(itemStack)).stream()
+                            .filter(itemEffect -> !itemEffect.equals(slotType.effect))
+                            .forEach(itemEffect -> effectLevelMap.put(itemEffect, module.getEffectLevel(itemStack, itemEffect)));
 
-    public int getNumPotionSlots(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .map(module -> module.getEffectLevel(itemStack, ItemEffect.potionSlot))
-                .reduce(0, Integer::sum);
-    }
 
-    public int getNumQuiverSlots(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .map(module -> module.getEffectLevel(itemStack, ItemEffect.quiverSlot))
-                .reduce(0, Integer::sum);
+                    int slotCount = module.getEffectLevel(itemStack, slotType.effect);
+                    Collection<Collection<ItemEffect>> result = new ArrayList<>(slotCount);
+                    for (int i = 0; i < slotCount; i++) {
+                        ArrayList<ItemEffect> slotEffects = new ArrayList<>();
+                        for (Map.Entry<ItemEffect, Integer> entry: effectLevelMap.entrySet()) {
+                            if (entry.getValue() > i) {
+                                slotEffects.add(entry.getKey());
+                            }
+                        }
+                        result.add(slotEffects);
+                    }
+
+                    return result;
+                })
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     /**

@@ -232,19 +232,19 @@ public class ContainerToolbelt extends Container {
         this.quickslotInventory.closeInventory(playerIn);
     }
 
-    public IInventory getQuickslotInventory() {
+    public InventoryQuickslot getQuickslotInventory() {
         return quickslotInventory;
     }
 
-    public IInventory getStorageInventory() {
+    public InventoryStorage getStorageInventory() {
         return storageInventory;
     }
 
-    public IInventory getPotionInventory() {
+    public InventoryPotions getPotionInventory() {
         return potionsInventory;
     }
 
-    public IInventory getQuiverInventory() {
+    public InventoryQuiver getQuiverInventory() {
         return quiverInventory;
     }
 }

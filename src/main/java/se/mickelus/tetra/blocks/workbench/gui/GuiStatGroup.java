@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -134,9 +135,9 @@ public class GuiStatGroup extends GuiElement {
         if (itemStack.getItem() instanceof ItemToolbeltModular) {
             ItemToolbeltModular item = (ItemToolbeltModular) itemStack.getItem();
 
-            int numQuickslots = item.getNumQuickslots(itemStack);
+            int numQuickslots = item.getNumSlots(itemStack, SlotType.quick);
             if (!previewStack.isEmpty()) {
-                int numQuickSlotsPreview = item.getNumQuickslots(previewStack);
+                int numQuickSlotsPreview = item.getNumSlots(previewStack, SlotType.quick);
                 if (numQuickslots > 0 || numQuickSlotsPreview > 0) {
                     quickslotBar.setValue(numQuickslots, numQuickSlotsPreview);
                     showBar(quickslotBar);
@@ -146,9 +147,9 @@ public class GuiStatGroup extends GuiElement {
                 showBar(quickslotBar);
             }
 
-            int numPotionSlots = item.getNumPotionSlots(itemStack);
+            int numPotionSlots = item.getNumSlots(itemStack, SlotType.potion);
             if (!previewStack.isEmpty()) {
-                int numPotionSlotsPreview = item.getNumPotionSlots(previewStack);
+                int numPotionSlotsPreview = item.getNumSlots(previewStack, SlotType.potion);
                 if (numPotionSlots > 0 || numPotionSlotsPreview > 0) {
                     potionBar.setValue(numPotionSlots, numPotionSlotsPreview);
                     showBar(potionBar);
@@ -158,9 +159,9 @@ public class GuiStatGroup extends GuiElement {
                 showBar(potionBar);
             }
 
-            int numStorageSlots = item.getNumStorageSlots(itemStack);
+            int numStorageSlots = item.getNumSlots(itemStack, SlotType.storage);
             if (!previewStack.isEmpty()) {
-                int numStorageSlotsPreview = item.getNumStorageSlots(previewStack);
+                int numStorageSlotsPreview = item.getNumSlots(previewStack, SlotType.storage);
                 if (numStorageSlots > 0 || numStorageSlotsPreview > 0) {
                     storageBar.setValue(numStorageSlots, numStorageSlotsPreview);
                     showBar(storageBar);
@@ -170,9 +171,9 @@ public class GuiStatGroup extends GuiElement {
                 showBar(storageBar);
             }
 
-            int numQuiverSlots = item.getNumQuiverSlots(itemStack);
+            int numQuiverSlots = item.getNumSlots(itemStack, SlotType.quiver);
             if (!previewStack.isEmpty()) {
-                int numQuiverSlotsPreview = item.getNumQuiverSlots(previewStack);
+                int numQuiverSlotsPreview = item.getNumSlots(previewStack, SlotType.quiver);
                 if (numQuiverSlots > 0 || numQuiverSlotsPreview > 0) {
                     quiverBar.setValue(numQuiverSlots, numQuiverSlotsPreview);
                     showBar(quiverBar);

@@ -3,10 +3,14 @@ package se.mickelus.tetra.items.toolbelt.gui;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.toolbelt.SlotType;
+import se.mickelus.tetra.module.ItemEffect;
+
+import java.util.Collection;
 
 public class GuiStorageBackdrop extends GuiElement {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
-    public GuiStorageBackdrop(int x, int y, int numSlots) {
+    public GuiStorageBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {
         super(x, y, numSlots * 17 - 9, 28);
 
         setAttachmentPoint(GuiAttachment.topCenter);
@@ -26,5 +30,7 @@ public class GuiStorageBackdrop extends GuiElement {
         rightCap.setAttachmentPoint(GuiAttachment.topLeft);
         rightCap.setAttachmentAnchor(GuiAttachment.topRight);
         addChild(rightCap);
+
+        GuiSlotEffect.getEffectsForInventory(SlotType.storage, inventoryEffects).forEach(this::addChild);
     }
 }

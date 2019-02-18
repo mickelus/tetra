@@ -123,7 +123,7 @@ public class GuiWorkbench extends GuiContainer {
     protected void renderHoveredToolTip(int mouseX, int mouseY) {
         super.renderHoveredToolTip(mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
-        if (tooltipLines !=null) {
+        if (tooltipLines != null) {
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
         }
 

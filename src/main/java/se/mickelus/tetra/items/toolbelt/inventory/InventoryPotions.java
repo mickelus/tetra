@@ -6,6 +6,7 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.toolbelt.SlotType;
 
 import javax.annotation.Nullable;
 
@@ -15,9 +16,9 @@ public class InventoryPotions extends InventoryToolbelt {
     public static int maxSize = 9;
 
     public InventoryPotions(ItemStack stack) {
-        super(inventoryKey, stack, maxSize);
+        super(inventoryKey, stack, maxSize, SlotType.potion);
         ItemToolbeltModular item = (ItemToolbeltModular) stack.getItem();
-        numSlots = item.getNumPotionSlots(stack);
+        numSlots = item.getNumSlots(stack, SlotType.potion);
 
         readFromNBT(NBTHelper.getTag(stack));
     }

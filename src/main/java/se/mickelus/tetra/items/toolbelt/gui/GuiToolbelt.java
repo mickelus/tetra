@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.toolbelt.gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
@@ -11,6 +12,7 @@ import se.mickelus.tetra.items.toolbelt.ContainerToolbelt;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.io.IOException;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiToolbelt extends GuiContainer {
@@ -39,22 +41,22 @@ public class GuiToolbelt extends GuiContainer {
         defaultGui.addChild(new GuiTexture(0, 103, 179, 106, INVENTORY_TEXTURE));
 
         if (numPotionSlots > 0) {
-            defaultGui.addChild(new GuiPotionsBackdrop(0, 55 - 30 * offset, numPotionSlots));
+            defaultGui.addChild(new GuiPotionsBackdrop(0, 55 - 30 * offset, numPotionSlots, container.getPotionInventory().getSlotEffects()));
             offset++;
         }
 
         if (numQuiverSlots > 0) {
-            defaultGui.addChild(new GuiQuiverBackdrop(0, 55 - 30 * offset, numQuiverSlots));
+            defaultGui.addChild(new GuiQuiverBackdrop(0, 55 - 30 * offset, numQuiverSlots, container.getQuiverInventory().getSlotEffects()));
             offset++;
         }
 
         if (numQuickslots > 0 ) {
-            defaultGui.addChild(new GuiQuickSlotBackdrop(0, 55 - 30 * offset, numQuickslots));
+            defaultGui.addChild(new GuiQuickSlotBackdrop(0, 55 - 30 * offset, numQuickslots, container.getQuickslotInventory().getSlotEffects()));
             offset++;
         }
 
         if (numStorageSlots > 0) {
-            defaultGui.addChild(new GuiStorageBackdrop(0, 55 - 30 * offset, numStorageSlots));
+            defaultGui.addChild(new GuiStorageBackdrop(0, 55 - 30 * offset, numStorageSlots, container.getStorageInventory().getSlotEffects()));
         }
 
         defaultGui.addChild(new GuiKeybinding(166, 85, OverlayToolbelt.instance.accessBinding));
@@ -77,6 +79,15 @@ public class GuiToolbelt extends GuiContainer {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
+    }
+
+    @Override
+    protected void renderHoveredToolTip(int mouseX, int mouseY) {
+        super.renderHoveredToolTip(mouseX, mouseY);
+        List<String> tooltipLines = defaultGui.getTooltipLines();
+        if (tooltipLines != null) {
+            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
+        }
     }
 
     @Override

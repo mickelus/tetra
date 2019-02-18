@@ -91,14 +91,6 @@ duplex/binding=Binding
 duplex/accessory=Accessory
 
 ###############################
-# TOOLBELT
-###############################
-toolbelt/slot1=
-toolbelt/slot2=
-toolbelt/slot3=
-toolbelt/belt=Belt
-
-###############################
 # REPAIR SCHEMA
 ###############################
 repair_schema.name=Repair
@@ -1284,14 +1276,24 @@ sickle/knightmetal=Knightmetal sickle
 sickle/knightmetal.name=Sickle
 sickle/knightmetal.prefix=Knightmetal
 
+
 ###############################
-# TOOLBELT MISC
+# TOOLBELT
 ###############################
+toolbelt/slot1=
+toolbelt/slot2=
+toolbelt/slot3=
+toolbelt/belt=Belt
+
 toolbelt.full=Toolbelt is full
 toolbelt.blocked=Inventory full, make space first
 toolbelt.binding.group=Tetra toolbelt
 toolbelt.binding.access=Quick access
 toolbelt.binding.restock=Restock
+
+toolbelt.effect.tooltip.quiver.quickAccess=Arrows can be drawn straight from this slot
+toolbelt.effect.tooltip.storage.quickAccess=Items can be restocked into this slot
+toolbelt.effect.tooltip.storage.cellSocket=Modules can draw power from cells in this slot
 
 ###############################
 # TOOLBELT BELT
