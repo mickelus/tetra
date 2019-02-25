@@ -1,20 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "tetra:forged_container_1"
+    "model": "tetra:forged_container"
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}],
-    "facing": {
-      "east": {},
-      "south": {},
-      "west": {},
-      "north": {}
-    },
-    "flipped": {
-      "true": {},
-      "false": {}
-    }
+    "inventory": { "y": 270 }
   }
 }

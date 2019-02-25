@@ -101,7 +101,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.GUI_TOOLBELT_ID, new GuiHandlerToolbelt());
+        GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.toolbeltId, new GuiHandlerToolbelt());
 
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, Side.SERVER);
         packetHandler.registerPacket(UpdateBoosterPacket.class, Side.SERVER);
@@ -135,7 +135,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        player.openGui(TetraMod.instance, GuiHandlerToolbelt.GUI_TOOLBELT_ID, world, hand.ordinal(), 0, 0);
+        player.openGui(TetraMod.instance, GuiHandlerToolbelt.toolbeltId, world, hand.ordinal(), 0, 0);
 
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }

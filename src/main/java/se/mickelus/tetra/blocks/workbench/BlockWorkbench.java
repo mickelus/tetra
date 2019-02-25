@@ -146,7 +146,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        player.openGui(TetraMod.instance, GuiHandlerWorkbench.GUI_WORKBENCH_ID, world, pos.getX(), pos.getY(), pos.getZ());
+        player.openGui(TetraMod.instance, GuiHandlerWorkbench.workbenchId, world, pos.getX(), pos.getY(), pos.getZ());
 
         return true;
     }
@@ -220,7 +220,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         TileEntityWorkbench.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
 
-        GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.GUI_WORKBENCH_ID, new GuiHandlerWorkbench());
+        GuiHandlerRegistry.instance.registerHandler(GuiHandlerWorkbench.workbenchId, new GuiHandlerWorkbench());
         PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, Side.SERVER);

@@ -1,12 +1,17 @@
 package se.mickelus.tetra;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -55,6 +60,8 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.IProxy;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 
 @Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "#VERSION")
 public class TetraMod {
@@ -153,6 +160,18 @@ public class TetraMod {
                 .filter(block -> block instanceof ITetraBlock)
                 .map(block -> (ITetraBlock) block)
                 .forEach(block -> block.init(packetHandler));
+    }
+
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event) {
+
+        // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
+        ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
+                    @Override
+                    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                        return new ModelResourceLocation(MOD_ID + ":forged_container");
+                    }
+                });
     }
 
     @EventHandler

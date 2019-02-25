@@ -5,31 +5,62 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import se.mickelus.tetra.gui.ToggleableSlot;
+import se.mickelus.tetra.network.PacketHandler;
+
+import java.util.Arrays;
 
 
 public class ContainerForgedContainer extends Container {
     private TileEntityForgedContainer tileEntity;
+    private IInventory playerInventory;
+
+    private ToggleableSlot[][] compartmentSlots;
+    private int currentCompartment = 0;
 
     public ContainerForgedContainer(IInventory playerInventory, TileEntityForgedContainer tileEntity, EntityPlayer player) {
         this.tileEntity = tileEntity;
         tileEntity.openInventory(player);
 
-        // container inventory
-        for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-            Slot slot = new Slot(tileEntity, i, 167, 107 + 18 * i);
-            addSlotToContainer(slot);
-        }
+        this.playerInventory = playerInventory;
 
-        // player inventory
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 3; y++) {
-                addSlotToContainer(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
+        compartmentSlots = new ToggleableSlot[TileEntityForgedContainer.compartmentCount][];
+        for (int i = 0; i < compartmentSlots.length; i++) {
+            compartmentSlots[i] = new ToggleableSlot[TileEntityForgedContainer.compartmentSize];
+            int offset = i * TileEntityForgedContainer.compartmentSize;
+            for (int j = 0; j < 6; j++) {
+                for (int k = 0; k < 9; k++) {
+                    int index = j * 9 + k;
+                    compartmentSlots[i][index] = new ToggleableSlot(tileEntity, index + offset, k * 17 + 12, j * 17);
+                    compartmentSlots[i][index].toggle(i == 0);
+                    this.addSlotToContainer(compartmentSlots[i][index]);
+                }
             }
         }
 
-        // player toolbar
+        // player inventory
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                this.addSlotToContainer(new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 116));
+            }
+        }
+
         for (int i = 0; i < 9; i++) {
-            addSlotToContainer(new Slot(playerInventory, i, i * 17 + 84, 221));
+            this.addSlotToContainer(new Slot(playerInventory, i, i * 17 + 12, 171));
+        }
+    }
+
+    public void changeCompartment(int compartmentIndex) {
+        currentCompartment = compartmentIndex;
+        for (int i = 0; i < compartmentSlots.length; i++) {
+            boolean enabled = i == compartmentIndex;
+            Arrays.stream(compartmentSlots[i]).forEach(slot -> slot.toggle(enabled));
+        }
+
+        if (tileEntity.getWorld().isRemote) {
+            PacketHandler.sendToServer(new ChangeCompartmentPacket(compartmentIndex));
         }
     }
 
@@ -52,7 +83,8 @@ public class ContainerForgedContainer extends Container {
                 if (!mergeItemStack(itemStack,  tileEntity.getSizeInventory(), inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!mergeItemStack(itemStack, 0,  tileEntity.getSizeInventory(), false)) {
+            } else if (!mergeItemStack(itemStack, currentCompartment * TileEntityForgedContainer.compartmentSize,
+                    ( currentCompartment + 1) * TileEntityForgedContainer.compartmentSize, false)) {
                 return ItemStack.EMPTY;
             }
 

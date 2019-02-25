@@ -27,19 +27,19 @@ public class GuiStringOutline extends GuiString {
     }
 
     @Override
-    protected void drawString(String text, int x, int y, int color, boolean drawShadow) {
+    protected void drawString(String text, int x, int y, int color, float opacity, boolean drawShadow) {
 
-        super.drawString(text, x - 1, y - 1, 0, false);
-        super.drawString(text, x, y - 1, 0, false);
-        super.drawString(text, x + 1, y - 1, 0, false);
+        super.drawString(text, x - 1, y - 1, 0, opacity, false);
+        super.drawString(text, x, y - 1, 0, opacity, false);
+        super.drawString(text, x + 1, y - 1, 0, opacity, false);
 
-        super.drawString(text, x - 1, y + 1, 0, false);
-        super.drawString(text, x, y + 1, 0, false);
-        super.drawString(text, x + 1, y + 1, 0, false);
+        super.drawString(text, x - 1, y + 1, 0, opacity, false);
+        super.drawString(text, x, y + 1, 0, opacity, false);
+        super.drawString(text, x + 1, y + 1, 0, opacity, false);
 
-        super.drawString(text, x + 1, y, 0, false);
-        super.drawString(text, x - 1, y, 0, false);
+        super.drawString(text, x + 1, y, 0, opacity, false);
+        super.drawString(text, x - 1, y, 0, opacity, false);
 
-        super.drawString(text, x, y, color, false);
+        super.drawString(text, x, y, color, opacity, false);
     }
 }

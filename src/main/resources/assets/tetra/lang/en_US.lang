@@ -67,6 +67,10 @@ tile.forged_platform.name=Forged platform
 tile.forged_platform_slab.name=Forged platform
 tile.forged_wall.name=Forged wall
 tile.forged_vent.name=Forged Vent
+
+tile.forged_container.name=Forged Container
+forged_container.compartment=Compartment %s
+
 tile.hammer_base.name=Hammer base
 tile.hammer_head.name=Hammer head
 

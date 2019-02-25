@@ -26,8 +26,8 @@ public class ToggleableSlot extends Slot {
             xPos = realX;
             yPos = realY;
         } else {
-            xPos = -100;
-            yPos = -100;
+            xPos = -10000;
+            yPos = -10000;
         }
     }
 

@@ -6,19 +6,37 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyModifier;
 
+import javax.annotation.Nullable;
+
 public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
+        this(x, y,
+                GameSettings.getKeyDisplayString(keyBinding.getKeyCode()),
+                keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
+                I18n.format(keyBinding.getKeyDescription()));
+    }
+
+    public GuiKeybinding(int x, int y, String key, @Nullable String modifier) {
+        this(x, y, key, modifier, null);
+    }
+
+    public GuiKeybinding(int x, int y, String key) {
+        this(x, y, key, null, null);
+    }
+
+    public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description) {
         super(x, y, 0, 0);
 
-
-        GuiKey guiKey = new GuiKey(0, 0, GameSettings.getKeyDisplayString(keyBinding.getKeyCode()));
+        GuiKey guiKey = new GuiKey(0, 0, key);
         addChild(guiKey);
 
-        addChild(new GuiStringOutline(3, 2, I18n.format(keyBinding.getKeyDescription())));
+        if (description != null) {
+            addChild(new GuiStringOutline(3, 2, description));
+        }
 
-        if (keyBinding.getKeyModifier() != KeyModifier.NONE) {
-            addChild(new GuiKey(guiKey.x - 7, 0, keyBinding.getKeyModifier().toString()));
+        if (modifier != null) {
+            addChild(new GuiKey(guiKey.x - 7, 0, modifier));
             addChild(new GuiStringOutline(guiKey.x - 6, 2, "+", GuiColors.muted));
         }
     }

@@ -2,6 +2,8 @@ package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class GuiString extends GuiElement {
 
@@ -73,10 +75,18 @@ public class GuiString extends GuiElement {
 
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawString(string, refX + x, refY + y, color, drawShadow);
+        activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
+        activeAnimations.forEach(KeyframeAnimation::preDraw);
+        GlStateManager.enableBlend();
+        drawString(string, refX + x, refY + y, color, opacity * getOpacity(), drawShadow);
     }
 
-    protected void drawString(String text, int x, int y, int color, boolean drawShadow) {
-        fontRenderer.drawString(text, (float)x, (float)y, color, drawShadow);
+    protected void drawString(String text, int x, int y, int color, float opacity, boolean drawShadow) {
+        color = colorWithOpacity(color, opacity);
+
+        // if the vanilla fontrender considers the color to be almost transparent (0xfc) it flips the opacity back to 1
+        if ((color & -67108864) != 0) {
+            fontRenderer.drawString(text, (float)x, (float)y, color, drawShadow);
+        }
     }
 }

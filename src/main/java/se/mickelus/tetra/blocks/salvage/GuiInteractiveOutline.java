@@ -74,7 +74,7 @@ public class GuiInteractiveOutline extends GuiElement {
                     blockInteraction.requiredCapability, blockInteraction.requiredLevel, player);
             addChild(capability);
             if (width > height) {
-                if (y + width / 2 > 16) {
+                if (y + width / 2 < 16) {
                     capability.setAttachmentPoint(GuiAttachment.bottomCenter);
                     capability.setAttachmentAnchor(GuiAttachment.topCenter);
                 } else {
@@ -88,6 +88,7 @@ public class GuiInteractiveOutline extends GuiElement {
                 } else {
                     capability.setAttachmentPoint(GuiAttachment.middleRight);
                     capability.setAttachmentAnchor(GuiAttachment.middleLeft);
+                    capability.setX(1);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -8,17 +9,94 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class TileEntityForgedContainer extends TileEntity implements IInventory {
 
     private NonNullList<ItemStack> stacks;
 
+    private boolean[] locked;
+
+    private boolean open = false;
+
+    private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
+
+    public static int compartmentCount = 3;
+    public static int compartmentSize = 54;
+
     public TileEntityForgedContainer() {
-        stacks = NonNullList.withSize(16, ItemStack.EMPTY);
+        stacks = NonNullList.withSize(compartmentSize * compartmentCount, ItemStack.EMPTY);
+
+        locked = new boolean[4];
+        Arrays.fill(locked, Boolean.TRUE);
+    }
+
+    public TileEntityForgedContainer getOrDelegate() {
+        if (isFlipped()) {
+            TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos.offset(getFacing().rotateYCCW()));
+            if (te != null) {
+                return te;
+            }
+        }
+        return this;
+    }
+
+    public EnumFacing getFacing() {
+        return world.getBlockState(pos).getValue(BlockForgedContainer.propFacing);
+    }
+
+    public boolean isFlipped() {
+        return world.getBlockState(pos).getValue(BlockForgedContainer.propFlipped);
+    }
+
+    public void open() {
+        open = true;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public boolean isLocked(int index) {
+        return locked[index];
+    }
+
+    public boolean[] isLocked() {
+        return locked;
+    }
+
+    public void breakLock(EntityPlayer player, int index) {
+        if (locked[index]) {
+            locked[index] = false;
+
+            if (!world.isRemote) {
+                world.getTileEntity(pos);
+                WorldServer worldServer = (WorldServer) world;
+                LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(lockLootTable);
+                LootContext.Builder builder = new LootContext.Builder(worldServer);
+                builder.withLuck(player.getLuck()).withPlayer(player);
+
+                table.generateLootForPools(player.getRNG(), builder.build()).forEach(itemStack -> {
+                    if (!player.inventory.addItemStackToInventory(itemStack)) {
+                        player.dropItem(itemStack, false);
+                    }
+                });
+
+                worldServer.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 0.6f);
+            }
+            markDirty();
+        }
     }
 
     @Nullable
@@ -42,6 +120,12 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         super.readFromNBT(compound);
 
         NBTHelper.readItemStacks(compound, stacks);
+
+        for (int i = 0; i < locked.length; i++) {
+            locked[i] = compound.getBoolean("locked" + i);
+        }
+
+        open = compound.getBoolean("open");
     }
 
     @Override
@@ -49,6 +133,12 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         super.writeToNBT(compound);
 
         NBTHelper.writeItemStacks(stacks, compound);
+
+        for (int i = 0; i < locked.length; i++) {
+            compound.setBoolean("locked" + i, locked[i]);
+        }
+
+        compound.setBoolean("open", open);
 
         return compound;
     }
