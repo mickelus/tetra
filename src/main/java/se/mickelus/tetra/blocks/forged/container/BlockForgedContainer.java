@@ -177,7 +177,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
 
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
         if (te != null) {
-            te.getOrDelegate().open();
+            te.getOrDelegate().open(player);
         }
 
         return true;

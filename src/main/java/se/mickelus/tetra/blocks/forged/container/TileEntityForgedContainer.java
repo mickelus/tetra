@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.forged.container;
 
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -8,11 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.potion.PotionAttackDamage;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
@@ -21,6 +24,7 @@ import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Random;
 
 public class TileEntityForgedContainer extends TileEntity implements IInventory {
 
@@ -67,8 +71,47 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         if (lidIntegrity > 0) {
             lidIntegrity--;
             markDirty();
+
+            if (!world.isRemote) {
+                WorldServer worldServer = (WorldServer) world;;
+                if (lidIntegrity == 0) {
+                    causeOpeningEffects(worldServer);
+                } else {
+                    worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 1.3f);
+                }
+
+                if (!player.isPotionActive(MobEffects.STRENGTH)) {
+                    player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 100));
+                }
+            }
         }
     }
+
+    private void causeOpeningEffects(WorldServer worldServer) {
+        EnumFacing facing = worldServer.getBlockState(pos).getValue(BlockHorizontal.FACING);
+        Vec3d smokeDirection = new Vec3d(facing.rotateY().getDirectionVec());
+        Random random = new Random();
+        int smokeCount = 5 + random.nextInt(4);
+
+        BlockPos smokeOrigin = pos;
+        if (EnumFacing.SOUTH.equals(facing)) {
+            smokeOrigin = smokeOrigin.add(1, 0, 0);
+        } else if (EnumFacing.WEST.equals(facing)) {
+            smokeOrigin = smokeOrigin.add(1, 0, 1);
+        } else if (EnumFacing.NORTH.equals(facing)) {
+            smokeOrigin = smokeOrigin.add(0, 0, 1);
+        }
+
+        for (int i = 0; i < smokeCount; i++) {
+            worldServer.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
+                    smokeOrigin.getX() + smokeDirection.x * i * 2 / ( smokeCount - 1),
+                    smokeOrigin.getY() + 0.8,
+                    smokeOrigin.getZ() + smokeDirection.z * i * 2 / ( smokeCount - 1),
+                    1, 0, 0, 0, 0d);
+        }
+
+        worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundCategory.PLAYERS, 1, 0.5f);
+        worldServer.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.2f, 0.8f);
     }
 
     public boolean isOpen() {

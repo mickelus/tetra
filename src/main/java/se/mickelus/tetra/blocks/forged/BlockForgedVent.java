@@ -121,7 +121,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
                 }
             });
 
-            worldServer.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 0.5f);
+            worldServer.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
         }
 
         return true;
