@@ -27,6 +27,7 @@ import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.generation.processor.CompoundProcessor;
+import se.mickelus.tetra.generation.processor.ForgedContainerProcessor;
 import se.mickelus.tetra.generation.processor.HammerProcessor;
 
 import java.util.*;
@@ -129,7 +130,8 @@ public class WorldGenFeatures implements IWorldGenerator {
 
         ITemplateProcessor processors = new CompoundProcessor(
                 new BlockRotationProcessor(pos, settings),
-                new HammerProcessor(settings.getRandom(pos)));
+                new HammerProcessor(settings.getRandom(pos)),
+                new ForgedContainerProcessor(settings.getRandom(pos)));
 
         template.addBlocksToWorld(world, pos, processors, settings, 2);
 

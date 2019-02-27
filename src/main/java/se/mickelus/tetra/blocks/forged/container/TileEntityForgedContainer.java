@@ -26,9 +26,12 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
 
     private NonNullList<ItemStack> stacks;
 
-    private boolean[] locked;
+    public static int lockIntegrityMax = 4;
+    public static int lockCount = 4;
+    private int[] lockIntegrity;
 
-    private boolean open = false;
+    public static int lidIntegrityMax = 5;
+    private int lidIntegrity = 3;
 
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
 
@@ -38,8 +41,8 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     public TileEntityForgedContainer() {
         stacks = NonNullList.withSize(compartmentSize * compartmentCount, ItemStack.EMPTY);
 
-        locked = new boolean[4];
-        Arrays.fill(locked, Boolean.TRUE);
+        lockIntegrity = new int[lockCount];
+        Arrays.fill(lockIntegrity, 0);
     }
 
     public TileEntityForgedContainer getOrDelegate() {
@@ -60,43 +63,55 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         return world.getBlockState(pos).getValue(BlockForgedContainer.propFlipped);
     }
 
-    public void open() {
-        open = true;
+    public void open(EntityPlayer player) {
+        if (lidIntegrity > 0) {
+            lidIntegrity--;
+            markDirty();
+        }
+    }
     }
 
     public boolean isOpen() {
-        return open;
+        return lidIntegrity <= 0;
     }
 
     public boolean isLocked(int index) {
-        return locked[index];
+        return lockIntegrity[index] > 0;
     }
 
-    public boolean[] isLocked() {
-        return locked;
+    public Boolean[] isLocked() {
+        return Arrays.stream(lockIntegrity)
+                .mapToObj(integrity -> integrity > 0)
+                .toArray(Boolean[]::new);
     }
 
     public void breakLock(EntityPlayer player, int index) {
-        if (locked[index]) {
-            locked[index] = false;
+        if (lockIntegrity[index] > 0) {
+            lockIntegrity[index]--;
 
             if (!world.isRemote) {
-                world.getTileEntity(pos);
                 WorldServer worldServer = (WorldServer) world;
-                LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(lockLootTable);
-                LootContext.Builder builder = new LootContext.Builder(worldServer);
-                builder.withLuck(player.getLuck()).withPlayer(player);
 
-                table.generateLootForPools(player.getRNG(), builder.build()).forEach(itemStack -> {
-                    if (!player.inventory.addItemStackToInventory(itemStack)) {
-                        player.dropItem(itemStack, false);
-                    }
-                });
+                if (lockIntegrity[index] == 0) {
+                    worldServer.playSound(null, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1,0.5f);
+                } else {
+                    worldServer.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1,0.5f);
+                }
 
-                worldServer.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 0.6f);
+                if (lockIntegrity[index] == 0) {
+                    LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(lockLootTable);
+                    LootContext.Builder builder = new LootContext.Builder(worldServer);
+                    builder.withLuck(player.getLuck()).withPlayer(player);
+
+                    table.generateLootForPools(player.getRNG(), builder.build()).forEach(itemStack -> {
+                        if (!player.inventory.addItemStackToInventory(itemStack)) {
+                            player.dropItem(itemStack, false);
+                        }
+                    });
+                }
             }
-            markDirty();
         }
+        markDirty();
     }
 
     @Nullable
@@ -121,11 +136,11 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
 
         NBTHelper.readItemStacks(compound, stacks);
 
-        for (int i = 0; i < locked.length; i++) {
-            locked[i] = compound.getBoolean("locked" + i);
+        for (int i = 0; i < lockIntegrity.length; i++) {
+            lockIntegrity[i] = compound.getInteger("lock_integrity" + i);
         }
 
-        open = compound.getBoolean("open");
+        lidIntegrity = compound.getInteger("lid_integrity");
     }
 
     @Override
@@ -134,13 +149,20 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
 
         NBTHelper.writeItemStacks(stacks, compound);
 
-        for (int i = 0; i < locked.length; i++) {
-            compound.setBoolean("locked" + i, locked[i]);
-        }
-
-        compound.setBoolean("open", open);
+        writeLockData(compound, lockIntegrity);
+        writeLidData(compound, lidIntegrity);
 
         return compound;
+    }
+
+    public static void writeLockData(NBTTagCompound compound, int[] lockIntegrity) {
+        for (int i = 0; i < lockIntegrity.length; i++) {
+            compound.setInteger("lock_integrity" + i, lockIntegrity[i]);
+        }
+    }
+
+    public static void writeLidData(NBTTagCompound compound, int lidIntegrity) {
+        compound.setInteger("lid_integrity", lidIntegrity);
     }
 
 

@@ -292,7 +292,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
         if (te != null) {
             te = te.getOrDelegate();
 
-            boolean anyLocked = Booleans.asList(te.getOrDelegate().isLocked()).contains(true);
+            boolean anyLocked = Arrays.stream(te.getOrDelegate().isLocked()).anyMatch(isLocked -> isLocked);
 
             if (state.getValue(propFlipped)) {
                 actualState = actualState

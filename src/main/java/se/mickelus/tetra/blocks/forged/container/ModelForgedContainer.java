@@ -34,7 +34,7 @@ public class ModelForgedContainer extends ModelBase {
     }
 
 
-    public void render(boolean[] locked) {
+    public void render(Boolean[] locked) {
         lid.render(0.0625F);
 
         for (int i = 0; i < locks.length; i++) {
