@@ -42,6 +42,8 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     public static int compartmentCount = 3;
     public static int compartmentSize = 54;
 
+    public long openTime = -1;
+
     public TileEntityForgedContainer() {
         stacks = NonNullList.withSize(compartmentSize * compartmentCount, ItemStack.EMPTY);
 
@@ -83,6 +85,8 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
                 if (!player.isPotionActive(MobEffects.STRENGTH)) {
                     player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 100));
                 }
+            } else if (lidIntegrity == 0) { // start lid open animation on the client
+                openTime = System.currentTimeMillis();
             }
         }
     }
