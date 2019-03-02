@@ -14,8 +14,6 @@ import net.minecraft.world.storage.loot.LootTable;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 
-import java.util.Random;
-
 public class ConfigActionImpl extends ConfigAction {
 
     @Override
@@ -42,7 +40,7 @@ public class ConfigActionImpl extends ConfigAction {
     public void perform(EntityPlayer player, ItemStack targetStack, TileEntityWorkbench workbench) {
         if (!player.world.isRemote) {
             WorldServer world = (WorldServer) player.world;
-            LootTable table = world.getLootTableManager().getLootTableFromLocation(this.lootTable);
+            LootTable table = world.getLootTableManager().getLootTableFromLocation(lootTable);
             LootContext.Builder builder = new LootContext.Builder(world);
             builder.withLuck(player.getLuck()).withPlayer(player);
 

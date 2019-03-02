@@ -1,19 +1,20 @@
 package se.mickelus.tetra;
 
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -32,10 +33,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
-import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
-import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
+import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
+import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.generation.TGenCommand;
@@ -50,9 +51,9 @@ import se.mickelus.tetra.items.forged.ItemBolt;
 import se.mickelus.tetra.items.forged.ItemMesh;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
-import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
@@ -60,8 +61,8 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.IProxy;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "#VERSION")
 public class TetraMod {
@@ -93,6 +94,7 @@ public class TetraMod {
 
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
 
         blocks = new Block[] {
                 new BlockWorkbench(),
@@ -163,15 +165,15 @@ public class TetraMod {
     }
 
     @SubscribeEvent
-    public void registerModels(ModelRegistryEvent event) {
-
-        // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
-        ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
-                    @Override
-                    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                        return new ModelResourceLocation(MOD_ID + ":forged_container");
-                    }
-                });
+    public void lootTableLoad(LootTableLoadEvent event) {
+        if (TetraMod.MOD_ID.equals(event.getName().getResourceDomain())) {
+            LootTable lootTable = event.getTable();
+            LootPool[] extendedPools = DataHandler.instance.getExtendedLootPools(event.getName());
+            Optional.ofNullable(extendedPools)
+                    .map(Arrays::stream)
+                    .orElseGet(Stream::empty)
+                    .forEach(lootTable::addPool);
+        }
     }
 
     @EventHandler

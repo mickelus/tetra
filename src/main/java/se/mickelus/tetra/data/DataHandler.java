@@ -6,10 +6,20 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.io.FilenameUtils;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.generation.GenerationFeature;
+import se.mickelus.tetra.loot.LootEntryDeserializer;
+import se.mickelus.tetra.loot.LootPoolDeserializer;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
@@ -50,6 +60,13 @@ public class DataHandler {
                 .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
                 .registerTypeAdapter(Block.class, new BlockDeserializer())
                 .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
+                .registerTypeAdapter(LootPool.class, new LootPoolDeserializer())
+                .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
+                .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
+                .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
+                .registerTypeHierarchyAdapter(LootFunction.class, new LootFunctionManager.Serializer())
+                .registerTypeHierarchyAdapter(LootCondition.class, new LootConditionManager.Serializer())
+                .registerTypeHierarchyAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
                 .create();
 
         instance = this;
@@ -88,8 +105,9 @@ public class DataHandler {
             if (configOverride.exists()) {
                 fPath = configOverride.toPath();
             } else if (source.isFile()) {
-                FileSystem fs = FileSystems.newFileSystem(source.toPath(), null);
-                fPath = fs.getPath(pathString);
+                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
+                    fPath = fs.getPath(pathString);
+                }
             } else if (source.isDirectory()) {
                 fPath = source.toPath().resolve(pathString);
             }
@@ -113,8 +131,9 @@ public class DataHandler {
 
         try {
             if (source.isFile()) {
-                FileSystem fs = FileSystems.newFileSystem(source.toPath(), null);
-                structuresPath = fs.getPath(pathString);
+                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
+                    structuresPath = fs.getPath(pathString);
+                }
             } else if (source.isDirectory()) {
                 structuresPath = source.toPath().resolve(pathString);
             }
@@ -150,6 +169,37 @@ public class DataHandler {
         }
 
         System.err.println("Failed to read generation feature from: " + path);
+        return null;
+    }
+
+    public LootPool[] getExtendedLootPools(ResourceLocation poolLocation) {
+        Path poolPath = null;
+
+        String pathString = String.format("assets/%s/loot_pools_extended/%s.json", poolLocation.getResourceDomain(), poolLocation.getResourcePath());
+
+        try {
+            if (source.isFile()) {
+                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
+                    poolPath = fs.getPath(pathString);
+                }
+            } else if (source.isDirectory()) {
+                poolPath = source.toPath().resolve(pathString);
+            }
+
+            if (poolPath != null && Files.exists(poolPath)) {
+                try (BufferedReader reader = Files.newBufferedReader(poolPath)){
+                    return gson.fromJson(reader, LootPool[].class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                System.err.println("Failed to read extended loot pools from: " + poolPath);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }
