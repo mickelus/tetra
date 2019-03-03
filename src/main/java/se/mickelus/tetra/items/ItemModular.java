@@ -29,8 +29,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
-import se.mickelus.tetra.module.data.CapabilityData;
 import se.mickelus.tetra.module.data.ImprovementData;
+import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.schema.Material;
 
@@ -214,13 +214,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                            tooltip.add("\u00BB " + module.getName(itemStack));
-                            Arrays.stream(module.getImprovements(itemStack))
-                                    .map(improvement -> String.format(" %s- %s %s",
-                                            ChatFormatting.DARK_GRAY,
-                                            I18n.format(improvement.key + ".name"),
-                                            improvement.level > 0 ? I18n.format("enchantment.level." + improvement.level) : ""))
-                                    .forEach(tooltip::add);
+                        tooltip.add("\u00BB " + module.getName(itemStack));
+                        Arrays.stream(module.getImprovements(itemStack))
+                                .map(improvement -> String.format(" %s- %s",
+                                        ChatFormatting.DARK_GRAY, getImprovementTooltip(improvement.key, improvement.level)))
+                                .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
@@ -231,11 +229,19 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .filter(Objects::nonNull)
                     .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
                     .filter(improvement -> improvement.enchantment)
-                    .map(improvement -> I18n.format(improvement.key + ".name") + " "
-                            + I18n.format("enchantment.level." + improvement.level))
+                    .collect(Collectors.groupingBy(ImprovementData::getKey, Collectors.summingInt(ImprovementData::getLevel)))
+                    .entrySet()
+                    .stream()
+                    .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue()))
                     .forEach(tooltip::add);
-
         }
+    }
+
+    private String getImprovementTooltip(String key, int level) {
+        if (level > 0) {
+            return I18n.format(key + ".name") + " " + I18n.format("enchantment.level." + level);
+        }
+        return I18n.format(key + ".name");
     }
 
     /**

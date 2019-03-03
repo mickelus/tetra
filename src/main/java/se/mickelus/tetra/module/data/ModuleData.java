@@ -138,6 +138,9 @@ public class ModuleData {
      */
     public CapabilityData capabilities = new CapabilityData();
 
+    public String getKey() {
+        return key;
+    }
 
     public ResourceLocation getTextureLocation() {
         return new ResourceLocation(TetraMod.MOD_ID, "items/" + key);

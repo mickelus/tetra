@@ -32,4 +32,8 @@ public class ImprovementData extends ModuleData {
      * If set to true the item will render with the enchantment glint.
      */
     public boolean enchantment = false;
+
+    public int getLevel() {
+        return level;
+    }
 }
