@@ -16,7 +16,7 @@
                     "hammer": 4
                 },
                 "moduleKey": "toolbelt/quiver",
-                "moduleVariant": "quiver/mesh"
+                "moduleVariant": "quiver/forged_mesh"
             },
             {
                 "material": {

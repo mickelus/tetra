@@ -16,7 +16,7 @@
                     "hammer": 4
                 },
                 "moduleKey": "toolbelt/potion_storage",
-                "moduleVariant": "potion_storage/mesh"
+                "moduleVariant": "potion_storage/forged_mesh"
             },
             {
                 "material": {

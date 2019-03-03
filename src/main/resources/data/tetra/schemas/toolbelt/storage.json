@@ -15,7 +15,7 @@
                     "hammer": 4
                 },
                 "moduleKey": "toolbelt/storage",
-                "moduleVariant": "storage/mesh"
+                "moduleVariant": "storage/forged_mesh"
             },
             {
                 "material": {

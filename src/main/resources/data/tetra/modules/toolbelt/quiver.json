@@ -1,12 +1,12 @@
 [
     {
-        "key": "quiver/mesh",
+        "key": "quiver/forged_mesh",
         "integrity": -2,
         "effects": {
             "quiverSlot": 8
         },
         "glyph": {
-            "tint": "fefefe",
+            "tint": "383838",
             "textureX": 224
         }
     },

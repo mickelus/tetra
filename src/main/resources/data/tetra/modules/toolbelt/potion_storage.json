@@ -1,12 +1,12 @@
 [
     {
-        "key": "potion_storage/mesh",
+        "key": "potion_storage/forged_mesh",
         "integrity": -3,
         "effects": {
             "potionSlot": 4
         },
         "glyph": {
-            "tint": "cfcfcf",
+            "tint": "383838",
             "textureX": 208
         }
     },
