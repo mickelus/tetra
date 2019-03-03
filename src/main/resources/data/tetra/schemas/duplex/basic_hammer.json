@@ -23,7 +23,7 @@
                     "item": "minecraft:obsidian"
                 },
                 "requiredCapabilities": {
-                    "hammer": 3
+                    "hammer": 5
                 },
                 "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/obsidian"
@@ -107,7 +107,7 @@
                     "count": 3
                 },
                 "requiredCapabilities": {
-                    "hammer": 4
+                    "hammer": 5
                 },
                 "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/steel"
