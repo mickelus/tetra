@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "# #",
+        "###",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "tetra:forged_mesh"
+        }
+    },
+    "result": {
+        "item": "minecraft:chainmail_chestplate"
+    }
+}
