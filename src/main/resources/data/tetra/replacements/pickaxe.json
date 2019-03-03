@@ -390,5 +390,16 @@
         "improvements": {
             "duplex/head_left:basic_pickaxe/puncturing": 1
         }
+    },
+    {
+        "predicate": {
+            "item": "immersiveengineering:pickaxe_steel"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_pickaxe_left", "basic_pickaxe/steel"],
+            "duplex/head_right": ["duplex/basic_pickaxe_right", "basic_pickaxe/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/treated_wood"]
+        }
     }
 ]

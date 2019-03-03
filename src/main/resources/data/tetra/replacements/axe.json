@@ -364,5 +364,16 @@
         "improvements": {
             "duplex/head_left:basic_axe/severing": 1
         }
+    },
+    {
+        "predicate": {
+            "item": "immersiveengineering:axe_steel"
+        },
+        "item": "tetra:duplex_tool_modular",
+        "modules": {
+            "duplex/head_left": ["duplex/basic_axe_left", "basic_axe/steel"],
+            "duplex/head_right": ["duplex/butt_right", "butt/steel"],
+            "duplex/handle": ["duplex/basic_handle", "basic_handle/treated_wood"]
+        }
     }
 ]
