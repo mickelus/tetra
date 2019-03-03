@@ -40,43 +40,25 @@
         }
     },
     {
-        "key": "enchantment/fortune",
+        "key": "enchantment/mending",
         "level": 1,
         "enchantment": true,
         "effects": {
-            "fortune": 1
+            "mending": 1
         }
     },
     {
-        "key": "enchantment/fortune",
+        "key": "enchantment/mending",
         "level": 2,
         "enchantment": true,
         "effects": {
-            "fortune": 2
+            "mending": 2
         }
     },
     {
-        "key": "enchantment/fortune",
-        "level": 3,
-        "enchantment": true,
+        "key": "basic_handle/blazing",
         "effects": {
-            "fortune": 3
-        }
-    },
-    {
-        "key": "enchantment/fortune",
-        "level": 4,
-        "enchantment": true,
-        "effects": {
-            "fortune": 4
-        }
-    },
-    {
-        "key": "enchantment/fortune",
-        "level": 5,
-        "enchantment": true,
-        "effects": {
-            "fortune": 5
+            "fierySelf": [2, 0.05]
         }
     }
 ]

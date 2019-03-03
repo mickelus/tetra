@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -128,6 +129,9 @@ public class GuiModuleList extends GuiElement {
         static Offsets toolbeltMajorOffsets = new Offsets(-14, 18, 4, 0, 4, 18);
         static Offsets toolbeltMinorOffsets = new Offsets(-13, 0);
 
+        static Offsets duplexMajorOffsets = new Offsets(-13, 19, -13, -1, 3, 19);
+        static Offsets duplexMinorOffsets = new Offsets(6, 1);
+
         private int[] offsetX;
         private int[] offsetY;
         private boolean[] alignment;
@@ -162,6 +166,8 @@ public class GuiModuleList extends GuiElement {
         public static Offsets getMajorOffsets(ItemModular item) {
             if (item instanceof ItemToolbeltModular) {
                 return toolbeltMajorOffsets;
+            } else if (item instanceof ItemDuplexToolModular ) {
+                return duplexMajorOffsets;
             } else {
                 return defaultMajorOffsets[item.getNumMajorModules() - 1];
             }
@@ -170,6 +176,8 @@ public class GuiModuleList extends GuiElement {
         public static Offsets getMinorOffsets(ItemModular item) {
             if (item instanceof ItemToolbeltModular) {
                 return toolbeltMinorOffsets;
+            } else if (item instanceof ItemDuplexToolModular ) {
+                return duplexMinorOffsets;
             } else {
                 return defaultMinorOffsets[item.getNumMinorModules() - 1];
             }

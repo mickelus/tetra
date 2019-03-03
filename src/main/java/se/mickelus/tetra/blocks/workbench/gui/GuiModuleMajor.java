@@ -1,13 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -72,7 +70,8 @@ public class GuiModuleMajor extends GuiModule {
         }
     }
 
-    private void setupImprovements(ItemModuleMajor previewModule, ItemStack previewStack, ItemModuleMajor module, ItemStack itemStack) {
+    private void setupImprovements(ItemModuleMajor previewModule, ItemStack previewStack, ItemModuleMajor module,
+            ItemStack itemStack) {
         String[] improvements = getImprovementUnion(module.getImprovements(itemStack), previewModule.getImprovements(previewStack));
         improvementElements = new GuiModuleImprovement[improvements.length];
         for (int i = 0; i < improvements.length; i++) {
@@ -89,10 +88,11 @@ public class GuiModuleMajor extends GuiModule {
             }
 
             if (GuiAttachment.topRight.equals(attachmentPoint)) {
-                improvementElements[i] = new GuiModuleImprovement(-19 + i * -5, 13, improvements[i], previewValue, color);
+                improvementElements[i] = new GuiModuleImprovement(-17 + i * -5, 13, improvements[i], previewValue, color);
             } else {
                 improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color);
             }
+            improvementElements[i].setAttachment(attachmentPoint);
             addChild(improvementElements[i]);
         }
     }

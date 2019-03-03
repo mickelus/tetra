@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -65,6 +66,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     public static DuplexHeadModule butt;
 
+    public static BasicMajorModule handle;
+
     public static ItemDuplexToolModular instance;
 
     public ItemDuplexToolModular() {
@@ -76,10 +79,10 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         entityHitDamage = 2;
 
-        majorModuleKeys = new String[]{headLeftKey, headRightKey};
-        minorModuleKeys = new String[]{bindingKey, handleKey, accessoryKey};
+        majorModuleKeys = new String[] { handleKey, headLeftKey, headRightKey };
+        minorModuleKeys = new String[] { bindingKey };
 
-        requiredModules = new String[]{headLeftKey, headRightKey, handleKey};
+        requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
 
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
@@ -106,7 +109,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
-        new BasicHandleModule(handleKey);
+        handle = new BasicMajorModule(handleKey, "duplex/basic_handle", "duplex/improvements/basic_handle");
 
         instance = this;
     }
@@ -146,6 +149,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new BookEnchantSchema(butt);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
+        new BookEnchantSchema(handle);
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
@@ -169,7 +173,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         basicHammerHeadLeft.addModule(itemStack, "basic_hammer/" + headMaterial, null);
         basicHammerHeadRight.addModule(itemStack, "basic_hammer/" + headMaterial, null);
-        BasicHandleModule.instance.addModule(itemStack, "basic_handle/" + handleMaterial, null);
+        handle.addModule(itemStack, "basic_handle/" + handleMaterial, null);
         return itemStack;
     }
 

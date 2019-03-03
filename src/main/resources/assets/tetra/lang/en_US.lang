@@ -92,7 +92,7 @@ sword/fuller=Fuller
 ###############################
 duplex/head_left=Head §7(left)
 duplex/head_right=Head §7(right)
-duplex/handle=Binding
+duplex/handle=Handle
 duplex/binding=Binding
 duplex/accessory=Accessory
 
@@ -768,7 +768,7 @@ duplex/claw_hammer=Claw hammer
 duplex/claw_axe=Carpenter's axe
 
 ###############################
-# HAMMER HANDLE
+# DUPLEX HANDLE
 ###############################
 basic_handle_schema.name=Tool handle
 basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.

@@ -228,22 +228,6 @@
         }
     },
     {
-        "key": "enchantment/mending",
-        "level": 1,
-        "enchantment": true,
-        "effects": {
-            "mending": 1
-        }
-    },
-    {
-        "key": "enchantment/mending",
-        "level": 2,
-        "enchantment": true,
-        "effects": {
-            "mending": 2
-        }
-    },
-    {
         "key": "enchantment/fire_aspect",
         "level": 1,
         "enchantment": true,

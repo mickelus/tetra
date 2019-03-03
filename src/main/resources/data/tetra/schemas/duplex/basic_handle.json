@@ -3,11 +3,8 @@
         "key": "basic_handle_schema",
         "slots": ["duplex/handle"],
         "materialSlotCount": 1,
-        "displayType": "minor",
-        "glyph": {
-            "textureX": 24,
-            "textureY": 16
-        },
+        "displayType": "major",
+        "glyph": { "textureX": 16 },
         "outcomes": [
             {
                 "material": {
