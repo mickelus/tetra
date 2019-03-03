@@ -1,5 +1,16 @@
 [
     {
+        "key": "potion_storage/mesh",
+        "integrity": -3,
+        "effects": {
+            "potionSlot": 4
+        },
+        "glyph": {
+            "tint": "cfcfcf",
+            "textureX": 208
+        }
+    },
+    {
         "key": "potion_storage/leather",
         "integrity": -3,
         "effects": {

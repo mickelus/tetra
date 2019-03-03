@@ -1,5 +1,16 @@
 [
     {
+        "key": "quiver/mesh",
+        "integrity": -2,
+        "effects": {
+            "quiverSlot": 8
+        },
+        "glyph": {
+            "tint": "fefefe",
+            "textureX": 224
+        }
+    },
+    {
         "key": "quiver/leather",
         "integrity": -3,
         "effects": {

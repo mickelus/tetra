@@ -9,6 +9,17 @@
         "outcomes": [
             {
                 "material": {
+                    "item": "tetra:forged_mesh",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "toolbelt/quiver",
+                "moduleVariant": "quiver/mesh"
+            },
+            {
+                "material": {
                     "item": "minecraft:leather",
                     "count": 3
                 },

@@ -9,6 +9,16 @@
         "outcomes": [
             {
                 "material": {
+                    "item": "tetra:forged_mesh"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "toolbelt/storage",
+                "moduleVariant": "storage/mesh"
+            },
+            {
+                "material": {
                     "item": "minecraft:leather",
                     "count": 2
                 },

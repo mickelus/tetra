@@ -1,5 +1,16 @@
 [
     {
+        "key": "storage/mesh",
+        "integrity": -4,
+        "effects": {
+            "storageSlot": 7
+        },
+        "glyph": {
+            "tint": "cfcfcf",
+            "textureX": 192
+        }
+    },
+    {
         "key": "storage/leather",
         "integrity": -5,
         "effects": {
