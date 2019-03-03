@@ -8,5 +8,35 @@
             "hammer": 2
         },
         "lootTable": "tetra:geode"
+    },
+    {
+        "key": "salvage_bolt_action",
+        "requirement": {
+            "item": "tetra:forged_bolt"
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        },
+        "lootTable": "tetra:forged/bolt_salvage"
+    },
+    {
+        "key": "salvage_beam_action",
+        "requirement": {
+            "item": "tetra:forged_beam"
+        },
+        "requiredCapabilities": {
+            "hammer": 4
+        },
+        "lootTable": "tetra:forged/beam_salvage"
+    },
+    {
+        "key": "salvage_mesh_action",
+        "requirement": {
+            "item": "tetra:forged_mesh"
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        },
+        "lootTable": "tetra:forged/mesh_salvage"
     }
 ]

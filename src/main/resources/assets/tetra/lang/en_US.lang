@@ -33,11 +33,6 @@ item.modular.speed=Swing speed
 item.modular.integrity_usage=Integrity usage: %d/%d
 
 ###############################
-# ITEM NAMES
-###############################
-item.rocket_boots.name=Rocket boots
-
-###############################
 # GEODE
 ###############################
 tetra.general.geode_generate=Generate geodes
@@ -73,6 +68,13 @@ forged_container.compartment=Compartment %s
 
 tile.hammer_base.name=Hammer base
 tile.hammer_head.name=Hammer head
+
+item.forged_bolt.name=Bolt
+item.forged_beam.name=Structure beam
+item.forged_mesh.name=Flex mesh
+salvage_bolt_action.label=Salvage
+salvage_beam_action.label=Salvage
+salvage_mesh_action.label=Salvage
 
 ancient_description=§8Found in structures deep underground in snowy biomes
 
