@@ -33,7 +33,6 @@ public class GuiActionList extends GuiElement {
         clearChildren();
         int count = availableActions.length;
         setHeight(count * 2 + 20);
-        addChild(new GuiRect(0, 0, 1, 1, GuiColors.hover));
         for (int i = 0; i < count; i++) {
             GuiAlignment alignment = i % 2 == 0 ? GuiAlignment.left : GuiAlignment.right;
             actionButtons[i] = new GuiActionButton(count > 1 ? -9 : -20, i * 14, actions[i], targetStack, alignment, clickHandler);

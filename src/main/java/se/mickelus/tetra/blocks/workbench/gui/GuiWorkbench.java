@@ -158,7 +158,7 @@ public class GuiWorkbench extends GuiContainer {
         UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (!ItemStack.areItemStackTagsEqual(targetStack, itemStack)) {
+        if (!ItemStack.areItemStacksEqual(targetStack, itemStack)) {
             targetStack = itemStack;
             selectedSlot = null;
         }
