@@ -201,5 +201,17 @@
             "textureX": 24,
             "textureY": 16
         }
+    },
+    {
+        "key": "basic_handle/forged_beam",
+        "durability": 250,
+        "integrity": 7,
+        "attackSpeed": -0.3,
+        "damageMultiplier": 0.9,
+        "glyph": {
+            "tint": "383838",
+            "textureX": 24,
+            "textureY": 16
+        }
     }
 ]

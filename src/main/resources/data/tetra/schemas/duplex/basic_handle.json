@@ -205,6 +205,16 @@
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/oak"
+            },
+            {
+                "material": {
+                    "item": "tetra:forged_beam"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/forged_beam"
             }
         ]
     }

@@ -1,12 +1,12 @@
 [
     {
-        "key": "storage/mesh",
+        "key": "storage/forged_mesh",
         "integrity": -4,
         "effects": {
             "storageSlot": 7
         },
         "glyph": {
-            "tint": "cfcfcf",
+            "tint": "383838",
             "textureX": 192
         }
     },

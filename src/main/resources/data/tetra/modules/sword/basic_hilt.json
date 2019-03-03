@@ -182,5 +182,16 @@
             "tint": "8c714d",
             "textureX": 16
         }
+    },
+    {
+        "key": "basic_hilt/forged_beam",
+        "durability": 150,
+        "integrity": 8,
+        "attackSpeed": -0.3,
+        "damageMultiplier": 0.9,
+        "glyph": {
+            "tint": "383838",
+            "textureX": 16
+        }
     }
 ]

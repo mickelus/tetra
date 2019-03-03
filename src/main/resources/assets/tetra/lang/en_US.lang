@@ -249,6 +249,7 @@ basic_hilt/steel=Steel hilt
 basic_hilt/greatwood=Greatwood hilt
 basic_hilt/treated_wood=Treated wooden hilt
 basic_hilt/ironwood=Ironwood hilt
+basic_hilt/forged_beam=Repurposed beam
 
 ###############################
 # DECORATIVE POMMEL
@@ -793,6 +794,7 @@ basic_handle/steel=Steel handle
 basic_handle/greatwood=Greatwood handle
 basic_handle/treated_wood=Treated wooden handle
 basic_handle/ironwood=Ironwood handle
+basic_handle/forged_beam=Repurposed beam
 
 ###############################
 # AXE HEAD

@@ -208,6 +208,16 @@
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/oak"
+            },
+            {
+                "material": {
+                    "item": "tetra:forged_beam"
+                },
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/forged_beam"
             }
         ]
     }
