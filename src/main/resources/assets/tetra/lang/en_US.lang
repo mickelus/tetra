@@ -1370,7 +1370,7 @@ potion_storage_schema.name=Potion bag
 potion_storage_schema.description=Attach a small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
 potion_storage_schema.slot1=Material
 
-potion_storage/leather=Mesh potion pack
+potion_storage/forged_mesh=Mesh potion pack
 potion_storage/leather=Large potion bag
 potion_storage/wool=Potion bag
 potion_storage/hide=Small potion bag
@@ -1384,7 +1384,7 @@ storage_schema.name=Storage pouch
 storage_schema.description=Attach a small pouch to the toolbelt, which can store a large amount of items. While the items in the pouch are not easily accessible, held items can be stored into the pouch as easily as with other toolbelt attachments.
 storage_schema.slot1=Material
 
-storage/mesh=Mesh pack
+storage/forged_mesh=Mesh pack
 storage/leather=Large pouch
 storage/wool=Pouch
 storage/hide=Small pouch
@@ -1398,7 +1398,7 @@ quiver_schema.name=Quiver
 quiver_schema.description=Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.
 quiver_schema.slot1=Material
 
-quiver/mesh=Mesh quiver
+quiver/forged_mesh=Mesh quiver
 quiver/leather=Leather quiver
 quiver/wool=Cloth quiver
 quiver/hide=Hide quiver
