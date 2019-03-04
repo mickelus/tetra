@@ -94,6 +94,8 @@ public class ItemModularHandheld extends ItemModular {
             applyDamage(blockDestroyDamage, itemStack, entityLiving);
         }
 
+        causeFierySelfEffect(entityLiving, itemStack, 1);
+
         return true;
     }
 
@@ -133,6 +135,8 @@ public class ItemModularHandheld extends ItemModular {
                 int ticks = 20 + attacker.getRNG().nextInt(10 * arthropodLevel);
                 target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, ticks, 3));
             }
+
+            causeFierySelfEffect(attacker, itemStack, 1.4);
         }
 
         return true;
@@ -143,6 +147,8 @@ public class ItemModularHandheld extends ItemModular {
         ItemStack itemStack = player.getHeldItem(hand);
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
+
+        causeFierySelfEffect(player, itemStack, 2);
 
         if (flatteningLevel > 0 && (tillingLevel > 0 && player.isSneaking() || tillingLevel == 0)) {
             return flattenPath(player, world, pos, hand, facing);
@@ -163,6 +169,19 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    protected void causeFierySelfEffect(EntityLivingBase attacker, ItemStack itemStack, double multiplier) {
+        if (!attacker.world.isRemote) {
+            double fierySelfEfficiency = getEffectEfficiency(itemStack, ItemEffect.fierySelf);
+            if (fierySelfEfficiency > 0) {
+                double rng = attacker.getRNG().nextDouble();
+                float temperature = attacker.world.getBiome(attacker.getPosition()).getTemperature(attacker.getPosition());
+                if (rng < fierySelfEfficiency * temperature * multiplier) {
+                    attacker.setFire(getEffectLevel(itemStack, ItemEffect.fierySelf));
+                }
+            }
+        }
     }
 
     /**
@@ -566,6 +585,9 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
         }
+
+        causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }
 
@@ -575,6 +597,9 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
         }
+
+        causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }
 }

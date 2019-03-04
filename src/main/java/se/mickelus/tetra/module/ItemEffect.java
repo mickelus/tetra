@@ -174,6 +174,14 @@ public enum ItemEffect {
      */
     denailing,
 
+    /**
+     * Fiery self: When the player uses the item there's a chance that the player is set on fire. The player burns for 1 second per level of the
+     * effect. The chance for the player to catch fire is based on the effect efficiency, efficiency 1.0 would cause the player to always catch
+     * fire and an efficiency of 0.0 would cause the player to never catch fire. The temperature of the biome affect the chance for the effect to
+     * trigger, colder biomes reduce it while warmer biomes cause an increase.
+     */
+    fierySelf,
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

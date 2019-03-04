@@ -58,7 +58,7 @@
     {
         "key": "basic_handle/blazing",
         "effects": {
-            "fierySelf": [2, 0.05]
+            "fierySelf": [2, 0.1]
         }
     }
 ]

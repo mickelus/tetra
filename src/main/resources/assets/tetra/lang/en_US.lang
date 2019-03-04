@@ -251,6 +251,9 @@ basic_hilt/treated_wood=Treated wooden hilt
 basic_hilt/ironwood=Ironwood hilt
 basic_hilt/forged_beam=Repurposed beam
 
+basic_hilt/blazing.name=Blazing
+basic_hilt/blazing.description=Using this may set you on fire, more sever in hot environments.
+
 ###############################
 # DECORATIVE POMMEL
 ###############################
@@ -795,6 +798,9 @@ basic_handle/greatwood=Greatwood handle
 basic_handle/treated_wood=Treated wooden handle
 basic_handle/ironwood=Ironwood handle
 basic_handle/forged_beam=Repurposed beam
+
+basic_handle/blazing.name=Blazing
+basic_handle/blazing.description=Using this may set you on fire, more sever in hot environments.
 
 ###############################
 # AXE HEAD

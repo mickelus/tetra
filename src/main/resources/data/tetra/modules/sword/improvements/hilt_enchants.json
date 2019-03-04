@@ -94,5 +94,11 @@
         "effects": {
             "knockback": 5
         }
+    },
+    {
+        "key": "basic_hilt/blazing",
+        "effects": {
+            "fierySelf": [2, 0.1]
+        }
     }
 ]

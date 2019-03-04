@@ -34,10 +34,10 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         blockDestroyDamage = 2;
 
-        majorModuleKeys = new String[]{bladeKey, hiltKey};
-        minorModuleKeys = new String[]{fullerKey, guardKey, pommelKey};
+        majorModuleKeys = new String[] { bladeKey, hiltKey };
+        minorModuleKeys = new String[] { fullerKey, guardKey, pommelKey };
 
-        requiredModules = new String[]{bladeKey, hiltKey};
+        requiredModules = new String[] { bladeKey, hiltKey };
 
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
                 "sword/improvements/blade_enchants", "sword/improvements/basic_blade");

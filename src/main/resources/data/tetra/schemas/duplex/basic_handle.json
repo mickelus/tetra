@@ -28,7 +28,10 @@
                     "hammer": 4
                 },
                 "moduleKey": "duplex/basic_handle",
-                "moduleVariant": "basic_handle/blaze_rod"
+                "moduleVariant": "basic_handle/blaze_rod",
+                "improvements": {
+                    "basic_handle/blazing": 0
+                }
             },
             {
                 "material": {

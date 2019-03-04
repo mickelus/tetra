@@ -44,7 +44,10 @@
                     "hammer": 4
                 },
                 "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/blaze_rod"
+                "moduleVariant": "basic_hilt/blaze_rod",
+                "improvements": {
+                    "basic_hilt/blazing": 0
+                }
             },
             {
                 "material": {
