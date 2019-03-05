@@ -15,6 +15,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityEndermite;
+import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
@@ -23,6 +27,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -95,6 +100,7 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         causeFierySelfEffect(entityLiving, itemStack, 1);
+        causeEnderReverbEffect(entityLiving, itemStack, 1);
 
         return true;
     }
@@ -137,6 +143,7 @@ public class ItemModularHandheld extends ItemModular {
             }
 
             causeFierySelfEffect(attacker, itemStack, 1.4);
+            causeEnderReverbEffect(attacker, itemStack, 1.5);
         }
 
         return true;
@@ -149,6 +156,7 @@ public class ItemModularHandheld extends ItemModular {
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
 
         causeFierySelfEffect(player, itemStack, 2);
+        causeEnderReverbEffect(player, itemStack, 1.7);
 
         if (flatteningLevel > 0 && (tillingLevel > 0 && player.isSneaking() || tillingLevel == 0)) {
             return flattenPath(player, world, pos, hand, facing);
@@ -171,14 +179,30 @@ public class ItemModularHandheld extends ItemModular {
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
-    protected void causeFierySelfEffect(EntityLivingBase attacker, ItemStack itemStack, double multiplier) {
-        if (!attacker.world.isRemote) {
+    protected void causeFierySelfEffect(EntityLivingBase entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
             double fierySelfEfficiency = getEffectEfficiency(itemStack, ItemEffect.fierySelf);
             if (fierySelfEfficiency > 0) {
-                double rng = attacker.getRNG().nextDouble();
-                float temperature = attacker.world.getBiome(attacker.getPosition()).getTemperature(attacker.getPosition());
-                if (rng < fierySelfEfficiency * temperature * multiplier) {
-                    attacker.setFire(getEffectLevel(itemStack, ItemEffect.fierySelf));
+                BlockPos pos = entity.getPosition();
+                float temperature = entity.world.getBiome(pos).getTemperature(pos);
+                if (entity.getRNG().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
+                    entity.setFire(getEffectLevel(itemStack, ItemEffect.fierySelf));
+                }
+            }
+        }
+    }
+    
+    protected void causeEnderReverbEffect(EntityLivingBase entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
+            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
+            if (effectProbability > 0) {
+                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                    AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
+                    List<EntityLivingBase> nearbyTargets = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb,
+                            target -> target instanceof EntityEnderman || target instanceof EntityEndermite || target instanceof EntityShulker || target instanceof EntityDragon);
+                    if (nearbyTargets.size() > 0) {
+                        nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
+                    }
                 }
             }
         }
@@ -587,6 +611,7 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+        causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }
@@ -599,6 +624,7 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+        causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }

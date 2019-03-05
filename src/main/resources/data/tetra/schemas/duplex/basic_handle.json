@@ -41,7 +41,10 @@
                     "hammer": 4
                 },
                 "moduleKey": "duplex/basic_handle",
-                "moduleVariant": "basic_handle/end_rod"
+                "moduleVariant": "basic_handle/end_rod",
+                "improvements": {
+                    "basic_handle/ender_reverb": 0
+                }
             },
             {
                 "material": {

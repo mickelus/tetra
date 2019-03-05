@@ -57,7 +57,10 @@
                     "hammer": 4
                 },
                 "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/end_rod"
+                "moduleVariant": "basic_hilt/end_rod",
+                "improvements": {
+                    "basic_hilt/ender_reverb": 0
+                }
             },
             {
                 "material": {

@@ -6,12 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,6 +32,26 @@ public class CapabilityHelper {
                 .filter(stack -> stack.getItem() instanceof ICapabilityProvider)
                 .map(stack -> ((ICapabilityProvider) stack.getItem()).getCapabilities(stack))
                 .orElse(Collections.emptyList());
+    }
+
+    public static int getPlayerEffectLevel(EntityPlayer player, ItemEffect effect) {
+        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+                .filter(itemStack -> !itemStack.isEmpty())
+                .map(CapabilityHelper::getReplacement)
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .map(itemStack -> ((ItemModular) itemStack.getItem()).getEffectLevel(itemStack, effect))
+                .max(Integer::compare)
+                .orElse(0);
+    }
+
+    public static double getPlayerEffectEfficiency(EntityPlayer player, ItemEffect effect) {
+        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+                .filter(itemStack -> !itemStack.isEmpty())
+                .map(CapabilityHelper::getReplacement)
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .max(Comparator.comparingInt(itemStack -> ((ItemModular) itemStack.getItem()).getEffectLevel(itemStack, effect)))
+                .map(itemStack -> ((ItemModular) itemStack.getItem()).getEffectEfficiency(itemStack, effect))
+                .orElse(0d);
     }
 
     public static int getPlayerCapabilityLevel(EntityPlayer player, Capability capability) {

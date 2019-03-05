@@ -182,6 +182,15 @@ public enum ItemEffect {
      */
     fierySelf,
 
+    /**
+     * Ender reverb: Using the item angers nearby endermen. When nearby endermen teleport the player sometimes suffers nausea and will be teleported
+     * along with the enderman (also applies for thrown pearls). Breaking blocks or performing actions using the tool will sometimes anger nearby
+     * entities from the end (endermen, endermites, shulkers & the dragon). The chance for the effects to occur is based on the effect efficiency,
+     * efficiency 1.0 would cause them to always occur and an efficiency of 0.0 would cause them to never occur. Different actions have slightly
+     * different chance to trigger effects.
+     */
+    enderReverb,
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

@@ -10,11 +10,15 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
@@ -25,6 +29,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import se.mickelus.tetra.ReflectionHelper;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 
@@ -333,6 +338,28 @@ public class ItemEffectHandler {
                         breakingPlayer.resetCooldown();
                     }
                 });
+    }
+
+    @SubscribeEvent
+    public void onEnderTeleport(EnderTeleportEvent event) {
+        if (!event.getEntity().getEntityWorld().isRemote) {
+            World world = event.getEntity().getEntityWorld();
+            AxisAlignedBB aabb = new AxisAlignedBB(event.getTargetX() - 24, event.getTargetY() - 24, event.getTargetZ() - 24,
+                    event.getTargetX() + 24, event.getTargetY() + 24, event.getTargetZ() + 24);
+
+            event.getEntity().getEntityWorld().getEntitiesWithinAABB(EntityPlayer.class, aabb).forEach(player -> {
+                int reverbLevel = CapabilityHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
+                if (reverbLevel > 0) {
+                    double effectProbability = CapabilityHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
+                    if (effectProbability > 0) {
+                        if (player.getRNG().nextDouble() < effectProbability * 2) {
+                            player.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                            player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 40 * reverbLevel));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**

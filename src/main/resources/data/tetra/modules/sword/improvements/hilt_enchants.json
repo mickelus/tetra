@@ -100,5 +100,11 @@
         "effects": {
             "fierySelf": [2, 0.1]
         }
+    },
+    {
+        "key": "basic_hilt/ender_reverb",
+        "effects": {
+            "enderReverb": [3, 0.3]
+        }
     }
 ]

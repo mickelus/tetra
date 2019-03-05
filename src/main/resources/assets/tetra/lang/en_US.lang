@@ -254,6 +254,9 @@ basic_hilt/forged_beam=Repurposed beam
 basic_hilt/blazing.name=Blazing
 basic_hilt/blazing.description=Using this may set you on fire, more sever in hot environments.
 
+basic_hilt/ender_reverb.name=Ender reverb
+basic_hilt/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
+
 ###############################
 # DECORATIVE POMMEL
 ###############################
@@ -801,6 +804,9 @@ basic_handle/forged_beam=Repurposed beam
 
 basic_handle/blazing.name=Blazing
 basic_handle/blazing.description=Using this may set you on fire, more sever in hot environments.
+
+basic_handle/ender_reverb.name=Ender reverb
+basic_handle/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
 
 ###############################
 # AXE HEAD
