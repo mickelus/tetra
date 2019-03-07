@@ -9,8 +9,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,12 +54,32 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 .anyMatch(improvement -> level == improvement.level);
     }
 
-    public void addImprovement(ItemStack itemStack, String improvement, int level) {
-        addImprovement(itemStack, slotKey, improvement, level);
+    public void addImprovement(ItemStack itemStack, String improvementKey, int level) {
+        removeCollidingImprovements(itemStack, improvementKey, level);
+        NBTHelper.getTag(itemStack).setInteger(slotKey + ":" + improvementKey, level);
     }
 
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
-        NBTHelper.getTag(itemStack).setInteger(slot + ":" + improvement, level);
+        ItemModular item = (ItemModular) itemStack.getItem();
+        CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
+                .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
+    }
+
+    public void removeCollidingImprovements(ItemStack itemStack, String improvementKey, int level) {
+        Arrays.stream(improvements)
+                .filter(improvement -> improvementKey.equals(improvement.key))
+                .filter(improvement -> level == improvement.level)
+                .filter(improvement -> improvement.group != null)
+                .map(improvement -> improvement.group)
+                .findFirst()
+                .ifPresent(group -> Arrays.stream(getImprovements(itemStack))
+                        .filter(improvement -> group.equals(improvement.group))
+                        .forEach(improvement -> removeImprovement(itemStack, slotKey, improvement.key)));
+    }
+
+    public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
+
+        NBTHelper.getTag(itemStack).removeTag(slot + ":" + improvement);
     }
 
     @Override

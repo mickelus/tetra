@@ -33,6 +33,8 @@ public class ImprovementData extends ModuleData {
      */
     public boolean enchantment = false;
 
+    public String group = null;
+
     public int getLevel() {
         return level;
     }
