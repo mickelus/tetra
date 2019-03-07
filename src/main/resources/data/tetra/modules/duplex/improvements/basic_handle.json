@@ -58,57 +58,63 @@
     {
         "key": "basic_handle/blazing",
         "effects": {
-            "fierySelf": [2, 0.1]
+            "fierySelf": [3, 0.1]
         }
     },
     {
         "key": "basic_handle/ender_reverb",
         "effects": {
-            "enderReverb": [3, 0.3]
+            "enderReverb": [4, 0.3]
         }
     },
     {
         "key": "basic_handle/wrap_string",
+        "durability": 3,
+        "textured": true,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.1,
-        "damageMultiplier": 1.05,
+        "attackSpeed": 0.05,
+        "damageMultiplier": 1.1,
         "effects": {
-            "enderReverb": [-2, -0.15],
-            "fierySelf": [-1, -0.03]
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
         }
     },
     {
         "key": "basic_handle/wrap_leather",
+        "durability": 10,
+        "textured": true,
         "group": "wrap",
-        "integrity": -2,
-        "attackSpeed": 0.2,
-        "damageMultiplier": 1.07,
+        "integrity": -1,
+        "damageMultiplier": 1.05,
         "effects": {
-            "enderReverb": [-2, -0.2],
+            "enderReverb": [-2, -0.15],
             "fierySelf": [-1, -0.05]
         }
     },
     {
         "key": "basic_handle/wrap_hide",
+        "durability": 5,
+        "textured": true,
         "group": "wrap",
         "integrity": -1,
         "attackSpeed": 0.1,
-        "damageMultiplier": 1.05,
         "effects": {
-            "enderReverb": [-2, -0.15],
-            "fierySelf": [-1, -0.03]
+            "enderReverb": [-3, -0.1],
+            "fierySelf": [-2, -0.033]
         }
     },
     {
         "key": "basic_handle/wrap_vine",
+        "durability": 5,
+        "textured": true,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.1,
+        "attackSpeed": 0.22,
         "damageMultiplier": 1.05,
         "effects": {
-            "enderReverb": [-2, -0.15],
-            "fierySelf": [-1, -0.03]
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
         }
     }
 ]

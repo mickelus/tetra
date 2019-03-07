@@ -33,6 +33,10 @@ public class ImprovementData extends ModuleData {
      */
     public boolean enchantment = false;
 
+    /**
+     * Improvements in the same group cannot be present for a slot at the same time. Adding an improvement with a
+     * specified group will remove any other improvement on that slot which has a matching group.
+     */
     public String group = null;
 
     public int getLevel() {

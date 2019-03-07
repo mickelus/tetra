@@ -808,6 +808,19 @@ basic_handle/blazing.description=Using this may set you on fire, more sever in h
 basic_handle/ender_reverb.name=Ender reverb
 basic_handle/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
 
+basic_handle/wrap_string.name=String wrap
+basic_handle/wrap_string.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-33%%§r probability\n  §2-1.5§r    severity
+basic_handle/wrap_leather.name=Leather wrap
+basic_handle/wrap_leather.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-50%%§r probability\n  §2-1.5§r    severity
+basic_handle/wrap_hide.name=Hide wrap
+basic_handle/wrap_hide.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-33%%§r probability\n  §2-2.5§r    severity
+basic_handle/wrap_vine.name=Vine wrap
+basic_handle/wrap_vine.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-50%%§r probability\n  §2-1.5§r    severity
+
+wrap_handle_schema.name=Wrap handle
+wrap_handle_schema.slot1=Material
+wrap_handle_schema.description=Wrap the handle using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the handle.
+
 ###############################
 # AXE HEAD
 ##############################
