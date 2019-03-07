@@ -4,8 +4,8 @@ import se.mickelus.tetra.module.data.CapabilityData;
 
 
 public class RepairDefinition {
-    public Material material = new Material();
-    public CapabilityData requiredCapabilities = new CapabilityData();
+    public Material material;
+    public CapabilityData requiredCapabilities;
     public String moduleKey;
     public String moduleVariant;
 
@@ -15,5 +15,9 @@ public class RepairDefinition {
 
         material = outcomeDefinition.material;
         requiredCapabilities = outcomeDefinition.requiredCapabilities;
+    }
+
+    public static boolean validateOutcome(OutcomeDefinition outcome) {
+        return outcome.moduleVariant != null && outcome.material != null && outcome.material.predicate != null;
     }
 }
