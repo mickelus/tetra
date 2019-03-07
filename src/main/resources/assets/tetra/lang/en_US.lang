@@ -257,6 +257,19 @@ basic_hilt/blazing.description=Using this may set you on fire, more sever in hot
 basic_hilt/ender_reverb.name=Ender reverb
 basic_hilt/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
 
+basic_hilt/wrap_string.name=String wrap
+basic_hilt/wrap_string.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-41%%§r severity
+basic_hilt/wrap_leather.name=Leather wrap
+basic_hilt/wrap_leather.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-50%%§r probability\n §2-41%%§r severity
+basic_hilt/wrap_hide.name=Hide wrap
+basic_hilt/wrap_hide.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-70%%§r severity
+basic_hilt/wrap_vine.name=Vine wrap
+basic_hilt/wrap_vine.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-41%%§r severity
+
+wrap_hilt_schema.name=Wrap hilt
+wrap_hilt_schema.slot1=Material
+wrap_hilt_schema.description=Wrap the hilt using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the hilt.
+
 ###############################
 # DECORATIVE POMMEL
 ###############################
@@ -809,13 +822,13 @@ basic_handle/ender_reverb.name=Ender reverb
 basic_handle/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
 
 basic_handle/wrap_string.name=String wrap
-basic_handle/wrap_string.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-33%%§r probability\n  §2-1.5§r    severity
+basic_handle/wrap_string.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-41%%§r severity
 basic_handle/wrap_leather.name=Leather wrap
-basic_handle/wrap_leather.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-50%%§r probability\n  §2-1.5§r    severity
+basic_handle/wrap_leather.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-50%%§r probability\n §2-41%%§r severity
 basic_handle/wrap_hide.name=Hide wrap
-basic_handle/wrap_hide.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-33%%§r probability\n  §2-2.5§r    severity
+basic_handle/wrap_hide.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-70%%§r severity
 basic_handle/wrap_vine.name=Vine wrap
-basic_handle/wrap_vine.description=Slightly increases damage and speed.\nReduces negative effects:\n  §2-50%%§r probability\n  §2-1.5§r    severity
+basic_handle/wrap_vine.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-41%%§r severity
 
 wrap_handle_schema.name=Wrap handle
 wrap_handle_schema.slot1=Material

@@ -106,5 +106,55 @@
         "effects": {
             "enderReverb": [3, 0.3]
         }
+    },
+    {
+        "key": "basic_hilt/wrap_string",
+        "durability": 3,
+        "textured": true,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.05,
+        "damageMultiplier": 1.1,
+        "effects": {
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
+        }
+    },
+    {
+        "key": "basic_hilt/wrap_leather",
+        "durability": 10,
+        "textured": true,
+        "group": "wrap",
+        "integrity": -1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.15],
+            "fierySelf": [-1, -0.05]
+        }
+    },
+    {
+        "key": "basic_hilt/wrap_hide",
+        "durability": 5,
+        "textured": true,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "effects": {
+            "enderReverb": [-3, -0.1],
+            "fierySelf": [-2, -0.033]
+        }
+    },
+    {
+        "key": "basic_hilt/wrap_vine",
+        "durability": 5,
+        "textured": true,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.22,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
+        }
     }
 ]
