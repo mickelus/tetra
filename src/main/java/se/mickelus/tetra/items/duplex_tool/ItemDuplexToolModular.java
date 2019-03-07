@@ -149,6 +149,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         new BookEnchantSchema(butt);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle_improvements");
         new BookEnchantSchema(handle);
 
         new RepairSchema(this);

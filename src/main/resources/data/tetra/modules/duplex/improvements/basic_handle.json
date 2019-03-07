@@ -66,5 +66,49 @@
         "effects": {
             "enderReverb": [3, 0.3]
         }
+    },
+    {
+        "key": "basic_handle/wrap_string",
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.15],
+            "fierySelf": [-1, -0.03]
+        }
+    },
+    {
+        "key": "basic_handle/wrap_leather",
+        "group": "wrap",
+        "integrity": -2,
+        "attackSpeed": 0.2,
+        "damageMultiplier": 1.07,
+        "effects": {
+            "enderReverb": [-2, -0.2],
+            "fierySelf": [-1, -0.05]
+        }
+    },
+    {
+        "key": "basic_handle/wrap_hide",
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.15],
+            "fierySelf": [-1, -0.03]
+        }
+    },
+    {
+        "key": "basic_handle/wrap_vine",
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.15],
+            "fierySelf": [-1, -0.03]
+        }
     }
 ]
