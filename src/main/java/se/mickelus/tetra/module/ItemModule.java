@@ -33,6 +33,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
+    public ItemModule<T> withRenderLayer(Priority layer) {
+        this.renderLayer = layer;
+        return this;
+    }
+
     public String getKey() {
         return moduleKey;
     }

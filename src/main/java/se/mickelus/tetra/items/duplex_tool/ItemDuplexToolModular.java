@@ -18,6 +18,7 @@ import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
@@ -79,7 +80,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         entityHitDamage = 2;
 
-        majorModuleKeys = new String[] { handleKey, headLeftKey, headRightKey };
+        majorModuleKeys = new String[] { headLeftKey, headRightKey, handleKey };
         minorModuleKeys = new String[] { bindingKey };
 
         requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
@@ -109,7 +110,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix);
 
-        handle = new BasicMajorModule(handleKey, "duplex/basic_handle", "duplex/improvements/basic_handle");
+        handle = new BasicMajorModule(handleKey, "duplex/basic_handle", "duplex/improvements/basic_handle")
+                .withRenderLayer(Priority.LOWER);
 
         instance = this;
     }

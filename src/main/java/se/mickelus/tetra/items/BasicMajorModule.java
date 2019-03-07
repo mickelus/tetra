@@ -3,6 +3,7 @@ package se.mickelus.tetra.items;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 
@@ -22,5 +23,10 @@ public class BasicMajorModule extends ItemModuleMajor<ModuleData> {
         }
 
         ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
+    }
+
+    public BasicMajorModule withRenderLayer(Priority layer) {
+        this.renderLayer = layer;
+        return this;
     }
 }

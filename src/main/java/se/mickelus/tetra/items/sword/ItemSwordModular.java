@@ -7,6 +7,7 @@ import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.*;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -26,6 +27,7 @@ public class ItemSwordModular extends ItemModularHandheld {
     private final ItemModuleMajor shortBladeModule;
     private final ItemModuleMajor heavyBladeModule;
     private final ItemModuleMajor macheteModule;
+    private final ItemModuleMajor hiltModule;
 
     public ItemSwordModular() {
         setUnlocalizedName(unlocalizedName);
@@ -47,7 +49,8 @@ public class ItemSwordModular extends ItemModularHandheld {
                 "sword/improvements/blade_enchants", "sword/improvements/heavy_blade");
         macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/blade_enchants");
 
-        new HiltModule(hiltKey);
+        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/hilt_enchants")
+                .withRenderLayer(Priority.LOWER);
 
         new BasicModule(guardKey, "sword/makeshift_guard");
         new BasicModule(guardKey, "sword/wide_guard");
@@ -77,7 +80,8 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BookEnchantSchema(macheteModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
-        new BookEnchantSchema(HiltModule.instance);
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt_improvements");
+        new BookEnchantSchema(hiltModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/counterweight");
