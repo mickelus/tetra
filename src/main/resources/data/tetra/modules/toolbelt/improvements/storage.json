@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "key": "storage/quick_latch",
+        "integrity": -1,
+        "effects": {
+            "quickAccess": 8
+        }
+    }
+]

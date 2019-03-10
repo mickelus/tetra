@@ -1478,3 +1478,9 @@ quiver_quickslot_schema.slot1=Latch
 quiver/quick_latch.name=Quick latch
 quiver/quick_latch.description=Arrows will be automatically drawn from this quiver when no ammo is available.
 
+storage_quickslot_schema.name=Quick latch
+storage_quickslot_schema.description=Upgrade the pouch with a quick latch mechanism, making it easier to stash items into it.\n\n§7Held items can be put into the pouch using the restock hotkey.
+storage_quickslot_schema.slot1=Latch
+
+storage/quick_latch.name=Quick latch
+storage/quick_latch.description=Held items can be stashed into the pouch using the restock hotkey.
