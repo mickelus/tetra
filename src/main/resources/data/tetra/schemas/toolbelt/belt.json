@@ -6,7 +6,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "variants": {
-                "toolbelt/belt": "belt/rope"
+                "belt/rope": "toolbelt/belt"
             }
         },
         "glyph": { "textureY": 16 },
@@ -26,7 +26,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "variants": {
-                "toolbelt/belt": "belt/sash"
+                "belt/sash": "toolbelt/belt"
             }
         },
         "glyph": { "textureY": 16 },
@@ -46,7 +46,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "variants": {
-                "toolbelt/belt": "belt/leather"
+                "belt/leather": "toolbelt/belt"
             }
         },
         "glyph": { "textureY": 16 },
@@ -70,7 +70,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "variants": {
-                "toolbelt/belt": "belt/buckled"
+                "belt/buckled": "toolbelt/belt"
             }
         },
         "displayType": "minor",
