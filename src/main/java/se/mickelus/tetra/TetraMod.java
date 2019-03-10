@@ -46,9 +46,7 @@ import se.mickelus.tetra.items.ItemModularPredicate;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.forged.ItemBeam;
-import se.mickelus.tetra.items.forged.ItemBolt;
-import se.mickelus.tetra.items.forged.ItemMesh;
+import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
@@ -119,14 +117,17 @@ public class TetraMod {
                 new ItemGeode(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
-                new ItemBolt(),
-                new ItemBeam(),
-                new ItemMesh()
         };
 
         if (ConfigHandler.feature_generate) {
             items = ArrayUtils.addAll(items,
-                    new ItemCellMagmatic()
+                    new ItemCellMagmatic(),
+                    new ItemBolt(),
+                    new ItemBeam(),
+                    new ItemMesh(),
+                    new ItemQuickLatch(),
+                    new ItemMetalScrap(),
+                    new ItemVentPlate()
             );
         }
 

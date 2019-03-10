@@ -1,8 +1,28 @@
 [
     {
-        "name": "forged/bolt_salvage",
+        "name": "forged/vent_plate_salvage",
         "rolls": 1,
         "entries": [
+            {
+                "type": "oredict",
+                "ore": "plateIron",
+                "weight": 3,
+                "functions": [
+                    {
+                        "function": "set_count",
+                        "count": 1
+                    },
+                    {
+                        "function": "tetra:fortune_enchant",
+                        "count": {
+                            "min": 0,
+                            "max": 0.5
+                        },
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 3
+                    }
+                ]
+            },
             {
                 "type": "item",
                 "name": "minecraft:iron_nugget",
@@ -22,7 +42,7 @@
                             "max": 2
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
                     }
                 ]
             },
@@ -42,7 +62,27 @@
                             "max": 0.5
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
+                    }
+                ]
+            },
+            {
+                "type": "oredict",
+                "ore": "plateCopper",
+                "weight": 3,
+                "functions": [
+                    {
+                        "function": "set_count",
+                        "count": 1
+                    },
+                    {
+                        "function": "tetra:fortune_enchant",
+                        "count": {
+                            "min": 0,
+                            "max": 0.5
+                        },
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 3
                     }
                 ]
             },
@@ -62,7 +102,7 @@
                             "max": 0.5
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
                     }
                 ]
             },
@@ -85,7 +125,27 @@
                             "max": 2
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
+                    }
+                ]
+            },
+            {
+                "type": "oredict",
+                "ore": "plateBronze",
+                "weight": 1,
+                "functions": [
+                    {
+                        "function": "set_count",
+                        "count": 1
+                    },
+                    {
+                        "function": "tetra:fortune_enchant",
+                        "count": {
+                            "min": 0,
+                            "max": 0.5
+                        },
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 3
                     }
                 ]
             },
@@ -105,7 +165,7 @@
                             "max": 0.5
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
                     }
                 ]
             },
@@ -128,7 +188,7 @@
                             "max": 2
                         },
                         "requiredCapability": "hammer",
-                        "capabilityLevel": 2
+                        "capabilityLevel": 3
                     }
                 ]
             }

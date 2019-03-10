@@ -78,6 +78,19 @@ salvage_beam_action.label=Salvage
 item.forged_mesh.name=Flex mesh
 salvage_mesh_action.label=Salvage
 
+item.quick_latch.name=Quick Latch
+item.quick_latch.description=Reveals related upgrade schemas while in the inventory.
+salvage_quick_latch_action_hammer.label=Salvage
+salvage_quick_latch_action_pry.label=Salvage
+
+item.metal_scrap.name=Metal scrap
+item.metal_scrap.description=Shapes of metal, their use undone or never to be known, awaits a purpose anew
+salvage_metal_scrap_action.label=Salvage
+
+item.vent_plate.name=Vent plate
+item.vent_plate.description=Re-attach this to machinery to slightly increase its efficiency.
+salvage_vent_plate_action.label=Salvage
+
 ancient_description=Found in structures deep underground in snowy biomes
 
 ###############################

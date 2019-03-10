@@ -20,7 +20,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "minecraft:iron_nugget",
+                    "name": "tetra:metal_scrap",
                     "weight": 1,
                     "functions": [
                         {
@@ -56,14 +56,14 @@
                             "condition": "tetra:random_chance_with_fortune",
                             "chance": 0.1,
                             "fortuneMultiplier": 0,
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "requiredCapability": "pry",
+                            "capabilityLevel": 1
                         }
                     ]
                 },
                 {
                     "type": "item",
-                    "name": "minecraft:iron_nugget",
+                    "name": "tetra:metal_scrap",
                     "weight": 1,
                     "functions": [
                         {
@@ -79,8 +79,8 @@
                                 "min": 0,
                                 "max": 2
                             },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "requiredCapability": "pry",
+                            "capabilityLevel": 1
                         }
                     ]
                 }

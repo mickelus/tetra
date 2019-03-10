@@ -38,5 +38,45 @@
             "hammer": 3
         },
         "lootTable": "tetra:forged/mesh_salvage"
+    },
+    {
+        "key": "salvage_vent_plate_action",
+        "requirement": {
+            "item": "tetra:vent_plate"
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        },
+        "lootTable": "tetra:forged/vent_plate_salvage"
+    },
+    {
+        "key": "salvage_metal_scrap_action",
+        "requirement": {
+            "item": "tetra:metal_scrap"
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        },
+        "lootTable": "tetra:forged/metal_scrap_salvage"
+    },
+    {
+        "key": "salvage_quick_latch_action_hammer",
+        "requirement": {
+            "item": "tetra:quick_latch"
+        },
+        "requiredCapabilities": {
+            "hammer": 3
+        },
+        "lootTable": "tetra:forged/quick_latch_salvage_hammer"
+    },
+    {
+        "key": "salvage_quick_latch_action_pry",
+        "requirement": {
+            "item": "tetra:quick_latch"
+        },
+        "requiredCapabilities": {
+            "pry": 1
+        },
+        "lootTable": "tetra:forged/quick_latch_salvage_pry"
     }
 ]

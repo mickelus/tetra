@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.hammer;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -21,7 +22,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,6 +50,8 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     public static final PropertyBool propCell1Charged = PropertyBool.create("cell1charged");
     public static final PropertyBool propCell2 = PropertyBool.create("cell2");
     public static final PropertyBool propCell2Charged = PropertyBool.create("cell2charged");
+
+    private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
     static final String unlocalizedName = "hammer_base";
     @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -147,7 +153,17 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         Optional.ofNullable(getTileEntity(world, pos))
                 .ifPresent(te -> {
                     te.removePlate(plate);
-                    spawnAsEntity(world, pos.offset(face), new ItemStack(Items.IRON_NUGGET, world.rand.nextInt(16) + 1));
+
+                    if (!world.isRemote) {
+                        WorldServer worldServer = (WorldServer) world;
+                        LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(plateLootTable);
+                        LootContext.Builder builder = new LootContext.Builder(worldServer);
+                        builder.withLuck(player.getLuck()).withPlayer(player);
+
+                        table.generateLootForPools(player.getRNG(), builder.build())
+                                .forEach(itemStack -> spawnAsEntity(worldServer, pos, itemStack));
+                    }
+
                     world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
                     world.notifyBlockUpdate(pos, state, state, 3);
         });

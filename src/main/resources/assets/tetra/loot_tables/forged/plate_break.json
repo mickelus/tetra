@@ -1,20 +1,20 @@
 {
     "pools": [
         {
-            "name": "forged/bolt",
+            "name": "forged/plate_break",
             "rolls": 1,
             "entries": [
                 {
                     "type": "item",
-                    "name": "tetra:forged_bolt",
+                    "name": "tetra:vent_plate",
                     "weight": 10,
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.2,
-                            "fortuneMultiplier": 0.2,
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "chance": 0.5,
+                            "fortuneMultiplier": 0.1,
+                            "requiredCapability": "pry",
+                            "capabilityLevel": 1
                         }
                     ]
                 },
@@ -36,8 +36,8 @@
                                 "min": 0,
                                 "max": 2
                             },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "requiredCapability": "pry",
+                            "capabilityLevel": 1
                         }
                     ]
                 }
