@@ -14,6 +14,7 @@ import se.mickelus.tetra.module.ItemModule;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class ItemModularPredicate extends ItemPredicate {
@@ -46,32 +47,45 @@ public class ItemModularPredicate extends ItemPredicate {
     public boolean test(ItemStack itemStack, String slot) {
         if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
-            Collection<ItemModule> itemModules = item.getAllModules(itemStack);
-            for (int i = 0; i < modules.length; i++) {
-                for (int j = 0; j < modules[i].length; j++) {
-                    int matchCount = 0;
 
-                    for (ItemModule module: itemModules) {
-                        if (module.getKey().equals(modules[i][j])) {
-                            matchCount++;
-                            break;
+            // if it's a slot specific check and there are single module requirement, assume the requirement is to be matched against the checked slot
+            if (slot != null) {
+                ItemModule module = item.getModuleFromSlot(itemStack, slot);
+                if (module != null) {
+                    for (int i = 0; i < modules.length; i++) {
+                        if (modules[i].length == 1 && modules[i][0].equals(module.getKey())) {
+                            return true;
                         }
                     }
+                }
+            } else {
+                Collection<ItemModule> itemModules = item.getAllModules(itemStack);
+                for (int i = 0; i < modules.length; i++) {
+                    for (int j = 0; j < modules[i].length; j++) {
+                        int matchCount = 0;
 
-                    if (matchCount == modules[i].length) {
-                        return true;
+                        for (ItemModule module: itemModules) {
+                            if (module.getKey().equals(modules[i][j])) {
+                                matchCount++;
+                                break;
+                            }
+                        }
+
+                        if (matchCount == modules[i].length) {
+                            return true;
+                        }
                     }
                 }
             }
 
             for (Map.Entry<String, String> variant : variants.entrySet()) {
-                String currentSlot = variant.getKey();
-                if (slot != null && "§slot".equals(currentSlot)) {
+                String currentSlot = variant.getValue();
+                if (slot != null && "#slot".equals(currentSlot)) {
                     currentSlot = slot;
                 }
 
                 ItemModule module = item.getModuleFromSlot(itemStack, currentSlot);
-                if (module != null && variant.getValue().equals(module.getData(itemStack).key)) {
+                if (module != null && variant.getKey().equals(module.getData(itemStack).key)) {
                     return true;
                 }
             }
