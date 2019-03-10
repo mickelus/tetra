@@ -13,9 +13,12 @@ import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetNBT;
 import net.minecraftforge.oredict.OreDictionary;
+import se.mickelus.tetra.items.forged.ItemMetalScrap;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class LootEntryOredict extends LootEntryItem {
@@ -23,29 +26,28 @@ public class LootEntryOredict extends LootEntryItem {
         super(item, weight, quality, functions, conditions, entryName);
     }
 
+    @Nullable
     public static LootEntryItem deserialize(JsonObject jsonObject, JsonDeserializationContext deserializationContext, int weight, int quality, LootCondition[] conditions) {
         String oreName = JsonUtils.getString(jsonObject, "ore");
-        NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreName);
+        return OreDictionary.getOres(oreName).stream()
+                .filter(itemStack -> !itemStack.isEmpty())
+                .min(Comparator.comparing(itemStack -> itemStack.getItem().getUnlocalizedName()))
+                .map(itemStack -> {
+                    List<LootFunction> functions = new ArrayList<>();
 
-        if (!itemStacks.isEmpty()) {
-            ItemStack itemStack = itemStacks.get(0);
+                    if (itemStack.getMetadata() != 0) {
+                        functions.add(new SetMetadataFunction(conditions, new RandomValueRange(itemStack.getMetadata())));
+                    }
 
-            List<LootFunction> functions = new ArrayList<>();
+                    if (itemStack.hasTagCompound()) {
+                        functions.add(new SetNBT(conditions, itemStack.getTagCompound()));
+                    }
 
-            if (itemStack.getMetadata() != 0) {
-                functions.add(new SetMetadataFunction(conditions, new RandomValueRange(itemStack.getMetadata())));
-            }
+                    functions.addAll(Arrays.asList(
+                            JsonUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], deserializationContext, LootFunction[].class)));
 
-            if (itemStack.hasTagCompound()) {
-                functions.add(new SetNBT(conditions, itemStack.getTagCompound()));
-            }
-
-            functions.addAll(Arrays.asList(
-                    JsonUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], deserializationContext, LootFunction[].class)));
-
-            return new LootEntryOredict(itemStack.getItem(), weight, quality, functions.toArray(new LootFunction[0]), conditions, oreName);
-        }
-
-        return null;
+                    return new LootEntryOredict(itemStack.getItem(), weight, quality, functions.toArray(new LootFunction[0]), conditions, oreName);
+                })
+                .orElse(null);
     }
 }
