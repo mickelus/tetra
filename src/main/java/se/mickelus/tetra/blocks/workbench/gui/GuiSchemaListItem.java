@@ -28,8 +28,8 @@ public class GuiSchemaListItem extends GuiClickable {
         } else if (schema.getType() == SchemaType.improvement) {
             border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f);
             addChild(border);
-            addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
             addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
         } else if (schema.getType() == SchemaType.other) {
             border = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation).setOpacity(0.3f);
             addChild(border);

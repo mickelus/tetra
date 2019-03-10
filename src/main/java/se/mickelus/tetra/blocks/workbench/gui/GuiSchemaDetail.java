@@ -84,8 +84,8 @@ public class GuiSchemaDetail extends GuiElement {
             glyph.addChild(new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
         } else if (schema.getType() == SchemaType.improvement) {
             glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
-            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
             glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
         } else if (schema.getType() == SchemaType.other) {
             glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation).setOpacity(0.3f));
         }
