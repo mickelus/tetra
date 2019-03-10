@@ -4,15 +4,29 @@ import baubles.api.BaublesApi;
 import baubles.api.cap.BaublesCapabilities;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.Loader;
 import se.mickelus.tetra.IntegrationHelper;
 import net.minecraft.util.text.TextComponentTranslation;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
+import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
+import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.util.CastOptional;
+
+import java.util.Collection;
+import java.util.List;
 
 public class UtilToolbelt {
     public static void equipItemFromToolbelt(EntityPlayer player, ToolbeltSlotType slotType, int index, EnumHand hand) {
@@ -155,5 +169,50 @@ public class UtilToolbelt {
                 BaublesApi.getBaublesHandler(player).setChanged(baubleSlot, true);
             }
         }
+    }
+
+    /**
+     * Attempts to find a suitable tool from the players quick access quickslots to be used on the given blockstate.
+     * @param player The player
+     * @param traceResult The raytrace result for where the cursor was when the event was triggered
+     * @param blockState A blockstate
+     * @return a quickslot inventory index if a suitable tool is found, otherwise -1
+     */
+    public static int getQuickAccessSlotIndex(EntityPlayer player, RayTraceResult traceResult, IBlockState blockState) {
+        ItemStack toolbeltStack = UtilToolbelt.findToolbelt(player);
+        InventoryQuickslot inventory = new InventoryQuickslot(toolbeltStack);
+        List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+
+        Vec3d hitVector = traceResult.hitVec;
+        BlockPos blockPos = traceResult.getBlockPos();
+
+        BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
+                .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, traceResult.sideHit,
+                        (float) hitVector.x - blockPos.getX(),
+                        (float) hitVector.y - blockPos.getY(),
+                        (float) hitVector.z - blockPos.getZ()))
+                .orElse(null);
+
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack itemStack = inventory.getStackInSlot(i);
+            if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
+                String requiredTool = blockState.getBlock().getHarvestTool(blockState);
+                if (requiredTool != null && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) > -1) {
+                    return i;
+                }
+
+                if (blockInteraction != null) {
+                    if (itemStack.getItem() instanceof ICapabilityProvider) {
+                        ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
+                        if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
+                            return i;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return -1;
     }
 }

@@ -1471,6 +1471,13 @@ booster/iron=Booster unit
 # QUICK ACCESS IMPROVEMENTS
 ###############################
 
+strap_quickslot_schema.name=Quick latch
+strap_quickslot_schema.description=Using a quick latch mechanism for locking the strap in place allows faster access to the tool held by the strap.\n\n§7Tapping the toolbelt access hotkey will attempt to equip the first item suitable for breaking or salvaging the block you're looking at. Tools can only be equipped from slots with this upgrade.
+strap_quickslot_schema.slot1=Latch
+
+strap/quick_latch.name=Quick latch
+strap/quick_latch.description=Tapping the toolbelt hotkey will quickly equip suitable tools from this inventory.
+
 quiver_quickslot_schema.name=Quick latch
 quiver_quickslot_schema.description=Upgrade the quiver with a quick latch mechanism, allowing quicker access to arrows in the quiver.\n\n§7Drawing a bow with no ammo available will automatically grab an arrow from the first stack in the quiver.
 quiver_quickslot_schema.slot1=Latch

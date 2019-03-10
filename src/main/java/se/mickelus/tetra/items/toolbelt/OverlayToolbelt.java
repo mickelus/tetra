@@ -1,9 +1,11 @@
 package se.mickelus.tetra.items.toolbelt;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -27,6 +29,8 @@ public class OverlayToolbelt {
 
     public KeyBinding accessBinding;
     public KeyBinding restockBinding;
+
+    private long openTime = -1;
 
     // due to gui visibility tricks, let's use this to keep track of when we should show or hide the gui
     private boolean isActive = false;
@@ -52,7 +56,7 @@ public class OverlayToolbelt {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (restockBinding.isPressed()) {
-            equipToolbeltItem(ToolbeltSlotType.quickslot, -1);
+            equipToolbeltItem(ToolbeltSlotType.quickslot, -1, EnumHand.OFF_HAND);
         } else if (accessBinding.isPressed() && mc.inGameHasFocus) {
             showView();
         }
@@ -78,6 +82,7 @@ public class OverlayToolbelt {
             mc.inGameHasFocus = false;
             mc.mouseHelper.ungrabMouseCursor();
             isActive = true;
+            openTime = System.currentTimeMillis();
         }
     }
 
@@ -89,19 +94,32 @@ public class OverlayToolbelt {
 
         int focusIndex = findIndex();
         if (focusIndex != -1) {
-            equipToolbeltItem(findSlotType(), focusIndex);
+            equipToolbeltItem(findSlotType(), focusIndex, EnumHand.OFF_HAND);
+        } else if (System.currentTimeMillis() - openTime < 500) {
+            quickEquip();
         }
     }
 
-    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex) {
-        EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex);
+    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, EnumHand hand) {
+        EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex, hand);
         PacketHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
-            UtilToolbelt.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, EnumHand.OFF_HAND);
+            UtilToolbelt.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, hand);
         } else {
             boolean storeItemSuccess = UtilToolbelt.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
                 mc.player.sendStatusMessage(new TextComponentTranslation("toolbelt.full"), true);
+            }
+        }
+    }
+
+    private void quickEquip() {
+        if (mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
+            IBlockState blockState = mc.world.getBlockState(mc.objectMouseOver.getBlockPos());
+            int index = UtilToolbelt.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
+
+            if (index > -1) {
+                equipToolbeltItem(ToolbeltSlotType.quickslot, index, EnumHand.MAIN_HAND);
             }
         }
     }

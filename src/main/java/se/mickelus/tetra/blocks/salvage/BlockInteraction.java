@@ -16,6 +16,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -124,6 +125,21 @@ public class BlockInteraction {
             return true;
         }
         return false;
+    }
+
+    public static BlockInteraction getInteractionAtPoint(EntityPlayer player, IBlockState blockState, EnumFacing hitFace, float hitX, float hitY,
+            float hitZ) {
+        float hitU = getHitU(hitFace, hitX, hitY, hitZ);
+        float hitV = getHitV(hitFace, hitX, hitY, hitZ);
+
+        return Optional.of(blockState.getBlock())
+                .filter(block -> block instanceof IBlockCapabilityInteractive)
+                .map(block -> (IBlockCapabilityInteractive) block)
+                .map(block -> block.getPotentialInteractions(blockState, hitFace, CapabilityHelper.getPlayerCapabilities(player)))
+                .map(Arrays::stream).orElseGet(Stream::empty)
+                .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
+                .findFirst()
+                .orElse(null);
     }
 
     private static float getHitU(EnumFacing facing, float hitX, float hitY, float hitZ) {

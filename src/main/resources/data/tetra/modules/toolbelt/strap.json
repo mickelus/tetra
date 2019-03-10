@@ -23,7 +23,7 @@
     },
     {
         "key": "strap2/leather",
-        "integrity": -3,
+        "integrity": -2,
         "effects": {
             "quickSlot": 2
         },
@@ -45,7 +45,7 @@
     },
     {
         "key": "strap3/leather",
-        "integrity": -4,
+        "integrity": -3,
         "effects": {
             "quickSlot": 3
         },
@@ -67,7 +67,7 @@
     },
     {
         "key": "strap4/leather",
-        "integrity": -6,
+        "integrity": -5,
         "effects": {
             "quickSlot": 4
         },
