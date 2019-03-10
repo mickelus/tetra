@@ -64,9 +64,9 @@ public class DataHandler {
                 .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
                 .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
                 .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
-                .registerTypeHierarchyAdapter(LootFunction.class, new LootFunctionManager.Serializer())
-                .registerTypeHierarchyAdapter(LootCondition.class, new LootConditionManager.Serializer())
-                .registerTypeHierarchyAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
+                .registerTypeAdapter(LootFunction.class, new LootFunctionManager.Serializer())
+                .registerTypeAdapter(LootCondition.class, new LootConditionManager.Serializer())
+                .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
                 .create();
 
         instance = this;
