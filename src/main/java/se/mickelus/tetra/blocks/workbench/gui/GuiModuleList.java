@@ -129,7 +129,7 @@ public class GuiModuleList extends GuiElement {
         static Offsets toolbeltMajorOffsets = new Offsets(-14, 18, 4, 0, 4, 18);
         static Offsets toolbeltMinorOffsets = new Offsets(-13, 0);
 
-        static Offsets duplexMajorOffsets = new Offsets(-13, 19, -13, -1, 3, 19);
+        static Offsets duplexMajorOffsets = new Offsets(-13, -1, 3, 19, -13, 19);
         static Offsets duplexMinorOffsets = new Offsets(6, 1);
 
         private int[] offsetX;
