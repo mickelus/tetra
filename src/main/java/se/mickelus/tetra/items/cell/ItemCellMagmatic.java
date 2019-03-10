@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.cell;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -61,7 +62,7 @@ public class ItemCellMagmatic extends TetraItem {
             tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_empty")));
         }
 
-        tooltip.add(I18n.format("ancient_description"));
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("ancient_description"));
     }
 
     @Override

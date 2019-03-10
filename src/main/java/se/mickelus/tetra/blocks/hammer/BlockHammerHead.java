@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.hammer;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -59,7 +60,7 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(I18n.format("ancient_description"));
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("ancient_description"));
     }
 
     @Override

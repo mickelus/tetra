@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -105,11 +106,11 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
                 .withProperty(propBroken, false));
     }
 
-    private static boolean breakBolt(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakBolt(World world, BlockPos pos, IBlockState blockState, EntityPlayer player,
             EnumHand hand, EnumFacing facing) {
-        ((World) world).setBlockState(pos, world.getBlockState(pos).withProperty(propBroken, true), 2);
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(propBroken, true), 2);
 
-        if (!player.world.isRemote) {
+        if (!world.isRemote) {
             WorldServer worldServer = (WorldServer) world;
             LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(boltLootTable);
             LootContext.Builder builder = new LootContext.Builder(worldServer);
@@ -127,7 +128,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         return true;
     }
 
-    private static boolean breakPlate(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakPlate(World world, BlockPos pos, IBlockState blockState, EntityPlayer player,
             EnumHand hand, EnumFacing facing) {
         List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.getValue(propX));
 
@@ -136,11 +137,11 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         }
 
         connectedVents.forEach(blockPos -> {
-            ((World) world).playEvent(null, 2001, blockPos, Block.getStateId(world.getBlockState(blockPos)));
-            ((World) world).setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
+            world.playEvent(null, 2001, blockPos, Block.getStateId(world.getBlockState(blockPos)));
+            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
         });
 
-        if (!player.world.isRemote) {
+        if (!world.isRemote) {
             WorldServer worldServer = (WorldServer) world;
             LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(ventLootTable);
             LootContext.Builder builder = new LootContext.Builder(worldServer);
@@ -187,7 +188,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(I18n.format("ancient_description"));
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("ancient_description"));
     }
 
     @Override

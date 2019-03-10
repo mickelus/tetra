@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import com.google.common.primitives.Booleans;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -138,7 +139,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(I18n.format("ancient_description"));
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("ancient_description"));
     }
 
     private static void breakLock(IBlockAccess world, BlockPos pos, EntityPlayer player, int index) {

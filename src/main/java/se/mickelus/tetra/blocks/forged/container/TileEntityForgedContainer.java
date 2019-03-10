@@ -48,7 +48,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         stacks = NonNullList.withSize(compartmentSize * compartmentCount, ItemStack.EMPTY);
 
         lockIntegrity = new int[lockCount];
-        Arrays.fill(lockIntegrity, 0);
+        Arrays.fill(lockIntegrity, 1);
     }
 
     public TileEntityForgedContainer getOrDelegate() {

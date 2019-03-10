@@ -70,13 +70,15 @@ tile.hammer_base.name=Hammer base
 tile.hammer_head.name=Hammer head
 
 item.forged_bolt.name=Bolt
-item.forged_beam.name=Structure beam
-item.forged_mesh.name=Flex mesh
 salvage_bolt_action.label=Salvage
+
+item.forged_beam.name=Structure beam
 salvage_beam_action.label=Salvage
+
+item.forged_mesh.name=Flex mesh
 salvage_mesh_action.label=Salvage
 
-ancient_description=§8Found in structures deep underground in snowy biomes
+ancient_description=Found in structures deep underground in snowy biomes
 
 ###############################
 # SWORD
