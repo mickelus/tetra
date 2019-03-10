@@ -110,10 +110,13 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/belt");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap_improvements");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/booster");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/potion_storage");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage_improvements");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver");
+        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver_improvements");
 
         RemoveSchema.registerRemoveSchemas(this);
     }
@@ -146,7 +149,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
                 .reduce(0, Integer::sum);
     }
 
-    public Collection<Collection<ItemEffect>> getSlotEffects(ItemStack itemStack, SlotType slotType) {
+    public List<Collection<ItemEffect>> getSlotEffects(ItemStack itemStack, SlotType slotType) {
         return getAllModules(itemStack).stream()
                 .filter(module -> module.getEffects(itemStack).contains(slotType.effect))
                 .map(module -> {

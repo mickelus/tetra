@@ -16,6 +16,7 @@ import se.mickelus.tetra.items.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 
 import java.util.Collection;
+import java.util.List;
 
 public class InventoryToolbelt implements IInventory {
     protected static final String slotKey = "slot";
@@ -245,7 +246,7 @@ public class InventoryToolbelt implements IInventory {
         return -1;
     }
 
-    public Collection<Collection<ItemEffect>> getSlotEffects() {
+    public List<Collection<ItemEffect>> getSlotEffects() {
         return ItemToolbeltModular.instance.getSlotEffects(toolbeltItemStack, inventoryType);
     }
 }

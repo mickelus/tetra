@@ -1466,3 +1466,15 @@ booster_schema.description=Attach a booster unit, which grants the ability to ju
 booster_schema.slot1=Material
 
 booster/iron=Booster unit
+
+###############################
+# QUICK ACCESS IMPROVEMENTS
+###############################
+
+quiver_quickslot_schema.name=Quick latch
+quiver_quickslot_schema.description=Upgrade the quiver with a quick latch mechanism, allowing quicker access to arrows in the quiver.\n\n§7Drawing a bow with no ammo available will automatically grab an arrow from the first stack in the quiver.
+quiver_quickslot_schema.slot1=Latch
+
+quiver/quick_latch.name=Quick latch
+quiver/quick_latch.description=Arrows will be automatically drawn from this quiver when no ammo is available.
+

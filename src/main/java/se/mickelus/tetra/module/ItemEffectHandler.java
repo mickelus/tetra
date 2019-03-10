@@ -13,8 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,23 +21,23 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import se.mickelus.tetra.ReflectionHelper;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
+import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.toolbelt.SlotType;
+import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -458,6 +457,25 @@ public class ItemEffectHandler {
                 return new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
             case EAST:
                 return new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onArrowNock(ArrowNockEvent event) {
+        if (!event.hasAmmo() && event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).isEmpty()) {
+            ItemStack itemStack = UtilToolbelt.findToolbelt(event.getEntityPlayer());
+            InventoryQuiver inventory = new InventoryQuiver(itemStack);
+            List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+            for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
+                    event.getEntityPlayer().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
+                    event.getEntityPlayer().setActiveHand(event.getHand());
+                    inventory.markDirty();
+
+                    event.setAction(new ActionResult<>(EnumActionResult.SUCCESS, event.getBow()));
+                    return;
+                }
+            }
         }
     }
 }
