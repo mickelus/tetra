@@ -36,8 +36,9 @@ public class BlockGeode extends TetraBlock {
     public static PropertyInteger variantProp = PropertyInteger.create("variant", 0,
             (int) Arrays.stream(DataHandler.instance.getData("geode/variants", GeodeVariant[].class)).count() - 1);
 
-    public GeodeVariant[] variants;
+    public GeodeVariant[] variants = new GeodeVariant[0];
 
+    private GeodeVariant fallbackVariant = new GeodeVariant();
 
     public BlockGeode() {
         super(Material.ROCK);
@@ -49,7 +50,6 @@ public class BlockGeode extends TetraBlock {
         setRegistryName(unlocalizedName);
 
         setCreativeTab(TetraCreativeTabs.getInstance());
-
         this.setDefaultState(this.blockState.getBaseState().withProperty(variantProp, 0));
     }
 
@@ -74,7 +74,7 @@ public class BlockGeode extends TetraBlock {
             return variants[index];
         }
 
-        return variants[0];
+        return fallbackVariant;
     }
 
     @Override
