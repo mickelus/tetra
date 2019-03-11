@@ -96,26 +96,23 @@ public class DataHandler {
     }
 
     public <T> T getData(String path, Class<T> dataClass) {
-        Path fPath = null;
-
         String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
         File configOverride = new File (configDir, String.format("%s/%s.json", TetraMod.MOD_ID, path));
 
         try {
+            T data = null;
             if (configOverride.exists()) {
-                fPath = configOverride.toPath();
+                data = getData(configOverride.toPath(), dataClass);
             } else if (source.isFile()) {
                 try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    fPath = fs.getPath(pathString);
+                    data = getData(fs.getPath(pathString), dataClass);
                 }
             } else if (source.isDirectory()) {
-                fPath = source.toPath().resolve(pathString);
+                data = getData(source.toPath().resolve(pathString), dataClass);
             }
 
-            if (fPath != null && Files.exists(fPath)) {
-                try (BufferedReader reader = Files.newBufferedReader(fPath)) {
-                    return gson.fromJson(reader, dataClass);
-                }
+            if (data != null) {
+                return data;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,26 +121,31 @@ public class DataHandler {
         return gson.fromJson("[]", dataClass);
     }
 
-    public GenerationFeature[] getGenerationFeatures() {
-        Path structuresPath = null;
+    private <T> T getData(Path path, Class<T> dataClass) throws IOException {
+        if (path != null && Files.exists(path)) {
+            try (BufferedReader reader = Files.newBufferedReader(path)) {
+                return gson.fromJson(reader, dataClass);
+            }
+        }
 
+        return null;
+    }
+
+    public GenerationFeature[] getGenerationFeatures() {
         String pathString = String.format("assets/%s/structures", TetraMod.MOD_ID);
 
         try {
+            GenerationFeature[] features = null;
             if (source.isFile()) {
                 try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    structuresPath = fs.getPath(pathString);
+                    features = getGenerationFeatures(fs.getPath(pathString));
                 }
             } else if (source.isDirectory()) {
-                structuresPath = source.toPath().resolve(pathString);
+                features = getGenerationFeatures(source.toPath().resolve(pathString));
             }
 
-            if (structuresPath != null && Files.exists(structuresPath)) {
-                return Files.list(structuresPath)
-                        .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
-                        .map(this::getGenerationFeature)
-                        .filter(Objects::nonNull)
-                        .toArray(GenerationFeature[]::new);
+            if (features != null) {
+                return features;
             }
 
         } catch (IOException e) {
@@ -151,6 +153,18 @@ public class DataHandler {
         }
 
         return new GenerationFeature[0];
+    }
+
+    private GenerationFeature[] getGenerationFeatures(Path structuresPath) throws IOException {
+        if (structuresPath != null && Files.exists(structuresPath)) {
+            return Files.list(structuresPath)
+                    .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
+                    .map(this::getGenerationFeature)
+                    .filter(Objects::nonNull)
+                    .toArray(GenerationFeature[]::new);
+        }
+
+        return null;
     }
 
     private GenerationFeature getGenerationFeature(Path path) {
@@ -173,32 +187,28 @@ public class DataHandler {
     }
 
     public LootPool[] getExtendedLootPools(ResourceLocation poolLocation) {
-        Path poolPath = null;
-
         String pathString = String.format("assets/%s/loot_pools_extended/%s.json", poolLocation.getResourceDomain(), poolLocation.getResourcePath());
 
         try {
+            LootPool[] pools = null;
             if (source.isFile()) {
                 try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    poolPath = fs.getPath(pathString);
+                    pools = getData(fs.getPath(pathString), LootPool[].class);
                 }
             } else if (source.isDirectory()) {
-                poolPath = source.toPath().resolve(pathString);
+                pools = getData(source.toPath().resolve(pathString), LootPool[].class);
             }
 
-            if (poolPath != null && Files.exists(poolPath)) {
-                try (BufferedReader reader = Files.newBufferedReader(poolPath)){
-                    return gson.fromJson(reader, LootPool[].class);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (pools != null) {
+                return pools;
 
-                System.err.println("Failed to read extended loot pools from: " + poolPath);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.err.println("Failed to read extended loot pools from: " + pathString);
 
         return null;
     }
