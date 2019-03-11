@@ -69,11 +69,13 @@ public class ClientProxy implements IProxy {
     public void registerModels(ModelRegistryEvent event) {
 
         // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
-        ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return new ModelResourceLocation(TetraMod.MOD_ID + ":forged_container");
-            }
-        });
+        if (ConfigHandler.feature_generate) {
+            ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new ModelResourceLocation(TetraMod.MOD_ID + ":forged_container");
+                }
+            });
+        }
     }
 }

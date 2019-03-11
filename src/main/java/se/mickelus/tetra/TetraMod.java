@@ -117,19 +117,14 @@ public class TetraMod {
                 new ItemGeode(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
+                new ItemCellMagmatic(),
+                new ItemBolt(),
+                new ItemBeam(),
+                new ItemMesh(),
+                new ItemQuickLatch(),
+                new ItemMetalScrap(),
+                new ItemVentPlate()
         };
-
-        if (ConfigHandler.feature_generate) {
-            items = ArrayUtils.addAll(items,
-                    new ItemCellMagmatic(),
-                    new ItemBolt(),
-                    new ItemBeam(),
-                    new ItemMesh(),
-                    new ItemQuickLatch(),
-                    new ItemMetalScrap(),
-                    new ItemVentPlate()
-            );
-        }
 
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
 
