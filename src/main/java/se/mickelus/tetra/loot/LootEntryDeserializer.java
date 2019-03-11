@@ -47,10 +47,16 @@ public class LootEntryDeserializer implements JsonDeserializer<LootEntry> {
     private LootEntryItem deserializeItem(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootCondition[] conditions) {
         String name = JsonUtils.getString(jsonObject, "name");
 
-        Item item = JsonUtils.getItem(jsonObject, "name");
-        LootFunction[] functions = JsonUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], context, LootFunction[].class);
+        try {
+            Item item = JsonUtils.getItem(jsonObject, "name");
+            LootFunction[] functions = JsonUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], context, LootFunction[].class);
+            return new LootEntryItem(item, weight, quality, functions, conditions, name);
+        } catch (JsonSyntaxException e) {
+            // we expect this to throw for some modded items
+            // todo: add debug log
+        }
 
-        return new LootEntryItem(item, weight, quality, functions, conditions, name);
+        return null;
     }
 
     private LootEntryTable deserializeTable(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootCondition[] conditions) {
