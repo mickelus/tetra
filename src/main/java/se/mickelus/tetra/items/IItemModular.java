@@ -19,5 +19,12 @@ public interface IItemModular {
     public String[] getMinorModuleNames();
     public ItemModule[] getMinorModules(ItemStack itemStack);
 
+    /**
+     * Resets and applies effects for the current setup of modules & improvements. Applies enchantments and other things which cannot be emulated
+     * through other means. Call this after each time the module setup changes.
+     * @param itemStack The modular item itemstack
+     */
+    public void assemble(ItemStack itemStack);
+
     public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
 }

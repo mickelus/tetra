@@ -7,7 +7,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -195,6 +194,11 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
         if (currentSchema != null && currentSchema.canApplyUpgrade(player, targetStack, getMaterials(), currentSlot, availableCapabilities)) {
             upgradedStack = currentSchema.applyUpgrade(targetStack, getMaterials(), true, currentSlot, player);
+
+            if (upgradedStack.getItem() instanceof ItemModular) {
+                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack);
+            }
+
             for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materialsCopy)) {
                 int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materialsCopy, capability);
                 ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);

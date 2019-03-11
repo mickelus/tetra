@@ -44,7 +44,6 @@ import java.util.stream.Stream;
 
 public class ItemEffectHandler {
 
-    private Cache<Block, Method> silkMethodCache;
     private Cache<UUID, Integer> strikeCache;
 
     public static ItemEffectHandler instance;
@@ -100,11 +99,6 @@ public class ItemEffectHandler {
     };
 
     public ItemEffectHandler() {
-         silkMethodCache = CacheBuilder.newBuilder()
-                .maximumSize(100)
-                .expireAfterWrite(5, TimeUnit.MINUTES)
-                .build();
-
         strikeCache = CacheBuilder.newBuilder()
                 .maximumSize(100)
                 .expireAfterWrite(1, TimeUnit.MINUTES)
@@ -242,24 +236,8 @@ public class ItemEffectHandler {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
-                    int silkTouchLevel = getEffectLevel(itemStack, ItemEffect.silkTouch);
                     IBlockState state = event.getState();
-                    if (silkTouchLevel > 0
-                            && state.getBlock().canSilkHarvest(event.getWorld(), event.getPos(), state, event.getHarvester())) {
-                        try {
-                            ItemStack silkDrop = (ItemStack) silkMethodCache.get(state.getBlock(), () -> {
-                                return ReflectionHelper.findMethod(state.getBlock().getClass(),
-                                        "getSilkTouchDrop","func_180643_i", IBlockState.class);
-                            })
-                                    .invoke(state.getBlock(), state);
-
-                            event.getDrops().clear();
-                            event.getDrops().add(silkDrop);
-                        } catch (IllegalAccessException | InvocationTargetException | ExecutionException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
+                    if (!event.isSilkTouching()) {
                         int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
                         if (fortuneLevel > 0) {
                             event.getDrops().clear();
@@ -268,21 +246,6 @@ public class ItemEffectHandler {
                             List<ItemStack> list = state.getBlock().getDrops(event.getWorld(), event.getPos(), state, fortuneLevel);
                             event.getDrops().addAll(list);
                         }
-                    }
-                });
-    }
-
-    @SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent event) {
-        Optional.ofNullable(event.getPlayer())
-                .map(EntityLivingBase::getHeldItemMainhand)
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
-                .filter(itemStack -> getEffectLevel(itemStack, ItemEffect.silkTouch) > 0)
-                .ifPresent(itemStack -> {
-                    IBlockState state = event.getState();
-                    if (state.getBlock().canSilkHarvest(event.getWorld(), event.getPos(), state, event.getPlayer())) {
-                        event.setExpToDrop(0);
                     }
                 });
     }

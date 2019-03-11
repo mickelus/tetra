@@ -10,6 +10,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.block.state.pattern.BlockStateMatcher;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -21,10 +23,12 @@ import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -627,5 +631,21 @@ public class ItemModularHandheld extends ItemModular {
         causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
+    }
+
+    @Override
+    public void assemble(ItemStack itemStack) {
+        NBTTagCompound nbt = NBTHelper.getTag(itemStack);
+
+        nbt.removeTag("ench");
+
+        // this stops the tooltip renderer from showing enchantments
+        nbt.setInteger("HideFlags", 1);
+
+        if (getEffects(itemStack).contains(ItemEffect.silkTouch)) {
+            Map<Enchantment, Integer> enchantments = new HashMap<>();
+            enchantments.put(Enchantments.SILK_TOUCH, 1);
+            EnchantmentHelper.setEnchantments(enchantments, itemStack);
+        }
     }
 }

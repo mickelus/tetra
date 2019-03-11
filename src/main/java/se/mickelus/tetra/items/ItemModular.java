@@ -357,6 +357,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         incrementRepairCount(itemStack);
     }
 
+    @Override
+    public void assemble(ItemStack itemStack) {
+
+    }
+
     public int getCapabilityLevel(ItemStack itemStack, String capability) {
         if (EnumUtils.isValidEnum(Capability.class, capability)) {
             return getCapabilityLevel(itemStack, Capability.valueOf(capability));
