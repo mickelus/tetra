@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemVentPlate extends TetraItem {
     private static final String unlocalizedName = "vent_plate";
     @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemQuickLatch instance;
+    public static ItemVentPlate instance;
 
     public ItemVentPlate() {
         setRegistryName(unlocalizedName);

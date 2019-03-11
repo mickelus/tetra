@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemMetalScrap extends TetraItem {
     private static final String unlocalizedName = "metal_scrap";
     @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemQuickLatch instance;
+    public static ItemMetalScrap instance;
 
     public ItemMetalScrap() {
         setRegistryName(unlocalizedName);
