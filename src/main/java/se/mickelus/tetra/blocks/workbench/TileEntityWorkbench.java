@@ -209,7 +209,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                     }
                 } else {
                     if (getBlockType() instanceof BlockWorkbench) {
-                        ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState,
+                        upgradedStack = ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState,
                                 upgradedStack, player, true);
                     }
                 }
