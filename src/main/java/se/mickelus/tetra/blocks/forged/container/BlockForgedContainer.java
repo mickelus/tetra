@@ -60,16 +60,16 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     public static final PropertyBool propOpen = PropertyBool.create("open");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 6, 8, 6, 9,
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(propLocked1, equalTo(true)).where(propFlipped, equalTo(false)),
                     BlockForgedContainer::breakLock0),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 12, 14, 6, 9,
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(false)),
                     BlockForgedContainer::breakLock1),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 2, 4, 6, 9,
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(propLocked1, equalTo(true)).where(propFlipped, equalTo(true)),
                     BlockForgedContainer::breakLock2),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 8, 10, 6, 9,
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(true)),
                     BlockForgedContainer::breakLock3),
             new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 16, 7, 8,
@@ -186,7 +186,6 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
 
     @Override
     public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
-
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.getValue(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);
