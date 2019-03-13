@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tetra:forged_crate"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "facing": {
+      "north":  {},
+      "south":  { "y": 180 },
+      "west":  { "y": -90 },
+      "east":  { "y": 90 }
+    },
+    "stacked": {
+      "true": {
+        "model": "tetra:forged_crate_offset"
+      },
+      "false": {}
+    }
+  }
+}

@@ -187,7 +187,7 @@ public class UtilToolbelt {
         BlockPos blockPos = traceResult.getBlockPos();
 
         BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
-                .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, traceResult.sideHit,
+                .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, traceResult.sideHit,
                         (float) hitVector.x - blockPos.getX(),
                         (float) hitVector.y - blockPos.getY(),
                         (float) hitVector.z - blockPos.getZ()))

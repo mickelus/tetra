@@ -10,6 +10,7 @@ import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootEntryTable;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.lang.reflect.Type;
 
@@ -44,8 +45,16 @@ public class LootEntryDeserializer implements JsonDeserializer<LootEntry> {
         return null;
     }
 
+    private static String getEntryName(JsonObject json, String fallback) {
+        if (json.has("entryName")) {
+            return JsonUtils.getString(json, "entryName");
+        }
+
+        return fallback;
+    }
+
     private LootEntryItem deserializeItem(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootCondition[] conditions) {
-        String name = JsonUtils.getString(jsonObject, "name");
+        String name = getEntryName(jsonObject, JsonUtils.getString(jsonObject, "name"));
 
         try {
             Item item = JsonUtils.getItem(jsonObject, "name");
@@ -60,12 +69,12 @@ public class LootEntryDeserializer implements JsonDeserializer<LootEntry> {
     }
 
     private LootEntryTable deserializeTable(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootCondition[] conditions) {
-        String name = JsonUtils.getString(jsonObject, "name");
+        String name = getEntryName(jsonObject, JsonUtils.getString(jsonObject, "name"));
         ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "name"));
         return new LootEntryTable(resourcelocation, weight, quality, conditions, name);
     }
 
     public static LootEntryEmpty deserializeEmpty(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootCondition[] conditions) {
-        return new LootEntryEmpty(weight, quality, conditions, "empty");
+        return new LootEntryEmpty(weight, quality, conditions, getEntryName(jsonObject, "empty"));
     }
 }

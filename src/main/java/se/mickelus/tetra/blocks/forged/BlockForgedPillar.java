@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 
@@ -32,7 +33,7 @@ public class BlockForgedPillar extends TetraBlock {
     public static BlockForgedPillar instance;
 
     public BlockForgedPillar() {
-        super(Material.IRON);
+        super(Materials.forged);
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);

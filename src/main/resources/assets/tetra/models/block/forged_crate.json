@@ -1,0 +1,21 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "tetra:blocks/forged_crate",
+        "texture": "tetra:blocks/forged_crate"
+    },
+    "elements": [
+        {
+            "from": [  1,  0,  0 ],
+            "to":   [ 15, 14, 14 ],
+            "faces": {
+                "down":  { "texture": "#texture", "uv": [  0, 0,  14, 14 ] },
+                "up":    { "texture": "#texture", "uv": [  0, 0,  14, 14 ] },
+                "north": { "texture": "#texture", "uv": [  0, 0,  14, 14 ] },
+                "south": { "texture": "#texture", "uv": [  0, 0,  14, 14 ] },
+                "west":  { "texture": "#texture", "uv": [  0, 0,  14, 14 ] },
+                "east":  { "texture": "#texture", "uv": [  0, 0,  14, 14 ] }
+            }
+        }
+    ]
+}

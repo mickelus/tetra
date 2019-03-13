@@ -1,12 +1,12 @@
 {
     "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/forged_wall",
-        "down": "tetra:blocks/forged_wall",
-        "up": "tetra:blocks/forged_wall",
-        "north": "tetra:blocks/forged_wall",
-        "east": "tetra:blocks/forged_wall",
-        "south": "tetra:blocks/forged_wall",
-        "west": "tetra:blocks/forged_wall"
+        "particle": "#texture",
+        "down": "#texture",
+        "up": "#texture",
+        "north": "#texture",
+        "east": "#texture",
+        "south": "#texture",
+        "west": "#texture"
     }
 }

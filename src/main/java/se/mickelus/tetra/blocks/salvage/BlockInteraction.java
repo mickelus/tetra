@@ -7,12 +7,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -101,8 +103,9 @@ public class BlockInteraction {
             return false;
         }
 
-        float hitU = getHitU(hitFace, hitX, hitY, hitZ);
-        float hitV = getHitV(hitFace, hitX, hitY, hitZ);
+        AxisAlignedBB boundingBox = blockState.getBoundingBox(world, pos);
+        float hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
+        float hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         BlockInteraction possibleInteraction = Optional.of(blockState.getBlock())
                 .filter(block -> block instanceof IBlockCapabilityInteractive)
@@ -118,7 +121,11 @@ public class BlockInteraction {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, hitFace);
 
             if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isItemStackDamageable()) {
-                heldStack.damageItem(2, player);
+                if (heldStack.getItem() instanceof ItemModular) {
+                    ((ItemModular) heldStack.getItem()).applyDamage(2, heldStack, player);
+                } else {
+                    heldStack.damageItem(2, player);
+                }
             }
 
             player.resetCooldown();
@@ -127,10 +134,11 @@ public class BlockInteraction {
         return false;
     }
 
-    public static BlockInteraction getInteractionAtPoint(EntityPlayer player, IBlockState blockState, EnumFacing hitFace, float hitX, float hitY,
+    public static BlockInteraction getInteractionAtPoint(EntityPlayer player, IBlockState blockState, BlockPos pos, EnumFacing hitFace, float hitX, float hitY,
             float hitZ) {
-        float hitU = getHitU(hitFace, hitX, hitY, hitZ);
-        float hitV = getHitV(hitFace, hitX, hitY, hitZ);
+        AxisAlignedBB boundingBox = blockState.getBoundingBox(player.world, pos);
+        float hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
+        float hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         return Optional.of(blockState.getBlock())
                 .filter(block -> block instanceof IBlockCapabilityInteractive)
@@ -142,38 +150,38 @@ public class BlockInteraction {
                 .orElse(null);
     }
 
-    private static float getHitU(EnumFacing facing, float hitX, float hitY, float hitZ) {
+    private static float getHitU(EnumFacing facing, AxisAlignedBB boundingBox, float hitX, float hitY, float hitZ) {
         switch (facing) {
             case DOWN:
-                return hitX;
+                return (float) boundingBox.maxX - hitX;
             case UP:
-                return 1 - hitX;
+                return (float) boundingBox.maxX - hitX;
             case NORTH:
-                return 1 - hitX;
+                return (float) boundingBox.maxX - hitX;
             case SOUTH:
-                return hitX;
+                return hitX - (float) boundingBox.minX;
             case WEST:
-                return hitZ;
+                return hitZ - (float) boundingBox.minZ;
             case EAST:
-                return 1 - hitZ;
+                return (float) boundingBox.maxZ - hitZ;
         }
         return 0;
     }
 
-    private static float getHitV(EnumFacing facing, float hitX, float hitY, float hitZ) {
+    private static float getHitV(EnumFacing facing, AxisAlignedBB boundingBox, float hitX, float hitY, float hitZ) {
         switch (facing) {
             case DOWN:
-                return 1 - hitZ;
+                return (float) boundingBox.maxZ - hitZ;
             case UP:
-                return 1 - hitZ;
+                return (float) boundingBox.maxZ - hitZ;
             case NORTH:
-                return 1 - hitY;
+                return (float) boundingBox.maxY - hitY;
             case SOUTH:
-                return 1 - hitY;
+                return (float) boundingBox.maxY - hitY;
             case WEST:
-                return 1 - hitY;
+                return (float) boundingBox.maxY - hitY;
             case EAST:
-                return 1 - hitY;
+                return (float) boundingBox.maxY - hitY;
         }
         return 0;
     }

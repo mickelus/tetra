@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -91,7 +92,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
 
     public BlockForgedVent() {
-        super(Material.IRON);
+        super(Materials.forged);
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);

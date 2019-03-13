@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 
@@ -20,7 +21,7 @@ public class BlockForgedPlatform extends TetraBlock {
     public static BlockForgedPlatform instance;
 
     public BlockForgedPlatform() {
-        super(Material.IRON);
+        super(Materials.forged);
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);

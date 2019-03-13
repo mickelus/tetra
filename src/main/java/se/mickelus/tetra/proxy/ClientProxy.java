@@ -3,6 +3,7 @@ package se.mickelus.tetra.proxy;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.tileentity.TileEntityStructure;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.blocks.forged.BlockForgedCrate;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TESRForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TileEntityForgedContainer;
@@ -76,6 +78,8 @@ public class ClientProxy implements IProxy {
                     return new ModelResourceLocation(TetraMod.MOD_ID + ":forged_container");
                 }
             });
+
+            ModelLoader.setCustomStateMapper(BlockForgedCrate.instance, new StateMap.Builder().ignore(BlockForgedCrate.propIntegrity).build());
         }
     }
 }

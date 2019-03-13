@@ -75,11 +75,11 @@ public class GuiInteractiveOutline extends GuiElement {
             addChild(capability);
             if (width > height) {
                 if (y + width / 2 < 16) {
-                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
-                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
-                } else {
                     capability.setAttachmentPoint(GuiAttachment.topCenter);
                     capability.setAttachmentAnchor(GuiAttachment.bottomCenter);
+                } else {
+                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
+                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
                 }
             } else {
                 if (x + height / 2 < 16) {

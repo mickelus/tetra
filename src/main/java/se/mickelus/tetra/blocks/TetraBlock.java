@@ -29,16 +29,6 @@ public class TetraBlock extends Block implements ITetraBlock {
     }
 
     @Override
-    public void clientPreInit() {
-
-    }
-
-    @Override
-    public void init(PacketHandler packetHandler) {
-
-    }
-
-    @Override
     public boolean hasItem() {
         return hasItem;
     }
@@ -50,24 +40,5 @@ public class TetraBlock extends Block implements ITetraBlock {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
         }
-    }
-
-    @Override
-    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
-        return -1;
-    }
-
-
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
-        return targetStack;
-    }
-
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
-        return targetStack;
     }
 }

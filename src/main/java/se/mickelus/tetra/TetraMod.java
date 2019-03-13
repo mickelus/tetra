@@ -108,7 +108,8 @@ public class TetraMod {
                     new BlockForgedPlatform(),
                     new BlockForgedPlatformSlab(),
                     new BlockForgedVent(),
-                    new BlockForgedContainer()
+                    new BlockForgedContainer(),
+                    new BlockForgedCrate()
             );
         }
 
