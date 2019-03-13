@@ -371,6 +371,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+        if (isBroken(itemStack)) {
+            return -1;
+        }
+
         int base = getAllModules(itemStack).stream()
                 .map(module -> module.getCapabilityLevel(itemStack, capability))
                 .max(Integer::compare)
@@ -382,6 +386,47 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sum();
 
         return base + synergyBonus;
+    }
+
+    public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
+        if (EnumUtils.isValidEnum(Capability.class, capability)) {
+            return getCapabilityEfficiency(itemStack, Capability.valueOf(capability));
+        }
+        return -1;
+    }
+
+    @Override
+    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
+        int highestLevel = getAllModules(itemStack).stream()
+                .map(module -> module.getCapabilityLevel(itemStack, capability))
+                .max(Integer::compare)
+                .orElse(-1);
+
+        float efficiency = getAllModules(itemStack).stream()
+                .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
+                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
+                .max(Float::compare)
+                .orElse(1f);
+
+        return efficiency + (float) Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.capabilities)
+                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
+                .sum();
+    }
+
+    @Override
+    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return Collections.emptyList();
+        }
+
+        return getAllModules(itemStack).stream()
+                .flatMap(module -> ((Collection<Capability>)module.getCapabilities(itemStack)).stream())
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -419,18 +464,30 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
+        if (isBroken(itemStack)) {
+            return -1;
+        }
+
         return getAllModules(itemStack).stream()
                 .mapToInt(module -> module.getEffectLevel(itemStack, effect))
                 .sum();
     }
 
     public double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
         return getAllModules(itemStack).stream()
                 .mapToDouble(module -> module.getEffectEfficiency(itemStack, effect))
                 .sum();
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return Collections.emptyList();
+        }
+
         return getAllModules(itemStack).stream()
                 .flatMap(module -> ((Collection<ItemEffect>)module.getEffects(itemStack)).stream())
                 .distinct()
@@ -447,39 +504,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return slotChanged;
-    }
-
-    public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
-        if (EnumUtils.isValidEnum(Capability.class, capability)) {
-            return getCapabilityEfficiency(itemStack, Capability.valueOf(capability));
-        }
-        return -1;
-    }
-
-    @Override
-    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
-        int highestLevel = getAllModules(itemStack).stream()
-                .map(module -> module.getCapabilityLevel(itemStack, capability))
-                .max(Integer::compare)
-                .orElse(-1);
-
-        float efficiency = getAllModules(itemStack).stream()
-                .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
-                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
-                .max(Float::compare)
-                .orElse(1f);
-
-        return efficiency + (float) Arrays.stream(getSynergyData(itemStack))
-                .map(synergyData -> synergyData.capabilities)
-                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
-                .sum();
-    }
-
-    @Override
-    public Collection<Capability> getCapabilities(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .flatMap(module -> ((Collection<Capability>)module.getCapabilities(itemStack)).stream())
-                .collect(Collectors.toSet());
     }
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {
