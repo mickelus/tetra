@@ -251,7 +251,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      */
     private float getRepairMultiplier(int repairCount) {
         // the seed has to change a significant amount for there to be any noticable change, 500 seems to be a decent value
-        return Math.max(0.3f, new Random(repairCount*500).nextFloat());
+        return 1; //Math.max(0.3f, new Random(repairCount*500).nextFloat());
     }
 
     /**
