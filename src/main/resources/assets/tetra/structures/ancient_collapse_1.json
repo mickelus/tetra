@@ -1,4 +1,20 @@
 {
     "origin": [3, 2, 2],
-    "integrityMin": 0.6
+    "integrityMin": 0.6,
+    "children": [
+        {
+            "offset": [3, 1, 2],
+            "facing": "SOUTH",
+            "chance": 0.2,
+            "features": [
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c"
+            ]
+        }
+    ]
 }

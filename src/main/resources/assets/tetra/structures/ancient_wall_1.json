@@ -1,3 +1,27 @@
 {
-    "origin": [3, 2, 2]
+    "origin": [3, 2, 2],
+    "children": [
+        {
+            "offset": [1, 1, 2],
+            "facing": "EAST",
+            "chance": 0.2,
+            "features": [
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        },
+        {
+            "offset": [5, 1, 1],
+            "facing": "WEST",
+            "chance": 0.2,
+            "features": [
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        }
+    ]
 }

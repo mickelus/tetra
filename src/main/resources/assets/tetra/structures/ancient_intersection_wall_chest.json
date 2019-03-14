@@ -4,7 +4,15 @@
         {
             "offset": [0, 1, 1],
             "facing": "SOUTH",
-            "features": ["tetra:ancient_chest_medium", "tetra:ancient_chest_small", "tetra:collapse_gravel"]
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:collapse_gravel",
+                "tetra:collapse_gravel"
+            ]
         }
     ]
 }

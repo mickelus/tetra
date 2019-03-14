@@ -12,7 +12,12 @@
             "features": [
                 "tetra:ancient_hammer",
                 "tetra:ancient_hammer_benchless",
-                "tetra:ancient_chest_small",
+                "tetra:forged_chest",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
                 "tetra:ancient_workbench",
                 "tetra:ancient_shaft",
                 "tetra:collapse_gravel"

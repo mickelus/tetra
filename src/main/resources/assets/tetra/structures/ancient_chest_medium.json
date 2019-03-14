@@ -1,6 +1,0 @@
-{
-    "origin": [1, 0, 0],
-    "loot": [
-        { "position": [0, 0, 0], "table": "tetra:forged/chest_medium" }
-    ]
-}

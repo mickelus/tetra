@@ -1,0 +1,128 @@
+{
+    "origin": [5, 2, 7],
+    "children": [
+        {
+            "offset": [-1, 3, 6],
+            "facing": "WEST",
+            "features": [
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_down_west"
+            ]
+        },
+        {
+            "offset": [11, 3, 5],
+            "facing": "EAST",
+            "features": [
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_down_east"
+            ]
+        },
+        {
+            "offset": [-1, 4, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_up_west"
+            ]
+        },
+        {
+            "offset": [11, 4, 2],
+            "facing": "EAST",
+            "features": [
+                "tetra:ancient_intersection_wall",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_hallway",
+                "tetra:ancient_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [5, 3, 3],
+            "facing": "SOUTH",
+            "chance": 0.5,
+            "features": [
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b",
+                "tetra:ancient_shaft",
+                "tetra:ancient_hammer",
+                "tetra:ancient_hammer_benchless",
+                "tetra:collapse_gravel",
+                "tetra:collapse_gravel"
+            ]
+        },
+        {
+            "offset": [2, 3, 1],
+            "facing": "SOUTH",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        },
+        {
+            "offset": [8, 3, 1],
+            "facing": "SOUTH",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        },
+        {
+            "offset": [5, 3, 1],
+            "facing": "SOUTH",
+            "chance": 0.2,
+            "features": [
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        },
+        {
+            "offset": [5, 1, 5],
+            "facing": "SOUTH",
+            "chance": 0.1,
+            "features": [
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        }
+    ]
+}

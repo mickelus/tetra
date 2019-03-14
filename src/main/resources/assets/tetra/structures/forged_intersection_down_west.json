@@ -1,0 +1,71 @@
+{
+    "origin": [1, 4, 4],
+    "children": [
+        {
+            "offset": [3, 1, 7],
+            "facing": "EAST",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        },
+        {
+            "offset": [6, 1, 6],
+            "facing": "WEST",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        },
+        {
+            "offset": [5, 1, 8],
+            "facing": "NORTH",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_chest",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        },
+        {
+            "features": ["tetra:ancient_vent"],
+            "chance": 0.3,
+            "offset": [1, 3, 5]
+        },
+        {
+            "offset": [6, 1, 3],
+            "facing": "WEST",
+            "chance": 0.1,
+            "features": [
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c"
+            ]
+        },
+        {
+            "offset": [5, 1, 1],
+            "facing": "SOUTH",
+            "chance": 0.1,
+            "features": [
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b"
+            ]
+        }
+    ]
+}
