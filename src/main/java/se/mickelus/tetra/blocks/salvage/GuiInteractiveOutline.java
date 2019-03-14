@@ -73,22 +73,28 @@ public class GuiInteractiveOutline extends GuiElement {
             capability = new GuiInteractiveCapability(0, 0,
                     blockInteraction.requiredCapability, blockInteraction.requiredLevel, player);
             addChild(capability);
-            if (width > height) {
-                if (y + width / 2 < 16) {
-                    capability.setAttachmentPoint(GuiAttachment.topCenter);
-                    capability.setAttachmentAnchor(GuiAttachment.bottomCenter);
-                } else {
-                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
-                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
-                }
-            } else {
-                if (x + height / 2 < 16) {
+
+             float centerY = y + width / 2f;
+             float centerX = x + height / 2f;
+
+            if (Math.abs(centerX - 16) > Math.abs(centerY - 16)) {
+                if (centerX < 16) {
                     capability.setAttachmentPoint(GuiAttachment.middleLeft);
                     capability.setAttachmentAnchor(GuiAttachment.middleRight);
                 } else {
                     capability.setAttachmentPoint(GuiAttachment.middleRight);
                     capability.setAttachmentAnchor(GuiAttachment.middleLeft);
                     capability.setX(1);
+                }
+            } else {
+                if (centerY < 16) {
+                    capability.setAttachmentPoint(GuiAttachment.topCenter);
+                    capability.setAttachmentAnchor(GuiAttachment.bottomCenter);
+                    capability.setY(1);
+                } else {
+                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
+                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
+                    capability.setY(-2);
                 }
             }
         }

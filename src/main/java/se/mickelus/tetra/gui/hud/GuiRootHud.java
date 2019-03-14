@@ -72,7 +72,7 @@ public class GuiRootHud extends GuiElement {
                 GlStateManager.rotate(-90, 0, 1, 0);
                 break;
             case UP:
-                mouseX = (int) ( ( hitX - boundingBox.minX ) * 32 );
+                mouseX = (int) ( ( boundingBox.maxX - hitX ) * 32 );
                 mouseY = (int) ( ( boundingBox.maxZ - hitZ ) * 32 );
 
                 GlStateManager.translate(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ);

@@ -54,12 +54,15 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
     public static final PropertyInteger propIntegrity = PropertyInteger.create("integrity", 0, 3);
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 1, 4, 12, 15,
-                    BlockStateMatcher.ANY,
-                    BlockForgedCrate::attemptBreakHammer),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.EAST, 7, 11, 8, 12,
+            new BlockInteraction(Capability.pry, 1, EnumFacing.EAST, 6, 8, 6, 8,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakPry),
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 1, 4, 1, 4,
+                    BlockStateMatcher.ANY,
+                    BlockForgedCrate::attemptBreakHammer),
+            new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 10, 13, 10, 13,
+                    BlockStateMatcher.ANY,
+                    BlockForgedCrate::attemptBreakHammer),
     };
 
     static final String unlocalizedName = "forged_crate";
@@ -75,7 +78,7 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
         setUnlocalizedName(unlocalizedName);
         setCreativeTab(TetraCreativeTabs.getInstance());
 
-        setHardness(20);
+        setHardness(10);
 
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(propFacing, EnumFacing.EAST)
@@ -100,18 +103,19 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
             Capability capability, int min, int multiplier) {
 
         int integrity = blockState.getValue(propIntegrity);
-        if (integrity > 0) {
+
+        int progress = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getCapabilityLevel(itemStack, capability))
+                .map(level -> ( level - min ) * multiplier)
+                .orElse(1);
+
+        if (integrity - progress >= 0) {
             if (Capability.hammer.equals(capability)) {
                 world.playSound(player, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
             } else {
-                world.playSound(player, pos, SoundEvents.BLOCK_LADDER_STEP, SoundCategory.PLAYERS, 1, 2f);
+                world.playSound(player, pos, SoundEvents.BLOCK_LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
             }
 
-            int progress = CastOptional.cast(itemStack, ItemModular.class)
-                    .map(item -> item.getCapabilityLevel(itemStack, capability))
-                    .map(level -> ( level - min ) * multiplier)
-                    .map(value -> Math.min(integrity, value))
-                    .orElse(1);
             world.setBlockState(pos, blockState.withProperty(propIntegrity, integrity - progress));
         } else {
             world.playEvent(player, 2001, pos, Block.getStateId(blockState));
@@ -123,20 +127,7 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
 
     @Override
     public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
-//        if (face.getAxis().isHorizontal()) {
-            return new BlockInteraction[] {
-                    new BlockInteraction(Capability.pry, 1, EnumFacing.EAST, 4, 10, 4, 10,
-                            BlockStateMatcher.ANY,
-                            BlockForgedCrate::attemptBreakPry),
-//                    new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 1, 13, 1, 6,
-//                            BlockStateMatcher.ANY,
-//                            BlockForgedCrate::attemptBreakHammer),
-//                    new BlockInteraction(Capability.pry, 1, EnumFacing.EAST, 1, 13, 8, 13,
-//                            BlockStateMatcher.ANY,
-//                            BlockForgedCrate::attemptBreakPry),
-            };
-//        }
-//        return new BlockInteraction[0];
+            return interactions;
     }
 
     @Override
