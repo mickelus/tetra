@@ -92,7 +92,7 @@ item.vent_plate.name=Vent plate
 item.vent_plate.description=Re-attach this to machinery to slightly increase its efficiency.
 salvage_vent_plate_action.label=Salvage
 
-ancient_description=Found in structures deep underground in snowy biomes
+forged_description=Found in structures deep underground in snowy biomes
 
 ###############################
 # SWORD

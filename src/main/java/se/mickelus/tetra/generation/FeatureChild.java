@@ -11,8 +11,8 @@ import net.minecraft.util.math.BlockPos;
  *     "offset": [3, 2, 6],
  *     "facing": "SOUTH",
  *     "features": [
- *         "tetra:ancient_hallway_1",
- *         "tetra:ancient_wall_1"
+ *         "tetra:forged_hallway_1",
+ *         "tetra:forged_wall_1"
  *     ]
  * }
  */

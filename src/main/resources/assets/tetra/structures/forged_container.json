@@ -1,0 +1,6 @@
+{
+    "origin": [1, 0, 0],
+    "loot": [
+        { "position": [1, 0, 0], "table": "tetra:forged/container_content" }
+    ]
+}

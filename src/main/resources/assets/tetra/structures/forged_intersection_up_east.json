@@ -4,10 +4,10 @@
         {
             "offset": [6, 3, 1],
             "facing": "EAST",
-            "features": ["tetra:ancient_intersection_wall_chest", "tetra:ancient_intersection_wall", "tetra:ancient_intersection_hallway"]
+            "features": ["tetra:forged_intersection_wall_chest", "tetra:forged_intersection_wall", "tetra:forged_intersection_hallway"]
         },
         {
-            "features": ["tetra:ancient_vent"],
+            "features": ["tetra:forged_vent"],
             "facing": "EAST",
             "chance": 0.2,
             "offset": [4, 2, 1]

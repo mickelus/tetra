@@ -262,6 +262,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         if (!itemStack.isEmpty() && itemStack.getCount() > getInventoryStackLimit()) {
             itemStack.setCount(getInventoryStackLimit());
         }
+        markDirty();
     }
 
     @Override

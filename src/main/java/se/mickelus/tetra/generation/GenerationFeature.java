@@ -20,11 +20,11 @@ import net.minecraft.util.math.BlockPos;
  *         {
  *             "offset": [3, 1, 3],
  *             "facing": "WEST",
- *             "features": ["tetra:ancient_hammer", "tetra:collapse_gravel"]
+ *             "features": ["tetra:forged_hammer", "tetra:collapse_gravel"]
  *         },
  *         {
  *             "offset": [3, 2, 0],
- *             "features": ["tetra:ancient_hallway_1", "tetra:ancient_collapse_1"]
+ *             "features": ["tetra:forged_hallway_1", "tetra:forged_collapse_1"]
  *         }
  *     ],
  *     "loot": [

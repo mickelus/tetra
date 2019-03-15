@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.Mirror;
@@ -12,10 +13,13 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.template.*;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -28,6 +32,7 @@ import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.generation.processor.CompoundProcessor;
 import se.mickelus.tetra.generation.processor.ForgedContainerProcessor;
+import se.mickelus.tetra.generation.processor.ForgedCrateProcessor;
 import se.mickelus.tetra.generation.processor.HammerProcessor;
 
 import java.util.*;
@@ -131,6 +136,7 @@ public class WorldGenFeatures implements IWorldGenerator {
         ITemplateProcessor processors = new CompoundProcessor(
                 new BlockRotationProcessor(pos, settings),
                 new HammerProcessor(settings.getRandom(pos)),
+                new ForgedCrateProcessor(settings.getRandom(pos)),
                 new ForgedContainerProcessor(settings.getRandom(pos)));
 
         template.addBlocksToWorld(world, pos, processors, settings, 2);
@@ -200,8 +206,12 @@ public class WorldGenFeatures implements IWorldGenerator {
 
         if (tileEntity instanceof TileEntityLockableLoot) {
             ((TileEntityLockableLoot) tileEntity).setLootTable(lootLocation, random.nextLong());
-        } else {
-            world.setBlockState(pos.up(4), Blocks.OBSIDIAN.getDefaultState(), 3);
+        } else if (tileEntity instanceof IInventory) {
+            // todo: implement setter interface for lockable loot TEs?
+            LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(lootLocation);
+            LootContext.Builder builder = new LootContext.Builder((WorldServer)world);
+
+            lootTable.fillInventory((IInventory) tileEntity, random, builder.build());
         }
     }
 }

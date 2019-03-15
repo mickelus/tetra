@@ -1,0 +1,96 @@
+{
+    "origin": [2, 1, 2],
+    "integrityMin": 0.9,
+    "children": [
+        {
+            "offset": [-1, 10, 2],
+            "facing": "WEST",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_up_west",
+                "tetra:forged_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [-1, 19, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_up_west",
+                "tetra:forged_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [2, 8, -1],
+            "facing": "NORTH",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway"
+            ]
+        },
+        {
+            "offset": [5, 10, 2],
+            "facing": "EAST",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_up_west",
+                "tetra:forged_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [5, 22, 1],
+            "facing": "EAST",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_up_west",
+                "tetra:forged_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [2, 15, 5],
+            "facing": "SOUTH",
+            "features": [
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_wall",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_hallway",
+                "tetra:forged_intersection_up_west",
+                "tetra:forged_intersection_up_east"
+            ]
+        },
+        {
+            "offset": [2, 22, 2],
+            "features": [
+                "tetra:collapse_gravel",
+                "tetra:collapse_air",
+                "tetra:collapse_air"
+            ]
+        }
+    ]
+}

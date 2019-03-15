@@ -21,6 +21,7 @@ public class ForgedContainerProcessor implements ITemplateProcessor {
     @Nullable
     @Override
     public Template.BlockInfo processBlock(World world, BlockPos pos, Template.BlockInfo blockInfo) {
+        System.out.println(blockInfo.blockState.getBlock());
         if (blockInfo.blockState.getBlock() instanceof BlockForgedContainer) {
             int[] lockIntegrity = new int[TileEntityForgedContainer.lockCount];
             for (int i = 0; i < lockIntegrity.length; i++) {

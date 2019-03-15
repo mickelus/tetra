@@ -1,0 +1,69 @@
+{
+    "biomes": ["cold", "snowy"],
+    "origin": [3, 0, 3],
+    "probability": 0.05,
+    "minY": 7,
+    "maxY": 22,
+    "integrityMin": 0.95,
+    "children": [
+        {
+            "offset": [3, 1, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:forged_hammer",
+                "tetra:forged_hammer_benchless",
+                "tetra:forged_container",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_workbench",
+                "tetra:forged_shaft",
+                "tetra:collapse_gravel"
+            ]
+        },
+        {
+            "offset": [3, 2, 0],
+            "features": ["tetra:forged_hallway_1", "tetra:forged_collapse_1"]
+        },
+        {
+            "offset": [3, 2, 6],
+            "facing": "SOUTH",
+            "features": [
+                "tetra:forged_hallway_1",
+                "tetra:forged_collapse_1",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2"
+            ]
+        },
+        {
+            "offset": [0, 2, 3],
+            "facing": "WEST",
+            "features": [
+                "tetra:forged_hallway_1",
+                "tetra:forged_collapse_1",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2",
+                "tetra:forged_intersection_1"
+            ]
+        },
+        {
+            "offset": [6, 2, 3],
+            "facing": "EAST",
+            "features": [
+                "tetra:forged_hallway_1",
+                "tetra:forged_collapse_1",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2",
+                "tetra:forged_wall_1",
+                "tetra:forged_wall_2",
+                "tetra:forged_intersection_1"
+            ]
+        }
+    ]
+}

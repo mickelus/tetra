@@ -2,7 +2,7 @@
     "origin": [1, 2, 9],
     "integrityMin": 0.7,
     "children": [{
-        "features": ["tetra:ancient_vent"],
+        "features": ["tetra:forged_vent"],
         "chance": 0.3,
         "offset": [1, 1, 9]
     }]

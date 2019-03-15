@@ -6,7 +6,7 @@
             "facing": "EAST",
             "chance": 0.3,
             "features": [
-                "tetra:forged_chest",
+                "tetra:forged_container",
                 "tetra:forged_crate_1a",
                 "tetra:forged_crate_1b",
                 "tetra:forged_crate_2a",
@@ -18,7 +18,7 @@
             "facing": "WEST",
             "chance": 0.3,
             "features": [
-                "tetra:forged_chest",
+                "tetra:forged_container",
                 "tetra:forged_crate_1a",
                 "tetra:forged_crate_1b",
                 "tetra:forged_crate_2a",
@@ -30,7 +30,7 @@
             "facing": "NORTH",
             "chance": 0.3,
             "features": [
-                "tetra:forged_chest",
+                "tetra:forged_container",
                 "tetra:forged_crate_1a",
                 "tetra:forged_crate_1b",
                 "tetra:forged_crate_2a",
@@ -38,7 +38,7 @@
             ]
         },
         {
-            "features": ["tetra:ancient_vent"],
+            "features": ["tetra:forged_vent"],
             "chance": 0.3,
             "offset": [5, 3, 5]
         },

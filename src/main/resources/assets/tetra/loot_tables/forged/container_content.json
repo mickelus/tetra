@@ -1,0 +1,61 @@
+{
+    "pools": [
+        {
+            "name": "forged/container_content",
+            "rolls": {
+                "min": 4,
+                "max": 15
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:forged_mesh",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_beam",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:quick_latch",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:magmatic_cell",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_damage",
+                            "damage": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:metal_scrap",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 6
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
