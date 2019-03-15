@@ -37,6 +37,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.forged.ItemVentPlate;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -187,10 +188,14 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                                     EnumFacing facing, float hitX, float hitY, float hitZ) {
         EnumFacing blockFacing = state.getValue(propFacing);
         TileEntityHammerBase te = getTileEntity(world, pos);
+        ItemStack heldStack = player.getHeldItem(hand);
 
-        if (te != null && blockFacing.getAxis().equals(facing.getAxis())) {
+        if (te == null) {
+            return false;
+        }
+
+        if (blockFacing.getAxis().equals(facing.getAxis())) {
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
-            ItemStack heldStack = player.getHeldItem(hand);
             if (te.hasCellInSlot(slotIndex)) {
                 spawnAsEntity(world, pos.offset(facing), te.removeCellFromSlot(slotIndex));
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.6f);
@@ -202,6 +207,16 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.5f);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
+            }
+        } else if (heldStack.getItem() instanceof ItemVentPlate) {
+            if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.EAST)) {
+                te.attachPlate(EnumHammerPlate.EAST);
+                world.notifyBlockUpdate(pos, state, state, 3);
+                heldStack.shrink(1);
+            } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.WEST)) {
+                te.attachPlate(EnumHammerPlate.WEST);
+                world.notifyBlockUpdate(pos, state, state, 3);
+                heldStack.shrink(1);
             }
         }
 

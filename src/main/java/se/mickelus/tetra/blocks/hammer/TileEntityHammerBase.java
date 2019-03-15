@@ -186,6 +186,18 @@ public class TileEntityHammerBase extends TileEntity {
         markDirty();
     }
 
+    public void attachPlate(EnumHammerPlate plate) {
+        switch (plate) {
+            case EAST:
+                hasPlateEast = true;
+                break;
+            case WEST:
+                hasPlateWest = true;
+                break;
+        }
+        markDirty();
+    }
+
     public boolean hasPlate(EnumHammerPlate plate) {
         switch (plate) {
             case EAST:
