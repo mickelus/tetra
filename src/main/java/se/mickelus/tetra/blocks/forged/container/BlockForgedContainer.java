@@ -19,10 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -72,7 +69,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
             new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(true)),
                     BlockForgedContainer::breakLock3),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 16, 7, 8,
+            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 16, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
@@ -80,7 +77,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
                             .where(propOpen, equalTo(false))
                             .where(propFlipped, equalTo(false)),
                     BlockForgedContainer::open),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 0, 15, 7, 8,
+            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 0, 15, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
@@ -139,7 +136,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("ancient_description"));
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     private static void breakLock(IBlockAccess world, BlockPos pos, EntityPlayer player, int index) {
@@ -358,7 +355,21 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
         }
     }
 
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        EnumFacing facing = state.getValue(propFacing);
+
+        if (Rotation.CLOCKWISE_180.equals(rot)
+                || Rotation.CLOCKWISE_90.equals(rot) && ( EnumFacing.NORTH.equals(facing) || EnumFacing.SOUTH.equals(facing))
+                || Rotation.COUNTERCLOCKWISE_90.equals(rot) && ( EnumFacing.EAST.equals(facing) || EnumFacing.WEST.equals(facing))) {
+            state = state.withProperty(propFlipped, state.getValue(propFlipped));
+        }
+
+        return state.withProperty(propFacing, rot.rotate(facing));
     }
 }
