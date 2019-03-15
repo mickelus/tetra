@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.tileentity.TileEntityStructure;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -30,7 +29,6 @@ import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
-import se.mickelus.tetra.generation.WorldGenFeatures;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
@@ -71,7 +69,7 @@ public class ClientProxy implements IProxy {
     public void registerModels(ModelRegistryEvent event) {
 
         // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
-        if (ConfigHandler.feature_generate) {
+        if (ConfigHandler.generate_features) {
             ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
                 @Override
                 protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

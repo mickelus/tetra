@@ -1,9 +1,7 @@
 package se.mickelus.tetra;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootPool;
@@ -11,7 +9,6 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.advancements.critereon.ItemPredicates;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -99,7 +96,7 @@ public class TetraMod {
                 new BlockGeode(),
         };
 
-        if (ConfigHandler.feature_generate) {
+        if (ConfigHandler.generate_features) {
             blocks = ArrayUtils.addAll(blocks,
                     new BlockHammerHead(),
                     new BlockHammerBase(),
@@ -142,7 +139,7 @@ public class TetraMod {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
-        if (ConfigHandler.feature_generate) {
+        if (ConfigHandler.generate_features) {
             WorldGenFeatures worldGenFeatures = new WorldGenFeatures();
             GameRegistry.registerWorldGenerator(worldGenFeatures, 11);
         }

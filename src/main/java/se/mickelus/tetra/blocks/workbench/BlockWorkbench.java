@@ -126,7 +126,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> items) {
         if (TetraCreativeTabs.getInstance().equals(creativeTabs)) {
             items.add(new ItemStack(this, 1, Variant.wood.ordinal()));
-            if (ConfigHandler.feature_generate) {
+            if (ConfigHandler.generate_features) {
                 items.add(new ItemStack(this, 1, Variant.forged.ordinal()));
             }
         }

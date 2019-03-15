@@ -14,7 +14,7 @@ public class ConfigHandler {
 
     public static boolean geode_generate = true;
 
-    public static boolean feature_generate = false;
+    public static boolean generate_features = true;
     public static int max_feature_depth = 8;
 
     public static boolean workbenchDropTable = true;
