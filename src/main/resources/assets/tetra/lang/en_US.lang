@@ -270,10 +270,10 @@ basic_hilt/ironwood=Ironwood hilt
 basic_hilt/forged_beam=Repurposed beam
 
 basic_hilt/blazing.name=Blazing
-basic_hilt/blazing.description=Using this may set you on fire, more sever in hot environments.
+basic_hilt/blazing.description=Using this may set you on fire, more sever in hot environments
 
 basic_hilt/ender_reverb.name=Ender reverb
-basic_hilt/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
+basic_hilt/ender_reverb.description=Reacts negatively with nearby entities originating from the end
 
 basic_hilt/wrap_string.name=String wrap
 basic_hilt/wrap_string.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-41%%§r severity
