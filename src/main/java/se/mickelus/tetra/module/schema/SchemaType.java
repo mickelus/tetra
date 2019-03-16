@@ -5,6 +5,11 @@ package se.mickelus.tetra.module.schema;
  */
 public enum SchemaType {
     /**
+     * Renders no outline.
+     */
+    other,
+
+    /**
      * Renders in the same way as major, but with a + int he bottom left. Use for improvement schemas.
      */
     improvement,
@@ -17,10 +22,5 @@ public enum SchemaType {
     /**
      * Renders a similar outline as major modules, but cut off at the top and the bottom. Use for major module schemas.
      */
-    major,
-
-    /**
-     * Renders no outline. Currently unused ¯\_(ツ)_/¯
-     */
-    other
+    major
 }

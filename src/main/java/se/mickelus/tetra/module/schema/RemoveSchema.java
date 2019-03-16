@@ -134,7 +134,7 @@ public class RemoveSchema extends BaseSchema {
 
     @Override
     public SchemaType getType() {
-        return SchemaType.major;
+        return SchemaType.other;
     }
 
     @Override
