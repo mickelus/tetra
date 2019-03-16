@@ -73,6 +73,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
     @Override
     protected boolean onHide() {
+        super.onHide();
         Arrays.stream(slots)
                 .filter(Objects::nonNull)
                 .forEach(item -> item.setVisible(false));

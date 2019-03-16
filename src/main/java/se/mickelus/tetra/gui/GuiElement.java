@@ -202,7 +202,10 @@ public class GuiElement extends Gui {
      * take care of setting isVisible to false.
      * @return
      */
-    protected boolean onHide() { return true; }
+    protected boolean onHide() {
+        this.hasFocus = false;
+        return true;
+    }
 
     public GuiElement setOpacity(float opacity) {
         this.opacity = opacity;
@@ -249,11 +252,14 @@ public class GuiElement extends Gui {
     }
 
     public List<String> getTooltipLines() {
-        return elements.stream()
-                .map(GuiElement::getTooltipLines)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse(null);
+        if (isVisible()) {
+            return elements.stream()
+                    .map(GuiElement::getTooltipLines)
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElse(null);
+        }
+        return Collections.emptyList();
     }
 
 

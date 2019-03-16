@@ -57,6 +57,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
 
     @Override
     protected boolean onHide() {
+        super.onHide();
         quickslotGroup.setVisible(false);
         potionGroup.setVisible(false);
         quiverGroup.setVisible(false);
