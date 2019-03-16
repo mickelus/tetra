@@ -88,12 +88,23 @@ public class SchemaDefinition {
     public ItemPredicate requirement = ItemPredicate.ANY;
 
     /**
+     * If set this schema will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
+     * provided index.
+     */
+    public int materialRevealSlot = -1;
+
+    /**
      * Defines the outline around the schema glyph, visible in most views where players interact with the schema
      * somehow. Has four possible values: "minor", "major", "improvement", "other". Minor and major display a similar
      * outline as minor and major modules, "improvement" looks like a major module outline with a plus, "other" has no
      * outline and the outline can instead be part of the glyph.
      */
     public SchemaType displayType = SchemaType.other;
+
+    /**
+     * The rarity of a schema affects how it is rendered. Colors and effects are used to differentiate between effects.
+     */
+    public SchemaRarity rarity = SchemaRarity.basic;
 
     /**
      * The glyph displayed for this schema, preferably the same as the module it will be used to craft but with no tint.

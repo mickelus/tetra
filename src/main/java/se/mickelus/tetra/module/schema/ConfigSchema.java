@@ -146,6 +146,23 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
+    public boolean isVisibleForPlayer(EntityPlayer player, ItemStack targetStack) {
+        if (definition.materialRevealSlot > -1) {
+            for (int x = 0; x < 9; x++) {
+                for (int y = 0; y < 4; y++) {
+                    if (acceptsMaterial(targetStack, definition.materialRevealSlot, player.inventory.getStackInSlot(y * 9 + x))) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public Collection<Capability> getRequiredCapabilities(ItemStack targetStack, ItemStack[] materials) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
@@ -241,6 +258,11 @@ public class ConfigSchema extends BaseSchema {
     @Override
     public SchemaType getType() {
         return definition.displayType;
+    }
+
+    @Override
+    public SchemaRarity getRarity() {
+        return definition.rarity;
     }
 
     @Override

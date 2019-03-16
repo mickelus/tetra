@@ -76,19 +76,33 @@ public class GuiSchemaDetail extends GuiElement {
 
         glyph.clearChildren();
         GlyphData glyphData = schema.getGlyph();
+        GuiTexture border = null;
+        GuiTexture glyphTexture;
         if (schema.getType() == SchemaType.major) {
-            glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
-            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png");
+            glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.minor) {
-            glyph.addChild(new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png").setOpacity(0.3f));
-            glyph.addChild(new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
+            border = new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png");
+            glyphTexture = new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.improvement) {
-            glyph.addChild(new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png").setOpacity(0.3f));
-            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation));
-            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
-        } else if (schema.getType() == SchemaType.other) {
-            glyph.addChild(new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation).setOpacity(0.3f));
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png");
+            glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
+        } else {
+            glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         }
+
+        if (border != null) {
+            border.setOpacity(0.3f);
+            border.setColor(schema.getRarity().tint);
+            glyph.addChild(border);
+        }
+        glyphTexture.setColor(schema.getRarity().tint);
+        glyph.addChild(glyphTexture);
+
+        if (schema.getType() == SchemaType.improvement) {
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
+        }
+
 
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(itemStack, i));

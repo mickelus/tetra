@@ -8,6 +8,8 @@ repair_action.label=Repair
 workbench.schema_detail.craft=Craft
 workbench.schema_detail.back=back
 
+workbench.schema_list.temporary=Made available by an item in your inventory
+
 ###############################
 # CAPABILITIES
 ###############################
@@ -1477,7 +1479,7 @@ strap_quickslot_schema.description=Using a quick latch mechanism for locking the
 strap_quickslot_schema.slot1=Latch
 
 strap/quick_latch.name=Quick latch
-strap/quick_latch.description=Tapping the toolbelt hotkey will quickly equip suitable tools from this inventory.
+strap/quick_latch.description=Tapping the toolbelt hotkey will quickly equip the most suitable tool from this inventory.
 
 quiver_quickslot_schema.name=Quick latch
 quiver_quickslot_schema.description=Upgrade the quiver with a quick latch mechanism, allowing quicker access to arrows in the quiver.\n\n§7Drawing a bow with no ammo available will automatically grab an arrow from the first stack in the quiver.

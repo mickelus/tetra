@@ -49,7 +49,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
 
     public TileEntityWorkbench() {
-        stacks = NonNullList.withSize(4, ItemStack.EMPTY);changeListeners = new HashMap<>();
+        stacks = NonNullList.withSize(4, ItemStack.EMPTY);
+        changeListeners = new HashMap<>();
     }
 
     public static void initConfigActions(WorkbenchAction[] actions) {

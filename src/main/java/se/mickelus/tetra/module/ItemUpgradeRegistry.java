@@ -35,7 +35,7 @@ public class ItemUpgradeRegistry {
 
     public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
         return schemaMap.values().stream()
-                .filter(upgradeSchema -> playerHasSchema(player, upgradeSchema))
+                .filter(upgradeSchema -> playerHasSchema(player, itemStack, upgradeSchema))
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
                 .toArray(UpgradeSchema[]::new);
     }
@@ -44,8 +44,8 @@ public class ItemUpgradeRegistry {
         return schemaMap.get(key);
     }
 
-    public boolean playerHasSchema(EntityPlayer player, UpgradeSchema schema) {
-        return true;
+    public boolean playerHasSchema(EntityPlayer player, ItemStack targetStack, UpgradeSchema schema) {
+        return schema.isVisibleForPlayer(player, targetStack);
     }
 
     public void registerSchema(UpgradeSchema upgradeSchema) {

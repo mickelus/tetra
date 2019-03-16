@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import java.util.Collection;
@@ -52,6 +53,16 @@ public interface UpgradeSchema {
     public boolean isApplicableForSlot(String slot, ItemStack itemStack);
 
     /**
+     * This is a final check if the player should be able to see the schema in schema listings, based on the player or it's surroundings.
+     * @param player The player
+     * @param targetStack The target itemstack for the schema
+     * @return true if it should be visible, otherwise false
+     */
+    public default boolean isVisibleForPlayer(EntityPlayer player, ItemStack targetStack) {
+        return true;
+    }
+
+    /**
      * Returns true if all criterias are met (e.g. correct materials & tools) and the upgrade can be performed.
      * @param player the player performing the upgrade
      * @param itemStack the itemstack that is to be upgraded
@@ -69,5 +80,10 @@ public interface UpgradeSchema {
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
 
     public SchemaType getType();
+
+    public default SchemaRarity getRarity() {
+        return SchemaRarity.basic;
+    }
+
     public GlyphData getGlyph();
 }
