@@ -65,7 +65,6 @@ public class OverlayGuiPotionSlot extends GuiElement {
 
     @Override
     protected boolean onHide() {
-        super.onHide();
         if (showAnimation.isActive()) {
             showAnimation.stop();
         }
