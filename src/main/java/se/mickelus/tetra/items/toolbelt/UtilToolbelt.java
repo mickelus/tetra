@@ -33,6 +33,11 @@ public class UtilToolbelt {
         InventoryToolbelt inventory = null;
         ItemStack toolbeltStack = findToolbelt(player);
 
+        // stops things from crashing if the player has dropped the toolbelt stack after opening the overlay
+        if (!(toolbeltStack.getItem() instanceof ItemToolbeltModular)) {
+            return;
+        }
+
         switch (slotType) {
             case quickslot:
                 inventory = new InventoryQuickslot(toolbeltStack);
