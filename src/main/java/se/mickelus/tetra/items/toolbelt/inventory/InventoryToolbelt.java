@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -11,12 +12,16 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class InventoryToolbelt implements IInventory {
     protected static final String slotKey = "slot";
@@ -30,6 +35,12 @@ public class InventoryToolbelt implements IInventory {
     protected int numSlots = 0;
     protected int maxSize = 0;
 
+    ItemPredicate predicate = ItemPredicate.ANY;
+    public static ItemPredicate potionPredicate = ItemPredicate.ANY;
+    public static ItemPredicate quickPredicate = ItemPredicate.ANY;
+    public static ItemPredicate quiverPredicate = ItemPredicate.ANY;
+    public static ItemPredicate storagePredicate = ItemPredicate.ANY;
+
     public InventoryToolbelt(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
         this.inventoryKey = inventoryKey;
         toolbeltItemStack = stack;
@@ -38,6 +49,26 @@ public class InventoryToolbelt implements IInventory {
 
         this.maxSize = maxSize;
         inventoryContents = NonNullList.withSize(maxSize, ItemStack.EMPTY);
+    }
+
+    public static void initializePredicates() {
+        potionPredicate = getPredicate("potion");
+        quickPredicate = getPredicate("quick");
+        quiverPredicate = getPredicate("quiver");
+        storagePredicate = getPredicate("storage");
+    }
+
+    private static ItemPredicate getPredicate(String inventory) {
+        ItemPredicate[] predicates = Arrays.stream(DataHandler.instance.getData(String.format("toolbelt/%s_predicates", inventory), ItemPredicate[].class))
+                .filter(Objects::nonNull)
+                .toArray(ItemPredicate[]::new);
+
+        // todo: add debug log
+        if (predicates.length > 0) {
+            return new ItemPredicateComposite(predicates);
+        }
+
+        return ItemPredicate.ANY;
     }
 
 
@@ -152,7 +183,7 @@ public class InventoryToolbelt implements IInventory {
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return true;
+        return isItemValid(stack);
     }
 
     @Override
@@ -209,7 +240,15 @@ public class InventoryToolbelt implements IInventory {
         }
     }
 
+    public boolean isItemValid(ItemStack itemStack) {
+        return predicate.test(itemStack);
+    }
+
     public boolean storeItemInInventory(ItemStack itemStack) {
+        if (!isItemValid(itemStack)) {
+            return false;
+        }
+
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
@@ -248,5 +287,9 @@ public class InventoryToolbelt implements IInventory {
 
     public List<Collection<ItemEffect>> getSlotEffects() {
         return ItemToolbeltModular.instance.getSlotEffects(toolbeltItemStack, inventoryType);
+    }
+
+    public static void setPredicates(ItemPredicate[] predicates) {
+
     }
 }

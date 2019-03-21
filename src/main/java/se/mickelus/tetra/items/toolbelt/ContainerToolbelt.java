@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -42,21 +41,21 @@ public class ContainerToolbelt extends Container {
         }
 
         for (int i = 0; i < numQuiverSlots; i++) {
-            this.addSlotToContainer(new QuiverSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 61 - offset * 30));
+            this.addSlotToContainer(new PredicateSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 61 - offset * 30, quiverInventory::isItemValid));
         }
         if (numQuiverSlots > 0) {
             offset++;
         }
 
         for (int i = 0; i < numQuickslots; i++) {
-            this.addSlotToContainer(new Slot(quickslotInventory, i, (int)(-8.5 * numQuickslots + 17 * i + 90), 61 - offset * 30));
+            this.addSlotToContainer(new PredicateSlot(quickslotInventory, i, (int)(-8.5 * numQuickslots + 17 * i + 90), 61 - offset * 30, quickslotInventory::isItemValid));
         }
         if (numQuickslots > 0) {
             offset++;
         }
 
         for (int i = 0; i < numStorageSlots; i++) {
-            this.addSlotToContainer(new Slot(storageInventory, i, (int)(-8.5 * numStorageSlots + 17 * i + 90), 61 - offset * 30));
+            this.addSlotToContainer(new PredicateSlot(storageInventory, i, (int)(-8.5 * numStorageSlots + 17 * i + 90), 61 - offset * 30, storageInventory::isItemValid));
         }
 
         for (int i = 0; i < 3; i++) {

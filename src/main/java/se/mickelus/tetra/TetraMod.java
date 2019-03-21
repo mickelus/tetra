@@ -39,7 +39,7 @@ import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.generation.WorldGenFeatures;
 import se.mickelus.tetra.items.ITetraItem;
-import se.mickelus.tetra.items.ItemModularPredicate;
+import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
@@ -74,7 +74,7 @@ public class TetraMod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemModularPredicate::new);
+        ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
         LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
         LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());

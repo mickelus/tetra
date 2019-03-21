@@ -20,11 +20,9 @@ public class InventoryPotions extends InventoryToolbelt {
         ItemToolbeltModular item = (ItemToolbeltModular) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 
-        readFromNBT(NBTHelper.getTag(stack));
-    }
+        predicate = InventoryToolbelt.potionPredicate;
 
-    public static boolean isItemValid(@Nullable ItemStack itemStack) {
-        return itemStack != null && (itemStack.getItem() instanceof ItemPotion || itemStack.getItem() instanceof ItemGlassBottle);
+        readFromNBT(NBTHelper.getTag(stack));
     }
 
     @Override

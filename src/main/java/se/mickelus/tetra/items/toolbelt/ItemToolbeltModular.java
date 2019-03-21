@@ -24,6 +24,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
+import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -37,8 +38,6 @@ import java.util.stream.Collectors;
 
 @Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
 public class ItemToolbeltModular extends ItemModular implements IBauble {
-
-
     private final static String unlocalizedName = "toolbelt_modular";
     @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemToolbeltModular instance;
@@ -107,6 +106,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
         packetHandler.registerPacket(UpdateBoosterPacket.class, Side.SERVER);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
+        InventoryToolbelt.initializePredicates();
 
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/belt");
         ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap");

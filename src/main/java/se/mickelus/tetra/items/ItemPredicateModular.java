@@ -17,16 +17,16 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class ItemModularPredicate extends ItemPredicate {
+public class ItemPredicateModular extends ItemPredicate {
 
     private String[][] modules = new String[0][0];
     private Map<String, String> variants = new HashMap<>();
 
-    public ItemModularPredicate(String[][] modules) {
+    public ItemPredicateModular(String[][] modules) {
         this.modules = modules;
     }
 
-    public ItemModularPredicate(JsonObject jsonObject) {
+    public ItemPredicateModular(JsonObject jsonObject) {
         if (jsonObject.has("modules")) {
             JsonArray outerModules = jsonObject.getAsJsonArray("modules");
             modules = new String[outerModules.size()][];

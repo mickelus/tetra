@@ -5,14 +5,20 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
-public class QuiverSlot extends Slot {
-    public QuiverSlot(IInventory inventory, int index, int x, int y) {
+public class PredicateSlot extends Slot {
+
+    protected Predicate<ItemStack> predicate;
+
+    public PredicateSlot(IInventory inventory, int index, int x, int y, Predicate<ItemStack> predicate) {
         super(inventory, index, x, y);
+
+        this.predicate = predicate;
     }
 
     @Override
     public boolean isItemValid(@Nullable ItemStack itemStack) {
-        return InventoryQuiver.isItemValid(itemStack);
+        return itemStack != null && predicate.test(itemStack);
     }
 }

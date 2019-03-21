@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.ItemModularPredicate;
+import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -129,8 +129,8 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.requirement instanceof ItemModularPredicate) {
-            return ((ItemModularPredicate) definition.requirement).test(itemStack, moduleSlot);
+        if (definition.requirement instanceof ItemPredicateModular) {
+            return ((ItemPredicateModular) definition.requirement).test(itemStack, moduleSlot);
         }
         return definition.requirement.test(itemStack);
     }

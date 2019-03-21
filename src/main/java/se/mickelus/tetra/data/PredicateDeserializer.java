@@ -11,6 +11,11 @@ import java.lang.reflect.Type;
 public class PredicateDeserializer implements JsonDeserializer<ItemPredicate> {
     @Override
     public ItemPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return ItemPredicate.deserialize(json);
+        try {
+            return ItemPredicate.deserialize(json);
+        } catch (JsonParseException e) {
+            // todo: debug level log
+            return null;
+        }
     }
 }

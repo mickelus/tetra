@@ -1,23 +1,11 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemGlassBottle;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nullable;
-
-public class PotionSlot extends Slot {
-    public PotionSlot(IInventory inventory, int index, int x, int y) {
-        super(inventory, index, x, y);
+public class PotionSlot extends PredicateSlot {
+    public PotionSlot(InventoryPotions inventory, int index, int x, int y) {
+        super(inventory, index, x, y, inventory::isItemValid);
     }
-
-    @Override
-    public boolean isItemValid(@Nullable ItemStack itemStack) {
-        return InventoryPotions.isItemValid(itemStack);
-    }
-
 
     @Override
     public int getSlotStackLimit() {
