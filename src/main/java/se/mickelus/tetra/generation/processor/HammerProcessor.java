@@ -30,7 +30,7 @@ public class HammerProcessor implements ITemplateProcessor {
             // randomize cells
             ItemCellMagmatic item = ItemCellMagmatic.instance;
             int discharge1 = random.nextInt(item.maxCharge);
-            int discharge2 = item.maxCharge - random.nextInt(discharge1);
+            int discharge2 = item.maxCharge - random.nextInt(Math.max(discharge1, 1));
             TileEntityHammerBase.writeCells(blockInfo.tileentityData,
                     new ItemStack(item, 1, discharge1), new ItemStack(item, 1, discharge2));
 

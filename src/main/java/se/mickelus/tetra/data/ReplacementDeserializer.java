@@ -30,6 +30,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         try {
             replacement.predicate = ItemPredicate.deserialize(JsonUtils.getJsonObject(jsonObject, "predicate"));
         } catch (JsonSyntaxException e) {
+            // todo: debug log here
 //                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JsonUtils.getJsonObject(jsonObject, "predicate").toString()));
             return replacement;
         }
