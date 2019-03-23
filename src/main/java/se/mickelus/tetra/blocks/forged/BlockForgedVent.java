@@ -98,6 +98,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         setUnlocalizedName(unlocalizedName);
         setCreativeTab(TetraCreativeTabs.getInstance());
         setBlockUnbreakable();
+        setResistance(22);
 
         hasItem = true;
 
@@ -105,6 +106,11 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
                 .withProperty(propRotation, 0)
                 .withProperty(propX, true)
                 .withProperty(propBroken, false));
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.clear();
     }
 
     private static boolean breakBolt(World world, BlockPos pos, IBlockState blockState, EntityPlayer player,

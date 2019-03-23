@@ -119,6 +119,11 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
         packetHandler.registerPacket(ChangeCompartmentPacket.class, Side.SERVER);
     }
 
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.clear();
+    }
+
     /**
      * Special item registration to to check that multiblock is allowed to be placed
      * @param registry Item registry

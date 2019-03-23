@@ -94,6 +94,11 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 .withProperty(propCell2Charged, false));
     }
 
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.clear();
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
