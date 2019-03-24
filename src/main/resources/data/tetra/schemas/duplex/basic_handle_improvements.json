@@ -9,10 +9,7 @@
             {
                 "material": {
                     "item": "minecraft:string",
-                    "count": 16
-                },
-                "requiredCapabilities": {
-                    "cut": 1
+                    "count": 8
                 },
                 "improvements": {
                     "basic_handle/wrap_string": 0
@@ -46,9 +43,6 @@
                 "material": {
                     "item": "minecraft:vine",
                     "count": 3
-                },
-                "requiredCapabilities": {
-                    "cut": 1
                 },
                 "improvements": {
                     "basic_handle/wrap_vine": 0
