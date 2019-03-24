@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -177,7 +178,16 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void applyDamage(int amount, ItemStack itemStack, EntityLivingBase responsibleEntity) {
-        itemStack.damageItem(getReducedDamage(amount, itemStack, responsibleEntity), responsibleEntity);
+        int damage = itemStack.getItemDamage();
+        int maxDamage = itemStack.getMaxDamage();
+        if (damage < maxDamage) {
+            int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
+            itemStack.damageItem(reducedAmount, responsibleEntity);
+
+            if (damage + reducedAmount >= maxDamage && responsibleEntity.world.isRemote) {
+                responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
+            }
+        }
     }
 
     @Override
