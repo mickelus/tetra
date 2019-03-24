@@ -124,7 +124,7 @@ public class GuiStatGroup extends GuiElement {
                 previewArmor = item.getEffectLevel(previewStack, ItemEffect.armor);
             }
 
-            if (currentArmor != 0 || previewArmor != 0) {
+            if (currentArmor > 0 || previewArmor > 0) {
                 armorBar.setValue(currentArmor, previewArmor);
                 showBar(armorBar);
             }
