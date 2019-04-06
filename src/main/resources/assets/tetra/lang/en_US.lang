@@ -23,6 +23,8 @@ shovel=Dig
 shovel.unavailable=This action requires a tier %d shovel
 cut=Cut
 cut.unavailable=This action requires a tier %d cutting implement
+pry=Pry
+pry.unavailable=This action requires a tier %d prying implement
 
 ###############################
 # MISC
@@ -115,10 +117,21 @@ duplex/binding=Binding
 duplex/accessory=Accessory
 
 ###############################
+# MODULE PROGRESSION
+###############################
+settled.name=Settled
+settled.description=Due to extended use this part has settled into place, it provides additional integrity
+settled.toast=A part has settled!
+arrested.name=Arrested
+arrested.description=This part cannot settle and will not improve over time
+honing.progress=Honing progress: %0.1f%%
+honing.available=Honing available
+
+###############################
 # REPAIR SCHEMA
 ###############################
 repair_schema.name=Repair
-repair_schema.description=Repair the item using various materials.
+repair_schema.description=Patch up damage and wear using various materials.
 
 ###############################
 # REMOVE SCHEMA
@@ -161,6 +174,67 @@ enchantment/fortune.description=Increases drops when breaking things
 enchantment/silk_touch.name=Silk Touch
 enchantment/silk_touch.description=Harvested blocks will not break
 
+###############################
+# BLADE HONING SHARED
+###############################
+blade_honing_damage_1_schema.name=Hone: Damage I
+blade_honing_damage_1_schema.description=Increase damage (flat)
+blade_honing_damage_2_schema.name=Hone: Damage II
+blade_honing_damage_2_schema.description=Increase damage (flat)
+blade_honing_damage_3_schema.name=Hone: Damage III
+blade_honing_damage_3_schema.description=Increase damage (flat)
+blade_honing_damage_4_schema.name=Hone: Damage IV
+blade_honing_damage_4_schema.description=Increase damage (flat)
+blade_honing_damage_5_schema.name=Hone: Damage V
+blade_honing_damage_5_schema.description=Increase damage (flat)
+
+blade_honing/damage.name=Hone: Damage
+blade_honing/damage.description=Increases damage dealt
+
+blade_honing_speed_1_schema.name=Hone: Speed I
+blade_honing_speed_1_schema.description=Increase swing speed (multiplier)
+blade_honing_speed_2_schema.name=Hone: Speed II
+blade_honing_speed_2_schema.description=Increase swing speed (multiplier)
+blade_honing_speed_3_schema.name=Hone: Speed III
+blade_honing_speed_3_schema.description=Increase swing speed (multiplier)
+blade_honing_speed_4_schema.name=Hone: Speed IV
+blade_honing_speed_4_schema.description=Increase swing speed (multiplier)
+blade_honing_speed_5_schema.name=Hone: Speed V
+blade_honing_speed_5_schema.description=Increase swing speed (multiplier)
+
+blade_honing/speed.name=Hone: Speed
+blade_honing/speed.description=Increases swing speed
+
+###############################
+# HILT HONING SHARED
+###############################
+hilt_honing_damage_1_schema.name=Hone: Damage I
+hilt_honing_damage_1_schema.description=Increase damage (multiplier)
+hilt_honing_damage_2_schema.name=Hone: Damage II
+hilt_honing_damage_2_schema.description=Increase damage (multiplier)
+hilt_honing_damage_3_schema.name=Hone: Damage III
+hilt_honing_damage_3_schema.description=Increase damage (multiplier)
+hilt_honing_damage_4_schema.name=Hone: Damage IV
+hilt_honing_damage_4_schema.description=Increase damage (multiplier)
+hilt_honing_damage_5_schema.name=Hone: Damage V
+hilt_honing_damage_5_schema.description=Increase damage (multiplier)
+
+hilt_honing/damage.name=Hone: Damage
+hilt_honing/damage.description=Increases damage dealt
+
+hilt_honing_speed_1_schema.name=Hone: Speed I
+hilt_honing_speed_1_schema.description=Increase swing speed (flat)
+hilt_honing_speed_2_schema.name=Hone: Speed II
+hilt_honing_speed_2_schema.description=Increase swing speed (flat)
+hilt_honing_speed_3_schema.name=Hone: Speed III
+hilt_honing_speed_3_schema.description=Increase swing speed (flat)
+hilt_honing_speed_4_schema.name=Hone: Speed IV
+hilt_honing_speed_4_schema.description=Increase swing speed (flat)
+hilt_honing_speed_5_schema.name=Hone: Speed V
+hilt_honing_speed_5_schema.description=Increase swing speed (flat)
+
+hilt_honing/speed.name=Hone: Speed
+hilt_honing/speed.description=Increases swing speed
 
 ###############################
 # BASIC BLADE

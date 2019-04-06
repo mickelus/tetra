@@ -22,6 +22,12 @@ public class BasicMajorModule extends ItemModuleMajor<ModuleData> {
                     .toArray(ImprovementData[]::new);
         }
 
+        settleMax = Arrays.stream(improvements)
+                .filter(data -> data.key.equals(settleImprovement))
+                .mapToInt(ImprovementData::getLevel)
+                .max()
+                .orElse(0);
+
         ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
     }
 

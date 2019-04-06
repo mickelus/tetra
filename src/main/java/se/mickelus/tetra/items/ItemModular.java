@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.improvement.HoneToast;
 import se.mickelus.tetra.module.schema.Material;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
@@ -40,6 +40,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     protected static final String repairCountKey = "repairCount";
 
     protected static final String cooledStrengthKey = "cooledStrength";
+
+    private static final String honingProgressKey = "honing_progress";
+    private static final String honingAvailableKey = "honing_available";
+    private static final String honingCountKey = "honing_count";
+    protected int honingBase = 450;
+    protected int honingIncrease = 200;
 
     protected String[] majorModuleKeys;
     protected String[] minorModuleKeys;
@@ -190,6 +196,67 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
     }
 
+    public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
+        // todo: store this in a separate data structure?
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        if (!isHoneable(itemStack)) {
+            int honingProgress;
+            if (tag.hasKey(honingProgressKey)) {
+                honingProgress = tag.getInteger(honingProgressKey);
+            } else {
+                honingProgress = getHoningBase(itemStack);
+            }
+
+            honingProgress -= multiplier;
+            tag.setInteger(honingProgressKey, honingProgress);
+
+            if (honingProgress <= 0 && !isHoneable(itemStack)) {
+                tag.setBoolean(honingAvailableKey, true);
+
+                if (entity instanceof EntityPlayer) {
+                    HoneToast.showToast((EntityPlayer) entity, itemStack);
+                }
+            }
+        }
+
+        for (ItemModuleMajor module: getMajorModules(itemStack)) {
+            module.tickProgression(entity, itemStack, multiplier);
+        }
+    }
+
+    public int getHoningProgress(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+
+        if (tag.hasKey(honingProgressKey)) {
+            return tag.getInteger(honingProgressKey);
+        }
+
+        return getHoningBase(itemStack);
+    }
+
+    public int getHoningBase(ItemStack itemStack) {
+        return honingBase + honingIncrease * -getIntegrityCost(itemStack);
+    }
+
+    public int getHonedCount(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getInteger(honingCountKey);
+    }
+
+    public static boolean isHoneable(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).hasKey(honingAvailableKey);
+    }
+
+    public static int getHoningSeed(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getInteger(honingCountKey) + 1;
+    }
+
+    public static void removeHoneable(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        tag.removeTag(honingAvailableKey);
+        tag.removeTag(honingProgressKey);
+        tag.setInteger(honingCountKey, tag.getInteger(honingCountKey) + 1);
+    }
+
     @Override
     public void setDamage(ItemStack itemStack, int damage) {
         super.setDamage(itemStack, Math.min(itemStack.getMaxDamage(), damage));
@@ -234,6 +301,15 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .filter(Objects::nonNull)
                     .map(module -> "* " + module.getName(itemStack))
                     .forEach(tooltip::add);
+
+            // honing tooltip
+            if (isHoneable(itemStack)) {
+                tooltip.add(" §b>§7 " + I18n.format("honing.available"));
+            } else {
+                int progress = getHoningProgress(itemStack);
+                int base = getHoningBase(itemStack);
+                tooltip.add(" §3>§7 " + I18n.format("honing.progress", 100f * (base - progress) / base));
+            }
         } else {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
@@ -369,7 +445,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public void assemble(ItemStack itemStack) {
+        int honingBase = getHoningBase(itemStack);
+        int honingProgress = getHoningProgress(itemStack);
 
+        if (honingProgress > honingBase) {
+            NBTHelper.getTag(itemStack).setInteger(honingProgressKey, honingBase);
+        } else {
+            NBTHelper.getTag(itemStack).setInteger(honingProgressKey, (int) (honingProgress * 0.75 + honingBase * 0.25));
+        }
     }
 
     public int getCapabilityLevel(ItemStack itemStack, String capability) {

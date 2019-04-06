@@ -72,6 +72,15 @@ public interface UpgradeSchema {
      * @return
      */
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities);
+
+    /**
+     * Returns true if this is a honing schema and should have it's usage regulated by honing rules.
+     * @return
+     */
+    public default boolean isHoning() {
+        return false;
+    }
+
     public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
 

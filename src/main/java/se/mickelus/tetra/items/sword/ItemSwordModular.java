@@ -42,14 +42,16 @@ public class ItemSwordModular extends ItemModularHandheld {
         requiredModules = new String[] { bladeKey, hiltKey };
 
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/basic_blade");
+                "sword/improvements/shared_blade", "sword/improvements/basic_blade", "settling_improvements");
         shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/short_blade");
+                "sword/improvements/shared_blade", "sword/improvements/short_blade", "settling_improvements");
         heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/heavy_blade");
-        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/blade_enchants");
+                "sword/improvements/shared_blade", "sword/improvements/heavy_blade", "settling_improvements");
+        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade",
+                "settling_improvements");
 
-        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/hilt_enchants")
+        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/shared_hilt",
+                "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
 
         new BasicModule(guardKey, "sword/makeshift_guard");
@@ -89,6 +91,9 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/forefinger_ring");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_bolster");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/honing_blade");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/honing_hilt");
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);

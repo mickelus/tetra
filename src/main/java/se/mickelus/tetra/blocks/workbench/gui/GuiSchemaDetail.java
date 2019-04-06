@@ -72,6 +72,7 @@ public class GuiSchemaDetail extends GuiElement {
         this.schema = schema;
 
         title.setString(schema.getName());
+        title.setColor(schema.getRarity().tint);
         description.setString(schema.getDescription());
 
         glyph.clearChildren();

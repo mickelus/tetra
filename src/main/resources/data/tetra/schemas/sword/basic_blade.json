@@ -99,7 +99,10 @@
                     "hammer": 2
                 },
                 "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/andesite"
+                "moduleVariant": "basic_blade/andesite",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {
@@ -143,7 +146,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/diamond"
+                "moduleVariant": "basic_blade/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

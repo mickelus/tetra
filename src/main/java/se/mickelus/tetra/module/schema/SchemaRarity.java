@@ -6,6 +6,7 @@ package se.mickelus.tetra.module.schema;
 public enum SchemaRarity {
 
     temporary(0xffdfaa),
+    hone(0xceceff),
     basic(0xffffff);
 
     public int tint;

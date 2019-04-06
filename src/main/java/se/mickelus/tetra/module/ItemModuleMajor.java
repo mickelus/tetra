@@ -2,6 +2,8 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Streams;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -10,6 +12,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.improvement.SettleToast;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.util.CastOptional;
@@ -22,8 +25,50 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
+    protected static final String settleImprovement = "settled";
+    protected static final String arrestedImprovement = "arrested";
+    protected static final int settleLimitBase = 300;
+
+    protected int settleMax = 0;
+    private String settleProgressKey = "/settle_progress";
+
     public ItemModuleMajor(String slotKey, String moduleKey) {
         super(slotKey, moduleKey);
+
+        settleProgressKey = getSlot() + settleProgressKey;
+    }
+
+    public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
+        if (settleMax == 0) {
+            return;
+        }
+
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        int settleLevel = getImprovementLevel(settleImprovement, itemStack);
+
+        if (settleLevel < settleMax && (getImprovementLevel(arrestedImprovement, itemStack) == -1)) {
+            int settleProgress;
+            if (tag.hasKey(settleProgressKey)) {
+                settleProgress = tag.getInteger(settleProgressKey);
+            } else {
+                settleProgress = (settleLimitBase + getDurability(itemStack) / 2) * (settleLevel + 2);
+            }
+
+            settleProgress -= multiplier;
+            tag.setInteger(settleProgressKey, settleProgress);
+            if (settleProgress <= 0) {
+                addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
+                tag.removeTag(settleProgressKey);
+
+                if (entity instanceof EntityPlayer) {
+                    SettleToast.showToast((EntityPlayer) entity, itemStack, getSlot());
+                }
+            }
+        }
+    }
+
+    protected void clearProgression(ItemStack itemStack) {
+        NBTHelper.getTag(itemStack).removeTag(String.format(settleProgressKey, getSlot()));
     }
 
     public int getImprovementLevel(String improvementKey, ItemStack itemStack) {
@@ -90,6 +135,8 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         Arrays.stream(improvements)
             .map(improvement -> slotKey + ":" + improvement.key)
             .forEach(tag::removeTag);
+
+        clearProgression(targetStack);
 
         return salvage;
     }

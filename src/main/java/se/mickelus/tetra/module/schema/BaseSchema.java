@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.items.ItemModular;
 
 public abstract class BaseSchema implements UpgradeSchema {
-
     @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return isMaterialsValid(itemStack, materials)

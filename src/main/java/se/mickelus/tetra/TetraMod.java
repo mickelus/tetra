@@ -51,6 +51,8 @@ import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.improvement.HonePacket;
+import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.IProxy;
@@ -156,6 +158,9 @@ public class TetraMod {
                 .filter(block -> block instanceof ITetraBlock)
                 .map(block -> (ITetraBlock) block)
                 .forEach(block -> block.init(packetHandler));
+
+        packetHandler.registerPacket(HonePacket.class, Side.CLIENT);
+        packetHandler.registerPacket(SettlePacket.class, Side.CLIENT);
     }
 
     @SubscribeEvent

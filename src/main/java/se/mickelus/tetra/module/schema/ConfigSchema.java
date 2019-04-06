@@ -12,6 +12,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -129,9 +130,14 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
+        if (definition.honing && !ItemModular.isHoneable(itemStack)) {
+            return false;
+        }
+
         if (definition.requirement instanceof ItemPredicateModular) {
             return ((ItemPredicateModular) definition.requirement).test(itemStack, moduleSlot);
         }
+
         return definition.requirement.test(itemStack);
     }
 
@@ -160,6 +166,10 @@ public class ConfigSchema extends BaseSchema {
         }
 
         return true;
+    }
+
+    public boolean isHoning() {
+        return definition.honing;
     }
 
     @Override
@@ -226,8 +236,14 @@ public class ConfigSchema extends BaseSchema {
             }
         }
 
-        if (consumeMaterials && player instanceof EntityPlayerMP) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+        if (consumeMaterials) {
+            if(player instanceof EntityPlayerMP) {
+                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
+            }
+
+            if (definition.honing) {
+                ItemModular.removeHoneable(upgradedStack);
+            }
         }
         return upgradedStack;
     }

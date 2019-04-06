@@ -259,7 +259,7 @@ public class GuiElement extends Gui {
                     .findFirst()
                     .orElse(null);
         }
-        return Collections.emptyList();
+        return null;
     }
 
 
