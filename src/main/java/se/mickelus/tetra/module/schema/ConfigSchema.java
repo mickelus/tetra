@@ -236,21 +236,20 @@ public class ConfigSchema extends BaseSchema {
     private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
         if (outcome.moduleKey != null) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
-
-            float durabilityAdjustment = CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
-                    .map(item -> item.getModuleFromSlot(upgradedStack, module.getSlot()))
-                    .map(prevModule -> -prevModule.getDurability(upgradedStack))
-                    .orElse(0);
+            float durabilityFactor = 0;
 
             if (upgradedStack.isItemStackDamageable()) {
-                durabilityAdjustment *= 1 - upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage(); // current damage percentage
+                durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
             }
 
             ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
 
             module.addModule(upgradedStack, outcome.moduleVariant, player);
-            durabilityAdjustment += module.getDurability(upgradedStack);
-            upgradedStack.setItemDamage(upgradedStack.getItemDamage() - (int)durabilityAdjustment);
+
+            if (upgradedStack.isItemStackDamageable()) {
+                upgradedStack.setItemDamage((int) ( durabilityFactor * upgradedStack.getMaxDamage()
+                        - ( durabilityFactor * durabilityFactor * module.getDurability(upgradedStack) ) ));
+            }
 
             outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
 
