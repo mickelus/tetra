@@ -369,7 +369,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public void assemble(ItemStack itemStack) {
-
+        if (itemStack.getItemDamage() > itemStack.getMaxDamage()) {
+            itemStack.setItemDamage(itemStack.getMaxDamage());
+        }
     }
 
     public int getCapabilityLevel(ItemStack itemStack, String capability) {

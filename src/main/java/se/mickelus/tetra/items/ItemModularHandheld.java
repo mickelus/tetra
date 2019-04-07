@@ -635,6 +635,8 @@ public class ItemModularHandheld extends ItemModular {
 
     @Override
     public void assemble(ItemStack itemStack) {
+        super.assemble(itemStack);
+
         NBTTagCompound nbt = NBTHelper.getTag(itemStack);
 
         nbt.removeTag("ench");
