@@ -427,16 +427,18 @@ public class ItemEffectHandler {
     public void onArrowNock(ArrowNockEvent event) {
         if (!event.hasAmmo() && event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).isEmpty()) {
             ItemStack itemStack = UtilToolbelt.findToolbelt(event.getEntityPlayer());
-            InventoryQuiver inventory = new InventoryQuiver(itemStack);
-            List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
-            for (int i = 0; i < inventory.getSizeInventory(); i++) {
-                if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
-                    event.getEntityPlayer().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
-                    event.getEntityPlayer().setActiveHand(event.getHand());
-                    inventory.markDirty();
+            if (!itemStack.isEmpty()) {
+                InventoryQuiver inventory = new InventoryQuiver(itemStack);
+                List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+                for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                    if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
+                        event.getEntityPlayer().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
+                        event.getEntityPlayer().setActiveHand(event.getHand());
+                        inventory.markDirty();
 
-                    event.setAction(new ActionResult<>(EnumActionResult.SUCCESS, event.getBow()));
-                    return;
+                        event.setAction(new ActionResult<>(EnumActionResult.SUCCESS, event.getBow()));
+                        return;
+                    }
                 }
             }
         }

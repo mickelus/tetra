@@ -43,11 +43,24 @@ public class GenerationFeature {
      * possible in vanilla:
      * hot, cold, sparse, dense, wet, dry, savanna, coniferous, jungle, spooky, dead, lush, nether, end, mushroom, void, magical,
      * rare, ocean, river, water, mesa, forest, plains, mountain, hills, swamp, sandy, snowy, wasteland, beach
+     *
      * Optional, but can only generate as child feature if not present.
      *
      * Example json: ["hot", "water", "rare"]
      */
     String[] biomes = new String[0];
+
+    /**
+     * A list of dimension IDs that this feature can generate in. The vanilla dimensions have the following IDs:
+     * overworld: 0
+     * nether: -1
+     * The end: 1
+     *
+     * Optional, defaults to the overworld if not provided
+     *
+     * Example json: [0, -1]
+     */
+    int[] dimensions = new int[] {0};
 
     /**
      * The probability that this feature will generate in applicable chunks. Should be between 0 and 1, where a value of 1 would

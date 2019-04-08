@@ -90,6 +90,7 @@ public class WorldGenFeatures implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         Arrays.stream(features)
+                .filter(feature -> Arrays.stream(feature.dimensions).anyMatch(id -> world.provider.getDimension() == id))
                 .filter(feature -> {
                     Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
                     Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biome);

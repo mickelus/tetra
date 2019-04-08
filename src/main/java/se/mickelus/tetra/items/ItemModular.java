@@ -453,6 +453,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         } else {
             NBTHelper.getTag(itemStack).setInteger(honingProgressKey, (int) (honingProgress * 0.75 + honingBase * 0.25));
         }
+
+        if (itemStack.getItemDamage() > itemStack.getMaxDamage()) {
+            itemStack.setItemDamage(itemStack.getMaxDamage());
+        }
     }
 
     public int getCapabilityLevel(ItemStack itemStack, String capability) {

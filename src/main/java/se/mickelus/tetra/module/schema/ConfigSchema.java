@@ -251,12 +251,27 @@ public class ConfigSchema extends BaseSchema {
     private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
         if (outcome.moduleKey != null) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
+            float durabilityFactor = 0;
+
+            if (upgradedStack.isItemStackDamageable()) {
+                durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
+            }
+
             ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
+
             module.addModule(upgradedStack, outcome.moduleVariant, player);
+
+            if (upgradedStack.isItemStackDamageable()) {
+                upgradedStack.setItemDamage((int) ( durabilityFactor * upgradedStack.getMaxDamage()
+                        - ( durabilityFactor * durabilityFactor * module.getDurability(upgradedStack) ) ));
+            }
+
             outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
+
             if (previousModule != null && consumeMaterials) {
                 previousModule.postRemove(upgradedStack, player);
             }
+
         } else {
             outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
         }
