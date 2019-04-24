@@ -1,0 +1,77 @@
+[
+    {
+        "key": "hone/damage",
+        "level": 1,
+        "damage": 0.5
+    },
+    {
+        "key": "hone/damage",
+        "level": 2,
+        "integrity": -1,
+        "damage": 1
+    },
+    {
+        "key": "hone/damage",
+        "level": 3,
+        "integrity": -1,
+        "damage": 1.5
+    },
+    {
+        "key": "hone/damage",
+        "level": 4,
+        "integrity": -2,
+        "damage": 2
+    },
+    {
+        "key": "hone/damage",
+        "level": 5,
+        "integrity": -2,
+        "damage": 3
+    },
+    {
+        "key": "hone/axe_efficiency",
+        "level": 1,
+        "capabilities": {
+            "axe": [0, 1]
+        }
+    },
+    {
+        "key": "hone/axe_efficiency",
+        "level": 2,
+        "integrity": -1,
+        "capabilities": {
+            "axe": [0, 2.5]
+        }
+    },
+    {
+        "key": "hone/axe_efficiency",
+        "level": 3,
+        "integrity": -1,
+        "capabilities": {
+            "axe": [0, 5]
+        }
+    },
+    {
+        "key": "hone/axe_efficiency",
+        "level": 4,
+        "integrity": -2,
+        "capabilities": {
+            "axe": [0, 10]
+        }
+    },
+    {
+        "key": "hone/axe_efficiency",
+        "level": 5,
+        "integrity": -2,
+        "capabilities": {
+            "axe": [0, 15]
+        }
+    },
+    {
+        "key": "hone/axe_tier",
+        "integrity": -1,
+        "capabilities": {
+            "axe": 1
+        }
+    }
+]

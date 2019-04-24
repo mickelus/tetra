@@ -38,7 +38,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "duplex/claw",
-                "moduleVariant": "claw/diamond"
+                "moduleVariant": "claw/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

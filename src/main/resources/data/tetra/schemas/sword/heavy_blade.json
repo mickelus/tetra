@@ -133,7 +133,10 @@
                     "hammer": 4
                 },
                 "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/obsidian"
+                "moduleVariant": "heavy_blade/obsidian",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

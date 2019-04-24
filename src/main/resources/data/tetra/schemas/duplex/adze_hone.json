@@ -1,0 +1,406 @@
+[
+    {
+        "key": "adze_hone_axe_efficiency_1_schema",
+        "localizationKey": "duplex_hone_axe_efficiency_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "!hone/axe_efficiency": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/axe_efficiency": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_axe_efficiency_2_schema",
+        "localizationKey": "duplex_hone_axe_efficiency_2_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/axe_efficiency": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/axe_efficiency": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_axe_efficiency_3_schema",
+        "localizationKey": "duplex_hone_axe_efficiency_3_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/axe_efficiency": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/axe_efficiency": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_axe_efficiency_4_schema",
+        "localizationKey": "duplex_hone_axe_efficiency_4_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/axe_efficiency": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/axe_efficiency": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_axe_efficiency_5_schema",
+        "localizationKey": "duplex_hone_axe_efficiency_5_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/axe_efficiency": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/axe_efficiency": 5
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_efficiency_1_schema",
+        "localizationKey": "duplex_hone_shovel_efficiency_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "!hone/shovel_efficiency": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/shovel_efficiency": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_efficiency_2_schema",
+        "localizationKey": "duplex_hone_shovel_efficiency_2_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/shovel_efficiency": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/shovel_efficiency": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_efficiency_3_schema",
+        "localizationKey": "duplex_hone_shovel_efficiency_3_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/shovel_efficiency": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/shovel_efficiency": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_efficiency_4_schema",
+        "localizationKey": "duplex_hone_shovel_efficiency_4_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/shovel_efficiency": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/shovel_efficiency": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_efficiency_5_schema",
+        "localizationKey": "duplex_hone_shovel_efficiency_5_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "hone/shovel_efficiency": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/shovel_efficiency": 5
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_axe_tier_1_schema",
+        "localizationKey": "duplex_hone_axe_tier_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 144
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "!hone/axe_tier": -1,
+                "hone/axe_efficiency": 5
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/axe_tier": 0
+                }
+            }
+        ]
+    },
+    {
+        "key": "adze_hone_shovel_tier_1_schema",
+        "localizationKey": "duplex_hone_shovel_tier_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 0,
+            "textureY": 32
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/adze_right"],
+                ["duplex/adze_left"]
+            ],
+            "improvements": {
+                "!hone/shovel_tier": -1,
+                "hone/shovel_efficiency": 5
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/shovel_tier": 0
+                }
+            }
+        ]
+    }
+]

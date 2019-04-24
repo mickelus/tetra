@@ -7,7 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
@@ -27,7 +29,6 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected static final String settleImprovement = "settled";
     protected static final String arrestedImprovement = "arrested";
-    protected static final int settleLimitBase = 300;
 
     protected int settleMax = 0;
     private String settleProgressKey = "/settle_progress";
@@ -39,19 +40,21 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     }
 
     public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
-        if (settleMax == 0) {
+        int settleLimit = getSettleLimit(itemStack);
+        if (settleLimit == 0) {
             return;
         }
 
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         int settleLevel = getImprovementLevel(settleImprovement, itemStack);
 
-        if (settleLevel < settleMax && (getImprovementLevel(arrestedImprovement, itemStack) == -1)) {
+        if (settleLevel < settleLimit && (getImprovementLevel(arrestedImprovement, itemStack) == -1)) {
             int settleProgress;
             if (tag.hasKey(settleProgressKey)) {
                 settleProgress = tag.getInteger(settleProgressKey);
             } else {
-                settleProgress = (settleLimitBase + getDurability(itemStack) / 2) * (settleLevel + 2);
+                settleProgress = (int) ((ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier)
+                        * Math.max(settleLevel * ConfigHandler.settleLimitLevelMultiplier, 1f));
             }
 
             settleProgress -= multiplier;
@@ -60,11 +63,26 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
                 tag.removeTag(settleProgressKey);
 
-                if (entity instanceof EntityPlayer) {
+                if (entity instanceof EntityPlayer && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
                     SettleToast.showToast((EntityPlayer) entity, itemStack, getSlot());
                 }
             }
         }
+    }
+
+    private int getSettleLimit(ItemStack itemStack) {
+        if (settleMax == 0) {
+            return 0;
+        }
+
+        int integrity = getData(itemStack).integrity;
+        if (integrity <= -4 || integrity >= 6) {
+            return settleMax;
+        } else if (integrity != 0) {
+            return 1;
+        }
+
+        return 0;
     }
 
     protected void clearProgression(ItemStack itemStack) {
@@ -249,6 +267,24 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 .mapToInt(improvement -> improvement.integrity)
                 .filter(integrity -> integrity < 0)
                 .sum();
+    }
+
+    @Override
+    public int getDurability(ItemStack itemStack) {
+        return (int)((super.getDurability(itemStack) + getImprovementDurability(itemStack)) * getImprovementDurabilityMultiplier(itemStack));
+    }
+
+    private int getImprovementDurability(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .mapToInt(improvement -> improvement.durability)
+                .sum();
+    }
+
+    private double getImprovementDurabilityMultiplier(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .mapToDouble(improvement -> improvement.durabilityMultiplier)
+                .filter(integrity -> integrity > 0)
+                .reduce(1, (a, b) -> a * b);
     }
 
     protected ResourceLocation[] getAllImprovementTextures() {

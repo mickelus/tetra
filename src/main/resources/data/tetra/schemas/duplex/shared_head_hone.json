@@ -1,0 +1,287 @@
+[
+    {
+        "key": "duplex_head_hone_durability_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "!hone/durability": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/durability": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_durability_2_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/durability": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/durability": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_durability_3_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/durability": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/durability": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_durability_4_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/durability": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/durability": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_durability_5_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/durability": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/durability": 5
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_speed_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "!hone/speed": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/speed": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_speed_2_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/speed": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/speed": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_speed_3_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/speed": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/speed": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_speed_4_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/speed": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/speed": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "duplex_head_hone_speed_5_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "hone/speed": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/speed": 5
+                }
+            }
+        ]
+    }
+]

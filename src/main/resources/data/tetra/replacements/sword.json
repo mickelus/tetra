@@ -57,6 +57,9 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/diamond"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/diamond"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
         }
     },
     {
@@ -312,6 +315,9 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/steel"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/steel"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
         }
     },
     {

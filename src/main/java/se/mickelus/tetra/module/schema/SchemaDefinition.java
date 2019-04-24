@@ -84,7 +84,7 @@ public class SchemaDefinition {
     /**
      * Defines if this schema should only be applicable when the player has a honing attempt available for the item.
      */
-    public boolean honing = false;
+    public boolean hone = false;
 
     /**
      * An item predicate which has to be met for this schema to be applicable. Will not show up in the schema list

@@ -264,7 +264,7 @@ public class GuiWorkbench extends GuiContainer {
             UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, targetStack);
             schemas = Arrays.stream(schemas)
                     .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot, targetStack))
-                    .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getKey))
+                    .sorted(Comparator.comparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
                     .toArray(UpgradeSchema[]::new);
             schemaList.setSchemas(schemas);
             schemaList.setVisible(true);

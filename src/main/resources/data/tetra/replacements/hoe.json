@@ -52,6 +52,10 @@
             "duplex/head_left": ["duplex/hoe_left", "hoe/diamond"],
             "duplex/head_right": ["duplex/butt_right", "butt/diamond"],
             "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "duplex/head_left:arrested": 0,
+            "duplex/head_right:arrested": 0
         }
     },
     {

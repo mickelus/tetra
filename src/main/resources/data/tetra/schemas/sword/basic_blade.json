@@ -160,7 +160,10 @@
                     "hammer": 3
                 },
                 "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/obsidian"
+                "moduleVariant": "basic_blade/obsidian",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

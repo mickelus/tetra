@@ -6,8 +6,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentDurability;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,11 +39,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     protected static final String cooledStrengthKey = "cooledStrength";
 
-    private static final String honingProgressKey = "honing_progress";
-    private static final String honingAvailableKey = "honing_available";
-    private static final String honingCountKey = "honing_count";
-    protected int honingBase = 450;
-    protected int honingIncrease = 200;
+    private static final String honeProgressKey = "honing_progress";
+    private static final String honeAvailableKey = "honing_available";
+    private static final String honeCountKey = "honing_count";
+    protected int honeBase = 450;
+    protected int honeIntegrityMultiplier = 200;
 
     protected String[] majorModuleKeys;
     protected String[] minorModuleKeys;
@@ -201,19 +199,19 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (!isHoneable(itemStack)) {
             int honingProgress;
-            if (tag.hasKey(honingProgressKey)) {
-                honingProgress = tag.getInteger(honingProgressKey);
+            if (tag.hasKey(honeProgressKey)) {
+                honingProgress = tag.getInteger(honeProgressKey);
             } else {
                 honingProgress = getHoningBase(itemStack);
             }
 
             honingProgress -= multiplier;
-            tag.setInteger(honingProgressKey, honingProgress);
+            tag.setInteger(honeProgressKey, honingProgress);
 
             if (honingProgress <= 0 && !isHoneable(itemStack)) {
-                tag.setBoolean(honingAvailableKey, true);
+                tag.setBoolean(honeAvailableKey, true);
 
-                if (entity instanceof EntityPlayer) {
+                if (entity instanceof EntityPlayer && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
                     HoneToast.showToast((EntityPlayer) entity, itemStack);
                 }
             }
@@ -227,34 +225,34 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     public int getHoningProgress(ItemStack itemStack) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
 
-        if (tag.hasKey(honingProgressKey)) {
-            return tag.getInteger(honingProgressKey);
+        if (tag.hasKey(honeProgressKey)) {
+            return tag.getInteger(honeProgressKey);
         }
 
         return getHoningBase(itemStack);
     }
 
     public int getHoningBase(ItemStack itemStack) {
-        return honingBase + honingIncrease * -getIntegrityCost(itemStack);
+        return honeBase + honeIntegrityMultiplier * -getIntegrityCost(itemStack);
     }
 
     public int getHonedCount(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInteger(honingCountKey);
+        return NBTHelper.getTag(itemStack).getInteger(honeCountKey);
     }
 
     public static boolean isHoneable(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).hasKey(honingAvailableKey);
+        return NBTHelper.getTag(itemStack).hasKey(honeAvailableKey);
     }
 
     public static int getHoningSeed(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInteger(honingCountKey) + 1;
+        return NBTHelper.getTag(itemStack).getInteger(honeCountKey) + 1;
     }
 
     public static void removeHoneable(ItemStack itemStack) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
-        tag.removeTag(honingAvailableKey);
-        tag.removeTag(honingProgressKey);
-        tag.setInteger(honingCountKey, tag.getInteger(honingCountKey) + 1);
+        tag.removeTag(honeAvailableKey);
+        tag.removeTag(honeProgressKey);
+        tag.setInteger(honeCountKey, tag.getInteger(honeCountKey) + 1);
     }
 
     @Override
@@ -304,11 +302,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
             // honing tooltip
             if (isHoneable(itemStack)) {
-                tooltip.add(" §b>§7 " + I18n.format("honing.available"));
+                tooltip.add(ChatFormatting.AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.available"));
             } else {
                 int progress = getHoningProgress(itemStack);
                 int base = getHoningBase(itemStack);
-                tooltip.add(" §3>§7 " + I18n.format("honing.progress", 100f * (base - progress) / base));
+                tooltip.add(ChatFormatting.DARK_AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.progress", String.format("%.1f", 100f * (base - progress) / base)));
             }
         } else {
             Arrays.stream(getMajorModules(itemStack))
@@ -449,9 +447,9 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         int honingProgress = getHoningProgress(itemStack);
 
         if (honingProgress > honingBase) {
-            NBTHelper.getTag(itemStack).setInteger(honingProgressKey, honingBase);
+            NBTHelper.getTag(itemStack).setInteger(honeProgressKey, honingBase);
         } else {
-            NBTHelper.getTag(itemStack).setInteger(honingProgressKey, (int) (honingProgress * 0.75 + honingBase * 0.25));
+            NBTHelper.getTag(itemStack).setInteger(honeProgressKey, (int) (honingProgress * 0.75 + honingBase * 0.25));
         }
 
         if (itemStack.getItemDamage() > itemStack.getMaxDamage()) {
@@ -695,22 +693,5 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return result.toArray(new SynergyData[result.size()]);
         }
         return new SynergyData[0];
-    }
-
-    protected ItemStack getStackFromMaterialString(String material) {
-        switch (material) {
-            case "WOOD":
-                return new ItemStack(Blocks.PLANKS, 1);
-            case "STONE":
-                return new ItemStack(Blocks.COBBLESTONE, 1);
-            case "IRON":
-                return new ItemStack(Items.IRON_INGOT, 1);
-            case "DIAMOND":
-                return new ItemStack(Items.DIAMOND, 1);
-            case "GOLD":
-                return new ItemStack(Items.GOLD_INGOT, 1);
-            default:
-                return new ItemStack(Blocks.PLANKS, 1);
-        }
     }
 }

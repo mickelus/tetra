@@ -1,16 +1,19 @@
 [
     {
-        "key": "hilt_honing_damage_1_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_damage_1_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hilt_honing/damage": -1
+                "!blade_hone/damage": -1
             }
         },
         "outcomes": [
@@ -19,23 +22,26 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hilt_honing/damage": 1
+                    "blade_hone/damage": 1
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_damage_2_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_damage_2_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/damage": 1
+                "blade_hone/damage": 1
             }
         },
         "outcomes": [
@@ -44,23 +50,26 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hilt_honing/damage": 2
+                    "blade_hone/damage": 2
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_damage_3_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_damage_3_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/damage": 2
+                "blade_hone/damage": 2
             }
         },
         "outcomes": [
@@ -69,23 +78,26 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/damage": 3
+                    "blade_hone/damage": 3
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_damage_4_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_damage_4_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/damage": 3
+                "blade_hone/damage": 3
             }
         },
         "outcomes": [
@@ -94,23 +106,26 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/damage": 4
+                    "blade_hone/damage": 4
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_damage_5_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_damage_5_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/damage": 4
+                "blade_hone/damage": 4
             }
         },
         "outcomes": [
@@ -119,23 +134,26 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/damage": 5
+                    "blade_hone/damage": 5
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_speed_1_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_speed_1_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hilt_honing/speed": -1
+                "!blade_hone/speed": -1
             }
         },
         "outcomes": [
@@ -144,23 +162,26 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hilt_honing/speed": 1
+                    "blade_hone/speed": 1
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_speed_2_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_speed_2_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/speed": 1
+                "blade_hone/speed": 1
             }
         },
         "outcomes": [
@@ -169,23 +190,26 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hilt_honing/speed": 2
+                    "blade_hone/speed": 2
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_speed_3_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_speed_3_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/speed": 2
+                "blade_hone/speed": 2
             }
         },
         "outcomes": [
@@ -194,23 +218,26 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/speed": 3
+                    "blade_hone/speed": 3
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_speed_4_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_speed_4_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/speed": 3
+                "blade_hone/speed": 3
             }
         },
         "outcomes": [
@@ -219,23 +246,26 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/speed": 4
+                    "blade_hone/speed": 4
                 }
             }
         ]
     },
     {
-        "key": "hilt_honing_speed_5_schema",
-        "slots": ["sword/hilt"],
+        "key": "blade_hone_speed_5_schema",
+        "slots": ["sword/blade"],
         "materialSlotCount": 0,
-        "honing": true,
+        "hone": true,
         "rarity": "hone",
-        "displayType": "improvement",
-        "glyph": { "textureX": 16 },
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hilt_honing/speed": 4
+                "blade_hone/speed": 4
             }
         },
         "outcomes": [
@@ -244,7 +274,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hilt_honing/speed": 5
+                    "blade_hone/speed": 5
                 }
             }
         ]
