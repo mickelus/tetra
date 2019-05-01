@@ -1,12 +1,16 @@
-package se.mickelus.tetra.blocks.workbench.gui;
+package se.mickelus.tetra.gui.statbar;
 
 import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.statbar.GuiStatBar;
 
-public class GuiStatBarSegmented extends GuiStatBar {
-    int maxSegments, segmentCount, diffCount, segmentLength;
-    public GuiStatBarSegmented(int x, int y, String label, double min, double max) {
-        super(x, y, label, min, max);
+public class GuiBarSegmented extends GuiBar {
+
+    private int maxSegments;
+    private int segmentCount;
+    private int diffCount;
+    private int segmentLength;
+
+    public GuiBarSegmented(int x, int y, int barLength, double min, double max) {
+        super(x, y, barLength, min, max);
     }
 
     @Override
@@ -14,16 +18,16 @@ public class GuiStatBarSegmented extends GuiStatBar {
         double minValue = Math.min(value, diffValue);
 
 
-        maxSegments = (int) (barMaxLength / Math.ceil(barMaxLength / (max - min)));
+        maxSegments = (int) (width / Math.ceil(width / (max - min)));
         segmentCount = (int) Math.round(minValue - min);
         diffCount = (int) Math.ceil(Math.abs(value - diffValue));
 
-        segmentLength = barMaxLength / maxSegments;
+        segmentLength = width / maxSegments;
         diffColor = value < diffValue ? increaseColorBar : decreaseColorBar;
     }
 
     @Override
-    protected void drawBar(int refX, int refY) {
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (alignment == GuiAlignment.right) {
             for (int i = 0; i < segmentCount; i++) {
                 drawSegmentReverse(refX, refY, i, 0xffffffff);
@@ -52,11 +56,11 @@ public class GuiStatBarSegmented extends GuiStatBar {
             refX + x + (index * (segmentLength)),
             refY + y + 6,
             refX + x + ((index + 1) * segmentLength) - 1,
-            refY + y + 6 + barHeight,
+            refY + y + 6 + height,
             color);
     }
 
     private void drawSegmentReverse(int refX, int refY, int index, int color) {
-        drawSegment(refX + barMaxLength + 1, refY, -index - 1, color);
+        drawSegment(refX + width + 1, refY, -index - 1, color);
     }
 }

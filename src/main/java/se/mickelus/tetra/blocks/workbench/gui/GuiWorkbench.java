@@ -230,7 +230,7 @@ public class GuiWorkbench extends GuiContainer {
 
     private void updateItemDisplay(ItemStack itemStack, ItemStack previewStack) {
         moduleList.update(itemStack, previewStack, selectedSlot);
-        statGroup.setItemStack(itemStack, previewStack, viewingPlayer);
+        statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
     }
 

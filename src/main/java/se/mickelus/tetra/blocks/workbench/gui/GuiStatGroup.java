@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.statbar.GuiStatBar;
 import se.mickelus.tetra.items.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
@@ -63,7 +64,7 @@ public class GuiStatGroup extends GuiElement {
         addChild(capabilityGroup);
     }
 
-    public void setItemStack(ItemStack itemStack, ItemStack previewStack, EntityPlayer player) {
+    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, EntityPlayer player) {
         boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
         setVisible(shouldShow);
         if (shouldShow) {

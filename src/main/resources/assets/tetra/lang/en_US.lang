@@ -13,20 +13,20 @@ workbench.schema_list.temporary=Made available by an item in your inventory
 ###############################
 # CAPABILITIES
 ###############################
-hammer=Hammer
-hammer.requirement=This action requires a tier %d hammer
-axe=Chop
-axe.requirement=This action requires a tier %d axe
-pickaxe=Mine
-pickaxe.requirement=This action requires a tier %d pickaxe
-shovel=Dig
-shovel.requirement=This action requires a tier %d shovel
-cut=Cut
-cut.requirement=This action requires a tier %d cutting implement
-pry=Pry
-pry.requirement=This action requires a tier %d prying implement
+capability.hammer=Hammer
+capability.hammer.requirement=This action requires a tier %d hammer
+capability.axe=Chop
+capability.axe.requirement=This action requires a tier %d axe
+capability.pickaxe=Mine
+capability.pickaxe.requirement=This action requires a tier %d pickaxe
+capability.shovel=Dig
+capability.shovel.requirement=This action requires a tier %d shovel
+capability.cut=Cut
+capability.cut.requirement=This action requires a tier %d cutting implement
+capability.pry=Pry
+capability.pry.requirement=This action requires a tier %d prying implement
 
-requirement.available=You have tier %d available
+capability.available=You have tier %d available
 
 ###############################
 # MISC
