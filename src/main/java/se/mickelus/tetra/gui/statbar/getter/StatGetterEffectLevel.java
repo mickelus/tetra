@@ -45,7 +45,7 @@ public class StatGetterEffectLevel implements IStatGetter {
         return base + CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))
-                .map(improvementData -> improvementData.effects.getLevel(effect))
-                .orElse(0);
+                .map(improvementData -> improvementData.effects.getLevel(effect) * multiplier)
+                .orElse(0d);
     }
 }

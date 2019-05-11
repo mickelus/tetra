@@ -42,10 +42,9 @@ public class GuiStatBarCapability extends GuiStatBar {
             color = getDiffColor(level, previewLevel);
             level = previewLevel;
         } else if (slot != null) {
-            int previewLevel = getSlotLevel(player, currentStack, slot, improvement);
+            int previewLevel = level - getSlotLevel(player, currentStack, slot, improvement);;
 
-            color = getDiffColor(level, previewLevel);
-            level = previewLevel;
+            color = getDiffColor(previewLevel, level);
         }
 
         capabilityElement.update(level, color);

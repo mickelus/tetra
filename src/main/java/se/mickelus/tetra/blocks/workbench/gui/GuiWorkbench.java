@@ -39,7 +39,6 @@ public class GuiWorkbench extends GuiContainer {
     private final ContainerWorkbench container;
 
     private GuiElement defaultGui;
-    private FontRenderer fontRenderer;
 
     private GuiModuleList moduleList;
     private GuiStatGroup statGroup;
@@ -71,7 +70,7 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
 
-        moduleList = new GuiModuleList(164, 49, this::selectSlot);
+        moduleList = new GuiModuleList(164, 49, this::selectSlot, this::updateSlotHoverPreview);
         defaultGui.addChild(moduleList);
 
         statGroup = new GuiStatGroup(60, 0);
@@ -132,7 +131,7 @@ public class GuiWorkbench extends GuiContainer {
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
         }
 
-        updateHoverPreview();
+        updateMaterialHoverPreview();
     }
 
     @Override
@@ -239,7 +238,14 @@ public class GuiWorkbench extends GuiContainer {
         integrityBar.setItemStack(itemStack, previewStack);
     }
 
-    private void updateHoverPreview() {
+    private void updateSlotHoverPreview(String slot, String improvement) {
+        if (tileEntity.getCurrentSchema() == null) {
+            ItemStack itemStack = tileEntity.getTargetItemStack();
+            statGroup.update(itemStack, ItemStack.EMPTY, slot, improvement, viewingPlayer);
+        }
+    }
+
+    private void updateMaterialHoverPreview() {
         int newPreviewMaterialSlot = -1;
         Slot hoveredSlot = getSlotUnderMouse();
         UpgradeSchema currentSchema = tileEntity.getCurrentSchema();

@@ -6,6 +6,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.ModuleData;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class GuiModule extends GuiClickable {
@@ -22,10 +23,12 @@ public class GuiModule extends GuiClickable {
     protected boolean isRemoving;
     protected boolean isAdding;
 
+    protected BiConsumer<String, String> hoverHandler;
+
     public GuiModule(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
                      String slotKey, String slotName,
                      ItemModule module, ItemModule previewModule,
-                     Consumer<String> slotClickHandler) {
+                     Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
         super(x, y, 0, 11, () -> slotClickHandler.accept(slotKey));
         this.slotKey = slotKey;
         setAttachmentPoint(attachmentPoint);
@@ -52,6 +55,8 @@ public class GuiModule extends GuiClickable {
                 setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName);
             }
         }
+
+        this.hoverHandler = hoverHandler;
     }
 
     protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
@@ -123,11 +128,15 @@ public class GuiModule extends GuiClickable {
     protected void onFocus() {
         isHovered = true;
         updateColors();
+
+        hoverHandler.accept(slotKey, null);
     }
 
     @Override
     protected void onBlur() {
         isHovered = false;
         updateColors();
+
+        hoverHandler.accept(null, null);
     }
 }

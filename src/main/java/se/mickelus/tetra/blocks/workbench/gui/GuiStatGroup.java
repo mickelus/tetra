@@ -164,7 +164,7 @@ public class GuiStatGroup extends GuiElement {
         IStatGetter fierySelfGetter = new StatGetterEffectEfficiency(ItemEffect.fierySelf, 100);
         bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fierySelf"),
                 0, 100, false, fierySelfGetter, LabelGetterBasic.percentageLabel,
-                new TooltipGetterPercentage("stats.fierySelf.tooltip", fierySelfGetter)));
+                new TooltipGetterFierySelf()));
 
         IStatGetter enderReverbGetter = new StatGetterEffectEfficiency(ItemEffect.enderReverb, 100);
         bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.enderReverb"),

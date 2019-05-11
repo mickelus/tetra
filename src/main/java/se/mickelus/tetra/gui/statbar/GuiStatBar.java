@@ -79,7 +79,8 @@ public class GuiStatBar extends GuiStatBase {
             value = statGetter.getValue(player, currentStack);
 
             if (slot != null) {
-                diffValue = value + getSlotValue(player, currentStack, slot, improvement);
+                diffValue = value;
+                value = value - getSlotValue(player, currentStack, slot, improvement);
             } else {
                 diffValue = value;
             }
@@ -105,7 +106,7 @@ public class GuiStatBar extends GuiStatBase {
 
                     return statGetter.getValue(player, itemStack, slot);
                 })
-                .orElse(-1d);
+                .orElse(0d);
     }
 
     public void updateValue(double value, double diffValue) {

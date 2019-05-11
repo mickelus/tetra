@@ -13,8 +13,11 @@ public class GuiModuleImprovement extends GuiElement {
 
     private final List<String> tooltipLines;
 
-    public GuiModuleImprovement(int x, int y, String improvement, int level, int color) {
-        super(x, y, 4, 3);
+    private Runnable hoverHandler;
+    private Runnable blurHandler;
+
+    public GuiModuleImprovement(int x, int y, String improvement, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
+        super(x, y, 4, 4);
 
         addChild(new GuiRect(0, 1, width, 1, color));
 
@@ -32,6 +35,9 @@ public class GuiModuleImprovement extends GuiElement {
                 .map(line -> line.replace(ChatFormatting.RESET.toString(), ChatFormatting.DARK_GRAY.toString()))
                 .map(line -> ChatFormatting.DARK_GRAY + line)
                 .forEachOrdered(tooltipLines::add);
+
+        this.hoverHandler = hoverHandler;
+        this.blurHandler = blurHandler;
     }
 
     @Override
@@ -40,5 +46,17 @@ public class GuiModuleImprovement extends GuiElement {
             return tooltipLines;
         }
         return null;
+    }
+
+    @Override
+    protected void onFocus() {
+        super.onFocus();
+        hoverHandler.run();
+    }
+
+    @Override
+    protected void onBlur() {
+        super.onBlur();
+        blurHandler.run();
     }
 }

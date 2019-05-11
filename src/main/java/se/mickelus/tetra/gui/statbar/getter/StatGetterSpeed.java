@@ -27,7 +27,7 @@ public class StatGetterSpeed implements IStatGetter {
     public double getValue(EntityPlayer player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModule.class))
-                .map(module -> module.getSpeedModifier(itemStack) + getValue(player, itemStack) * module.getSpeedMultiplierModifier(itemStack))
+                .map(module -> module.getSpeedModifier(itemStack) + (module.getSpeedMultiplierModifier(itemStack) - 1) * getValue(player, itemStack))
                 .orElse(0d);
     }
 
@@ -37,7 +37,7 @@ public class StatGetterSpeed implements IStatGetter {
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> {
                     ImprovementData data = module.getImprovement(itemStack, improvement);
-                    return data.damage + data.damageMultiplier * module.getDamageModifier(itemStack);
+                    return data.damage + (data.damageMultiplier - 1) * module.getDamageModifier(itemStack);
                 })
                 .orElse(0d);
     }
