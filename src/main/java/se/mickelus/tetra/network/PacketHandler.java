@@ -67,13 +67,19 @@ public class PacketHandler implements IMessageHandler<AbstractPacket, AbstractPa
     @Override
     public AbstractPacket onMessage(AbstractPacket message, MessageContext ctx) {
         if (ctx.side.equals(Side.CLIENT)) {
-            Minecraft.getMinecraft().addScheduledTask(() -> message.handle(Minecraft.getMinecraft().player));
+            onMessageClient(message);
         } else {
             EntityPlayerMP player = ctx.getServerHandler().player;
             player.getServerWorld().addScheduledTask(() -> message.handle(player));
         }
 
         return null;
+    }
+
+    // breaking this out helps to avoid NoClassDefFoundError crashes on the server :)
+    @SideOnly(Side.CLIENT)
+    private void onMessageClient(AbstractPacket message) {
+        Minecraft.getMinecraft().addScheduledTask(() -> message.handle(Minecraft.getMinecraft().player));
     }
 
     /**
