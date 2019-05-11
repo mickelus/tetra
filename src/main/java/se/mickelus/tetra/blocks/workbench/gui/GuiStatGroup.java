@@ -131,10 +131,10 @@ public class GuiStatGroup extends GuiElement {
                 0, 25, false, arthropodGetter, LabelGetterBasic.decimalLabel,
                 new TooltipGetterArthropod()));
 
-        IStatGetter unbreakingGetter = new StatGetterUnbreaking();
+        IStatGetter unbreakingGetter = new StatGetterEffectLevel(ItemEffect.unbreaking, 1);
         bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.unbreaking"),
-                0, 100, false, unbreakingGetter, LabelGetterBasic.percentageLabel,
-                new TooltipGetterPercentage("stats.unbreaking.tooltip", unbreakingGetter)));
+                0, 20, true, unbreakingGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterUnbreaking()));
 
         IStatGetter mendingGetter = new StatGetterEffectLevel(ItemEffect.mending, 2);
         bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.mending"),

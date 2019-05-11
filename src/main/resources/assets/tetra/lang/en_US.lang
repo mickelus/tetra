@@ -71,7 +71,7 @@ stats.sweeping=Sweeping
 stats.sweeping.tooltip=Attacking an entity also hits all adjacent enemies for §e%s§r weapon damage
 
 stats.unbreaking=Unbreaking
-stats.unbreaking.tooltip=Has a §e%s§r chance to not take durability damage on use
+stats.unbreaking.tooltip=Has a chance to not take durability damage on use\n\n§7Unbreaking level: §e%s§7\nAvoid chance: §e%s%%
 
 stats.mending=Mending
 stats.mending.tooltip=Consumes gathered experience orbs to repair durability by §e%s§r per experience point\n\n§7Only active while held in the mainhand or the offhand
