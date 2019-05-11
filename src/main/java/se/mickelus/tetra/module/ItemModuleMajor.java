@@ -46,9 +46,9 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         }
 
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
-        int settleLevel = getImprovementLevel(settleImprovement, itemStack);
+        int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
-        if (settleLevel < settleLimit && (getImprovementLevel(arrestedImprovement, itemStack) == -1)) {
+        if (settleLevel < settleLimit && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
             int settleProgress;
             if (tag.hasKey(settleProgressKey)) {
                 settleProgress = tag.getInteger(settleProgressKey);
@@ -89,12 +89,22 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         NBTHelper.getTag(itemStack).removeTag(String.format(settleProgressKey, getSlot()));
     }
 
-    public int getImprovementLevel(String improvementKey, ItemStack itemStack) {
+    public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (tag.hasKey(slotKey + ":" + improvementKey)) {
             return NBTHelper.getTag(itemStack).getInteger(slotKey + ":" + improvementKey);
         }
         return -1;
+    }
+
+    public ImprovementData getImprovement(ItemStack itemStack, String improvementKey) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        return Arrays.stream(improvements)
+                .filter(improvement -> improvementKey.equals(improvement.key))
+                .filter(improvement -> tag.hasKey(slotKey + ":" + improvement.key))
+                .filter(improvement -> improvement.level == tag.getInteger(slotKey + ":" + improvement.key))
+                .findAny()
+                .orElse(null);
     }
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {

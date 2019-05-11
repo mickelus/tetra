@@ -1,27 +1,18 @@
 package se.mickelus.tetra.gui.statbar;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.statbar.getter.ILabelGetter;
+import se.mickelus.tetra.gui.statbar.getter.IStatGetter;
+import se.mickelus.tetra.gui.statbar.getter.ITooltipGetter;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
 
+import java.util.Collections;
 import java.util.List;
 
 public class GuiStatBar extends GuiStatBase {
-
-    protected static final int defaultBarMaxLength = 60;
-    protected int barMaxLength = 60;
-    protected final int barHeight = 1;
-
-    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
-    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
-
-    protected static final int increaseColorBar = 0x8855ff55;
-    protected static final int decreaseColorBar = 0x88ff5555;
-    protected int diffColor;
-
     protected double min;
     protected double max;
 
@@ -33,29 +24,33 @@ public class GuiStatBar extends GuiStatBase {
 
     protected GuiAlignment alignment = GuiAlignment.left;
 
+    protected IStatGetter statGetter;
+    protected ILabelGetter labelGetter;
+    protected ITooltipGetter tooltipGetter;
 
-    public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented) {
-        super(x, y, barLength, 16);
+    public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented,
+            IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+        super(x, y, barLength, 12);
 
-
-        setAttachmentAnchor(GuiAttachment.bottomCenter);
-
-        barMaxLength = barLength;
         this.min = min;
         this.max = max;
 
         labelString = new GuiStringSmall(0, 0, label);
-        valueString = new GuiString(0, 3, label);
+        valueString = new GuiStringSmall(0, 0, label);
 
         if (segmented) {
-            bar = new GuiBarSegmented(height - 1, 0, barLength, min, max);
+            bar = new GuiBarSegmented(0, 0, barLength, min, max);
         } else {
-            bar = new GuiBar(height - 1, 0, barLength, min, max);
+            bar = new GuiBar(0, 0, barLength, min, max);
         }
 
         addChild(labelString);
         addChild(valueString);
         addChild(bar);
+
+        this.statGetter = statGetter;
+        this.labelGetter = labelGetter;
+        this.tooltipGetter = tooltipGetter;
     }
 
     public void setAlignment(GuiAlignment alignment) {
@@ -63,75 +58,70 @@ public class GuiStatBar extends GuiStatBase {
         realign();
     }
 
-    private void realign() {
-        if (alignment == GuiAlignment.right) {
-            valueString.setX(-4);
-        } else {
-            valueString.setX(4);
-        }
+    protected void realign() {
+        bar.setAlignment(alignment);
 
         labelString.setAttachment(alignment.toAttachment());
-        valueString.setAttachmentPoint(alignment.toAttachment());
-        valueString.setAttachmentAnchor(alignment.toAttachment().flipHorizontal());
+        valueString.setAttachment(alignment.toAttachment().flipHorizontal());
     }
 
     @Override
-    public void update(ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+        double value;
+        double diffValue;
 
+        if (!previewStack.isEmpty()) {
+            value = statGetter.getValue(player, currentStack);
+            diffValue = statGetter.getValue(player, previewStack);
+
+            tooltip = Collections.singletonList(tooltipGetter.getTooltip(player, previewStack));
+        } else {
+            value = statGetter.getValue(player, currentStack);
+
+            if (slot != null) {
+                diffValue = value + getSlotValue(player, currentStack, slot, improvement);
+            } else {
+                diffValue = value;
+            }
+
+            tooltip = Collections.singletonList(tooltipGetter.getTooltip(player, currentStack));
+        }
+
+        updateValue(value, diffValue);
     }
 
     @Override
-    public boolean shouldShow(ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        return getValue(currentStack, null, null) > 0 || getPreviewValue(currentStack, previewStack, slot, improvement) > 0;
+    public boolean shouldShow(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+        double baseValue = statGetter.getValue(player, ItemStack.EMPTY);
+        return statGetter.getValue(player, currentStack) != baseValue || statGetter.getValue(player, previewStack) > baseValue;
     }
 
-
-    protected double getValue(ItemStack itemStack, String slot, String improvement) {
+    protected double getSlotValue(EntityPlayer player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> {
-                    if (slot != null) {
-                        return CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
-                                .map(module -> {
-                                    if (improvement != null) {
-                                        item.getM
-                                    } else {
-
-                                    }
-                                })
-
+                    if (improvement != null) {
+                        return statGetter.getValue(player, itemStack, slot, improvement);
                     }
+
+                    return statGetter.getValue(player, itemStack, slot);
                 })
-                .orElse(-1);
+                .orElse(-1d);
     }
 
-    protected double getPreviewValue(ItemStack itemStack, ItemStack previewStack, String slot, String improvement) {
-
-    }
-
-    protected String getLabel(double value, double previewValue) {
-
-    }
-
-    protected String getTooltip(double value) {
-
-    }
-
-    public void setValue(double value, double diffValue) {
+    public void updateValue(double value, double diffValue) {
         bar.setValue(value, diffValue);
         updateValueLabel(value, diffValue);
     }
 
     private void updateValueLabel(double value, double diffValue) {
-        if (value != diffValue) {
-            if (alignment == GuiAlignment.right) {
-                valueString.setString(String.format("%s(%+.02f) %s%.02f",
-                    value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, ChatFormatting.RESET, diffValue));
-            } else {
-                valueString.setString(String.format("%.02f %s(%+.02f)",
-                    diffValue, value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value));
-            }
-        } else {
-            valueString.setString(String.format("%.02f", diffValue));
+        valueString.setString(labelGetter.getLabel(value, diffValue, alignment == GuiAlignment.right));
+    }
+
+    @Override
+    public List<String> getTooltipLines() {
+        if (hasFocus()) {
+            return tooltip;
         }
+        return super.getTooltipLines();
     }
 }

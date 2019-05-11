@@ -13,6 +13,7 @@ import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
 public class GuiToolbelt extends GuiContainer {
@@ -85,7 +86,12 @@ public class GuiToolbelt extends GuiContainer {
     protected void renderHoveredToolTip(int mouseX, int mouseY) {
         super.renderHoveredToolTip(mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
+
         if (tooltipLines != null) {
+            tooltipLines = tooltipLines.stream()
+                    .map(line -> line.replace("\\n", "\n"))
+                    .collect(Collectors.toList());
+
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
         }
     }

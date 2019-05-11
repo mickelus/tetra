@@ -29,14 +29,103 @@ capability.pry.requirement=This action requires a tier %d prying implement
 capability.available=You have tier %d available
 
 ###############################
+# STATS
+###############################
+stats.durability=Durability
+stats.durability.tooltip=This item has §e%s§r durability
+
+stats.speed=Speed
+stats.speed.tooltip=Affects how fast this item can be swinged\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier
+
+stats.damage=Damage
+stats.damage.tooltip=Deals §e%s §rdamage
+
+stats.bleeding=Bleeding
+stats.bleeding.tooltip=Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds
+
+stats.backstab=Backstab
+stats.backstab.tooltip=Hitting entities from behind cause critical hits that deal §e%s§r bonus damage
+
+stats.armorPenetration=Penetrating
+stats.armorPenetration.tooltip=Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor
+
+stats.unarmoredDamage=Severing
+stats.unarmoredDamage.tooltip=Deals §e%s§r bonus damage when attacking entities with no armor
+
+stats.knockback=Knockback
+stats.knockback.tooltip=Increases how far hit entities are knocked back by a factor of §e%s
+
+stats.looting=Looting
+stats.looting.tooltip=Increases drops from killing entities
+
+stats.fiery=Fiery
+stats.fiery.tooltip=Hitting an entity sets it on fire for §e%s§r seconds
+
+stats.smite=Smite
+stats.smite.tooltip=Deals §e%s§r bonus damage when attacking undead entities
+
+stats.arthropod=Arthropod
+stats.arthropod.tooltip=Deals §e%s§r bonus damage when attacking an arthropod and applies slowness IV for 1 to §e%s§r seconds
+
+stats.sweeping=Sweeping
+stats.sweeping.tooltip=Attacking an entity also hits all adjacent enemies for §e%s§r weapon damage
+
+stats.unbreaking=Unbreaking
+stats.unbreaking.tooltip=Has a §e%s§r chance to not take durability damage on use
+
+stats.mending=Mending
+stats.mending.tooltip=Consumes gathered experience orbs to repair durability by §e%s§r per experience point\n\n§7Only active while held in the mainhand or the offhand
+
+stats.silkTouch=Silktouch
+stats.silkTouch.tooltip=Harvesting blocks cause the block to drop instead of the usual item
+
+stats.fortune=Fortune
+stats.fortune.tooltip=Increases drop chance when harvesting or salvaging blocks
+
+stats.quickStrike=Quick
+stats.quickStrike.tooltip=Reduces the minimum damage dealt to §e%s§r while the attack cooldown is active
+
+stats.softStrike=SoftStrike
+stats.softStrike.tooltip=Items crafted using this tool gains increased durability
+
+stats.fierySelf=FierySelf
+stats.fierySelf.tooltip=Using the item has a chance to set the wielder on fire, occurs less frequent in cold biomes\n\n§7Base chance: §e%s§7\nFire duration: §e%s
+
+stats.enderReverb=EnderReverb
+stats.enderReverb.tooltip=Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder\n\n§7Base chance: §e%s§7
+
+stats.toolbelt.quickslot=Quickslots
+stats.toolbelt.storage.tooltip=Has §e%s§r quickslots
+
+stats.toolbelt.potion_storage=Potion slots
+stats.toolbelt.potion_storage.tooltip=Has §e%s§r potion slots
+
+stats.toolbelt.storage=Storage slots
+stats.toolbelt.storage.tooltip=Has §e%s§r storage slots
+
+stats.toolbelt.quiver=Quiver slots
+stats.toolbelt.quiver.tooltip=Has §e%s§r quiver slots
+
+stats.toolbelt.booster=Boost strength
+stats.toolbelt.booster.tooltip=Provides jump boost and limited flight with strength §e%s
+
+
+stats.hammer.tooltip=This item can be used for hammering, usable when crafting and salvaging\n\n§7Hammer tier: §e%s§7\nHammer efficiency: §e%s
+stats.axe.tooltip=This item can be used for chopping wood\n\n§7Axe tier: §e%s§7\nAxe efficiency: §e%s
+stats.pickaxe.tooltip=This item can be used for mining\n\n§7Pickaxe tier: §e%s§7\nPickaxe efficiency: §e%s
+stats.shovel.tooltip=This item can be used for digging\n\n§7Shovel tier: §e%s§7\nShovel efficiency: §e%s
+stats.cut.tooltip=This item can be used for cutting, usable for crafting and for breaking webs and plants\n\n§7Cut tier: §e%s§7\nCut efficiency: §e%s
+stats.pry.tooltip=This item can be used for prying things open, usable for salvaging\n\n§7Pry tier: §e%s§7\nPry efficiency: §e%s
+
+stats.integrity_usage=Integrity usage: %s/%s
+stats.integrity_usage.tooltip=Integrity is provided by some modules (often in a specific slot), while it is required by other modules and most improvements.
+
+
+###############################
 # MISC
 ###############################
 item.modular.broken=Broken
 item.modular.empty_slot=Empty
-item.modular.tier=Tier
-item.modular.durability=Durability
-item.modular.speed=Swing speed
-item.modular.integrity_usage=Integrity usage: %d/%d
 
 ###############################
 # GEODE
@@ -1599,7 +1688,6 @@ belt/inlaid.prefix=Inlaid
 ###############################
 # TOOLBELT STRAPS
 ###############################
-stats.toolbelt.quickslot=Quickslots
 
 strap_schema1.name=Single belt strap
 strap_schema1.description=Attach a single strap to the belt, which can be used for carrying and quickly accessing tools or other items.
@@ -1626,7 +1714,6 @@ strap4/iron=4 Iron loops
 ###############################
 # POTION BAG
 ###############################
-stats.toolbelt.potion_storage=Potion slots
 
 potion_storage_schema.name=Potion bag
 potion_storage_schema.description=Attach a small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
@@ -1640,7 +1727,6 @@ potion_storage/hide=Small potion bag
 ###############################
 # STORAGE POUCH
 ###############################
-stats.toolbelt.storage=Storage slots
 
 storage_schema.name=Storage pouch
 storage_schema.description=Attach a small pouch to the toolbelt, which can store a large amount of items. While the items in the pouch are not easily accessible, held items can be stored into the pouch as easily as with other toolbelt attachments.
@@ -1654,7 +1740,6 @@ storage/hide=Small pouch
 ###############################
 # QUIVER
 ###############################
-stats.toolbelt.quiver=Quiver slots
 
 quiver_schema.name=Quiver
 quiver_schema.description=Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.
@@ -1668,7 +1753,6 @@ quiver/hide=Hide quiver
 ###############################
 # BOOSTER
 ###############################
-stats.booster=Boost strength
 
 booster_schema.name=Booster
 booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder as fuel.

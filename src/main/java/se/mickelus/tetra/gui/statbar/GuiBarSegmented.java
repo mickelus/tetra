@@ -10,15 +10,15 @@ public class GuiBarSegmented extends GuiBar {
     private int segmentLength;
 
     public GuiBarSegmented(int x, int y, int barLength, double min, double max) {
-        super(x, y, barLength, min, max);
+        super(x, y, barLength + 1, min, max);
+
+        maxSegments = (int) (max - min);
     }
 
     @Override
     protected void calculateBarLengths() {
         double minValue = Math.min(value, diffValue);
 
-
-        maxSegments = (int) (width / Math.ceil(width / (max - min)));
         segmentCount = (int) Math.round(minValue - min);
         diffCount = (int) Math.ceil(Math.abs(value - diffValue));
 
@@ -61,6 +61,6 @@ public class GuiBarSegmented extends GuiBar {
     }
 
     private void drawSegmentReverse(int refX, int refY, int index, int color) {
-        drawSegment(refX + width + 1, refY, -index - 1, color);
+        drawSegment(refX + width, refY, -index - 1, color);
     }
 }

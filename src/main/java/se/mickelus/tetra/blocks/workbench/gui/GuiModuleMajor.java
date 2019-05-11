@@ -75,8 +75,8 @@ public class GuiModuleMajor extends GuiModule {
         String[] improvements = getImprovementUnion(module.getImprovements(itemStack), previewModule.getImprovements(previewStack));
         improvementElements = new GuiModuleImprovement[improvements.length];
         for (int i = 0; i < improvements.length; i++) {
-            int currentValue = module.getImprovementLevel(improvements[i], itemStack);
-            int previewValue = previewModule.getImprovementLevel(improvements[i], previewStack);
+            int currentValue = module.getImprovementLevel(itemStack, improvements[i]);
+            int previewValue = previewModule.getImprovementLevel(previewStack, improvements[i]);
             int color = GuiColors.normal;
 
             if (currentValue == -1) {

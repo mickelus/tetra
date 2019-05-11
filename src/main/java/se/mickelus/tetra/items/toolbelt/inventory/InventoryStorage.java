@@ -12,7 +12,7 @@ import java.util.List;
 public class InventoryStorage extends InventoryToolbelt {
 
     private static final String inventoryKey = "storageInventory";
-    public static int maxSize = 24;
+    public static int maxSize = 30; // 24;
 
     public InventoryStorage(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.storage);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class InventoryQuiver extends InventoryToolbelt {
 
     private static final String inventoryKey = "quiverInventory";
-    public static int maxSize = 27;
+    public static int maxSize = 30; // 27;
 
     public InventoryQuiver(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.quiver);

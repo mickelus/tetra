@@ -1,35 +1,95 @@
 package se.mickelus.tetra.gui.statbar;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.blocks.workbench.gui.GuiCapability;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.GuiAlignment;
+import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.statbar.getter.*;
+import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.util.CastOptional;
 
 public class GuiStatBarCapability extends GuiStatBar {
-    protected static final int efficiencyBarLength = 60;
 
-    public GuiStatBarCapability(int x, int y, Capability capability) {
-        super(x, y, efficiencyBarLength, I18n.format("capability." + capability.toString()), 0, 40);
+    private static final int efficiencyMax = 50;
 
-        valueString.setX
+    private GuiCapability capabilityElement;
+    private IStatGetter levelGetter;
+
+    public GuiStatBarCapability(int x, int y, int width, Capability capability) {
+        super(x, y, width, "", 0, efficiencyMax,
+                false, new StatGetterCapabilityEfficiency(capability), LabelGetterBasic.decimalLabel,
+                new TooltipGetterCapability(capability));
+
+        bar.setWidth(width - 16);
+        bar.setX(16);
+
+        levelGetter = new StatGetterCapabilityLevel(capability);
+        capabilityElement = new GuiCapability(-3, -3, capability);
+        addChild(capabilityElement);
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void update(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+        super.update(player, currentStack, previewStack, slot, improvement);
 
-        drawBar(refX, refY);
+        int level = (int) levelGetter.getValue(player, currentStack);
+        int color = GuiColors.normal;
+
+        if (!previewStack.isEmpty()) {
+            int previewLevel = (int) levelGetter.getValue(player, previewStack);
+
+            color = getDiffColor(level, previewLevel);
+            level = previewLevel;
+        } else if (slot != null) {
+            int previewLevel = getSlotLevel(player, currentStack, slot, improvement);
+
+            color = getDiffColor(level, previewLevel);
+            level = previewLevel;
+        }
+
+        capabilityElement.update(level, color);
     }
 
-    protected void drawBar(int refX, int refY) {
-        drawRect(refX + x, refY + y + 6,refX + x + barMaxLength, refY + y + 6 + barHeight, 0x22ffffff);
-        if (alignment == GuiAlignment.right) {
-            drawRect(refX + x + barMaxLength - barLength, refY + y + 6,refX + x + barMaxLength, refY + y + 6 + barHeight, 0xffffffff);
-            drawRect(refX + x + barMaxLength - barLength - diffLength, refY + y + 6,refX + x + barMaxLength - barLength, refY + y + 6 + barHeight,
-                    diffColor);
+    @Override
+    protected void realign() {
+        super.realign();
+
+        if (GuiAlignment.left.equals(alignment)) {
+            bar.setX(16);
+            capabilityElement.setX(-3);
         } else {
-            drawRect(refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + barHeight, 0xffffffff);
-            drawRect(refX + x + barLength, refY + y + 6,refX + x + barLength + diffLength, refY + y + 6 + barHeight,
-                    diffColor);
+            bar.setX(0);
+            capabilityElement.setX(0);
         }
+
+        capabilityElement.setAttachment(alignment.toAttachment());
+    }
+
+    @Override
+    public boolean shouldShow(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+        return levelGetter.getValue(player, currentStack) > 0 || levelGetter.getValue(player, previewStack) > 0;
+    }
+
+    protected int getDiffColor(int currentValue, int previewValue) {
+        if (previewValue > currentValue) {
+            return GuiColors.positive;
+        } else if (previewValue < currentValue) {
+            return GuiColors.negative;
+        }
+
+        return GuiColors.normal;
+    }
+
+    protected int getSlotLevel(EntityPlayer player, ItemStack itemStack, String slot, String improvement) {
+        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> {
+                    if (improvement != null) {
+                        return levelGetter.getValue(player, itemStack, slot, improvement);
+                    }
+
+                    return levelGetter.getValue(player, itemStack, slot);
+                })
+                .orElse(-1d).intValue();
     }
 }

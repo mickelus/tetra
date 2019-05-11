@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 public class InventoryPotions extends InventoryToolbelt {
 
     private static final String inventoryKey = "potionsInventory";
-    public static int maxSize = 9;
+    public static int maxSize = 10; // 9;
 
     public InventoryPotions(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.potion);
