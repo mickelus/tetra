@@ -10,14 +10,18 @@ public class LabelGetterBasic implements ILabelGetter {
     protected String formatDiffFlipped;
     protected String format;
 
-    public static final ILabelGetter integerLabel = new LabelGetterBasic("%.0f");
-    public static final ILabelGetter decimalLabel = new LabelGetterBasic("%.02f");
-    public static final ILabelGetter percentageLabel = new LabelGetterBasic("%.01f%%");
+    public static final ILabelGetter integerLabel = new LabelGetterBasic("%.0f", "%+.0f");
+    public static final ILabelGetter decimalLabel = new LabelGetterBasic("%.02f", "%+.02f");
+    public static final ILabelGetter percentageLabel = new LabelGetterBasic("%.01f%%", "%+.01f%%");
 
     public LabelGetterBasic(String format) {
+        this(format, format);
+    }
 
-        formatDiff = "%s(" + format + ") %s" + format;
-        formatDiffFlipped = format + " %s(" + format + ")";
+    public LabelGetterBasic(String format, String formatDiff) {
+
+        this.formatDiff = "%s(" + formatDiff + ") %s" + format;
+        formatDiffFlipped = format + " %s(" + formatDiff + ")";
         this.format = format;
     }
 

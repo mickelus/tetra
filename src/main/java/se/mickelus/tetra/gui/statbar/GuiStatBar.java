@@ -93,8 +93,7 @@ public class GuiStatBar extends GuiStatBase {
 
     @Override
     public boolean shouldShow(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        double baseValue = statGetter.getValue(player, ItemStack.EMPTY);
-        return statGetter.getValue(player, currentStack) != baseValue || statGetter.getValue(player, previewStack) > baseValue;
+        return statGetter.shouldShow(player, currentStack, previewStack);
     }
 
     protected double getSlotValue(EntityPlayer player, ItemStack itemStack, String slot, String improvement) {

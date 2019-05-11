@@ -88,10 +88,10 @@ stats.quickStrike.tooltip=Reduces the minimum damage dealt to §e%s§r while the
 stats.softStrike=SoftStrike
 stats.softStrike.tooltip=Items crafted using this tool gains increased durability
 
-stats.fierySelf=FierySelf
+stats.fierySelf=Blazing
 stats.fierySelf.tooltip=Using the item has a chance to set the wielder on fire, occurs less frequent in cold biomes\n\n§7Base chance: §e%s§7\nFire duration: §e%s
 
-stats.enderReverb=EnderReverb
+stats.enderReverb=Reverb
 stats.enderReverb.tooltip=Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder\n\n§7Base chance: §e%s§7
 
 stats.toolbelt.quickslot=Quickslots
