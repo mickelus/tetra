@@ -128,8 +128,9 @@
     },
     {
         "key": "basic_hilt/steel",
-        "durability": 47,
+        "durability": 64,
         "integrity": 5,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "383838",
             "textureX": 16
@@ -157,7 +158,7 @@
     },
     {
         "key": "basic_hilt/greatwood",
-        "durability": 11,
+        "durability": 14,
         "integrity": 6,
         "glyph": {
             "tint": "33231e",

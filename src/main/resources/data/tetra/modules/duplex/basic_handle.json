@@ -118,7 +118,7 @@
     },
     {
         "key": "basic_handle/bronze",
-        "durability": 18,
+        "durability": 36,
         "integrity": 6,
         "attackSpeed": -0.3,
         "glyph": {
@@ -130,6 +130,7 @@
         "key": "basic_handle/steel",
         "durability": 244,
         "integrity": 5,
+        "attackSpeed": -0.2,
         "glyph": {
             "tint": "383838",
             "textureX": 16
@@ -157,7 +158,7 @@
     },
     {
         "key": "basic_handle/greatwood",
-        "durability": 22,
+        "durability": 28,
         "integrity": 6,
         "glyph": {
             "tint": "33231e",

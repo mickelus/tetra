@@ -59,7 +59,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "bronzeIngot"
+                    "ore": "ingotBronze"
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -70,7 +70,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "steelIngot"
+                    "ore": "ingotSteel"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
