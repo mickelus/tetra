@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.sword;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
@@ -68,6 +69,9 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(guardKey, "sword/forefinger_ring");
         new BasicModule(guardKey, "sword/reinforced_bolster");
         new BasicModule(fullerKey, "sword/reinforced_fuller");
+
+
+        updateConfig(ConfigHandler.swordHoneBase, ConfigHandler.swordHoneIntegrityMultiplier);
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
@@ -131,6 +132,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         handle = new BasicMajorModule(handleKey, "duplex/basic_handle",
                 "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone", "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
+
+        updateConfig(ConfigHandler.duplexHoneBase, ConfigHandler.duplexHoneIntegrityMultiplier);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
