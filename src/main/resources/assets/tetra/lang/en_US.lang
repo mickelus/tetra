@@ -299,15 +299,15 @@ blade_hone/speed.description=Increases swing speed
 ###############################
 # HILT HONING SHARED
 ###############################
-hilt_hone_damage_1_schema.name=Hone: Speed I
+hilt_hone_damage_1_schema.name=Hone: Damage I
 hilt_hone_damage_1_schema.description=Hone the module to increase the overall damage by 5%%.
-hilt_hone_damage_2_schema.name=Hone: Speed II
+hilt_hone_damage_2_schema.name=Hone: Damage II
 hilt_hone_damage_2_schema.description=Further hone the damage improvement for this module, increasing the damage bonus from 5%% to 10%%.
-hilt_hone_damage_3_schema.name=Hone: Speed III
+hilt_hone_damage_3_schema.name=Hone: Damage III
 hilt_hone_damage_3_schema.description=Further hone the damage improvement for this module, increasing the damage bonus from 10%% to 15%%.
-hilt_hone_damage_4_schema.name=Hone: Speed IV
+hilt_hone_damage_4_schema.name=Hone: Damage IV
 hilt_hone_damage_4_schema.description=Further hone the damage improvement for this module, increasing the damage bonus from 15%% to 20%%.
-hilt_hone_damage_5_schema.name=Hone: Speed V
+hilt_hone_damage_5_schema.name=Hone: Damage V
 hilt_hone_damage_5_schema.description=Further hone the damage improvement for this module, increasing the damage bonus from 20%% to 25%%.
 
 hilt_hone/damage.name=Hone: Damage
@@ -455,17 +455,25 @@ basic_hilt/ender_reverb.name=Ender reverb
 basic_hilt/ender_reverb.description=Reacts negatively with nearby entities originating from the end
 
 basic_hilt/wrap_string.name=String wrap
-basic_hilt/wrap_string.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-41%%§r severity
+basic_hilt/wrap_string.description=Slightly increases damage and speed, reduces negative hilt effects.
 basic_hilt/wrap_leather.name=Leather wrap
-basic_hilt/wrap_leather.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-50%%§r probability\n §2-41%%§r severity
+basic_hilt/wrap_leather.description=Slightly increases damage and speed, reduces negative hilt effects.
 basic_hilt/wrap_hide.name=Hide wrap
-basic_hilt/wrap_hide.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-70%%§r severity
+basic_hilt/wrap_hide.description=Slightly increases damage and speed, reduces negative hilt effects.
 basic_hilt/wrap_vine.name=Vine wrap
-basic_hilt/wrap_vine.description=Slightly increases damage and speed.\nReduces negative hilt effects:\n §2-33%%§r probability\n §2-41%%§r severity
+basic_hilt/wrap_vine.description=Slightly increases damage and speed, reduces negative hilt effects.
 
 wrap_hilt_schema.name=Wrap hilt
 wrap_hilt_schema.slot1=Material
 wrap_hilt_schema.description=Wrap the hilt using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the hilt.
+
+wrap_hilt_hone_1_schema.name=Hone: Wrap II
+wrap_hilt_hone_1_schema.slot1=Material
+wrap_hilt_hone_1_schema.description=Improve the hilt wrap, further increasing damage and speed, and reducing negative effects.
+
+wrap_hilt_hone_2_schema.name=Hone: Wrap III
+wrap_hilt_hone_2_schema.slot1=Material
+wrap_hilt_hone_2_schema.description=Further improve the hilt wrap, increasing damage and speed, and reducing negative effects.
 
 ###############################
 # DECORATIVE POMMEL
@@ -1124,17 +1132,25 @@ basic_handle/ender_reverb.name=Ender reverb
 basic_handle/ender_reverb.description=Reacts negatively with nearby entities originating from the end.
 
 basic_handle/wrap_string.name=String wrap
-basic_handle/wrap_string.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-41%%§r severity
+basic_handle/wrap_string.description=Slightly increases damage and speed, reduces negative handle effects.
 basic_handle/wrap_leather.name=Leather wrap
-basic_handle/wrap_leather.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-50%%§r probability\n §2-41%%§r severity
+basic_handle/wrap_leather.description=Slightly increases damage and speed, reduces negative handle effects.
 basic_handle/wrap_hide.name=Hide wrap
-basic_handle/wrap_hide.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-70%%§r severity
+basic_handle/wrap_hide.description=Slightly increases damage and speed, reduces negative handle effects.
 basic_handle/wrap_vine.name=Vine wrap
-basic_handle/wrap_vine.description=Slightly increases damage and speed.\nReduces negative handle effects:\n §2-33%%§r probability\n §2-41%%§r severity
+basic_handle/wrap_vine.description=Slightly increases damage and speed, reduces negative handle effects.
 
 wrap_handle_schema.name=Wrap handle
 wrap_handle_schema.slot1=Material
 wrap_handle_schema.description=Wrap the handle using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the handle.
+
+wrap_handle_hone_1_schema.name=Hone: Wrap II
+wrap_handle_hone_1_schema.slot1=Material
+wrap_handle_hone_1_schema.description=Improve the handle wrap, further increasing damage and speed, and reducing negative effects.
+
+wrap_handle_hone_2_schema.name=Hone: Wrap III
+wrap_handle_hone_2_schema.slot1=Material
+wrap_handle_hone_2_schema.description=Further improve the handle wrap, increasing damage and speed, and reducing negative effects.
 
 handle_hone_speed_1_schema.name=Hone: Speed I
 handle_hone_speed_1_schema.description=Hone the handle to increase the overall swing speed by 4%%.
