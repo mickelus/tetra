@@ -20,6 +20,7 @@ public class ConfigHandler {
 
     public static boolean workbenchDropTable = true;
 
+    public static boolean experimentalProgression = false;
     public static int settleLimitBase = 300;
     public static float settleLimitLevelMultiplier = 3;
     public static float settleLimitDurabilityMultiplier = 0.5f;

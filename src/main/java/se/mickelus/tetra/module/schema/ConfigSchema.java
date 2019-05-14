@@ -5,6 +5,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemPredicateModular;
@@ -129,7 +130,7 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && !ItemModular.isHoneable(itemStack)) {
+        if (definition.hone && (!ConfigHandler.experimentalProgression || !ItemModular.isHoneable(itemStack))) {
             return false;
         }
 

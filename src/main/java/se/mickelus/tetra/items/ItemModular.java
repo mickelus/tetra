@@ -18,6 +18,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -195,6 +196,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
+        if (!ConfigHandler.experimentalProgression) {
+            return;
+        }
+
         // todo: store this in a separate data structure?
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (!isHoneable(itemStack)) {
@@ -301,12 +306,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .forEach(tooltip::add);
 
             // honing tooltip
-            if (isHoneable(itemStack)) {
-                tooltip.add(ChatFormatting.AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.available"));
-            } else {
-                int progress = getHoningProgress(itemStack);
-                int base = getHoningBase(itemStack);
-                tooltip.add(ChatFormatting.DARK_AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.progress", String.format("%.1f", 100f * (base - progress) / base)));
+            if (ConfigHandler.experimentalProgression) {
+                if (isHoneable(itemStack)) {
+                    tooltip.add(ChatFormatting.AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.available"));
+                } else {
+                    int progress = getHoningProgress(itemStack);
+                    int base = getHoningBase(itemStack);
+                    tooltip.add(ChatFormatting.DARK_AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.progress", String.format("%.1f", 100f * (base - progress) / base)));
+                }
             }
         } else {
             Arrays.stream(getMajorModules(itemStack))
