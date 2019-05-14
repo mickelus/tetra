@@ -41,7 +41,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "duplex/sickle",
-                "moduleVariant": "sickle/diamond"
+                "moduleVariant": "sickle/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

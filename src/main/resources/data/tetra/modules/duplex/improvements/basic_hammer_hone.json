@@ -1,0 +1,9 @@
+[
+    {
+        "key": "hone/hammer",
+        "integrity": -1,
+        "capabilities": {
+            "hammer": 1
+        }
+    }
+]

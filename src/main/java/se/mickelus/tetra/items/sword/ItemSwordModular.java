@@ -2,6 +2,9 @@ package se.mickelus.tetra.items.sword;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -29,6 +32,9 @@ public class ItemSwordModular extends ItemModularHandheld {
     private final ItemModuleMajor macheteModule;
     private final ItemModuleMajor hiltModule;
 
+    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ItemSwordModular instance;
+
     public ItemSwordModular() {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
@@ -42,14 +48,16 @@ public class ItemSwordModular extends ItemModularHandheld {
         requiredModules = new String[] { bladeKey, hiltKey };
 
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/basic_blade");
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/basic_blade", "settling_improvements");
         shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/short_blade");
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/short_blade", "settling_improvements");
         heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-                "sword/improvements/blade_enchants", "sword/improvements/heavy_blade");
-        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/blade_enchants");
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/heavy_blade", "settling_improvements");
+        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone",
+                "settling_improvements");
 
-        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/hilt_enchants")
+        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/shared_hilt", "sword/improvements/shared_hilt_hone",
+                "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
 
         new BasicModule(guardKey, "sword/makeshift_guard");
@@ -61,6 +69,9 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(guardKey, "sword/forefinger_ring");
         new BasicModule(guardKey, "sword/reinforced_bolster");
         new BasicModule(fullerKey, "sword/reinforced_fuller");
+
+
+        updateConfig(ConfigHandler.swordHoneBase, ConfigHandler.swordHoneIntegrityMultiplier);
     }
 
     @Override
@@ -90,10 +101,18 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_bolster");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
 
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_blade_hone");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_hilt_hone");
+
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
 
         ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
+    }
+
+    public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
+        this.honeBase = honeBase;
+        this.honeIntegrityMultiplier = honeIntegrityMultiplier;
     }
 
     @Override

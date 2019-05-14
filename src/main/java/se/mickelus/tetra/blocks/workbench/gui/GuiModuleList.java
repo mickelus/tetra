@@ -9,21 +9,24 @@ import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class GuiModuleList extends GuiElement {
     private final Consumer<String> slotClickHandler;
+    private final BiConsumer<String, String> hoverHandler;
     
     private GuiModuleMajor[] majorModuleElements;
     private GuiModule[] minorModuleElements;
 
-    public GuiModuleList(int x, int y, Consumer<String> slotClickHandler) {
+    public GuiModuleList(int x, int y, Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
         super(x, y, 0, 0);
 
         majorModuleElements = new GuiModuleMajor[0];
         minorModuleElements = new GuiModule[0];
 
         this.slotClickHandler = slotClickHandler;
+        this.hoverHandler = hoverHandler;
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String focusSlot) {
@@ -64,7 +67,7 @@ public class GuiModuleList extends GuiElement {
                 final int x = offsets.getX(i);
                 majorModuleElements[i] = new GuiModuleMajor(x, offsets.getY(i), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
                         itemStack, previewStack, majorModuleKeys[i], majorModuleNames[i],
-                        majorModules[i], majorModulesPreview[i], slotClickHandler);
+                        majorModules[i], majorModulesPreview[i], slotClickHandler, hoverHandler);
                 addChild(majorModuleElements[i]);
             }
         } else {
@@ -72,7 +75,7 @@ public class GuiModuleList extends GuiElement {
                 final int x = offsets.getX(i);
                 majorModuleElements[i] = new GuiModuleMajor(x, offsets.getY(i), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
                         itemStack, itemStack, majorModuleKeys[i], majorModuleNames[i],
-                        majorModules[i], majorModules[i], slotClickHandler);
+                        majorModules[i], majorModules[i], slotClickHandler, hoverHandler);
                 addChild(majorModuleElements[i]);
             }
         }
@@ -109,7 +112,7 @@ public class GuiModuleList extends GuiElement {
                                      ItemModule module, ItemModule previewModule) {
         final int x = offsets.getX(index);
         return new GuiModule(x, offsets.getY(index), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
-                itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler);
+                itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler, hoverHandler);
     }
     
     private static class Offsets {

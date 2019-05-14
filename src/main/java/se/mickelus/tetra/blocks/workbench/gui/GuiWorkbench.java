@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
 public class GuiWorkbench extends GuiContainer {
@@ -38,7 +39,6 @@ public class GuiWorkbench extends GuiContainer {
     private final ContainerWorkbench container;
 
     private GuiElement defaultGui;
-    private FontRenderer fontRenderer;
 
     private GuiModuleList moduleList;
     private GuiStatGroup statGroup;
@@ -70,7 +70,7 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));
 
-        moduleList = new GuiModuleList(164, 49, this::selectSlot);
+        moduleList = new GuiModuleList(164, 49, this::selectSlot, this::updateSlotHoverPreview);
         defaultGui.addChild(moduleList);
 
         statGroup = new GuiStatGroup(60, 0);
@@ -124,10 +124,14 @@ public class GuiWorkbench extends GuiContainer {
         super.renderHoveredToolTip(mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
+            tooltipLines = tooltipLines.stream()
+                    .map(line -> line.replace("\\n", "\n"))
+                    .collect(Collectors.toList());
+
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
         }
 
-        updateHoverPreview();
+        updateMaterialHoverPreview();
     }
 
     @Override
@@ -230,11 +234,18 @@ public class GuiWorkbench extends GuiContainer {
 
     private void updateItemDisplay(ItemStack itemStack, ItemStack previewStack) {
         moduleList.update(itemStack, previewStack, selectedSlot);
-        statGroup.setItemStack(itemStack, previewStack, viewingPlayer);
+        statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
     }
 
-    private void updateHoverPreview() {
+    private void updateSlotHoverPreview(String slot, String improvement) {
+        if (tileEntity.getCurrentSchema() == null) {
+            ItemStack itemStack = tileEntity.getTargetItemStack();
+            statGroup.update(itemStack, ItemStack.EMPTY, slot, improvement, viewingPlayer);
+        }
+    }
+
+    private void updateMaterialHoverPreview() {
         int newPreviewMaterialSlot = -1;
         Slot hoveredSlot = getSlotUnderMouse();
         UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
@@ -264,7 +275,7 @@ public class GuiWorkbench extends GuiContainer {
             UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, targetStack);
             schemas = Arrays.stream(schemas)
                     .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot, targetStack))
-                    .sorted(Comparator.comparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getKey))
+                    .sorted(Comparator.comparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
                     .toArray(UpgradeSchema[]::new);
             schemaList.setSchemas(schemas);
             schemaList.setVisible(true);

@@ -44,6 +44,7 @@ public class PacketHandler implements IMessageHandler<AbstractPacket, AbstractPa
      * Register your packet with the pipeline. Discriminators are automatically set.
      *
      * @param packetClass the class to register
+     * @param side The side that the handler is supposed to handle packages on (the side they are sent to, not from)
      *
      * @return whether registration was successful. Failure may occur if 256 packets have been registered or if the registry already contains this packet
      */
@@ -65,10 +66,20 @@ public class PacketHandler implements IMessageHandler<AbstractPacket, AbstractPa
 
     @Override
     public AbstractPacket onMessage(AbstractPacket message, MessageContext ctx) {
-        EntityPlayerMP player = ctx.getServerHandler().player;
+        if (ctx.side.equals(Side.CLIENT)) {
+            onMessageClient(message);
+        } else {
+            EntityPlayerMP player = ctx.getServerHandler().player;
+            player.getServerWorld().addScheduledTask(() -> message.handle(player));
+        }
 
-        player.getServerWorld().addScheduledTask(() -> message.handle(player));
         return null;
+    }
+
+    // breaking this out helps to avoid NoClassDefFoundError crashes on the server :)
+    @SideOnly(Side.CLIENT)
+    private void onMessageClient(AbstractPacket message) {
+        Minecraft.getMinecraft().addScheduledTask(() -> message.handle(Minecraft.getMinecraft().player));
     }
 
     /**
@@ -82,8 +93,6 @@ public class PacketHandler implements IMessageHandler<AbstractPacket, AbstractPa
 
     /**
      * Send this message to the specified player.
-     * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message The message to send
      * @param player  The player to send it to

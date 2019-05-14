@@ -15,6 +15,8 @@ public class GuiModuleGlyph extends GuiElement {
     int textureY;
     int tint;
 
+    boolean shift = true;
+
     public GuiModuleGlyph(int x, int y, int width, int height, int tint, int textureX, int textureY, ResourceLocation textureLocation) {
         super(x, y, width + 1, height + 1);
 
@@ -29,6 +31,15 @@ public class GuiModuleGlyph extends GuiElement {
         this(x, y, width, height, tint, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
     }
 
+    public GuiModuleGlyph(int x, int y, int width, int height, GlyphData glyphData) {
+        this(x, y, width, height, glyphData.tint, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
+    }
+
+    public GuiModuleGlyph setShift(boolean shift) {
+        this.shift = shift;
+        return this;
+    }
+
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
@@ -39,13 +50,19 @@ public class GuiModuleGlyph extends GuiElement {
         float blue = (float)(tint >> 8 & 255) / 255.0F;
         float green = (float)(tint & 255) / 255.0F;
 
-        GlStateManager.translate(0.5F, 0.5F, 0);
+        if (shift) {
+            GlStateManager.translate(0.5F, 0.5F, 0);
+        }
+
         GlStateManager.color(red, blue, green, 1);
         drawTexturedModalRect(
                 refX + x,
                 refY + y,
                 textureX, textureY, width - 1, height - 1);
         GlStateManager.color(1, 1, 1, 1);
-        GlStateManager.translate(-0.5F, -0.5F, 0);
+
+        if (shift) {
+            GlStateManager.translate(-0.5F, -0.5F, 0);
+        }
     }
 }

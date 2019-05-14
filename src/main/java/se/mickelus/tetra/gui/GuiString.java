@@ -58,7 +58,7 @@ public class GuiString extends GuiElement {
     }
 
     public void setString(String string) {
-        if (string != null & !string.equals(this.string)) {
+        if (string != null && !string.equals(this.string)) {
             if (fixedWidth) {
                 this.string = fontRenderer.trimStringToWidth(string, width);
             } else {

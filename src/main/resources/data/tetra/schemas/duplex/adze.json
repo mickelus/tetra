@@ -38,7 +38,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "duplex/adze",
-                "moduleVariant": "adze/diamond"
+                "moduleVariant": "adze/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

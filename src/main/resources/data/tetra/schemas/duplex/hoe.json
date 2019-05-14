@@ -38,7 +38,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "duplex/hoe",
-                "moduleVariant": "hoe/diamond"
+                "moduleVariant": "hoe/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {

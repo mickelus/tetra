@@ -27,7 +27,10 @@
                     "hammer": 1
                 },
                 "moduleKey": "duplex/butt",
-                "moduleVariant": "butt/diamond"
+                "moduleVariant": "butt/diamond",
+                "improvements": {
+                    "arrested": 0
+                }
             },
             {
                 "material": {
@@ -190,7 +193,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "cobblestone"
+                    "ore": "stone"
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -201,7 +204,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "stone"
+                    "ore": "cobblestone"
                 },
                 "requiredCapabilities": {
                     "hammer": 1

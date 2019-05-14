@@ -2,14 +2,19 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Streams;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.improvement.SettleToast;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.util.CastOptional;
@@ -22,16 +27,84 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
+    protected static final String settleImprovement = "settled";
+    protected static final String arrestedImprovement = "arrested";
+
+    protected int settleMax = 0;
+    private String settleProgressKey = "/settle_progress";
+
     public ItemModuleMajor(String slotKey, String moduleKey) {
         super(slotKey, moduleKey);
+
+        settleProgressKey = getSlot() + settleProgressKey;
     }
 
-    public int getImprovementLevel(String improvementKey, ItemStack itemStack) {
+    public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
+        int settleLimit = getSettleLimit(itemStack);
+        if (settleLimit == 0) {
+            return;
+        }
+
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        int settleLevel = getImprovementLevel(itemStack, settleImprovement);
+
+        if (settleLevel < settleLimit && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
+            int settleProgress;
+            if (tag.hasKey(settleProgressKey)) {
+                settleProgress = tag.getInteger(settleProgressKey);
+            } else {
+                settleProgress = (int) ((ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier)
+                        * Math.max(settleLevel * ConfigHandler.settleLimitLevelMultiplier, 1f));
+            }
+
+            settleProgress -= multiplier;
+            tag.setInteger(settleProgressKey, settleProgress);
+            if (settleProgress <= 0) {
+                addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
+                tag.removeTag(settleProgressKey);
+
+                if (entity instanceof EntityPlayer && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
+                    SettleToast.showToast((EntityPlayer) entity, itemStack, getSlot());
+                }
+            }
+        }
+    }
+
+    private int getSettleLimit(ItemStack itemStack) {
+        if (settleMax == 0) {
+            return 0;
+        }
+
+        int integrity = getData(itemStack).integrity;
+        if (integrity <= -4 || integrity >= 6) {
+            return settleMax;
+        } else if (integrity != 0) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    protected void clearProgression(ItemStack itemStack) {
+        NBTHelper.getTag(itemStack).removeTag(String.format(settleProgressKey, getSlot()));
+    }
+
+    public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (tag.hasKey(slotKey + ":" + improvementKey)) {
             return NBTHelper.getTag(itemStack).getInteger(slotKey + ":" + improvementKey);
         }
         return -1;
+    }
+
+    public ImprovementData getImprovement(ItemStack itemStack, String improvementKey) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        return Arrays.stream(improvements)
+                .filter(improvement -> improvementKey.equals(improvement.key))
+                .filter(improvement -> tag.hasKey(slotKey + ":" + improvement.key))
+                .filter(improvement -> improvement.level == tag.getInteger(slotKey + ":" + improvement.key))
+                .findAny()
+                .orElse(null);
     }
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {
@@ -90,6 +163,8 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         Arrays.stream(improvements)
             .map(improvement -> slotKey + ":" + improvement.key)
             .forEach(tag::removeTag);
+
+        clearProgression(targetStack);
 
         return salvage;
     }
@@ -202,6 +277,24 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 .mapToInt(improvement -> improvement.integrity)
                 .filter(integrity -> integrity < 0)
                 .sum();
+    }
+
+    @Override
+    public int getDurability(ItemStack itemStack) {
+        return (int)((super.getDurability(itemStack) + getImprovementDurability(itemStack)) * getImprovementDurabilityMultiplier(itemStack));
+    }
+
+    private int getImprovementDurability(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .mapToInt(improvement -> improvement.durability)
+                .sum();
+    }
+
+    private double getImprovementDurabilityMultiplier(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .mapToDouble(improvement -> improvement.durabilityMultiplier)
+                .filter(integrity -> integrity > 0)
+                .reduce(1, (a, b) -> a * b);
     }
 
     protected ResourceLocation[] getAllImprovementTextures() {

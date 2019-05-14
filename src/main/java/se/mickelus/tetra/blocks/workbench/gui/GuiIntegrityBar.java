@@ -7,6 +7,9 @@ import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 
+import java.util.Collections;
+import java.util.List;
+
 public class GuiIntegrityBar extends GuiElement {
 
     private static final int segmentWidth = 8;
@@ -22,11 +25,18 @@ public class GuiIntegrityBar extends GuiElement {
 
     private GuiString label;
 
-    public GuiIntegrityBar(int x, int y) {
-        super(x, y, 0, 0);
+    private List<String> tooltip;
 
-        label = new GuiStringSmall(0, 0, "", GuiAttachment.topCenter);
+    public GuiIntegrityBar(int x, int y) {
+        super(x, y, 0, 8);
+
+        label = new GuiStringSmall(0, 0, "");
+        label.setAttachment(GuiAttachment.topCenter);
         addChild(label);
+
+        setAttachmentPoint(GuiAttachment.topCenter);
+
+        tooltip = Collections.singletonList(I18n.format("stats.integrity_usage.tooltip"));
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
@@ -42,25 +52,34 @@ public class GuiIntegrityBar extends GuiElement {
             }
 
             if (integrityGain + integrityCost < 0) {
-                label.setString(TextFormatting.RED + I18n.format("item.modular.integrity_usage", -integrityCost, integrityGain));
+                label.setString(TextFormatting.RED + I18n.format("stats.integrity_usage", -integrityCost, integrityGain));
             } else {
-                label.setString(I18n.format("item.modular.integrity_usage", -integrityCost, integrityGain));
+                label.setString(I18n.format("stats.integrity_usage", -integrityCost, integrityGain));
             }
+
+            width = integrityGain * ( segmentWidth + 1);
         }
+    }
+
+    @Override
+    public List<String> getTooltipLines() {
+        if (hasFocus()) {
+            return tooltip;
+        }
+        return super.getTooltipLines();
     }
 
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-        int offset = integrityGain * ( segmentWidth + 1) / 2;
 
         for (int i = 0; i < -integrityCost; i++) {
-            drawSegment(refX + x  - offset + i * (segmentWidth + 1),refY + y + segmentOffset,
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,
                     i >= integrityGain ? overuseColor : costColor);
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawSegment(refX + x  - offset + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor);
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor);
         }
     }
 

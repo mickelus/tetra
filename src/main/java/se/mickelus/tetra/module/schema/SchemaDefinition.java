@@ -82,6 +82,11 @@ public class SchemaDefinition {
     public boolean repair = true;
 
     /**
+     * Defines if this schema should only be applicable when the player has a honing attempt available for the item.
+     */
+    public boolean hone = false;
+
+    /**
      * An item predicate which has to be met for this schema to be applicable. Will not show up in the schema list
      * if this is not met. Optional, allows all items by default (as long as they have the required slots)
      */

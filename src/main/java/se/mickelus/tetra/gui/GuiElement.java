@@ -45,8 +45,8 @@ public class GuiElement extends Gui {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
         activeAnimations.forEach(KeyframeAnimation::preDraw);
-        drawChildren(refX + x, refY + y, screenWidth, screenHeight, mouseX, mouseY, opacity * this.opacity);
         calculateFocusState(refX, refY, mouseX, mouseY);
+        drawChildren(refX + x, refY + y, screenWidth, screenHeight, mouseX, mouseY, opacity * this.opacity);
     }
 
     protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
@@ -259,7 +259,7 @@ public class GuiElement extends Gui {
                     .findFirst()
                     .orElse(null);
         }
-        return Collections.emptyList();
+        return null;
     }
 
 

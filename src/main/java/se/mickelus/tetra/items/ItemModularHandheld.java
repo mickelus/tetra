@@ -36,7 +36,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.advancements.critereon.OredictItemPredicate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -101,6 +100,7 @@ public class ItemModularHandheld extends ItemModular {
     public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if (state.getBlockHardness(worldIn, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entityLiving);
+            tickProgression(entityLiving, itemStack, 1);
         }
 
         causeFierySelfEffect(entityLiving, itemStack, 1);
@@ -113,6 +113,7 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
         applyDamage(entityHitDamage, itemStack, attacker);
+
         if (!isBroken(itemStack)) {
             getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
 
@@ -148,6 +149,8 @@ public class ItemModularHandheld extends ItemModular {
 
             causeFierySelfEffect(attacker, itemStack, 1.4);
             causeEnderReverbEffect(attacker, itemStack, 1.5);
+
+            tickProgression(attacker, itemStack, 1);
         }
 
         return true;
@@ -612,10 +615,12 @@ public class ItemModularHandheld extends ItemModular {
             Capability capability, int capabilityLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
-        }
 
-        causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
-        causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+            causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+            causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+
+            tickProgression(player, providerStack, capabilityLevel * 2);
+        }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }
@@ -625,10 +630,12 @@ public class ItemModularHandheld extends ItemModular {
             Capability capability, int capabilityLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
-        }
 
-        causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
-        causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+            causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
+            causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+
+            tickProgression(player, providerStack, capabilityLevel * 2);
+        }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
     }

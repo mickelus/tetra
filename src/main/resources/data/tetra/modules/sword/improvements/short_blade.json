@@ -2,25 +2,82 @@
     {
         "key": "short_blade/hooked",
         "textured": true,
+        "level": 1,
         "integrity": -1,
         "effects": {
             "backstab": 1
         }
     },
     {
+        "key": "short_blade/hooked",
+        "textured": true,
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "backstab": 2
+        }
+    },
+    {
+        "key": "short_blade/hooked",
+        "textured": true,
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "backstab": 4
+        }
+    },
+    {
         "key": "short_blade/tempered",
         "textured": true,
+        "level": 1,
         "integrity": -1,
         "effects": {
             "armorPenetration": 2
         }
     },
     {
+        "key": "short_blade/tempered",
+        "textured": true,
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "armorPenetration": 3
+        }
+    },
+    {
+        "key": "short_blade/tempered",
+        "textured": true,
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "armorPenetration": 5
+        }
+    },
+    {
         "key": "short_blade/serrated",
         "textured": true,
+        "level": 1,
         "integrity": -1,
         "effects": {
             "bleeding": 1
+        }
+    },
+    {
+        "key": "short_blade/serrated",
+        "textured": true,
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 2
+        }
+    },
+    {
+        "key": "short_blade/serrated",
+        "textured": true,
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "bleeding": 4
         }
     }
 ]

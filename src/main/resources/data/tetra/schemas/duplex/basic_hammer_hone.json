@@ -1,0 +1,29 @@
+[
+    {
+        "key": "hammer_hone_hammer_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "improvement",
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "!hone/hammer": -1,
+                "hone/durability": 5,
+                "hone/speed": 5
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 4
+                },
+                "improvements": {
+                    "hone/hammer": 1
+                }
+            }
+        ]
+    }
+]

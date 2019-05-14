@@ -8,6 +8,7 @@ import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -20,10 +21,11 @@ public class GuiModuleMajor extends GuiModule {
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
                           String slotKey, String slotName,
                           ItemModuleMajor module, ItemModuleMajor previewModule,
-                          Consumer<String> slotClickHandler) {
-        super(x, y, attachmentPoint, itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler);
+                          Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
+        super(x, y, attachmentPoint, itemStack, previewStack, slotKey, slotName, module, previewModule,
+                slotClickHandler, hoverHandler);
 
-        this.height = 16;
+        this.height = 17;
 
         improvementElements = new GuiModuleImprovement[0];
         if (module != null && previewModule != null) {
@@ -75,8 +77,9 @@ public class GuiModuleMajor extends GuiModule {
         String[] improvements = getImprovementUnion(module.getImprovements(itemStack), previewModule.getImprovements(previewStack));
         improvementElements = new GuiModuleImprovement[improvements.length];
         for (int i = 0; i < improvements.length; i++) {
-            int currentValue = module.getImprovementLevel(improvements[i], itemStack);
-            int previewValue = previewModule.getImprovementLevel(improvements[i], previewStack);
+            final String improvementKey = improvements[i];
+            int currentValue = module.getImprovementLevel(itemStack, improvements[i]);
+            int previewValue = previewModule.getImprovementLevel(previewStack, improvements[i]);
             int color = GuiColors.normal;
 
             if (currentValue == -1) {
@@ -88,9 +91,21 @@ public class GuiModuleMajor extends GuiModule {
             }
 
             if (GuiAttachment.topRight.equals(attachmentPoint)) {
-                improvementElements[i] = new GuiModuleImprovement(-17 + i * -5, 13, improvements[i], previewValue, color);
+                improvementElements[i] = new GuiModuleImprovement(-17 + i * -5, 13, improvements[i], previewValue, color,
+                        () -> hoverHandler.accept(slotKey, improvementKey),
+                        () -> {
+                            if (hasFocus()) {
+                                hoverHandler.accept(slotKey, null);
+                            }
+                        });
             } else {
-                improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color);
+                improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color,
+                        () -> hoverHandler.accept(slotKey, improvementKey),
+                        () -> {
+                            if (hasFocus()) {
+                                hoverHandler.accept(slotKey, null);
+                            }
+                        });
             }
             improvementElements[i].setAttachment(attachmentPoint);
             addChild(improvementElements[i]);

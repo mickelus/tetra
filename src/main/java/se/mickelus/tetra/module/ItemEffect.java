@@ -47,7 +47,7 @@ public enum ItemEffect {
     unarmoredDamage,
 
     /**
-     * Knockback: Increased how far hit entities are knocked back, similar to the vanilla knockback enchant.
+     * Knockback: Increases how far hit entities are knocked back, similar to the vanilla knockback enchant.
      * Each level increases the knockback strength by 0.5, whatever that means...
      */
     knockback,

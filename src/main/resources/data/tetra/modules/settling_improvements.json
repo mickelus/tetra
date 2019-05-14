@@ -1,0 +1,18 @@
+[
+    {
+        "key": "settled",
+        "level": 1,
+        "textured": false,
+        "integrity": 1
+    },
+    {
+        "key": "settled",
+        "level": 2,
+        "textured": false,
+        "integrity": 2
+    },
+    {
+        "key": "arrested",
+        "textured": false
+    }
+]

@@ -1,247 +1,226 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.items.toolbelt.SlotType;
+import se.mickelus.tetra.gui.statbar.GuiStatBar;
+import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
+import se.mickelus.tetra.gui.statbar.GuiStatBase;
+import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class GuiStatGroup extends GuiElement {
 
-    private GuiStatBar damageBar;
-    private GuiStatBar speedBar;
-    private GuiStatBar durabilityBar;
-
-    private GuiStatBar quickslotBar;
-    private GuiStatBar potionBar;
-    private GuiStatBar storageBar;
-    private GuiStatBar quiverBar;
-    private GuiStatBar boosterBar;
-    private GuiStatBar armorBar;
-
+    private List<GuiStatBase> bars;
     private GuiElement barGroup;
-    private GuiElement capabilityGroup;
 
+    protected static final int barLength = 59;
 
     public GuiStatGroup(int x, int y) {
         super(x, y, 200, 52);
 
+        bars = new LinkedList<>();
+
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
 
-        damageBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.attackDamage"), 0, 40);
-        speedBar = new GuiStatBar(0, 0, I18n.format("item.modular.speed"), -4, 4);
-        durabilityBar = new GuiStatBar(0, 0, I18n.format("item.modular.durability"), 0, 2024);
-        armorBar = new GuiStatBar(0, 0, I18n.format("attribute.name.generic.armor"), 0, 20);
+        IStatGetter damageGetter = new StatGetterDamage();
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.damage"),
+                0, 40, false, damageGetter, LabelGetterBasic.decimalLabel,
+                new TooltipGetterDecimal("stats.damage.tooltip", damageGetter)));
 
-        quickslotBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quickslot"),
-                0, InventoryQuickslot.maxSize);
-        potionBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.potion_storage"),
-                0, InventoryPotions.maxSize);
-        storageBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.storage"),
-                0, InventoryStorage.maxSize);
-        quiverBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.toolbelt.quiver"),
-                0, InventoryQuiver.maxSize);
-        boosterBar = new GuiStatBarSegmented(0, 0, I18n.format("stats.booster"),
-                0, 3);
+        IStatGetter speedGetter = new StatGetterSpeed();
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.speed"),
+                0, 4, false, speedGetter, LabelGetterBasic.decimalLabel,
+                new TooltipGetterSpeed()));
 
-        capabilityGroup = new GuiElement(width / 2, 0, 0, 0);
-        addChild(capabilityGroup);
+        IStatGetter durabilityGetter = new StatGetterDurability();
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.durability"),
+                0, 2400, false, durabilityGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.durability.tooltip", durabilityGetter)));
+
+        IStatGetter armorGetter = new StatGetterEffectLevel(ItemEffect.armor, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.armor"),
+                0, 20, false, armorGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.armor.tooltip", armorGetter)));
+
+        IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.quickslot"),
+                0, InventoryQuickslot.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.toolbelt.quickslot.tooltip", armorGetter)));
+
+        IStatGetter potionStorageGetter = new StatGetterEffectLevel(ItemEffect.potionSlot, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.potion_storage"),
+                0, InventoryPotions.maxSize, true, potionStorageGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.toolbelt.potion_storage.tooltip", potionStorageGetter)));
+
+        IStatGetter storageGetter = new StatGetterEffectLevel(ItemEffect.storageSlot, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.storage"),
+                0, InventoryStorage.maxSize, true, storageGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.toolbelt.storage.tooltip", storageGetter)));
+
+        IStatGetter quiverGetter = new StatGetterEffectLevel(ItemEffect.quiverSlot, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.quiver"),
+                0, InventoryQuiver.maxSize, true, quiverGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.toolbelt.quiver.tooltip", quiverGetter)));
+
+        IStatGetter boosterGetter = new StatGetterEffectLevel(ItemEffect.booster, 1d);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.booster"),
+                0, 3, true, boosterGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.toolbelt.booster.tooltip", boosterGetter)));
+
+        IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.sweeping"),
+                0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterPercentage("stats.sweeping.tooltip", sweepingGetter)));
+
+        IStatGetter bleedingGetter = new StatGetterEffectLevel(ItemEffect.bleeding, 4);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.bleeding"),
+                0, 12, false, bleedingGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.bleeding.tooltip", bleedingGetter)));
+
+        IStatGetter backstabGetter = new StatGetterEffectLevel(ItemEffect.backstab, 25, 25);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.backstab"),
+                0, 200, false, backstabGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterPercentage("stats.backstab.tooltip", backstabGetter)));
+
+        IStatGetter armorPenetrationGetter = new StatGetterEffectLevel(ItemEffect.armorPenetration, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.armorPenetration"),
+                0, 10, false, armorPenetrationGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.armorPenetration.tooltip", armorPenetrationGetter)));
+
+        IStatGetter unarmoredDamageGetter = new StatGetterEffectLevel(ItemEffect.unarmoredDamage, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.unarmoredDamage"),
+                0, 10, false, unarmoredDamageGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.unarmoredDamage.tooltip", unarmoredDamageGetter)));
+
+        IStatGetter knockbackGetter = new StatGetterEffectLevel(ItemEffect.knockback, 0.5);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.knockback"),
+                0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
+                new TooltipGetterDecimal("stats.knockback.tooltip", knockbackGetter)));
+
+        IStatGetter lootingGetter = new StatGetterEffectLevel(ItemEffect.looting, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.looting"),
+                0, 20, false, lootingGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.looting.tooltip", lootingGetter)));
+
+        IStatGetter fieryGetter = new StatGetterEffectLevel(ItemEffect.fiery, 4);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fieryping"),
+                0, 32, false, fieryGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.fiery.tooltip", fieryGetter)));
+
+        IStatGetter smiteGetter = new StatGetterEffectLevel(ItemEffect.smite, 2.5);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.smiteping"),
+                0, 25, false, smiteGetter, LabelGetterBasic.decimalLabel,
+                new TooltipGetterDecimal("stats.smite.tooltip", smiteGetter)));
+
+        IStatGetter arthropodGetter = new StatGetterEffectLevel(ItemEffect.arthropod, 2.5);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.arthropod"),
+                0, 25, false, arthropodGetter, LabelGetterBasic.decimalLabel,
+                new TooltipGetterArthropod()));
+
+        IStatGetter unbreakingGetter = new StatGetterEffectLevel(ItemEffect.unbreaking, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.unbreaking"),
+                0, 20, true, unbreakingGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterUnbreaking()));
+
+        IStatGetter mendingGetter = new StatGetterEffectLevel(ItemEffect.mending, 2);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.mending"),
+                0, 10, false, mendingGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterDecimal("stats.mending.tooltip", mendingGetter)));
+
+        IStatGetter silkTouchGetter = new StatGetterEffectLevel(ItemEffect.silkTouch, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.silkTouch"),
+                0, 1, false, silkTouchGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterDecimal("stats.silkTouch.tooltip", silkTouchGetter)));
+
+        IStatGetter fortuneGetter = new StatGetterEffectLevel(ItemEffect.fortune, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fortune"),
+                0, 20, false, fortuneGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.fortune.tooltip", fortuneGetter)));
+
+        IStatGetter quickStrikeGetter = new StatGetterEffectLevel(ItemEffect.quickStrike, 5, 20);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.quickStrike"),
+                0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterPercentage("stats.quickStrike.tooltip", quickStrikeGetter)));
+
+        IStatGetter softStrikeGetter = new StatGetterEffectLevel(ItemEffect.softStrike, 1);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.softStrike"),
+                0, 1, false, softStrikeGetter, LabelGetterBasic.integerLabel,
+                new TooltipGetterInteger("stats.softStrike.tooltip", softStrikeGetter)));
+
+        IStatGetter fierySelfGetter = new StatGetterEffectEfficiency(ItemEffect.fierySelf, 100);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fierySelf"),
+                0, 100, false, fierySelfGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterFierySelf()));
+
+        IStatGetter enderReverbGetter = new StatGetterEffectEfficiency(ItemEffect.enderReverb, 100);
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.enderReverb"),
+                0, 100, false, enderReverbGetter, LabelGetterBasic.percentageLabel,
+                new TooltipGetterPercentage("stats.enderReverb.tooltip", enderReverbGetter)));
+
+// todo: remaining effects
+//        ItemEffect.strikingAxe
+//        ItemEffect.strikingPickaxe
+//        ItemEffect.strikingCut
+//        ItemEffect.strikingShovel
+//        ItemEffect.sweepingStrike
+//        ItemEffect.flattening
+//        ItemEffect.tilling
+//        ItemEffect.counterweight
+//        ItemEffect.denailing
+
+        Arrays.stream(Capability.values())
+                .map(capability -> new GuiStatBarCapability(0, 0, barLength, capability))
+                .forEach(bars::add);
+
+        bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));
     }
 
-    public void setItemStack(ItemStack itemStack, ItemStack previewStack, EntityPlayer player) {
+    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, EntityPlayer player) {
         boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
         setVisible(shouldShow);
         if (shouldShow) {
             barGroup.clearChildren();
-            if (itemStack.getItem() instanceof ItemModularHandheld) {
-                showBar(damageBar);
-                showBar(speedBar);
-            }
+            bars.stream()
+                    .filter(bar -> bar.shouldShow(player, itemStack, previewStack, slot, improvement))
+                    .forEach(bar -> {
+                        bar.update(player, itemStack, previewStack, slot, improvement);
 
-            if (itemStack.getMaxDamage() > 0) {
-                showBar(durabilityBar);
-            }
+                        realignBar(bar);
+                        barGroup.addChild(bar);
+                    });
 
-            if (!previewStack.isEmpty()) {
-                damageBar.setValue(getAttackDamage(itemStack, player), getAttackDamage(previewStack, player));
-                speedBar.setValue(getAttackSpeed(itemStack, player), getAttackSpeed(previewStack, player));
-                durabilityBar.setValue(itemStack.getMaxDamage(), previewStack.getMaxDamage());
-            } else {
-                double damage = getAttackDamage(itemStack, player);
-                damageBar.setValue(damage, damage);
-
-                double speed = getAttackSpeed(itemStack, player);
-                speedBar.setValue(speed, speed);
-
-                durabilityBar.setValue(itemStack.getMaxDamage(), itemStack.getMaxDamage());
-            }
-
-            updateArmorBar(itemStack, previewStack);
-            updateToolbeltBars(itemStack, previewStack);
-
-            updateCapabilityIndicators(itemStack, previewStack);
         }
     }
 
-    private void showBar(GuiStatBar bar) {
-        int offset = barGroup.getNumChildren();
-        bar.setY(-15 * (offset / 2));
-        if (offset % 2 == 0) {
-            bar.setX(3);
+    private void realignBar(GuiStatBase bar) {
+        int count = barGroup.getNumChildren();
+
+        bar.setY(-17 * ((count % 6) / 2) - 3);
+
+        int xOffset = 3 + (count / 6) * (barLength + 3);
+        if (count % 2 == 0) {
+            bar.setX(xOffset);
             bar.setAttachmentPoint(GuiAttachment.bottomLeft);
             bar.setAlignment(GuiAlignment.left);
         } else {
-            bar.setX(-3);
+            bar.setX(-xOffset);
             bar.setAttachmentPoint(GuiAttachment.bottomRight);
             bar.setAlignment(GuiAlignment.right);
         }
-        barGroup.addChild(bar);
     }
 
-
-    private void updateArmorBar(ItemStack itemStack, ItemStack previewStack) {
-        if (itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
-            int currentArmor = item.getEffectLevel(itemStack, ItemEffect.armor);
-            int previewArmor = currentArmor;
-
-            if (!previewStack.isEmpty()) {
-                previewArmor = item.getEffectLevel(previewStack, ItemEffect.armor);
-            }
-
-            if (currentArmor > 0 || previewArmor > 0) {
-                armorBar.setValue(currentArmor, previewArmor);
-                showBar(armorBar);
-            }
-        }
-    }
-
-    private void updateToolbeltBars(ItemStack itemStack, ItemStack previewStack) {
-        if (itemStack.getItem() instanceof ItemToolbeltModular) {
-            ItemToolbeltModular item = (ItemToolbeltModular) itemStack.getItem();
-
-            int numQuickslots = item.getNumSlots(itemStack, SlotType.quick);
-            if (!previewStack.isEmpty()) {
-                int numQuickSlotsPreview = item.getNumSlots(previewStack, SlotType.quick);
-                if (numQuickslots > 0 || numQuickSlotsPreview > 0) {
-                    quickslotBar.setValue(numQuickslots, numQuickSlotsPreview);
-                    showBar(quickslotBar);
-                }
-            } else if (numQuickslots > 0) {
-                quickslotBar.setValue(numQuickslots, numQuickslots);
-                showBar(quickslotBar);
-            }
-
-            int numPotionSlots = item.getNumSlots(itemStack, SlotType.potion);
-            if (!previewStack.isEmpty()) {
-                int numPotionSlotsPreview = item.getNumSlots(previewStack, SlotType.potion);
-                if (numPotionSlots > 0 || numPotionSlotsPreview > 0) {
-                    potionBar.setValue(numPotionSlots, numPotionSlotsPreview);
-                    showBar(potionBar);
-                }
-            } else if (numPotionSlots > 0) {
-                potionBar.setValue(numPotionSlots, numPotionSlots);
-                showBar(potionBar);
-            }
-
-            int numStorageSlots = item.getNumSlots(itemStack, SlotType.storage);
-            if (!previewStack.isEmpty()) {
-                int numStorageSlotsPreview = item.getNumSlots(previewStack, SlotType.storage);
-                if (numStorageSlots > 0 || numStorageSlotsPreview > 0) {
-                    storageBar.setValue(numStorageSlots, numStorageSlotsPreview);
-                    showBar(storageBar);
-                }
-            } else if (numStorageSlots > 0) {
-                storageBar.setValue(numStorageSlots, numStorageSlots);
-                showBar(storageBar);
-            }
-
-            int numQuiverSlots = item.getNumSlots(itemStack, SlotType.quiver);
-            if (!previewStack.isEmpty()) {
-                int numQuiverSlotsPreview = item.getNumSlots(previewStack, SlotType.quiver);
-                if (numQuiverSlots > 0 || numQuiverSlotsPreview > 0) {
-                    quiverBar.setValue(numQuiverSlots, numQuiverSlotsPreview);
-                    showBar(quiverBar);
-                }
-            } else if (numQuiverSlots > 0) {
-                quiverBar.setValue(numQuiverSlots, numQuiverSlots);
-                showBar(quiverBar);
-            }
-
-            int boostStrength = item.getEffectLevel(itemStack, ItemEffect.booster);
-            if (!previewStack.isEmpty()) {
-                int boostStrengthPreview = item.getEffectLevel(itemStack, ItemEffect.booster);
-                if (boostStrength > 0 || boostStrengthPreview > 0) {
-                    boosterBar.setValue(boostStrength, boostStrengthPreview);
-                    showBar(boosterBar);
-                }
-            } else if (boostStrength > 0) {
-                boosterBar.setValue(boostStrength, boostStrength);
-                showBar(boosterBar);
-            }
-        }
-    }
-
-    private double getAttackDamage(ItemStack itemStack, EntityPlayer player) {
-        return itemStack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).stream()
-                .map(AttributeModifier::getAmount)
-                .reduce(0d, Double::sum) + player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
-    }
-
-    private double getAttackSpeed(ItemStack itemStack, EntityPlayer player) {
-        return itemStack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_SPEED.getName()).stream()
-                .map(AttributeModifier::getAmount)
-                .reduce(0d, Double::sum) + player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue();
-    }
-
-    private int getCapability(ItemStack itemStack, Capability capability) {
-        if (itemStack.getItem() instanceof ICapabilityProvider) {
-            ICapabilityProvider item = (ICapabilityProvider) itemStack.getItem();
-            return item.getCapabilityLevel(itemStack, capability);
-        }
-        return 0;
-    }
-
-    private void updateCapabilityIndicators(ItemStack itemStack, ItemStack previewStack) {
-        Capability[] capabilities = Capability.values();
-        capabilityGroup.clearChildren();
-
-        if (previewStack.isEmpty()) {
-            previewStack = itemStack;
-        }
-
-        for (int i = 0; i < capabilities.length; i++) {
-            int previewLevel = getCapability(previewStack, capabilities[i]);
-            int currentLevel = getCapability(itemStack, capabilities[i]);
-            if (previewLevel > 0 || currentLevel > 0) {
-                GuiCapability guiCapability = new GuiCapability(capabilityGroup.getNumChildren() * 16, 0, capabilities[i]);
-                if (previewLevel > currentLevel) {
-                    guiCapability.update(previewLevel, GuiColors.add);
-                } else if (previewLevel < currentLevel) {
-                    guiCapability.update(previewLevel, GuiColors.remove);
-                } else {
-                    guiCapability.update(previewLevel, GuiColors.normal);
-                }
-                capabilityGroup.addChild(guiCapability);
-            }
-        }
-
-        capabilityGroup.setX(width / 2 - 8 * (capabilityGroup.getNumChildren()));
-
-    }
 }

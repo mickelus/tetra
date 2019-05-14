@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.*;
@@ -32,8 +33,10 @@ public class GuiCapabilityRequirement extends GuiCapability {
 
     @Override
     public List<String> getTooltipLines() {
-        if (hasFocus() && requiredLevel > availableLevel) {
-            return Collections.singletonList(I18n.format(capability + ".unavailable", requiredLevel));
+        if (hasFocus()) {
+            return Collections.singletonList(I18n.format("capability." + capability + ".requirement", requiredLevel) + "\n\n"
+                    + (requiredLevel > availableLevel ? ChatFormatting.RED : ChatFormatting.GREEN)
+                    + I18n.format( "capability.available", availableLevel));
         }
         return super.getTooltipLines();
     }

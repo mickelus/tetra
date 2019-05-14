@@ -24,6 +24,7 @@ public class GuiSchemaListItem extends GuiClickable {
         rarity = schema.getRarity();
 
         label = new GuiString(16, 3, 93, schema.getName());
+        label.setColor(rarity.tint);
         addChild(label);
 
         GlyphData glyphData = schema.getGlyph();
@@ -67,7 +68,7 @@ public class GuiSchemaListItem extends GuiClickable {
         if (border != null) {
             border.setOpacity(0.3f);
         }
-        label.setColor(GuiColors.normal);
+        label.setColor(rarity.tint);
     }
 
     @Override
@@ -76,6 +77,6 @@ public class GuiSchemaListItem extends GuiClickable {
             return Collections.singletonList(I18n.format("workbench.schema_list.temporary"));
         }
 
-        return Collections.emptyList();
+        return null;
     }
 }

@@ -2,9 +2,28 @@
     {
         "key": "basic_blade/serrated",
         "textured": false,
+        "level": 1,
         "integrity": -1,
         "effects": {
             "bleeding": 1
+        }
+    },
+    {
+        "key": "basic_blade/serrated",
+        "textured": false,
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 2
+        }
+    },
+    {
+        "key": "basic_blade/serrated",
+        "textured": false,
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "bleeding": 4
         }
     }
 ]

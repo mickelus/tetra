@@ -1,0 +1,201 @@
+[
+    {
+        "key": "basic_pickaxe_hone_pickaxe_efficiency_1_schema",
+        "localizationKey": "duplex_hone_pickaxe_efficiency_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "!hone/pickaxe_efficiency": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/pickaxe_efficiency": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "basic_pickaxe_hone_pickaxe_efficiency_2_schema",
+        "localizationKey": "duplex_hone_pickaxe_efficiency_2_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "hone/pickaxe_efficiency": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "hone/pickaxe_efficiency": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "basic_pickaxe_hone_pickaxe_efficiency_3_schema",
+        "localizationKey": "duplex_hone_pickaxe_efficiency_3_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "hone/pickaxe_efficiency": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/pickaxe_efficiency": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "basic_pickaxe_hone_pickaxe_efficiency_4_schema",
+        "localizationKey": "duplex_hone_pickaxe_efficiency_4_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "hone/pickaxe_efficiency": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/pickaxe_efficiency": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "basic_pickaxe_hone_pickaxe_efficiency_5_schema",
+        "localizationKey": "duplex_hone_pickaxe_efficiency_5_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "hone/pickaxe_efficiency": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/pickaxe_efficiency": 5
+                }
+            }
+        ]
+    },
+    {
+        "key": "basic_pickaxe_hone_pickaxe_tier_1_schema",
+        "localizationKey": "duplex_hone_pickaxe_tier_1_schema",
+        "slots": ["duplex/head_left", "duplex/head_right"],
+        "keySuffixes": ["_left", "_right"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 176
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "modules": [
+                ["duplex/basic_pickaxe_right"],
+                ["duplex/basic_pickaxe_left"]
+            ],
+            "improvements": {
+                "!hone/pickaxe_tier": -1,
+                "hone/pickaxe_efficiency": 5
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "hone/pickaxe_tier": 0
+                }
+            }
+        ]
+    }
+]

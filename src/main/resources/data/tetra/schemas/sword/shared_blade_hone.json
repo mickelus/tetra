@@ -1,0 +1,282 @@
+[
+    {
+        "key": "blade_hone_damage_1_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "!blade_hone/damage": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "blade_hone/damage": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_damage_2_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/damage": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "blade_hone/damage": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_damage_3_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/damage": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/damage": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_damage_4_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/damage": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/damage": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_damage_5_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 32,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/damage": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/damage": 5
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_speed_1_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "!blade_hone/speed": -1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "blade_hone/speed": 1
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_speed_2_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/speed": 1
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "improvements": {
+                    "blade_hone/speed": 2
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_speed_3_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/speed": 2
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/speed": 3
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_speed_4_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/speed": 3
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/speed": 4
+                }
+            }
+        ]
+    },
+    {
+        "key": "blade_hone_speed_5_schema",
+        "slots": ["sword/blade"],
+        "materialSlotCount": 0,
+        "hone": true,
+        "rarity": "hone",
+        "displayType": "major",
+        "glyph": {
+            "textureX": 16,
+            "textureY": 240
+        },
+        "requirement": {
+            "type": "tetra:modular_item",
+            "improvements": {
+                "blade_hone/speed": 4
+            }
+        },
+        "outcomes": [
+            {
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "improvements": {
+                    "blade_hone/speed": 5
+                }
+            }
+        ]
+    }
+]
