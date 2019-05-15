@@ -18,6 +18,7 @@ import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.BasicMajorModule;
+import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -133,6 +134,10 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone", "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
 
+        if (ConfigHandler.experimentalSockets) {
+            new BasicModule(bindingKey, "duplex/socket");
+        }
+
         updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
     }
 
@@ -195,6 +200,10 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("hoe");
+
+        if (ConfigHandler.experimentalSockets) {
+            ItemUpgradeRegistry.instance.registerConfigSchema("duplex/socket");
+        }
     }
 
     @Override

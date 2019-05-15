@@ -1,0 +1,29 @@
+[
+    {
+        "key": "sword_socket/diamond",
+        "integrity": -1,
+        "glyph": {
+            "tint": "2ccdb1",
+            "textureX": 80,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "sword_socket/emerald",
+        "integrity": -1,
+        "glyph": {
+            "tint": "009e30",
+            "textureX": 80,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "sword_socket/lapis",
+        "integrity": -1,
+        "glyph": {
+            "tint": "1b4aa1",
+            "textureX": 80,
+            "textureY": 16
+        }
+    }
+]

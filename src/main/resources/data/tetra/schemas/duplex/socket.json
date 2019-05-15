@@ -1,0 +1,39 @@
+[
+    {
+        "key": "duplex_socket_schema",
+        "slots": ["duplex/binding"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "repair": false,
+        "glyph": {
+            "textureX": 80,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemDiamond"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/diamond"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemEmerald"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/emerald"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemLapis"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/lapis"
+            }
+        ]
+    }
+]

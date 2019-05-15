@@ -557,6 +557,17 @@ wide_guard/fierymetal=Wide fierymetal guard
 wide_guard/knightmetal=Wide knightmetal guard
 
 ###############################
+# SWORD SOCKET
+###############################
+sword_socket_schema.name=Socket
+sword_socket_schema.description=Socket a gem into the sword, providing different effects depending on the gem.\n\n§7Does not have to be repaired.
+sword_socket_schema.slot1=Gem
+
+sword_socket/diamond=Socket [§bDiamond§r]
+sword_socket/emerald=Socket [§aEmerald§r]
+sword_socket/lapis=Socket [§9Lapis§r]
+
+###############################
 # COUNTERWEIGHT
 ###############################
 counterweight_schema.name=Counterweight
@@ -1162,6 +1173,17 @@ handle_hone_speed_4_schema.name=Hone: Speed IV
 handle_hone_speed_4_schema.description=Further hone the swing speed improvement for this module, increasing the speed bonus from 13%% to 18%%.
 handle_hone_speed_5_schema.name=Hone: Speed V
 handle_hone_speed_5_schema.description=Further hone the swing speed improvement for this module, increasing the speed bonus from 18%% to 22%%.
+
+###############################
+# DUPLEX SOCKET
+###############################
+duplex_socket_schema.name=Socket
+duplex_socket_schema.description=Socket a gem into the tool, providing different effects depending on the gem.\n\n§7Does not have to be repaired.
+duplex_socket_schema.slot1=Gem
+
+duplex_socket/diamond=Socket [§bDiamond§r]
+duplex_socket/emerald=Socket [§aEmerald§r]
+duplex_socket/lapis=Socket [§9Lapis§r]
 
 ###############################
 # AXE HEAD

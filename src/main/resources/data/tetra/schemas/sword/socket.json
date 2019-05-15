@@ -1,0 +1,39 @@
+[
+    {
+        "key": "sword_socket_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "repair": false,
+        "glyph": {
+            "textureX": 80,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemDiamond"
+                },
+                "moduleKey": "sword/socket",
+                "moduleVariant": "sword_socket/diamond"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemEmerald"
+                },
+                "moduleKey": "sword/socket",
+                "moduleVariant": "sword_socket/emerald"
+            },
+            {
+                "material": {
+                    "type": "forge:ore_dict",
+                    "ore": "gemLapis"
+                },
+                "moduleKey": "sword/socket",
+                "moduleVariant": "sword_socket/lapis"
+            }
+        ]
+    }
+]
