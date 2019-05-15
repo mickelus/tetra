@@ -6,6 +6,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentDurability;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,8 +32,9 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.SynergyData;
-import se.mickelus.tetra.module.improvement.HoneToast;
+import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
+import se.mickelus.tetra.network.PacketHandler;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -217,7 +219,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 tag.setBoolean(honeAvailableKey, true);
 
                 if (entity instanceof EntityPlayer && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-                    HoneToast.showToast((EntityPlayer) entity, itemStack);
+                    PacketHandler.sendTo(new HonePacket(itemStack), (EntityPlayerMP) entity);
                 }
             }
         }

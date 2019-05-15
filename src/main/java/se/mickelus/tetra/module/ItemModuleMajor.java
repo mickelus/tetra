@@ -4,6 +4,7 @@ package se.mickelus.tetra.module;
 import com.google.common.collect.Streams;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -14,9 +15,10 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.improvement.SettleToast;
+import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
@@ -64,7 +66,7 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                 tag.removeTag(settleProgressKey);
 
                 if (entity instanceof EntityPlayer && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-                    SettleToast.showToast((EntityPlayer) entity, itemStack, getSlot());
+                    PacketHandler.sendTo(new SettlePacket(itemStack, getSlot()), (EntityPlayerMP) entity);
                 }
             }
         }

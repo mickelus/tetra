@@ -1,26 +1,20 @@
 package se.mickelus.tetra.module.improvement;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schema.SchemaRarity;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
@@ -33,14 +27,6 @@ public class SettleToast implements IToast {
     private ItemStack itemStack;
     private String moduleName;
     private GuiModuleGlyph glyph;
-
-    public static void showToast(EntityPlayer player, ItemStack itemStack, String slot) {
-        if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)) {
-            PacketHandler.sendTo(new SettlePacket(itemStack, slot), (EntityPlayerMP) player);
-        } else {
-            Minecraft.getMinecraft().getToastGui().add(new SettleToast(itemStack, slot));
-        }
-    }
 
     public SettleToast(ItemStack itemStack, String slot) {
         this.itemStack = itemStack;

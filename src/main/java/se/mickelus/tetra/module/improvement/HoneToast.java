@@ -1,38 +1,23 @@
 package se.mickelus.tetra.module.improvement;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schema.SchemaRarity;
-import se.mickelus.tetra.network.PacketHandler;
-
 
 public class HoneToast implements IToast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
     private boolean hasPlayedSound = false;
     private ItemStack itemStack;
-
-    public static void showToast(EntityPlayer player, ItemStack itemStack) {
-        if (player instanceof EntityPlayerMP && FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)) {
-            PacketHandler.sendTo(new HonePacket(itemStack), (EntityPlayerMP) player);
-        } else {
-            Minecraft.getMinecraft().getToastGui().add(new HoneToast(itemStack));
-        }
-    }
 
     public HoneToast(ItemStack itemStack) {
         this.itemStack = itemStack;

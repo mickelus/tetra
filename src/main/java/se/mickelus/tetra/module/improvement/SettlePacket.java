@@ -31,6 +31,6 @@ public class SettlePacket extends AbstractPacket {
 
     @Override
     public void handle(EntityPlayer player) {
-        SettleToast.showToast(player, itemStack, slot);
+        ProgressionHelper.showSettleToastClient(itemStack, slot);
     }
 }

@@ -28,6 +28,6 @@ public class HonePacket extends AbstractPacket {
 
     @Override
     public void handle(EntityPlayer player) {
-        HoneToast.showToast(player, itemStack);
+        ProgressionHelper.showHoneToastClient(itemStack);
     }
 }
