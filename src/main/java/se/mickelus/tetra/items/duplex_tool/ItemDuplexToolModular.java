@@ -133,7 +133,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone", "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
 
-        updateConfig(ConfigHandler.duplexHoneBase, ConfigHandler.duplexHoneIntegrityMultiplier);
+        updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

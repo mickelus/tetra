@@ -71,7 +71,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(fullerKey, "sword/reinforced_fuller");
 
 
-        updateConfig(ConfigHandler.swordHoneBase, ConfigHandler.swordHoneIntegrityMultiplier);
+        updateConfig(ConfigHandler.honeSwordBase, ConfigHandler.honeSwordIntegrityMultiplier);
     }
 
     @Override

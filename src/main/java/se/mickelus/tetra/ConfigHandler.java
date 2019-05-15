@@ -25,11 +25,11 @@ public class ConfigHandler {
     public static float settleLimitLevelMultiplier = 3;
     public static float settleLimitDurabilityMultiplier = 0.5f;
 
-    public static int swordHoneBase = 250;
-    public static int swordHoneIntegrityMultiplier = 150;
+    public static int honeSwordBase = 250;
+    public static int honeSwordIntegrityMultiplier = 150;
 
-    public static int duplexHoneBase = 450;
-    public static int duplexHoneIntegrityMultiplier = 200;
+    public static int honeDuplexBase = 450;
+    public static int honeDuplexIntegrityMultiplier = 200;
 
     @Mod.EventBusSubscriber
     private static class EventHandler {
@@ -38,8 +38,8 @@ public class ConfigHandler {
             if (event.getModID().equals(TetraMod.MOD_ID)) {
                 ConfigManager.sync(TetraMod.MOD_ID, Config.Type.INSTANCE);
 
-                ItemDuplexToolModular.instance.updateConfig(duplexHoneBase, duplexHoneIntegrityMultiplier);
-                ItemSwordModular.instance.updateConfig(swordHoneBase, swordHoneIntegrityMultiplier);
+                ItemDuplexToolModular.instance.updateConfig(honeDuplexBase, honeDuplexIntegrityMultiplier);
+                ItemSwordModular.instance.updateConfig(honeSwordBase, honeSwordIntegrityMultiplier);
             }
         }
     }
