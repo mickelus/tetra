@@ -1,0 +1,55 @@
+package se.mickelus.tetra.items.journal.gui.craft;
+
+import net.minecraft.client.resources.I18n;
+import se.mickelus.tetra.gui.*;
+
+import java.util.function.Consumer;
+
+public class GuiJournalSlotMajor extends GuiClickable {
+
+    private final static String texture = "textures/gui/workbench.png";
+    private final GuiTexture backdrop;
+    private final GuiString slotString;
+
+    public GuiJournalSlotMajor(int x, int y, GuiAttachment attachment, String slot, String label, Consumer<String> onSelect) {
+        super(x, y, 64, 17, () -> onSelect.accept(slot));
+        setAttachmentPoint(attachment);
+
+        backdrop = new GuiTexture(0, 0, 15, 15, 52, 0, texture);
+        if (GuiAttachment.topRight.equals(attachment)) {
+            backdrop.setX(-1);
+        }
+        backdrop.setAttachment(attachment);
+        addChild(backdrop);
+
+        slotString = new GuiString(18, 3, label);
+        if (GuiAttachment.topRight.equals(attachment)) {
+            slotString.setX(-18);
+        }
+        slotString.setAttachment(attachment);
+        addChild(slotString);
+
+        if ("".equals(label)) {
+            slotString.setString(I18n.format("journal.craft.slot"));
+        }
+
+        width = slotString.getWidth() + 18;
+    }
+
+    @Override
+    protected void onFocus() {
+        super.onFocus();
+
+        backdrop.setColor(GuiColors.hover);
+        slotString.setColor(GuiColors.hover);
+    }
+
+    @Override
+    protected void onBlur() {
+        super.onBlur();
+
+        backdrop.setColor(GuiColors.normal);
+        slotString.setColor(GuiColors.normal);
+    }
+
+}

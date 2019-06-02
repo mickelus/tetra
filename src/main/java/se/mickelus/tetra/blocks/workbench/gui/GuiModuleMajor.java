@@ -35,8 +35,7 @@ public class GuiModuleMajor extends GuiModule {
 
     protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
         backdrop = new GuiModuleBackdrop(1, 0, GuiColors.normal);
-        backdrop.setAttachmentAnchor(attachmentPoint);
-        backdrop.setAttachmentPoint(attachmentPoint);
+        backdrop.setAttachment(attachmentPoint);
         addChild(backdrop);
 
         moduleString = new GuiString(19, 5, "");

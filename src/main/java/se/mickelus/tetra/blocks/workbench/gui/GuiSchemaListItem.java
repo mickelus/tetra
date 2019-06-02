@@ -19,11 +19,15 @@ public class GuiSchemaListItem extends GuiClickable {
     private SchemaRarity rarity;
 
     public GuiSchemaListItem(int x, int y, UpgradeSchema schema, Runnable onClickHandler) {
-        super(x, y, 109, 14, onClickHandler);
+        this(x, y, 109, schema, onClickHandler);
+    }
+
+    public GuiSchemaListItem(int x, int y, int width, UpgradeSchema schema, Runnable onClickHandler) {
+        super(x, y, width, 14, onClickHandler);
 
         rarity = schema.getRarity();
 
-        label = new GuiString(16, 3, 93, schema.getName());
+        label = new GuiString(16, 3, width - 16, schema.getName());
         label.setColor(rarity.tint);
         addChild(label);
 
@@ -47,12 +51,12 @@ public class GuiSchemaListItem extends GuiClickable {
             addChild(border);
         }
 
-        glyph.setColor(rarity.tint);
-        addChild(glyph);
-
         if (schema.getType() == SchemaType.improvement) {
             addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
         }
+
+        glyph.setColor(rarity.tint);
+        addChild(glyph);
     }
 
     @Override

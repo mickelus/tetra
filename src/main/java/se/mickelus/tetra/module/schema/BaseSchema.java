@@ -23,4 +23,9 @@ public abstract class BaseSchema implements UpgradeSchema {
         return getRequiredCapabilities(targetStack, materials).stream()
                 .allMatch(capability -> availableCapabilities[capability.ordinal()] >= getRequiredCapabilityLevel(targetStack, materials, capability));
     }
+
+    @Override
+    public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
+        return new OutcomePreview[0];
+    }
 }

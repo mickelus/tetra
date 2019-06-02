@@ -300,4 +300,40 @@ public class ConfigSchema extends BaseSchema {
     public GlyphData getGlyph() {
         return definition.glyph;
     }
+
+    @Override
+    public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
+        return Arrays.stream(definition.outcomes)
+                .map(outcome -> {
+                    String key = null;
+                    GlyphData glyph;
+
+                    if (outcome.moduleKey != null) {
+                        ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
+
+                        key = outcome.moduleVariant;
+                        glyph = module.getData(outcome.moduleVariant).glyph;
+                    } else {
+                        if (outcome.improvements.size() == 1) {
+                            for (String improvementKey : outcome.improvements.keySet()) {
+                                key = improvementKey;
+                            }
+                            glyph = definition.glyph;
+                        } else if (!outcome.improvements.isEmpty()) {
+                            key = definition.key;
+                            glyph = definition.glyph;
+                        } else {
+                            return null;
+                        }
+
+                    }
+
+                    ItemStack itemStack = targetStack.copy();
+                    applyOutcome(outcome, targetStack, false, slot, null);
+
+                    return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredCapabilities,
+                            outcome.material.getApplicableItemstacks());
+                })
+                .toArray(OutcomePreview[]::new);
+    }
 }

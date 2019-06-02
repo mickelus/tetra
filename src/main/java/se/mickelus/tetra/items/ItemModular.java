@@ -451,6 +451,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
+    public ItemStack getDefaultStack() {
+        return new ItemStack(this);
+    }
+
+    @Override
     public void assemble(ItemStack itemStack) {
         int honingBase = getHoningBase(itemStack);
         int honingProgress = getHoningProgress(itemStack);

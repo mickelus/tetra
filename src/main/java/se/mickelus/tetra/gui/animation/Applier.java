@@ -130,4 +130,34 @@ public abstract class Applier {
             element.setOpacity(currentValue);
         }
     }
+
+    public static class Width extends Applier {
+
+        public Width(float targetValue) {
+            super(targetValue);
+        }
+
+        public Width(float startValue, float targetValue) {
+            super(startValue, targetValue);
+        }
+
+        @Override
+        public void start(int duration) {
+            super.start(duration);
+            if (!relativeStart) {
+                element.setWidth((int) startValue);
+            }
+        }
+
+        @Override
+        protected float getRelativeStartValue() {
+            return element.getWidth();
+        }
+
+        @Override
+        public void preDraw(float progress) {
+            super.preDraw(progress);
+            element.setWidth((int) currentValue);
+        }
+    }
 }

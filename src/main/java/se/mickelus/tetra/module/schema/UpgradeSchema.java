@@ -3,7 +3,6 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import java.util.Collection;
@@ -95,4 +94,6 @@ public interface UpgradeSchema {
     }
 
     public GlyphData getGlyph();
+
+    public OutcomePreview[] getPreviews(ItemStack targetStack, String slot);
 }

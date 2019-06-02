@@ -79,6 +79,12 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                 .findAny().orElse(getDefaultData());
     }
 
+    public T getData(String variantKey) {
+        return Arrays.stream(data)
+                .filter(moduleData -> moduleData.key.equals(variantKey))
+                .findAny().orElse(getDefaultData());
+    }
+
     public T getDefaultData() {
         return data[0];
     }

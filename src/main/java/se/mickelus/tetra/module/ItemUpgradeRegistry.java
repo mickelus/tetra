@@ -40,6 +40,12 @@ public class ItemUpgradeRegistry {
                 .toArray(UpgradeSchema[]::new);
     }
 
+    public UpgradeSchema[] getSchemas(String slot) {
+        return schemaMap.values().stream()
+                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(slot, ItemStack.EMPTY))
+                .toArray(UpgradeSchema[]::new);
+    }
+
     public UpgradeSchema getSchema(String key) {
         return schemaMap.get(key);
     }

@@ -75,4 +75,16 @@ public class Material {
 
         return "Unknown material";
     }
+
+    @SideOnly(Side.CLIENT)
+    public ItemStack[] getApplicableItemstacks() {
+        if (itemStack != null) {
+            return new ItemStack[] { itemStack };
+        } else if (ore != null) {
+            NonNullList<ItemStack> itemStacks = OreDictionary.getOres(ore);
+            return itemStacks.toArray(new ItemStack[0]);
+        }
+
+        return new ItemStack[0];
+    }
 }

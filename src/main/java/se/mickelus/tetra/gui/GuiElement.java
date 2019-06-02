@@ -43,20 +43,26 @@ public class GuiElement extends Gui {
     }
 
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
-        activeAnimations.forEach(KeyframeAnimation::preDraw);
         calculateFocusState(refX, refY, mouseX, mouseY);
         drawChildren(refX + x, refY + y, screenWidth, screenHeight, mouseX, mouseY, opacity * this.opacity);
+    }
+
+    public void updateAnimations() {
+        activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
+        activeAnimations.forEach(KeyframeAnimation::preDraw);
     }
 
     protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         elements.removeIf(GuiElement::shouldRemove);
         elements.stream()
                 .filter(GuiElement::isVisible)
-                .forEach((element -> element.draw(
-                        refX + getXOffset(this, element.attachmentAnchor) - getXOffset(element, element.attachmentPoint),
-                        refY + getYOffset(this, element.attachmentAnchor) - getYOffset(element, element.attachmentPoint),
-                        screenWidth, screenHeight, mouseX, mouseY, opacity)));
+                .forEach((element -> {
+                    element.updateAnimations();
+                    element.draw(
+                            refX + getXOffset(this, element.attachmentAnchor) - getXOffset(element, element.attachmentPoint),
+                            refY + getYOffset(this, element.attachmentAnchor) - getYOffset(element, element.attachmentPoint),
+                            screenWidth, screenHeight, mouseX, mouseY, opacity);
+                }));
     }
 
     protected static int getXOffset(GuiElement element, GuiAttachment attachment) {

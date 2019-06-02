@@ -147,7 +147,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public SchemaType getType() {
-        return SchemaType.major;
+        return SchemaType.improvement;
     }
 
     @Override
@@ -155,4 +155,8 @@ public class BookEnchantSchema implements UpgradeSchema {
         return glyph;
     }
 
+    @Override
+    public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
+        return new OutcomePreview[0];
+    }
 }

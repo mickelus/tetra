@@ -44,6 +44,7 @@ import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.forged.*;
+import se.mickelus.tetra.items.journal.ItemJournal;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
@@ -123,7 +124,8 @@ public class TetraMod {
                 new ItemMesh(),
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
-                new ItemVentPlate()
+                new ItemVentPlate(),
+                new ItemJournal()
         };
 
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());

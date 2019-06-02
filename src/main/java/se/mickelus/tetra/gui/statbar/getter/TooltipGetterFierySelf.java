@@ -16,7 +16,7 @@ public class TooltipGetterFierySelf implements ITooltipGetter {
 
     @Override
     public String getTooltip(EntityPlayer player, ItemStack itemStack) {
-        return I18n.format("stats.fiery.tooltip",
+        return I18n.format("stats.fierySelf.tooltip",
                 String.format("%.2f%%", efficiencyGetter.getValue(player, itemStack)),
                 String.format("%.2f", levelGetter.getValue(player, itemStack)));
     }

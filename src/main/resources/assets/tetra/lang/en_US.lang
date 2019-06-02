@@ -1,6 +1,15 @@
 itemGroup.tetra=Tetra
 
 ###############################
+# JOURNAL
+###############################
+journal.craft.breadcrumb.root=Items
+journal.craft.sword=Blades
+journal.craft.toolbelt=Toolbelts
+journal.craft.tool=Tools
+journal.craft.slot=Slot
+
+###############################
 # WORKBENCH
 ###############################
 workbench.schema_list.empty=No upgrades available for the selected slot.
