@@ -55,6 +55,9 @@ stats.bleeding.tooltip=Hitting entities has a 30%% chance to cause them to bleed
 stats.backstab=Backstab
 stats.backstab.tooltip=Hitting entities from behind cause critical hits that deal §e%s§r bonus damage
 
+stats.armor=Armor
+stats.armor.tooltip=Provides §e%s§r armor when held
+
 stats.armorPenetration=Penetrating
 stats.armorPenetration.tooltip=Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor
 
@@ -242,15 +245,15 @@ remove_schema.description=Remove the module in the selected slot.
 ###############################
 # BOOK ENCHANT SCHEMA
 ###############################
-book_enchant.name=Apply enchantment
-book_enchant.description=Apply the enchantments from an enchanted book to the selected module.
+book_enchant.name=Enchant
+book_enchant.description=Apply the enchantments from an enchanted book onto the selected part.
 book_enchant.slot1=Enchanted book
 
 ###############################
 # ENCHANTS
 ###############################
 enchantment/fire_aspect.name=Fire Aspect
-enchantment/fire_aspect.description=Striking entities sets them on fire
+enchantment/fire_aspect.description=Hitting entities sets them on fire
 enchantment/looting.name=Looting
 enchantment/looting.description=Increases drops when killing entities
 enchantment/unbreaking.name=Unbreaking
@@ -423,11 +426,11 @@ blade_hone_tempered_3_schema.name=Hone: Tempered III
 blade_hone_tempered_3_schema.description=Further hone the serrated improvement, increases the amount of damage that penetrates armor to 5.
 
 hooked_blade_schema.name=Notch hook
-hooked_blade_schema.description=Notch the back side of the blade, providing additional damage when striking unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
+hooked_blade_schema.description=Notch the back side of the blade, providing additional damage when hitting unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
 blade_hone_hooked_2_schema.name=Hone: Hooked II
-blade_hone_hooked_2_schema.description=Hone the hooked improvement, increases the bonus damage dealt when striking enemies from behind to 75%%.
+blade_hone_hooked_2_schema.description=Hone the hooked improvement, increases the bonus damage dealt when hitting enemies from behind to 75%%.
 blade_hone_hooked_3_schema.name=Hone: Hooked III
-blade_hone_hooked_3_schema.description=Further hone the hooked improvement, increases the bonus damage dealt when striking enemies from behind to 125%%.
+blade_hone_hooked_3_schema.description=Further hone the hooked improvement, increases the bonus damage dealt when hitting enemies from behind to 125%%.
 
 ###############################
 # BASIC HILT
@@ -837,7 +840,7 @@ short_blade/knightmetal.name=Dagger
 
 short_blade/hooked.name=Hooked blade
 short_blade/hooked.prefix=Hooked
-short_blade/hooked.description=Striking enemies from behind cause critical damage
+short_blade/hooked.description=Hitting enemies from behind cause critical damage
 
 short_blade/tempered.name=Tempered point
 short_blade/tempered.prefix=Tempered

@@ -117,12 +117,12 @@ public class GuiStatGroup extends GuiElement {
                 new TooltipGetterInteger("stats.looting.tooltip", lootingGetter)));
 
         IStatGetter fieryGetter = new StatGetterEffectLevel(ItemEffect.fiery, 4);
-        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fieryping"),
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.fiery"),
                 0, 32, false, fieryGetter, LabelGetterBasic.integerLabel,
                 new TooltipGetterInteger("stats.fiery.tooltip", fieryGetter)));
 
         IStatGetter smiteGetter = new StatGetterEffectLevel(ItemEffect.smite, 2.5);
-        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.smiteping"),
+        bars.add(new GuiStatBar(0, 0, barLength, I18n.format("stats.smite"),
                 0, 25, false, smiteGetter, LabelGetterBasic.decimalLabel,
                 new TooltipGetterDecimal("stats.smite.tooltip", smiteGetter)));
 
