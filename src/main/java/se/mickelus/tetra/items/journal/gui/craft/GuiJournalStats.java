@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.workbench.gui;
+package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,12 +16,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class GuiStatGroup extends GuiElement {
+public class GuiJournalStats extends GuiElement {
 
     private List<GuiStatBase> bars;
     private GuiElement barGroup;
 
-    public GuiStatGroup(int x, int y) {
+    public GuiJournalStats(int x, int y) {
         super(x, y, 200, 52);
 
         bars = new LinkedList<>();
@@ -82,20 +82,13 @@ public class GuiStatGroup extends GuiElement {
     }
 
     private void realignBar(GuiStatBase bar) {
-        int count = barGroup.getNumChildren();
+        int index = barGroup.getNumChildren();
 
-        bar.setY(-17 * ((count % 6) / 2) - 3);
+        bar.setAttachment(GuiAttachment.topLeft);
+        bar.setAlignment(GuiAlignment.left);
 
-        int xOffset = 3 + (count / 6) * (GuiStats.barLength + 3);
-        if (count % 2 == 0) {
-            bar.setX(xOffset);
-            bar.setAttachmentPoint(GuiAttachment.bottomLeft);
-            bar.setAlignment(GuiAlignment.left);
-        } else {
-            bar.setX(-xOffset);
-            bar.setAttachmentPoint(GuiAttachment.bottomRight);
-            bar.setAlignment(GuiAlignment.right);
-        }
+        bar.setX((index % 3) * (GuiStats.barLength + 10));
+        bar.setY(17 * ((index / 3)));
     }
 
 }

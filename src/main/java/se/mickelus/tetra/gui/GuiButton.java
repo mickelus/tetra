@@ -48,6 +48,11 @@ public class GuiButton extends GuiClickable {
         updateColor();
     }
 
+    public void setText(String text) {
+        textElement.setString(text);
+        setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(text));
+    }
+
     @Override
     protected void onFocus() {
         updateColor();

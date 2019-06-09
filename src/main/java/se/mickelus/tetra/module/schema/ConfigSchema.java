@@ -329,7 +329,7 @@ public class ConfigSchema extends BaseSchema {
                     }
 
                     ItemStack itemStack = targetStack.copy();
-                    applyOutcome(outcome, targetStack, false, slot, null);
+                    applyOutcome(outcome, itemStack, false, slot, null);
 
                     return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredCapabilities,
                             outcome.material.getApplicableItemstacks());

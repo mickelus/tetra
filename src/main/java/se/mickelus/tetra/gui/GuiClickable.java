@@ -26,7 +26,7 @@ public class GuiClickable extends GuiElement {
 
     @Override
     public boolean onClick(int x, int y) {
-        if (x >= screenX && x <= screenX + width && y >= screenY && y <= screenY + height) {
+        if (hasFocus()) {
             onClickHandler.run();
             return true;
         }

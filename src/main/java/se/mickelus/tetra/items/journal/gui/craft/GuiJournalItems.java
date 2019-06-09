@@ -46,6 +46,12 @@ public class GuiJournalItems extends GuiElement {
                 .start();
     }
 
+    public void animateBack() {
+        new KeyframeAnimation(100, this)
+                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
+                .start();
+    }
+
     public void changeItem(Item item) {
         if (item instanceof ItemSwordModular) {
             toolbelt.setVisible(false);

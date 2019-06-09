@@ -78,10 +78,17 @@ public class Material {
 
     @SideOnly(Side.CLIENT)
     public ItemStack[] getApplicableItemstacks() {
-        if (itemStack != null) {
+        if (itemStack != null && !itemStack.isEmpty()) {
             return new ItemStack[] { itemStack };
         } else if (ore != null) {
             NonNullList<ItemStack> itemStacks = OreDictionary.getOres(ore);
+
+            itemStacks.forEach(stack -> stack.setCount(count));
+
+            itemStacks.stream()
+                    .filter(stack -> stack.getItemDamage() == OreDictionary.WILDCARD_VALUE)
+                    .forEach(stack -> stack.setItemDamage(0));
+
             return itemStacks.toArray(new ItemStack[0]);
         }
 

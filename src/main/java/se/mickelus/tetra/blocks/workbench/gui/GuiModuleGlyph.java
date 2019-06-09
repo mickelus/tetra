@@ -54,7 +54,7 @@ public class GuiModuleGlyph extends GuiElement {
             GlStateManager.translate(0.5F, 0.5F, 0);
         }
 
-        GlStateManager.color(red, blue, green, 1);
+        GlStateManager.color(red, blue, green, opacity * this.opacity);
         drawTexturedModalRect(
                 refX + x,
                 refY + y,

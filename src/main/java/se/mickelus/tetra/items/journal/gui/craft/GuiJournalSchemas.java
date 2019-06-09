@@ -2,6 +2,8 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import se.mickelus.tetra.blocks.workbench.gui.GuiSchemaListItem;
 import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.SchemaRarity;
@@ -16,10 +18,20 @@ public class GuiJournalSchemas extends GuiElement {
 
     private Consumer<UpgradeSchema> onSchemaSelect;
 
+    private KeyframeAnimation showAnimation;
+    private KeyframeAnimation hideAnimation;
+
     public GuiJournalSchemas(int x, int y, int width, int height, Consumer<UpgradeSchema> onSchemaSelect) {
         super(x, y, width, height);
 
         this.onSchemaSelect = onSchemaSelect;
+
+        showAnimation = new KeyframeAnimation(80, this)
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y));
+
+        hideAnimation = new KeyframeAnimation(60, this)
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 5))
+                .onStop(complete -> this.isVisible = false);
     }
 
     public void update(ItemModular item, String slot) {
@@ -44,5 +56,20 @@ public class GuiJournalSchemas extends GuiElement {
                     103,
                     schema, () -> onSchemaSelect.accept(schema)));
         }
+    }
+
+    @Override
+    protected void onShow() {
+        super.onShow();
+        hideAnimation.stop();
+        showAnimation.start();
+    }
+
+    @Override
+    protected boolean onHide() {
+        showAnimation.stop();
+        hideAnimation.start();
+
+        return false;
     }
 }

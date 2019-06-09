@@ -122,12 +122,12 @@ stats.toolbelt.booster=Boost strength
 stats.toolbelt.booster.tooltip=Provides jump boost and limited flight with strength §e%s
 
 
-stats.hammer.tooltip=This item can be used for hammering, usable when crafting and salvaging\n\n§7Hammer tier: §e%s§7\nHammer efficiency: §e%s
-stats.axe.tooltip=This item can be used for chopping wood\n\n§7Axe tier: §e%s§7\nAxe efficiency: §e%s
-stats.pickaxe.tooltip=This item can be used for mining\n\n§7Pickaxe tier: §e%s§7\nPickaxe efficiency: §e%s
-stats.shovel.tooltip=This item can be used for digging\n\n§7Shovel tier: §e%s§7\nShovel efficiency: §e%s
-stats.cut.tooltip=This item can be used for cutting, usable for crafting and for breaking webs and plants\n\n§7Cut tier: §e%s§7\nCut efficiency: §e%s
-stats.pry.tooltip=This item can be used for prying things open, usable for salvaging\n\n§7Pry tier: §e%s§7\nPry efficiency: §e%s
+stats.hammer.tooltip=This item can be used for hammering, usable when crafting and salvaging\n\n§7Hammer tier: §e%s\n§7:sHammer efficiency: §e%s
+stats.axe.tooltip=This item can be used for chopping wood\n\n§7Axe tier: §e%s\n§7:sAxe efficiency: §e%s
+stats.pickaxe.tooltip=This item can be used for mining\n\n§7Pickaxe tier: §e%s\n§7:sPickaxe efficiency: §e%s
+stats.shovel.tooltip=This item can be used for digging\n\n§7Shovel tier: §e%s\n§7:sShovel efficiency: §e%s
+stats.cut.tooltip=This item can be used for cutting, usable for crafting and for breaking webs and plants\n\n§7Cut tier: §e%s\n§7:sCut efficiency: §e%s
+stats.pry.tooltip=This item can be used for prying things open, usable for salvaging\n\n§7Pry tier: §e%s\n§7:sPry efficiency: §e%s
 
 stats.integrity_usage=Integrity usage: %s/%s
 stats.integrity_usage.tooltip=Integrity is provided by some modules (often in a specific slot), while it is required by other modules and most improvements.
@@ -425,8 +425,8 @@ blade_hone_tempered_2_schema.description=Hone the tempered improvement, increase
 blade_hone_tempered_3_schema.name=Hone: Tempered III
 blade_hone_tempered_3_schema.description=Further hone the serrated improvement, increases the amount of damage that penetrates armor to 5.
 
-hooked_blade_schema.name=Notch hook
-hooked_blade_schema.description=Notch the back side of the blade, providing additional damage when hitting unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
+hooked_blade_schema.name=Carve hook
+hooked_blade_schema.description=Carve a hook into the back side of the blade, providing additional damage when hitting unsuspecting enemies. Cause critical strikes when attacking enemies from behind.
 blade_hone_hooked_2_schema.name=Hone: Hooked II
 blade_hone_hooked_2_schema.description=Hone the hooked improvement, increases the bonus damage dealt when hitting enemies from behind to 75%%.
 blade_hone_hooked_3_schema.name=Hone: Hooked III

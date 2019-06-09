@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
@@ -80,6 +81,10 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
 
         this.schema = null;
         schemaView.setVisible(false);
+
+        if (depth > 1) {
+            itemsView.animateBack();
+        }
 
         updateBreadcrumb();
     }

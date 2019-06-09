@@ -116,6 +116,38 @@ public class GuiJournalItem extends GuiClickable {
     }
 
     @Override
+    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
+        mouseX -= refX + x;
+        mouseY -= refY + y;
+        boolean gainFocus = true;
+
+        if (mouseX + mouseY < 44) {
+            gainFocus = false;
+        }
+
+        if (mouseX + mouseY > 84) {
+            gainFocus = false;
+        }
+
+        if (mouseX - mouseY > 16) {
+            gainFocus = false;
+        }
+
+        if (mouseY - mouseX > 19) {
+            gainFocus = false;
+        }
+
+        if (gainFocus != hasFocus) {
+            hasFocus = gainFocus;
+            if (hasFocus) {
+                onFocus();
+            } else {
+                onBlur();
+            }
+        }
+    }
+
+    @Override
     protected void onFocus() {
         if (!isSelected) {
             backdrop.setColor(GuiColors.hover);

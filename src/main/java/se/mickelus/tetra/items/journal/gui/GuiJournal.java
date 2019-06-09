@@ -13,13 +13,12 @@ import se.mickelus.tetra.items.journal.gui.craft.GuiJournalCraftRoot;
 import se.mickelus.tetra.items.journal.gui.system.GuiJournalSystemRoot;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
 public class GuiJournal extends GuiScreen {
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
-    private static final String INVENTORY_TEXTURE = "textures/gui/player-inventory.png";
 
     private final GuiJournalHeader header;
 
@@ -81,9 +80,10 @@ public class GuiJournal extends GuiScreen {
         if (tooltipLines != null) {
             tooltipLines = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
+                    .flatMap(line -> Arrays.stream(line.split("\n")))
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, fontRenderer);
+            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, 300, fontRenderer);
         }
     }
 
