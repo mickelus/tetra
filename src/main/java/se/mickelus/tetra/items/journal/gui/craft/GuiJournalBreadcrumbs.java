@@ -22,8 +22,6 @@ public class GuiJournalBreadcrumbs extends GuiElement {
     private List<GuiElement> separators;
     private List<GuiButton> buttons;
 
-    private GuiKeybinding keybinding;
-
     public GuiJournalBreadcrumbs(int x, int y, int width, Consumer<Integer> onClick) {
         super(x, y, width, 16);
 
@@ -39,7 +37,7 @@ public class GuiJournalBreadcrumbs extends GuiElement {
         separators = new ArrayList<>();
         buttons = new ArrayList<>();
 
-        keybinding = new GuiKeybinding(0, 3, "Q");
+        GuiKeybinding keybinding = new GuiKeybinding(0, 3, "" + GuiJournalCraftRoot.backBinding);
         keybinding.setAttachmentPoint(GuiAttachment.topRight);
         keybinding.setOpacity(0);
         addChild(keybinding);

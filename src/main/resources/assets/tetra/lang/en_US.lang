@@ -8,6 +8,10 @@ journal.craft.sword=Blades
 journal.craft.toolbelt=Toolbelts
 journal.craft.tool=Tools
 journal.craft.slot=Slot
+journal.craft.requirements=Requirements
+journal.craft.improvements=Improvements
+journal.craft.stats=Stats
+journal.craft.variants=Variants
 
 ###############################
 # WORKBENCH

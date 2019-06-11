@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.journal;
 
 public enum JournalPage {
     craft("CRFT"),
-    blueprint("BRPT"),
+    structures("STRC"),
     system("SYST");
 
     public String label;

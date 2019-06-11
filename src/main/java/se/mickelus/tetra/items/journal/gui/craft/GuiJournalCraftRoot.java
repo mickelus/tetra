@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
@@ -12,6 +11,8 @@ import se.mickelus.tetra.module.schema.UpgradeSchema;
 import java.util.LinkedList;
 
 public class GuiJournalCraftRoot extends GuiJournalRootBase {
+
+    public static final char backBinding = 'q';
 
     private GuiJournalBreadcrumbs breadcrumbs;
     private int depth = 0;
@@ -47,7 +48,7 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
     @Override
     public void onKeyTyped(char typedChar) {
         switch (typedChar) {
-            case 'q':
+            case backBinding:
                 if (depth > 0) {
                     onBreadcrumbClick(depth - 1);
                 }

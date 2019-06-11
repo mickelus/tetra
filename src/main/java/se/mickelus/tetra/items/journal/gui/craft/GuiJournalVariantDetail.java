@@ -47,7 +47,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         addChild(variantLabel);
 
         // variant requirements
-        GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, "Requirements");
+        GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, I18n.format("journal.craft.requirements"));
         requirementsLabel.setColor(GuiColors.muted);
         addChild(requirementsLabel);
 
@@ -64,7 +64,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         }
 
         // variant improvements
-        improvementsLabel = new GuiStringSmall(57, 13, "Improvements");
+        improvementsLabel = new GuiStringSmall(57, 13, I18n.format("journal.craft.improvements"));
         improvementsLabel.setColor(GuiColors.muted);
         addChild(improvementsLabel);
 
@@ -72,7 +72,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         addChild(improvements);
 
         // variant stats
-        GuiStringSmall statsLabel = new GuiStringSmall(120, 13, "Stats");
+        GuiStringSmall statsLabel = new GuiStringSmall(120, 13, I18n.format("journal.craft.stats"));
         statsLabel.setColor(GuiColors.muted);
         addChild(statsLabel);
 

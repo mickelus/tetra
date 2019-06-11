@@ -10,7 +10,7 @@ public class GuiJournalBlueprintRoot extends GuiJournalRootBase {
     public GuiJournalBlueprintRoot(int x, int y) {
         super(x, y);
 
-        GuiString test = new GuiString(0, 0, ChatFormatting.OBFUSCATED + "blueprint");
+        GuiString test = new GuiString(0, 0, ChatFormatting.OBFUSCATED + "structures");
         test.setAttachment(GuiAttachment.middleCenter);
         addChild(test);
     }

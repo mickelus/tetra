@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
@@ -32,7 +33,7 @@ public class GuiJournalVariants extends GuiElement {
                               Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, width, 50);
 
-        GuiString variantsLabel = new GuiStringSmall(0, 0, "Variants");
+        GuiString variantsLabel = new GuiStringSmall(0, 0, I18n.format("journal.craft.variants"));
         variantsLabel.setColor(GuiColors.muted);
         addChild(variantsLabel);
 
