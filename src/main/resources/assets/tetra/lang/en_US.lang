@@ -3,6 +3,7 @@ itemGroup.tetra=Tetra
 ###############################
 # JOURNAL
 ###############################
+item.journal.name=Holosphere
 journal.craft.breadcrumb.root=Items
 journal.craft.sword=Blades
 journal.craft.toolbelt=Toolbelts
