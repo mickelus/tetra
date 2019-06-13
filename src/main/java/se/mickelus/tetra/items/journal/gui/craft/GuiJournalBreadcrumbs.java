@@ -13,6 +13,7 @@ public class GuiJournalBreadcrumbs extends GuiElement {
 
     private Consumer<Integer> onClick;
 
+    private KeyframeAnimation openAnimation;
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
@@ -26,6 +27,10 @@ public class GuiJournalBreadcrumbs extends GuiElement {
         super(x, y, width, 16);
 
         this.onClick = onClick;
+
+        openAnimation = new KeyframeAnimation(80, this)
+                .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(x - 5, x))
+                .withDelay(80);
 
         showAnimation = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateX(x));
@@ -129,6 +134,12 @@ public class GuiJournalBreadcrumbs extends GuiElement {
                     .onStop(finished -> separator.remove())
                     .start();
         }
+    }
+
+    public void animateOpen(boolean fast) {
+        openAnimation
+                .withDelay(fast ? 80 : 600)
+                .start();
     }
 
     @Override

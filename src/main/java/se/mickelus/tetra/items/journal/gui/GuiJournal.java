@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
 import se.mickelus.tetra.items.journal.JournalPage;
@@ -27,6 +28,8 @@ public class GuiJournal extends GuiScreen {
 
     private GuiElement defaultGui;
 
+    private static GuiJournal instance;
+
     public GuiJournal() {
         super();
 
@@ -39,11 +42,9 @@ public class GuiJournal extends GuiScreen {
 
         header = new GuiJournalHeader(0, 0, width, this::changePage);
         defaultGui.addChild(header);
-        header.onShow();
 
         pages = new GuiJournalRootBase[JournalPage.values().length];
         pages[0] = new GuiJournalCraftRoot(0, 18);
-        pages[0].animateOpen();
         defaultGui.addChild(pages[0]);
         pages[1] = new GuiJournalBlueprintRoot(0, 18);
         pages[1].setVisible(false);
@@ -53,6 +54,19 @@ public class GuiJournal extends GuiScreen {
         defaultGui.addChild(pages[2]);
 
         currentPage = pages[0];
+    }
+
+    public static GuiJournal getInstance() {
+        if (instance == null || ConfigHandler.development) {
+            instance = new GuiJournal();
+        }
+
+        return instance;
+    }
+
+    public void onShow() {
+        header.onShow();
+        currentPage.animateOpen();
     }
 
     private void changePage(JournalPage page) {

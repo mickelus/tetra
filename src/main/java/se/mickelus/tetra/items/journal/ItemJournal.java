@@ -8,6 +8,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.TetraItem;
@@ -42,7 +43,10 @@ public class ItemJournal extends TetraItem {
     }
 
     private void showGui() {
-        Minecraft.getMinecraft().displayGuiScreen(new GuiJournal());
+        GuiJournal gui = GuiJournal.getInstance();
+
+        Minecraft.getMinecraft().displayGuiScreen(gui);
+        gui.onShow();
     }
     
 }

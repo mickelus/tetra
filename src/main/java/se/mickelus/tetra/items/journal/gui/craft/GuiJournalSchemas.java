@@ -18,6 +18,8 @@ public class GuiJournalSchemas extends GuiElement {
 
     private Consumer<UpgradeSchema> onSchemaSelect;
 
+    private KeyframeAnimation openAnimation;
+
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
@@ -25,6 +27,10 @@ public class GuiJournalSchemas extends GuiElement {
         super(x, y, width, height);
 
         this.onSchemaSelect = onSchemaSelect;
+
+        openAnimation = new KeyframeAnimation(80, this)
+                .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(y - 5, y))
+                .withDelay(120);
 
         showAnimation = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y));
@@ -56,6 +62,10 @@ public class GuiJournalSchemas extends GuiElement {
                     103,
                     schema, () -> onSchemaSelect.accept(schema)));
         }
+    }
+
+    public void animateOpen() {
+        openAnimation.start();
     }
 
     @Override

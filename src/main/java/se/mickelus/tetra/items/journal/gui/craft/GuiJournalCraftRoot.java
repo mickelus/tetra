@@ -168,6 +168,19 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
     }
 
     public void animateOpen() {
-        itemsView.animateOpen();
+        switch (depth) {
+            case 0:
+            case 1:
+                itemsView.animateOpen();
+                break;
+            case 2:
+                schemasView.animateOpen();
+                break;
+            case 3:
+                schemaView.animateOpen();
+                break;
+        }
+
+        breadcrumbs.animateOpen(depth > 1);
     }
 }

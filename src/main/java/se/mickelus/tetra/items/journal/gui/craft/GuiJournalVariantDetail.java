@@ -37,6 +37,7 @@ public class GuiJournalVariantDetail extends GuiElement {
 
     private int[] capabilityLevels;
 
+    private KeyframeAnimation openAnimation;
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
@@ -80,12 +81,20 @@ public class GuiJournalVariantDetail extends GuiElement {
         addChild(stats);
 
         // animations
+        openAnimation = new KeyframeAnimation(80, this)
+                .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(y - 4, y))
+                .withDelay(120);
+
         showAnimation = new KeyframeAnimation(60, this)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y));
 
         hideAnimation = new KeyframeAnimation(60, this)
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 5))
-                .onStop(complete -> this.isVisible = false);
+                .onStop(complete -> {
+                    if (complete) {
+                        this.isVisible = false;
+                    }
+                });
     }
 
     public void updateVariant(OutcomePreview selectedOutcome, OutcomePreview hoveredOutcome, String slot) {
@@ -131,6 +140,10 @@ public class GuiJournalVariantDetail extends GuiElement {
         } else {
             setVisible(false);
         }
+    }
+
+    public void animateOpen() {
+        openAnimation.start();
     }
 
     @Override

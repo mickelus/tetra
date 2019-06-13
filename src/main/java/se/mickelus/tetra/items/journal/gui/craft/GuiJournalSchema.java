@@ -50,6 +50,13 @@ public class GuiJournalSchema extends GuiElement {
         detail.updateVariant(selectedVariant, hoveredVariant, slot);
     }
 
+    public void animateOpen() {
+        list.onShow();
+        if (selectedVariant != null) {
+            detail.animateOpen();
+        }
+    }
+
     @Override
     protected void onShow() {
         list.setVisible(true);
