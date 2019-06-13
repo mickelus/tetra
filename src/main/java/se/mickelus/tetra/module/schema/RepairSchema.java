@@ -100,7 +100,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return acceptsMaterial(itemStack, 0, materials[0]);
+        return acceptsMaterial(itemStack, 0, materials[0])
+                && materials[0].getCount() >= getRequiredQuantity(itemStack, 0, materials[0]);
     }
 
     @Override
