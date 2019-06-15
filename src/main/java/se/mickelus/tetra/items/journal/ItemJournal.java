@@ -8,12 +8,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import se.mickelus.tetra.ConfigHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.journal.gui.GuiJournal;
-import se.mickelus.tetra.items.toolbelt.GuiHandlerToolbelt;
 
 public class ItemJournal extends TetraItem {
 
@@ -42,6 +42,7 @@ public class ItemJournal extends TetraItem {
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
+    @SideOnly(Side.CLIENT)
     private void showGui() {
         GuiJournal gui = GuiJournal.getInstance();
 
