@@ -10,7 +10,13 @@ public class GuiBarSegmented extends GuiBar {
     private int segmentLength;
 
     public GuiBarSegmented(int x, int y, int barLength, double min, double max) {
-        super(x, y, barLength + 1, min, max);
+        super(x, y, barLength, min, max);
+
+        maxSegments = (int) (max - min);
+    }
+
+    public GuiBarSegmented(int x, int y, int barLength, double min, double max, boolean invertedDiff) {
+        super(x, y, barLength + 1, min, max, invertedDiff);
 
         maxSegments = (int) (max - min);
     }
@@ -23,7 +29,7 @@ public class GuiBarSegmented extends GuiBar {
         diffCount = (int) Math.ceil(Math.abs(value - diffValue));
 
         segmentLength = width / maxSegments;
-        diffColor = value < diffValue ? increaseColorBar : decreaseColorBar;
+        diffColor = invertedDiff ^ value < diffValue ? increaseColorBar : decreaseColorBar;
     }
 
     @Override

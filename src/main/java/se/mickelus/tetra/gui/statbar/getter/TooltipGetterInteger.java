@@ -9,6 +9,14 @@ public class TooltipGetterInteger implements ITooltipGetter {
     protected IStatGetter statGetter;
     protected String localizationKey;
 
+    protected boolean absolute = false;
+
+    public TooltipGetterInteger(String localizationKey, IStatGetter statGetter, boolean absolute) {
+        this(localizationKey, statGetter);
+
+        this.absolute = absolute;
+    }
+
     public TooltipGetterInteger(String localizationKey, IStatGetter statGetter) {
         this.localizationKey = localizationKey;
         this.statGetter = statGetter;
@@ -17,6 +25,9 @@ public class TooltipGetterInteger implements ITooltipGetter {
 
     @Override
     public String getTooltip(EntityPlayer player, ItemStack itemStack) {
+        if (absolute) {
+            return I18n.format(localizationKey, (int) Math.abs(statGetter.getValue(player, itemStack)));
+        }
         return I18n.format(localizationKey, (int) statGetter.getValue(player, itemStack));
     }
 }

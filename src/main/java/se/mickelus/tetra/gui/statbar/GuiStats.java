@@ -152,6 +152,8 @@ public class GuiStats {
                 0, 100, false, enderReverbGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("stats.enderReverb.tooltip", enderReverbGetter));
 
+    public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
+
 
 
 // todo: remaining effects

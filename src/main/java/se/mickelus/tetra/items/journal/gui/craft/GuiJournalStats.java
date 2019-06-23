@@ -29,6 +29,7 @@ public class GuiJournalStats extends GuiElement {
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
 
+        bars.add(GuiStats.integrity);
         bars.add(GuiStats.damage);
         bars.add(GuiStats.speedNormalized);
         bars.add(GuiStats.durability);
