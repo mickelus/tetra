@@ -30,6 +30,11 @@ public class GuiStatBar extends GuiStatBase {
 
     public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented,
             IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+        this(x, y, barLength, label, min, max, segmented, false, statGetter, labelGetter, tooltipGetter);
+    }
+
+    public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented, boolean split,
+            IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         super(x, y, barLength, 12);
 
         this.min = min;
@@ -41,7 +46,11 @@ public class GuiStatBar extends GuiStatBase {
         if (segmented) {
             bar = new GuiBarSegmented(0, 0, barLength, min, max);
         } else {
-            bar = new GuiBar(0, 0, barLength, min, max);
+            if (split) {
+                bar = new GuiBarSplit(0, 0, barLength, max);
+            } else {
+                bar = new GuiBar(0, 0, barLength, min, max);
+            }
         }
 
         addChild(labelString);

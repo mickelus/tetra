@@ -22,6 +22,11 @@ public class GuiStats {
                 0, 4, false, speedGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterSpeed());
 
+    public static final IStatGetter speedGetterNormalized = new StatGetterSpeedNormalized();
+    public static final GuiStatBar speedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("stats.speed_normalized"),
+            -3, 3, false, true, speedGetterNormalized, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("stats.speed_normalized.tooltip", speedGetterNormalized));
+
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, I18n.format("stats.durability"),
                 0, 2400, false, durabilityGetter, LabelGetterBasic.integerLabel,

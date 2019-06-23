@@ -17,13 +17,21 @@ public class GuiBar extends GuiElement {
     protected int barLength;
     protected int diffLength;
 
+    protected boolean invertedDiff = false;
+
     protected GuiAlignment alignment = GuiAlignment.left;
 
     public GuiBar(int x, int y, int barLength, double min, double max) {
+        this(x, y, barLength, min, max, false);
+    }
+
+    public GuiBar(int x, int y, int barLength, double min, double max, boolean invertedDiff) {
         super(x, y, barLength, 1);
 
         this.min = min;
         this.max = max;
+
+        this.invertedDiff = invertedDiff;
     }
 
     public void setAlignment(GuiAlignment alignment) {
@@ -43,7 +51,7 @@ public class GuiBar extends GuiElement {
         barLength = (int) Math.floor((minValue - min) / (max - min) * width);
         diffLength = (int) Math.ceil( Math.abs(value - diffValue) / (max - min) * width);
 
-        diffColor = value < diffValue ? increaseColorBar : decreaseColorBar;
+        diffColor = invertedDiff ^ value < diffValue ? increaseColorBar : decreaseColorBar;
     }
 
     @Override
