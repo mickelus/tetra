@@ -1,0 +1,33 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "particle": "tetra:blocks/transfer_unit",
+        "down": "tetra:blocks/transfer_unit",
+        "up": "tetra:blocks/transfer_unit_top",
+        "north": "tetra:blocks/transfer_unit",
+        "south": "#config",
+        "east": "#indicator",
+        "west": "#indicator"
+    },
+    "elements": [
+        {
+            "from": [ 1, 0, 0 ],
+            "to": [ 15, 12, 13 ],
+            "faces": {
+                "down":  { "texture": "#down",  "uv": [  0, 0,  14, 13 ], "cullface": "down" },
+                "up":    { "texture": "#up",    "uv": [  0, 0,  14, 13 ] },
+                "north": { "texture": "#north", "uv": [  0, 0,  14, 12 ], "cullface": "north" },
+                "south": { "texture": "#south", "uv": [  0, 0,  14, 12 ] },
+                "west":  { "texture": "#west",  "uv": [  13, 0,  0, 12 ] },
+                "east":  { "texture": "#east",  "uv": [  0, 0,  13, 12 ] }
+            }
+        },
+        {
+            "from": [ 1, 0, 0 ],
+            "to": [ 15, 12, 13 ],
+            "faces": {
+                "south":  { "texture": "#plate", "uv": [  0, 0,  14, 12 ] }
+            }
+        }
+    ]
+}
