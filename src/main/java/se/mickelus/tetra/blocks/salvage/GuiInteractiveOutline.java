@@ -74,8 +74,8 @@ public class GuiInteractiveOutline extends GuiElement {
                     blockInteraction.requiredCapability, blockInteraction.requiredLevel, player);
             addChild(capability);
 
-             float centerY = y + width / 2f;
-             float centerX = x + height / 2f;
+             float centerY = y + height / 2f;
+             float centerX = x + width / 2f;
 
             if (Math.abs(centerX - 16) > Math.abs(centerY - 16)) {
                 if (centerX < 16) {

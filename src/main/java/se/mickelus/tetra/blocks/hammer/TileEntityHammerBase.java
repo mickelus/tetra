@@ -142,11 +142,11 @@ public class TileEntityHammerBase extends TileEntity {
         return Math.max(usage, 1);
     }
 
-    public boolean hasCellInSlot(int index){
+    public boolean hasCellInSlot(int index) {
         return index >= 0 && index < slots.length && slots[index] != null;
     }
 
-    public int getCellFuel(int index){
+    public int getCellFuel(int index) {
         if (index >= 0 && index < slots.length && slots[index] != null) {
             if (slots[index].getItem() instanceof ItemCellMagmatic) {
                 ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();

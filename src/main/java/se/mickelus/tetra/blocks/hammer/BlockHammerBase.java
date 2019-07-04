@@ -38,6 +38,7 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
+import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -107,29 +108,27 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        TileEntityHammerBase te = getTileEntity(world, pos);
-        if (te != null) {
-            return state
-                    .withProperty(propCell1, te.hasCellInSlot(0))
-                    .withProperty(propCell1Charged, te.getCellFuel(0) > 0)
-                    .withProperty(propCell2, te.hasCellInSlot(1))
-                    .withProperty(propCell2Charged, te.getCellFuel(1) > 0)
-                    .withProperty(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
-                    .withProperty(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
-                    .withProperty(EnumHammerConfig.propE, te.getConfiguration(EnumFacing.EAST))
-                    .withProperty(EnumHammerConfig.propW, te.getConfiguration(EnumFacing.WEST));
-        }
-        return state;
+        return TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
+                .map(te -> state
+                        .withProperty(propCell1, te.hasCellInSlot(0))
+                        .withProperty(propCell1Charged, te.getCellFuel(0) > 0)
+                        .withProperty(propCell2, te.hasCellInSlot(1))
+                        .withProperty(propCell2Charged, te.getCellFuel(1) > 0)
+                        .withProperty(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
+                        .withProperty(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
+                        .withProperty(EnumHammerConfig.propE, te.getConfiguration(EnumFacing.EAST))
+                        .withProperty(EnumHammerConfig.propW, te.getConfiguration(EnumFacing.WEST)))
+                .orElse(state);
     }
 
     public boolean isFueled(World world, BlockPos pos) {
-        return Optional.ofNullable(getTileEntity(world, pos))
+        return TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .map(TileEntityHammerBase::isFueled)
                 .orElse(false);
     }
 
     public void consumeFuel(World world, BlockPos pos) {
-        Optional.ofNullable(getTileEntity(world, pos))
+        TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     IBlockState blockState = world.getBlockState(pos);
                     te.consumeFuel();
@@ -139,7 +138,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     public void applyEffects(World world, BlockPos pos, ItemStack itemStack, EntityPlayer player) {
-        Optional.ofNullable(getTileEntity(world, pos))
+        TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     if (te.hasEffect(EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
                         ItemModular item = (ItemModular) itemStack.getItem();
@@ -150,13 +149,13 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     public int getHammerLevel(World world, BlockPos pos) {
-        return Optional.ofNullable(getTileEntity(world, pos))
+        return TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .map(TileEntityHammerBase::getHammerLevel)
                 .orElse(0);
     }
 
     public static boolean removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
-        Optional.ofNullable(getTileEntity(world, pos))
+        TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.removePlate(plate);
 
@@ -178,7 +177,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     public static boolean reconfigure(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing adjustedFace) {
-        Optional.ofNullable(getTileEntity(world, pos))
+        TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.reconfigure(adjustedFace);
                     world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
@@ -192,7 +191,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
                                     EnumFacing facing, float hitX, float hitY, float hitZ) {
         EnumFacing blockFacing = state.getValue(propFacing);
-        TileEntityHammerBase te = getTileEntity(world, pos);
+        TileEntityHammerBase te = TileEntityOptional.from(world, pos, TileEntityHammerBase.class).orElse(null);
         ItemStack heldStack = player.getHeldItem(hand);
 
         if (te == null) {
@@ -218,10 +217,12 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 te.attachPlate(EnumHammerPlate.EAST);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 heldStack.shrink(1);
+                return true;
             } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.WEST)) {
                 te.attachPlate(EnumHammerPlate.WEST);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 heldStack.shrink(1);
+                return true;
             }
         }
 
@@ -260,21 +261,6 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TileEntityHammerBase();
-    }
-
-    private static TileEntityHammerBase getTileEntity(IBlockAccess world, BlockPos pos) {
-        TileEntity tileEntity;
-
-        if (world instanceof ChunkCache) {
-            tileEntity = ((ChunkCache)world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK);
-        } else {
-            tileEntity = world.getTileEntity(pos);
-        }
-
-        if (tileEntity instanceof TileEntityHammerBase) {
-            return (TileEntityHammerBase) tileEntity;
-        }
-        return null;
     }
 
     @Override
