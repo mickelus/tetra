@@ -273,4 +273,11 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
     }
+
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
+                .map(te -> te.getCellFuel() > 0 ? 1 : 0)
+                .orElse(0);
+    }
 }

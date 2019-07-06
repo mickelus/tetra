@@ -5,7 +5,7 @@ import se.mickelus.tetra.blocks.hammer.EnumHammerConfig;
 public enum EnumTransferEffect {
 
     SEND,
-    RECIEVE,
+    RECEIVE,
     REDSTONE;
 
 
