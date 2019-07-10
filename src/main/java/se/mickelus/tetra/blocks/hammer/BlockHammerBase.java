@@ -202,13 +202,13 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
                 spawnAsEntity(world, pos.offset(facing), te.removeCellFromSlot(slotIndex));
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.6f);
+                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setHeldItem(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.5f);
+                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
             }

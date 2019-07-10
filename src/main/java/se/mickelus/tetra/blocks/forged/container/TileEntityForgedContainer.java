@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.potion.PotionAttackDamage;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -79,7 +78,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
                 if (lidIntegrity == 0) {
                     causeOpeningEffects(worldServer);
                 } else {
-                    worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 1.3f);
+                    worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 1.3f);
                 }
 
                 if (!player.isPotionActive(MobEffects.STRENGTH)) {
