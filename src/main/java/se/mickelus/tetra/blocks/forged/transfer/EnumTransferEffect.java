@@ -1,7 +1,5 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import se.mickelus.tetra.blocks.hammer.EnumHammerConfig;
-
 public enum EnumTransferEffect {
 
     SEND,
@@ -9,7 +7,7 @@ public enum EnumTransferEffect {
     REDSTONE;
 
 
-    public static EnumTransferEffect fromConfig(EnumHammerConfig config, long seed) {
+    public static EnumTransferEffect fromConfig(EnumTransferConfig config, long seed) {
         return EnumTransferEffect.values()[config.ordinal() % EnumTransferEffect.values().length];
     }
 }

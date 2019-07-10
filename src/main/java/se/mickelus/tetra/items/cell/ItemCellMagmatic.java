@@ -29,7 +29,7 @@ public class ItemCellMagmatic extends TetraItem {
 
     private final String chargedPropKey = "tetra:charged";
 
-    public final int maxCharge = 128;
+    public static final int maxCharge = 128;
 
     public ItemCellMagmatic() {
         setRegistryName(unlocalizedName);
@@ -80,17 +80,26 @@ public class ItemCellMagmatic extends TetraItem {
         return itemStack.getMaxDamage() - itemStack.getItemDamage();
     }
 
-    public void reduceCharge(ItemStack itemStack, int amount) {
+    public int drainCharge(ItemStack itemStack, int amount) {
         if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
             setDamage(itemStack, itemStack.getItemDamage() + amount);
-        } else {
-            setDamage(itemStack, itemStack.getMaxDamage());
+            return amount;
         }
+
+        int actualAmount = itemStack.getMaxDamage() - itemStack.getItemDamage();
+        setDamage(itemStack, itemStack.getMaxDamage());
+        return actualAmount;
     }
 
-    public void recharge(ItemStack itemStack) {
+    public int recharge(ItemStack itemStack, int amount) {
+        if (getDamage(itemStack) - amount >= 0) {
+            setDamage(itemStack, getDamage(itemStack) - amount);
+            return 0;
+        }
 
+        int overfill = amount - getDamage(itemStack);
         setDamage(itemStack, 0);
+        return overfill;
     }
 
     // todo: change these for metered upgrade

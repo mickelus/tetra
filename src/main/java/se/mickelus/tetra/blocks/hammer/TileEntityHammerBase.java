@@ -1,10 +1,6 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,10 +12,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
+import org.apache.commons.lang3.EnumUtils;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
-import org.apache.commons.lang3.EnumUtils;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class TileEntityHammerBase extends TileEntity {
 
@@ -73,7 +71,7 @@ public class TileEntityHammerBase extends TileEntity {
     public void consumeFuel(int index, int amount) {
         if (index > 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
             ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
-            item.reduceCharge(slots[index], amount);
+            item.drainCharge(slots[index], amount);
         }
     }
 

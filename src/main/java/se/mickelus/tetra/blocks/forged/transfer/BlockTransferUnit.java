@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -50,6 +51,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
     public static final PropertyBool propPlate = PropertyBool.create("plate");
     public static final PropertyInteger propCell = PropertyInteger.create("cell", 0, 2);
+    public static final PropertyInteger propTransfer = PropertyInteger.create("transfer", 0, 2);
 
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
@@ -160,14 +162,21 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
         if (facing.equals(EnumFacing.UP)) {
             if (te.hasCell()) {
-                spawnAsEntity(world, pos, te.removeCell());
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.6f);
+                ItemStack cell = te.removeCell();
+                if (player.inventory.addItemStackToInventory(cell)) {
+                    player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
+                } else {
+                    spawnAsEntity(world, pos.up(), cell);
+                }
+
+                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
+
                 world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCell(heldStack);
                 player.setHeldItem(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 1, 0.5f);
+                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
                 world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
             }
@@ -175,6 +184,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
                 && heldStack.getItem() instanceof ItemVentPlate
                 && !te.hasPlate()) {
             te.attachPlate();
+            world.playSound(player, pos, SoundEvents.BLOCK_METAL_PLACE, SoundCategory.PLAYERS, 0.5f, 1);
             world.notifyBlockUpdate(pos, state, state, 3);
             heldStack.shrink(1);
             return true;
@@ -182,6 +192,14 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
         return BlockInteraction.attemptInteraction(world, getActualState(world.getBlockState(pos), world, pos), pos, player, hand,
                 facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
+        if (!pos.offset(world.getBlockState(pos).getValue(propFacing)).equals(fromPos)) {
+            TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
+                    .ifPresent(TileEntityTransferUnit::updateTransferState);
+        }
     }
 
     @Override
@@ -225,7 +243,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, propFacing, EnumTransferConfig.prop, propPlate, propCell);
+        return new BlockStateContainer(this, propFacing, EnumTransferConfig.prop, propPlate, propCell, propTransfer);
     }
 
     @Override
@@ -237,6 +255,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
                 .map(te -> actualState
                         .withProperty(propPlate, te.hasPlate())
                         .withProperty(propCell, te.hasCell() ? te.getCellFuel() > 0 ? 2 : 1 : 0)
+                        .withProperty(propTransfer, te.isReceiving() ? 2 : te.isSending() ? 1 : 0)
                         .withProperty(EnumTransferConfig.prop, te.getConfiguration()))
                 .orElse(actualState);
     }

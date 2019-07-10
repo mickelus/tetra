@@ -6,8 +6,8 @@
         "up": "tetra:blocks/transfer_unit_top",
         "north": "tetra:blocks/transfer_unit",
         "south": "#config",
-        "east": "tetra:blocks/transfer_unit_indicator_receive",
-        "west": "tetra:blocks/transfer_unit_indicator_send"
+        "east": "#indicator",
+        "west": "#indicator"
     },
     "elements": [
         {

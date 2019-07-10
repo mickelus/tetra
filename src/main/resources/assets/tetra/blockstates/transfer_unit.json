@@ -38,6 +38,19 @@
         }
       }
     },
+    "transfer": {
+      "0": {},
+      "1": {
+        "textures": {
+          "indicator": "tetra:blocks/transfer_unit_indicator_send"
+        }
+      },
+      "2": {
+        "textures": {
+          "indicator": "tetra:blocks/transfer_unit_indicator_receive"
+        }
+      }
+    },
     "plate": {
       "true": { },
       "false": { "textures": { "plate": "tetra:blocks/transparent" } }
