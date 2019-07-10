@@ -69,7 +69,7 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     public void consumeFuel(int index, int amount) {
-        if (index > 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
+        if (index >= 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
             ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
             item.drainCharge(slots[index], amount);
         }
