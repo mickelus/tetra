@@ -129,6 +129,10 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
                 && getCellFuel() > 0;
     }
 
+    public void setReceiving(boolean receiving) {
+        isReceiving = receiving;
+    }
+
     public boolean isReceiving() {
         return isReceiving;
     }
@@ -137,13 +141,21 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
         return isSending;
     }
 
-    private int drain(int amount) {
+    public int getReceiveLimit() {
+        return baseAmount;
+    }
+
+    public int getSendLimit() {
+        return baseAmount;
+    }
+
+    public int drain(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
                 .map(item -> item.drainCharge(cell, amount))
                 .orElse(0);
     }
 
-    private int fill(int amount) {
+    public int fill(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
                 .map(item -> item.recharge(cell, amount))
                 .orElse(0);
@@ -175,10 +187,10 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
 
                             // triggers visual update from empty to charged cell
                             if (connectedCurrent == 0) {
-                                notifyBlockUpdate();
-                            } else {
-                                markDirty();
+                                connected.notifyBlockUpdate();
                             }
+
+                            markDirty();
                         } else {
                             isSending = false;
                             connected.isReceiving = false;
@@ -254,7 +266,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
         markDirty();
     }
 
-    private void notifyBlockUpdate() {
+    public void notifyBlockUpdate() {
         markDirty();
         IBlockState state = world.getBlockState(pos);
         world.notifyBlockUpdate(pos, state, state,3);

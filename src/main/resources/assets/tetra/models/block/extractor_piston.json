@@ -1,0 +1,32 @@
+{
+    "textures": {
+        "texture": "tetra:blocks/extractor_piston",
+        "particle": "tetra:blocks/extractor_piston"
+    },
+    "elements": [
+        {
+            "name": "head",
+            "from": [ 5, 0, 5 ],
+            "to": [ 11, 16, 11 ],
+            "faces": {
+                "north": { "texture": "#texture", "uv": [ 0, 0, 6, 16 ] },
+                "east": { "texture": "#texture", "uv":  [ 0, 0, 6, 16 ] },
+                "south": { "texture": "#texture", "uv": [ 0, 0, 6, 16 ] },
+                "west": { "texture": "#texture", "uv":  [ 0, 0, 6, 16 ] },
+                "up": { "texture": "#texture", "uv":    [ 10, 0, 16, 6 ] },
+                "down": { "texture": "#texture", "uv":  [ 10, 0, 16, 6 ] }
+            }
+        },
+        {
+            "from": [ 6, 0, 6 ],
+            "to": [ 10, 16, 10 ],
+            "faces": {
+                "north": { "texture": "#texture", "uv": [ 6, 0, 10, 16 ] },
+                "east": { "texture": "#texture", "uv":  [ 6, 0, 10, 16 ] },
+                "south": { "texture": "#texture", "uv": [ 6, 0, 10, 16 ] },
+                "west": { "texture": "#texture", "uv":  [ 6, 0, 10, 16 ] },
+                "down": { "texture": "#texture", "uv":  [ 11, 1, 15, 5 ] }
+            }
+        }
+    ]
+}

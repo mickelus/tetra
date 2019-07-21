@@ -30,6 +30,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
+import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorBase;
+import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorPiston;
 import se.mickelus.tetra.blocks.forged.transfer.BlockTransferUnit;
 import se.mickelus.tetra.blocks.geode.BlockGeode;
 import se.mickelus.tetra.blocks.geode.ItemGeode;
@@ -111,7 +113,9 @@ public class TetraMod {
                     new BlockForgedVent(),
                     new BlockForgedContainer(),
                     new BlockForgedCrate(),
-                    new BlockTransferUnit()
+                    new BlockTransferUnit(),
+                    new BlockCoreExtractorBase(),
+                    new BlockCoreExtractorPiston()
             );
         }
 

@@ -1,0 +1,20 @@
+{
+    "parameters": {
+        "cycle_start": ["-", "#activation_time"],
+        "cycle": [ "compose", [ "/",  5] , "#cycle_start" ],
+        "end_cycle": [ "-", "#activation_time" ]
+    },
+    "clips": {
+        "default": [ "apply", "tetra:block/extractor_piston@default", 0],
+        "active": [ "apply", "tetra:block/extractor_piston@default", "#cycle"]
+    },
+    "states": [
+        "default",
+        "active"
+    ],
+    "transitions": {
+        "default": "active",
+        "active": "default"
+    },
+    "start_state": "default"
+}

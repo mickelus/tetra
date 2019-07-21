@@ -23,6 +23,7 @@ import se.mickelus.tetra.blocks.forged.BlockForgedCrate;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TESRForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TileEntityForgedContainer;
+import se.mickelus.tetra.blocks.forged.extractor.TileEntityCoreExtractorPiston;
 import se.mickelus.tetra.blocks.hammer.TileEntityHammerHead;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
 import se.mickelus.tetra.blocks.workbench.TESRWorkbench;
@@ -51,6 +52,7 @@ public class ClientProxy implements IProxy {
     public void init(FMLInitializationEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorkbench.class, new TESRWorkbench());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHammerHead.class, new AnimationTESR<>());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreExtractorPiston.class, new AnimationTESR<>());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForgedContainer.class, new TESRForgedContainer());
 
         if (ConfigHandler.development) {
