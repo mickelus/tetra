@@ -13,6 +13,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.EnumUtils;
+import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -20,7 +21,7 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityTransferUnit extends TileEntity implements ITickable {
+public class TileEntityTransferUnit extends TileEntity implements ITickable, IHeatTransfer {
     private boolean hasPlate;
     private EnumTransferConfig config;
     private ItemStack cell;
@@ -29,7 +30,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
     private boolean isReceiving = false;
 
     private static final int baseAmount = 8;
-    private int leakAmount = 0;
+    private float efficiency = 1;
 
     public TileEntityTransferUnit() {
         hasPlate = true;
@@ -89,12 +90,6 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
         return !cell.isEmpty();
     }
 
-    public int getCellFuel() {
-        return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
-                .map(item -> item.getCharge(cell))
-                .orElse(0);
-    }
-
     public ItemStack removeCell() {
         ItemStack removedCell = cell;
         cell = ItemStack.EMPTY;
@@ -113,51 +108,97 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
         return false;
     }
 
-    private Optional<TileEntityTransferUnit> getConnectedUnit() {
-        return TileEntityOptional.from(world, pos.offset(getFacing()), TileEntityTransferUnit.class);
+    private Optional<IHeatTransfer> getConnectedUnit() {
+        return TileEntityOptional.from(world, pos.offset(getFacing()), IHeatTransfer.class);
     }
 
+    @Override
+    public int getCharge() {
+        return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
+                .map(item -> item.getCharge(cell))
+                .orElse(0);
+    }
+
+    @Override
+    public float getEfficiency() {
+        return hasPlate() ? 1 : 0.9f;
+    }
+
+    @Override
     public boolean canRecieve() {
         return getEffectPowered().equals(EnumTransferEffect.RECEIVE)
                 && hasCell()
-                && getCellFuel() < ItemCellMagmatic.maxCharge;
+                && getCharge() < ItemCellMagmatic.maxCharge;
     }
 
+    @Override
     public boolean canSend() {
         return getEffectPowered().equals(EnumTransferEffect.SEND)
                 && hasCell()
-                && getCellFuel() > 0;
+                && getCharge() > 0;
     }
 
+    @Override
     public void setReceiving(boolean receiving) {
         isReceiving = receiving;
+
+        if (isReceiving) {
+            setSending(false);
+        }
+
+        notifyBlockUpdate();
     }
 
+    @Override
     public boolean isReceiving() {
         return isReceiving;
     }
 
+    @Override
+    public void setSending(boolean sending) {
+        isSending = sending;
+
+        if (isSending) {
+            isReceiving = false;
+        }
+
+        notifyBlockUpdate();
+    }
+
+    @Override
     public boolean isSending() {
         return isSending;
     }
 
+    @Override
     public int getReceiveLimit() {
         return baseAmount;
     }
 
+    @Override
     public int getSendLimit() {
         return baseAmount;
     }
 
+    @Override
     public int drain(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
                 .map(item -> item.drainCharge(cell, amount))
                 .orElse(0);
     }
 
+    @Override
     public int fill(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
-                .map(item -> item.recharge(cell, amount))
+                .map(item -> {
+                    int overfill = item.recharge(cell, amount);
+
+                    if (item.getCharge(cell) == 0) {
+                        notifyBlockUpdate();
+                    }
+
+                    return overfill;
+                })
                 .orElse(0);
     }
 
@@ -176,24 +217,16 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
                     .ifPresent(connected -> {
                         if (connected.canRecieve()) {
                             int amount = drain(baseAmount);
-                            int connectedCurrent = connected.getCellFuel();
-                            int overfill = connected.fill(amount - leakAmount);
+                            int overfill = connected.fill((int) (amount * efficiency));
 
                             if (overfill > 0) {
                                 fill(overfill);
                             }
 
                             markDirty();
-
-                            // triggers visual update from empty to charged cell
-                            if (connectedCurrent == 0) {
-                                connected.notifyBlockUpdate();
-                            }
-
-                            markDirty();
                         } else {
-                            isSending = false;
-                            connected.isReceiving = false;
+                            setSending(false);
+                            connected.setReceiving(false);
 
                             runEndEffects();
 
@@ -201,8 +234,8 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
                         }
                     });
         } else {
-            getConnectedUnit().ifPresent(connected -> connected.isReceiving = false);
-            isSending = false;
+            getConnectedUnit().ifPresent(connected -> connected.setReceiving(false));
+            setSending(false);
 
             runEndEffects();
 
@@ -220,6 +253,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
         }
     }
 
+    @Override
     public void updateTransferState() {
         switch (getEffectPowered()) {
             case SEND:
@@ -227,39 +261,24 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable {
                     boolean canTransfer = canSend() && connected.canRecieve();
                     isSending = canTransfer;
                     isReceiving = false;
-                    connected.isReceiving = canTransfer;
-                    connected.isSending = false;
+                    connected.setReceiving(canTransfer);
 
-                    leakAmount = 0;
-                    if (!hasPlate()) {
-                        leakAmount++;
-                    }
-                    if (!connected.hasPlate()) {
-                        leakAmount++;
-                    }
-
-                    connected.notifyBlockUpdate();
+                    efficiency = getEfficiency() * connected.getEfficiency();
                 });
                 break;
             case RECEIVE:
                 getConnectedUnit().ifPresent(connected -> {
                     boolean canTransfer = canRecieve() && connected.canSend();
-                    connected.isSending = canTransfer;
-                    connected.isReceiving = false;
-                    isReceiving = canTransfer;
-                    isSending = false;
-
-                    connected.notifyBlockUpdate();
+                    connected.setSending(canTransfer);
+                    setReceiving(canTransfer);
                 });
                 break;
             case REDSTONE:
                 getConnectedUnit().ifPresent(connected -> {
-                    connected.isSending = false;
-                    connected.isReceiving = false;
-                    isReceiving = false;
-                    isSending = false;
-
-                    connected.notifyBlockUpdate();
+                    connected.setSending(false);
+                    connected.setReceiving(false);
+                    setSending(false);
+                    setReceiving(false);
                 });
                 break;
         }

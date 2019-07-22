@@ -254,7 +254,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
         return TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
                 .map(te -> actualState
                         .withProperty(propPlate, te.hasPlate())
-                        .withProperty(propCell, te.hasCell() ? te.getCellFuel() > 0 ? 2 : 1 : 0)
+                        .withProperty(propCell, te.hasCell() ? te.getCharge() > 0 ? 2 : 1 : 0)
                         .withProperty(propTransfer, te.isReceiving() ? 2 : te.isSending() ? 1 : 0)
                         .withProperty(EnumTransferConfig.prop, te.getConfiguration()))
                 .orElse(actualState);
@@ -296,7 +296,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         return TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
-                .map(te -> te.getCellFuel() > 0 ? 1 : 0)
+                .map(te -> te.getCharge() > 0 ? 1 : 0)
                 .orElse(0);
     }
 }

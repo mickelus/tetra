@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -12,8 +11,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
-import org.apache.commons.lang3.EnumUtils;
-import se.mickelus.tetra.blocks.forged.transfer.EnumTransferConfig;
 import se.mickelus.tetra.blocks.forged.transfer.TileEntityTransferUnit;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -99,7 +96,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
                     if (connected.canRecieve()) {
                         if (canSend()) {
                             int amount = drain(Math.min(getSendLimit(), connected.getReceiveLimit()));
-                            int connectedCurrent = connected.getCellFuel();
+                            int connectedCurrent = connected.getCharge();
                             int overfill = connected.fill(amount - leakAmount);
 
                             if (overfill > 0) {
