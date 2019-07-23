@@ -84,6 +84,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     public void reconfigure() {
         config = EnumTransferConfig.getNextConfiguration(config);
         updateTransferState();
+        notifyBlockUpdate();
     }
 
     public boolean hasCell() {
@@ -183,7 +184,15 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     @Override
     public int drain(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
-                .map(item -> item.drainCharge(cell, amount))
+                .map(item -> {
+                    int drained = item.drainCharge(cell, amount);
+
+                    if (item.getCharge(cell) == 0) {
+                        runDrainedEffects();
+                    }
+
+                    return drained;
+                })
                 .orElse(0);
     }
 
@@ -191,10 +200,13 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     public int fill(int amount) {
         return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
                 .map(item -> {
-                    int overfill = item.recharge(cell, amount);
-
                     if (item.getCharge(cell) == 0) {
                         notifyBlockUpdate();
+                    }
+                    int overfill = item.recharge(cell, amount);
+
+                    if (item.getCharge(cell) == ItemCellMagmatic.maxCharge) {
+                        runFilledEffects();
                     }
 
                     return overfill;
@@ -227,27 +239,29 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
                         } else {
                             setSending(false);
                             connected.setReceiving(false);
-
-                            runEndEffects();
-
-                            notifyBlockUpdate();
                         }
                     });
         } else {
             getConnectedUnit().ifPresent(connected -> connected.setReceiving(false));
             setSending(false);
-
-            runEndEffects();
-
-            notifyBlockUpdate();
         }
     }
 
-    private void runEndEffects() {
+    private void runDrainedEffects() {
         if (world instanceof WorldServer) {
             ((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
                     pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
                     10,  0, 0, 0, 0.02f);
+            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+                    0.2f, 1);
+        }
+    }
+
+    private void runFilledEffects() {
+        if (world instanceof WorldServer) {
+            ((WorldServer) world).spawnParticle(EnumParticleTypes.FLAME,
+                    pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+                    5,  0, 0, 0, 0.02f);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
                     0.2f, 1);
         }
@@ -268,9 +282,13 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
                 break;
             case RECEIVE:
                 getConnectedUnit().ifPresent(connected -> {
-                    boolean canTransfer = canRecieve() && connected.canSend();
-                    connected.setSending(canTransfer);
-                    setReceiving(canTransfer);
+                    if (isSending()) {
+                        setSending(false);
+                    }
+
+                    if (connected.canSend()) {
+                        connected.updateTransferState();
+                    }
                 });
                 break;
             case REDSTONE:

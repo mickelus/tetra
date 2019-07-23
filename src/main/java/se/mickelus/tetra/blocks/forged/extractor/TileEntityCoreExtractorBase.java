@@ -11,6 +11,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -21,9 +23,11 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
 
     private boolean isSending = false;
 
-    private static final int sendLimit = 16;
+    private static final int sendLimit = 4;
 
+    private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
+    private static final int drainAmount = 4;
     private int currentCharge = 0;
     private float efficiency;
 
@@ -31,9 +35,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     public boolean canRefill() {
-        return getPiston()
-                .map(te -> !te.isActive())
-                .orElse(false);
+        return getPiston().isPresent();
     }
 
     @Override
@@ -41,6 +43,8 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         if (receiving) {
             isSending = false;
         }
+
+        notifyBlockUpdate();
     }
 
     @Override
@@ -54,19 +58,20 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     @Override
-    public boolean canSend() {
-        return currentCharge > 0;
-    }
-
-
-    @Override
     public void setSending(boolean sending) {
         isSending = sending;
+
+        notifyBlockUpdate();
     }
 
     @Override
     public boolean isSending() {
         return isSending;
+    }
+
+    @Override
+    public boolean canSend() {
+        return currentCharge > 0 || canRefill();
     }
 
     @Override
@@ -122,19 +127,28 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
             if (world.getTotalWorldTime() % 5 == 0) {
                 transfer();
             }
+        } else if (currentCharge > 0) {
+            if (world.getTotalWorldTime() % 20 == 0) {
+                currentCharge = Math.max(0, currentCharge - drainAmount);
+            }
         }
     }
 
     @Override
     public void updateTransferState() {
         getConnectedUnit().ifPresent(connected -> {
-            boolean canTransfer = canSend() && connected.canRecieve();
-            setSending(canTransfer);
-            connected.setReceiving(canTransfer);
+            boolean canSend = canSend();
+            boolean canRecieve = connected.canRecieve();
+
+            setSending(canSend && canRecieve);
+            connected.setReceiving(canSend && canRecieve);
 
             efficiency = getEfficiency() * connected.getEfficiency();
+
+            if (!canSend && canRecieve && canRefill()) {
+                getPiston().ifPresent(TileEntityCoreExtractorPiston::activate);
+            }
         });
-        markDirty();
     }
 
 
@@ -142,7 +156,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         getConnectedUnit()
                 .ifPresent(connected -> {
                     if (connected.canRecieve()) {
-                        if (canSend()) {
+                        if (currentCharge > 0) {
                             int amount = drain(Math.min(getSendLimit(), connected.getReceiveLimit()));
                             int overfill = connected.fill((int) (amount * efficiency));
 
@@ -152,37 +166,24 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
 
                             markDirty();
                         } else {
-                            if (canRefill()) {
-                                getPiston().ifPresent(TileEntityCoreExtractorPiston::activate);
-                            }
 
                             setSending(false);
                             connected.setReceiving(false);
 
-                            runFilledEffects();
-
                             notifyBlockUpdate();
+                        }
+
+                        if (canRefill()) {
+                            getPiston().ifPresent(TileEntityCoreExtractorPiston::activate);
                         }
                     } else {
                         setSending(false);
                         connected.setReceiving(false);
 
-                        runFilledEffects();
-
                         notifyBlockUpdate();
                     }
                 });
 
-    }
-
-    private void runFilledEffects() {
-        if (world instanceof WorldServer) {
-            ((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
-                    pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
-                    10,  0, 0, 0, 0.02f);
-            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
-                    0.2f, 1);
-        }
     }
 
     private void notifyBlockUpdate() {
@@ -207,8 +208,8 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
-        if (compound.hasKey("charge")) {
-            currentCharge = compound.getInteger("charge");
+        if (compound.hasKey(chargeKey)) {
+            currentCharge = compound.getInteger(chargeKey);
         } else {
             currentCharge = 0;
         }
@@ -218,7 +219,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
-        compound.setInteger("charge", currentCharge);
+        compound.setInteger(chargeKey, currentCharge);
 
         return compound;
     }
