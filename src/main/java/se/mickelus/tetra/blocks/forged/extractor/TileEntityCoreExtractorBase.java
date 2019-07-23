@@ -11,13 +11,13 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
-import se.mickelus.tetra.blocks.forged.transfer.TileEntityTransferUnit;
+import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityCoreExtractorBase extends TileEntity implements ITickable {
+public class TileEntityCoreExtractorBase extends TileEntity implements ITickable, IHeatTransfer {
 
     private boolean isSending = false;
 
@@ -25,37 +25,61 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
 
     private static final int maxCharge = 128;
     private int currentCharge = 0;
-    private int leakAmount;
+    private float efficiency;
 
     public TileEntityCoreExtractorBase() {
     }
 
-    public boolean canRecieve() {
-        return false;
-    }
-
-    public boolean canSend() {
-        return currentCharge > 0;
-    }
-
     public boolean canRefill() {
-        return TileEntityOptional.from(world, pos.offset(EnumFacing.UP), TileEntityCoreExtractorPiston.class)
+        return getPiston()
                 .map(te -> !te.isActive())
                 .orElse(false);
     }
 
+    @Override
+    public void setReceiving(boolean receiving) {
+        if (receiving) {
+            isSending = false;
+        }
+    }
+
+    @Override
     public boolean isReceiving() {
         return false;
     }
 
+    @Override
+    public boolean canRecieve() {
+        return false;
+    }
+
+    @Override
+    public boolean canSend() {
+        return currentCharge > 0;
+    }
+
+
+    @Override
+    public void setSending(boolean sending) {
+        isSending = sending;
+    }
+
+    @Override
     public boolean isSending() {
         return isSending;
     }
 
+    @Override
+    public int getReceiveLimit() {
+        return 0;
+    }
+
+    @Override
     public int getSendLimit() {
         return sendLimit;
     }
 
+    @Override
     public int drain(int amount) {
         if (amount > currentCharge) {
             int drained = currentCharge;
@@ -67,6 +91,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         return amount;
     }
 
+    @Override
     public int fill(int amount) {
         if (amount + currentCharge > maxCharge) {
             int overfill = amount + currentCharge - maxCharge;
@@ -82,6 +107,16 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     @Override
+    public int getCharge() {
+        return currentCharge;
+    }
+
+    @Override
+    public float getEfficiency() {
+        return 1;
+    }
+
+    @Override
     public void update() {
         if (isSending) {
             if (world.getTotalWorldTime() % 5 == 0) {
@@ -90,34 +125,38 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         }
     }
 
+    @Override
+    public void updateTransferState() {
+        getConnectedUnit().ifPresent(connected -> {
+            boolean canTransfer = canSend() && connected.canRecieve();
+            setSending(canTransfer);
+            connected.setReceiving(canTransfer);
+
+            efficiency = getEfficiency() * connected.getEfficiency();
+        });
+        markDirty();
+    }
+
+
     public void transfer() {
         getConnectedUnit()
                 .ifPresent(connected -> {
                     if (connected.canRecieve()) {
                         if (canSend()) {
                             int amount = drain(Math.min(getSendLimit(), connected.getReceiveLimit()));
-                            int connectedCurrent = connected.getCharge();
-                            int overfill = connected.fill(amount - leakAmount);
+                            int overfill = connected.fill((int) (amount * efficiency));
 
                             if (overfill > 0) {
                                 fill(overfill);
                             }
 
                             markDirty();
-
-                            // triggers visual update from empty to charged cell
-                            if (connectedCurrent == 0) {
-                                notifyBlockUpdate();
-                            } else {
-                                markDirty();
-                            }
                         } else {
                             if (canRefill()) {
-                                TileEntityOptional.from(world, pos.offset(EnumFacing.UP), TileEntityCoreExtractorPiston.class)
-                                        .ifPresent(TileEntityCoreExtractorPiston::activate);
+                                getPiston().ifPresent(TileEntityCoreExtractorPiston::activate);
                             }
 
-                            isSending = false;
+                            setSending(false);
                             connected.setReceiving(false);
 
                             runFilledEffects();
@@ -125,7 +164,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
                             notifyBlockUpdate();
                         }
                     } else {
-                        isSending = false;
+                        setSending(false);
                         connected.setReceiving(false);
 
                         runFilledEffects();
@@ -146,19 +185,6 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         }
     }
 
-    public void updateTransferState() {
-        getConnectedUnit().ifPresent(connected -> {
-            boolean canTransfer = canSend() && connected.canRecieve();
-            isSending = canTransfer;
-            connected.setReceiving(canTransfer);
-
-            leakAmount = connected.hasPlate() ? 0 : 1;
-
-            connected.notifyBlockUpdate();
-        });
-        markDirty();
-    }
-
     private void notifyBlockUpdate() {
         markDirty();
         IBlockState state = world.getBlockState(pos);
@@ -169,8 +195,8 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
         return world.getBlockState(pos).getValue(BlockCoreExtractorBase.propFacing);
     }
 
-    private Optional<TileEntityTransferUnit> getConnectedUnit() {
-        return TileEntityOptional.from(world, pos.offset(getFacing()), TileEntityTransferUnit.class);
+    private Optional<IHeatTransfer> getConnectedUnit() {
+        return TileEntityOptional.from(world, pos.offset(getFacing()), IHeatTransfer.class);
     }
 
     private Optional<TileEntityCoreExtractorPiston> getPiston() {

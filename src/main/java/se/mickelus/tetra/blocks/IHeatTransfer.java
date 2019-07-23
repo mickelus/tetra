@@ -5,7 +5,7 @@ public interface IHeatTransfer {
     public boolean canSend();
     public void setReceiving(boolean receiving);
     public boolean isReceiving();
-    public void setSending(boolean receiving);
+    public void setSending(boolean sending);
     public boolean isSending();
     public int getReceiveLimit();
     public int getSendLimit();
