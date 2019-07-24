@@ -155,17 +155,23 @@ public class GuiElement extends Gui {
         this.y = y;
     }
 
-    public void setAttachmentPoint(GuiAttachment attachment) {
+    public GuiElement setAttachmentPoint(GuiAttachment attachment) {
         attachmentPoint = attachment;
+
+        return this;
     }
 
-    public void setAttachmentAnchor(GuiAttachment attachment) {
+    public GuiElement setAttachmentAnchor(GuiAttachment attachment) {
         attachmentAnchor = attachment;
+
+        return this;
     }
 
-    public void setAttachment(GuiAttachment attachment) {
+    public GuiElement setAttachment(GuiAttachment attachment) {
         attachmentPoint = attachment;
         attachmentAnchor = attachment;
+
+        return this;
     }
 
     public int getWidth() {
@@ -185,16 +191,16 @@ public class GuiElement extends Gui {
     }
 
     public void setVisible(boolean visible) {
-//        if (isVisible != visible) { todo: switch back to only toggling if actual change?
-        if (visible) {
-            onShow();
-        } else {
-            if (!onHide()) {
-                return;
+        if (isVisible != visible) {
+            if (visible) {
+                onShow();
+            } else {
+                if (!onHide()) {
+                    return;
+                }
             }
+            isVisible = visible;
         }
-        isVisible = visible;
-//        }
     }
 
     public boolean isVisible() {
