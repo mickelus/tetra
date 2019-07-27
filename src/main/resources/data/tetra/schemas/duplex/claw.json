@@ -183,7 +183,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal"
+                    "ore": "ingotFiery"
                 },
                 "requiredCapabilities": {
                     "hammer": 2

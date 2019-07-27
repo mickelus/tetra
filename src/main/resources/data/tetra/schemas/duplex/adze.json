@@ -195,7 +195,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "ingotFierymetal",
+                    "ore": "ingotFiery",
                     "count": 2
                 },
                 "requiredCapabilities": {
