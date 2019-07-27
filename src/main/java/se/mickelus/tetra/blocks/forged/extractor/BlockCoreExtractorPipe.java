@@ -1,35 +1,25 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.items.TetraCreativeTabs;
-import se.mickelus.tetra.util.TileEntityOptional;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class BlockCoreExtractorPipe extends TetraBlock {
     public static final PropertyDirection propFacing = BlockDirectional.FACING;
@@ -44,15 +34,36 @@ public class BlockCoreExtractorPipe extends TetraBlock {
         super(Material.IRON);
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        GameRegistry.registerTileEntity(TileEntityCoreExtractorBase.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
         setCreativeTab(TetraCreativeTabs.getInstance());
 
         setBlockUnbreakable();
+        setResistance(22);
 
         hasItem = true;
 
         setDefaultState(getBlockState().getBaseState()
-                .withProperty(propFacing, EnumFacing.UP));
+                .withProperty(propFacing, EnumFacing.UP)
+                .withProperty(propPowered, false));
+    }
+
+    public static boolean isPowered(IBlockAccess world, BlockPos pos) {
+        IBlockState pipeState = world.getBlockState(pos.down());
+        return instance.equals(pipeState.getBlock()) && pipeState.getValue(propPowered);
+    }
+
+    private boolean shouldGetPower(IBlockAccess world, BlockPos pos, EnumFacing blockFacing) {
+        for (EnumFacing facing : EnumFacing.values()) {
+            if (!facing.equals(blockFacing)) {
+                IBlockState adjacent = world.getBlockState(pos.offset(facing));
+                if (adjacent.getBlock().equals(this)
+                        && facing.equals(adjacent.getValue(propFacing).getOpposite())
+                        && adjacent.getValue(propPowered)) {
+                    return true;
+                }
+            }
+        }
+
+        return BlockSeepingBedrock.isActive(world, pos.offset(blockFacing.getOpposite()));
     }
 
     @Override
@@ -60,30 +71,11 @@ public class BlockCoreExtractorPipe extends TetraBlock {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
-    }
-
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
-        EnumFacing blockFacing = state.getValue(propFacing);
-        boolean isPowered = state.getValue(propPowered);
+        boolean getsPowered = shouldGetPower(world, pos, state.getValue(propFacing));
 
-        boolean getsPowered = false;
-        for (EnumFacing facing : EnumFacing.values()) {
-            if (!facing.equals(blockFacing)) {
-                IBlockState adjacent = world.getBlockState(pos.offset(facing));
-                if (adjacent.getBlock().equals(this)
-                        && facing.equals(adjacent.getValue(propFacing).getOpposite())
-                        && adjacent.getValue(propPowered)) {
-                    getsPowered = true;
-                }
-            }
-        }
-
-        if (isPowered != getsPowered) {
+        if (state.getValue(propPowered) != getsPowered) {
             world.setBlockState(pos, state.withProperty(propPowered, getsPowered));
         }
     }
@@ -108,9 +100,9 @@ public class BlockCoreExtractorPipe extends TetraBlock {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
-
-        return iblockstate.withProperty(propFacing, facing.getOpposite());
+        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer)
+                .withProperty(propFacing, facing)
+                .withProperty(propPowered, shouldGetPower(world, pos, facing));
     }
 
     @Override

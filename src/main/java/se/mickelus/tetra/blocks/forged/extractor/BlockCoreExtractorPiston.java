@@ -54,18 +54,7 @@ public class BlockCoreExtractorPiston extends TetraBlock implements ITileEntityP
 
         hasItem = true;
 
-        setTickRandomly(true);
-
         this.setDefaultState(this.blockState.getBaseState());
-    }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return TileEntityOptional.from(worldIn, pos, TileEntityCoreExtractorPiston.class)
-                .map(te -> {
-                    te.activate();
-                    return true;
-                }).orElse(false);
     }
 
     @Override

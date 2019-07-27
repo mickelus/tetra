@@ -35,7 +35,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     public boolean canRefill() {
-        return getPiston().isPresent();
+        return getPiston().isPresent() && BlockCoreExtractorPipe.isPowered(world, pos.down());
     }
 
     @Override

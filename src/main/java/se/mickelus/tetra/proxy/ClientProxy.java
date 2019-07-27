@@ -1,5 +1,8 @@
 package se.mickelus.tetra.proxy;
 
+import com.google.common.collect.Maps;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -23,6 +26,7 @@ import se.mickelus.tetra.blocks.forged.BlockForgedCrate;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TESRForgedContainer;
 import se.mickelus.tetra.blocks.forged.container.TileEntityForgedContainer;
+import se.mickelus.tetra.blocks.forged.extractor.BlockSeepingBedrock;
 import se.mickelus.tetra.blocks.forged.extractor.TileEntityCoreExtractorPiston;
 import se.mickelus.tetra.blocks.hammer.TileEntityHammerHead;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
@@ -35,6 +39,7 @@ import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class ClientProxy implements IProxy {
 
@@ -70,8 +75,9 @@ public class ClientProxy implements IProxy {
     @SubscribeEvent
     public void registerModels(ModelRegistryEvent event) {
 
-        // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
+
         if (ConfigHandler.generate_features) {
+            // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
             ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
                 @Override
                 protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
@@ -80,6 +86,14 @@ public class ClientProxy implements IProxy {
             });
 
             ModelLoader.setCustomStateMapper(BlockForgedCrate.instance, new StateMap.Builder().ignore(BlockForgedCrate.propIntegrity).build());
+
+            ModelLoader.setCustomStateMapper(BlockSeepingBedrock.instance, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new ModelResourceLocation(TetraMod.MOD_ID + ":seeping_bedrock",
+                            "active=" + (state.getValue(BlockSeepingBedrock.propActive) > 0));
+                }
+            });
         }
     }
 }
