@@ -2,8 +2,8 @@
     "biomes": ["cold", "snowy"],
     "origin": [3, 0, 3],
     "probability": 0.05,
-    "minY": 16,
-    "maxY": 17,
+    "minY": 15,
+    "maxY": 16,
     "children": [
         {
             "offset": [3, 1, 3],

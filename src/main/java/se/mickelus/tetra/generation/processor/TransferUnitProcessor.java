@@ -31,10 +31,10 @@ public class TransferUnitProcessor implements ITemplateProcessor {
         if (blockInfo.blockState.getBlock() instanceof BlockTransferUnit) {
 
             // randomize cell
-            if (random.nextFloat() < 0.1) {
+            if (random.nextFloat() < 0.05) {
                 int charge = random.nextInt(ItemCellMagmatic.maxCharge);
                 TileEntityTransferUnit.writeCell(blockInfo.tileentityData, new ItemStack(ItemCellMagmatic.instance, 1, charge));
-            } else if (random.nextFloat() < 0.2) {
+            } else if (random.nextFloat() < 0.1) {
                 TileEntityTransferUnit.writeCell(blockInfo.tileentityData, new ItemStack(ItemCellMagmatic.instance, 1, 0));
             }
 
@@ -43,9 +43,7 @@ public class TransferUnitProcessor implements ITemplateProcessor {
             TileEntityTransferUnit.writeConfig(blockInfo.tileentityData, configs[random.nextInt(configs.length)]);
 
             // randomize plates
-            if (random.nextFloat() < 0.7) {
-                TileEntityTransferUnit.writePlate(blockInfo.tileentityData, random.nextBoolean());
-            }
+            TileEntityTransferUnit.writePlate(blockInfo.tileentityData, random.nextBoolean());
         }
         return blockInfo;
     }
