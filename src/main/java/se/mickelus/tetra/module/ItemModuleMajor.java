@@ -55,7 +55,7 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
             if (tag.hasKey(settleProgressKey)) {
                 settleProgress = tag.getInteger(settleProgressKey);
             } else {
-                settleProgress = (int) ((ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier)
+                settleProgress = (int) (( ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier )
                         * Math.max(settleLevel * ConfigHandler.settleLimitLevelMultiplier, 1f));
             }
 

@@ -1,0 +1,61 @@
+{
+    "origin": [10, 12, 5],
+    "children": [
+        {
+            "offset": [4, 5, 4],
+            "facing": "EAST",
+            "chance": 0.8,
+            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+        },
+        {
+            "offset": [4, 5, 6],
+            "facing": "EAST",
+            "chance": 0.8,
+            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+        },
+        {
+            "offset": [16, 5, 4],
+            "facing": "WEST",
+            "chance": 0.8,
+            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+        },
+        {
+            "offset": [16, 5, 6],
+            "facing": "WEST",
+            "chance": 0.8,
+            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+        },
+        {
+            "offset": [10, 6, 8],
+            "facing": "NORTH",
+            "chance": 0.3,
+            "features": [
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        },
+        {
+            "offset": [10, 6, 2],
+            "facing": "SOUTH",
+            "chance": 0.3,
+            "features": [
+
+                "tetra:forged_crate_3a",
+                "tetra:forged_crate_3b",
+                "tetra:forged_crate_3c",
+                "tetra:forged_crate_2a",
+                "tetra:forged_crate_2b",
+                "tetra:forged_crate_1a",
+                "tetra:forged_crate_1b",
+                "tetra:forged_crate_1b"
+            ]
+        }
+    ]
+
+}

@@ -1,9 +1,6 @@
 package se.mickelus.tetra.generation;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
@@ -20,7 +17,6 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.template.*;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -30,10 +26,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.generation.processor.CompoundProcessor;
-import se.mickelus.tetra.generation.processor.ForgedContainerProcessor;
-import se.mickelus.tetra.generation.processor.ForgedCrateProcessor;
-import se.mickelus.tetra.generation.processor.HammerProcessor;
+import se.mickelus.tetra.generation.processor.*;
 
 import java.util.*;
 
@@ -138,7 +131,8 @@ public class WorldGenFeatures implements IWorldGenerator {
                 new BlockRotationProcessor(pos, settings),
                 new HammerProcessor(settings.getRandom(pos)),
                 new ForgedCrateProcessor(settings.getRandom(pos)),
-                new ForgedContainerProcessor(settings.getRandom(pos)));
+                new ForgedContainerProcessor(settings.getRandom(pos)),
+                new TransferUnitProcessor((settings.getRandom(pos))));
 
         template.addBlocksToWorld(world, pos, processors, settings, 2);
 

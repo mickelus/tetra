@@ -165,9 +165,9 @@ item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
 break_geode_action.label=Break open
 
 ###############################
-# MAGMATIC CELL
+# THERMAL CELL
 ###############################
-item.magmatic_cell.name=Magmatic cell
+item.magmatic_cell.name=Thermal cell
 item.magmatic_cell.charge=Charge: %s
 item.magmatic_cell.charge_full=§aFull
 item.magmatic_cell.charge_good=§aGood

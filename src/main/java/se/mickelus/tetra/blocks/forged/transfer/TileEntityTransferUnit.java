@@ -334,19 +334,31 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
         hasPlate = compound.getBoolean("plate");
     }
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-
+    public static final void writeCell(NBTTagCompound compound, ItemStack cell) {
         if (!cell.isEmpty()) {
             NBTTagCompound cellNBT = new NBTTagCompound();
             cell.writeToNBT(cellNBT);
             compound.setTag("cell", cellNBT);
         }
+    }
 
-        compound.setString(EnumTransferConfig.prop.getName(), config.toString());
-
+    public static void writePlate(NBTTagCompound compound, boolean hasPlate) {
         compound.setBoolean("plate", hasPlate);
+    }
+
+    public static void writeConfig(NBTTagCompound compound, EnumTransferConfig config) {
+        compound.setString(EnumTransferConfig.prop.getName(), config.toString());
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        writeCell(compound, cell);
+
+        writeConfig(compound, config);
+
+        writePlate(compound, hasPlate);
 
         return compound;
     }

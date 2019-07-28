@@ -35,6 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class DataHandler {
     private final File source;
@@ -157,11 +158,13 @@ public class DataHandler {
 
     private GenerationFeature[] getGenerationFeatures(Path structuresPath) throws IOException {
         if (structuresPath != null && Files.exists(structuresPath)) {
-            return Files.list(structuresPath)
-                    .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
-                    .map(this::getGenerationFeature)
-                    .filter(Objects::nonNull)
-                    .toArray(GenerationFeature[]::new);
+            try (Stream<Path> stream = Files.list(structuresPath)) {
+                return stream
+                        .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
+                        .map(this::getGenerationFeature)
+                        .filter(Objects::nonNull)
+                        .toArray(GenerationFeature[]::new);
+            }
         }
 
         return null;

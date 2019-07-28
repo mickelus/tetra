@@ -1,0 +1,18 @@
+{
+    "origin": [0, 0, 0],
+    "children": [
+        {
+            "offset": [3, 0, 0],
+            "facing": "WEST",
+            "chance": 0.5,
+            "features": ["tetra:forged_extractor_platform"]
+        },
+        {
+            "offset": [-3, 0, 0],
+            "facing": "EAST",
+            "chance": 0.5,
+            "features": ["tetra:forged_extractor_platform"]
+        }
+    ]
+
+}
