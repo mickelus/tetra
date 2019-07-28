@@ -110,7 +110,7 @@ public class BlockGeode extends TetraBlock {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        if (ConfigHandler.geode_generate) {
+        if (ConfigHandler.geodeGenerate) {
             GameRegistry.registerWorldGenerator(new GeodeGenerator(), 10);
         }
 

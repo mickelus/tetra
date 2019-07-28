@@ -83,6 +83,7 @@ public class TetraMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
         LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
         LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());
@@ -104,7 +105,7 @@ public class TetraMod {
                 new BlockGeode(),
         };
 
-        if (ConfigHandler.generate_features) {
+        if (ConfigHandler.generateFeatures) {
             blocks = ArrayUtils.addAll(blocks,
                     new BlockHammerHead(),
                     new BlockHammerBase(),
@@ -153,7 +154,7 @@ public class TetraMod {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
-        if (ConfigHandler.generate_features) {
+        if (ConfigHandler.generateFeatures) {
             WorldGenFeatures worldGenFeatures = new WorldGenFeatures();
             GameRegistry.registerWorldGenerator(worldGenFeatures, 11);
         }

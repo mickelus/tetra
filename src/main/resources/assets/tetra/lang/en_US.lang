@@ -1,6 +1,52 @@
 itemGroup.tetra=Tetra
 
 ###############################
+# CONFIG TOOLTIPS
+###############################
+tetra.general.geodegenerate=Generate geodes
+tetra.general.geodegenerate.tooltip=Toggle off to disable generation of geodes. Already generated chunks may still contain geodes. §oRequires restart.§r
+
+tetra.general.generatefeatures=Generate features
+tetra.general.generatefeatures.tooltip=Enables generation of terrain features such as ancient ruins. Will not remove already generated features when disabled. §oRequires restart.§r
+
+tetra.general.maxfeaturedepth=Max feature depth
+tetra.general.maxfeaturedepth.tooltip=Used to limit how deep the feature generator will recurse into feature children, helps to avoid recursive loops and cascading worldgen in 3d-party generation features.
+
+tetra.general.development=Development mode
+tetra.general.development.tooltip=Puts tetra in development mode, causing several configuration files to be reloaded continously and initializes rendering of structure helpers. Enabling will have a negative impact on performance. §oRequires restart.§r
+
+tetra.general.experimentalprogression=Item progression [experimental]
+tetra.general.experimentalprogression.tooltip=Allows tetra items to "level up" after being used a certain amount of times, allowing the player to choose from different ways to "hone" 1 module on the item. Modules also settle after some time, increasing its integrity. §oNeeds further balancing.§r
+
+tetra.general.workbenchdroptable=Workbench drop table
+tetra.general.workbenchdroptable.tooltip=Enabling cause the workbench to drop itself as an item when broken, rather than dropping the vanilla crafting bench.
+
+tetra.general.experimentalsockets=Sockets [experimental]
+tetra.general.experimentalsockets.tooltip=Allows swords and tools to be socketed (handle and binding slots). §oDoes not provide any stats.§r
+
+tetra.general.settlelimitbase=Settle limit base
+tetra.general.settlelimitbase.tooltip=The base value for number of uses required for a module to settle.
+
+tetra.general.settlelimitlevelmultiplier=Settle limit level multiplier
+tetra.general.settlelimitlevelmultiplier.tooltip=Level multiplier for settling limit. A value of 3 would cause a module that has settled once to require 3x as many uses before it settles again.
+
+tetra.general.settlelimitdurabilitymultiplier=Settle limit durability multiplier
+tetra.general.settlelimitdurabilitymultiplier.tooltip=Durability multiplier for settling limit. A value of 1 would cause a module with 75 durability to require an additional 75 uses before it settles.
+
+tetra.general.honeswordbase=Hone limit base - sword
+tetra.general.honeswordbase.tooltip=The base value for number of uses required before a sword can be honed.
+
+tetra.general.honeswordintegritymultiplier=Hone limit multiplier - sword
+tetra.general.honeswordintegritymultiplier.tooltip=Integrity multiplier for sword honing. A value of 2 would cause a sword which uses 3 integrity to require a 2*3 times as many uses before it can be honed.
+
+tetra.general.honeduplexbase=Hone limit base - tools
+tetra.general.honeduplexbase.tooltip=The base value for number of uses required before a tool can be honed.
+
+tetra.general.honeduplexintegritymultiplier=Hone limit multiplier - tools
+tetra.general.honeduplexintegritymultiplier.tooltip=Integrity multiplier for tool honing. A value of 2 would cause a sword which uses 3 integrity to require a 2*3 times as many uses before it can be honed.
+
+
+###############################
 # JOURNAL
 ###############################
 item.journal.name=Holosphere
@@ -155,10 +201,6 @@ item.modular.empty_slot=Empty
 ###############################
 # GEODE
 ###############################
-tetra.general.geode_generate=Generate geodes
-tetra.general.geode_generate.tooltip=Toggle off to disable generation of geodes. Already generated chunks may still contain geodes. §oRequires restart.§r
-tetra.general.geode_contents=Geode contents
-tetra.general.geode_contents.tooltip=Configure which items may be found when breaking a geode. Config values should be entered in groups of 3: itemId, maxCount, weight, where maxCount is the maximum amount that can be found when breaking a geode, and weight affects the probability that this item will be found.
 tile.block_geode.name=Geode block
 item.geode.name=Geode
 item.geode.tooltip=Breaking open at a workbench may yield valuable minerals

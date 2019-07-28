@@ -1,8 +1,5 @@
 package se.mickelus.tetra.proxy;
 
-import com.google.common.collect.Maps;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -39,7 +36,6 @@ import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 
 import java.util.Arrays;
-import java.util.Map;
 
 public class ClientProxy implements IProxy {
 
@@ -76,7 +72,7 @@ public class ClientProxy implements IProxy {
     public void registerModels(ModelRegistryEvent event) {
 
 
-        if (ConfigHandler.generate_features) {
+        if (ConfigHandler.generateFeatures) {
             // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
             ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
                 @Override

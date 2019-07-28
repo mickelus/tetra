@@ -138,7 +138,7 @@ public class WorldGenFeatures implements IWorldGenerator {
 
         generateLoot(feature, template, world, pos, settings, random);
 
-        if (depth < ConfigHandler.max_feature_depth) {
+        if (depth < ConfigHandler.maxFeatureDepth) {
             generateChildren(feature, world, pos, rotation, mirror, random, depth);
         }
     }

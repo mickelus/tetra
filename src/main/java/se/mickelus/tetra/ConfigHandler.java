@@ -13,10 +13,10 @@ public class ConfigHandler {
 
     public static boolean development = false;
 
-    public static boolean geode_generate = true;
+    public static boolean geodeGenerate = true;
 
-    public static boolean generate_features = true;
-    public static int max_feature_depth = 8;
+    public static boolean generateFeatures = true;
+    public static int maxFeatureDepth = 8;
 
     public static boolean workbenchDropTable = true;
 
