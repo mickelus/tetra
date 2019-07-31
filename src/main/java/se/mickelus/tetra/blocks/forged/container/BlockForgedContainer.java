@@ -69,7 +69,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
             new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(true)),
                     BlockForgedContainer::breakLock3),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 16, 3, 4,
+            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
@@ -77,7 +77,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
                             .where(propOpen, equalTo(false))
                             .where(propFlipped, equalTo(false)),
                     BlockForgedContainer::open),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 0, 15, 3, 4,
+            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
