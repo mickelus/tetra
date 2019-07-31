@@ -15,6 +15,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -172,12 +174,22 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
 
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                }
+
                 return true;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCell(heldStack);
                 player.setHeldItem(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                }
+
                 return true;
             }
         } else if (blockFacing.equals(facing.getOpposite())
@@ -187,6 +199,11 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
             world.playSound(player, pos, SoundEvents.BLOCK_METAL_PLACE, SoundCategory.PLAYERS, 0.5f, 1);
             world.notifyBlockUpdate(pos, state, state, 3);
             heldStack.shrink(1);
+
+            if (!player.world.isRemote) {
+                BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+            }
+
             return true;
         }
 

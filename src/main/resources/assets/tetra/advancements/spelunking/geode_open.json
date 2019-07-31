@@ -3,8 +3,9 @@
         "icon": {
             "item": "minecraft:gold_nugget"
         },
-        "title": "Mineral crackers",
-        "description": "Upgrade a mallet and use it to break open a geode at a workbench"
+        "title": "Mineral Crackers",
+        "description": "Upgrade a mallet and use it to break open a geode at a workbench",
+        "announce_to_chat": false
     },
     "parent": "tetra:spelunking/geode",
     "criteria": {

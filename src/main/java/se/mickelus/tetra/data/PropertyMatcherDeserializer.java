@@ -5,14 +5,15 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import se.mickelus.tetra.blocks.PropertyMatcher;
 
 import java.lang.reflect.Type;
 
-public class PredicateDeserializer implements JsonDeserializer<ItemPredicate> {
+public class PropertyMatcherDeserializer implements JsonDeserializer<PropertyMatcher> {
     @Override
-    public ItemPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public PropertyMatcher deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         try {
-            return ItemPredicate.deserialize(json);
+            return PropertyMatcher.deserialize(json);
         } catch (JsonParseException e) {
             // todo: debug level log
             return null;

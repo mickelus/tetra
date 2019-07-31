@@ -4,6 +4,7 @@ import com.google.common.base.Predicates;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -11,6 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.RotationHelper;
+import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
@@ -18,7 +20,6 @@ import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -126,6 +127,13 @@ public class BlockInteraction {
                 } else {
                     heldStack.damageItem(2, player);
                 }
+            }
+
+            if (player instanceof EntityPlayerMP) {
+                IBlockState newState = world.getBlockState(pos);
+                newState = newState.getActualState(world, pos);
+
+                BlockInteractionCriterion.trigger((EntityPlayerMP) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
             }
 
             player.resetCooldown();

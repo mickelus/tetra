@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:forged_pillar"
+        },
+        "title": "Long Gone",
+        "description": "Find ancient ruins deep down in a cold biome",
+        "announce_to_chat": false
+    },
+    "parent": "tetra:spelunking/root",
+    "criteria": {
+        "wall": {
+            "trigger": "tetra:block_look",
+            "conditions": {
+                "block": "tetra:forged_wall"
+            }
+        },
+        "pillar": {
+            "trigger": "tetra:block_look",
+            "conditions": {
+                "block": "tetra:forged_pillar"
+            }
+        },
+        "platform": {
+            "trigger": "tetra:block_look",
+            "conditions": {
+                "block": "tetra:forged_platform"
+            }
+        },
+        "platform_slab": {
+            "trigger": "tetra:block_look",
+            "conditions": {
+                "block": "tetra:forged_platform_slab"
+            }
+        },
+        "vent": {
+            "trigger": "tetra:block_look",
+            "conditions": {
+                "block": "tetra:forged_vent"
+            }
+        }
+    },
+    "requirements": [[
+        "wall",
+        "pillar",
+        "platform",
+        "platform_slab",
+        "vent"
+    ]]
+}

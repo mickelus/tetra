@@ -17,6 +17,7 @@ import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.io.FilenameUtils;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.generation.GenerationFeature;
 import se.mickelus.tetra.loot.LootEntryDeserializer;
 import se.mickelus.tetra.loot.LootPoolDeserializer;
@@ -55,7 +56,8 @@ public class DataHandler {
                 .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
                 .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
                 .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
-                .registerTypeAdapter(ItemPredicate.class, new PredicateDeserializer())
+                .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
+                .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
                 .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
                 .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
                 .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())

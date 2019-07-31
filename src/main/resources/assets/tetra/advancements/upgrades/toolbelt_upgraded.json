@@ -11,12 +11,9 @@
     "parent": "tetra:upgrades/toolbelt",
     "criteria": {
         "inlaid": {
-            "trigger": "minecraft:consume_item",
+            "trigger": "tetra:craft_module",
             "conditions": {
-                "item": {
-                    "item": "tetra:toolbelt_modular",
-                    "nbt": "{\"toolbelt/belt_material\": \"belt/inlaid\"}"
-                }
+                "variant": "belt/inlaid"
             }
         }
     }

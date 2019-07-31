@@ -10,13 +10,10 @@
     },
     "parent": "tetra:upgrades/hammer_2",
     "criteria": {
-        "upgrade_any": {
-            "trigger": "minecraft:consume_item",
+        "craft_module": {
+            "trigger": "tetra:craft_module",
             "conditions": {
-                "item": {
-                    "item": "tetra:sword_modular",
-                    "nbt": "{\"sword/blade\": \"sword/heavy_blade\"}"
-                }
+                "module": "sword/heavy_blade"
             }
         }
     }

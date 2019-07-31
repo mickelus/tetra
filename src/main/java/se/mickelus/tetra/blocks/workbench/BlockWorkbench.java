@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -35,6 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
@@ -92,8 +92,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
             if (!world.isRemote) {
                 world.setBlockState(pos, instance.getDefaultState());
 
-                // todo: add proper criteria ?
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemStack);
+                BlockUseCriterion.trigger((EntityPlayerMP) player, instance.getDefaultState(), ItemStack.EMPTY);
             }
             return EnumActionResult.SUCCESS;
         }

@@ -11,34 +11,23 @@
     "parent": "tetra:upgrades/short_blade",
     "criteria": {
         "hooked": {
-            "trigger": "minecraft:consume_item",
+            "trigger": "tetra:craft_improvement",
             "conditions": {
-                "item": {
-                    "item": "tetra:sword_modular",
-                    "nbt": "{\"sword/blade:short_blade/hooked\": 0}"
-                }
+                "improvement": "short_blade/hooked"
             }
         },
         "tempered": {
-            "trigger": "minecraft:consume_item",
+            "trigger": "tetra:craft_improvement",
             "conditions": {
-                "item": {
-                    "item": "tetra:sword_modular",
-                    "nbt": "{\"sword/blade:short_blade/tempered\": 0}"
-                }
+                "improvement": "short_blade/tempered"
             }
         },
         "serrated": {
-            "trigger": "minecraft:consume_item",
+            "trigger": "tetra:craft_improvement",
             "conditions": {
-                "item": {
-                    "item": "tetra:sword_modular",
-                    "nbt": "{\"sword/blade:short_blade/serrated\": 0}"
-                }
+                "improvement": "short_blade/serrated"
             }
         }
     },
-    "requirements": [
-        ["hooked", "tempered", "serrated"]
-    ]
+    "requirements": [["hooked", "tempered", "serrated"]]
 }

@@ -1,20 +1,21 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:geode"
+            "item": "tetra:magmatic_cell",
+            "data": 128
         },
-        "title": "Hollow Solids",
-        "description": "Find a geode in the depths",
+        "title": "Thermal Theft",
+        "description": "Find a thermal cell in the ancient ruins",
         "announce_to_chat": false
     },
-    "parent": "tetra:spelunking/root",
+    "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {
         "get_geode": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:geode"
+                        "item": "tetra:magmatic_cell"
                     }
                 ]
             }

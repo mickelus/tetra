@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:workbench",
+            "data": 1
+        },
+        "frame": "goal",
+        "title": "Magmatic Press Channel",
+        "description": "Use a forge hammer to craft a module requiring tier 4 hammering",
+        "announce_to_chat": false
+    },
+    "parent": "tetra:spelunking/fuel_hammer",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "capability": "hammer",
+                "capabilityLevel": 4
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "capability": "hammer",
+                "capabilityLevel": 4
+            }
+        }
+    }
+}

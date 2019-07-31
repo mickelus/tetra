@@ -13,23 +13,22 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -44,7 +43,6 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
     public static final PropertyDirection propFacing = BlockHorizontal.FACING;
@@ -210,24 +208,46 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
 
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                }
+
                 return true;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setHeldItem(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                }
+
                 return true;
             }
         } else if (heldStack.getItem() instanceof ItemVentPlate) {
             if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.EAST)) {
                 te.attachPlate(EnumHammerPlate.EAST);
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                }
+
                 heldStack.shrink(1);
+
                 return true;
             } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.WEST)) {
                 te.attachPlate(EnumHammerPlate.WEST);
                 world.notifyBlockUpdate(pos, state, state, 3);
+
+                if (!player.world.isRemote) {
+                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                }
+
                 heldStack.shrink(1);
+
                 return true;
             }
         }

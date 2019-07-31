@@ -1,11 +1,12 @@
 package se.mickelus.tetra.module.schema;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
+import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemPredicateModular;
@@ -227,20 +228,22 @@ public class ConfigSchema extends BaseSchema {
 
                     if (consumeMaterials) {
                         materials[index].shrink(outcome.material.count);
+
+                        triggerAdvancement(outcome, player, itemStack, upgradedStack, slot);
                     }
                 });
             }
         } else {
             for (OutcomeDefinition outcome : definition.outcomes) {
                 applyOutcome(outcome, upgradedStack, consumeMaterials, slot, player);
+
+                if (consumeMaterials) {
+                    triggerAdvancement(outcome, player, itemStack, upgradedStack, slot);
+                }
             }
         }
 
         if (consumeMaterials) {
-            if(player instanceof EntityPlayerMP) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, upgradedStack);
-            }
-
             if (definition.hone) {
                 ItemModular.removeHoneable(upgradedStack);
             }
@@ -274,6 +277,32 @@ public class ConfigSchema extends BaseSchema {
 
         } else {
             outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
+        }
+    }
+
+    private void triggerAdvancement(OutcomeDefinition outcome, EntityPlayer player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
+        if(player instanceof EntityPlayerMP) {
+
+            if (outcome.moduleKey != null) {
+                if (outcome.requiredCapabilities.getValues().isEmpty()) {
+                    ModuleCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                            outcome.moduleVariant, null, -1);
+                } else {
+                    outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
+                            ModuleCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                                    outcome.moduleVariant, capability, capabilityLevel));
+                }
+            }
+
+            outcome.improvements.forEach((improvement, level) -> {
+                if (outcome.requiredCapabilities.getValues().isEmpty()) {
+                    ImprovementCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
+                } else {
+                    outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
+                            ImprovementCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
+                            capability, capabilityLevel));
+                }
+            });
         }
     }
 

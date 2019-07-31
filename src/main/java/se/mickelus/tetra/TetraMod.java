@@ -1,5 +1,6 @@
 package se.mickelus.tetra;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
@@ -96,9 +98,16 @@ public class TetraMod {
 
         new GuiHandlerRegistry();
 
+        CriteriaTriggers.register(BlockLookTrigger.instance);
+        CriteriaTriggers.register(BlockUseCriterion.trigger);
+        CriteriaTriggers.register(BlockInteractionCriterion.trigger);
+        CriteriaTriggers.register(ModuleCraftCriterion.trigger);
+        CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
+
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
+        MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
 
         blocks = new Block[] {
                 new BlockWorkbench(),

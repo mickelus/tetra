@@ -10,9 +10,9 @@
     "parent": "tetra:upgrades/root",
     "criteria": {
         "hammer": {
-            "trigger": "minecraft:placed_block",
+            "trigger": "tetra:block_use",
             "conditions": {
-                "block": "tetra:workbench"
+                "after": "tetra:workbench"
             }
         }
     }

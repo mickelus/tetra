@@ -10,13 +10,22 @@
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
-        "upgrade_any": {
-            "trigger": "minecraft:consume_item",
+        "module": {
+            "trigger": "tetra:craft_module",
             "conditions": {
-                "item": {
+                "after": {
+                    "item": "tetra:sword_modular"
+                }
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "after": {
                     "item": "tetra:sword_modular"
                 }
             }
         }
-    }
+    },
+    "requirements": [["module", "improvement"]]
 }

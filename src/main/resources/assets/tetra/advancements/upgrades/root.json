@@ -6,7 +6,8 @@
         },
         "title": "Basic Tinkering",
         "description": "Craft a mallet from sticks and logs\n\nItem Reward: Holosphere",
-        "background": "tetra:textures/blocks/forged_platform.png"
+        "background": "tetra:textures/blocks/forged_platform.png",
+        "announce_to_chat": false
     },
     "criteria": {
         "hammer": {

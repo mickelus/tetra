@@ -1,20 +1,21 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:geode"
+            "item": "tetra:magmatic_cell"
         },
-        "title": "Hollow Solids",
-        "description": "Find a geode in the depths",
+        "title": "Excitement",
+        "description": "Use a transfer unit or a core extractor to fully charge a thermal cell",
         "announce_to_chat": false
     },
-    "parent": "tetra:spelunking/root",
+    "parent": "tetra:spelunking/find_cell",
     "criteria": {
         "get_geode": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:geode"
+                        "item": "tetra:magmatic_cell",
+                        "durability": 128
                     }
                 ]
             }
