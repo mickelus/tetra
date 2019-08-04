@@ -194,6 +194,14 @@ public class ItemEffectHandler {
                             event.setResult(Event.Result.ALLOW);
                         }
                     }
+
+                    int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
+                    if (critLevel > 0) {
+                        if (event.getEntityLiving().getRNG().nextFloat() < critLevel * 0.01) {
+                            event.setDamageModifier(Math.max((float) getEffectEfficiency(itemStack, ItemEffect.criticalStrike), event.getDamageModifier()));
+                            event.setResult(Event.Result.ALLOW);
+                        }
+                    }
                 });
     }
 
@@ -258,7 +266,6 @@ public class ItemEffectHandler {
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int strikingLevel = 0;
-                    int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweepingStrike);
                     BlockPos pos = event.getPos();
                     World world = event.getWorld();
                     IBlockState blockState = world.getBlockState(pos);
@@ -283,6 +290,7 @@ public class ItemEffectHandler {
                     }
 
                     if (strikingLevel > 0) {
+                        int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweepingStrike);
                         if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {
                             if (sweepingLevel > 0) {
                                 breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
@@ -299,7 +307,45 @@ public class ItemEffectHandler {
                         event.setCanceled(true);
                         breakingPlayer.resetCooldown();
                     }
+
+                    if (!event.getWorld().isRemote) {
+                        int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
+                        if (critLevel > 0) {
+                            if (critBlock(world, breakingPlayer, pos, blockState, itemStack, tool, critLevel)) {
+                                event.setCanceled(true);
+                            }
+                        }
+                    }
                 });
+    }
+
+    private boolean critBlock(World world, EntityPlayer breakingPlayer, BlockPos pos, IBlockState blockState, ItemStack itemStack, String tool, int critLevel) {
+        if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
+            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
+            if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
+                world.playEvent(null, 2001, pos, Block.getStateId(blockState));
+                breakBlock(world, breakingPlayer, itemStack, pos, blockState);
+                itemStack.damageItem(2, breakingPlayer);
+
+                ((ItemModular) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
+
+                if (world instanceof WorldServer) {
+                    ((WorldServer) world).spawnParticle(EnumParticleTypes.CRIT_MAGIC,
+                            pos.getX() + 0.5, // world.rand.nextGaussian(),
+                            pos.getY() + 0.5, // world.rand.nextGaussian(),
+                            pos.getZ() + 0.5, // world.rand.nextGaussian(),
+                            12,
+                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
+                            0.3D + world.rand.nextDouble() * 0.3D,
+                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
+                            0.3);
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @SubscribeEvent

@@ -1,6 +1,7 @@
 [
     {
         "key": "duplex_socket/diamond",
+        "durability": 412,
         "integrity": -1,
         "glyph": {
             "tint": "2ccdb1",
@@ -10,15 +11,20 @@
     },
     {
         "key": "duplex_socket/emerald",
+        "durability": 48,
         "integrity": -1,
         "glyph": {
             "tint": "009e30",
             "textureX": 80,
             "textureY": 16
+        },
+        "effects": {
+            "criticalStrike": [15, 2]
         }
     },
     {
         "key": "duplex_socket/lapis",
+        "durability": 22,
         "integrity": -1,
         "glyph": {
             "tint": "1b4aa1",

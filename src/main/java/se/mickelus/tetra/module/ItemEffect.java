@@ -191,6 +191,11 @@ public enum ItemEffect {
      */
     enderReverb,
 
+    /**
+     * Critical strike: Hitting entities and destroying blocks has a chance to critically strike, the probability is equal to the level of the effect.
+     *
+     * A critical strike on an entity deals damage multiplied by the effects efficiency, e.g. a 1.5 efficiency would cause a critical strike to deal
+     * 150% damage.
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

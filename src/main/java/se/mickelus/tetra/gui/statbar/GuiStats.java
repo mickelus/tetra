@@ -64,7 +64,7 @@ public class GuiStats {
 
     public static final IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
     public static final GuiStatBar sweeping = new GuiStatBar(0, 0, barLength, I18n.format("stats.sweeping"),
-                0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabel,
+                0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentage("stats.sweeping.tooltip", sweepingGetter));
 
     public static final IStatGetter bleedingGetter = new StatGetterEffectLevel(ItemEffect.bleeding, 4);
@@ -74,7 +74,7 @@ public class GuiStats {
 
     public static final IStatGetter backstabGetter = new StatGetterEffectLevel(ItemEffect.backstab, 25, 25);
     public static final GuiStatBar backstab = new GuiStatBar(0, 0, barLength, I18n.format("stats.backstab"),
-                0, 200, false, backstabGetter, LabelGetterBasic.percentageLabel,
+                0, 200, false, backstabGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentage("stats.backstab.tooltip", backstabGetter));
 
     public static final IStatGetter armorPenetrationGetter = new StatGetterEffectLevel(ItemEffect.armorPenetration, 1);
@@ -119,12 +119,12 @@ public class GuiStats {
 
     public static final IStatGetter mendingGetter = new StatGetterEffectLevel(ItemEffect.mending, 2);
     public static final GuiStatBar mending = new GuiStatBar(0, 0, barLength, I18n.format("stats.mending"),
-                0, 10, false, mendingGetter, LabelGetterBasic.percentageLabel,
+                0, 10, false, mendingGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterDecimal("stats.mending.tooltip", mendingGetter));
 
     public static final IStatGetter silkTouchGetter = new StatGetterEffectLevel(ItemEffect.silkTouch, 1);
     public static final GuiStatBar silkTouch = new GuiStatBar(0, 0, barLength, I18n.format("stats.silkTouch"),
-                0, 1, false, silkTouchGetter, LabelGetterBasic.percentageLabel,
+                0, 1, false, silkTouchGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterDecimal("stats.silkTouch.tooltip", silkTouchGetter));
 
     public static final IStatGetter fortuneGetter = new StatGetterEffectLevel(ItemEffect.fortune, 1);
@@ -134,7 +134,7 @@ public class GuiStats {
 
     public static final IStatGetter quickStrikeGetter = new StatGetterEffectLevel(ItemEffect.quickStrike, 5, 20);
     public static final GuiStatBar quickStrike = new GuiStatBar(0, 0, barLength, I18n.format("stats.quickStrike"),
-                0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabel,
+                0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentage("stats.quickStrike.tooltip", quickStrikeGetter));
 
     public static final IStatGetter softStrikeGetter = new StatGetterEffectLevel(ItemEffect.softStrike, 1);
@@ -144,13 +144,18 @@ public class GuiStats {
 
     public static final IStatGetter fierySelfGetter = new StatGetterEffectEfficiency(ItemEffect.fierySelf, 100);
     public static final GuiStatBar fierySelf = new GuiStatBar(0, 0, barLength, I18n.format("stats.fierySelf"),
-                0, 100, false, fierySelfGetter, LabelGetterBasic.percentageLabel,
+                0, 100, false, fierySelfGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterFierySelf());
 
     public static final IStatGetter enderReverbGetter = new StatGetterEffectEfficiency(ItemEffect.enderReverb, 100);
     public static final GuiStatBar enderReverb = new GuiStatBar(0, 0, barLength, I18n.format("stats.enderReverb"),
-                0, 100, false, enderReverbGetter, LabelGetterBasic.percentageLabel,
+                0, 100, false, enderReverbGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentage("stats.enderReverb.tooltip", enderReverbGetter));
+
+    public static final IStatGetter criticalGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
+    public static final GuiStatBar criticalStrike = new GuiStatBar(0, 0, barLength, I18n.format("stats.criticalStrike"),
+            0, 100, false, criticalGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterCriticalStrike());
 
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 

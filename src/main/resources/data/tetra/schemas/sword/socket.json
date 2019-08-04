@@ -4,7 +4,6 @@
         "slots": ["sword/guard"],
         "materialSlotCount": 1,
         "displayType": "minor",
-        "repair": false,
         "glyph": {
             "textureX": 80,
             "textureY": 16
