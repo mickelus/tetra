@@ -58,6 +58,7 @@ public class GuiJournalStats extends GuiElement {
         bars.add(GuiStats.fierySelf);
         bars.add(GuiStats.enderReverb);
         bars.add(GuiStats.criticalStrike);
+        bars.add(GuiStats.intuit);
 
         Arrays.stream(Capability.values())
                 .map(capability -> new GuiStatBarCapability(0, 0, GuiStats.barLength, capability))

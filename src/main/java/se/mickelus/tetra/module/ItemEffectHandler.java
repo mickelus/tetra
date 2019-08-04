@@ -10,19 +10,16 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -110,6 +107,26 @@ public class ItemEffectHandler {
     private int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         ItemModular item = (ItemModular) itemStack.getItem();
         return item.getEffectLevel(itemStack, effect);
+    }
+
+    private double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+        ItemModular item = (ItemModular) itemStack.getItem();
+        return item.getEffectEfficiency(itemStack, effect);
+    }
+
+    @SubscribeEvent(priority=EventPriority.LOW)
+    public void onExperienceDrop(LivingExperienceDropEvent event) {
+        Optional.of(event.getAttackingPlayer())
+                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .ifPresent(itemStack -> {
+                    int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
+                    int xp = event.getDroppedExperience();
+                    if (intuitLevel > 0 && xp > 0) {
+                        ((ItemModular) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
+                    }
+                });
     }
 
     @SubscribeEvent

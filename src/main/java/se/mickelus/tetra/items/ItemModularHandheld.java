@@ -97,18 +97,27 @@ public class ItemModularHandheld extends ItemModular {
     protected int entityHitDamage = 1;
 
     @Override
-    public boolean onBlockDestroyed(ItemStack itemStack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
-        if (state.getBlockHardness(worldIn, pos) > 0) {
-            applyDamage(blockDestroyDamage, itemStack, entityLiving);
-            tickProgression(entityLiving, itemStack, 1);
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, IBlockState state, BlockPos pos, EntityLivingBase entity) {
+        if (state.getBlockHardness(world, pos) > 0) {
+            applyDamage(blockDestroyDamage, itemStack, entity);
+            tickProgression(entity, itemStack, 1);
         }
 
-        causeFierySelfEffect(entityLiving, itemStack, 1);
-        causeEnderReverbEffect(entityLiving, itemStack, 1);
+        if (!world.isRemote) {
+            int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
+            if (intuitLevel > 0) {
+                int xp = state.getBlock().getExpDrop(state, world, pos, getEffectLevel(itemStack, ItemEffect.fortune));
+                if (xp > 0) {
+                    tickHoningProgression(entity, itemStack, xp);
+                }
+            }
+        }
+
+        causeFierySelfEffect(entity, itemStack, 1);
+        causeEnderReverbEffect(entity, itemStack, 1);
 
         return true;
     }
-
 
     @Override
     public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {

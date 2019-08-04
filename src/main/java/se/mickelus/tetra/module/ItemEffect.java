@@ -196,6 +196,17 @@ public enum ItemEffect {
      *
      * A critical strike on an entity deals damage multiplied by the effects efficiency, e.g. a 1.5 efficiency would cause a critical strike to deal
      * 150% damage.
+     *
+     * A critical strike when mining blocks would cause the block to break instantly. Critical strikes can only occur when mining blocks
+     * if the efficiency of the required tool is twice (or higher) as high as the blocks hardness.
+     */
+    criticalStrike,
+
+    /**
+     * Intuit: Experience gained from mining blocks or killing entities also yield honing progress equal to the xp gained multiplied by the effect
+     * level.
+     */
+    intuit,
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

@@ -30,6 +30,9 @@
             "tint": "1b4aa1",
             "textureX": 80,
             "textureY": 16
+        },
+        "effects": {
+            "intuit": 1
         }
     }
 ]

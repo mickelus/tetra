@@ -202,6 +202,18 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return;
         }
 
+        tickHoningProgression(entity, itemStack, multiplier);
+
+        for (ItemModuleMajor module: getMajorModules(itemStack)) {
+            module.tickProgression(entity, itemStack, multiplier);
+        }
+    }
+
+    public void tickHoningProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
+        if (!ConfigHandler.experimentalProgression) {
+            return;
+        }
+
         // todo: store this in a separate data structure?
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (!isHoneable(itemStack)) {
@@ -224,9 +236,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             }
         }
 
-        for (ItemModuleMajor module: getMajorModules(itemStack)) {
-            module.tickProgression(entity, itemStack, multiplier);
-        }
     }
 
     public int getHoningProgress(ItemStack itemStack) {

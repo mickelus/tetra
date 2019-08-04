@@ -157,6 +157,11 @@ public class GuiStats {
             0, 100, false, criticalGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterCriticalStrike());
 
+    public static final IStatGetter intuitGetter = new StatGetterEffectLevel(ItemEffect.intuit, 1);
+    public static final GuiStatBar intuit = new GuiStatBar(0, 0, barLength, I18n.format("stats.intuit"),
+            0, 8, false, intuitGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.intuit.tooltip", intuitGetter));
+
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 
 
