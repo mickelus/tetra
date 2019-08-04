@@ -10,7 +10,7 @@ import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class GuiInteractiveCapability extends GuiElement {
-    private static final String texture = "textures/gui/block_interaction.png";
+    private static final String texture = "textures/gui/block-interaction.png";
 
     private GuiTexture iconTexture;
     private GuiTexture levelTexture;

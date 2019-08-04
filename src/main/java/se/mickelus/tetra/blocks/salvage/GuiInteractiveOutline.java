@@ -7,7 +7,7 @@ import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class GuiInteractiveOutline extends GuiElement {
 
-    private static final String texture = "textures/gui/block_interaction.png";
+    private static final String texture = "textures/gui/block-interaction.png";
 
     private BlockInteraction blockInteraction;
 
