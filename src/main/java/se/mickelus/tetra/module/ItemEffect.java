@@ -207,6 +207,13 @@ public enum ItemEffect {
      * level.
      */
     intuit,
+
+    /**
+     * Earthbind: Hitting an entity has a chance to bind them to the ground. Earthbound entities are slowed, have reduced knockback and cannot jump.
+     * This effect is more likely to occur at lower y levels, starting at 50% at y level 0 and is reduced down to 0% at y level 128.
+     */
+    earthbind,
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

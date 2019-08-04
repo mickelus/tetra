@@ -149,6 +149,7 @@ public class TetraMod {
         };
 
         ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
+        ForgeRegistries.POTIONS.registerAll(new PotionEarthbound());
 
         proxy.preInit(event,
                 Arrays.stream(items)

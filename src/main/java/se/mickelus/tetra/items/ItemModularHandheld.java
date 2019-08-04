@@ -42,6 +42,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.oredict.OreDictionary;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.PotionBleeding;
+import se.mickelus.tetra.PotionEarthbound;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
@@ -145,7 +146,7 @@ public class ItemModularHandheld extends ItemModular {
 
             int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
             if (bleedingLevel > 0) {
-                if (!EnumCreatureAttribute.UNDEAD.equals(target.getCreatureAttribute()) && Math.random() > 0.7f) {
+                if (!EnumCreatureAttribute.UNDEAD.equals(target.getCreatureAttribute()) && attacker.getRNG().nextFloat() < 0.3f) {
                     target.addPotionEffect(new PotionEffect(PotionBleeding.instance, 40, bleedingLevel));
                 }
             }
@@ -154,6 +155,18 @@ public class ItemModularHandheld extends ItemModular {
             if (arthropodLevel > 0 && EnumCreatureAttribute.ARTHROPOD.equals(target.getCreatureAttribute())) {
                 int ticks = 20 + attacker.getRNG().nextInt(10 * arthropodLevel);
                 target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, ticks, 3));
+            }
+
+            // todo: only trigger if target is standing on stone/earth/sand/gravel
+            int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
+            if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
+                target.addPotionEffect(new PotionEffect(PotionEarthbound.instance, 80, 0, false, true));
+
+                if (target.world instanceof WorldServer) {
+                    ((WorldServer)target.world).spawnParticle(EnumParticleTypes.BLOCK_CRACK, target.posX, target.posY + 0.1, target.posZ,
+                            16, 0, 0.1,0, target.world.rand.nextGaussian() * 0.2,
+                            Block.getStateId(target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ))));
+                }
             }
 
             causeFierySelfEffect(attacker, itemStack, 1.4);

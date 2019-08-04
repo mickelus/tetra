@@ -10,13 +10,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.*;
@@ -28,6 +26,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import se.mickelus.tetra.PotionEarthbound;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -116,7 +115,7 @@ public class ItemEffectHandler {
 
     @SubscribeEvent(priority=EventPriority.LOW)
     public void onExperienceDrop(LivingExperienceDropEvent event) {
-        Optional.of(event.getAttackingPlayer())
+        Optional.ofNullable(event.getAttackingPlayer())
                 .map(EntityLivingBase::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
@@ -191,6 +190,13 @@ public class ItemEffectHandler {
                         event.setAmount(event.getAmount()  + unarmoredBonusLevel);
                     }
                 });
+    }
+
+
+    @SubscribeEvent
+    public void onLivingJump(LivingEvent.LivingJumpEvent event) {
+        Optional.ofNullable(event.getEntityLiving().getActivePotionEffect(PotionEarthbound.instance))
+                .ifPresent(effect -> event.getEntityLiving().motionY *= 0.5);
     }
 
     @SubscribeEvent
