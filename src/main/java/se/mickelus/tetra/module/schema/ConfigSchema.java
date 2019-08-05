@@ -131,7 +131,7 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && (!ConfigHandler.experimentalProgression || !ItemModular.isHoneable(itemStack))) {
+        if (definition.hone && (!ConfigHandler.moduleProgression || !ItemModular.isHoneable(itemStack))) {
             return false;
         }
 

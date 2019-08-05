@@ -15,14 +15,11 @@ tetra.general.maxfeaturedepth.tooltip=Used to limit how deep the feature generat
 tetra.general.development=Development mode
 tetra.general.development.tooltip=Puts tetra in development mode, causing several configuration files to be reloaded continously and initializes rendering of structure helpers. Enabling will have a negative impact on performance. §oRequires restart.§r
 
-tetra.general.experimentalprogression=Item progression [experimental]
-tetra.general.experimentalprogression.tooltip=Allows tetra items to "level up" after being used a certain amount of times, allowing the player to choose from different ways to "hone" 1 module on the item. Modules also settle after some time, increasing its integrity. §oNeeds further balancing.§r
+tetra.general.moduleprogression=Module progression
+tetra.general.moduleprogression.tooltip=Allows tetra items to "level up" after being used a certain amount of times, allowing the player to choose from different ways to "hone" 1 module on the item. Major modules also settle after some time, increasing its integrity.
 
 tetra.general.workbenchdroptable=Workbench drop table
 tetra.general.workbenchdroptable.tooltip=Enabling cause the workbench to drop itself as an item when broken, rather than dropping the vanilla crafting bench.
-
-tetra.general.experimentalsockets=Sockets [experimental]
-tetra.general.experimentalsockets.tooltip=Allows swords and tools to be socketed (handle and binding slots). §oDoes not provide any stats.§r
 
 tetra.general.settlelimitbase=Settle limit base
 tetra.general.settlelimitbase.tooltip=The base value for number of uses required for a module to settle.

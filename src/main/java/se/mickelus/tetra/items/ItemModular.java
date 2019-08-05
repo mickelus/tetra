@@ -205,7 +205,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
-        if (!ConfigHandler.experimentalProgression) {
+        if (!ConfigHandler.moduleProgression) {
             return;
         }
 
@@ -217,7 +217,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void tickHoningProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
-        if (!ConfigHandler.experimentalProgression) {
+        if (!ConfigHandler.moduleProgression) {
             return;
         }
 
@@ -324,7 +324,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .forEach(tooltip::add);
 
             // honing tooltip
-            if (ConfigHandler.experimentalProgression) {
+            if (ConfigHandler.moduleProgression) {
                 if (isHoneable(itemStack)) {
                     tooltip.add(ChatFormatting.AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.available"));
                 } else {

@@ -70,9 +70,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(guardKey, "sword/reinforced_bolster");
         new BasicModule(fullerKey, "sword/reinforced_fuller");
 
-        if (ConfigHandler.experimentalSockets) {
-            new BasicModule(guardKey, "sword/socket");
-        }
+        new BasicModule(guardKey, "sword/socket");
 
         updateConfig(ConfigHandler.honeSwordBase, ConfigHandler.honeSwordIntegrityMultiplier);
     }
@@ -107,9 +105,7 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_blade_hone");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_hilt_hone");
 
-        if (ConfigHandler.experimentalSockets) {
-            ItemUpgradeRegistry.instance.registerConfigSchema("sword/socket");
-        }
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/socket");
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
