@@ -220,46 +220,6 @@
         }
     },
     {
-        "key": "enchantment/unbreaking",
-        "level": 1,
-        "enchantment": true,
-        "effects": {
-            "unbreaking": 1
-        }
-    },
-    {
-        "key": "enchantment/unbreaking",
-        "level": 2,
-        "enchantment": true,
-        "effects": {
-            "unbreaking": 2
-        }
-    },
-    {
-        "key": "enchantment/unbreaking",
-        "level": 3,
-        "enchantment": true,
-        "effects": {
-            "unbreaking": 3
-        }
-    },
-    {
-        "key": "enchantment/unbreaking",
-        "level": 4,
-        "enchantment": true,
-        "effects": {
-            "unbreaking": 4
-        }
-    },
-    {
-        "key": "enchantment/unbreaking",
-        "level": 5,
-        "enchantment": true,
-        "effects": {
-            "unbreaking": 5
-        }
-    },
-    {
         "key": "enchantment/fire_aspect",
         "level": 1,
         "enchantment": true,
