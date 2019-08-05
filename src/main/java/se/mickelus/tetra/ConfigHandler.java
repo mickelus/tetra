@@ -23,15 +23,15 @@ public class ConfigHandler {
     public static boolean experimentalSockets = false;
 
     public static boolean experimentalProgression = false;
-    public static int settleLimitBase = 300;
+    public static int settleLimitBase = 200;
     public static float settleLimitLevelMultiplier = 3;
     public static float settleLimitDurabilityMultiplier = 0.5f;
 
-    public static int honeSwordBase = 250;
-    public static int honeSwordIntegrityMultiplier = 150;
+    public static int honeSwordBase = 150;
+    public static int honeSwordIntegrityMultiplier = 120;
 
-    public static int honeDuplexBase = 450;
-    public static int honeDuplexIntegrityMultiplier = 200;
+    public static int honeDuplexBase = 260;
+    public static int honeDuplexIntegrityMultiplier = 180;
 
     @Mod.EventBusSubscriber
     private static class EventHandler {
