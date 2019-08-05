@@ -1,12 +1,19 @@
 [
     {
         "key": "duplex_socket/diamond",
-        "durability": 412,
+        "durability": 512,
+        "durabilityMultiplier": 0.8,
         "integrity": -1,
         "glyph": {
             "tint": "2ccdb1",
             "textureX": 80,
             "textureY": 16
+        },
+        "capabilities": {
+            "axe": [0, 1],
+            "shovel": [0, 1],
+            "pickaxe": [0, 1],
+            "cut": [0, 1]
         }
     },
     {

@@ -85,7 +85,9 @@ public class ModuleData {
     public int durability = 0;
 
     /**
-     * Multiplies the flat durability of the item. Works the same way as the multipliers for damage and attack speed.
+     * Works differently for modules and improvements.
+     * For modules: Multiplies the durability of the entire item and multiplies the amount of durability gained from each repair.
+     * For improvements: Multiplies the durability of the module.
      */
     public float durabilityMultiplier = 1;
 

@@ -639,7 +639,7 @@ wide_guard/knightmetal=Wide knightmetal guard
 # SWORD SOCKET
 ###############################
 sword_socket_schema.name=Socket
-sword_socket_schema.description=Socket a gem into the sword, providing different effects depending on the gem.\n\n§7Does not have to be repaired.
+sword_socket_schema.description=Socket a gem into the sword, providing different effects depending on the gem.
 sword_socket_schema.slot1=Gem
 
 sword_socket/diamond=Socket [§bDiamond§r]
@@ -1257,7 +1257,7 @@ handle_hone_speed_5_schema.description=Further hone the swing speed improvement 
 # DUPLEX SOCKET
 ###############################
 duplex_socket_schema.name=Socket
-duplex_socket_schema.description=Socket a gem into the tool, providing different effects depending on the gem.\n\n§7Does not have to be repaired.
+duplex_socket_schema.description=Socket a gem into the tool, providing different effects depending on the gem.
 duplex_socket_schema.slot1=Gem
 
 duplex_socket/diamond=Socket [§bDiamond§r]

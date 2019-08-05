@@ -152,9 +152,12 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return 0;
     }
 
-
     public int getDurability(ItemStack itemStack) {
         return getData(itemStack).durability;
+    }
+
+    public float getDurabilityMultiplier(ItemStack itemStack) {
+        return getData(itemStack).durabilityMultiplier;
     }
 
     public Material getRepairMaterial(ItemStack itemStack) {

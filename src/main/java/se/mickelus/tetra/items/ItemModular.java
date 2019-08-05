@@ -60,9 +60,16 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return getAllModules(stack).stream()
+        return (int) ((getAllModules(stack).stream()
                 .map(itemModule -> itemModule.getDurability(stack))
-                .reduce(0, Integer::sum) + baseDurability;
+                .reduce(0, Integer::sum) + baseDurability)
+                * getDurabilityMultiplier(stack));
+    }
+
+    public float getDurabilityMultiplier(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .map(itemModule -> itemModule.getDurabilityMultiplier(itemStack))
+                .reduce(1f, (a, b) -> a * b);
     }
 
     public static int getIntegrityGain(ItemStack itemStack) {
@@ -347,16 +354,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     /**
-     * Returns the durability and material multiplier of the next repair attempt.
-     * @param repairCount The amount of repairs done so far, used as seed
-     * @return A value between 0.3 and 1
-     */
-    private float getRepairMultiplier(int repairCount) {
-        // the seed has to change a significant amount for there to be any noticable change, 500 seems to be a decent value
-        return 1; //Math.max(0.3f, new Random(repairCount*500).nextFloat());
-    }
-
-    /**
      * Returns an optional with the module that will be repaired in next repair attempt, the optional is empty if
      * there are no repairable modules in this item.
      * @param itemStack The itemstack for the modular item
@@ -382,12 +379,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      */
     public Material getRepairMaterial(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> {
-                    Material material = module.getRepairMaterial(itemStack);
-                    int repairCount = getRepairCount(itemStack);
-
-                    return material;
-                })
+                .map(module -> module.getRepairMaterial(itemStack))
                 .orElse(null);
     }
 
@@ -398,16 +390,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      */
     public int getRepairMaterialCount(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> {
-                    Material material = module.getRepairMaterial(itemStack);
-                    int repairCount = getRepairCount(itemStack);
-
-                    if (material.count > 1) {
-                        return Math.max(1, (int)(getRepairMultiplier(repairCount) * material.count));
-                    }
-
-                    return material.count;
-                })
+                .map(module -> module.getRepairMaterial(itemStack).count)
                 .orElse(0);
     }
 
@@ -418,10 +401,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      */
     public int getRepairAmount(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> {
-                    int repairCount = getRepairCount(itemStack);
-                    return (int) (module.getRepairAmount(itemStack) * getRepairMultiplier(repairCount));
-                })
+                .map(module -> (int) (module.getRepairAmount(itemStack) * getDurabilityMultiplier(itemStack)))
                 .orElse(0);
     }
 
