@@ -37,8 +37,7 @@ import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorPipe;
 import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorPiston;
 import se.mickelus.tetra.blocks.forged.extractor.BlockSeepingBedrock;
 import se.mickelus.tetra.blocks.forged.transfer.BlockTransferUnit;
-import se.mickelus.tetra.blocks.geode.BlockGeode;
-import se.mickelus.tetra.blocks.geode.ItemGeode;
+import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
@@ -136,6 +135,9 @@ public class TetraMod {
         items = new Item[] {
                 new ItemSwordModular(),
                 new ItemGeode(),
+                new ItemPristineLapis(),
+                new ItemPristineEmerald(),
+                new ItemPristineDiamond(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
                 new ItemCellMagmatic(),

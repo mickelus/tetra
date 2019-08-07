@@ -1,0 +1,25 @@
+{
+    "pools": [
+        {
+            "name": "shatter_emerald",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:emerald",
+                    "functions": [
+                        {
+                            "function": "tetra:fortune_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 0.3
+                            },
+                            "requiredCapability": "hammer",
+                            "capabilityLevel": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

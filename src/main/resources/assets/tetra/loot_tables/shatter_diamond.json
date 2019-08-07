@@ -1,0 +1,25 @@
+{
+    "pools": [
+        {
+            "name": "shatter_diamond",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond",
+                    "functions": [
+                        {
+                            "function": "tetra:fortune_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 0.3
+                            },
+                            "requiredCapability": "hammer",
+                            "capabilityLevel": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -209,6 +209,15 @@ item.geode.name=Geode
 item.geode.tooltip=Breaking open at a workbench may yield valuable minerals
 break_geode_action.label=Break open
 
+item.pristine_diamond.name=Pristine Diamond
+shatter_diamond_action.label=Shatter
+
+item.pristine_emerald.name=Pristine Emerald
+shatter_emerald_action.label=Shatter
+
+item.pristine_lapis.name=Pristine Lapis Lazuli
+shatter_lapis_action.label=Shatter
+
 ###############################
 # THERMAL CELL
 ###############################
@@ -642,6 +651,10 @@ sword_socket_schema.slot1=Gem
 sword_socket/diamond=Socket [§bDiamond§r]
 sword_socket/emerald=Socket [§aEmerald§r]
 sword_socket/lapis=Socket [§9Lapis§r]
+sword_socket/amber=Socket [§6Amber§r]
+sword_socket/pristine_diamond=Socket [§bDiamond+§r]
+sword_socket/pristine_emerald=Socket [§aEmerald+§r]
+sword_socket/pristine_lapis=Socket [§9Lapis+§r]
 
 ###############################
 # COUNTERWEIGHT
@@ -1260,6 +1273,10 @@ duplex_socket_schema.slot1=Gem
 duplex_socket/diamond=Socket [§bDiamond§r]
 duplex_socket/emerald=Socket [§aEmerald§r]
 duplex_socket/lapis=Socket [§9Lapis§r]
+duplex_socket/amber=Socket [§6Amber§r]
+duplex_socket/pristine_diamond=Socket [§bDiamond+§r]
+duplex_socket/pristine_emerald=Socket [§aEmerald+§r]
+duplex_socket/pristine_lapis=Socket [§9Lapis+§r]
 
 ###############################
 # AXE HEAD

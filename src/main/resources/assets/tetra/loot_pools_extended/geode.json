@@ -5,6 +5,48 @@
         "entries": [
             {
                 "type": "item",
+                "name": "tetra:pristine_diamond",
+                "weight": 4,
+                "conditions": [
+                    {
+                        "condition": "tetra:random_chance_with_fortune",
+                        "chance": 0.4,
+                        "fortuneMultiplier": 0.1,
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 2
+                    }
+                ]
+            },
+            {
+                "type": "item",
+                "name": "tetra:pristine_emerald",
+                "weight": 4,
+                "conditions": [
+                    {
+                        "condition": "tetra:random_chance_with_fortune",
+                        "chance": 0.4,
+                        "fortuneMultiplier": 0.1,
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 2
+                    }
+                ]
+            },
+            {
+                "type": "item",
+                "name": "tetra:pristine_lapis",
+                "weight": 4,
+                "conditions": [
+                    {
+                        "condition": "tetra:random_chance_with_fortune",
+                        "chance": 0.4,
+                        "fortuneMultiplier": 0.1,
+                        "requiredCapability": "hammer",
+                        "capabilityLevel": 2
+                    }
+                ]
+            },
+            {
+                "type": "item",
                 "name": "minecraft:diamond",
                 "functions": [
                     {

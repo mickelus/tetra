@@ -10,6 +10,36 @@
         "lootTable": "tetra:geode"
     },
     {
+        "key": "shatter_diamond_action",
+        "requirement": {
+            "item": "tetra:pristine_diamond"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:shatter_diamond"
+    },
+    {
+        "key": "shatter_emerald_action",
+        "requirement": {
+            "item": "tetra:pristine_emerald"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:shatter_emerald"
+    },
+    {
+        "key": "shatter_lapis_action",
+        "requirement": {
+            "item": "tetra:pristine_lapis"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:shatter_lapis"
+    },
+    {
         "key": "salvage_bolt_action",
         "requirement": {
             "item": "tetra:forged_bolt"

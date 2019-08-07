@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:pristine_lapis"
+        },
+        "title": "Immaculate Insert",
+        "description": "Find a pristine gem in a geode and use it to socket a sword or a tool",
+        "announce_to_chat": false
+    },
+    "parent": "tetra:spelunking/geode_open",
+    "criteria": {
+        "duplex_emerald": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "duplex_socket/pristine_emerald"
+            }
+        },
+        "duplex_diamond": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "duplex_socket/pristine_diamond"
+            }
+        },
+        "duplex_lapis": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "duplex_socket/pristine_lapis"
+            }
+        },
+        "sword_emerald": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_emerald"
+            }
+        },
+        "sword_diamond": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_diamond"
+            }
+        },
+        "sword_lapis": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_lapis"
+            }
+        }
+    },
+    "requirements": [["duplex_emerald", "duplex_diamond", "duplex_lapis", "sword_emerald", "sword_diamond", "sword_lapis"]]
+}

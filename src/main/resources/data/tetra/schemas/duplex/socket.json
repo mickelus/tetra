@@ -11,6 +11,34 @@
         "outcomes": [
             {
                 "material": {
+                    "item": "tetra:pristine_diamond"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/pristine_diamond"
+            },
+            {
+                "material": {
+                    "item": "tetra:pristine_emerald"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/pristine_emerald"
+            },
+            {
+                "material": {
+                    "item": "tetra:pristine_lapis"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/pristine_lapis"
+            },
+            {
+                "material": {
+                    "item": "thaumcraft:amber"
+                },
+                "moduleKey": "duplex/socket",
+                "moduleVariant": "duplex_socket/amber"
+            },
+            {
+                "material": {
                     "type": "forge:ore_dict",
                     "ore": "gemDiamond"
                 },
