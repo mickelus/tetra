@@ -13,28 +13,32 @@
                 "material": {
                     "item": "tetra:pristine_diamond"
                 },
-                "moduleKey": "duplex/socket",
+                "experienceCost": 3,
+                "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/pristine_diamond"
             },
             {
                 "material": {
                     "item": "tetra:pristine_emerald"
                 },
-                "moduleKey": "duplex/socket",
+                "experienceCost": 3,
+                "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/pristine_emerald"
             },
             {
                 "material": {
                     "item": "tetra:pristine_lapis"
                 },
-                "moduleKey": "duplex/socket",
+                "experienceCost": 3,
+                "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/pristine_lapis"
             },
             {
                 "material": {
                     "item": "thaumcraft:amber"
                 },
-                "moduleKey": "duplex/socket",
+                "experienceCost": 2,
+                "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/amber"
             },
             {
@@ -42,6 +46,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemDiamond"
                 },
+                "experienceCost": 2,
                 "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/diamond"
             },
@@ -50,6 +55,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemEmerald"
                 },
+                "experienceCost": 2,
                 "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/emerald"
             },
@@ -58,6 +64,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemLapis"
                 },
+                "experienceCost": 2,
                 "moduleKey": "sword/socket",
                 "moduleVariant": "sword_socket/lapis"
             }

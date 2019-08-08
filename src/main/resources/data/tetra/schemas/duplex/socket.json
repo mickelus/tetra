@@ -13,6 +13,7 @@
                 "material": {
                     "item": "tetra:pristine_diamond"
                 },
+                "experienceCost": 3,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/pristine_diamond"
             },
@@ -20,6 +21,7 @@
                 "material": {
                     "item": "tetra:pristine_emerald"
                 },
+                "experienceCost": 3,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/pristine_emerald"
             },
@@ -27,6 +29,7 @@
                 "material": {
                     "item": "tetra:pristine_lapis"
                 },
+                "experienceCost": 3,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/pristine_lapis"
             },
@@ -34,6 +37,7 @@
                 "material": {
                     "item": "thaumcraft:amber"
                 },
+                "experienceCost": 2,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/amber"
             },
@@ -42,6 +46,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemDiamond"
                 },
+                "experienceCost": 2,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/diamond"
             },
@@ -50,6 +55,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemEmerald"
                 },
+                "experienceCost": 2,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/emerald"
             },
@@ -58,6 +64,7 @@
                     "type": "forge:ore_dict",
                     "ore": "gemLapis"
                 },
+                "experienceCost": 2,
                 "moduleKey": "duplex/socket",
                 "moduleVariant": "duplex_socket/lapis"
             }
