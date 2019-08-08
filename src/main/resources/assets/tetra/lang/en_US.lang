@@ -64,6 +64,7 @@ workbench.schema_list.empty=No upgrades available for the selected slot.
 repair_action.label=Repair
 workbench.schema_detail.craft=Craft
 workbench.schema_detail.back=back
+workbench.schema_detail.experience=This action requires %d experience levels
 
 workbench.schema_list.temporary=Made available by an item in your inventory
 

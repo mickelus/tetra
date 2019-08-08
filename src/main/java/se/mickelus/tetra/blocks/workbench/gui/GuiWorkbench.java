@@ -192,7 +192,7 @@ public class GuiWorkbench extends GuiContainer {
             int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
                     world.getBlockState(pos));
 
-            schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities);
+            schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities, viewingPlayer.experienceLevel);
             schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(),
                     currentSlot, availableCapabilities));
 

@@ -169,6 +169,7 @@ public class ConfigSchema extends BaseSchema {
         return true;
     }
 
+    @Override
     public boolean isHoning() {
         return definition.hone;
     }
@@ -313,6 +314,24 @@ public class ConfigSchema extends BaseSchema {
             previousModule.removeModule(itemStack);
         }
         return previousModule;
+    }
+
+    @Override
+    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials) {
+        int cost = 0;
+        if (definition.materialSlotCount > 0) {
+            for (int i = 0; i < materials.length; i++) {
+                cost += getOutcomeFromMaterial(materials[i], i)
+                        .map(outcome -> outcome.experienceCost)
+                        .orElse(0);
+            }
+        } else {
+            cost += Arrays.stream(definition.outcomes)
+                    .mapToInt(outcome -> outcome.experienceCost)
+                    .sum();
+        }
+
+        return cost;
     }
 
     @Override

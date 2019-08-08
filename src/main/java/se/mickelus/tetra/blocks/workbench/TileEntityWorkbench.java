@@ -215,6 +215,11 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                     }
                 }
             }
+
+            int xpCost = currentSchema.getExperienceCost(targetStack, materialsCopy);
+            if (xpCost > 0) {
+                player.addExperienceLevel(-xpCost);
+            }
         }
 
         emptyMaterialSlots(player);

@@ -9,8 +9,8 @@ public class GuiTexture extends GuiElement {
 
     private ResourceLocation textureLocation;
 
-    private final int textureX;
-    private final int textureY;
+    private int textureX;
+    private int textureY;
 
     protected int color = 0xffffff;
 
@@ -33,6 +33,12 @@ public class GuiTexture extends GuiElement {
         this.textureY = textureY;
 
         this.textureLocation = textureLocation;
+    }
+
+    public GuiTexture setTextureCoordinates(int x, int y) {
+        textureX = x;
+        textureY = y;
+        return this;
     }
 
     public GuiTexture setColor(int color) {

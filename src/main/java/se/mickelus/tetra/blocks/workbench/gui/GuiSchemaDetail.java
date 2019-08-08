@@ -29,6 +29,8 @@ public class GuiSchemaDetail extends GuiElement {
 
     private GuiCapabilityRequirementList capabilityIndicatorList;
 
+    private GuiExperience experienceIndicator;
+
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
@@ -64,11 +66,14 @@ public class GuiSchemaDetail extends GuiElement {
         capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
 
+        experienceIndicator = new GuiExperience(170, 42, "workbench.schema_detail.experience");
+        addChild(experienceIndicator);
+
         craftButton = new GuiButton(138, 44, 30, 8, I18n.format("workbench.schema_detail.craft"), craftListener);
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials, int[] availableCapabilities) {
+    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
         this.schema = schema;
 
         title.setString(schema.getName());
@@ -129,6 +134,12 @@ public class GuiSchemaDetail extends GuiElement {
         }
 
         capabilityIndicatorList.update(schema, itemStack, materials, availableCapabilities);
+
+        int xpCost = schema.getExperienceCost(itemStack, materials);
+        experienceIndicator.setVisible(xpCost > 0);
+        if (xpCost > 0) {
+            experienceIndicator.update(xpCost, xpCost <= playerLevel);
+        }
     }
 
     public void updateAvailableCapabilities(int[] availableCapabilities) {

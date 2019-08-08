@@ -72,6 +72,17 @@ public interface UpgradeSchema {
      */
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities);
 
+    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
+
+    public boolean checkCapabilities(final ItemStack targetStack, final ItemStack[] materials, int[] availableCapabilities);
+    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
+    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
+
+    public default int getExperienceCost(final ItemStack targetStack, final ItemStack[] materials) {
+        return 0;
+    }
+
     /**
      * Returns true if this is a honing schema and should have it's usage regulated by honing rules.
      * @return
@@ -79,13 +90,6 @@ public interface UpgradeSchema {
     public default boolean isHoning() {
         return false;
     }
-
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
-
-    public boolean checkCapabilities(final ItemStack targetStack, final ItemStack[] materials, int[] availableCapabilities);
-    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
-    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
 
     public SchemaType getType();
 

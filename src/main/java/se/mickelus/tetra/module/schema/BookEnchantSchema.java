@@ -99,7 +99,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
-        return isMaterialsValid(itemStack, materials);
+        return isMaterialsValid(itemStack, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials);
     }
 
     @Override
@@ -143,6 +143,20 @@ public class BookEnchantSchema implements UpgradeSchema {
     @Override
     public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
         return 0;
+    }
+
+    @Override
+    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials) {
+        int cost = 0;
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
+            if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
+                cost += entry.getValue();
+            }
+        }
+
+        return cost;
     }
 
     @Override

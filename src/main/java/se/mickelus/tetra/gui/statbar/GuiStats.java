@@ -162,6 +162,11 @@ public class GuiStats {
             0, 8, false, intuitGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.intuit.tooltip", intuitGetter));
 
+    public static final IStatGetter earthbindGetter = new StatGetterEffectLevel(ItemEffect.earthbind, 1);
+    public static final GuiStatBar earthbind = new GuiStatBar(0, 0, barLength, I18n.format("stats.earthbind"),
+            0, 100, false, earthbindGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("stats.earthbind.tooltip", earthbindGetter));
+
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 
 
