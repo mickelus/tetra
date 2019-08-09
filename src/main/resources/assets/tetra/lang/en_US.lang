@@ -1782,6 +1782,7 @@ toolbelt.binding.group=Tetra toolbelt
 toolbelt.binding.access=Quick access
 toolbelt.binding.restock=Restock
 
+toolbelt.effect.tooltip.quick.quickAccess=A suitable tool can be quickly drawn from this slot
 toolbelt.effect.tooltip.quiver.quickAccess=Arrows can be drawn straight from this slot
 toolbelt.effect.tooltip.storage.quickAccess=Items can be restocked into this slot
 toolbelt.effect.tooltip.storage.cellSocket=Modules can draw power from cells in this slot
