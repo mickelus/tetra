@@ -23,6 +23,7 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
 
     public OverlayGuiQuickslotGroup(int x, int y) {
         super(x, y, 200, 0);
+        isVisible = false;
         opacity = 0;
         showAnimation = new KeyframeAnimation(200, this)
                 .applyTo(new Applier.TranslateX(this.getX() + 10), new Applier.Opacity(1))

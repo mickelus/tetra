@@ -64,20 +64,17 @@ public class OverlayGuiPotionGroup extends GuiElement {
     }
 
     @Override
-    protected void onShow() {
-        Arrays.stream(slots)
-                .filter(Objects::nonNull)
-                .forEach(item -> item.setVisible(true));
-        focusSlot.setVisible(true);
-    }
-
-    @Override
-    protected boolean onHide() {
-        Arrays.stream(slots)
-                .filter(Objects::nonNull)
-                .forEach(item -> item.setVisible(false));
-        focusSlot.setVisible(false);
-        return false;
+    public void setVisible(boolean visible) {
+        if (visible) {
+            Arrays.stream(slots)
+                    .filter(Objects::nonNull)
+                    .forEach(item -> item.setVisible(true));
+        } else {
+            Arrays.stream(slots)
+                    .filter(Objects::nonNull)
+                    .forEach(item -> item.setVisible(false));
+        }
+        focusSlot.setVisible(visible);
     }
 
     @Override

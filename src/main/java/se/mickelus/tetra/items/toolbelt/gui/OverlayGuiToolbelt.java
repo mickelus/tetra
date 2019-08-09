@@ -45,22 +45,18 @@ public class OverlayGuiToolbelt extends GuiRoot {
         quiverGroup.setInventory(new InventoryQuiver(itemStack));
     }
 
-    @Override
-    protected void onShow() {
-
-        scaledResolution = new ScaledResolution(mc);
-        hasMouseMoved = false;
-        quickslotGroup.setVisible(true);
-        potionGroup.setVisible(true);
-        quiverGroup.setVisible(true);
-    }
-
-    @Override
-    protected boolean onHide() {
-        quickslotGroup.setVisible(false);
-        potionGroup.setVisible(false);
-        quiverGroup.setVisible(false);
-        return false;
+    public void setVisible(boolean visible) {
+        if (visible) {
+            scaledResolution = new ScaledResolution(mc);
+            hasMouseMoved = false;
+            quickslotGroup.setVisible(true);
+            potionGroup.setVisible(true);
+            quiverGroup.setVisible(true);
+        } else {
+            quickslotGroup.setVisible(false);
+            potionGroup.setVisible(false);
+            quiverGroup.setVisible(false);
+        }
     }
 
     @Override
