@@ -732,41 +732,6 @@ reinforced_fuller/fierymetal=Fierymetal reinforced fuller
 reinforced_fuller/knightmetal=Knightmetal reinforced fuller
 
 ###############################
-# REINFORCED BOLSTER
-###############################
-reinforced_bolster_schema.name=Reinforce bolster
-reinforced_bolster_schema.description=Reinforce the bolster using the given material, providing additional integrity at the cost of slower swing speed.
-reinforced_bolster_schema.slot1=Material
-
-reinforced_bolster/oak=Wood reinforced bolster
-reinforced_bolster/spruce=Spruce reinforced bolster
-reinforced_bolster/birch=Birch reinforced bolster
-reinforced_bolster/jungle=Jungle reinforced bolster
-reinforced_bolster/acacia=Acacia reinforced bolster
-reinforced_bolster/dark_oak=Dark-oak reinforced bolster
-reinforced_bolster/cobblestone=Cobblestone reinforced bolster
-reinforced_bolster/stone=Stone reinforced bolster
-reinforced_bolster/granite=Granite reinforced bolster
-reinforced_bolster/diorite=Diorite reinforced bolster
-reinforced_bolster/andesite=Andesite reinforced bolster
-reinforced_bolster/iron=Iron reinforced bolster
-reinforced_bolster/flint=Flint reinforced bolster
-reinforced_bolster/gold=Gold reinforced bolster
-reinforced_bolster/diamond=Diamond reinforced bolster
-reinforced_bolster/obsidian=Obsidian reinforced bolster
-reinforced_bolster/copper=Copper reinforced bolster
-reinforced_bolster/tin=Tin reinforced bolster
-reinforced_bolster/silver=Silver reinforced bolster
-reinforced_bolster/nickel=Nickel reinforced bolster
-reinforced_bolster/lead=Lead reinforced bolster
-reinforced_bolster/bronze=Bronze reinforced bolster
-reinforced_bolster/electrum=Electrum reinforced bolster
-reinforced_bolster/steel=Steel reinforced bolster
-reinforced_bolster/thaumium=Thaumium reinforced bolster
-reinforced_bolster/ironwood=Ironwood reinforced bolster
-reinforced_bolster/steeleaf=Steeleaf reinforced bolster
-reinforced_bolster/fierymetal=Fierymetal reinforced bolster
-reinforced_bolster/knightmetal=Knightmetal reinforced bolster
 
 ###############################
 # FOREFINGER RING

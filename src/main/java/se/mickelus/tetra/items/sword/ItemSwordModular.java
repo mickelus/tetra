@@ -67,7 +67,6 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(pommelKey, "sword/counterweight");
         new BasicModule(pommelKey, "sword/grip_loop");
         new BasicModule(guardKey, "sword/forefinger_ring");
-        new BasicModule(guardKey, "sword/reinforced_bolster");
         new BasicModule(fullerKey, "sword/reinforced_fuller");
 
         new BasicModule(guardKey, "sword/socket");
@@ -99,7 +98,6 @@ public class ItemSwordModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/counterweight");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/grip_loop");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/forefinger_ring");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_bolster");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_blade_hone");
