@@ -1,0 +1,56 @@
+[
+    {
+        "key": "duplex_binding/string",
+        "durability": 12,
+        "integrity": 1,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "fefefe",
+            "textureX": 88,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "duplex_binding/leather",
+        "durability": 23,
+        "integrity": 2,
+        "attackSpeed": -0.4,
+        "glyph": {
+            "tint": "753b26",
+            "textureX": 88,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "duplex_binding/hide",
+        "durability": 18,
+        "integrity": 2,
+        "attackSpeed": -0.3,
+        "glyph": {
+            "tint": "a88054",
+            "textureX": 88,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "duplex_binding/vine",
+        "durability": 12,
+        "integrity": 1,
+        "attackSpeed": -0.2,
+        "glyph": {
+            "tint": "445d24",
+            "textureX": 88,
+            "textureY": 16
+        }
+    },
+    {
+        "key": "duplex_binding/bolt",
+        "durability": 12,
+        "attackSpeed": -0.1,
+        "glyph": {
+            "tint": "383838",
+            "textureX": 80,
+            "textureY": 16
+        }
+    }
+]

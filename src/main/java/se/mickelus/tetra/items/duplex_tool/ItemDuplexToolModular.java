@@ -135,6 +135,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 .withRenderLayer(Priority.LOWER);
 
 
+        new BasicModule(bindingKey, "duplex/binding");
         new BasicModule(bindingKey, "duplex/socket");
 
         updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
@@ -200,6 +201,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
         ItemUpgradeRegistry.instance.registerReplacementDefinition("hoe");
 
+        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/binding");
         ItemUpgradeRegistry.instance.registerConfigSchema("duplex/socket");
     }
 

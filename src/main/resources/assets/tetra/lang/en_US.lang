@@ -1256,6 +1256,19 @@ duplex_socket/pristine_emerald=Socket [§aEmerald+§r]
 duplex_socket/pristine_lapis=Socket [§9Lapis+§r]
 
 ###############################
+# DUPLEX BINDING
+###############################
+duplex_binding_schema.name=Binding
+duplex_binding_schema.description=Bind the tool head to the hilt by binding it with rope or straps, or by using completely different materials and methods.
+duplex_binding_schema.slot1=Material
+
+duplex_binding/string=String binding
+duplex_binding/leather=Leather binding
+duplex_binding/hide=Hide binding
+duplex_binding/vine=Vine binding
+duplex_binding/bolt=Bolted
+
+###############################
 # AXE HEAD
 ##############################
 basic_axe_schema.name=Axe head
