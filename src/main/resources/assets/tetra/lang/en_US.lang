@@ -732,6 +732,17 @@ reinforced_fuller/fierymetal=Fierymetal reinforced fuller
 reinforced_fuller/knightmetal=Knightmetal reinforced fuller
 
 ###############################
+# SWORD BINDING
+###############################
+sword_binding_schema.name=Binding
+sword_binding_schema.description=Tighten the binding between the hilt and the blade by wrapping it with rope or straps, or by using completely different materials and methods.
+sword_binding_schema.slot1=Material
+
+sword_binding/string=String binding
+sword_binding/leather=Leather binding
+sword_binding/hide=Hide binding
+sword_binding/vine=Vine binding
+sword_binding/bolt=Bolted
 
 ###############################
 # FOREFINGER RING

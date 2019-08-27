@@ -1,0 +1,64 @@
+[
+    {
+        "key": "sword_binding_schema",
+        "slots": ["sword/guard"],
+        "materialSlotCount": 1,
+        "displayType": "minor",
+        "glyph": {
+            "textureX": 88,
+            "textureY": 16
+        },
+        "outcomes": [
+            {
+                "material": {
+                    "item": "minecraft:string",
+                    "count": 4
+                },
+                "requiredCapabilities": {
+                    "cut": 1
+                },
+                "moduleKey": "sword/binding",
+                "moduleVariant": "sword_binding/string"
+            },
+            {
+                "material": {
+                    "item": "minecraft:leather"
+                },
+                "requiredCapabilities": {
+                    "cut": 2
+                },
+                "moduleKey": "sword/binding",
+                "moduleVariant": "sword_binding/leather"
+            },
+            {
+                "material": {
+                    "item": "minecraft:hide",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "cut": 2
+                },
+                "moduleKey": "sword/binding",
+                "moduleVariant": "sword_binding/hide"
+            },
+            {
+                "material": {
+                    "item": "minecraft:vine",
+                    "count": 4
+                },
+                "requiredCapabilities": {
+                    "cut": 1
+                },
+                "moduleKey": "sword/binding",
+                "moduleVariant": "sword_binding/vine"
+            },
+            {
+                "material": {
+                    "item": "tetra:forged_bolt"
+                },
+                "moduleKey": "sword/binding",
+                "moduleVariant": "sword_binding/bolt"
+            }
+        ]
+    }
+]
