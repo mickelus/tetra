@@ -21,6 +21,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     protected T[] data;
 
+    protected String[] tweakableVariants = new String[] { "sword_binding/bolt", "duplex_binding/bolt" };
+
     protected String slotKey;
     protected String moduleKey;
     protected String dataKey;
@@ -74,9 +76,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         String dataName = tag.getString(this.dataKey);
 
-        return Arrays.stream(data)
-                .filter(moduleData -> moduleData.key.equals(dataName))
-                .findAny().orElse(getDefaultData());
+        return getData(dataName);
     }
 
     public T getData(String variantKey) {
@@ -188,6 +188,10 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return 0;
     }
 
+    public boolean isTweakable(ItemStack itemStack) {
+        String variant = NBTHelper.getTag(itemStack).getString(this.dataKey);
+        return Arrays.asList(tweakableVariants).contains(variant);
+    }
 
     public double getDamageModifier(ItemStack itemStack) {
         return getData(itemStack).damage;

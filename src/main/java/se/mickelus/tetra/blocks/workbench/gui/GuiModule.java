@@ -35,46 +35,53 @@ public class GuiModule extends GuiClickable {
 
         if (module == null && previewModule == null) {
             isEmpty = true;
-            setupChildren(null, null, slotName);
+            setupChildren(null, null, slotName, false);
         } else if (previewModule == null) {
             isRemoving = true;
             ModuleData data = module.getData(itemStack);
-            setupChildren(null, data.glyph, slotName);
+            setupChildren(null, data.glyph, slotName, module.isTweakable(itemStack));
         } else if (module == null) {
             isAdding = true;
             ModuleData previewData = previewModule.getData(previewStack);
-            setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName);
+            setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName, previewModule.isTweakable(itemStack));
         } else {
             ModuleData data = module.getData(itemStack);
             ModuleData previewData = previewModule.getData(previewStack);
 
             if (data.equals(previewData)) {
-                setupChildren(module.getName(itemStack), data.glyph, slotName);
+                setupChildren(module.getName(itemStack), data.glyph, slotName, module.isTweakable(itemStack));
             } else {
                 isPreview = true;
-                setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName);
+                setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName, previewModule.isTweakable(itemStack));
             }
         }
 
         this.hoverHandler = hoverHandler;
     }
 
-    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
+    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName, boolean tweakable) {
         backdrop = new GuiModuleMinorBackdrop(1, -1, GuiColors.normal);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             backdrop.setX(-1);
         }
-        backdrop.setAttachmentPoint(attachmentPoint);
-        backdrop.setAttachmentAnchor(attachmentPoint);
+        backdrop.setAttachment(attachmentPoint);
         addChild(backdrop);
+
+        if (tweakable) {
+            GuiTextureOffset tinkerIndicator = new GuiTextureOffset(1, -1, 11, 11, 112, 32, "textures/gui/workbench.png");
+            if (GuiAttachment.topLeft.equals(attachmentPoint)) {
+                tinkerIndicator.setX(-1);
+            }
+            tinkerIndicator.setAttachment(attachmentPoint);
+            addChild(tinkerIndicator);
+        }
 
 
         moduleString = new GuiString(-12, 1, moduleName != null ? moduleName : slotName);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
             moduleString.setX(12);
         }
-        moduleString.setAttachmentPoint(attachmentPoint);
-        moduleString.setAttachmentAnchor(attachmentPoint);
+        moduleString.setAttachment(attachmentPoint);
         addChild(moduleString);
 
         width = moduleString.getWidth() + 12;
@@ -86,8 +93,7 @@ public class GuiModule extends GuiClickable {
             if (GuiAttachment.topLeft.equals(attachmentPoint)) {
                 glyph.setX(1);
             }
-            glyph.setAttachmentPoint(attachmentPoint);
-            glyph.setAttachmentAnchor(attachmentPoint);
+            glyph.setAttachment(attachmentPoint);
             addChild(glyph);
         }
     }

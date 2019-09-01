@@ -33,10 +33,16 @@ public class GuiModuleMajor extends GuiModule {
         }
     }
 
-    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName) {
+    protected void setupChildren(String moduleName, GlyphData glyphData, String slotName, boolean tweakable) {
         backdrop = new GuiModuleBackdrop(1, 0, GuiColors.normal);
         backdrop.setAttachment(attachmentPoint);
         addChild(backdrop);
+
+        if (tweakable) {
+            GuiTextureOffset tinkerIndicator = new GuiTextureOffset(1, 0, 15, 15, 96, 32, "textures/gui/workbench.png");
+            tinkerIndicator.setAttachment(attachmentPoint);
+            addChild(tinkerIndicator);
+        }
 
         moduleString = new GuiString(19, 5, "");
         if (moduleName != null) {
