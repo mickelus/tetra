@@ -1,6 +1,9 @@
 package se.mickelus.tetra.items.journal;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -14,6 +17,9 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.journal.gui.GuiJournal;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemJournal extends TetraItem {
 
@@ -31,6 +37,13 @@ public class ItemJournal extends TetraItem {
         setMaxStackSize(1);
 
         setCreativeTab(TetraCreativeTabs.getInstance());
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("item.journal.tooltip1"));
+        tooltip.add("");
+        tooltip.add(ChatFormatting.DARK_GRAY + ChatFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
     }
 
     @Override
