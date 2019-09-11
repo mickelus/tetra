@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.journal.gui;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.items.journal.JournalPage;
 
 import java.util.ArrayList;
@@ -45,20 +46,18 @@ public class GuiJournalHeader extends GuiElement {
 
     private KeyframeAnimation getButtonAnimation(GuiElement button, int i, int size) {
         int delay = 1 + Math.abs(i - size / 2);
-        int x = button.getX();
         if (i == (size + 1) / 2 - 1 && size % 2 != 0) {
-            int y = button.getY();
             return new KeyframeAnimation(200, button)
                     .withDelay(delay * 300)
-                    .applyTo(new Applier.TranslateY(y + 3, y), new Applier.Opacity(0, button.getOpacity()));
+                    .applyTo(new Applier.TranslateY(3, 0, true), new Applier.Opacity(0, 0, false, true));
         } else if (i < size / 2) {
             return new KeyframeAnimation(200, button)
                     .withDelay(delay * 300)
-                    .applyTo(new Applier.TranslateX(x + 5, x), new Applier.Opacity(0, button.getOpacity()));
+                    .applyTo(new Applier.TranslateX(5, 0, true), new Applier.Opacity(0, 0, false, true));
         } else {
             return new KeyframeAnimation(200, button)
                     .withDelay(delay * 300)
-                    .applyTo(new Applier.TranslateX(x - 5, x), new Applier.Opacity(0, button.getOpacity()));
+                    .applyTo(new Applier.TranslateX(-5, 0, true), new Applier.Opacity(0, 0, false, true));
         }
 
     }

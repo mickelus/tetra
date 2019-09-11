@@ -3,9 +3,13 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.GuiAttachment;
+import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.GuiString;
+import se.mickelus.tetra.gui.GuiStringSmall;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.ItemModularHandheld;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +65,15 @@ public class GuiIntegrityBar extends GuiElement {
         }
     }
 
+    public void showAnimation() {
+        if (isVisible()) {
+            new KeyframeAnimation(100, this)
+                    .withDelay(200)
+                    .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(-3, 0, true))
+                    .start();
+        }
+    }
+
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
@@ -75,11 +88,11 @@ public class GuiIntegrityBar extends GuiElement {
 
         for (int i = 0; i < -integrityCost; i++) {
             drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,
-                    i >= integrityGain ? overuseColor : costColor);
+                    colorWithOpacity(i >= integrityGain ? overuseColor : costColor, opacity * getOpacity()));
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor);
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, colorWithOpacity(gainColor, opacity * getOpacity()));
         }
     }
 

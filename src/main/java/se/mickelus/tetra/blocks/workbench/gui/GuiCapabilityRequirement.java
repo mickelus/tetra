@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 import java.util.Collections;
 import java.util.List;

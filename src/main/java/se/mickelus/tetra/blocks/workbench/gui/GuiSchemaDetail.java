@@ -5,6 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -33,8 +35,6 @@ public class GuiSchemaDetail extends GuiElement {
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
-        addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
-
         addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("workbench.schema_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);

@@ -312,6 +312,7 @@ public class GuiElement extends Gui {
     }
 
     protected static int colorWithOpacity(int color, int opacity) {
-        return color & 0xffffff | (opacity << 24);
+        // replace alpha bits with passed opacity value, multiples opacity with current alpha bits if they are present
+        return color & 0xffffff | (opacity * (color >> 24 == 0 ? 255 : color >> 24 & 255) / 255 << 24);
     }
 }

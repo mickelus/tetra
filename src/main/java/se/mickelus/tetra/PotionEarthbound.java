@@ -2,17 +2,10 @@ package se.mickelus.tetra;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import scala.actors.threadpool.Arrays;
-import se.mickelus.tetra.gui.GuiColors;
-
-import java.util.Collections;
 
 public class PotionEarthbound extends Potion {
     public static PotionEarthbound instance;

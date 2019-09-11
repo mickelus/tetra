@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -21,11 +22,14 @@ public class RepairAction implements WorkbenchAction {
 
     @Override
     public boolean canPerformOn(EntityPlayer player, ItemStack itemStack) {
-        UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
-        return Arrays.stream(schemas)
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
-                .anyMatch(upgradeSchema -> upgradeSchema instanceof RepairSchema);
+        if (itemStack.getItem() instanceof ItemModular) {
+            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
+            return Arrays.stream(schemas)
+                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
+                    .anyMatch(upgradeSchema -> upgradeSchema instanceof RepairSchema);
+        }
 
+        return false;
     }
 
     @Override

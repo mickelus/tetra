@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
-import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiString;
 import se.mickelus.tetra.gui.GuiTexture;

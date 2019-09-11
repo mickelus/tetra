@@ -20,7 +20,7 @@ public class GuiHandlerForgedContainer implements TetraGuiHandler {
     public Object getClientGuiElement(EntityPlayer player, World world, int x, int y, int z) {
             TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
         return CastOptional.cast(tileEntity, TileEntityForgedContainer.class)
-                .map(te -> new GuiForgedContainer(getContainer(player, world, x, y, z), te, player))
+                .map(te -> new GuiForgedContainer(getContainer(player, world, x, y, z), te))
                 .orElse(null);
     }
 

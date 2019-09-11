@@ -3,14 +3,13 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.function.Consumer;
 
 public class GuiSchemaList extends GuiElement {
-
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
-
     private static int pageLength = 8;
 
     private int page = 0;
@@ -24,14 +23,10 @@ public class GuiSchemaList extends GuiElement {
     private GuiButton buttonBack;
     private GuiButton buttonForward;
 
-    private GuiButton buttonClose;
-
     private GuiText emptyStateText;
 
-    public GuiSchemaList(int x, int y, Consumer<UpgradeSchema> schemaSelectionConsumer, Runnable closeCallback) {
+    public GuiSchemaList(int x, int y, Consumer<UpgradeSchema> schemaSelectionConsumer) {
         super(x, y, 224, 67);
-
-        addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
         listGroup = new GuiElement(3, 3, width - 6, height - 6);
         addChild(listGroup);
@@ -40,9 +35,6 @@ public class GuiSchemaList extends GuiElement {
         addChild(buttonBack);
         buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
         addChild(buttonForward);
-
-        buttonClose = new GuiButton(215, -4, "x", closeCallback);
-        addChild(buttonClose);
 
         emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("workbench.schema_list.empty"));
         addChild(emptyStateText);

@@ -4,9 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -23,7 +23,6 @@ public class GuiActionList extends GuiElement {
 
     public void updateActions(ItemStack targetStack, WorkbenchAction[] actions, EntityPlayer player,
             Consumer<WorkbenchAction> clickHandler) {
-
         WorkbenchAction[] availableActions = Arrays.stream(actions)
                 .filter(action -> action.canPerformOn(player, targetStack))
                 .toArray(WorkbenchAction[]::new);
@@ -47,5 +46,16 @@ public class GuiActionList extends GuiElement {
 
     public void updateCapabilities(int[] availableCapabilities) {
         Arrays.stream(actionButtons).forEach(button -> button.update(availableCapabilities));
+    }
+
+    public void showAnimation() {
+        if (isVisible()) {
+            for (int i = 0; i < getNumChildren(); i++) {
+                new KeyframeAnimation(100, getChild(i))
+                        .withDelay(i * 100 + 300)
+                        .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(i % 2 == 0 ? -2 : 2, 0, true))
+                        .start();
+            }
+        }
     }
 }

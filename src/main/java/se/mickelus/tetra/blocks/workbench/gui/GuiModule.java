@@ -2,6 +2,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -14,6 +17,8 @@ public class GuiModule extends GuiClickable {
     protected String slotKey = null;
     protected GuiModuleBackdrop backdrop;
     protected GuiString moduleString;
+    protected GuiModuleGlyph glyph;
+    protected GuiTextureOffset tweakingIndicator;
 
     protected boolean isEmpty;
     protected boolean isHovered;
@@ -59,6 +64,35 @@ public class GuiModule extends GuiClickable {
         this.hoverHandler = hoverHandler;
     }
 
+    public void showAnimation(int offset) {
+        if (isVisible()) {
+            int direction = attachmentPoint == GuiAttachment.topLeft ? -2 : 2;
+            new KeyframeAnimation(100, backdrop)
+                    .withDelay(offset * 80)
+                    .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(direction, 0, true))
+                    .start();
+
+            if (glyph != null) {
+                new KeyframeAnimation(100, glyph)
+                        .withDelay(offset * 80 + 100)
+                        .applyTo(new Applier.Opacity(0, 1))
+                        .start();
+            }
+
+            if (tweakingIndicator != null) {
+                new KeyframeAnimation(100, tweakingIndicator)
+                        .withDelay(offset * 80 + 100)
+                        .applyTo(new Applier.Opacity(0, 1))
+                        .start();
+            }
+
+            new KeyframeAnimation(100, moduleString)
+                    .withDelay(offset * 80 + 200)
+                    .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(direction * 2, 0, true))
+                    .start();
+        }
+    }
+
     protected void setupChildren(String moduleName, GlyphData glyphData, String slotName, boolean tweakable) {
         backdrop = new GuiModuleMinorBackdrop(1, -1, GuiColors.normal);
         if (GuiAttachment.topLeft.equals(attachmentPoint)) {
@@ -68,12 +102,12 @@ public class GuiModule extends GuiClickable {
         addChild(backdrop);
 
         if (tweakable) {
-            GuiTextureOffset tinkerIndicator = new GuiTextureOffset(1, -1, 11, 11, 112, 32, "textures/gui/workbench.png");
+            tweakingIndicator = new GuiTextureOffset(1, -1, 11, 11, 112, 32, "textures/gui/workbench.png");
             if (GuiAttachment.topLeft.equals(attachmentPoint)) {
-                tinkerIndicator.setX(-1);
+                tweakingIndicator.setX(-1);
             }
-            tinkerIndicator.setAttachment(attachmentPoint);
-            addChild(tinkerIndicator);
+            tweakingIndicator.setAttachment(attachmentPoint);
+            addChild(tweakingIndicator);
         }
 
 
@@ -87,7 +121,7 @@ public class GuiModule extends GuiClickable {
         width = moduleString.getWidth() + 12;
 
         if (glyphData != null) {
-            final GuiModuleGlyph glyph = new GuiModuleGlyph(0, 1, 8, 8,
+            glyph = new GuiModuleGlyph(0, 1, 8, 8,
                     glyphData.tint, glyphData.textureX, glyphData.textureY,
                     glyphData.textureLocation);
             if (GuiAttachment.topLeft.equals(attachmentPoint)) {

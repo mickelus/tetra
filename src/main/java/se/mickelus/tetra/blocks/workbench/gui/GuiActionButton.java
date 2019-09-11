@@ -2,12 +2,11 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 import java.util.function.Consumer;
 

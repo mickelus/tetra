@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 import java.util.function.Consumer;
 

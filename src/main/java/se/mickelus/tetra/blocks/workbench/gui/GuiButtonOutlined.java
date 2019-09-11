@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 public class GuiButtonOutlined extends GuiClickable {
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";

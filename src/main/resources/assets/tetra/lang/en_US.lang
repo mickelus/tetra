@@ -47,6 +47,8 @@ tetra.general.honeduplexintegritymultiplier.tooltip=Integrity multiplier for too
 # JOURNAL
 ###############################
 item.journal.name=Holosphere
+item.journal.tooltip1=At a touch the sphere projects diagrams and glyphs onto nothingness
+item.journal.tooltip2=[Right click to use]
 journal.craft.breadcrumb.root=Items
 journal.craft.sword=Blades
 journal.craft.toolbelt=Toolbelts
@@ -60,6 +62,13 @@ journal.craft.variants=Variants
 ###############################
 # WORKBENCH
 ###############################
+workbench.slot_detail.details_tab=Details
+workbench.slot_detail.craft_tab=Craft
+workbench.slot_detail.tweak_tab=Tweak
+
+workbench.module_detail.empty=Empty slot
+workbench.module_detail.not_tweakable=Tweaking unavailable
+
 workbench.schema_list.empty=No upgrades available for the selected slot.
 repair_action.label=Repair
 workbench.schema_detail.craft=Craft
@@ -159,7 +168,7 @@ stats.enderReverb=Reverb
 stats.enderReverb.tooltip=Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder\n\n§7Base chance: §e%s§7
 
 stats.toolbelt.quickslot=Quickslots
-stats.toolbelt.storage.tooltip=Has §e%s§r quickslots
+stats.toolbelt.quickslot.tooltip=Has §e%s§r quickslots
 
 stats.toolbelt.potion_storage=Potion slots
 stats.toolbelt.potion_storage.tooltip=Has §e%s§r potion slots
@@ -421,6 +430,7 @@ basic_blade_schema.description=Replace the current sword blade with the given bl
 basic_blade_schema.slot1=Blade material
 
 sword/basic_blade.name=Sword
+sword/basic_blade.description=A basic blade with average damage, attack speed and integrity usage.
 
 basic_blade/oak=Wooden blade
 basic_blade/oak.prefix=Wooden
@@ -450,6 +460,7 @@ basic_blade/iron=Iron blade
 basic_blade/iron.prefix=Iron
 basic_blade/gold=Golden blade
 basic_blade/gold.prefix=Golden
+basic_blade/gold.description=A basic blade with average damage, attack speed and integrity usage.\n\n§6Gold blades are more fancy than other blades.
 basic_blade/diamond=Diamond blade
 basic_blade/diamond.prefix=Diamond
 basic_blade/obsidian=Obsidian blade
@@ -513,6 +524,8 @@ basic_hilt_schema.name=Simple hilt
 basic_hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
 basic_hilt_schema.slot1=Hilt material
 
+sword/basic_hilt.description=A simple sword hilt. The sword hilt is the primary source of integrity for swords.
+
 basic_hilt/hilt_stick=Flimsy hilt
 basic_hilt/iron=Iron hilt
 basic_hilt/bone=Bone hilt
@@ -564,6 +577,8 @@ wrap_hilt_hone_2_schema.description=Further improve the hilt wrap, increasing da
 ###############################
 # DECORATIVE POMMEL
 ###############################
+sword/decorative_pommel.description=A decorative pommel, it provides a small amount of durability but has no functional value.
+
 decorative_pommel/oak=Decorative wood pommel
 decorative_pommel/cobblestone=Decorative stone pommel
 decorative_pommel/iron=Decorative iron pommel
@@ -586,6 +601,8 @@ decorative_pommel/knightmetal=Decorative knightmetal pommel
 ###############################
 # MAKESHIFT GUARD
 ###############################
+sword/makeshift_guard.description=A sword guard, its weak construction provides little protection for the wielding hand.
+
 makeshift_guard/oak=Wooden makeshift guard
 makeshift_guard/cobblestone=Makeshift stone guard
 makeshift_guard/iron=Makeshift iron guard
@@ -611,6 +628,8 @@ makeshift_guard/knightmetal=Makeshift knightmetal guard
 wide_guard_schema.name=Wide guard
 wide_guard_schema.description=Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.
 wide_guard_schema.slot1=Guard material
+
+sword/wide_guard.description=a wide guard which protects the wielding hand. Provides additional armor when the sword is held in the main-hand or off-hand.
 
 wide_guard/oak=Wooden wide guard
 wide_guard/spruce=Wide spruce guard
@@ -649,13 +668,20 @@ sword_socket_schema.name=Socket
 sword_socket_schema.description=Socket a gem into the sword, providing different effects depending on the gem.
 sword_socket_schema.slot1=Gem
 
+sword/socket.description=A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.
+
 sword_socket/diamond=Socket [§bDiamond§r]
 sword_socket/emerald=Socket [§aEmerald§r]
 sword_socket/lapis=Socket [§9Lapis§r]
 sword_socket/amber=Socket [§6Amber§r]
 sword_socket/pristine_diamond=Socket [§bDiamond+§r]
+sword_socket/pristine_diamond.description=A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.
+
 sword_socket/pristine_emerald=Socket [§aEmerald+§r]
+sword_socket/pristine_emerald.description=A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.
+
 sword_socket/pristine_lapis=Socket [§9Lapis+§r]
+sword_socket/pristine_lapis.description=A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.
 
 ###############################
 # COUNTERWEIGHT
@@ -663,6 +689,8 @@ sword_socket/pristine_lapis=Socket [§9Lapis+§r]
 counterweight_schema.name=Counterweight
 counterweight_schema.description=Balance the blade with a counterweight. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other modules combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
 counterweight_schema.slot1=Material
+
+sword/counterweight.description=A counterweight attached to the bottom of the hilt. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other modules combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
 
 counterweight/oak=Wooden counterweight §7II
 counterweight/spruce=Spruce counterweight §7II
@@ -698,8 +726,10 @@ counterweight/knightmetal=Knightmetal counterweight §7IV
 # REINFORCED FULLER
 ###############################
 reinforced_fuller_schema.name=Reinforce fuller
-reinforced_fuller_schema.description=Reinforce the fuller using the given material. Provides additional integrity and reduces the chance for the item to take damage (Unbreaking I) but makes the sword heavier and slower to swing.
+reinforced_fuller_schema.description=Reinforce the fuller using the given material. Provides additional integrity and reduces the chance for the item to take damage, but makes the sword heavier and slower to swing.
 reinforced_fuller_schema.slot1=Material
+
+sword/reinforced_fuller.description=A fuller reinforcement that provides additional integrity and reduces the chance for the item to take damage, but makes the sword heavier and slower to swing.
 
 reinforced_fuller/oak=Wood reinforced fuller
 reinforced_fuller/spruce=Spruce reinforced fuller
@@ -739,17 +769,24 @@ sword_binding_schema.description=Tighten the binding between the hilt and the bl
 sword_binding_schema.slot1=Material
 
 sword_binding/string=String binding
+sword_binding/string.description=Tightly bound strings strengthens the blade's attachment to the hilt.
 sword_binding/leather=Leather binding
+sword_binding/leather.description=Tightly bound leather straps strengthens the blade's attachment to the hilt.
 sword_binding/hide=Hide binding
+sword_binding/hide.description=Tightly bound hide straps strengthens the blade's attachment to the hilt.
 sword_binding/vine=Vine binding
+sword_binding/vine.description=Tightly bound vine straps strengthens the blade's attachment to the hilt.
 sword_binding/bolt=Bolted
+sword_binding/bolt.description=An adjustable bolt attaches the blade to the hilt.
 
 ###############################
 # FOREFINGER RING
 ###############################
 forefinger_ring_schema.name=Forefinger ring
-forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Increases the minimum damage dealt when swinging too fast from 20%% to 40%%.
+forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Increases the minimum damage dealt when swinging too fast.
 forefinger_ring_schema.slot1=Material
+
+sword/forefinger_ring.description=A ring has been attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
 
 forefinger_ring/oak=Wooden ring
 forefinger_ring/spruce=Spruce ring
@@ -788,6 +825,8 @@ grip_loop_schema.name=Grip loop
 grip_loop_schema.description=Attach a loop at the end of the hilt. Increases the range of sweeping attacks by 2 blocks.
 grip_loop_schema.slot1=Material
 
+sword/forefinger_ring.description=A ring has been attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
+
 grip_loop/oak=Wooden loop
 grip_loop/spruce=Spruce loop
 grip_loop/birch=Birch loop
@@ -822,8 +861,10 @@ grip_loop/knightmetal=Knightmetal loop
 # SHORTBLADE
 ###############################
 short_blade_schema.name=Shortblade
-short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter blade than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
+short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
 short_blade_schema.slot1=Blade material
+
+sword/short_blade.description=A blade that's shorter and lighter than the common blade, allows for a faster swing rate but deals slightly less damage per swing.
 
 sword/short_blade.name=Shortblade
 
@@ -911,6 +952,8 @@ heavy_blade_schema.name=Heavy blade
 heavy_blade_schema.description=Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
 heavy_blade_schema.slot1=Blade material
 
+sword/heavy_blade.description=A large and hefty blade that sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
+
 sword/heavy_blade.name=Greatsword
 
 heavy_blade/crushing.name=Crushing
@@ -994,6 +1037,8 @@ heavy_blade/knightmetal.name=Cleaver
 machete_schema.name=Machete
 machete_schema.description=Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area. The machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 machete_schema.slot1=Blade material
+
+sword/heavy_blade.description=a machete which can be used to cut down plants in an area, it deals average damage and has an average attack speed.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 
 sword/machete.name=Machete
 
@@ -1180,6 +1225,8 @@ basic_handle_schema.name=Tool handle
 basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.
 basic_handle_schema.slot1=Handle material
 
+duplex/basic_handle.description=A basic tool handle. Handles are the primary source of integrity for tools.
+
 basic_handle/stick=Flimsy handle
 basic_handle/bone=Bone handle
 basic_handle/iron=Iron handle
@@ -1247,26 +1294,39 @@ duplex_socket_schema.name=Socket
 duplex_socket_schema.description=Socket a gem into the tool, providing different effects depending on the gem.
 duplex_socket_schema.slot1=Gem
 
+duplex/socket.description=A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the wielder.
+
 duplex_socket/diamond=Socket [§bDiamond§r]
 duplex_socket/emerald=Socket [§aEmerald§r]
 duplex_socket/lapis=Socket [§9Lapis§r]
 duplex_socket/amber=Socket [§6Amber§r]
 duplex_socket/pristine_diamond=Socket [§bDiamond+§r]
+duplex_socket/pristine_diamond.description=A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.
+
 duplex_socket/pristine_emerald=Socket [§aEmerald+§r]
+duplex_socket/pristine_emerald.description=A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.
+
 duplex_socket/pristine_lapis=Socket [§9Lapis+§r]
+duplex_socket/pristine_lapis.description=A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.
 
 ###############################
 # DUPLEX BINDING
 ###############################
 duplex_binding_schema.name=Binding
-duplex_binding_schema.description=Bind the tool head to the hilt by binding it with rope or straps, or by using completely different materials and methods.
+duplex_binding_schema.description=Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.
 duplex_binding_schema.slot1=Material
 
+
 duplex_binding/string=String binding
+duplex_binding/string.description=Tightly bound strings strengthen the tool head's attachment to the handle.
 duplex_binding/leather=Leather binding
+duplex_binding/leather.description=Tightly bound leather straps strengthen the tool head's attachment to the handle.
 duplex_binding/hide=Hide binding
+duplex_binding/hide.description=Tightly bound hide straps strengthen the tool head's attachment to the handle.
 duplex_binding/vine=Vine binding
+duplex_binding/vine.description=Tightly bound vine straps strengthen the tool head's attachment to the handle.
 duplex_binding/bolt=Bolted
+duplex_binding/bolt.description=An adjustable bolt attaches the tool head to the handle.
 
 ###############################
 # AXE HEAD
@@ -1274,6 +1334,8 @@ duplex_binding/bolt=Bolted
 basic_axe_schema.name=Axe head
 basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.\n\nDouble axe heads provide synergy bonuses.
 basic_axe_schema.slot1=Head material
+
+duplex/basic_axe.description=A basic axe head that can be used for chopping things.\n\nDouble axe heads provide synergy bonuses.
 
 basic_axe/severing.name=Severing
 basic_axe/severing.description=Deals bonus damage to unarmored targets
@@ -1342,6 +1404,8 @@ basic_axe/knightmetal.prefix=Knightmetal
 basic_pickaxe_schema.name=Pickaxe head
 basic_pickaxe_schema.description=Forge a pickaxe head from the given material.\n\nDouble pickaxe heads may provide synergy bonuses.
 basic_pickaxe_schema.slot1=Head material
+
+duplex/basic_pickaxe.description=A basic pickaxe head that can be used for mining.\n\nDouble pickaxe heads may provide synergy bonuses.
 
 basic_pickaxe/smelting.name=Smelting
 basic_pickaxe/smelting.description=[NOT IMPLEMENTED] Automatically smelts broken blocks
@@ -1412,9 +1476,10 @@ basic_pickaxe/knightmetal.prefix=Knightmetal
 # BUTT
 ###############################
 butt_schema.name=Tool butt
-butt_schema.description=Used as the back side of a single sided tool, yields lower weight than a double sided tool. Can sometimes be used for hammering if crafted from a sturdy material.
+butt_schema.description=Used as the back side of a single sided tool, typically yields faster swing speed than a double sided tool. Can sometimes be used for hammering if crafted from a sturdy material.
 butt_schema.slot1=Head material
 
+duplex/butt.description=The back side of a single sided tool, typically yields faster swing speed than a double sided head.
 
 butt/oak=Wooden butt
 butt/cobblestone=Stone butt
@@ -1439,9 +1504,10 @@ butt/knightmetal=Knightmetal butt
 # HAMMER HEAD
 ###############################
 basic_hammer_schema.name=Mallet head
-basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for upgrading other things.\n\nDouble hammer heads may provide synergy bonuses.
+basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for crafting modular items, and is sometimes used for salvaging.\n\nDouble hammer heads may provide synergy bonuses.
 basic_hammer_schema.slot1=Head material
 
+duplex/basic_hammer.description=The hammer head can be used when crafting modular items, and is sometimes used for salvaging.\n\nDouble hammer heads may provide synergy bonuses.
 
 basic_hammer/log=Wooden mallet
 basic_hammer/log.name=Mallet
@@ -1496,9 +1562,10 @@ basic_hammer/knightmetal.prefix=Knightmetal
 # ADZE HEAD
 ###############################
 adze_schema.name=Adze head
-adze_schema.description=Craft a adze head from the given material. The adze can primarily be used for digging but can also be used for cutting wood.
+adze_schema.description=Craft an adze head from the given material. The adze can primarily be used for digging but can also be used for cutting wood.
 adze_schema.slot1=Head material
 
+duplex/adze.description=A hefty arched blade at right angles to the handle. The adze can primarily be used for digging but can also be used for cutting wood.
 
 adze/oak=Wooden adze
 adze/oak.name=Adze
@@ -1562,9 +1629,10 @@ adze/knightmetal.prefix=Knightmetal
 # CLAW HEAD
 ###############################
 claw_schema.name=Claw
-claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open and to quickly break some wooden blocks.
+claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.
 claw_schema.slot1=Claw material
 
+duplex/claw.description=A slightly curved claw that can be used for prying things open, and can quickly break most wooden blocks.
 
 claw/oak=Wooden claw
 claw/oak.name=Claw
@@ -1631,6 +1699,7 @@ hoe_schema.name=Hoe
 hoe_schema.description=Craft a hoe from the given material, the hoe can be used for tilling soil.
 hoe_schema.slot1=Hoe material
 
+duplex/hoe.description=A basic hoe, useful for tilling soil.
 
 hoe/oak=Wooden hoe
 hoe/oak.name=Hoe
@@ -1697,6 +1766,7 @@ sickle_schema.name=Sickle
 sickle_schema.description=Craft a sickle from the given material, which can be used to cut blocks in an area. The sickle works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 sickle_schema.slot1=Sickle material
 
+duplex/sickle.description=A slightly arched sickle which can be used to cut blocks in an area.\n\nWorks different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 
 sickle/oak=Wooden sickle
 sickle/oak.name=Sickle
@@ -1799,13 +1869,22 @@ toolbelt/belt.name=Toolbelt
 
 belt/rope=Rope
 belt/rope.name=Rope
+belt/rope.description=A very basic waistband fashioned from a rope. Can hold a very limited amount of attachments.
+
 belt/sash=Sash
 belt/sash.name=Wool sash
+belt/sash.description=A woolen sash that can hold a small amount of attachments.
+
 belt/leather=Leather wrap
 belt/leather.name=Wrap
+belt/leather.description=A sturdy leather strap that can be wrapped around ones waist. Can hold a decent amount of attachments.
+
 belt/buckled=Leather belt
+belt/buckled.description=A sturdy leather belt, locked in place with a buckle. Can hold a large amount of attachments.
+
 belt/inlaid=Shulker inlaid belt
 belt/inlaid.prefix=Inlaid
+belt/inlaid.description=A sturdy leather belt that has been inlaid with shulker shells. Can hold an impressive amount of attachments.
 
 ###############################
 # TOOLBELT STRAPS
@@ -1825,13 +1904,29 @@ strap_schema4.description=Attach four straps to the belt, which can be used for 
 strap_schema4.slot1=Strap material
 
 strap1/leather=Leather strap
+strap1/leather.description=A leather strap that can be used to hang an item off the belt, allowing quick access to a frequently used tool or weapon.
+
 strap1/iron=Iron loop
+strap1/iron.description=An iron loop that can be used to hang an item off the belt, allowing quick access to a frequently used tool or weapon.
+
 strap2/leather=2 Leather straps
+strap2/leather.description=Two leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 strap2/iron=2 Iron loops
+strap2/iron.description=Two iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 strap3/leather=3 Leather straps
+strap3/leather.description=Three leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 strap3/iron=3 Iron loops
+strap3/iron.description=Three iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 strap4/leather=4 Leather straps
+strap4/leather.description=Four leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 strap4/iron=4 Iron loops
+strap4/iron.description=Four iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
+
 
 ###############################
 # POTION BAG
@@ -1840,6 +1935,8 @@ strap4/iron=4 Iron loops
 potion_storage_schema.name=Potion bag
 potion_storage_schema.description=Attach a small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
 potion_storage_schema.slot1=Material
+
+toolbelt/potion_storage.description=A small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
 
 potion_storage/forged_mesh=Mesh potion pack
 potion_storage/leather=Large potion bag
@@ -1851,8 +1948,10 @@ potion_storage/hide=Small potion bag
 ###############################
 
 storage_schema.name=Storage pouch
-storage_schema.description=Attach a small pouch to the toolbelt, which can store a large amount of items. While the items in the pouch are not easily accessible, held items can be stored into the pouch as easily as with other toolbelt attachments.
+storage_schema.description=Attach a small pouch to the toolbelt, which can store a decent amount of items. The contents of the pouch are not available using the toolbelt's quick access functionality.
 storage_schema.slot1=Material
+
+toolbelt/storage.description=A small pouch which can store a decent amount of items. The contents of the pouch are not available using the toolbelt's quick access functionality.
 
 storage/forged_mesh=Mesh pack
 storage/leather=Large pouch
@@ -1867,6 +1966,8 @@ quiver_schema.name=Quiver
 quiver_schema.description=Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.
 quiver_schema.slot1=Material
 
+toolbelt/quiver.description=A quiver that can hold a large amount of arrows.
+
 quiver/forged_mesh=Mesh quiver
 quiver/leather=Leather quiver
 quiver/wool=Cloth quiver
@@ -1879,6 +1980,8 @@ quiver/hide=Hide quiver
 booster_schema.name=Booster
 booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
 booster_schema.slot1=Material
+
+toolbelt/booster.description=A booster unit which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
 
 booster/iron=Booster unit
 

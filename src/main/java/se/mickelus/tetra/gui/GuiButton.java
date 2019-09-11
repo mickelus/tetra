@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 import java.util.Collections;
 import java.util.List;

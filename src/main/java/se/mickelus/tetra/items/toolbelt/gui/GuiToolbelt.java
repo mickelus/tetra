@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiKeybinding;
 import se.mickelus.tetra.items.toolbelt.ContainerToolbelt;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 

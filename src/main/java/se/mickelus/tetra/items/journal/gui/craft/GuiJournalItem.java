@@ -3,6 +3,8 @@ package se.mickelus.tetra.items.journal.gui.craft;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.impl.GuiModuleOffsets;
 import se.mickelus.tetra.items.ItemModular;
 
 import java.util.ArrayList;

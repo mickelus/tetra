@@ -3,11 +3,13 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiModuleOffsets;
+import se.mickelus.tetra.gui.impl.GuiModuleOffsets;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
+import java.util.Arrays;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -37,6 +39,17 @@ public class GuiModuleList extends GuiElement {
             updateMinorModules(item, itemStack, previewStack);
 
             setFocus(focusSlot);
+        }
+    }
+
+    public void showAnimation() {
+        Random rand = new Random();
+        for (int i = 0; i < majorModuleElements.length; i++) {
+            majorModuleElements[i].showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
+        }
+
+        for (int i = 0; i < minorModuleElements.length; i++) {
+            minorModuleElements[i].showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
         }
     }
     
@@ -113,5 +126,4 @@ public class GuiModuleList extends GuiElement {
         return new GuiModule(x, offsets.getY(index), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
                 itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler, hoverHandler);
     }
-
 }

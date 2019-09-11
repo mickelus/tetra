@@ -1,9 +1,13 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.GuiAttachment;
+import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.tetra.gui.GuiRect;
+import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.gui.animation.AnimationChain;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
 
 public class GuiInventoryHighlight extends GuiElement {
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";

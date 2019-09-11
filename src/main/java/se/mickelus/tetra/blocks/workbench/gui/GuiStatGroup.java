@@ -6,9 +6,11 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
-import se.mickelus.tetra.gui.statbar.GuiStatBase;
-import se.mickelus.tetra.gui.statbar.GuiStats;
+import se.mickelus.tetra.gui.animation.Applier;
+import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.statbar.GuiStatBarCapability;
+import se.mickelus.tetra.gui.impl.statbar.GuiStatBase;
+import se.mickelus.tetra.gui.impl.statbar.GuiStats;
 import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Arrays;
@@ -80,6 +82,20 @@ public class GuiStatGroup extends GuiElement {
                         barGroup.addChild(bar);
                     });
 
+        }
+    }
+
+    public void showAnimation() {
+        if (isVisible()) {
+            for (int i = 0; i < barGroup.getNumChildren(); i++) {
+                // we run this to clear animations if the player managed to hide the bars before the animations finished
+                barGroup.getChild(i).updateAnimations();
+
+                new KeyframeAnimation(100, barGroup.getChild(i))
+                        .withDelay(i * 60 + 400)
+                        .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(3, 0, true))
+                        .start();
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -16,13 +15,12 @@ import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
@@ -43,16 +41,19 @@ public class GuiWorkbench extends GuiContainer {
     private GuiModuleList moduleList;
     private GuiStatGroup statGroup;
     private GuiIntegrityBar integrityBar;
-    private GuiSchemaList schemaList;
     private GuiActionList actionList;
 
-    private GuiSchemaDetail schemaDetail;
     private final GuiInventoryInfo inventoryInfo;
     private String selectedSlot;
     private int previewMaterialSlot = -1;
 
+    private GuiSlotDetail slotDetail;
 
-    private ItemStack targetStack = ItemStack.EMPTY;
+    private ItemStack currentTarget = ItemStack.EMPTY;
+    private ItemStack currentPreview = ItemStack.EMPTY;
+    private UpgradeSchema currentSchema = null;
+
+    private boolean hadItem = false;
 
     public GuiWorkbench(ContainerWorkbench container, TileEntityWorkbench tileEntity, EntityPlayer viewingPlayer) {
         super(container);
@@ -79,16 +80,6 @@ public class GuiWorkbench extends GuiContainer {
         integrityBar = new GuiIntegrityBar(160, 90);
         defaultGui.addChild(integrityBar);
 
-        schemaList = new GuiSchemaList(46, 102,
-                schema -> tileEntity.setCurrentSchema(schema, selectedSlot),
-                () -> selectSlot(null));
-        schemaList.setVisible(false);
-        defaultGui.addChild(schemaList);
-
-        schemaDetail = new GuiSchemaDetail(46, 102, this::deselectSchema, this::craftUpgrade);
-        schemaDetail.setVisible(false);
-        defaultGui.addChild(schemaDetail);
-
         inventoryInfo = new GuiInventoryInfo(84, 164, viewingPlayer);
         defaultGui.addChild(inventoryInfo);
 
@@ -96,6 +87,12 @@ public class GuiWorkbench extends GuiContainer {
         actionList.setAttachmentAnchor(GuiAttachment.topCenter);
         actionList.setAttachmentPoint(GuiAttachment.middleCenter);
         defaultGui.addChild(actionList);
+
+        slotDetail = new GuiSlotDetail(46, 102,
+                schema -> tileEntity.setCurrentSchema(schema, selectedSlot),
+                () -> selectSlot(null),
+                this::craftUpgrade);
+        defaultGui.addChild(slotDetail);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
 
@@ -145,7 +142,11 @@ public class GuiWorkbench extends GuiContainer {
         selectedSlot = slotKey;
         tileEntity.clearSchema();
         moduleList.setFocus(selectedSlot);
-        updateSchemaList();
+
+        if (selectedSlot != null) {
+            slotDetail.onTileEntityChange(viewingPlayer, tileEntity, tileEntity.getTargetItemStack(), selectedSlot, tileEntity.getCurrentSchema());
+        }
+        slotDetail.setVisible(selectedSlot != null);
     }
 
     private void deselectSchema() {
@@ -157,51 +158,74 @@ public class GuiWorkbench extends GuiContainer {
     }
 
     private void onTileEntityChange() {
-        ItemStack itemStack = tileEntity.getTargetItemStack();
-        ItemStack previewStack = ItemStack.EMPTY;
-        UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
+        ItemStack newTarget = tileEntity.getTargetItemStack();
+        ItemStack newPreview = ItemStack.EMPTY;
+        UpgradeSchema newSchema = tileEntity.getCurrentSchema();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (!ItemStack.areItemStacksEqual(targetStack, itemStack)) {
-            targetStack = itemStack;
+        if (newTarget.getItem() instanceof ItemModular && currentSchema != null) {
+            newPreview = buildPreviewStack(currentSchema, newTarget, tileEntity.getMaterials());
+        }
+
+        boolean targetItemChanged = !ItemStack.areItemStacksEqual(currentTarget, newTarget);
+        boolean previewChanged = !ItemStack.areItemStacksEqual(currentPreview, newPreview);
+        boolean schemaChanged = !Objects.equals(currentSchema, newSchema);
+
+        currentPreview = newPreview;
+        currentSchema = newSchema;
+
+        if (targetItemChanged) {
+            ItemStack.areItemStacksEqual(currentTarget, newTarget);
+            currentTarget = newTarget.copy();
             selectedSlot = null;
         }
 
-        if (!itemStack.isEmpty() && currentSlot != null) {
+        boolean slotChanged = !Objects.equals(selectedSlot, currentSlot);
+
+        if (!currentTarget.isEmpty() && currentSlot != null) {
             selectedSlot = currentSlot;
         }
 
         container.updateSlots();
 
-        if (!itemStack.isEmpty() && tileEntity.getCurrentSchema() == null && selectedSlot == null) {
-            actionList.updateActions(targetStack, tileEntity.getAvailableActions(viewingPlayer), viewingPlayer,
+        if (slotChanged || targetItemChanged) {
+            actionList.updateActions(currentTarget, tileEntity.getAvailableActions(viewingPlayer), viewingPlayer,
                     action -> tileEntity.performAction(viewingPlayer, action.getKey()));
-            actionList.setVisible(true);
+        }
+
+        if (targetItemChanged || previewChanged || schemaChanged || slotChanged) {
+            updateItemDisplay(currentTarget, currentPreview);
+
+            if (currentTarget.getItem() instanceof ItemModular) {
+                slotDetail.onTileEntityChange(viewingPlayer, tileEntity, currentTarget, selectedSlot, currentSchema);
+            }
+        }
+
+        inventoryInfo.update(currentSchema, currentTarget);
+
+        if (!currentTarget.isEmpty()) {
+            if (!hadItem) {
+                hadItem = true;
+                if (targetItemChanged && currentSlot == null) {
+                    itemShowAnimation();
+                }
+            }
+        } else {
+            hadItem = false;
+        }
+
+        if (!currentTarget.isEmpty()) {
+            if (currentSchema == null && selectedSlot == null) {
+                actionList.setVisible(true);
+                slotDetail.setVisible(false);
+            } else if (currentTarget.getItem() instanceof ItemModular) {
+                actionList.setVisible(false);
+                slotDetail.setVisible(selectedSlot != null);
+            }
         } else {
             actionList.setVisible(false);
+            slotDetail.setVisible(false);
         }
-
-        if (currentSchema == null) {
-            updateSchemaList();
-            schemaDetail.setVisible(false);
-        } else if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
-            previewStack = buildPreviewStack(currentSchema, itemStack, tileEntity.getMaterials());
-
-            World world = tileEntity.getWorld();
-            BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
-                    world.getBlockState(pos));
-
-            schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities, viewingPlayer.experienceLevel);
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(viewingPlayer, itemStack, tileEntity.getMaterials(),
-                    currentSlot, availableCapabilities));
-
-            schemaList.setVisible(false);
-            schemaDetail.setVisible(true);
-        }
-
-        inventoryInfo.update(currentSchema, targetStack);
-        updateItemDisplay(itemStack, previewStack);
     }
 
     @Override
@@ -213,18 +237,10 @@ public class GuiWorkbench extends GuiContainer {
         int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos,
                 world.getBlockState(pos));
 
-        inventoryInfo.update(tileEntity.getCurrentSchema(), targetStack);
+        inventoryInfo.update(tileEntity.getCurrentSchema(), currentTarget);
 
-        if (tileEntity.getCurrentSchema() != null && schemaDetail.isVisible()) {
-            schemaDetail.updateAvailableCapabilities(availableCapabilities);
-
-            schemaDetail.toggleButton(
-                    tileEntity.getCurrentSchema().canApplyUpgrade(
-                            viewingPlayer,
-                            tileEntity.getTargetItemStack(),
-                            tileEntity.getMaterials(),
-                            tileEntity.getCurrentSlot(),
-                            availableCapabilities));
+        if (tileEntity.getCurrentSchema() != null && slotDetail.isVisible()) {
+            slotDetail.update(viewingPlayer, tileEntity, availableCapabilities);
         }
 
         if (actionList.isVisible()) {
@@ -236,6 +252,13 @@ public class GuiWorkbench extends GuiContainer {
         moduleList.update(itemStack, previewStack, selectedSlot);
         statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
+    }
+
+    private void itemShowAnimation() {
+        moduleList.showAnimation();
+        statGroup.showAnimation();
+        integrityBar.showAnimation();
+        actionList.showAnimation();
     }
 
     private void updateSlotHoverPreview(String slot, String improvement) {
@@ -269,26 +292,16 @@ public class GuiWorkbench extends GuiContainer {
         }
     }
 
-    private void updateSchemaList() {
-        if (selectedSlot != null) {
-            ItemStack targetStack = tileEntity.getTargetItemStack();
-            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(viewingPlayer, targetStack);
-            schemas = Arrays.stream(schemas)
-                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot, targetStack))
-                    .sorted(Comparator.comparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
-                    .toArray(UpgradeSchema[]::new);
-            schemaList.setSchemas(schemas);
-            schemaList.setVisible(true);
-        } else {
-            schemaList.setVisible(false);
-        }
-
-    }
-
     private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials) {
         if (schema.isMaterialsValid(targetStack, materials)) {
             return schema.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
         }
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        slotDetail.keyTyped(typedChar);
+        super.keyTyped(typedChar, keyCode);
     }
 }

@@ -4,6 +4,8 @@ import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.impl.GuiKeybinding;
 
 import java.util.ArrayList;
 import java.util.List;

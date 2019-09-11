@@ -47,8 +47,10 @@ public class GuiStringSmall extends GuiString {
         activeAnimations.forEach(KeyframeAnimation::preDraw);
         GlStateManager.pushMatrix();
         GlStateManager.scale(.5, .5, .5);
+        GlStateManager.enableBlend();
         drawString(string, refX * 2 + x + getXOffset(this, attachmentPoint), refY * 2 + y + getYOffset(this, attachmentPoint),
                 color, opacity * getOpacity(), drawShadow);
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

@@ -6,9 +6,9 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiAlignment;
 import se.mickelus.tetra.gui.GuiAttachment;
 import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
-import se.mickelus.tetra.gui.statbar.GuiStatBase;
-import se.mickelus.tetra.gui.statbar.GuiStats;
+import se.mickelus.tetra.gui.impl.statbar.GuiStatBarCapability;
+import se.mickelus.tetra.gui.impl.statbar.GuiStatBase;
+import se.mickelus.tetra.gui.impl.statbar.GuiStats;
 import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Arrays;
