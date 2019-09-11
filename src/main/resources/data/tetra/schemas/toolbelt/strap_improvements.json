@@ -37,6 +37,7 @@
         "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
         "keySuffixes": ["_slot1", "_slot2", "_slot3"],
         "materialSlotCount": 1,
+        "materialRevealSlot": 0,
         "rarity": "temporary",
         "repair": false,
         "glyph": {
@@ -69,6 +70,7 @@
         "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
         "keySuffixes": ["_slot1", "_slot2", "_slot3"],
         "materialSlotCount": 1,
+        "materialRevealSlot": 0,
         "rarity": "temporary",
         "repair": false,
         "glyph": {
@@ -101,6 +103,7 @@
         "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
         "keySuffixes": ["_slot1", "_slot2", "_slot3"],
         "materialSlotCount": 1,
+        "materialRevealSlot": 0,
         "rarity": "temporary",
         "repair": false,
         "glyph": {
