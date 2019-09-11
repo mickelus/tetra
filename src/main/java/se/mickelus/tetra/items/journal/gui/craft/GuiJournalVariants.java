@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiString;
 import se.mickelus.tetra.gui.GuiStringSmall;
@@ -27,10 +27,11 @@ public class GuiJournalVariants extends GuiElement {
     private KeyframeAnimation[] itemAnimations;
 
     private Consumer<OutcomePreview> onVariantHover;
+    private Consumer<OutcomePreview> onVariantBlur;
     private Consumer<OutcomePreview> onVariantSelect;
 
-    public GuiJournalVariants(int x, int y, int width, Consumer<OutcomePreview> onVariantHover,
-                              Consumer<OutcomePreview> onVariantSelect) {
+    public GuiJournalVariants(int x, int y, int width, Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur,
+            Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, width, 50);
 
         GuiString variantsLabel = new GuiStringSmall(0, 0, I18n.format("journal.craft.variants"));
@@ -48,6 +49,7 @@ public class GuiJournalVariants extends GuiElement {
         itemAnimations = new KeyframeAnimation[0];
 
         this.onVariantHover = onVariantHover;
+        this.onVariantBlur = onVariantBlur;
         this.onVariantSelect = onVariantSelect;
     }
 
@@ -63,22 +65,22 @@ public class GuiJournalVariants extends GuiElement {
         for (int i = 0; i < outcomes.length; i++) {
             if (SchemaType.minor.equals(outcomes[i].type)) {
                 variants[i] = new GuiJournalVariantItem((i / 2) * 15, (i % 2) * 15, outcomes[i],
-                        onVariantHover, onVariantSelect);
+                        onVariantHover, onVariantBlur, onVariantSelect);
                 variantsContainer.addChild(variants[i]);
 
                 itemAnimations[i] = new KeyframeAnimation(80, variants[i])
                         .applyTo(new Applier.Opacity(0, 1),
-                                new Applier.TranslateY(variants[i].getY() - 5, variants[i].getY()))
+                                new Applier.TranslateY(-5, 0, true))
                         .withDelay(40 + 40 * (i / 2));
             } else {
                 variants[i] = new GuiJournalVariantMajorItem((i / 2) * 20 + (i % 2) * 10, (i % 2) * 15, outcomes[i],
-                        onVariantHover, onVariantSelect);
+                        onVariantHover, onVariantBlur, onVariantSelect);
                 variantsContainer.addChild(variants[i]);
 
                 itemAnimations[i] = new KeyframeAnimation(80, variants[i])
                         .applyTo(new Applier.Opacity(0, 1),
-                                new Applier.TranslateX(variants[i].getX() - 5, variants[i].getX()),
-                                new Applier.TranslateY(variants[i].getY() - 5, variants[i].getY()))
+                                new Applier.TranslateX(-5, 0, true),
+                                new Applier.TranslateY(-5, 0, true))
                         .withDelay(40 + 40 * (i / 2));
             }
         }

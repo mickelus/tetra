@@ -5,23 +5,19 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.gui.GuiCapabilityRequirement;
-import se.mickelus.tetra.blocks.workbench.gui.GuiSchemaListItem;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.OutcomePreview;
-import se.mickelus.tetra.module.schema.SchemaRarity;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
-import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class GuiJournalVariantDetail extends GuiElement {
 
@@ -136,9 +132,9 @@ public class GuiJournalVariantDetail extends GuiElement {
             stats.update(selectedOutcome != null ? selectedOutcome.itemStack : hoveredOutcome.itemStack,
                     baseOutcome.itemStack,null, null, Minecraft.getMinecraft().player);
 
-            setVisible(true);
+            show();
         } else {
-            setVisible(false);
+            hide();
         }
     }
 
@@ -146,18 +142,14 @@ public class GuiJournalVariantDetail extends GuiElement {
         openAnimation.start();
     }
 
-    @Override
-    protected void onShow() {
-        super.onShow();
+    public void show() {
         hideAnimation.stop();
+        setVisible(true);
         showAnimation.start();
     }
 
-    @Override
-    protected boolean onHide() {
+    public void hide() {
         showAnimation.stop();
         hideAnimation.start();
-
-        return false;
     }
 }

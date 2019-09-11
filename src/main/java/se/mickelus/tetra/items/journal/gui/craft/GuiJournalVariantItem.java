@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 
 import java.util.function.Consumer;
@@ -13,20 +14,22 @@ public class GuiJournalVariantItem extends GuiClickable {
 
     protected OutcomePreview outcome;
     protected Consumer<OutcomePreview> onHover;
+    protected Consumer<OutcomePreview> onBlur;
 
     protected boolean isMuted = false;
 
     public GuiJournalVariantItem(int x, int y, int width, int height, OutcomePreview outcome,
-                                 Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onSelect) {
+            Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onBlur, Consumer<OutcomePreview> onSelect) {
         super(x, y, width, height, () -> onSelect.accept(outcome));
 
         this.outcome = outcome;
         this.onHover = onHover;
+        this.onBlur = onBlur;
     }
 
     public GuiJournalVariantItem(int x, int y, OutcomePreview outcome,
-                                 Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onSelect) {
-        this(x, y, 11, 11, outcome, onHover, onSelect);
+            Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onBlur, Consumer<OutcomePreview> onSelect) {
+        this(x, y, 11, 11, outcome, onHover, onBlur, onSelect);
 
         backdrop = new GuiTexture(0, 0, 11, 11, 68, 0, texture);
         addChild(backdrop);
@@ -52,7 +55,7 @@ public class GuiJournalVariantItem extends GuiClickable {
     protected void onBlur() {
         super.onBlur();
 
-        onHover.accept(null);
+        onBlur.accept(outcome);
 
         backdrop.setColor(isMuted ? GuiColors.muted : GuiColors.normal);
     }

@@ -8,9 +8,9 @@ import java.util.function.Consumer;
 
 public class GuiJournalVariantMajorItem extends GuiJournalVariantItem {
 
-    public GuiJournalVariantMajorItem(int x, int y, OutcomePreview outcome,
-                                      Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onSelect) {
-        super(x, y, 16, 16, outcome, onHover, onSelect);
+    public GuiJournalVariantMajorItem(int x, int y, OutcomePreview outcome, Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onBlur,
+            Consumer<OutcomePreview> onSelect) {
+        super(x, y, 16, 16, outcome, onHover, onBlur, onSelect);
 
         backdrop = new GuiTexture(1, 0, 15, 15, 52,0, texture);
         addChild(backdrop);

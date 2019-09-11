@@ -18,7 +18,7 @@ public class GuiJournalSchema extends GuiElement {
     public GuiJournalSchema(int x, int y, int width, int height) {
         super(x, y, width, height);
 
-        list = new GuiJournalVariants(0, 0, width, this::onVariantHover, this::onVariantSelect);
+        list = new GuiJournalVariants(0, 0, width, this::onVariantHover, this::onVariantBlur, this::onVariantSelect);
         addChild(list);
 
         detail = new GuiJournalVariantDetail(0, 50, width);
@@ -40,6 +40,12 @@ public class GuiJournalSchema extends GuiElement {
         hoveredVariant = outcome;
 
         detail.updateVariant(selectedVariant, hoveredVariant, slot);
+    }
+
+    private void onVariantBlur(OutcomePreview outcome) {
+        if (outcome.equals(hoveredVariant)) {
+            detail.updateVariant(selectedVariant, null, slot);
+        }
     }
 
     private void onVariantSelect(OutcomePreview outcome) {
@@ -65,7 +71,7 @@ public class GuiJournalSchema extends GuiElement {
     @Override
     protected boolean onHide() {
         list.setVisible(false);
-        detail.onHide();
+        detail.hide();
         return true;
     }
 }
