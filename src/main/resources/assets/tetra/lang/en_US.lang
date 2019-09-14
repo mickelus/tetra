@@ -182,7 +182,7 @@ stats.toolbelt.quiver.tooltip=Has §e%s§r quiver slots
 stats.toolbelt.booster=Boost strength
 stats.toolbelt.booster.tooltip=Provides jump boost and limited flight with strength §e%s
 
-stats.criticalStrike=Critical strike
+stats.criticalStrike=Crit
 stats.criticalStrike.tooltip=Has a chance to critically hit when hitting entities or breaking blocks.\n\n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n\n§7This effect cannot occur for blocks that are exceptionally hard
 
 stats.intuit=Intuit
@@ -504,12 +504,12 @@ basic_blade/serrated.description=Attacks may inflict bleed
 serrated_blade_schema.name=Serrate
 serrated_blade_schema.description=Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.
 blade_hone_serrated_2_schema.name=Hone: Serrated II
-blade_hone_serrated_2_schema.description=Hone the serrated improvement, increases the damage dealt to 2.
+blade_hone_serrated_2_schema.description=Hone the serrated improvement, increases the damage dealt to 8.
 blade_hone_serrated_3_schema.name=Hone: Serrated III
-blade_hone_serrated_3_schema.description=Further hone the serrated improvement, increases the damage dealt to 4.
+blade_hone_serrated_3_schema.description=Further hone the serrated improvement, increases the damage dealt to 16.
 
 tempered_blade_schema.name=Temper
-tempered_blade_schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes half of the damage dealt to ignore armor.
+tempered_blade_schema.description=Temper the point of the blade, greatly increasing it's hardness. Causes some of the damage dealt to ignore armor.
 blade_hone_tempered_2_schema.name=Hone: Tempered II
 blade_hone_tempered_2_schema.description=Hone the tempered improvement, increases the amount of damage that penetrates armor to 3.
 blade_hone_tempered_3_schema.name=Hone: Tempered III
