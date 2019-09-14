@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GuiElement extends Gui {
 
@@ -261,6 +262,17 @@ public class GuiElement extends Gui {
             return elements.get(index);
         }
         return null;
+    }
+
+    public List<GuiElement> getChildren() {
+        return Collections.unmodifiableList(elements);
+    }
+
+    public <T> List<T> getChildrenOfType(Class<T> type) {
+        return elements.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .collect(Collectors.toList());
     }
 
     public List<String> getTooltipLines() {

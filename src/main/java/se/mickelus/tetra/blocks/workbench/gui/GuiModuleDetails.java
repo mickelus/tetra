@@ -4,16 +4,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.statbar.GuiBar;
+import se.mickelus.tetra.gui.impl.GuiMagicUsage;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.RepairDefinition;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiModuleDetails extends GuiElement {
 
@@ -22,6 +18,7 @@ public class GuiModuleDetails extends GuiElement {
     private GuiTextSmall description;
     private GuiString emptyLabel;
 
+    private GuiMagicUsage magicBar;
 
     private GuiElement repairGroup;
     private GuiStringSmall repairTitle;
@@ -59,6 +56,8 @@ public class GuiModuleDetails extends GuiElement {
         repairMaterial.setAttachment(GuiAttachment.topRight);
         repairGroup.addChild(repairMaterial);
 
+        magicBar = new GuiMagicUsage(130, 45, 80);
+        addChild(magicBar);
     }
 
     public void update(ItemModule module, ItemStack itemStack) {
@@ -76,6 +75,7 @@ public class GuiModuleDetails extends GuiElement {
                 glyph.addChild(new GuiModuleGlyph(5, 4, 8, 8, glyphData).setShift(false));
             }
 
+            magicBar.update(itemStack, ItemStack.EMPTY, module.getSlot());
 
             RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getData(itemStack).key);
             boolean canRepair = repairDefinition != null && repairDefinition.material.getApplicableItemstacks().length > 0;
@@ -90,6 +90,7 @@ public class GuiModuleDetails extends GuiElement {
 
         title.setVisible(module != null);
         description.setVisible(module != null);
+        magicBar.setVisible(module instanceof ItemModuleMajor);
         emptyLabel.setVisible(module == null);
         repairGroup.setVisible(module != null);
     }

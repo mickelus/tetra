@@ -24,7 +24,7 @@ public class StatGetterDamage implements IStatGetter {
     @Override
     public double getValue(EntityPlayer player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModule.class))
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getDamageModifier(itemStack) + (module.getDamageMultiplierModifier(itemStack) - 1) * getValue(player, itemStack))
                 .orElse(0d);
     }

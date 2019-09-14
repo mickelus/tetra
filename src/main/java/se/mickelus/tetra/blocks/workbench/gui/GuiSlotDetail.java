@@ -14,6 +14,7 @@ import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.gui.animation.AnimationChain;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
@@ -52,6 +53,8 @@ public class GuiSlotDetail extends GuiElement {
 
         addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
 
+        addChild(new GuiRect(1, 6, 2, 49, 0));
+
         tabGroup = new GuiTabVerticalGroup(1, 6, this::changeTab,
                 I18n.format("workbench.slot_detail.details_tab"),
                 I18n.format("workbench.slot_detail.craft_tab"),
@@ -59,7 +62,6 @@ public class GuiSlotDetail extends GuiElement {
                 );
         tabGroup.setHasContent(1, true);
         addChild(tabGroup);
-        tabGroup.addChild(new GuiRect(0, 0, tabGroup.getWidth(), tabGroup.getHeight(), 0));
 
         moduleDetails = new GuiModuleDetails(0, 0);
         addChild(moduleDetails);
@@ -120,9 +122,13 @@ public class GuiSlotDetail extends GuiElement {
             BlockPos pos = tileEntity.getPos();
             int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, world, pos,
                     world.getBlockState(pos));
+            ItemStack[] materials = tileEntity.getMaterials();
 
-            schemaDetail.update(currentSchema, itemStack, tileEntity.getMaterials(), availableCapabilities, player.experienceLevel);
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(player, itemStack, tileEntity.getMaterials(),
+
+            schemaDetail.update(currentSchema, itemStack, materials, availableCapabilities, player.experienceLevel);
+            schemaDetail.updateMagicCapacity(currentSchema, selectedSlot, itemStack,
+                    currentSchema.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
+            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(player, itemStack, materials,
                     selectedSlot, availableCapabilities));
 
             tab = 1;
@@ -150,6 +156,10 @@ public class GuiSlotDetail extends GuiElement {
                         tileEntity.getMaterials(),
                         tileEntity.getCurrentSlot(),
                         availableCapabilities));
+    }
+
+    public void updatePreview(UpgradeSchema schema, String slot, ItemStack itemStack, ItemStack previewStack) {
+        schemaDetail.updateMagicCapacity(schema, slot, itemStack, previewStack);
     }
 
     private void updateSchemaList(EntityPlayer player, TileEntityWorkbench tileEntity, String selectedSlot) {

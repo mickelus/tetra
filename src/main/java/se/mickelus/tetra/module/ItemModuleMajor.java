@@ -255,16 +255,12 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     @Override
     public int getIntegrityGain(ItemStack itemStack) {
-        int moduleGain = super.getIntegrityGain(itemStack);
-        int improvementGain = getImprovementIntegrityGain(itemStack);
-        return moduleGain + improvementGain;
+        return super.getIntegrityGain(itemStack) + getImprovementIntegrityGain(itemStack);
     }
 
     @Override
     public int getIntegrityCost(ItemStack itemStack) {
-        int moduleCost = super.getIntegrityCost(itemStack);
-        int improvementCost = getImprovementIntegrityCost(itemStack);
-        return moduleCost + improvementCost;
+        return super.getIntegrityCost(itemStack) + getImprovementIntegrityCost(itemStack);
     }
 
     private int getImprovementIntegrityGain(ItemStack itemStack) {
@@ -277,6 +273,30 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     private int getImprovementIntegrityCost(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
                 .mapToInt(improvement -> improvement.integrity)
+                .filter(integrity -> integrity < 0)
+                .sum();
+    }
+
+    @Override
+    public int getMagicCapacityGain(ItemStack itemStack) {
+        return super.getMagicCapacityGain(itemStack) + getImprovementMagicCapacityGain(itemStack);
+    }
+
+    @Override
+    public int getMagicCapacityCost(ItemStack itemStack) {
+        return super.getMagicCapacityCost(itemStack) + getImprovementMagicCapacityCost(itemStack);
+    }
+
+    private int getImprovementMagicCapacityGain(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .mapToInt(improvement -> improvement.magicCapacity)
+                .filter(magicCapacity -> magicCapacity > 0)
+                .sum();
+    }
+
+    private int getImprovementMagicCapacityCost(ItemStack itemStack) {
+        return -Arrays.stream(getImprovements(itemStack))
+                .mapToInt(improvement -> improvement.magicCapacity)
                 .filter(integrity -> integrity < 0)
                 .sum();
     }

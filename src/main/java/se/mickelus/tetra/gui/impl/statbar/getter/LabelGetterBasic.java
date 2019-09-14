@@ -31,11 +31,11 @@ public class LabelGetterBasic implements ILabelGetter {
     public String getLabel(double value, double diffValue, boolean flipped) {
         if (value != diffValue) {
             if (flipped) {
-                return String.format(formatDiff,
-                        value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, ChatFormatting.RESET, diffValue);
-            } else {
                 return String.format(formatDiffFlipped,
                         diffValue, value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value);
+            } else {
+                return String.format(formatDiff,
+                        value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, ChatFormatting.RESET, diffValue);
             }
         } else {
             return String.format(format, diffValue);

@@ -3,10 +3,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.impl.GuiMagicUsage;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -28,6 +26,8 @@ public class GuiSchemaDetail extends GuiElement {
     private GuiString[] slotNames;
     private GuiString[] slotQuantities;
     private GuiTexture[] slotBorders;
+
+    private GuiMagicUsage magicCapacity;
 
     private GuiCapabilityRequirementList capabilityIndicatorList;
 
@@ -62,6 +62,9 @@ public class GuiSchemaDetail extends GuiElement {
             slotBorders[i].setVisible(false);
             addChild(slotBorders[i]);
         }
+
+        magicCapacity = new GuiMagicUsage(121, 28,80);
+        addChild(magicCapacity);
 
         capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
@@ -142,16 +145,21 @@ public class GuiSchemaDetail extends GuiElement {
         }
     }
 
+    public void updateMagicCapacity(UpgradeSchema schema, String slot, ItemStack itemStack, ItemStack previewStack) {
+        if (slot != null && (schema != null && SchemaType.major.equals(schema.getType()) && magicCapacity.providesCapacity(itemStack, previewStack, slot)
+                || magicCapacity.hasChanged(itemStack, previewStack, slot))) {
+            magicCapacity.update(itemStack, previewStack, slot);
+            magicCapacity.setVisible(true);
+        } else {
+            magicCapacity.setVisible(false);
+        }
+    }
+
     public void updateAvailableCapabilities(int[] availableCapabilities) {
         capabilityIndicatorList.updateAvailableCapabilities(availableCapabilities);
     }
 
     public void toggleButton(boolean enabled) {
         craftButton.setEnabled(enabled);
-    }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

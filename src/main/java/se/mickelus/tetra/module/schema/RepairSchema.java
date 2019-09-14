@@ -7,6 +7,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -123,6 +124,15 @@ public class RepairSchema extends BaseSchema {
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();
             return item.getRepairRequiredCapabilityLevel(targetStack, capability);
+        }
+        return 0;
+    }
+
+    @Override
+    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials) {
+        if (targetStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) targetStack.getItem();
+            return item.getRepairRequiredExperience(targetStack);
         }
         return 0;
     }

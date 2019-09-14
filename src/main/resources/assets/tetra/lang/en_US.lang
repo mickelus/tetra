@@ -188,6 +188,8 @@ stats.criticalStrike.tooltip=Has a chance to critically hit when hitting entitie
 stats.intuit=Intuit
 stats.intuit.tooltip=Experience gained from killing entities and destroying blocks yields honing progress at a §e%sx§r ratio
 
+stats.magicCapacity=Magic capacity
+stats.magicCapacity.tooltip=The amount of magic that the module may hold, this capacity is utilized by improvement such as enchantments.\n\n§7Magic capacity: §e%s
 
 stats.hammer.tooltip=This item can be used for hammering, usable when crafting and salvaging\n\n§7Hammer tier: §e%s\n§7Hammer efficiency: §e%s
 stats.axe.tooltip=This item can be used for chopping wood\n\n§7Axe tier: §e%s\n§7Axe efficiency: §e%s
@@ -210,6 +212,10 @@ stats.integrity_usage.tooltip=Integrity is provided by some modules (often in a 
 ###############################
 item.modular.broken=Broken
 item.modular.empty_slot=Empty
+item.modular.magic_capacity.label=Magic capacity
+item.modular.magic_capacity.description=The amount of magic that the module may hold and how much of that capacity is in use. The magic capacity may be exceeded, but the modules magical improvements may destabilize and cause negative effects when the item is altered.\n\n§7Magic capacity: §e%s\n§7Capacity usage: §e%s
+item.modular.repair_material.label=Repair material:
+item.modular.repair_material.empty=Does not need to be repaired
 
 ###############################
 # GEODE
@@ -460,7 +466,6 @@ basic_blade/iron=Iron blade
 basic_blade/iron.prefix=Iron
 basic_blade/gold=Golden blade
 basic_blade/gold.prefix=Golden
-basic_blade/gold.description=A basic blade with average damage, attack speed and integrity usage.\n\n§6Gold blades are more fancy than other blades.
 basic_blade/diamond=Diamond blade
 basic_blade/diamond.prefix=Diamond
 basic_blade/obsidian=Obsidian blade

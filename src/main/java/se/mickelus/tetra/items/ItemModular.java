@@ -419,6 +419,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .orElse(0);
     }
 
+    public int getRepairRequiredExperience(ItemStack itemStack) {
+        return getRepairModule(itemStack)
+                .map(module -> module.getMagicCapacity(itemStack))
+                .map(capacity -> Math.max(0, -capacity))
+                .orElse(0);
+    }
+
     /**
      * Returns the number of times this item has been repaired.
      * @param itemStack The itemstack for the modular item

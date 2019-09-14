@@ -93,6 +93,14 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return I18n.format(getData(itemStack).key);
     }
 
+    public String getDescription(ItemStack itemStack) {
+        String dataKey = getData(itemStack).key;
+        if (I18n.hasKey(dataKey + ".description")) {
+            return I18n.format(dataKey + ".description");
+        }
+        return I18n.format(getUnlocalizedName() + ".description");
+    }
+
     public String getItemName(ItemStack itemStack) {
         String name = getData(itemStack).key + ".name";
         if (I18n.hasKey(name)) {
@@ -148,6 +156,26 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         int integrity = getData(itemStack).integrity;
         if (integrity < 0 ) {
             return integrity;
+        }
+        return 0;
+    }
+
+    public int getMagicCapacity(ItemStack itemStack) {
+        return getMagicCapacityGain(itemStack) - getMagicCapacityCost(itemStack);
+    }
+
+    public int getMagicCapacityGain(ItemStack itemStack) {
+        int magicCapacity = getData(itemStack).magicCapacity;
+        if (magicCapacity > 0 ) {
+            return magicCapacity;
+        }
+        return 0;
+    }
+
+    public int getMagicCapacityCost(ItemStack itemStack) {
+        int magicCapacity = getData(itemStack).magicCapacity;
+        if (magicCapacity < 0 ) {
+            return -magicCapacity;
         }
         return 0;
     }

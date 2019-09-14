@@ -3,6 +3,7 @@
         "key": "short_blade/oak",
         "durability": 40,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 1,
         "attackSpeed": 2.2,
         "glyph": {
@@ -17,6 +18,7 @@
         "key": "short_blade/spruce",
         "durability": 40,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 1,
         "attackSpeed": 2.4,
         "glyph": {
@@ -31,6 +33,7 @@
         "key": "short_blade/birch",
         "durability": 50,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 1,
         "attackSpeed": 2.2,
         "glyph": {
@@ -45,6 +48,7 @@
         "key": "short_blade/jungle",
         "durability": 40,
         "integrity": -1,
+        "magicCapacity": 17,
         "damage": 2,
         "attackSpeed": 1.6,
         "glyph": {
@@ -59,6 +63,7 @@
         "key": "short_blade/acacia",
         "durability": 50,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 2,
         "attackSpeed": 2.6,
         "glyph": {
@@ -73,6 +78,7 @@
         "key": "short_blade/dark_oak",
         "durability": 40,
         "integrity": -1,
+        "magicCapacity": 17,
         "damage": 1,
         "attackSpeed": 2.4,
         "glyph": {
@@ -87,6 +93,7 @@
         "key": "short_blade/flint",
         "durability": 66,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 1.8,
         "glyph": {
@@ -101,6 +108,7 @@
         "key": "short_blade/iron",
         "durability": 120,
         "integrity": -1,
+        "magicCapacity": 14,
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
@@ -115,6 +123,7 @@
         "key": "short_blade/gold",
         "durability": 10,
         "integrity": -1,
+        "magicCapacity": 22,
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
@@ -129,6 +138,7 @@
         "key": "short_blade/prismarine",
         "durability": 140,
         "integrity": -3,
+        "magicCapacity": 17,
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -143,6 +153,7 @@
         "key": "short_blade/copper",
         "durability": 85,
         "integrity": 0,
+        "magicCapacity": 13,
         "damage": 4,
         "attackSpeed": 1.4,
         "glyph": {
@@ -157,6 +168,7 @@
         "key": "short_blade/tin",
         "durability": 77,
         "integrity": 0,
+        "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
@@ -171,6 +183,7 @@
         "key": "short_blade/silver",
         "durability": 36,
         "integrity": -1,
+        "magicCapacity": 21,
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
@@ -185,6 +198,7 @@
         "key": "short_blade/nickel",
         "durability": 133,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -199,6 +213,7 @@
         "key": "short_blade/lead",
         "durability": 75,
         "integrity": -1,
+        "magicCapacity": 11,
         "damage": 5.5,
         "attackSpeed": 1,
         "glyph": {
@@ -213,6 +228,7 @@
         "key": "short_blade/bronze",
         "durability": 201,
         "integrity": 0,
+        "magicCapacity": 13,
         "damage": 4.5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -227,6 +243,7 @@
         "key": "short_blade/electrum",
         "durability": 41,
         "integrity": -1,
+        "magicCapacity": 24,
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
@@ -241,6 +258,7 @@
         "key": "short_blade/steel",
         "durability": 311,
         "integrity": -1,
+        "magicCapacity": 11,
         "damage": 5.5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -255,6 +273,7 @@
         "key": "short_blade/thaumium",
         "durability": 281,
         "integrity": -1,
+        "magicCapacity": 25,
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -269,6 +288,7 @@
         "key": "short_blade/ironwood",
         "durability": 260,
         "integrity": -1,
+        "magicCapacity": 18,
         "damage": 4.5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -283,6 +303,7 @@
         "key": "short_blade/steeleaf",
         "durability": 61,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 5.5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -297,6 +318,7 @@
         "key": "short_blade/fierymetal",
         "durability": 450,
         "integrity": -3,
+        "magicCapacity": 12,
         "damage": 6.5,
         "attackSpeed": 1.5,
         "glyph": {
@@ -311,6 +333,7 @@
         "key": "short_blade/knightmetal",
         "durability": 150,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 5,
         "attackSpeed": 2.2,
         "glyph": {

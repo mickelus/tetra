@@ -3,6 +3,7 @@
         "key": "heavy_blade/oak_log",
         "durability": 100,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": -0.4,
         "glyph": {
@@ -20,6 +21,7 @@
         "key": "heavy_blade/spruce_log",
         "durability": 100,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": -0.4,
         "glyph": {
@@ -37,6 +39,7 @@
         "key": "heavy_blade/birch_log",
         "durability": 140,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": -0.4,
         "glyph": {
@@ -54,6 +57,7 @@
         "key": "heavy_blade/jungle_log",
         "durability": 100,
         "integrity": -2,
+        "magicCapacity": 17,
         "damage": 4,
         "attackSpeed": -0.4,
         "glyph": {
@@ -71,6 +75,7 @@
         "key": "heavy_blade/acacia_log",
         "durability": 140,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.45,
         "glyph": {
@@ -88,6 +93,7 @@
         "key": "heavy_blade/dark_oak_log",
         "durability": 100,
         "integrity": -2,
+        "magicCapacity": 17,
         "damage": 3,
         "attackSpeed": -0.45,
         "glyph": {
@@ -105,6 +111,7 @@
         "key": "heavy_blade/cobblestone",
         "durability": 210,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": -0.45,
         "glyph": {
@@ -122,6 +129,7 @@
         "key": "heavy_blade/stone",
         "durability": 390,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": -0.55,
         "glyph": {
@@ -139,6 +147,7 @@
         "key": "heavy_blade/granite",
         "durability": 430,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": -0.5,
         "glyph": {
@@ -156,6 +165,7 @@
         "key": "heavy_blade/diorite",
         "durability": 370,
         "integrity": -2,
+        "magicCapacity": 7,
         "damage": 4,
         "attackSpeed": -0.45,
         "glyph": {
@@ -173,6 +183,7 @@
         "key": "heavy_blade/andesite",
         "durability": 370,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 5,
         "attackSpeed": -0.5,
         "glyph": {
@@ -190,6 +201,7 @@
         "key": "heavy_blade/iron",
         "durability": 450,
         "integrity": -3,
+        "magicCapacity": 14,
         "damage": 6,
         "attackSpeed": -0.6,
         "glyph": {
@@ -207,6 +219,7 @@
         "key": "heavy_blade/gold",
         "durability": 30,
         "integrity": -3,
+        "magicCapacity": 22,
         "damage": 7,
         "attackSpeed": -0.6,
         "glyph": {
@@ -224,6 +237,7 @@
         "key": "heavy_blade/obsidian",
         "durability": 2423,
         "integrity": -4,
+        "magicCapacity": 7,
         "damage": 9,
         "attackSpeed": -0.8,
         "glyph": {
@@ -241,6 +255,7 @@
         "key": "heavy_blade/copper",
         "durability": 295,
         "integrity": -2,
+        "magicCapacity": 13,
         "damage": 5,
         "attackSpeed": -0.7,
         "glyph": {
@@ -258,6 +273,7 @@
         "key": "heavy_blade/tin",
         "durability": 151,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": -0.5,
         "glyph": {
@@ -275,6 +291,7 @@
         "key": "heavy_blade/silver",
         "durability": 105,
         "integrity": -3,
+        "magicCapacity": 21,
         "damage": 5,
         "attackSpeed": -0.6,
         "glyph": {
@@ -292,6 +309,7 @@
         "key": "heavy_blade/nickel",
         "durability": 370,
         "integrity": -3,
+        "magicCapacity": 12,
         "damage": 7,
         "attackSpeed": -0.7,
         "glyph": {
@@ -309,6 +327,7 @@
         "key": "heavy_blade/lead",
         "durability": 220,
         "integrity": -4,
+        "magicCapacity": 11,
         "damage": 6,
         "attackSpeed": -0.6,
         "glyph": {
@@ -326,6 +345,7 @@
         "key": "heavy_blade/bronze",
         "durability": 643,
         "integrity": -1,
+        "magicCapacity": 13,
         "damage": 6,
         "attackSpeed": -0.7,
         "glyph": {
@@ -343,6 +363,7 @@
         "key": "heavy_blade/electrum",
         "durability": 122,
         "integrity": -3,
+        "magicCapacity": 24,
         "damage": 5,
         "attackSpeed": -0.6,
         "glyph": {
@@ -360,6 +381,7 @@
         "key": "heavy_blade/steel",
         "durability": 790,
         "integrity": -3,
+        "magicCapacity": 11,
         "damage": 7,
         "attackSpeed": -0.7,
         "glyph": {
@@ -377,6 +399,7 @@
         "key": "heavy_blade/thaumium",
         "durability": 851,
         "integrity": -3,
+        "magicCapacity": 25,
         "damage": 6.5,
         "attackSpeed": -0.6,
         "glyph": {
@@ -394,6 +417,7 @@
         "key": "heavy_blade/ironwood",
         "durability": 865,
         "integrity": -3,
+        "magicCapacity": 18,
         "damage": 6,
         "attackSpeed": -0.6,
         "glyph": {
@@ -411,6 +435,7 @@
         "key": "heavy_blade/steeleaf",
         "durability": 130,
         "integrity": -3,
+        "magicCapacity": 15,
         "damage": 7,
         "attackSpeed": -0.6,
         "glyph": {
@@ -428,6 +453,7 @@
         "key": "heavy_blade/fierymetal",
         "durability": 1888,
         "integrity": -7,
+        "magicCapacity": 12,
         "damage": 9,
         "attackSpeed": -0.6,
         "glyph": {
@@ -445,6 +471,7 @@
         "key": "heavy_blade/knightmetal",
         "durability": 492,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 6,
         "glyph": {
             "tint": "b8cf9c",

@@ -49,8 +49,8 @@ public class GuiBar extends GuiElement {
     }
 
     public void setValue(double value, double diffValue) {
-        this.value = value;
-        this.diffValue = diffValue;
+        this.value = Math.min(Math.max(value, min), max);
+        this.diffValue = Math.min(Math.max(diffValue, min), max);
 
         calculateBarLengths();
     }

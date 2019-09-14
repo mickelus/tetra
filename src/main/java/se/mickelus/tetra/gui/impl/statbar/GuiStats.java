@@ -40,7 +40,7 @@ public class GuiStats {
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.quickslot"),
                 0, InventoryQuickslot.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("stats.toolbelt.quickslot.tooltip", armorGetter));
+            new TooltipGetterInteger("stats.toolbelt.quickslot.tooltip", quickslotGetter));
 
     public static final IStatGetter potionStorageGetter = new StatGetterEffectLevel(ItemEffect.potionSlot, 1d);
     public static final GuiStatBar potion_storage = new GuiStatBar(0, 0, barLength, I18n.format("stats.toolbelt.potion_storage"),
@@ -166,6 +166,11 @@ public class GuiStats {
     public static final GuiStatBar earthbind = new GuiStatBar(0, 0, barLength, I18n.format("stats.earthbind"),
             0, 100, false, earthbindGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("stats.earthbind.tooltip", earthbindGetter));
+
+    public static final IStatGetter magicCapacityGetter = new StatGetterMagicCapacity();
+    public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, I18n.format("stats.magicCapacity"),
+            0, 50, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.magicCapacity.tooltip", magicCapacityGetter));
 
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 

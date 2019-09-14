@@ -252,6 +252,7 @@ public class GuiWorkbench extends GuiContainer {
         moduleList.update(itemStack, previewStack, selectedSlot);
         statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
+        slotDetail.updatePreview(currentSchema, selectedSlot, itemStack, previewStack);
     }
 
     private void itemShowAnimation() {

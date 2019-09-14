@@ -3,6 +3,7 @@
         "key": "machete/oak",
         "durability": 50,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0,
         "glyph": {
@@ -23,6 +24,7 @@
         "key": "machete/spruce",
         "durability": 50,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0.2,
         "glyph": {
@@ -43,6 +45,7 @@
         "key": "machete/birch",
         "durability": 72,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0,
         "glyph": {
@@ -63,6 +66,7 @@
         "key": "machete/jungle",
         "durability": 50,
         "integrity": -2,
+        "magicCapacity": 17,
         "damage": 3,
         "attackSpeed": 0,
         "glyph": {
@@ -83,6 +87,7 @@
         "key": "machete/acacia",
         "durability": 72,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.3,
         "glyph": {
@@ -103,6 +108,7 @@
         "key": "machete/dark_oak",
         "durability": 50,
         "integrity": -2,
+        "magicCapacity": 17,
         "damage": 3,
         "attackSpeed": 0,
         "glyph": {
@@ -123,6 +129,7 @@
         "key": "machete/cobblestone",
         "durability": 102,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -143,6 +150,7 @@
         "key": "machete/stone",
         "durability": 180,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -163,6 +171,7 @@
         "key": "machete/granite",
         "durability": 240,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -183,6 +192,7 @@
         "key": "machete/diorite",
         "durability": 200,
         "integrity": -2,
+        "magicCapacity": 7,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -203,6 +213,7 @@
         "key": "machete/andesite",
         "durability": 200,
         "integrity": -2,
+        "magicCapacity": 5,
         "damage": 5,
         "attackSpeed": 0,
         "glyph": {
@@ -223,6 +234,7 @@
         "key": "machete/iron",
         "durability": 221,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 5,
         "attackSpeed": 0,
         "glyph": {
@@ -243,6 +255,7 @@
         "key": "machete/flint",
         "durability": 150,
         "integrity": -2,
+        "magicCapacity": 14,
         "damage": 4,
         "attackSpeed": 0.2,
         "glyph": {
@@ -263,6 +276,7 @@
         "key": "machete/gold",
         "durability": 15,
         "integrity": -2,
+        "magicCapacity": 22,
         "damage": 3,
         "attackSpeed": 0,
         "glyph": {
@@ -283,6 +297,7 @@
         "key": "machete/diamond",
         "durability": 1492,
         "integrity": -3,
+        "magicCapacity": 10,
         "damage": 6,
         "attackSpeed": 0,
         "glyph": {
@@ -303,6 +318,7 @@
         "key": "machete/obsidian",
         "durability": 1628,
         "integrity": -4,
+        "magicCapacity": 7,
         "damage": 8,
         "attackSpeed": -0.1,
         "glyph": {
@@ -323,6 +339,7 @@
         "key": "machete/copper",
         "durability": 148,
         "integrity": -1,
+        "magicCapacity": 13,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -343,6 +360,7 @@
         "key": "machete/tin",
         "durability": 126,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -363,6 +381,7 @@
         "key": "machete/silver",
         "durability": 60,
         "integrity": -2,
+        "magicCapacity": 21,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -383,6 +402,7 @@
         "key": "machete/nickel",
         "durability": 200,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 5.5,
         "attackSpeed": 0,
         "glyph": {
@@ -403,6 +423,7 @@
         "key": "machete/lead",
         "durability": 108,
         "integrity": -3,
+        "magicCapacity": 11,
         "damage": 6,
         "attackSpeed": -0.1,
         "glyph": {
@@ -423,6 +444,7 @@
         "key": "machete/bronze",
         "durability": 320,
         "integrity": -1,
+        "magicCapacity": 13,
         "damage": 5,
         "attackSpeed": 0,
         "glyph": {
@@ -443,6 +465,7 @@
         "key": "machete/electrum",
         "durability": 53,
         "integrity": -2,
+        "magicCapacity": 24,
         "damage": 4,
         "attackSpeed": 0,
         "glyph": {
@@ -463,6 +486,7 @@
         "key": "machete/steel",
         "durability": 380,
         "integrity": -2,
+        "magicCapacity": 11,
         "damage": 6,
         "attackSpeed": 0,
         "glyph": {
@@ -483,6 +507,7 @@
         "key": "machete/thaumium",
         "durability": 470,
         "integrity": -2,
+        "magicCapacity": 25,
         "damage": 5.5,
         "attackSpeed": 0,
         "glyph": {
@@ -503,6 +528,7 @@
         "key": "machete/ironwood",
         "durability": 482,
         "integrity": -2,
+        "magicCapacity": 18,
         "damage": 5,
         "attackSpeed": 0,
         "glyph": {
@@ -523,6 +549,7 @@
         "key": "machete/steeleaf",
         "durability": 101,
         "integrity": -2,
+        "magicCapacity": 15,
         "damage": 6,
         "attackSpeed": 0,
         "glyph": {
@@ -543,6 +570,7 @@
         "key": "machete/fierymetal",
         "durability": 944,
         "integrity": -6,
+        "magicCapacity": 12,
         "damage": 7,
         "attackSpeed": 0,
         "glyph": {
@@ -563,6 +591,7 @@
         "key": "machete/knightmetal",
         "durability": 230,
         "integrity": -3,
+        "magicCapacity": 12,
         "damage": 6,
         "attackSpeed": 0.5,
         "glyph": {

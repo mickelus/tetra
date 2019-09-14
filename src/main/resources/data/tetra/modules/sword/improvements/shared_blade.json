@@ -3,66 +3,77 @@
         "key": "enchantment/sharpness",
         "level": 1,
         "damage": 1,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -2
     },
     {
         "key": "enchantment/sharpness",
         "level": 2,
         "damage": 1.5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -3
     },
     {
         "key": "enchantment/sharpness",
         "level": 3,
         "damage": 2,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -4
     },
     {
         "key": "enchantment/sharpness",
         "level": 4,
         "damage": 2.5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -5
     },
     {
         "key": "enchantment/sharpness",
         "level": 5,
         "damage": 3,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -6
     },
     {
         "key": "enchantment/sharpness",
         "level": 6,
         "damage": 3.5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -7
     },
     {
         "key": "enchantment/sharpness",
         "level": 7,
         "damage": 4,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -8
     },
     {
         "key": "enchantment/sharpness",
         "level": 8,
         "damage": 4.5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -9
     },
     {
         "key": "enchantment/sharpness",
         "level": 9,
         "damage": 5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -10
     },
     {
         "key": "enchantment/sharpness",
         "level": 10,
         "damage": 5.5,
-        "enchantment": true
+        "enchantment": true,
+        "magicCapacity": -11
     },
     {
         "key": "enchantment/smite",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -2,
         "effects": {
             "smite": 1
         }
@@ -71,6 +82,7 @@
         "key": "enchantment/smite",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "smite": 2
         }
@@ -79,6 +91,7 @@
         "key": "enchantment/smite",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -4,
         "effects": {
             "smite": 3
         }
@@ -87,6 +100,7 @@
         "key": "enchantment/smite",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "smite": 4
         }
@@ -95,6 +109,7 @@
         "key": "enchantment/smite",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -6,
         "effects": {
             "smite": 5
         }
@@ -103,6 +118,7 @@
         "key": "enchantment/smite",
         "level": 6,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "smite": 6
         }
@@ -111,6 +127,7 @@
         "key": "enchantment/smite",
         "level": 7,
         "enchantment": true,
+        "magicCapacity": -8,
         "effects": {
             "smite": 7
         }
@@ -119,6 +136,7 @@
         "key": "enchantment/smite",
         "level": 8,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "smite": 8
         }
@@ -127,6 +145,7 @@
         "key": "enchantment/smite",
         "level": 9,
         "enchantment": true,
+        "magicCapacity": -10,
         "effects": {
             "smite": 9
         }
@@ -135,6 +154,7 @@
         "key": "enchantment/smite",
         "level": 10,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "smite": 10
         }
@@ -143,6 +163,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -2,
         "effects": {
             "arthropod": 1
         }
@@ -151,6 +172,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "arthropod": 2
         }
@@ -159,6 +181,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -4,
         "effects": {
             "arthropod": 3
         }
@@ -167,6 +190,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "arthropod": 4
         }
@@ -175,6 +199,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -6,
         "effects": {
             "arthropod": 5
         }
@@ -183,6 +208,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 6,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "arthropod": 6
         }
@@ -191,6 +217,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 7,
         "enchantment": true,
+        "magicCapacity": -8,
         "effects": {
             "arthropod": 7
         }
@@ -199,6 +226,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 8,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "arthropod": 8
         }
@@ -207,6 +235,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 9,
         "enchantment": true,
+        "magicCapacity": -10,
         "effects": {
             "arthropod": 9
         }
@@ -215,6 +244,7 @@
         "key": "enchantment/bane_of_arthropods",
         "level": 10,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "arthropod": 10
         }
@@ -223,6 +253,7 @@
         "key": "enchantment/fire_aspect",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -1,
         "effects": {
             "fiery": 1
         }
@@ -231,6 +262,7 @@
         "key": "enchantment/fire_aspect",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -2,
         "effects": {
             "fiery": 2
         }
@@ -239,6 +271,7 @@
         "key": "enchantment/fire_aspect",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "fiery": 3
         }
@@ -247,6 +280,7 @@
         "key": "enchantment/fire_aspect",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -4,
         "effects": {
             "fiery": 4
         }
@@ -255,6 +289,7 @@
         "key": "enchantment/fire_aspect",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "fiery": 5
         }
@@ -263,6 +298,7 @@
         "key": "enchantment/looting",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "looting": 1
         }
@@ -271,6 +307,7 @@
         "key": "enchantment/looting",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "looting": 2
         }
@@ -279,6 +316,7 @@
         "key": "enchantment/looting",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "looting": 3
         }
@@ -287,6 +325,7 @@
         "key": "enchantment/looting",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "looting": 4
         }
@@ -295,6 +334,7 @@
         "key": "enchantment/looting",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "looting": 5
         }
@@ -303,6 +343,7 @@
         "key": "enchantment/sweeping",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -2,
         "effects": {
             "sweeping": 3
         }
@@ -311,6 +352,7 @@
         "key": "enchantment/sweeping",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "sweeping": 4
         }
@@ -319,6 +361,7 @@
         "key": "enchantment/sweeping",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -4,
         "effects": {
             "sweeping": 5
         }
@@ -327,6 +370,7 @@
         "key": "enchantment/sweeping",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "sweeping": 6
         }
@@ -335,6 +379,7 @@
         "key": "enchantment/sweeping",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -6,
         "effects": {
             "sweeping": 7
         }

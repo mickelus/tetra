@@ -156,7 +156,9 @@ public class BookEnchantSchema implements UpgradeSchema {
             }
         }
 
-        return cost;
+        int multiplier = Math.max(1, -module.getMagicCapacity(targetStack));
+
+        return cost * multiplier;
     }
 
     @Override
