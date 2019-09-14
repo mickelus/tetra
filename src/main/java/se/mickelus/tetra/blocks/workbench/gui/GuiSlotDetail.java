@@ -144,6 +144,7 @@ public class GuiSlotDetail extends GuiElement {
         schemaList.setVisible(currentSchema == null);
 
         updateTabVisibility();
+        tabGroup.setActive(tab);
     }
 
     public void update(EntityPlayer player, TileEntityWorkbench tileEntity, int[] availableCapabilities) {

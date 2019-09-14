@@ -78,7 +78,7 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(ItemStack itemStack) {
         if (definition.localizationKey != null) {
             return I18n.format(definition.localizationKey + descriptionSuffix);
         }

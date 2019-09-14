@@ -371,6 +371,18 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return Optional.empty();
     }
 
+    public String getRepairModuleName(ItemStack itemStack) {
+        return getRepairModule(itemStack)
+                .map(module -> module.getName(itemStack))
+                .orElse(null);
+    }
+
+    public String getRepairSlot(ItemStack itemStack) {
+        return getRepairModule(itemStack)
+                .map(ItemModule::getSlot)
+                .orElse(null);
+    }
+
     /**
      * Returns an itemstack with the material required for the next repair attempt. Rotates between materials required
      * for different modules

@@ -49,6 +49,7 @@ public class RepairAction implements WorkbenchAction {
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
                 .filter(upgradeSchema -> upgradeSchema instanceof RepairSchema)
                 .findFirst()
-                .ifPresent(upgradeSchema -> workbench.setCurrentSchema(upgradeSchema, null));
+                .map(upgradeSchema -> (RepairSchema) upgradeSchema)
+                .ifPresent(repairSchema -> workbench.setCurrentSchema(repairSchema, repairSchema.getSlot(itemStack)));
     }
 }

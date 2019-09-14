@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.impl.GuiMagicUsage;
@@ -81,7 +80,7 @@ public class GuiSchemaDetail extends GuiElement {
 
         title.setString(schema.getName());
         title.setColor(schema.getRarity().tint);
-        description.setString(schema.getDescription());
+        description.setString(schema.getDescription(itemStack));
 
         glyph.clearChildren();
         GlyphData glyphData = schema.getGlyph();

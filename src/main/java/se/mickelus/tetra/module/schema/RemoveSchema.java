@@ -50,7 +50,7 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(ItemStack itemStack) {
         return I18n.format(key + descriptionSuffix);
     }
 

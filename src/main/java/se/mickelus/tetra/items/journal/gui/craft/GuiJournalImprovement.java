@@ -53,7 +53,7 @@ public class GuiJournalImprovement extends GuiElement {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Arrays.asList(schema.getName(), ChatFormatting.GRAY + schema.getDescription());
+            return Arrays.asList(schema.getName(), ChatFormatting.GRAY + schema.getDescription(null));
         }
         return null;
     }

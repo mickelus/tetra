@@ -9,12 +9,14 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
 public class RepairSchema extends BaseSchema {
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
+    private static final String extendedDescriptionSuffix = ".description_details";
 
     private String key = "repair_schema";
 
@@ -25,6 +27,12 @@ public class RepairSchema extends BaseSchema {
     public RepairSchema(ItemModular item) {
         this.item = item;
         ItemUpgradeRegistry.instance.registerSchema(this);
+    }
+
+    public String getSlot(ItemStack itemStack) {
+        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getRepairSlot(itemStack))
+                .orElse(null);
     }
 
     @Override
@@ -38,7 +46,15 @@ public class RepairSchema extends BaseSchema {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(@Nullable ItemStack itemStack) {
+        if (itemStack != null) {
+            return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                    .map(item -> I18n.format(key + extendedDescriptionSuffix,
+                            item.getRepairModuleName(itemStack),
+                            item.getRepairAmount(itemStack)))
+                    .orElse(I18n.format(key + descriptionSuffix));
+        }
+
         return I18n.format(key + descriptionSuffix);
     }
 

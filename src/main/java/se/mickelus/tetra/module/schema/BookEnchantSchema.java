@@ -1,6 +1,5 @@
 package se.mickelus.tetra.module.schema;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -47,7 +46,7 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(ItemStack itemStack) {
         return I18n.format(key + descriptionSuffix);
     }
 

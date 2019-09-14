@@ -5,13 +5,14 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 public interface UpgradeSchema {
 
     public String getKey();
     public String getName();
-    public String getDescription();
+    public String getDescription(@Nullable ItemStack itemStack);
     public int getNumMaterialSlots();
     public String getSlotName(final ItemStack itemStack, int index);
     public int getRequiredQuantity(final ItemStack itemStack, int index, ItemStack materialStack);
