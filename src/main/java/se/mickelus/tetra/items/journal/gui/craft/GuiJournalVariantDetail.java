@@ -139,6 +139,7 @@ public class GuiJournalVariantDetail extends GuiElement {
     }
 
     public void animateOpen() {
+        stats.realignBars();
         openAnimation.start();
     }
 

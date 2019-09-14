@@ -59,6 +59,7 @@ public class GuiJournalStats extends GuiElement {
         bars.add(GuiStats.enderReverb);
         bars.add(GuiStats.criticalStrike);
         bars.add(GuiStats.intuit);
+        bars.add(GuiStats.magicCapacity);
 
         Arrays.stream(Capability.values())
                 .map(capability -> new GuiStatBarCapability(0, 0, GuiStats.barLength, capability))
@@ -77,16 +78,13 @@ public class GuiJournalStats extends GuiElement {
                     .forEach(bar -> {
                         bar.update(player, itemStack, previewStack, slot, improvement);
 
-                        realignBar(bar);
+                        realignBar(bar, barGroup.getNumChildren());
                         barGroup.addChild(bar);
                     });
-
         }
     }
 
-    private void realignBar(GuiStatBase bar) {
-        int index = barGroup.getNumChildren();
-
+    private void realignBar(GuiStatBase bar, int index) {
         bar.setAttachment(GuiAttachment.topLeft);
         bar.setAlignment(GuiAlignment.left);
 
@@ -94,4 +92,9 @@ public class GuiJournalStats extends GuiElement {
         bar.setY(17 * ((index / 3)));
     }
 
+    public void realignBars() {
+        for (int i = 0; i < barGroup.getNumChildren(); i++) {
+            realignBar((GuiStatBase) barGroup.getChild(i), i);
+        }
+    }
 }
