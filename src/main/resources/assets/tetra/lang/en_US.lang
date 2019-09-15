@@ -323,8 +323,8 @@ hone.available=Honing available
 # REPAIR SCHEMA
 ###############################
 repair_schema.name=Repair
-repair_schema.description=Patch up damaged and worn modules, cycling through the modules of the item.
-repair_schema.description_details=Patch up damaged and worn modules, cycling through the modules of the item.\n\n§7Module: §f%s\n§7Restored durability: §f%s
+repair_schema.description=Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.
+repair_schema.description_details=Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n\n§7Module: §f%s\n§7Restored durability: §f%s
 
 ###############################
 # REMOVE SCHEMA
