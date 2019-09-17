@@ -105,13 +105,13 @@ public class DataHandler {
         try {
             T data = null;
             if (configOverride.exists()) {
-                data = getData(configOverride.toPath(), dataClass);
+                data = readData(configOverride.toPath(), dataClass);
             } else if (source.isFile()) {
                 try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    data = getData(fs.getPath(pathString), dataClass);
+                    data = readData(fs.getPath(pathString), dataClass);
                 }
             } else if (source.isDirectory()) {
-                data = getData(source.toPath().resolve(pathString), dataClass);
+                data = readData(source.toPath().resolve(pathString), dataClass);
             }
 
             if (data != null) {
@@ -124,7 +124,37 @@ public class DataHandler {
         return gson.fromJson("[]", dataClass);
     }
 
-    private <T> T getData(Path path, Class<T> dataClass) throws IOException {
+    public <T> T getAsset(String path, Class<T> assetClass) {
+        return getAsset(TetraMod.MOD_ID, path, assetClass);
+    }
+
+    public <T> T getAsset(String namespace, String path, Class<T> assetClass) {
+        String pathString = String.format("assets/%s/%s.json", namespace, path);
+        File configOverride = new File (configDir, String.format("%s/assets/%s/%s.json", TetraMod.MOD_ID, namespace, path));
+
+        try {
+            T asset = null;
+            if (configOverride.exists()) {
+                asset = readData(configOverride.toPath(), assetClass);
+            } else if (source.isFile()) {
+                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
+                    asset = readData(fs.getPath(pathString), assetClass);
+                }
+            } else if (source.isDirectory()) {
+                asset = readData(source.toPath().resolve(pathString), assetClass);
+            }
+
+            if (asset != null) {
+                return asset;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.err.printf("Could not read assets from '%s'. Initializing from empty array.\n", path);
+        return gson.fromJson("[]", assetClass);
+    }
+
+    private <T> T readData(Path path, Class<T> dataClass) throws IOException {
         if (path != null && Files.exists(path)) {
             try (BufferedReader reader = Files.newBufferedReader(path)) {
                 return gson.fromJson(reader, dataClass);
@@ -192,29 +222,7 @@ public class DataHandler {
     }
 
     public LootPool[] getExtendedLootPools(ResourceLocation poolLocation) {
-        String pathString = String.format("assets/%s/loot_pools_extended/%s.json", poolLocation.getResourceDomain(), poolLocation.getResourcePath());
+        return getAsset(poolLocation.getResourceDomain(), String.format("loot_pools_extended/%s", poolLocation.getResourcePath()), LootPool[].class);
 
-        try {
-            LootPool[] pools = null;
-            if (source.isFile()) {
-                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    pools = getData(fs.getPath(pathString), LootPool[].class);
-                }
-            } else if (source.isDirectory()) {
-                pools = getData(source.toPath().resolve(pathString), LootPool[].class);
-            }
-
-            if (pools != null) {
-                return pools;
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.err.println("Failed to read extended loot pools from: " + pathString);
-
-        return null;
     }
 }
