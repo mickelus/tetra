@@ -787,7 +787,7 @@ sword_binding/bolt=Bolted
 sword_binding/bolt.description=An adjustable bolt attaches the blade to the hilt.
 
 sword_tweak/binding_bolt.label=Bolt tightness
-sword_tweak/binding_bolt.tooltip=§eTighten§r the bolt to make the sword more stiff, increasing damage.\n§eLoosen§r the bolt to allow for a softer rebound, effetively increasing durability.
+sword_tweak/binding_bolt.tooltip=§eTighten§r the bolt to make the sword more stiff, increasing damage.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.
 sword_tweak/binding_bolt.left=Loose
 sword_tweak/binding_bolt.right=Tight
 
@@ -1339,6 +1339,11 @@ duplex_binding/vine=Vine binding
 duplex_binding/vine.description=Tightly bound vine straps strengthen the tool head's attachment to the handle.
 duplex_binding/bolt=Bolted
 duplex_binding/bolt.description=An adjustable bolt attaches the tool head to the handle.
+
+duplex_tweak/binding_bolt.label=Bolt tightness
+duplex_tweak/binding_bolt.tooltip=§eTighten§r the bolt to make the tool more rigid, increasing gathering efficiency.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.
+duplex_tweak/binding_bolt.left=Loose
+duplex_tweak/binding_bolt.right=Tight
 
 ###############################
 # AXE HEAD

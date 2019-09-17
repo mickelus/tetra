@@ -135,7 +135,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 .withRenderLayer(Priority.LOWER);
 
 
-        new BasicModule(bindingKey, "duplex/binding");
+        new BasicModule(bindingKey, "duplex/binding", "duplex/tweaks/binding");
         new BasicModule(bindingKey, "duplex/socket");
 
         updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);

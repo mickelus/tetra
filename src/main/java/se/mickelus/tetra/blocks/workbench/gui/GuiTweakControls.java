@@ -19,6 +19,7 @@ public class GuiTweakControls extends GuiElement {
     private GuiString untweakableLabel;
 
     private GuiElement tweakControls;
+    private GuiButton applyButton;
 
     private Consumer<Map<String, Integer>> previewTweak;
 
@@ -35,8 +36,9 @@ public class GuiTweakControls extends GuiElement {
         tweakControls.setAttachment(GuiAttachment.middleLeft);
         addChild(tweakControls);
 
-        addChild(new GuiButton(0, -10, I18n.format("workbench.slot_detail.tweak_apply"), () -> applyTweak.accept(tweaks))
-                .setAttachment(GuiAttachment.bottomCenter));
+        applyButton = new GuiButton(0, -10, I18n.format("workbench.slot_detail.tweak_apply"), () -> applyTweak.accept(tweaks));
+        applyButton.setAttachment(GuiAttachment.bottomCenter);
+        addChild(applyButton);
 
         this.previewTweak = previewTweak;
 
@@ -57,8 +59,10 @@ public class GuiTweakControls extends GuiElement {
                 tweakControls.addChild(slider);
             }
 
+            applyButton.setVisible(true);
             untweakableLabel.setVisible(false);
         } else {
+            applyButton.setVisible(false);
             untweakableLabel.setVisible(true);
         }
     }

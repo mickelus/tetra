@@ -295,9 +295,9 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        return Arrays.stream(getTweaks(itemStack))
-                .map(tweak -> tweak.getEffectEfficiency(effect, getTweakStep(itemStack, tweak)))
-                .reduce(getData(itemStack).effects.getEfficiency(effect), (a, b) -> a * b);
+        return (float) Arrays.stream(getTweaks(itemStack))
+                .mapToDouble(tweak -> tweak.getEffectEfficiency(effect, getTweakStep(itemStack, tweak)))
+                .sum() + getData(itemStack).effects.getEfficiency(effect);
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
@@ -311,7 +311,9 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     @Override
     public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
-        return getData(itemStack).capabilities.getEfficiency(capability);
+        return (float) Arrays.stream(getTweaks(itemStack))
+                .mapToDouble(tweak -> tweak.getCapabilityEfficiency(capability, getTweakStep(itemStack, tweak)))
+                .sum() + getData(itemStack).capabilities.getEfficiency(capability);
     }
 
     @Override

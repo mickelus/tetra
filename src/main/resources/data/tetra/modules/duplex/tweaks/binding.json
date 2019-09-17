@@ -1,0 +1,17 @@
+[
+    {
+        "variant": "duplex_binding/bolt",
+        "key": "duplex_tweak/binding_bolt",
+        "steps": 10,
+        "stepStats": {
+            "durabilityMultiplier": 0.952,
+            "capabilities": {
+                "axe": [0, 0.93],
+                "pickaxe": [0, 0.93],
+                "shovel": [0, 0.93],
+                "cut": [0, 0.93],
+                "pry": [0, 0.93]
+            }
+        }
+    }
+]

@@ -5,7 +5,7 @@
         "steps": 10,
         "stepStats": {
             "damageMultiplier": 1.02,
-            "durabilityMultiplier": 0.98
+            "durabilityMultiplier": 0.952
         }
     }
 ]

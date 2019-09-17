@@ -10,7 +10,7 @@ public class TweakData {
     public String key;
     public int steps;
 
-    private ModuleData baseStats;
+    private ModuleData baseStats = new ModuleData();
     private ModuleData stepStats;
 
 
@@ -39,11 +39,11 @@ public class TweakData {
     }
 
     public float getEffectEfficiency(ItemEffect effect, int step) {
-        return baseStats.effects.getEfficiency(effect) + step * (stepStats.effects.getEfficiency(effect) - 1);
+        return baseStats.effects.getEfficiency(effect) + step * stepStats.effects.getEfficiency(effect);
     }
 
     public float getCapabilityEfficiency(Capability capability, int step) {
-        return baseStats.capabilities.getEfficiency(capability) + step * (stepStats.capabilities.getEfficiency(capability) - 1);
+        return baseStats.capabilities.getEfficiency(capability) + step * stepStats.capabilities.getEfficiency(capability);
     }
 
     public int getMagicCapacity(int step) {
