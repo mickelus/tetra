@@ -43,7 +43,7 @@ public class ItemJournal extends TetraItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("item.journal.tooltip1"));
         tooltip.add("");
-        tooltip.add(ChatFormatting.DARK_GRAY + ChatFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
+        tooltip.add(ChatFormatting.GRAY + ChatFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
     }
 
     @Override
