@@ -241,12 +241,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     public void tweak(EntityPlayer player, String slot, Map<String, Integer> tweaks) {
         ItemStack tweakedStack = getTargetItemStack().copy();
         CastOptional.cast(tweakedStack.getItem(), ItemModular.class)
-                .map(item -> item.getModuleFromSlot(tweakedStack, slot))
-                .ifPresent(module -> tweaks.forEach((tweakKey, step) -> {
-                    if (module.hasTweak(tweakedStack, tweakKey)) {
-                        module.setTweakStep(tweakedStack, tweakKey, step);
-                    }
-                }));
+                .ifPresent(item -> item.tweak(tweakedStack, slot, tweaks));
 
         setInventorySlotContents(0, tweakedStack);
     }

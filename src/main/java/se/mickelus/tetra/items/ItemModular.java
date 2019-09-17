@@ -479,6 +479,30 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
     }
 
+    public void tweak(ItemStack itemStack, String slot, Map<String, Integer> tweaks) {
+        ItemModule module = getModuleFromSlot(itemStack, slot);
+        float durabilityFactor = 0;
+
+        if (module == null || !module.isTweakable(itemStack)) {
+            return;
+        }
+
+        if (itemStack.isItemStackDamageable()) {
+            durabilityFactor = itemStack.getItemDamage() * 1f / itemStack.getMaxDamage();
+        }
+
+        tweaks.forEach((tweakKey, step) -> {
+            if (module.hasTweak(itemStack, tweakKey)) {
+                module.setTweakStep(itemStack, tweakKey, step);
+            }
+        });
+
+        if (itemStack.isItemStackDamageable()) {
+            itemStack.setItemDamage((int) (durabilityFactor * itemStack.getMaxDamage()
+                    - (durabilityFactor * durabilityFactor * module.getDurability(itemStack))));
+        }
+    }
+
     public int getCapabilityLevel(ItemStack itemStack, String capability) {
         if (EnumUtils.isValidEnum(Capability.class, capability)) {
             return getCapabilityLevel(itemStack, Capability.valueOf(capability));
