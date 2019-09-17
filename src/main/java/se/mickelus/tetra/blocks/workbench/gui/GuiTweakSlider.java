@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 public class GuiTweakSlider extends GuiElement {
 
     private GuiString labelString;
-    private GuiString valueString;
     private GuiSliderSegmented slider;
 
     private List<String> tooltip;
@@ -30,14 +29,7 @@ public class GuiTweakSlider extends GuiElement {
         addChild(new GuiStringSmall(-2, 1, I18n.format(tweak.key + ".left")).setAttachment(GuiAttachment.bottomLeft));
         addChild(new GuiStringSmall(-1, 1, I18n.format(tweak.key + ".right")).setAttachment(GuiAttachment.bottomRight));
 
-        valueString = new GuiStringSmall(0, 0, "");
-        valueString.setAttachment(GuiAttachment.bottomCenter);
-        addChild(valueString);
-
-        slider = new GuiSliderSegmented(-2, 3, width, tweak.steps * 2 + 1, step -> {
-            valueString.setString("" + (step - tweak.steps));
-            onChange.accept(step - tweak.steps);
-        });
+        slider = new GuiSliderSegmented(-2, 3, width, tweak.steps * 2 + 1, step -> onChange.accept(step - tweak.steps));
         slider.setAttachment(GuiAttachment.topCenter);
         addChild(slider);
 
@@ -47,7 +39,6 @@ public class GuiTweakSlider extends GuiElement {
     }
 
     public void setValue(int value) {
-        valueString.setString("" + (value));
         slider.setValue(value + steps);
     }
 

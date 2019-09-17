@@ -34,16 +34,24 @@ public class GuiSliderSegmented extends GuiClickable {
                 addChild(new GuiRect(i * width / (valueSteps - 1) - 1, 7, 3, 1, 0));
                 addChild(new GuiRect(i * width / (valueSteps - 1), 4, 1, 4, GuiColors.muted));
             } else {
-                addChild(new GuiRect(i * width / (valueSteps - 1), 4, 1, 3, GuiColors.muted).setOpacity(0.7f));
+                addChild(new GuiRect(i * width / (valueSteps - 1), 5, 1, 2, GuiColors.muted).setOpacity(0.7f));
             }
         }
 
-        currentIndicator = new GuiRect(0, 4, 1, 4, GuiColors.normal);
-        addChild(currentIndicator);
-
-        hoverIndicator = new GuiRect(0, 4, 1, 4, GuiColors.hover);
-        hoverIndicator.setOpacity(0.3f);
+        hoverIndicator = new GuiElement(0, 4, 1, 4);
+        hoverIndicator.addChild(new GuiRect(-1, 0, 3, 5, 0));
+        hoverIndicator.addChild(new GuiRect(0, -1, 1, 3, GuiColors.muted));
+        hoverIndicator.addChild(new GuiRect(0, 3, 1, 1, GuiColors.muted));
+        hoverIndicator.addChild(new GuiRect(0, 5, 1, 1, GuiColors.muted));
+        hoverIndicator.setVisible(false);
         addChild(hoverIndicator);
+
+        currentIndicator = new GuiElement(0, 4, 1, 4);
+        currentIndicator.addChild(new GuiRect(-1, 0, 3, 5, 0));
+        currentIndicator.addChild(new GuiRect(0, -1, 1, 3, GuiColors.normal));
+        currentIndicator.addChild(new GuiRect(0, 3, 1, 1, GuiColors.selected));
+        currentIndicator.addChild(new GuiRect(0, 5, 1, 1, GuiColors.normal));
+        addChild(currentIndicator);
 
         this.valueSteps = valueSteps;
 
