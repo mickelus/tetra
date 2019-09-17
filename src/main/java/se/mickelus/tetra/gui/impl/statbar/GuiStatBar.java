@@ -44,7 +44,7 @@ public class GuiStatBar extends GuiStatBase {
         valueString = new GuiStringSmall(0, 0, label);
 
         if (segmented) {
-            bar = new GuiBarSegmented(0, 0, barLength, min, max);
+            bar = new GuiBarSegmented(0, 0, barLength + 1, min, max);
         } else {
             if (split) {
                 bar = new GuiBarSplit(0, 0, barLength, max);
