@@ -523,16 +523,22 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .max(Integer::compare)
                 .orElse(-1);
 
+        // grabs the highest efficiency from modules that also provide a capability level (from the module(s) that have the highest capability level
+        // adds the efficiency of all modules that have 0 capability level
         float efficiency = getAllModules(itemStack).stream()
                 .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
                 .map(module -> module.getCapabilityEfficiency(itemStack, capability))
                 .max(Float::compare)
-                .orElse(1f);
+                .orElse(1f)
+                + (float) getAllModules(itemStack).stream()
+                .filter(module -> module.getCapabilityLevel(itemStack, capability) == 0)
+                .mapToDouble(module -> module.getCapabilityEfficiency(itemStack, capability))
+                .sum();
 
-        return efficiency + (float) Arrays.stream(getSynergyData(itemStack))
+        return Math.max(0, efficiency + (float) Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.capabilities)
                 .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
-                .sum();
+                .sum());
     }
 
     @Override
