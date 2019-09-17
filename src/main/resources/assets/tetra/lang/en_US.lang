@@ -214,7 +214,8 @@ stats.integrity_usage.tooltip=Integrity is provided by some modules (often in a 
 item.modular.broken=Broken
 item.modular.empty_slot=Empty
 item.modular.magic_capacity.label=Magic capacity
-item.modular.magic_capacity.description=The amount of magic that the module may hold and how much of that capacity is in use. The magic capacity may be exceeded, but the modules magical improvements may destabilize and cause negative effects when the item is altered.\n\n§7Magic capacity: §e%s\n§7Capacity usage: §e%s
+item.modular.magic_capacity.description=The amount of magic that the module may hold and how much of that capacity is in use. The magic capacity may be exceeded but the experience cost of applying additional magical improvements will increase greatly and repairing the module will cost experience.\n\n§7Magic capacity: §e%s\n§7Capacity usage: §e%s
+item.modular.magic_capacity.description_WIP=The amount of magic that the module may hold and how much of that capacity is in use. The magic capacity may be exceeded, but the modules magical improvements may destabilize and cause negative effects when the item is altered.\n\n§7Magic capacity: §e%s\n§7Capacity usage: §e%s
 item.modular.repair_material.label=Repair material:
 item.modular.repair_material.empty=Does not need to be repaired
 
