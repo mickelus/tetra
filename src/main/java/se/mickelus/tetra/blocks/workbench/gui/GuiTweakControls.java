@@ -46,9 +46,8 @@ public class GuiTweakControls extends GuiElement {
     }
 
     public void update(ItemModule module, ItemStack itemStack) {
+        tweakControls.clearChildren();
         if (module != null && module.isTweakable(itemStack)) {
-            tweakControls.clearChildren();
-
             TweakData[] data = module.getTweaks(itemStack);
             tweakControls.setHeight(data.length * 22);
             for (int i = 0; i < data.length; i++) {
