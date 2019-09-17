@@ -75,11 +75,11 @@ public class GuiElement extends Gui {
             case topCenter:
             case middleCenter:
             case bottomCenter:
-                return element.width / 2;
+                return element.getWidth() / 2;
             case topRight:
             case middleRight:
             case bottomRight:
-                return element.width;
+                return element.getWidth();
         }
         return 0;
     }
@@ -93,11 +93,11 @@ public class GuiElement extends Gui {
             case middleLeft:
             case middleCenter:
             case middleRight:
-                return element.height / 2;
+                return element.getHeight() / 2;
             case bottomCenter:
             case bottomLeft:
             case bottomRight:
-                return element.height;
+                return element.getHeight();
         }
         return 0;
     }
@@ -115,8 +115,15 @@ public class GuiElement extends Gui {
         return false;
     }
 
+    public void mouseReleased(int x, int y) {
+        elements.forEach(element -> element.mouseReleased(x, y));
+    }
+
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
-        boolean gainFocus = mouseX >= x + refX && mouseX < x + refX + width && mouseY >= y + refY && mouseY < y + refY + height;
+        boolean gainFocus = mouseX >= getX() + refX
+                && mouseX < getX() + refX + getWidth()
+                && mouseY >= getY() + refY
+                && mouseY < getY() + refY + getHeight();
 
         if (gainFocus != hasFocus) {
             hasFocus = gainFocus;

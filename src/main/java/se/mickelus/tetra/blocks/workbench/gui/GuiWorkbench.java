@@ -16,11 +16,10 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
@@ -91,7 +90,9 @@ public class GuiWorkbench extends GuiContainer {
         slotDetail = new GuiSlotDetail(46, 102,
                 schema -> tileEntity.setCurrentSchema(schema, selectedSlot),
                 () -> selectSlot(null),
-                this::craftUpgrade);
+                this::craftUpgrade,
+                this::previewTweaks,
+                this::applyTweaks);
         defaultGui.addChild(slotDetail);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
@@ -138,6 +139,13 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.onClick(mouseX, mouseY);
     }
 
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        super.mouseReleased(mouseX, mouseY, state);
+
+        defaultGui.mouseReleased(mouseX, mouseY);
+    }
+
     private void selectSlot(String slotKey) {
         selectedSlot = slotKey;
         tileEntity.clearSchema();
@@ -155,6 +163,30 @@ public class GuiWorkbench extends GuiContainer {
 
     private void craftUpgrade() {
         tileEntity.initiateCrafting(viewingPlayer);
+    }
+
+    private void previewTweaks(Map<String, Integer> tweakMap) {
+        ItemStack previewStack = currentTarget.copy();
+        CastOptional.cast(previewStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(previewStack, selectedSlot))
+                .ifPresent(module -> tweakMap.forEach((tweakKey, step) -> {
+                    if (module.hasTweak(previewStack, tweakKey)) {
+                        module.setTweakStep(previewStack, tweakKey, step);
+                    }
+                }));
+
+        statGroup.update(currentTarget, previewStack, null, null, viewingPlayer);
+    }
+
+    private void applyTweaks(Map<String, Integer> tweakMap) {
+        tileEntity.applyTweaks(viewingPlayer, selectedSlot, tweakMap);
+    }
+
+    private void applyTweak(ItemStack itemStack, String tweakKey, int step) {
+        CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
+                .filter(module -> module.hasTweak(itemStack, tweakKey))
+                .ifPresent(module -> module.setTweakStep(itemStack, tweakKey, step));
     }
 
     private void onTileEntityChange() {
@@ -263,7 +295,7 @@ public class GuiWorkbench extends GuiContainer {
     }
 
     private void updateSlotHoverPreview(String slot, String improvement) {
-        if (tileEntity.getCurrentSchema() == null) {
+        if (tileEntity.getCurrentSlot() == null) {
             ItemStack itemStack = tileEntity.getTargetItemStack();
             statGroup.update(itemStack, ItemStack.EMPTY, slot, improvement, viewingPlayer);
         }

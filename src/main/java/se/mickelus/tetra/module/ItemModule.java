@@ -10,10 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 
@@ -21,7 +23,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     protected T[] data;
 
-    protected String[] tweakableVariants = new String[] { "sword_binding/bolt", "duplex_binding/bolt" };
+    protected TweakData[] tweaks = new TweakData[0];
 
     protected String slotKey;
     protected String moduleKey;
@@ -181,11 +183,15 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public int getDurability(ItemStack itemStack) {
-        return getData(itemStack).durability;
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToInt(tweak -> tweak.getDurability(getTweakStep(itemStack, tweak)))
+                .sum() + getData(itemStack).durability;
     }
 
     public float getDurabilityMultiplier(ItemStack itemStack) {
-        return getData(itemStack).durabilityMultiplier;
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getDurabilityMultiplier(getTweakStep(itemStack, tweak)))
+                .reduce(getData(itemStack).durabilityMultiplier, (a, b) -> a * b);
     }
 
     public Material getRepairMaterial(ItemStack itemStack) {
@@ -218,20 +224,55 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     public boolean isTweakable(ItemStack itemStack) {
         String variant = NBTHelper.getTag(itemStack).getString(this.dataKey);
-        return Arrays.asList(tweakableVariants).contains(variant);
+        return Arrays.stream(tweaks)
+                .anyMatch(data -> variant.equals(data.variant));
+    }
+
+    public TweakData[] getTweaks(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        String variant = tag.getString(this.dataKey);
+        return Arrays.stream(tweaks)
+                .filter(tweak -> variant.equals(tweak.variant))
+                .toArray(TweakData[]::new);
+    }
+
+    public boolean hasTweak(ItemStack itemStack, String tweakKey) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.key)
+                .anyMatch(tweakKey::equals);
+    }
+
+    public int getTweakStep(ItemStack itemStack, TweakData tweak) {
+        return Math.max(Math.min(NBTHelper.getTag(itemStack).getInteger(slotKey + ":" + tweak.key), tweak.steps), -tweak.steps);
+    }
+
+    public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
+        NBTHelper.getTag(itemStack).setInteger(slotKey + ":" + tweakKey, step);
     }
 
     public double getDamageModifier(ItemStack itemStack) {
-        return getData(itemStack).damage;
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToDouble(tweak -> tweak.getDamage(getTweakStep(itemStack, tweak)))
+                .sum() + getData(itemStack).damage;
     }
 
-    public double getDamageMultiplierModifier(ItemStack itemStack) { return getData(itemStack).damageMultiplier; }
+    public double getDamageMultiplierModifier(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getDamageMultiplier(getTweakStep(itemStack, tweak)))
+                .reduce(getData(itemStack).damageMultiplier, (a, b) -> a * b);
+    }
 
     public double getSpeedModifier(ItemStack itemStack) {
-        return getData(itemStack).attackSpeed;
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToDouble(tweak -> tweak.getAttackSpeed(getTweakStep(itemStack, tweak)))
+                .sum() + getData(itemStack).attackSpeed;
     }
 
-    public double getSpeedMultiplierModifier(ItemStack itemStack) { return getData(itemStack).attackSpeedMultiplier; }
+    public double getSpeedMultiplierModifier(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getAttackSpeedMultiplier(getTweakStep(itemStack, tweak)))
+                .reduce(getData(itemStack).attackSpeedMultiplier, (a, b) -> a * b);
+    }
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[] { getData(itemStack).getTextureLocation() };
@@ -254,7 +295,9 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        return getData(itemStack).effects.getEfficiency(effect);
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getEffectEfficiency(effect, getTweakStep(itemStack, tweak)))
+                .reduce(getData(itemStack).effects.getEfficiency(effect), (a, b) -> a * b);
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {

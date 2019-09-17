@@ -71,7 +71,8 @@ public class GuiMagicUsage extends GuiElement {
 
     private static int getGain(ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot).getMagicCapacityGain(itemStack))
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getMagicCapacityGain(itemStack))
                 .orElse(0);
     }
 

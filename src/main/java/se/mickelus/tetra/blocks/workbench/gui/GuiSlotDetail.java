@@ -19,11 +19,14 @@ import se.mickelus.tetra.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class GuiSlotDetail extends GuiElement {
@@ -46,7 +49,8 @@ public class GuiSlotDetail extends GuiElement {
 
     private final AnimationChain slotTransition;
 
-    public GuiSlotDetail(int x, int y, Consumer<UpgradeSchema> selectSchemaHandler, Runnable closeHandler, Runnable craftHandler) {
+    public GuiSlotDetail(int x, int y, Consumer<UpgradeSchema> selectSchemaHandler, Runnable closeHandler,
+            Runnable craftHandler, Consumer<Map<String, Integer>> previewTweak, Consumer<Map<String, Integer>> applyTweak) {
         super(x, y, 224, 67);
 
         this.selectSchemaHandler = selectSchemaHandler;
@@ -78,7 +82,7 @@ public class GuiSlotDetail extends GuiElement {
         schemaGroup.addChild(schemaDetail);
 
 
-        tweakControls = new GuiTweakControls(0, 0);
+        tweakControls = new GuiTweakControls(0, 0, previewTweak, applyTweak);
         addChild(tweakControls);
 
         GuiRect slotTransitionElement = new GuiRect(3, 3, 218, 56, 0);

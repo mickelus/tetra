@@ -15,6 +15,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -94,7 +95,7 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         if (tag.hasKey(slotKey + ":" + improvementKey)) {
-            return NBTHelper.getTag(itemStack).getInteger(slotKey + ":" + improvementKey);
+            return tag.getInteger(slotKey + ":" + improvementKey);
         }
         return -1;
     }
@@ -155,6 +156,18 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
 
         NBTHelper.getTag(itemStack).removeTag(slot + ":" + improvement);
+    }
+
+    @Override
+    public TweakData[] getTweaks(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        String variant = tag.getString(this.dataKey);
+        String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
+                .map(improvement -> improvement.key)
+                .toArray(String[]::new);
+        return Arrays.stream(tweaks)
+                .filter(tweak -> variant.equals(tweak.variant) || ArrayUtils.contains(improvementKeys, tweak.improvement))
+                .toArray(TweakData[]::new);
     }
 
     @Override

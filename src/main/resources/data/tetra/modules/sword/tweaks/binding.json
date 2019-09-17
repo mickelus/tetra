@@ -1,0 +1,11 @@
+[
+    {
+        "variant": "sword_binding/bolt",
+        "key": "sword_tweak/binding_bolt",
+        "steps": 10,
+        "stepStats": {
+            "damageMultiplier": 1.02,
+            "durabilityMultiplier": 0.98
+        }
+    }
+]

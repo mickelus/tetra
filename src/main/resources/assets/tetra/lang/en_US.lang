@@ -65,6 +65,7 @@ journal.craft.variants=Variants
 workbench.slot_detail.details_tab=Details
 workbench.slot_detail.craft_tab=Craft
 workbench.slot_detail.tweak_tab=Tweak
+workbench.slot_detail.tweak_apply=Apply
 
 workbench.module_detail.empty=Empty slot
 workbench.module_detail.not_tweakable=Tweaking unavailable
@@ -784,6 +785,11 @@ sword_binding/vine=Vine binding
 sword_binding/vine.description=Tightly bound vine straps strengthens the blade's attachment to the hilt.
 sword_binding/bolt=Bolted
 sword_binding/bolt.description=An adjustable bolt attaches the blade to the hilt.
+
+sword_tweak/binding_bolt.label=Bolt tightness
+sword_tweak/binding_bolt.tooltip=§eTighten§r the bolt to make the sword more stiff, increasing damage.\n§eLoosen§r the bolt to allow for a softer rebound, effetively increasing durability.
+sword_tweak/binding_bolt.left=Loose
+sword_tweak/binding_bolt.right=Tight
 
 ###############################
 # FOREFINGER RING

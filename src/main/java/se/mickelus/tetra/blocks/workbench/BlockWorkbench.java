@@ -224,6 +224,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
         PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, Side.SERVER);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, Side.SERVER);
+        PacketHandler.instance.registerPacket(TweakWorkbenchPacket.class, Side.SERVER);
     }
 
     @Override

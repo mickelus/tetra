@@ -62,15 +62,16 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         new BasicModule(guardKey, "sword/makeshift_guard");
         new BasicModule(guardKey, "sword/wide_guard");
+        new BasicModule(guardKey, "sword/forefinger_ring");
+        new BasicModule(guardKey, "sword/binding", "sword/tweaks/binding");
+        new BasicModule(guardKey, "sword/socket");
 
         new BasicModule(pommelKey, "sword/decorative_pommel");
         new BasicModule(pommelKey, "sword/counterweight");
         new BasicModule(pommelKey, "sword/grip_loop");
-        new BasicModule(guardKey, "sword/forefinger_ring");
-        new BasicModule(guardKey, "sword/binding");
+
         new BasicModule(fullerKey, "sword/reinforced_fuller");
 
-        new BasicModule(guardKey, "sword/socket");
 
         updateConfig(ConfigHandler.honeSwordBase, ConfigHandler.honeSwordIntegrityMultiplier);
     }

@@ -22,6 +22,7 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -225,6 +226,29 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         emptyMaterialSlots(player);
 
         setInventorySlotContents(0, upgradedStack);
+    }
+
+    public void applyTweaks(EntityPlayer player, String slot, Map<String, Integer> tweaks) {
+        if (world.isRemote) {
+            PacketHandler.sendToServer(new TweakWorkbenchPacket(pos, slot, tweaks));
+        }
+
+        tweak(player, slot, tweaks);
+
+        sync();
+    }
+
+    public void tweak(EntityPlayer player, String slot, Map<String, Integer> tweaks) {
+        ItemStack tweakedStack = getTargetItemStack().copy();
+        CastOptional.cast(tweakedStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(tweakedStack, slot))
+                .ifPresent(module -> tweaks.forEach((tweakKey, step) -> {
+                    if (module.hasTweak(tweakedStack, tweakKey)) {
+                        module.setTweakStep(tweakedStack, tweakKey, step);
+                    }
+                }));
+
+        setInventorySlotContents(0, tweakedStack);
     }
 
     public void addChangeListener(String key, Runnable runnable) {
