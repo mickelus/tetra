@@ -3,6 +3,7 @@
         "key": "enchantment/unbreaking",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "unbreaking": 1
         }
@@ -11,6 +12,7 @@
         "key": "enchantment/unbreaking",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -6,
         "effects": {
             "unbreaking": 2
         }
@@ -19,6 +21,7 @@
         "key": "enchantment/unbreaking",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "unbreaking": 3
         }
@@ -27,6 +30,7 @@
         "key": "enchantment/unbreaking",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -12,
         "effects": {
             "unbreaking": 4
         }
@@ -35,14 +39,17 @@
         "key": "enchantment/unbreaking",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -15,
         "effects": {
             "unbreaking": 5
         }
     },
+
     {
         "key": "enchantment/fortune",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "fortune": 1
         }
@@ -51,6 +58,7 @@
         "key": "enchantment/fortune",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "fortune": 2
         }
@@ -59,6 +67,7 @@
         "key": "enchantment/fortune",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "fortune": 3
         }
@@ -67,6 +76,7 @@
         "key": "enchantment/fortune",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "fortune": 4
         }
@@ -75,6 +85,7 @@
         "key": "enchantment/fortune",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "fortune": 5
         }

@@ -2,6 +2,7 @@
     {
         "key": "butt/oak",
         "durability": 12,
+        "magicCapacity": 15,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.3,
@@ -13,6 +14,7 @@
     {
         "key": "butt/flint",
         "durability": 15,
+        "magicCapacity": 5,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -24,6 +26,7 @@
     {
         "key": "butt/cobblestone",
         "durability": 18,
+        "magicCapacity": 15,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.3,
@@ -35,6 +38,7 @@
     {
         "key": "butt/iron",
         "durability": 26,
+        "magicCapacity": 14,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -49,6 +53,7 @@
     {
         "key": "butt/diamond",
         "durability": 548,
+        "magicCapacity": 10,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.1,
@@ -63,6 +68,7 @@
     {
         "key": "butt/gold",
         "durability": 11,
+        "magicCapacity": 22,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.1,
@@ -74,6 +80,7 @@
     {
         "key": "butt/copper",
         "durability": 18,
+        "magicCapacity": 13,
         "integrity": 0,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -88,6 +95,7 @@
     {
         "key": "butt/tin",
         "durability": 15,
+        "magicCapacity": 12,
         "integrity": 0,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -99,6 +107,7 @@
     {
         "key": "butt/silver",
         "durability": 17,
+        "magicCapacity": 21,
         "integrity": 0,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -110,6 +119,7 @@
     {
         "key": "butt/nickel",
         "durability": 31,
+        "magicCapacity": 12,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -124,6 +134,7 @@
     {
         "key": "butt/lead",
         "durability": 16,
+        "magicCapacity": 11,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.3,
@@ -138,6 +149,7 @@
     {
         "key": "butt/bronze",
         "durability": 47,
+        "magicCapacity": 13,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -152,6 +164,7 @@
     {
         "key": "butt/electrum",
         "durability": 8,
+        "magicCapacity": 24,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -166,6 +179,7 @@
     {
         "key": "butt/steel",
         "durability": 53,
+        "magicCapacity": 11,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.25,
@@ -180,6 +194,7 @@
     {
         "key": "butt/thaumium",
         "durability": 61,
+        "magicCapacity": 25,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.23,
@@ -194,6 +209,7 @@
     {
         "key": "butt/ironwood",
         "durability": 66,
+        "magicCapacity": 18,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.25,
@@ -208,6 +224,7 @@
     {
         "key": "butt/steeleaf",
         "durability": 15,
+        "magicCapacity": 15,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.15,
@@ -219,6 +236,7 @@
     {
         "key": "butt/fierymetal",
         "durability": 235,
+        "magicCapacity": 12,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.22,
@@ -233,6 +251,7 @@
     {
         "key": "butt/knightmetal",
         "durability": 86,
+        "magicCapacity": 12,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.2,
@@ -248,6 +267,7 @@
         "key": "butt/knightmetal2",
         "durability": 86,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {

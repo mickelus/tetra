@@ -3,6 +3,7 @@
         "key": "enchantment/fortune",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "fortune": 1
         }
@@ -11,6 +12,7 @@
         "key": "enchantment/fortune",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "fortune": 2
         }
@@ -19,6 +21,7 @@
         "key": "enchantment/fortune",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "fortune": 3
         }
@@ -27,6 +30,7 @@
         "key": "enchantment/fortune",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "fortune": 4
         }
@@ -35,6 +39,7 @@
         "key": "enchantment/fortune",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "fortune": 5
         }
@@ -43,6 +48,7 @@
         "key": "enchantment/silk_touch",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -15,
         "effects": {
             "silkTouch": 1
         }

@@ -3,6 +3,7 @@
         "key": "basic_handle/stick",
         "durability": 20,
         "integrity": 3,
+        "magicCapacity": 15,
         "glyph": {
             "tint": "866526",
             "textureX": 16
@@ -12,6 +13,7 @@
         "key": "basic_handle/oak",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "9d804e",
@@ -22,6 +24,7 @@
         "key": "basic_handle/spruce",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "694f2f",
@@ -32,6 +35,7 @@
         "key": "basic_handle/birch",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "c8b77d",
@@ -42,6 +46,7 @@
         "key": "basic_handle/jungle",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 17,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "996e4c",
@@ -52,6 +57,7 @@
         "key": "basic_handle/acacia",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "ac5d33",
@@ -62,6 +68,7 @@
         "key": "basic_handle/dark_oak",
         "durability": 31,
         "integrity": 4,
+        "magicCapacity": 17,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "3c2712",
@@ -72,6 +79,7 @@
         "key": "basic_handle/maple",
         "durability": 38,
         "integrity": 5,
+        "magicCapacity": 16,
         "glyph": {
             "tint": "623913",
             "textureX": 16
@@ -81,6 +89,7 @@
         "key": "basic_handle/cherry",
         "durability": 39,
         "integrity": 6,
+        "magicCapacity": 13,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "684817",
@@ -91,6 +100,7 @@
         "key": "basic_handle/baobab",
         "durability": 47,
         "integrity": 8,
+        "magicCapacity": 13,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "444b2c",
@@ -101,6 +111,7 @@
         "key": "basic_handle/bone",
         "durability": 39,
         "integrity": 4,
+        "magicCapacity": 18,
         "glyph": {
             "tint": "edebca",
             "textureX": 16
@@ -110,6 +121,7 @@
         "key": "basic_handle/iron",
         "durability": 58,
         "integrity": 5,
+        "magicCapacity": 14,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "d8d8d8",
@@ -120,6 +132,7 @@
         "key": "basic_handle/bronze",
         "durability": 36,
         "integrity": 6,
+        "magicCapacity": 13,
         "attackSpeed": -0.3,
         "glyph": {
             "tint": "b2712c",
@@ -130,6 +143,7 @@
         "key": "basic_handle/steel",
         "durability": 244,
         "integrity": 5,
+        "magicCapacity": 11,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "383838",
@@ -140,6 +154,7 @@
         "key": "basic_handle/blaze_rod",
         "durability": 80,
         "integrity": 7,
+        "magicCapacity": 18,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "ffc100",
@@ -150,6 +165,7 @@
         "key": "basic_handle/end_rod",
         "durability": 106,
         "integrity": 8,
+        "magicCapacity": 17,
         "attackSpeed": -0.2,
         "glyph": {
             "tint": "bd9ab1",
@@ -160,6 +176,7 @@
         "key": "basic_handle/greatwood",
         "durability": 28,
         "integrity": 6,
+        "magicCapacity": 20,
         "glyph": {
             "tint": "33231e",
             "textureX": 16
@@ -169,6 +186,7 @@
         "key": "basic_handle/treated_wood",
         "durability": 124,
         "integrity": 6,
+        "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
             "tint": "422114",
@@ -179,6 +197,7 @@
         "key": "basic_handle/ironwood",
         "durability": 63,
         "integrity": 5,
+        "magicCapacity": 15,
         "glyph": {
             "tint": "8c714d",
             "textureX": 16
@@ -188,6 +207,7 @@
         "key": "basic_handle/forged_beam",
         "durability": 250,
         "integrity": 7,
+        "magicCapacity": 6,
         "attackSpeed": -0.3,
         "damageMultiplier": 0.9,
         "glyph": {

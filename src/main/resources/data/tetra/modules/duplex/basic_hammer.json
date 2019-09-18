@@ -3,6 +3,7 @@
         "key": "basic_hammer/log",
         "durability": 100,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
@@ -17,6 +18,7 @@
         "key": "basic_hammer/stone",
         "durability": 300,
         "integrity": -1,
+        "magicCapacity": 5,
         "damage": 5,
         "attackSpeed": -0.4,
         "glyph": {
@@ -31,6 +33,7 @@
         "key": "basic_hammer/iron",
         "durability": 300,
         "integrity": -2,
+        "magicCapacity": 14,
         "damage": 7,
         "attackSpeed": -0.3,
         "glyph": {
@@ -45,6 +48,7 @@
         "key": "basic_hammer/obsidian",
         "durability": 720,
         "integrity": -3,
+        "magicCapacity": 6,
         "damage": 9,
         "attackSpeed": -0.6,
         "glyph": {
@@ -59,6 +63,7 @@
         "key": "basic_hammer/copper",
         "durability": 221,
         "integrity": -2,
+        "magicCapacity": 13,
         "damage": 6,
         "attackSpeed": -0.3,
         "glyph": {
@@ -73,6 +78,7 @@
         "key": "basic_hammer/tin",
         "durability": 120,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 6,
         "attackSpeed": -0.2,
         "glyph": {
@@ -87,6 +93,7 @@
         "key": "basic_hammer/nickel",
         "durability": 240,
         "integrity": -4,
+        "magicCapacity": 12,
         "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
@@ -101,6 +108,7 @@
         "key": "basic_hammer/lead",
         "durability": 120,
         "integrity": -2,
+        "magicCapacity": 11,
         "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
@@ -115,6 +123,7 @@
         "key": "basic_hammer/bronze",
         "durability": 465,
         "integrity": -2,
+        "magicCapacity": 13,
         "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
@@ -129,6 +138,7 @@
         "key": "basic_hammer/electrum",
         "durability": 102,
         "integrity": -2,
+        "magicCapacity": 24,
         "damage": 7,
         "attackSpeed": -0.3,
         "glyph": {
@@ -143,6 +153,7 @@
         "key": "basic_hammer/steel",
         "durability": 521,
         "integrity": -5,
+        "magicCapacity": 11,
         "damage": 8,
         "attackSpeed": -0.3,
         "glyph": {
@@ -157,6 +168,7 @@
         "key": "basic_hammer/thaumium",
         "durability": 634,
         "integrity": -3,
+        "magicCapacity": 25,
         "damage": 7,
         "attackSpeed": -0.3,
         "glyph": {
@@ -171,6 +183,7 @@
         "key": "basic_hammer/ironwood",
         "durability": 591,
         "integrity": -2,
+        "magicCapacity": 18,
         "damage": 6,
         "attackSpeed": -0.3,
         "glyph": {
@@ -185,6 +198,7 @@
         "key": "basic_hammer/steeleaf",
         "durability": 111,
         "integrity": -3,
+        "magicCapacity": 15,
         "damage": 7,
         "attackSpeed": -0.3,
         "glyph": {
@@ -199,6 +213,7 @@
         "key": "basic_hammer/fierymetal",
         "durability": 947,
         "integrity": -3,
+        "magicCapacity": 12,
         "damage": 8,
         "attackSpeed": -0.3,
         "glyph": {
@@ -213,6 +228,7 @@
         "key": "basic_hammer/knightmetal",
         "durability": 512,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 8,
         "attackSpeed": -0.3,
         "glyph": {

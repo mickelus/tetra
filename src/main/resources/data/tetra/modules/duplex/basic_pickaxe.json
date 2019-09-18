@@ -3,6 +3,7 @@
         "key": "basic_pickaxe/oak",
         "durability": 20,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
@@ -17,6 +18,7 @@
         "key": "basic_pickaxe/cobblestone",
         "durability": 56,
         "integrity": -1,
+        "magicCapacity": 5,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -31,6 +33,7 @@
         "key": "basic_pickaxe/flint",
         "durability": 78,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 2,
         "attackSpeed": 0.1,
         "glyph": {
@@ -45,6 +48,7 @@
         "key": "basic_pickaxe/iron",
         "durability": 115,
         "integrity": -2,
+        "magicCapacity": 14,
         "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
@@ -59,6 +63,7 @@
         "key": "basic_pickaxe/diamond",
         "durability": 771,
         "integrity": -2,
+        "magicCapacity": 10,
         "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
@@ -73,6 +78,7 @@
         "key": "basic_pickaxe/gold",
         "durability": 6,
         "integrity": -2,
+        "magicCapacity": 22,
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
@@ -87,6 +93,7 @@
         "key": "basic_pickaxe/copper",
         "durability": 70,
         "integrity": 0,
+        "magicCapacity": 13,
         "damage": 2,
         "attackSpeed": -0.1,
         "glyph": {
@@ -101,6 +108,7 @@
         "key": "basic_pickaxe/tin",
         "durability": 50,
         "integrity": 0,
+        "magicCapacity": 12,
         "damage": 2,
         "attackSpeed": -0.1,
         "glyph": {
@@ -115,6 +123,7 @@
         "key": "basic_pickaxe/silver",
         "durability": 26,
         "integrity": -1,
+        "magicCapacity": 21,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -129,6 +138,7 @@
         "key": "basic_pickaxe/nickel",
         "durability": 130,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
@@ -143,6 +153,7 @@
         "key": "basic_pickaxe/lead",
         "durability": 45,
         "integrity": -1,
+        "magicCapacity": 11,
         "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
@@ -157,6 +168,7 @@
         "key": "basic_pickaxe/bronze",
         "durability": 180,
         "integrity": 0,
+        "magicCapacity": 13,
         "damage": 3,
         "attackSpeed": -0.2,
         "glyph": {
@@ -171,6 +183,7 @@
         "key": "basic_pickaxe/electrum",
         "durability": 91,
         "integrity": -2,
+        "magicCapacity": 24,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -185,6 +198,7 @@
         "key": "basic_pickaxe/steel",
         "durability": 202,
         "integrity": -2,
+        "magicCapacity": 11,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -199,6 +213,7 @@
         "key": "basic_pickaxe/thaumium",
         "durability": 240,
         "integrity": -2,
+        "magicCapacity": 25,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -213,6 +228,7 @@
         "key": "basic_pickaxe/ironwood",
         "durability": 246,
         "integrity": -1,
+        "magicCapacity": 18,
         "damage": 2,
         "attackSpeed": -0.2,
         "glyph": {
@@ -227,6 +243,7 @@
         "key": "basic_pickaxe/steeleaf",
         "durability": 55,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {
@@ -241,6 +258,7 @@
         "key": "basic_pickaxe/fierymetal",
         "durability": 502,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 5,
         "attackSpeed": -0.2,
         "glyph": {
@@ -255,6 +273,7 @@
         "key": "basic_pickaxe/knightmetal",
         "durability": 246,
         "integrity": -1,
+        "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": -0.2,
         "glyph": {

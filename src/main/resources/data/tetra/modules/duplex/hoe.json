@@ -3,6 +3,7 @@
         "key": "hoe/oak",
         "durability": 20,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 2,
         "attackSpeed": -0.45,
         "glyph": {
@@ -18,6 +19,7 @@
         "key": "hoe/cobblestone",
         "durability": 56,
         "integrity": -1,
+        "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": -0.45,
         "glyph": {
@@ -33,6 +35,7 @@
         "key": "hoe/flint",
         "durability": 78,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
@@ -48,6 +51,7 @@
         "key": "hoe/iron",
         "durability": 115,
         "integrity": -2,
+        "magicCapacity": 14,
         "damage": 4,
         "attackSpeed": -0.1,
         "glyph": {
@@ -63,6 +67,7 @@
         "key": "hoe/diamond",
         "durability": 771,
         "integrity": -2,
+        "magicCapacity": 10,
         "damage": 4,
         "attackSpeed": -0.1,
         "glyph": {
@@ -78,6 +83,7 @@
         "key": "hoe/gold",
         "durability": 6,
         "integrity": -2,
+        "magicCapacity": 22,
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
@@ -93,6 +99,7 @@
         "key": "hoe/copper",
         "durability": 122,
         "integrity": 0,
+        "magicCapacity": 13,
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
@@ -108,6 +115,7 @@
         "key": "hoe/tin",
         "durability": 92,
         "integrity": 0,
+        "magicCapacity": 12,
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
@@ -123,6 +131,7 @@
         "key": "hoe/silver",
         "durability": 46,
         "integrity": -1,
+        "magicCapacity": 21,
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
@@ -138,6 +147,7 @@
         "key": "hoe/nickel",
         "durability": 230,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 2,
         "attackSpeed": -0.45,
         "glyph": {
@@ -153,6 +163,7 @@
         "key": "hoe/lead",
         "durability": 65,
         "integrity": -1,
+        "magicCapacity": 11,
         "damage": 3,
         "attackSpeed": -0.49,
         "glyph": {
@@ -168,6 +179,7 @@
         "key": "hoe/bronze",
         "durability": 360,
         "integrity": -1,
+        "magicCapacity": 13,
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
@@ -183,6 +195,7 @@
         "key": "hoe/electrum",
         "durability": 121,
         "integrity": -1,
+        "magicCapacity": 24,
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
@@ -198,6 +211,7 @@
         "key": "hoe/steel",
         "durability": 328,
         "integrity": -2,
+        "magicCapacity": 11,
         "damage": 5,
         "attackSpeed": -0.38,
         "glyph": {
@@ -213,6 +227,7 @@
         "key": "hoe/thaumium",
         "durability": 419,
         "integrity": -2,
+        "magicCapacity": 25,
         "damage": 4,
         "attackSpeed": -0.46,
         "glyph": {
@@ -228,6 +243,7 @@
         "key": "hoe/ironwood_tf",
         "durability": 426,
         "integrity": -2,
+        "magicCapacity": 18,
         "damage": 2,
         "attackSpeed": -0.36,
         "glyph": {
@@ -243,6 +259,7 @@
         "key": "hoe/steeleaf",
         "durability": 96,
         "integrity": -1,
+        "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": -0.34,
         "glyph": {
@@ -258,6 +275,7 @@
         "key": "hoe/fierymetal",
         "durability": 602,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
@@ -273,6 +291,7 @@
         "key": "hoe/knightmetal",
         "durability": 446,
         "integrity": -2,
+        "magicCapacity": 12,
         "damage": 5,
         "attackSpeed": -0.32,
         "glyph": {

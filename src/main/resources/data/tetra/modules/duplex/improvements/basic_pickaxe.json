@@ -3,6 +3,7 @@
         "key": "enchantment/efficiency",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -2,
         "capabilities": {
             "pickaxe": [0, 1.66666667]
         }
@@ -11,6 +12,7 @@
         "key": "enchantment/efficiency",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -3,
         "capabilities": {
             "pickaxe": [0, 4.166666667]
         }
@@ -19,6 +21,7 @@
         "key": "enchantment/efficiency",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -4,
         "capabilities": {
             "pickaxe": [0, 8.33333333]
         }
@@ -27,6 +30,7 @@
         "key": "enchantment/efficiency",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -5,
         "capabilities": {
             "pickaxe": [0, 14.16666667]
         }
@@ -35,6 +39,7 @@
         "key": "enchantment/efficiency",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -6,
         "capabilities": {
             "pickaxe": [0, 21.6666667]
         }
@@ -43,6 +48,7 @@
         "key": "enchantment/efficiency",
         "level": 6,
         "enchantment": true,
+        "magicCapacity": -7,
         "capabilities": {
             "axe": [0, 34.2591]
         }
@@ -51,6 +57,7 @@
         "key": "enchantment/efficiency",
         "level": 7,
         "enchantment": true,
+        "magicCapacity": -8,
         "capabilities": {
             "axe": [0, 46.2962]
         }
@@ -59,6 +66,7 @@
         "key": "enchantment/efficiency",
         "level": 8,
         "enchantment": true,
+        "magicCapacity": -9,
         "capabilities": {
             "axe": [0, 60.1851]
         }
@@ -67,6 +75,7 @@
         "key": "enchantment/efficiency",
         "level": 9,
         "enchantment": true,
+        "magicCapacity": -10,
         "capabilities": {
             "axe": [0, 75.9259]
         }
@@ -75,6 +84,7 @@
         "key": "enchantment/efficiency",
         "level": 10,
         "enchantment": true,
+        "magicCapacity": -11,
         "capabilities": {
             "axe": [0, 93.5185]
         }
@@ -83,6 +93,7 @@
         "key": "enchantment/fortune",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -3,
         "effects": {
             "fortune": 1
         }
@@ -91,6 +102,7 @@
         "key": "enchantment/fortune",
         "level": 2,
         "enchantment": true,
+        "magicCapacity": -5,
         "effects": {
             "fortune": 2
         }
@@ -99,6 +111,7 @@
         "key": "enchantment/fortune",
         "level": 3,
         "enchantment": true,
+        "magicCapacity": -7,
         "effects": {
             "fortune": 3
         }
@@ -107,6 +120,7 @@
         "key": "enchantment/fortune",
         "level": 4,
         "enchantment": true,
+        "magicCapacity": -9,
         "effects": {
             "fortune": 4
         }
@@ -115,6 +129,7 @@
         "key": "enchantment/fortune",
         "level": 5,
         "enchantment": true,
+        "magicCapacity": -11,
         "effects": {
             "fortune": 5
         }
@@ -123,6 +138,7 @@
         "key": "enchantment/silk_touch",
         "level": 1,
         "enchantment": true,
+        "magicCapacity": -15,
         "effects": {
             "silkTouch": 1
         }
