@@ -9,7 +9,7 @@ public class GuiBarSplit extends GuiBar {
     private GuiBar positiveBar;
 
     public GuiBarSplit(int x, int y, int barLength, double range) {
-        super(x, y, barLength, range, range);
+        super(x, y, barLength, -range, range);
 
         negativeBar = new GuiBar(0, 0, (barLength - 5) / 2, 0, range, true);
         negativeBar.setAlignment(GuiAlignment.right);
