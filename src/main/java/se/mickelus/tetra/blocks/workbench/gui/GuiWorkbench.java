@@ -182,13 +182,6 @@ public class GuiWorkbench extends GuiContainer {
         tileEntity.applyTweaks(viewingPlayer, selectedSlot, tweakMap);
     }
 
-    private void applyTweak(ItemStack itemStack, String tweakKey, int step) {
-        CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
-                .filter(module -> module.hasTweak(itemStack, tweakKey))
-                .ifPresent(module -> module.setTweakStep(itemStack, tweakKey, step));
-    }
-
     private void onTileEntityChange() {
         ItemStack newTarget = tileEntity.getTargetItemStack();
         ItemStack newPreview = ItemStack.EMPTY;
