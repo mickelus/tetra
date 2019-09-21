@@ -317,7 +317,7 @@ settled.name=Settled
 settled.description=Due to extended use this module has settled into place, it provides additional integrity
 settled.toast=A module has settled!
 arrested.name=Arrested
-arrested.description=This module cannot settle, its integrity will not improve over time
+arrested.description=This module is crafted from materials that will not settle over time
 hone.progress=Honing progress: %s%%
 hone.available=Honing available
 
@@ -838,7 +838,7 @@ grip_loop_schema.name=Grip loop
 grip_loop_schema.description=Attach a loop at the end of the hilt. Increases the range of sweeping attacks by 2 blocks.
 grip_loop_schema.slot1=Material
 
-sword/forefinger_ring.description=A ring has been attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
+sword/grip_loop.description=A ring attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
 
 grip_loop/oak=Wooden loop
 grip_loop/spruce=Spruce loop
@@ -1051,7 +1051,7 @@ machete_schema.name=Machete
 machete_schema.description=Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area. The machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 machete_schema.slot1=Blade material
 
-sword/heavy_blade.description=a machete which can be used to cut down plants in an area, it deals average damage and has an average attack speed.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
+sword/machete.description=A machete which can be used to cut down plants in an area, it deals average damage and has an average attack speed.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 
 sword/machete.name=Machete
 
