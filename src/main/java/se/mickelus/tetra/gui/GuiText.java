@@ -12,13 +12,14 @@ public class GuiText extends GuiElement {
     public GuiText(int x, int y, int width, String string) {
         super(x, y, width ,0);
 
-        setString(string);
-
         fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        setString(string);
     }
 
     public void setString(String string) {
         this.string = string.replace("\\n", "\n");
+
+        height = fontRenderer.getWordWrappedHeight(this.string, width);
     }
 
     @Override

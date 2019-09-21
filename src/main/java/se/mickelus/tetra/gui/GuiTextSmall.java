@@ -8,6 +8,12 @@ public class GuiTextSmall extends GuiText {
         super(x, y, width , string);
     }
 
+    public void setString(String string) {
+        this.string = string.replace("\\n", "\n");
+
+        height = fontRenderer.getWordWrappedHeight(this.string, width * 2) / 2;
+    }
+
     @Override
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         GlStateManager.pushMatrix();
