@@ -313,11 +313,23 @@ duplex/accessory=Accessory
 ###############################
 # MODULE PROGRESSION
 ###############################
+item.modular.settle_progress.label=Settle progress
+item.modular.settle_progress.label=Settle progress
+item.modular.settle_progress_gain.description=As the item is used this module will slowly settle into place, once settled it will provide additional integrity.\n\n§7Progress: §e%s§7/§e%s\n\n§7Requirement base: §e%s\n§7Durability penalty: §e%s
+item.modular.settle_progress_cost.description=As the item is used this module will slowly settle into place, once settled its integrity cost will decrease.\n\n§7Progress: §e%s§7/§e%s\n\n§7Requirement base: §e%s\n§7Durability penalty: §e%s
+item.modular.settle_full.label=Fully settled!
+item.modular.settle_full_gain.description=This module has fully settled, it is providing additional integrity!
+item.modular.settle_full_cost.description=This module has fully settled, its integrity cost is reduced.
+item.modular.settle_full_null.label=Fully settled
+item.modular.settle_full_null.description=The simplicity of this module makes it easy to fit into place and it does not need to settle any further
+
 settled.name=Settled
 settled.description=Due to extended use this module has settled into place, it provides additional integrity
 settled.toast=A module has settled!
+
 arrested.name=Arrested
 arrested.description=This module is crafted from materials that will not settle over time
+
 hone.progress=Honing progress: %s%%
 hone.available=Honing available
 

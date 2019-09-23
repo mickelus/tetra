@@ -30,8 +30,8 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
-    protected static final String settleImprovement = "settled";
-    protected static final String arrestedImprovement = "arrested";
+    public static final String settleImprovement = "settled";
+    public static final String arrestedImprovement = "arrested";
 
     protected int settleMax = 0;
     private String settleProgressKey = "/settle_progress";
@@ -43,22 +43,16 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     }
 
     public void tickProgression(EntityLivingBase entity, ItemStack itemStack, int multiplier) {
-        int settleLimit = getSettleLimit(itemStack);
-        if (settleLimit == 0) {
+        int settleMaxCount = getSettleMaxCount(itemStack);
+        if (settleMaxCount == 0) {
             return;
         }
 
         NBTTagCompound tag = NBTHelper.getTag(itemStack);
         int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
-        if (settleLevel < settleLimit && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
-            int settleProgress;
-            if (tag.hasKey(settleProgressKey)) {
-                settleProgress = tag.getInteger(settleProgressKey);
-            } else {
-                settleProgress = (int) (( ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier )
-                        * Math.max(settleLevel * ConfigHandler.settleLimitLevelMultiplier, 1f));
-            }
+        if (settleLevel < settleMaxCount && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
+            int settleProgress = getSettleProgress(itemStack);
 
             settleProgress -= multiplier;
             tag.setInteger(settleProgressKey, settleProgress);
@@ -73,7 +67,36 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
         }
     }
 
-    private int getSettleLimit(ItemStack itemStack) {
+    /**
+     * Returns the remaining number of times the item has to be used before this module will settle.
+     * @param itemStack The itemstack which the module is present on
+     * @return
+     */
+    public int getSettleProgress(ItemStack itemStack) {
+        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        if (tag.hasKey(settleProgressKey)) {
+            return tag.getInteger(settleProgressKey);
+        }
+
+        return getSettleLimit(itemStack);
+    }
+
+    /**
+     * Returns the total number of times the item has to be used before this module will settle.
+     * @param itemStack The itemstack which the module is present on
+     * @return
+     */
+    public int getSettleLimit(ItemStack itemStack) {
+        return (int) (( ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier)
+                * Math.max(getImprovementLevel(itemStack, settleImprovement) * ConfigHandler.settleLimitLevelMultiplier, 1f));
+    }
+
+    /**
+     * Returns the total number of times the item has to be used before this module will settle.
+     * @param itemStack The itemstack which the module is present on
+     * @return
+     */
+    public int getSettleMaxCount(ItemStack itemStack) {
         if (settleMax == 0) {
             return 0;
         }

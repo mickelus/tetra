@@ -261,6 +261,7 @@ public class ItemModularHandheld extends ItemModular {
             if (!world.isRemote) {
                 world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
                 applyDamage(blockDestroyDamage, itemStack, player);
+                tickProgression(player, itemStack, blockDestroyDamage);
             }
 
             return EnumActionResult.SUCCESS;
@@ -295,6 +296,7 @@ public class ItemModularHandheld extends ItemModular {
         }
         if (event.getResult() == Event.Result.ALLOW) {
             applyDamage(blockDestroyDamage, itemStack, player);
+            tickProgression(player, itemStack, blockDestroyDamage);
             return EnumActionResult.SUCCESS;
         }
 
@@ -348,6 +350,8 @@ public class ItemModularHandheld extends ItemModular {
             boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState);
             if (success) {
                 applyDamage(blockDestroyDamage, itemStack, player);
+                tickProgression(player, itemStack, blockDestroyDamage);
+
                 world.playEvent(player, 2001, pos, Block.getStateId(blockState));
                 player.resetCooldown();
                 return EnumActionResult.SUCCESS;

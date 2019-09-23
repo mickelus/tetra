@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.impl.GuiMagicUsage;
+import se.mickelus.tetra.gui.impl.GuiSettleProgress;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -19,6 +20,7 @@ public class GuiModuleDetails extends GuiElement {
     private GuiString emptyLabel;
 
     private GuiMagicUsage magicBar;
+    private GuiSettleProgress settleBar;
 
     private GuiElement repairGroup;
     private GuiStringSmall repairTitle;
@@ -31,7 +33,7 @@ public class GuiModuleDetails extends GuiElement {
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);
 
-        title = new GuiString(20, 7, 195, "");
+        title = new GuiString(20, 7, 105, "");
         addChild(title);
 
         description = new GuiTextSmall(5, 19, 105, "");
@@ -41,7 +43,7 @@ public class GuiModuleDetails extends GuiElement {
         emptyLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(emptyLabel);
 
-        repairGroup = new GuiElement(130, 19, 80, 16);
+        repairGroup = new GuiElement(130, 5, 80, 16);
         addChild(repairGroup);
 
         repairTitle = new GuiStringSmall(0, 7, I18n.format("item.modular.repair_material.label"));
@@ -56,8 +58,11 @@ public class GuiModuleDetails extends GuiElement {
         repairMaterial.setAttachment(GuiAttachment.topRight);
         repairGroup.addChild(repairMaterial);
 
-        magicBar = new GuiMagicUsage(130, 45, 80);
+        magicBar = new GuiMagicUsage(130, 30, 80);
         addChild(magicBar);
+
+        settleBar = new GuiSettleProgress(130, 45, 80);
+        addChild(settleBar);
     }
 
     public void update(ItemModule module, ItemStack itemStack) {
@@ -67,9 +72,12 @@ public class GuiModuleDetails extends GuiElement {
             description.setString(module.getDescription(itemStack));
 
             GlyphData glyphData = module.getData(itemStack).glyph;
+
             if (module instanceof ItemModuleMajor) {
                 glyph.addChild(new GuiTexture(0, 0, 15, 15, 52, 0, "textures/gui/workbench.png"));
                 glyph.addChild(new GuiModuleGlyph(-1, 0, 16, 16, glyphData).setShift(false));
+
+                settleBar.update(itemStack, (ItemModuleMajor) module);
             } else {
                 glyph.addChild(new GuiTexture(3, 2, 11, 11, 68, 0, "textures/gui/workbench.png"));
                 glyph.addChild(new GuiModuleGlyph(5, 4, 8, 8, glyphData).setShift(false));
@@ -90,6 +98,7 @@ public class GuiModuleDetails extends GuiElement {
 
         title.setVisible(module != null);
         description.setVisible(module != null);
+        settleBar.setVisible(module instanceof ItemModuleMajor);
         magicBar.setVisible(module instanceof ItemModuleMajor);
         emptyLabel.setVisible(module == null);
         repairGroup.setVisible(module != null);
