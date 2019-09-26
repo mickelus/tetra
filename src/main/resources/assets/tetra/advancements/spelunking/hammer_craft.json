@@ -6,8 +6,7 @@
         },
         "frame": "goal",
         "title": "Magmatic Press Channel",
-        "description": "Use a forge hammer to craft a module requiring tier 4 hammering",
-        "announce_to_chat": false
+        "description": "Use a forge hammer to craft a module requiring tier 4 hammering"
     },
     "parent": "tetra:spelunking/fuel_hammer",
     "criteria": {

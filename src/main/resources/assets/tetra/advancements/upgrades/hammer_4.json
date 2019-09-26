@@ -6,8 +6,7 @@
         },
         "frame": "goal",
         "title": "Ancient Assistance",
-        "description": "Find a forge hammer in the ancient ruins and use it to craft an obsidian hammer",
-        "announce_to_chat": false
+        "description": "Find a forge hammer in the ancient ruins and use it to craft an obsidian hammer"
     },
     "parent": "tetra:upgrades/hammer_3",
     "criteria": {

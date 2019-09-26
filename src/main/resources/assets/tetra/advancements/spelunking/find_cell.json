@@ -5,8 +5,7 @@
             "data": 128
         },
         "title": "Thermal Theft",
-        "description": "Find a thermal cell in the ancient ruins",
-        "announce_to_chat": false
+        "description": "Find a thermal cell in the ancient ruins"
     },
     "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {

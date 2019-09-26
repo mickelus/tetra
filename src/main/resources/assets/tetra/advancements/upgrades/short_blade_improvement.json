@@ -5,8 +5,7 @@
             "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\",\"sword/blade:short_blade/tempered\": 0, \"sword/blade:short_blade/serrated\": 0}"
         },
         "title": "Short and Stout",
-        "description": "Improve a shortblade",
-        "announce_to_chat": false
+        "description": "Improve a shortblade"
     },
     "parent": "tetra:upgrades/short_blade",
     "criteria": {

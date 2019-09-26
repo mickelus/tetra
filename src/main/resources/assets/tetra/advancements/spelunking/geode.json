@@ -4,8 +4,7 @@
             "item": "tetra:geode"
         },
         "title": "Hollow Solids",
-        "description": "Find a geode in the depths",
-        "announce_to_chat": false
+        "description": "Find a geode in the depths"
     },
     "parent": "tetra:spelunking/root",
     "criteria": {

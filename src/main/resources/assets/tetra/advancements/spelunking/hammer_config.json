@@ -4,8 +4,7 @@
             "item": "tetra:hammer_base"
         },
         "title": "Overdrive",
-        "description": "Configure a forge hammer to provide tier 5 hammering",
-        "announce_to_chat": false
+        "description": "Configure a forge hammer to provide tier 5 hammering"
     },
     "parent": "tetra:spelunking/hammer_craft",
     "criteria": {

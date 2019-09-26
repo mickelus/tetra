@@ -5,8 +5,7 @@
             "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/diorite\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Cutting a New One",
-        "description": "Upgrade a sword at the workbench",
-        "announce_to_chat": false
+        "description": "Upgrade a sword at the workbench"
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {

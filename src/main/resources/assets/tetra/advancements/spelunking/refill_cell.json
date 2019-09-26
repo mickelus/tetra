@@ -4,8 +4,7 @@
             "item": "tetra:magmatic_cell"
         },
         "title": "Excitement",
-        "description": "Use a transfer unit or a core extractor to fully charge a thermal cell",
-        "announce_to_chat": false
+        "description": "Use a transfer unit or a core extractor to fully charge a thermal cell"
     },
     "parent": "tetra:spelunking/find_cell",
     "criteria": {

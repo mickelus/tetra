@@ -5,8 +5,7 @@
             "nbt": "{\"sword/blade\": \"sword/heavy_blade\",\"sword/heavy_blade_material\": \"heavy_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Wide Sweeps",
-        "description": "Craft a heavy blade",
-        "announce_to_chat": false
+        "description": "Craft a heavy blade"
     },
     "parent": "tetra:upgrades/hammer_2",
     "criteria": {

@@ -6,8 +6,7 @@
         },
         "frame": "goal",
         "title": "Third times the charm",
-        "description": "Gain access to the third hammer tier by crafting a double sided iron hammer",
-        "announce_to_chat": false
+        "description": "Gain access to the third hammer tier by crafting a double sided iron hammer"
     },
     "parent": "tetra:upgrades/hammer_2",
     "criteria": {

@@ -4,8 +4,7 @@
             "item": "tetra:forged_pillar"
         },
         "title": "Long Gone",
-        "description": "Find ancient ruins deep down in a cold biome",
-        "announce_to_chat": false
+        "description": "Find ancient ruins deep down in a cold biome"
     },
     "parent": "tetra:spelunking/root",
     "criteria": {

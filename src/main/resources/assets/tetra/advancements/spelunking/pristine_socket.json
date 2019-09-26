@@ -4,8 +4,7 @@
             "item": "tetra:pristine_lapis"
         },
         "title": "Immaculate Insert",
-        "description": "Find a pristine gem in a geode and use it to socket a sword or a tool",
-        "announce_to_chat": false
+        "description": "Find a pristine gem in a geode and use it to socket a sword or a tool"
     },
     "parent": "tetra:spelunking/geode_open",
     "criteria": {

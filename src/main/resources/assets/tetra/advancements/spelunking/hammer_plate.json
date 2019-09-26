@@ -4,8 +4,7 @@
             "item": "tetra:vent_plate"
         },
         "title": "Plated Insulation",
-        "description": "Fully patch up a forge hammer with forged plates to increase its fuel efficiency",
-        "announce_to_chat": false
+        "description": "Fully patch up a forge hammer with forged plates to increase its fuel efficiency"
     },
     "parent": "tetra:spelunking/hammer_config",
     "criteria": {

@@ -5,8 +5,7 @@
             "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
         },
         "title": "Stay Hip",
-        "description": "Find a way to easily access your tools",
-        "announce_to_chat": false
+        "description": "Find a way to easily access your tools"
     },
     "parent": "tetra:upgrades/root",
     "criteria": {

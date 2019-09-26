@@ -6,7 +6,6 @@
         },
         "title": "Basic Tinkering",
         "description": "Craft a mallet from sticks and logs\n\n§8§oTetra begins",
-        "announce_to_chat": false,
         "show_toast": false,
         "frame": "goal"
     },

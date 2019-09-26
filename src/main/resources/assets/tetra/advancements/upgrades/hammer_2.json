@@ -6,8 +6,7 @@
         },
         "frame": "goal",
         "title": "Double Up",
-        "description": "Smelt stone and use it to craft a double-sided hammer head",
-        "announce_to_chat": false
+        "description": "Smelt stone and use it to craft a double-sided hammer head"
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {

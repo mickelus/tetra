@@ -4,8 +4,7 @@
             "item": "tetra:hammer_base"
         },
         "title": "Dust Off",
-        "description": "Fuel up a forge hammer using charged thermal cells",
-        "announce_to_chat": false
+        "description": "Fuel up a forge hammer using charged thermal cells"
     },
     "parent": "tetra:spelunking/find_cell",
     "criteria": {

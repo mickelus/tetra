@@ -5,8 +5,7 @@
             "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/inlaid\"}"
         },
         "title": "Wrapped Up",
-        "description": "Fully upgrade a toolbelt",
-        "announce_to_chat": false
+        "description": "Fully upgrade a toolbelt"
     },
     "parent": "tetra:upgrades/toolbelt",
     "criteria": {
