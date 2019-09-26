@@ -30,6 +30,12 @@ public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
                     .flatMap(Arrays::stream)
                     .toArray(ImprovementData[]::new);
         }
+
+        settleMax = Arrays.stream(improvements)
+                .filter(data -> data.key.equals(settleImprovement))
+                .mapToInt(ImprovementData::getLevel)
+                .max()
+                .orElse(0);
     }
 
     @Override
