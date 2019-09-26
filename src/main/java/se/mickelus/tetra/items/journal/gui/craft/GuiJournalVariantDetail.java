@@ -11,6 +11,7 @@ import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.impl.GuiSynergyIndicator;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 import se.mickelus.tetra.module.schema.SchemaType;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class GuiJournalVariantDetail extends GuiElement {
 
     private GuiString variantLabel;
+
+    private GuiSynergyIndicator synergyIndicator;
 
     private GuiString improvementsLabel;
     private GuiElement improvements;
@@ -42,6 +45,9 @@ public class GuiJournalVariantDetail extends GuiElement {
 
         variantLabel = new GuiString(0, 0, "");
         addChild(variantLabel);
+
+        synergyIndicator = new GuiSynergyIndicator(0, -1, true);
+        addChild(synergyIndicator);
 
         // variant requirements
         GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, I18n.format("journal.craft.requirements"));
@@ -99,6 +105,9 @@ public class GuiJournalVariantDetail extends GuiElement {
 
             variantLabel.setString(I18n.format(baseOutcome.key));
 
+            synergyIndicator.setX(variantLabel.getWidth() + 4);
+            synergyIndicator.update(baseOutcome.itemStack, slot);
+
             ItemStack improvementStack = baseOutcome.itemStack;
             UpgradeSchema[] improvementSchemas = Arrays.stream(ItemUpgradeRegistry.instance.getSchemas(slot))
                     .filter(improvementSchema -> SchemaType.improvement.equals(improvementSchema.getType()))
@@ -110,7 +119,7 @@ public class GuiJournalVariantDetail extends GuiElement {
             if (improvementSchemas.length > 0) {
                 improvements.clearChildren();
                 for (int i = 0; i < improvementSchemas.length; i++) {
-                    improvements.addChild(new GuiJournalImprovement(0, i * 20, improvementSchemas[i]));
+                    improvements.addChild(new GuiJournalImprovement(0, i * 18, improvementSchemas[i]));
                 }
             }
 

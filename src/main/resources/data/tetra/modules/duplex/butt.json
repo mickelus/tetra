@@ -26,7 +26,7 @@
     {
         "key": "butt/cobblestone",
         "durability": 18,
-        "magicCapacity": 15,
+        "magicCapacity": 5,
         "integrity": -1,
         "damage": 1,
         "attackSpeed": -0.3,

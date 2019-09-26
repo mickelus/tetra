@@ -6,6 +6,7 @@ import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.impl.GuiMagicUsage;
 import se.mickelus.tetra.gui.impl.GuiSettleProgress;
+import se.mickelus.tetra.gui.impl.GuiSynergyIndicator;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -21,6 +22,8 @@ public class GuiModuleDetails extends GuiElement {
 
     private GuiMagicUsage magicBar;
     private GuiSettleProgress settleBar;
+
+    private GuiSynergyIndicator synergyIndicator;
 
     private GuiElement repairGroup;
     private GuiStringSmall repairTitle;
@@ -43,7 +46,10 @@ public class GuiModuleDetails extends GuiElement {
         emptyLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(emptyLabel);
 
-        repairGroup = new GuiElement(130, 5, 80, 16);
+        synergyIndicator = new GuiSynergyIndicator(130, 8);
+        addChild(synergyIndicator);
+
+        repairGroup = new GuiElement(150, 5, 60, 16);
         addChild(repairGroup);
 
         repairTitle = new GuiStringSmall(0, 7, I18n.format("item.modular.repair_material.label"));
@@ -85,6 +91,8 @@ public class GuiModuleDetails extends GuiElement {
 
             magicBar.update(itemStack, ItemStack.EMPTY, module.getSlot());
 
+            synergyIndicator.update(itemStack, module);
+
             RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getData(itemStack).key);
             boolean canRepair = repairDefinition != null && repairDefinition.material.getApplicableItemstacks().length > 0;
             if (canRepair) {
@@ -96,6 +104,7 @@ public class GuiModuleDetails extends GuiElement {
             noRepairLabel.setVisible(!canRepair);
         }
 
+        synergyIndicator.setVisible(module != null);
         title.setVisible(module != null);
         description.setVisible(module != null);
         settleBar.setVisible(module instanceof ItemModuleMajor);

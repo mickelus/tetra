@@ -87,13 +87,13 @@ public class GuiSchemaDetail extends GuiElement {
         GuiTexture border = null;
         GuiTexture glyphTexture;
         if (schema.getType() == SchemaType.major) {
-            border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png");
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, WORKBENCH_TEXTURE);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.minor) {
-            border = new GuiTexture(2, 1, 11, 11, 68, 0, "textures/gui/workbench.png");
+            border = new GuiTexture(2, 1, 11, 11, 68, 0, WORKBENCH_TEXTURE);
             glyphTexture = new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.improvement) {
-            border = new GuiTexture(0, 2, 16, 9, 52, 3, "textures/gui/workbench.png");
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, WORKBENCH_TEXTURE);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else {
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
@@ -108,7 +108,7 @@ public class GuiSchemaDetail extends GuiElement {
         glyph.addChild(glyphTexture);
 
         if (schema.getType() == SchemaType.improvement) {
-            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, "textures/gui/workbench.png"));
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, WORKBENCH_TEXTURE));
         }
 
 

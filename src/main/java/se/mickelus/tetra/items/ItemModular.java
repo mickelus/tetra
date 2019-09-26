@@ -701,7 +701,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return WordUtils.capitalize(prefixes + name);
     }
 
-    protected SynergyData[] getSynergyData(ItemStack itemStack) {
+    public SynergyData[] getAllSynergyData(ItemStack itemStack) {
+        return synergies;
+    }
+
+    public SynergyData[] getSynergyData(ItemStack itemStack) {
         if (synergies.length > 0) {
             ArrayList<SynergyData> result = new ArrayList<>();
             String[] moduleKeys = getAllModules(itemStack).stream()
