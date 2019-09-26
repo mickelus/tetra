@@ -233,7 +233,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "stone",
+                    "ore": "cobblestone",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -245,7 +245,7 @@
             {
                 "material": {
                     "type": "forge:ore_dict",
-                    "ore": "cobblestone",
+                    "ore": "stone",
                     "count": 2
                 },
                 "requiredCapabilities": {

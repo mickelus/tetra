@@ -14,6 +14,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -373,7 +374,6 @@ public class ConfigSchema extends BaseSchema {
                         } else {
                             return null;
                         }
-
                     }
 
                     ItemStack itemStack = targetStack.copy();
@@ -382,6 +382,7 @@ public class ConfigSchema extends BaseSchema {
                     return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredCapabilities,
                             outcome.material.getApplicableItemstacks());
                 })
+                .filter(Filter.distinct(preview -> preview.key))
                 .toArray(OutcomePreview[]::new);
     }
 }

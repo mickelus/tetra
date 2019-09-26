@@ -83,11 +83,11 @@ workbench.schema_list.temporary=Made available by an item in your inventory
 ###############################
 capability.hammer=Hammer
 capability.hammer.requirement=This action requires a tier %d hammer
-capability.axe=Chop
+capability.axe=Axe
 capability.axe.requirement=This action requires a tier %d axe
-capability.pickaxe=Mine
+capability.pickaxe=Pickaxe
 capability.pickaxe.requirement=This action requires a tier %d pickaxe
-capability.shovel=Dig
+capability.shovel=Shovel
 capability.shovel.requirement=This action requires a tier %d shovel
 capability.cut=Cut
 capability.cut.requirement=This action requires a tier %d cutting implement
@@ -99,6 +99,11 @@ capability.available=You have tier %d available
 ###############################
 # STATS
 ###############################
+stats.efficiency_suffix=efficiency
+stats.strength_suffix=strength
+stats.tier_suffix=tier
+stats.level_suffix=level
+
 stats.durability=Durability
 stats.durability.tooltip=This item has §e%s§r durability
 
@@ -318,8 +323,8 @@ item.modular.settle_progress.label=Settle progress
 item.modular.settle_progress_gain.description=As the item is used this module will slowly settle into place, once settled it will provide additional integrity.\n\n§7Progress: §e%s§7/§e%s\n\n§7Requirement base: §e%s\n§7Durability penalty: §e%s
 item.modular.settle_progress_cost.description=As the item is used this module will slowly settle into place, once settled its integrity cost will decrease.\n\n§7Progress: §e%s§7/§e%s\n\n§7Requirement base: §e%s\n§7Durability penalty: §e%s
 item.modular.settle_full.label=Fully settled!
-item.modular.settle_full_gain.description=This module has fully settled, it is providing additional integrity!
-item.modular.settle_full_cost.description=This module has fully settled, its integrity cost is reduced.
+item.modular.settle_full_gain.description=This module has fully settled, it is providing additional integrity
+item.modular.settle_full_cost.description=This module has fully settled, its integrity cost is reduced
 item.modular.settle_full_null.label=Fully settled
 item.modular.settle_full_null.description=The simplicity of this module makes it easy to fit into place and it does not need to settle any further
 
@@ -332,6 +337,12 @@ arrested.description=This module is crafted from materials that will not settle 
 
 hone.progress=Honing progress: %s%%
 hone.available=Honing available
+
+###############################
+# SYNERGY
+###############################
+item.modular.synergy_indicator.empty=This module has no potential synergy bonuses
+item.modular.synergy_indicator.header=Synergy bonuses:
 
 ###############################
 # REPAIR SCHEMA
@@ -450,7 +461,8 @@ basic_blade_schema.name=Simple blade
 basic_blade_schema.description=Replace the current sword blade with the given blade, or reforge it using raw materials.
 basic_blade_schema.slot1=Blade material
 
-sword/basic_blade.name=Sword
+sword/basic_blade.item_name=Sword
+sword/basic_blade.name=Simple blade
 sword/basic_blade.description=A basic blade with average damage, attack speed and integrity usage.
 
 basic_blade/oak=Wooden blade
@@ -544,6 +556,7 @@ basic_hilt_schema.name=Simple hilt
 basic_hilt_schema.description=Replaces the current hilt with a new one crafted from the provided material.
 basic_hilt_schema.slot1=Hilt material
 
+sword/basic_hilt.name=Simple hilt
 sword/basic_hilt.description=A simple sword hilt. The sword hilt is the primary source of integrity for swords.
 
 basic_hilt/hilt_stick=Flimsy hilt
@@ -597,6 +610,7 @@ wrap_hilt_hone_2_schema.description=Further improve the hilt wrap, increasing da
 ###############################
 # DECORATIVE POMMEL
 ###############################
+sword/decorative_pommel.name=Decorative pommel
 sword/decorative_pommel.description=A decorative pommel, it provides a small amount of durability but has no functional value.
 
 decorative_pommel/oak=Decorative wood pommel
@@ -621,6 +635,7 @@ decorative_pommel/knightmetal=Decorative knightmetal pommel
 ###############################
 # MAKESHIFT GUARD
 ###############################
+sword/makeshift_guard.name=Makeshift guard
 sword/makeshift_guard.description=A sword guard, its weak construction provides little protection for the wielding hand.
 
 makeshift_guard/oak=Wooden makeshift guard
@@ -649,6 +664,7 @@ wide_guard_schema.name=Wide guard
 wide_guard_schema.description=Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.
 wide_guard_schema.slot1=Guard material
 
+sword/wide_guard.name=Wide guard
 sword/wide_guard.description=a wide guard which protects the wielding hand. Provides additional armor when the sword is held in the main-hand or off-hand.
 
 wide_guard/oak=Wooden wide guard
@@ -688,6 +704,7 @@ sword_socket_schema.name=Socket
 sword_socket_schema.description=Socket a gem into the sword, providing different effects depending on the gem.
 sword_socket_schema.slot1=Gem
 
+sword/socket.name=Socket
 sword/socket.description=A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.
 
 sword_socket/diamond=Socket [§bDiamond§r]
@@ -710,6 +727,7 @@ counterweight_schema.name=Counterweight
 counterweight_schema.description=Balance the blade with a counterweight. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other modules combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
 counterweight_schema.slot1=Material
 
+sword/counterweight.name=Counterweight
 sword/counterweight.description=A counterweight attached to the bottom of the hilt. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other modules combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.
 
 counterweight/oak=Wooden counterweight §7II
@@ -749,6 +767,7 @@ reinforced_fuller_schema.name=Reinforce fuller
 reinforced_fuller_schema.description=Reinforce the fuller using the given material. Provides additional integrity and reduces the chance for the item to take damage, but makes the sword heavier and slower to swing.
 reinforced_fuller_schema.slot1=Material
 
+sword/reinforced_fuller.name=Reinforced fuller
 sword/reinforced_fuller.description=A fuller reinforcement that provides additional integrity and reduces the chance for the item to take damage, but makes the sword heavier and slower to swing.
 
 reinforced_fuller/oak=Wood reinforced fuller
@@ -788,6 +807,8 @@ sword_binding_schema.name=Binding
 sword_binding_schema.description=Tighten the binding between the hilt and the blade by wrapping it with rope or straps, or by using completely different materials and methods.
 sword_binding_schema.slot1=Material
 
+sword/binding.name=Binding
+
 sword_binding/string=String binding
 sword_binding/string.description=Tightly bound strings strengthens the blade's attachment to the hilt.
 sword_binding/leather=Leather binding
@@ -811,6 +832,7 @@ forefinger_ring_schema.name=Forefinger ring
 forefinger_ring_schema.description=Attach a ring at the top of the hilt, greatly increasing grip. Increases the minimum damage dealt when swinging too fast.
 forefinger_ring_schema.slot1=Material
 
+sword/forefinger_ring.name=Forefinger ring
 sword/forefinger_ring.description=A ring has been attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
 
 forefinger_ring/oak=Wooden ring
@@ -850,6 +872,7 @@ grip_loop_schema.name=Grip loop
 grip_loop_schema.description=Attach a loop at the end of the hilt. Increases the range of sweeping attacks by 2 blocks.
 grip_loop_schema.slot1=Material
 
+sword/grip_loop.name=Grip loop
 sword/grip_loop.description=A ring attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.
 
 grip_loop/oak=Wooden loop
@@ -889,9 +912,10 @@ short_blade_schema.name=Shortblade
 short_blade_schema.description=Replace the current sword blade with a blade that's shorter and lighter than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.
 short_blade_schema.slot1=Blade material
 
+sword/short_blade.name=Shortblade
 sword/short_blade.description=A blade that's shorter and lighter than the common blade, allows for a faster swing rate but deals slightly less damage per swing.
 
-sword/short_blade.name=Shortblade
+sword/short_blade.item_name=Shortblade
 
 short_blade/oak=Wooden shortblade
 short_blade/oak.prefix=Wooden
@@ -977,9 +1001,10 @@ heavy_blade_schema.name=Heavy blade
 heavy_blade_schema.description=Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
 heavy_blade_schema.slot1=Blade material
 
+sword/heavy_blade.name=Heavy blade
 sword/heavy_blade.description=A large and hefty blade that sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.
 
-sword/heavy_blade.name=Greatsword
+sword/heavy_blade.item_name=Greatsword
 
 heavy_blade/crushing.name=Crushing
 heavy_blade/crushing.description=Attacks partially ignore armor
@@ -1063,9 +1088,10 @@ machete_schema.name=Machete
 machete_schema.description=Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area. The machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 machete_schema.slot1=Blade material
 
+sword/machete.name=Machete
 sword/machete.description=A machete which can be used to cut down plants in an area, it deals average damage and has an average attack speed.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 
-sword/machete.name=Machete
+sword/machete.item_name=Machete
 
 machete/oak=Wooden machete
 machete/oak.prefix=Wooden
@@ -1246,10 +1272,11 @@ duplex/claw_axe=Carpenter's axe
 ###############################
 # DUPLEX HANDLE
 ###############################
-basic_handle_schema.name=Tool handle
+basic_handle_schema.name=Basic handle
 basic_handle_schema.description=Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.
 basic_handle_schema.slot1=Handle material
 
+duplex/basic_handle.name=Basic handle
 duplex/basic_handle.description=A basic tool handle. Handles are the primary source of integrity for tools.
 
 basic_handle/stick=Flimsy handle
@@ -1319,6 +1346,7 @@ duplex_socket_schema.name=Socket
 duplex_socket_schema.description=Socket a gem into the tool, providing different effects depending on the gem.
 duplex_socket_schema.slot1=Gem
 
+duplex/socket.name=Socket
 duplex/socket.description=A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the wielder.
 
 duplex_socket/diamond=Socket [§bDiamond§r]
@@ -1341,6 +1369,7 @@ duplex_binding_schema.name=Binding
 duplex_binding_schema.description=Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.
 duplex_binding_schema.slot1=Material
 
+duplex/binding.name=Binding
 
 duplex_binding/string=String binding
 duplex_binding/string.description=Tightly bound strings strengthen the tool head's attachment to the handle.
@@ -1365,6 +1394,7 @@ basic_axe_schema.name=Axe head
 basic_axe_schema.description=Forge an axe head from the given material. The axe can be used to chop things.\n\nDouble axe heads provide synergy bonuses.
 basic_axe_schema.slot1=Head material
 
+duplex/basic_axe.name=Axe head
 duplex/basic_axe.description=A basic axe head that can be used for chopping things.\n\nDouble axe heads provide synergy bonuses.
 
 basic_axe/severing.name=Severing
@@ -1435,6 +1465,7 @@ basic_pickaxe_schema.name=Pickaxe head
 basic_pickaxe_schema.description=Forge a pickaxe head from the given material.\n\nDouble pickaxe heads may provide synergy bonuses.
 basic_pickaxe_schema.slot1=Head material
 
+duplex/basic_pickaxe.name=Pickaxe head
 duplex/basic_pickaxe.description=A basic pickaxe head that can be used for mining.\n\nDouble pickaxe heads may provide synergy bonuses.
 
 basic_pickaxe/smelting.name=Smelting
@@ -1509,6 +1540,7 @@ butt_schema.name=Tool butt
 butt_schema.description=Used as the back side of a single sided tool, typically yields faster swing speed than a double sided tool. Can sometimes be used for hammering if crafted from a sturdy material.
 butt_schema.slot1=Head material
 
+duplex/butt.name=Tool butt
 duplex/butt.description=The back side of a single sided tool, typically yields faster swing speed than a double sided head.
 
 butt/oak=Wooden butt
@@ -1533,59 +1565,60 @@ butt/knightmetal=Knightmetal butt
 ###############################
 # HAMMER HEAD
 ###############################
-basic_hammer_schema.name=Mallet head
+basic_hammer_schema.name=Hammer head
 basic_hammer_schema.description=Forge a hammer head from the given material. The hammer is useful for crafting modular items, and is sometimes used for salvaging.\n\nDouble hammer heads may provide synergy bonuses.
 basic_hammer_schema.slot1=Head material
 
+duplex/basic_hammer.name=Hammer head
 duplex/basic_hammer.description=The hammer head can be used when crafting modular items, and is sometimes used for salvaging.\n\nDouble hammer heads may provide synergy bonuses.
 
 basic_hammer/log=Wooden mallet
-basic_hammer/log.name=Mallet
+basic_hammer/log.item_name=Mallet
 basic_hammer/log.prefix=Log
 basic_hammer/stone=Stone hammer
-basic_hammer/stone.name=Hammer
+basic_hammer/stone.item_name=Hammer
 basic_hammer/stone.prefix=Stone
 basic_hammer/iron=Iron hammer
-basic_hammer/iron.name=Hammer
+basic_hammer/iron.item_name=Hammer
 basic_hammer/iron.prefix=Iron
 basic_hammer/obsidian=Obsidian hammer
-basic_hammer/obsidian.name=Hammer
+basic_hammer/obsidian.item_name=Hammer
 basic_hammer/obsidian.prefix=Obsidian
 basic_hammer/copper=Copper hammer
-basic_hammer/copper.name=Hammer
+basic_hammer/copper.item_name=Hammer
 basic_hammer/copper.prefix=Copper
 basic_hammer/tin=Tin hammer
-basic_hammer/tin.name=Hammer
+basic_hammer/tin.item_name=Hammer
 basic_hammer/tin.prefix=Tin
 basic_hammer/nickel=Nickel hammer
-basic_hammer/nickel.name=Hammer
+basic_hammer/nickel.item_name=Hammer
 basic_hammer/nickel.prefix=Nickel
 basic_hammer/lead=Lead hammer
-basic_hammer/lead.name=Hammer
+basic_hammer/lead.item_name=Hammer
 basic_hammer/lead.prefix=Lead
 basic_hammer/bronze=Bronze hammer
-basic_hammer/bronze.name=Hammer
+basic_hammer/bronze.item_name=Hammer
 basic_hammer/bronze.prefix=Bronze
 basic_hammer/electrum=Electrum hammer
-basic_hammer/electrum.name=Hammer
+basic_hammer/electrum.item_name=Hammer
 basic_hammer/electrum.prefix=Electrum
 basic_hammer/steel=Steel hammer
-basic_hammer/steel.name=Hammer
+basic_hammer/steel.item_name=Hammer
 basic_hammer/steel.prefix=Steel
 basic_hammer/thaumium=Thaumium hammer
-basic_hammer/thaumium.name=Hammer
+basic_hammer/thaumium.item_name=Hammer
 basic_hammer/thaumium.prefix=Thaumium
 basic_hammer/ironwood=Ironwood hammer
-basic_hammer/ironwood.name=Hammer
+basic_hammer/ironwood.item_name=Hammer
 basic_hammer/ironwood.prefix=Ironwood
 basic_hammer/steeleaf=Steeleaf hammer
-basic_hammer/steeleaf.name=Hammer
+basic_hammer/steeleaf.item_name=Hammer
 basic_hammer/steeleaf.prefix=Steeleaf
 basic_hammer/fierymetal=Fiery hammer
-basic_hammer/fierymetal.name=Hammer
+basic_hammer/fierymetal.item_name=Hammer
 basic_hammer/fierymetal.prefix=Fiery
 basic_hammer/knightmetal=Knightmetal hammer
-basic_hammer/knightmetal.name=Hammer
+basic_hammer/knightmetal.item_name=Hammer
 basic_hammer/knightmetal.prefix=Knightmetal
 
 ###############################
@@ -1595,6 +1628,7 @@ adze_schema.name=Adze head
 adze_schema.description=Craft an adze head from the given material. The adze can primarily be used for digging but can also be used for cutting wood.
 adze_schema.slot1=Head material
 
+duplex/adze.name=Adze head
 duplex/adze.description=A hefty arched blade at right angles to the handle. The adze can primarily be used for digging but can also be used for cutting wood.
 
 adze/oak=Wooden adze
@@ -1662,6 +1696,7 @@ claw_schema.name=Claw
 claw_schema.description=Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.
 claw_schema.slot1=Claw material
 
+duplex/claw.name=Claw
 duplex/claw.description=A slightly curved claw that can be used for prying things open, and can quickly break most wooden blocks.
 
 claw/oak=Wooden claw
@@ -1729,6 +1764,7 @@ hoe_schema.name=Hoe
 hoe_schema.description=Craft a hoe from the given material, the hoe can be used for tilling soil.
 hoe_schema.slot1=Hoe material
 
+duplex/hoe.name=Hoe
 duplex/hoe.description=A basic hoe, useful for tilling soil.
 
 hoe/oak=Wooden hoe
@@ -1796,6 +1832,7 @@ sickle_schema.name=Sickle
 sickle_schema.description=Craft a sickle from the given material, which can be used to cut blocks in an area. The sickle works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 sickle_schema.slot1=Sickle material
 
+duplex/sickle.name=Sickle
 duplex/sickle.description=A slightly arched sickle which can be used to cut blocks in an area.\n\nWorks different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.
 
 sickle/oak=Wooden sickle
@@ -1899,20 +1936,25 @@ toolbelt/belt.name=Toolbelt
 
 belt/rope=Rope
 belt/rope.name=Rope
+belt/rope.item_name=Rope
 belt/rope.description=A very basic waistband fashioned from a rope. Can hold a very limited amount of attachments.
 
 belt/sash=Sash
 belt/sash.name=Wool sash
+belt/sash.item_name=Wool sash
 belt/sash.description=A woolen sash that can hold a small amount of attachments.
 
 belt/leather=Leather wrap
-belt/leather.name=Wrap
+belt/leather.name=Leather wrap
+belt/leather.item_name=Wrap
 belt/leather.description=A sturdy leather strap that can be wrapped around ones waist. Can hold a decent amount of attachments.
 
 belt/buckled=Leather belt
+belt/buckled.name=Leather belt
 belt/buckled.description=A sturdy leather belt, locked in place with a buckle. Can hold a large amount of attachments.
 
 belt/inlaid=Shulker inlaid belt
+belt/inlaid.name=Shulker inlaid belt
 belt/inlaid.prefix=Inlaid
 belt/inlaid.description=A sturdy leather belt that has been inlaid with shulker shells. Can hold an impressive amount of attachments.
 
@@ -1934,27 +1976,35 @@ strap_schema4.description=Attach four straps to the belt, which can be used for 
 strap_schema4.slot1=Strap material
 
 strap1/leather=Leather strap
+strap1/leather.name=Leather strap
 strap1/leather.description=A leather strap that can be used to hang an item off the belt, allowing quick access to a frequently used tool or weapon.
 
 strap1/iron=Iron loop
+strap1/iron.name=Iron loop
 strap1/iron.description=An iron loop that can be used to hang an item off the belt, allowing quick access to a frequently used tool or weapon.
 
 strap2/leather=2 Leather straps
+strap2/leather.name=2 Leather straps
 strap2/leather.description=Two leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 strap2/iron=2 Iron loops
+strap2/iron.name=2 Iron loops
 strap2/iron.description=Two iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 strap3/leather=3 Leather straps
+strap3/leather.name=3 Leather straps
 strap3/leather.description=Three leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 strap3/iron=3 Iron loops
+strap3/iron.name=3 Iron loops
 strap3/iron.description=Three iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 strap4/leather=4 Leather straps
+strap4/leather.name=4 Leather straps
 strap4/leather.description=Four leather straps that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 strap4/iron=4 Iron loops
+strap4/iron.name=4 Iron loops
 strap4/iron.description=Four iron loops that can be used to hang items off the belt, allowing quick access to frequently used tools or weapons.
 
 
@@ -1966,6 +2016,7 @@ potion_storage_schema.name=Potion bag
 potion_storage_schema.description=Attach a small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
 potion_storage_schema.slot1=Material
 
+toolbelt/potion_storage.name=Potion bag
 toolbelt/potion_storage.description=A small bag specifically designed for carrying potions. The bag stores a large amount of potions, but can only support a small set of different types of potions.
 
 potion_storage/forged_mesh=Mesh potion pack
@@ -1981,6 +2032,7 @@ storage_schema.name=Storage pouch
 storage_schema.description=Attach a small pouch to the toolbelt, which can store a decent amount of items. The contents of the pouch are not available using the toolbelt's quick access functionality.
 storage_schema.slot1=Material
 
+toolbelt/storage.name=Storage pouch
 toolbelt/storage.description=A small pouch which can store a decent amount of items. The contents of the pouch are not available using the toolbelt's quick access functionality.
 
 storage/forged_mesh=Mesh pack
@@ -1996,6 +2048,7 @@ quiver_schema.name=Quiver
 quiver_schema.description=Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.
 quiver_schema.slot1=Material
 
+toolbelt/quiver.name=Quiver
 toolbelt/quiver.description=A quiver that can hold a large amount of arrows.
 
 quiver/forged_mesh=Mesh quiver
@@ -2011,6 +2064,7 @@ booster_schema.name=Booster
 booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
 booster_schema.slot1=Material
 
+toolbelt/booster.name=Booster
 toolbelt/booster.description=A booster unit which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
 
 booster/iron=Booster unit
