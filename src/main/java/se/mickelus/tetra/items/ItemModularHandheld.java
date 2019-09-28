@@ -101,7 +101,10 @@ public class ItemModularHandheld extends ItemModular {
     public boolean onBlockDestroyed(ItemStack itemStack, World world, IBlockState state, BlockPos pos, EntityLivingBase entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
-            tickProgression(entity, itemStack, 1);
+
+            if (!isBroken(itemStack)) {
+                tickProgression(entity, itemStack, 1);
+            }
         }
 
         if (!world.isRemote) {
