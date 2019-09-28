@@ -259,9 +259,7 @@ public class ConfigSchema extends BaseSchema {
         if (consumeMaterials) {
             if (definition.hone) {
                 ItemModular.removeHoneable(upgradedStack);
-            }
-
-            if (ConfigHandler.moduleProgression && !ItemModular.isHoneable(upgradedStack)) {
+            } else if (ConfigHandler.moduleProgression && !ItemModular.isHoneable(upgradedStack)) {
                 CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
                         .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
             }
