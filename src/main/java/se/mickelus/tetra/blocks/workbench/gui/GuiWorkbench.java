@@ -5,6 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -52,6 +53,8 @@ public class GuiWorkbench extends GuiContainer {
     private ItemStack currentPreview = ItemStack.EMPTY;
     private UpgradeSchema currentSchema = null;
 
+    private ItemStack[] currentMaterials;
+
     private boolean hadItem = false;
 
     public GuiWorkbench(ContainerWorkbench container, TileEntityWorkbench tileEntity, EntityPlayer viewingPlayer) {
@@ -96,6 +99,9 @@ public class GuiWorkbench extends GuiContainer {
         defaultGui.addChild(slotDetail);
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
+
+        currentMaterials = new ItemStack[TileEntityWorkbench.MATERIAL_SLOT_COUNT];
+        Arrays.fill(currentMaterials, ItemStack.EMPTY);
 
         instance = this;
     }
@@ -195,6 +201,7 @@ public class GuiWorkbench extends GuiContainer {
         boolean targetItemChanged = !ItemStack.areItemStacksEqual(currentTarget, newTarget);
         boolean previewChanged = !ItemStack.areItemStacksEqual(currentPreview, newPreview);
         boolean schemaChanged = !Objects.equals(currentSchema, newSchema);
+        boolean materialsChanged = diffMaterials(tileEntity.getMaterials());
 
         currentPreview = newPreview;
         currentSchema = newSchema;
@@ -218,7 +225,7 @@ public class GuiWorkbench extends GuiContainer {
                     action -> tileEntity.performAction(viewingPlayer, action.getKey()));
         }
 
-        if (targetItemChanged || previewChanged || schemaChanged || slotChanged) {
+        if (targetItemChanged || previewChanged || schemaChanged || slotChanged || materialsChanged) {
             updateItemDisplay(currentTarget, currentPreview);
 
             if (currentTarget.getItem() instanceof ItemModular) {
@@ -251,6 +258,22 @@ public class GuiWorkbench extends GuiContainer {
             actionList.setVisible(false);
             slotDetail.setVisible(false);
         }
+    }
+
+    private boolean diffMaterials(ItemStack[] newMaterials) {
+        boolean isDiff = false;
+        for (int i = 0; i < newMaterials.length; i++) {
+            if (!ItemStack.areItemStacksEqual(newMaterials[i], currentMaterials[i])) {
+                isDiff = true;
+                break;
+            }
+        }
+
+        for (int i = 0; i < newMaterials.length; i++) {
+            currentMaterials[i] = newMaterials[i].copy();
+        }
+
+        return isDiff;
     }
 
     @Override

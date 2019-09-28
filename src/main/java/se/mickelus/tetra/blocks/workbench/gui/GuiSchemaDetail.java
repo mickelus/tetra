@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.impl.GuiMagicUsage;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
@@ -121,7 +122,7 @@ public class GuiSchemaDetail extends GuiElement {
                 int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
                 if (!materials[i].isEmpty() && requiredCount > 1) {
                     slotQuantities[i].setString("/" + requiredCount);
-                    slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? 0xffff0000 : 0xffffffff);
+                    slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? GuiColors.negative : GuiColors.normal);
                 }
                 slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
             } else {
