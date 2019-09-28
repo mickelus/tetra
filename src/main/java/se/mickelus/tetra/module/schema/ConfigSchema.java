@@ -14,6 +14,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
@@ -221,6 +222,16 @@ public class ConfigSchema extends BaseSchema {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
 
+        float durabilityFactor = 0;
+        if (consumeMaterials && upgradedStack.isItemStackDamageable()) {
+            durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
+        }
+
+        float honingFactor = CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
+                .map(item -> 1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack))
+                .map(factor -> Math.min(Math.max(factor, 0), 1))
+                .orElse(0f);
+
         if (definition.materialSlotCount > 0) {
             for (int i = 0; i < materials.length; i++) {
                 final int index = i;
@@ -249,6 +260,15 @@ public class ConfigSchema extends BaseSchema {
             if (definition.hone) {
                 ItemModular.removeHoneable(upgradedStack);
             }
+
+            if (ConfigHandler.moduleProgression && !ItemModular.isHoneable(upgradedStack)) {
+                CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
+                        .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
+            }
+
+            if (upgradedStack.isItemStackDamageable()) {
+                upgradedStack.setItemDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
+            }
         }
         return upgradedStack;
     }
@@ -256,20 +276,10 @@ public class ConfigSchema extends BaseSchema {
     private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
         if (outcome.moduleKey != null) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
-            float durabilityFactor = 0;
-
-            if (upgradedStack.isItemStackDamageable()) {
-                durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
-            }
 
             ItemModule previousModule = removePreviousModule(upgradedStack, module.getSlot());
 
             module.addModule(upgradedStack, outcome.moduleVariant, player);
-
-            if (upgradedStack.isItemStackDamageable()) {
-                upgradedStack.setItemDamage((int) ( durabilityFactor * upgradedStack.getMaxDamage()
-                        - ( durabilityFactor * durabilityFactor * module.getDurability(upgradedStack) ) ));
-            }
 
             outcome.improvements.forEach((key, value) -> ItemModuleMajor.addImprovement(upgradedStack, slot, key, value));
 

@@ -3,11 +3,13 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -99,11 +101,30 @@ public class RemoveSchema extends BaseSchema {
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) itemStack.getItem();
+
+
+        float durabilityFactor = 0;
+        if (consumeMaterials && upgradedStack.isItemStackDamageable()) {
+            durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
+        }
+
+        float honingFactor = Math.min(Math.max(1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack), 0), 1);
+
         ItemModule previousModule = item.getModuleFromSlot(upgradedStack, slot);
         if (previousModule != null) {
             previousModule.removeModule(upgradedStack);
             if (consumeMaterials) {
                 previousModule.postRemove(upgradedStack, player);
+            }
+        }
+
+        if (consumeMaterials) {
+            if (ConfigHandler.moduleProgression && ItemModular.isHoneable(upgradedStack)) {
+                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
+            }
+
+            if (upgradedStack.isItemStackDamageable()) {
+                upgradedStack.setItemDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
             }
         }
 

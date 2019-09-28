@@ -20,6 +20,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -36,6 +37,8 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     private static final String CURRENT_SLOT_KEY = "current_slot";
     private static final String SCHEMA_KEY = "schema";
 
+    public static final int MATERIAL_SLOT_COUNT = 4;
+
     private NonNullList<ItemStack> stacks;
 
     private ItemStack previousTarget = ItemStack.EMPTY;
@@ -50,7 +53,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
 
     public TileEntityWorkbench() {
-        stacks = NonNullList.withSize(4, ItemStack.EMPTY);
+        stacks = NonNullList.withSize(MATERIAL_SLOT_COUNT, ItemStack.EMPTY);
         changeListeners = new HashMap<>();
     }
 

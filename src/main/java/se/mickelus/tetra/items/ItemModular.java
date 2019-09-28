@@ -255,8 +255,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return getHoningBase(itemStack);
     }
 
+    public void setHoningProgress(ItemStack itemStack, int progress) {
+        NBTHelper.getTag(itemStack).setInteger(honeProgressKey, progress);
+    }
+
     public int getHoningBase(ItemStack itemStack) {
-        return honeBase + honeIntegrityMultiplier * -getIntegrityCost(itemStack);
+        return Math.max(honeBase + honeIntegrityMultiplier * -getIntegrityCost(itemStack), 1);
     }
 
     public int getHonedCount(ItemStack itemStack) {
@@ -465,15 +469,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public void assemble(ItemStack itemStack) {
-        int honingBase = getHoningBase(itemStack);
-        int honingProgress = getHoningProgress(itemStack);
-
-        if (honingProgress > honingBase) {
-            NBTHelper.getTag(itemStack).setInteger(honeProgressKey, honingBase);
-        } else {
-            NBTHelper.getTag(itemStack).setInteger(honeProgressKey, (int) (honingProgress * 0.75 + honingBase * 0.25));
-        }
-
         if (itemStack.getItemDamage() > itemStack.getMaxDamage()) {
             itemStack.setItemDamage(itemStack.getMaxDamage());
         }
