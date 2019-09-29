@@ -1,8 +1,8 @@
 package se.mickelus.tetra.module.improvement;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -17,17 +17,17 @@ public class HonePacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(ByteBuf buffer) {
+    public void toBytes(PacketBuffer buffer) {
         ByteBufUtils.writeItemStack(buffer, itemStack);
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer) {
+    public void fromBytes(PacketBuffer buffer) {
         itemStack = ByteBufUtils.readItemStack(buffer);
     }
 
     @Override
-    public void handle(EntityPlayer player) {
+    public void handle(PlayerEntity player) {
         ProgressionHelper.showHoneToastClient(itemStack);
     }
 }

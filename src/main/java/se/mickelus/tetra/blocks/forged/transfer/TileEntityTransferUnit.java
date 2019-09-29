@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.forged.transfer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -314,7 +314,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
         if (compound.hasKey("cell")) {
@@ -334,24 +334,24 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
         hasPlate = compound.getBoolean("plate");
     }
 
-    public static final void writeCell(NBTTagCompound compound, ItemStack cell) {
+    public static final void writeCell(CompoundNBT compound, ItemStack cell) {
         if (!cell.isEmpty()) {
-            NBTTagCompound cellNBT = new NBTTagCompound();
+            CompoundNBT cellNBT = new CompoundNBT();
             cell.writeToNBT(cellNBT);
             compound.setTag("cell", cellNBT);
         }
     }
 
-    public static void writePlate(NBTTagCompound compound, boolean hasPlate) {
+    public static void writePlate(CompoundNBT compound, boolean hasPlate) {
         compound.setBoolean("plate", hasPlate);
     }
 
-    public static void writeConfig(NBTTagCompound compound, EnumTransferConfig config) {
+    public static void writeConfig(CompoundNBT compound, EnumTransferConfig config) {
         compound.setString(EnumTransferConfig.prop.getName(), config.toString());
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         writeCell(compound, cell);
@@ -370,8 +370,8 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override

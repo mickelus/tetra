@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.toolbelt;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.data.DataHandler;
@@ -25,7 +25,7 @@ public class ToolbeltModule extends MultiSlotModule<ModuleData> {
     }
 
     @Override
-    public void postRemove(ItemStack targetStack, EntityPlayer player) {
+    public void postRemove(ItemStack targetStack, PlayerEntity player) {
         UtilToolbelt.emptyOverflowSlots(targetStack, player);
     }
 

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.capabilities.Capability;
@@ -87,7 +87,7 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkCapabilities(itemStack, materials, availableCapabilities);
     }
@@ -98,7 +98,7 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
         ItemModular item = (ItemModular) itemStack.getItem();
 

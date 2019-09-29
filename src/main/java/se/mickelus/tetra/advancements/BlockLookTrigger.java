@@ -7,8 +7,8 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.common.ForgeHooks;
@@ -39,13 +39,13 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.player.ticksExisted % 20 == 0 && !event.player.world.isRemote) {
             event.player.world.profiler.startSection("lookTrigger");
-            RayTraceResult result = ForgeHooks.rayTraceEyes(event.player, event.player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue());
+            RayTraceResult result = ForgeHooks.rayTraceEyes(event.player, event.player.getEntityAttribute(PlayerEntity.REACH_DISTANCE).getAttributeValue());
 
             if (result != null && RayTraceResult.Type.BLOCK.equals(result.typeOfHit)) {
                 IBlockState currentState = event.player.world.getBlockState(result.getBlockPos());
 
                 if (!currentState.equals(stateCache.getIfPresent(event.player.getUniqueID()))) {
-                    trigger((EntityPlayerMP) event.player, currentState);
+                    trigger((PlayerEntityMP) event.player, currentState);
                     stateCache.put(event.player.getUniqueID(), currentState);
                 }
             } else {
@@ -59,7 +59,7 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
         return DataHandler.instance.gson.fromJson(json, Instance.class);
     }
 
-    public void trigger(EntityPlayerMP player, IBlockState state) {
+    public void trigger(PlayerEntityMP player, IBlockState state) {
         fulfillCriterion(player.getAdvancements(), instance -> instance.test(state));
     }
 

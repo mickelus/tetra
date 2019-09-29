@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -114,7 +114,7 @@ public class GuiSlotDetail extends GuiElement {
         tweakControls.setVisible(tab == 2);
     }
 
-    public void onTileEntityChange(EntityPlayer player, TileEntityWorkbench tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchema currentSchema) {
+    public void onTileEntityChange(PlayerEntity player, TileEntityWorkbench tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchema currentSchema) {
         ItemModule module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
                 .orElse(null);
@@ -151,7 +151,7 @@ public class GuiSlotDetail extends GuiElement {
         tabGroup.setActive(tab);
     }
 
-    public void update(EntityPlayer player, TileEntityWorkbench tileEntity, int[] availableCapabilities) {
+    public void update(PlayerEntity player, TileEntityWorkbench tileEntity, int[] availableCapabilities) {
         schemaDetail.updateAvailableCapabilities(availableCapabilities);
 
         schemaDetail.toggleButton(
@@ -167,7 +167,7 @@ public class GuiSlotDetail extends GuiElement {
         schemaDetail.updateMagicCapacity(schema, slot, itemStack, previewStack);
     }
 
-    private void updateSchemaList(EntityPlayer player, TileEntityWorkbench tileEntity, String selectedSlot) {
+    private void updateSchemaList(PlayerEntity player, TileEntityWorkbench tileEntity, String selectedSlot) {
         ItemStack targetStack = tileEntity.getTargetItemStack();
         UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, targetStack);
         schemas = Arrays.stream(schemas)

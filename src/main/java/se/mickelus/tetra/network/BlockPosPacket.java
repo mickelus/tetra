@@ -1,6 +1,6 @@
 package se.mickelus.tetra.network;
 
-import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 
 public abstract class BlockPosPacket extends AbstractPacket {
@@ -14,14 +14,14 @@ public abstract class BlockPosPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(ByteBuf buffer) {
+    public void toBytes(PacketBuffer buffer) {
         buffer.writeInt(pos.getX());
         buffer.writeInt(pos.getY());
         buffer.writeInt(pos.getZ());
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer) {
+    public void fromBytes(PacketBuffer buffer) {
         int x = buffer.readInt();
         int y = buffer.readInt();
         int z = buffer.readInt();

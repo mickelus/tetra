@@ -10,7 +10,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -78,7 +78,7 @@ public class BlockGeode extends TetraBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState blockState, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState blockState, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return getSilkTouchDrop(blockState);
     }
 

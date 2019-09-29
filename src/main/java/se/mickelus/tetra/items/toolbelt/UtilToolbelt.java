@@ -5,7 +5,7 @@ import baubles.api.cap.BaublesCapabilities;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UtilToolbelt {
-    public static void equipItemFromToolbelt(EntityPlayer player, ToolbeltSlotType slotType, int index, EnumHand hand) {
+    public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, EnumHand hand) {
         InventoryToolbelt inventory = null;
         ItemStack toolbeltStack = findToolbelt(player);
 
@@ -78,7 +78,7 @@ public class UtilToolbelt {
      * @param player A player
      * @return false if the toolbelt is full, otherwise true
      */
-    public static boolean storeItemInToolbelt(EntityPlayer player) {
+    public static boolean storeItemInToolbelt(PlayerEntity player) {
         ItemStack toolbeltStack = findToolbelt(player);
         ItemStack itemStack = player.getHeldItem(EnumHand.OFF_HAND);
         EnumHand sourceHand = EnumHand.OFF_HAND;
@@ -125,7 +125,7 @@ public class UtilToolbelt {
      * @param player A player
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
-    public static ItemStack findToolbelt(EntityPlayer player) {
+    public static ItemStack findToolbelt(PlayerEntity player) {
         ItemStack baubleToolbelt = getBaubleToolbelt(player);
         if (!baubleToolbelt.isEmpty()) {
             return baubleToolbelt;
@@ -141,7 +141,7 @@ public class UtilToolbelt {
         return ItemStack.EMPTY;
     }
 
-    public static ItemStack getBaubleToolbelt(EntityPlayer player) {
+    public static ItemStack getBaubleToolbelt(PlayerEntity player) {
         if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
             IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
 
@@ -160,14 +160,14 @@ public class UtilToolbelt {
         return ItemStack.EMPTY;
     }
 
-    public static void emptyOverflowSlots(ItemStack itemStack, EntityPlayer player) {
+    public static void emptyOverflowSlots(ItemStack itemStack, PlayerEntity player) {
         new InventoryQuickslot(itemStack).emptyOverflowSlots(player);
         new InventoryPotions(itemStack).emptyOverflowSlots(player);
         new InventoryStorage(itemStack).emptyOverflowSlots(player);
         new InventoryQuiver(itemStack).emptyOverflowSlots(player);
     }
 
-    public static void updateBauble(EntityPlayer player) {
+    public static void updateBauble(PlayerEntity player) {
         if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
             int baubleSlot = BaublesApi.isBaubleEquipped(player, ItemToolbeltModular.instance);
             if (baubleSlot != -1) {
@@ -183,7 +183,7 @@ public class UtilToolbelt {
      * @param blockState A blockstate
      * @return a quickslot inventory index if a suitable tool is found, otherwise -1
      */
-    public static int getQuickAccessSlotIndex(EntityPlayer player, RayTraceResult traceResult, IBlockState blockState) {
+    public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, IBlockState blockState) {
         ItemStack toolbeltStack = UtilToolbelt.findToolbelt(player);
         InventoryQuickslot inventory = new InventoryQuickslot(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();

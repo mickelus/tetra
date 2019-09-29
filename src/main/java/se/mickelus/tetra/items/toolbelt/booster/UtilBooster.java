@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
@@ -34,7 +34,7 @@ public class UtilBooster {
     public static final float chargedBoostStrength = 1.2f;
     public static final float boostLevelMultiplier = 0.4f;
 
-    public static boolean hasBooster(EntityPlayer player) {
+    public static boolean hasBooster(PlayerEntity player) {
         ItemStack itemStack = UtilToolbelt.findToolbelt(player);
 
         return canBoost(itemStack);
@@ -54,22 +54,22 @@ public class UtilBooster {
     }
 
 
-    public static boolean hasFuel(NBTTagCompound tag, boolean charged) {
+    public static boolean hasFuel(CompoundNBT tag, boolean charged) {
         if (charged) {
             return tag.getInteger(fuelKey) >= fuelCostCharged;
         }
         return tag.getInteger(fuelKey) >= fuelCost;
     }
 
-    public static int getFuel(NBTTagCompound tag) {
+    public static int getFuel(CompoundNBT tag) {
         return tag.getInteger(fuelKey);
     }
 
-    public static float getFuelPercent(NBTTagCompound tag) {
+    public static float getFuelPercent(CompoundNBT tag) {
         return tag.getInteger(fuelKey) * 1F / fuelCapacity;
     }
 
-    public static void boostPlayer(EntityPlayer player, NBTTagCompound tag, int level) {
+    public static void boostPlayer(PlayerEntity player, CompoundNBT tag, int level) {
         float boostBase = boostStrength + boostStrength * (level - 1) * 0.4f;
         if (player.isElytraFlying()) {
             Vec3d vec3d = player.getLookVec();
@@ -95,7 +95,7 @@ public class UtilBooster {
         }
     }
 
-    public static void boostPlayerCharged(EntityPlayer player, NBTTagCompound tag, int level) {
+    public static void boostPlayerCharged(PlayerEntity player, CompoundNBT tag, int level) {
         float boostBase = chargedBoostStrength + chargedBoostStrength * (level - 1) * boostLevelMultiplier;
         Vec3d lookVector = player.getLookVec();
         player.addVelocity(
@@ -115,7 +115,7 @@ public class UtilBooster {
         }
     }
 
-    public static void consumeFuel(NBTTagCompound tag, boolean charged) {
+    public static void consumeFuel(CompoundNBT tag, boolean charged) {
         if (charged) {
             tag.setInteger(fuelKey, tag.getInteger(fuelKey) - fuelCostCharged);
         } else {
@@ -124,7 +124,7 @@ public class UtilBooster {
         tag.setInteger(cooldownKey, cooldownTicks);
     }
 
-    public static void rechargeFuel(NBTTagCompound tag, ItemStack itemStack) {
+    public static void rechargeFuel(CompoundNBT tag, ItemStack itemStack) {
         int fuel = tag.getInteger(fuelKey);
         int buffer = tag.getInteger(bufferKey);
         int cooldown = tag.getInteger(cooldownKey);
@@ -140,7 +140,7 @@ public class UtilBooster {
         }
     }
 
-    private static void refuelBuffer(NBTTagCompound tag, ItemStack itemStack) {
+    private static void refuelBuffer(CompoundNBT tag, ItemStack itemStack) {
         InventoryToolbelt inventory = new InventoryQuickslot(itemStack);
         int index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
@@ -160,11 +160,11 @@ public class UtilBooster {
         tag.setInteger(cooldownKey, cooldownTicks);
     }
 
-    public static boolean isActive(NBTTagCompound tag) {
+    public static boolean isActive(CompoundNBT tag) {
         return tag.getBoolean(activeKey);
     }
 
-    public static void setActive(NBTTagCompound tag, boolean active, boolean charged) {
+    public static void setActive(CompoundNBT tag, boolean active, boolean charged) {
         tag.setBoolean(activeKey, active);
         if (charged) {
             tag.setBoolean(chargedKey, charged);

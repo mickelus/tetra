@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -20,8 +20,8 @@ public class TickHandlerBooster {
         }
     }
 
-    public void tickItem(EntityPlayer player, ItemStack stack, int level) {
-        NBTTagCompound tag = NBTHelper.getTag(stack);
+    public void tickItem(PlayerEntity player, ItemStack stack, int level) {
+        CompoundNBT tag = NBTHelper.getTag(stack);
         boolean charged = tag.getBoolean(UtilBooster.chargedKey);
         if (!player.isInWater() && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
             if (charged) {

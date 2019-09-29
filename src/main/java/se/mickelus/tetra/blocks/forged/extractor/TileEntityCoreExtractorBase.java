@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -205,7 +205,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
         if (compound.hasKey(chargeKey)) {
@@ -216,7 +216,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         compound.setInteger(chargeKey, currentCharge);
@@ -231,8 +231,8 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override

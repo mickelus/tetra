@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.animation.VisibilityFilter;
 

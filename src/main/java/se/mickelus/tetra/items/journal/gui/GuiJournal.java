@@ -37,7 +37,7 @@ public class GuiJournal extends GuiScreen {
         width = 320;
         height = 240;
 
-        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        fontRenderer = Minecraft.getInstance().fontRenderer;
         defaultGui = new GuiElement(0, 0, width, height);
 
         header = new GuiJournalHeader(0, 0, width, this::changePage);

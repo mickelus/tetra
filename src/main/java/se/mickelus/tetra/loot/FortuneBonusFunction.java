@@ -3,7 +3,7 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -37,7 +37,7 @@ public class FortuneBonusFunction extends LootFunction {
     @Override
     public ItemStack apply(ItemStack itemStack, Random rand, LootContext context) {
         int fortuneLevel = 0;
-        EntityPlayer player = (EntityPlayer) context.getKillerPlayer();
+        PlayerEntity player = (PlayerEntity) context.getKillerPlayer();
 
         if (player != null && requiredCapability != null) {
             ItemStack providingStack = CapabilityHelper.getProvidingItemStack(requiredCapability, capabilityLevel, player);

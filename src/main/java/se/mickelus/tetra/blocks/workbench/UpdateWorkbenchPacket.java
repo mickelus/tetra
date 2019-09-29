@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -24,7 +24,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(ByteBuf buffer) {
+    public void toBytes(PacketBuffer buffer) {
         buffer.writeInt(pos.getX());
         buffer.writeInt(pos.getY());
         buffer.writeInt(pos.getZ());
@@ -47,7 +47,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer) {
+    public void fromBytes(PacketBuffer buffer) {
         int x = buffer.readInt();
         int y = buffer.readInt();
         int z = buffer.readInt();
@@ -68,7 +68,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(EntityPlayer player) {
+    public void handle(PlayerEntity player) {
         TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.update(schema, selectedSlot, player);

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -155,7 +155,7 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isVisibleForPlayer(EntityPlayer player, ItemStack targetStack) {
+    public boolean isVisibleForPlayer(PlayerEntity player, ItemStack targetStack) {
         if (definition.materialRevealSlot > -1) {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 4; y++) {
@@ -219,7 +219,7 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
         float durabilityFactor = 0;
@@ -273,7 +273,7 @@ public class ConfigSchema extends BaseSchema {
         return upgradedStack;
     }
 
-    private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, EntityPlayer player) {
+    private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, PlayerEntity player) {
         if (outcome.moduleKey != null) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
 
@@ -292,26 +292,26 @@ public class ConfigSchema extends BaseSchema {
         }
     }
 
-    private void triggerAdvancement(OutcomeDefinition outcome, EntityPlayer player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
-        if(player instanceof EntityPlayerMP) {
+    private void triggerAdvancement(OutcomeDefinition outcome, PlayerEntity player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
+        if(player instanceof PlayerEntityMP) {
 
             if (outcome.moduleKey != null) {
                 if (outcome.requiredCapabilities.getValues().isEmpty()) {
-                    ModuleCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                    ModuleCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                             outcome.moduleVariant, null, -1);
                 } else {
                     outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
-                            ModuleCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                            ModuleCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                                     outcome.moduleVariant, capability, capabilityLevel));
                 }
             }
 
             outcome.improvements.forEach((improvement, level) -> {
                 if (outcome.requiredCapabilities.getValues().isEmpty()) {
-                    ImprovementCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
+                    ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
                 } else {
                     outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
-                            ImprovementCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
+                            ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
                             capability, capabilityLevel));
                 }
             });

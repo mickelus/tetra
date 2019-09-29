@@ -1,10 +1,12 @@
 package se.mickelus.tetra.module.improvement;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import se.mickelus.tetra.network.AbstractPacket;
+
+import java.io.IOException;
 
 public class SettlePacket extends AbstractPacket {
     ItemStack itemStack;
@@ -18,19 +20,19 @@ public class SettlePacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(ByteBuf buffer) {
-        ByteBufUtils.writeItemStack(buffer, itemStack);
-        ByteBufUtils.writeUTF8String(buffer, slot);
+    public void toBytes(PacketBuffer buffer) {
+        buffer.writeItemStack(itemStack);
+        buffer.writeString(slot);
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer) {
-        itemStack = ByteBufUtils.readItemStack(buffer);
-        slot = ByteBufUtils.readUTF8String(buffer);
+    public void fromBytes(PacketBuffer buffer) {
+        itemStack = buffer.readItemStack();
+        slot = buffer.readString();
     }
 
     @Override
-    public void handle(EntityPlayer player) {
+    public void handle(PlayerEntity player) {
         ProgressionHelper.showSettleToastClient(itemStack, slot);
     }
 }

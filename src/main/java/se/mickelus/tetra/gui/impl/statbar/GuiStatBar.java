@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.impl.statbar;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.impl.statbar.getter.ILabelGetter;
@@ -75,7 +75,7 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public void update(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         double value;
         double diffValue;
 
@@ -101,11 +101,11 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public boolean shouldShow(EntityPlayer player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         return statGetter.shouldShow(player, currentStack, previewStack);
     }
 
-    protected double getSlotValue(EntityPlayer player, ItemStack itemStack, String slot, String improvement) {
+    protected double getSlotValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> {
                     if (improvement != null) {

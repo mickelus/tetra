@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.impl.GuiColors;
@@ -20,9 +20,9 @@ public class GuiInteractiveCapability extends GuiElement {
 
     private Capability capability;
     private int capabilityLevel;
-    private EntityPlayer player;
+    private PlayerEntity player;
 
-    public GuiInteractiveCapability(int x, int y, Capability capability, int capabilityLevel, EntityPlayer player) {
+    public GuiInteractiveCapability(int x, int y, Capability capability, int capabilityLevel, PlayerEntity player) {
         super(x, y, 10, 10);
         opacity = 0;
 

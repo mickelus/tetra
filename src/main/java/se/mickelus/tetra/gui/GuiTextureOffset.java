@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 
@@ -43,7 +43,7 @@ public class GuiTextureOffset extends GuiElement {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(textureLocation);
+        Minecraft.getInstance().getTextureManager().bindTexture(textureLocation);
 
         GlStateManager.color(
             (color >> 16 & 255) / 255f,

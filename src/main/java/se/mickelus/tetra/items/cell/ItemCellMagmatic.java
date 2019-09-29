@@ -4,7 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -40,7 +40,7 @@ public class ItemCellMagmatic extends TetraItem {
 
         this.addPropertyOverride(new ResourceLocation(chargedPropKey), new IItemPropertyGetter() {
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack itemStack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+            public float apply(ItemStack itemStack, @Nullable World worldIn, @Nullable LivingEntity entityIn) {
                 return getCharge(itemStack) > 0 ? 1 : 0;
             }
         });

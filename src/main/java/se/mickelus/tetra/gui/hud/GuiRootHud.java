@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.hud;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ public class GuiRootHud extends GuiElement {
         super(0, 0, 0, 0);
     }
 
-    public void draw(EntityPlayer player, BlockPos blockPos, RayTraceResult rayTrace, AxisAlignedBB boundingBox, float partialTicks) {
+    public void draw(PlayerEntity player, BlockPos blockPos, RayTraceResult rayTrace, AxisAlignedBB boundingBox, float partialTicks) {
         double offsetX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
         double offsetY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double offsetZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;

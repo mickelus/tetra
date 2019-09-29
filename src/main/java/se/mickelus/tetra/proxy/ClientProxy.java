@@ -63,8 +63,8 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getMinecraft()));
-        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getMinecraft()));
+        MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new CapabililtyInteractiveOverlay());
     }
 

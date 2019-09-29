@@ -13,8 +13,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateMatcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,15 +90,15 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
         return 1;
     }
 
-    private static boolean attemptBreakHammer(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, EnumFacing facing) {
+    private static boolean attemptBreakHammer(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing facing) {
         return attemptBreak(world, pos, blockState, player, player.getHeldItem(hand), Capability.hammer, 2, 1);
     }
 
-    private static boolean attemptBreakPry(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, EnumFacing facing) {
+    private static boolean attemptBreakPry(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing facing) {
         return attemptBreak(world, pos, blockState, player, player.getHeldItem(hand), Capability.pry, 0, 2);
     }
 
-    private static boolean attemptBreak(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, ItemStack itemStack,
+    private static boolean attemptBreak(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, ItemStack itemStack,
             Capability capability, int min, int multiplier) {
 
         int integrity = blockState.getValue(propIntegrity);
@@ -130,7 +130,7 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return BlockInteraction.attemptInteraction(world, state.getActualState(world, pos), pos, player, hand, facing, hitX, hitY, hitZ);
     }
 
@@ -157,7 +157,7 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         return this.getDefaultState().withProperty(propFacing, placer.getHorizontalFacing().getOpposite());
     }
 

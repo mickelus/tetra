@@ -27,7 +27,7 @@ public class PotionSlot extends PredicateSlot {
     }
 
     //    @Override
-//    public ItemStack onTake(EntityPlayer thePlayer, ItemStack itemStack) {
+//    public ItemStack onTake(PlayerEntity thePlayer, ItemStack itemStack) {
 //        ItemStack takenStack = itemStack.splitStack(itemStack.getItem().getItemStackLimit(itemStack));
 //        onSlotChanged();
 //        return takenStack;

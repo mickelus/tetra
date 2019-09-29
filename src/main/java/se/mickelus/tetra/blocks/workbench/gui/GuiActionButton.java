@@ -39,7 +39,7 @@ public class GuiActionButton extends GuiElement {
         this.targetStack = targetStack;
 
         String label = I18n.format(action.getKey() + ".label");
-        width = Minecraft.getMinecraft().fontRenderer.getStringWidth(label) + 42;
+        width = Minecraft.getInstance().fontRenderer.getStringWidth(label) + 42;
 
         labelClickable = new GuiClickable(0, 0, width, height, () -> clickHandler.accept(action)) {
             protected void onFocus() {

@@ -20,7 +20,7 @@ public class GuiButton extends GuiClickable {
     }
 
     public GuiButton(int x, int y, String text, Runnable onClick) {
-        this(x, y, Minecraft.getMinecraft().fontRenderer.getStringWidth(text), 10, text, onClick);
+        this(x, y, Minecraft.getInstance().fontRenderer.getStringWidth(text), 10, text, onClick);
     }
 
     public GuiButton(int x, int y, int width, int height, String text, Runnable onClick, String disabledTooltip) {
@@ -51,7 +51,7 @@ public class GuiButton extends GuiClickable {
 
     public void setText(String text) {
         textElement.setString(text);
-        setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(text));
+        setWidth(Minecraft.getInstance().fontRenderer.getStringWidth(text));
     }
 
     @Override

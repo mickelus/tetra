@@ -42,7 +42,7 @@ public class WorldGenFeatures implements IWorldGenerator {
 
         DataFixer dataFixer;
         if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) {
-            dataFixer = Minecraft.getMinecraft().getDataFixer();
+            dataFixer = Minecraft.getInstance().getDataFixer();
         } else {
             dataFixer = FMLServerHandler.instance().getServer().getDataFixer();
         }
@@ -54,7 +54,7 @@ public class WorldGenFeatures implements IWorldGenerator {
                 @Override
                 public void run() {
                     GenerationFeature[] features = DataHandler.instance.getGenerationFeatures();
-                    Minecraft.getMinecraft().addScheduledTask(() -> WorldGenFeatures.instance.features = features);
+                    Minecraft.getInstance().addScheduledTask(() -> WorldGenFeatures.instance.features = features);
                 }
             }, 0, 1000);
         }

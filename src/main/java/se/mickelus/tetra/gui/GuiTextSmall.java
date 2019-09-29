@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 
 public class GuiTextSmall extends GuiText {
 

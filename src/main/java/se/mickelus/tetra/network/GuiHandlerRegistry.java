@@ -1,6 +1,6 @@
 package se.mickelus.tetra.network;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
@@ -23,7 +23,7 @@ public class GuiHandlerRegistry implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         if (handlerMap.containsKey(id)) {
             return handlerMap.get(id).getServerGuiElement(player, world, x, y, z);
         }
@@ -31,7 +31,7 @@ public class GuiHandlerRegistry implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         if (handlerMap.containsKey(id)) {
             return handlerMap.get(id).getClientGuiElement(player, world, x, y, z);
         }

@@ -4,7 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -47,7 +47,7 @@ public class ItemJournal extends TetraItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, EnumHand hand) {
         if (world.isRemote) {
             showGui();
         }
@@ -59,7 +59,7 @@ public class ItemJournal extends TetraItem {
     private void showGui() {
         GuiJournal gui = GuiJournal.getInstance();
 
-        Minecraft.getMinecraft().displayGuiScreen(gui);
+        Minecraft.getInstance().displayGuiScreen(gui);
         gui.onShow();
     }
     

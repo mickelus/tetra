@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.toolbelt;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -17,7 +17,7 @@ public class ContainerToolbelt extends Container {
     private InventoryPotions potionsInventory;
     private InventoryQuiver quiverInventory;
 
-    public ContainerToolbelt(IInventory playerInventory, ItemStack itemStackToolbelt, EntityPlayer player) {
+    public ContainerToolbelt(IInventory playerInventory, ItemStack itemStackToolbelt, PlayerEntity player) {
         this.quickslotInventory = new InventoryQuickslot(itemStackToolbelt);
         this.storageInventory = new InventoryStorage(itemStackToolbelt);
         this.potionsInventory = new InventoryPotions(itemStackToolbelt);
@@ -129,7 +129,7 @@ public class ContainerToolbelt extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
 
         if (clickTypeIn == ClickType.PICKUP && 0 < slotId && slotId < potionsInventory.getSizeInventory()) {
             Slot slot = getSlot(slotId);
@@ -158,7 +158,7 @@ public class ContainerToolbelt extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return this.quickslotInventory.isUsableByPlayer(playerIn);
     }
 
@@ -166,7 +166,7 @@ public class ContainerToolbelt extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
         Slot slot = inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -226,7 +226,7 @@ public class ContainerToolbelt extends Container {
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn) {
+    public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         this.quickslotInventory.closeInventory(playerIn);
     }

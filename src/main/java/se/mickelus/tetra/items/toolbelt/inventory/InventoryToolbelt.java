@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -72,11 +72,11 @@ public class InventoryToolbelt implements IInventory {
     }
 
 
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         NBTTagList items = compound.getTagList(inventoryKey, Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < items.tagCount(); i++) {
-            NBTTagCompound itemTag = items.getCompoundTagAt(i);
+            CompoundNBT itemTag = items.getCompoundTagAt(i);
             int slot = itemTag.getInteger(slotKey);
 
             if (0 <= slot && slot < maxSize) {
@@ -85,12 +85,12 @@ public class InventoryToolbelt implements IInventory {
         }
     }
 
-    public void writeToNBT(NBTTagCompound tagcompound) {
+    public void writeToNBT(CompoundNBT tagcompound) {
         NBTTagList items = new NBTTagList();
 
         for (int i = 0; i < maxSize; i++) {
             if (getStackInSlot(i) != null) {
-                NBTTagCompound item = new NBTTagCompound();
+                CompoundNBT item = new CompoundNBT();
                 item.setInteger(slotKey, i);
                 getStackInSlot(i).writeToNBT(item);
                 items.appendTag(item);
@@ -171,15 +171,15 @@ public class InventoryToolbelt implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {}
+    public void openInventory(PlayerEntity player) {}
 
     @Override
-    public void closeInventory(EntityPlayer player) {}
+    public void closeInventory(PlayerEntity player) {}
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -225,14 +225,14 @@ public class InventoryToolbelt implements IInventory {
         return itemStack;
     }
 
-    public void emptyOverflowSlots(EntityPlayer player) {
+    public void emptyOverflowSlots(PlayerEntity player) {
         for (int i = getSizeInventory(); i < maxSize; i++) {
             moveStackToPlayer(removeStackFromSlot(i), player);
         }
         this.markDirty();
     }
 
-    protected void moveStackToPlayer(ItemStack itemStack, EntityPlayer player) {
+    protected void moveStackToPlayer(ItemStack itemStack, PlayerEntity player) {
         if (!itemStack.isEmpty()) {
             if (!player.inventory.addItemStackToInventory(itemStack)) {
                 player.dropItem(itemStack, false);

@@ -2,7 +2,7 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.data.DataHandler;
@@ -33,7 +33,7 @@ public class ItemUpgradeRegistry {
         moduleMap = new HashMap<>();
     }
 
-    public UpgradeSchema[] getAvailableSchemas(EntityPlayer player, ItemStack itemStack) {
+    public UpgradeSchema[] getAvailableSchemas(PlayerEntity player, ItemStack itemStack) {
         return schemaMap.values().stream()
                 .filter(upgradeSchema -> playerHasSchema(player, itemStack, upgradeSchema))
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
@@ -50,7 +50,7 @@ public class ItemUpgradeRegistry {
         return schemaMap.get(key);
     }
 
-    public boolean playerHasSchema(EntityPlayer player, ItemStack targetStack, UpgradeSchema schema) {
+    public boolean playerHasSchema(PlayerEntity player, ItemStack targetStack, UpgradeSchema schema) {
         return schema.isVisibleForPlayer(player, targetStack);
     }
 

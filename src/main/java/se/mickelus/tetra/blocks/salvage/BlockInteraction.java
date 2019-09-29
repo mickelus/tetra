@@ -3,8 +3,8 @@ package se.mickelus.tetra.blocks.salvage;
 import com.google.common.base.Predicates;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -90,11 +90,11 @@ public class BlockInteraction {
                 && availableCapabilities.contains(requiredCapability);
     }
 
-    public void applyOutcome(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, EnumFacing hitFace) {
+    public void applyOutcome(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing hitFace) {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
-    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, EntityPlayer player,
+    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, PlayerEntity player,
                                              EnumHand hand, EnumFacing hitFace, float hitX, float hitY, float hitZ) {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
@@ -129,11 +129,11 @@ public class BlockInteraction {
                 }
             }
 
-            if (player instanceof EntityPlayerMP) {
+            if (player instanceof PlayerEntityMP) {
                 IBlockState newState = world.getBlockState(pos);
                 newState = newState.getActualState(world, pos);
 
-                BlockInteractionCriterion.trigger((EntityPlayerMP) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
+                BlockInteractionCriterion.trigger((PlayerEntityMP) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
             }
 
             player.resetCooldown();
@@ -142,7 +142,7 @@ public class BlockInteraction {
         return false;
     }
 
-    public static BlockInteraction getInteractionAtPoint(EntityPlayer player, IBlockState blockState, BlockPos pos, EnumFacing hitFace, float hitX, float hitY,
+    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, IBlockState blockState, BlockPos pos, EnumFacing hitFace, float hitX, float hitY,
             float hitZ) {
         AxisAlignedBB boundingBox = blockState.getBoundingBox(player.world, pos);
         float hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);

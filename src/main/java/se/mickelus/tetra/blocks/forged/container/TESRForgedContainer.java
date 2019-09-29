@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;

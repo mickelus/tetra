@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -14,7 +14,7 @@ public class ContainerWorkbench extends Container {
 
     private ToggleableSlot[] materialSlots;
 
-    public ContainerWorkbench(IInventory playerInventory, TileEntityWorkbench workbench, EntityPlayer player) {
+    public ContainerWorkbench(IInventory playerInventory, TileEntityWorkbench workbench, PlayerEntity player) {
         this.workbench = workbench;
 
         materialSlots = new ToggleableSlot[3];
@@ -44,7 +44,7 @@ public class ContainerWorkbench extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return this.workbench.isUsableByPlayer(playerIn);
     }
 
@@ -52,7 +52,7 @@ public class ContainerWorkbench extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -98,7 +98,7 @@ public class ContainerWorkbench extends Container {
      * Called when the container is closed.
      */
     @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
+    public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
 
         workbench.closeInventory(playerIn);

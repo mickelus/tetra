@@ -18,7 +18,7 @@ public class GuiButtonOutlined extends GuiClickable {
 
     public GuiButtonOutlined(int x, int y, String label, GuiAlignment alignment, Runnable onClickHandler) {
         super(x, y, 0, 11, onClickHandler);
-        width = Minecraft.getMinecraft().fontRenderer.getStringWidth(label) + 18;
+        width = Minecraft.getInstance().fontRenderer.getStringWidth(label) + 18;
 
         addChild(new GuiRect(9, 0, width - 18, 11, 0));
 

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.schema;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -58,7 +58,7 @@ public interface UpgradeSchema {
      * @param targetStack The target itemstack for the schema
      * @return true if it should be visible, otherwise false
      */
-    public default boolean isVisibleForPlayer(EntityPlayer player, ItemStack targetStack) {
+    public default boolean isVisibleForPlayer(PlayerEntity player, ItemStack targetStack) {
         return true;
     }
 
@@ -71,10 +71,10 @@ public interface UpgradeSchema {
      * @param availableCapabilities
      * @return
      */
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities);
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities);
 
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot);
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player);
+    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player);
 
     public boolean checkCapabilities(final ItemStack targetStack, final ItemStack[] materials, int[] availableCapabilities);
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);

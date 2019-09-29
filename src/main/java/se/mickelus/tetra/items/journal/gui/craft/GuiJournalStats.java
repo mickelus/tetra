@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiAlignment;
@@ -68,7 +68,7 @@ public class GuiJournalStats extends GuiElement {
         bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));
     }
 
-    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, EntityPlayer player) {
+    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, PlayerEntity player) {
         boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
         setVisible(shouldShow);
         if (shouldShow) {

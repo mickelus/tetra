@@ -7,7 +7,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -96,7 +96,7 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
         BlockPos basePos = pos.offset(EnumFacing.UP);
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
@@ -111,7 +111,7 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
     BlockPos basePos = pos.offset(EnumFacing.UP);
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();

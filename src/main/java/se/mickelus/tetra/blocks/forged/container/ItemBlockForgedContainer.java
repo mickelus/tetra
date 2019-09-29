@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -27,7 +27,7 @@ public class ItemBlockForgedContainer extends ItemBlock {
      * Straight up copy of the vanilla implementation except that it does not check entity collisions in worldIn.mayPlace.
      */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
@@ -58,7 +58,7 @@ public class ItemBlockForgedContainer extends ItemBlock {
      * Based on the vanilla implementation, but also checks that the multiblock part can be placed.
      */
     @Override
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
+    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, PlayerEntity player, ItemStack stack) {
         if (worldIn.getBlockState(pos.offset(side)).getBlock().isReplaceable(worldIn, pos.offset(side))) {
             BlockPos adjacentPos = pos.offset(side).offset(player.getHorizontalFacing().rotateY());
             return worldIn.getBlockState(adjacentPos).getBlock().isReplaceable(worldIn, adjacentPos);

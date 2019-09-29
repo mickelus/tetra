@@ -3,7 +3,7 @@ package se.mickelus.tetra.advancements;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntityMP;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
@@ -19,7 +19,7 @@ public class BlockInteractionCriterion extends AbstractCriterionInstance {
         super(trigger.getId());
     }
 
-    public static void trigger(EntityPlayerMP player, IBlockState state, Capability usedCapability, int usedCapabilityLevel) {
+    public static void trigger(PlayerEntityMP player, IBlockState state, Capability usedCapability, int usedCapabilityLevel) {
         trigger.fulfillCriterion(player.getAdvancements(), criterion -> criterion.test(state, usedCapability, usedCapabilityLevel));
     }
 

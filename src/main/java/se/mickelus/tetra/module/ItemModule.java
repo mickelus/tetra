@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
@@ -54,15 +54,15 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return slotKey;
     }
 
-    public void addModule(ItemStack targetStack, String variantKey, EntityPlayer player) {
-        NBTTagCompound tag = NBTHelper.getTag(targetStack);
+    public void addModule(ItemStack targetStack, String variantKey, PlayerEntity player) {
+        CompoundNBT tag = NBTHelper.getTag(targetStack);
 
         tag.setString(slotKey, moduleKey);
         tag.setString(dataKey, variantKey);
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
-        NBTTagCompound tag = NBTHelper.getTag(targetStack);
+        CompoundNBT tag = NBTHelper.getTag(targetStack);
 
         tag.removeTag(slotKey);
         tag.removeTag(dataKey);
@@ -70,12 +70,12 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return new ItemStack[0];
     }
 
-    public void postRemove(ItemStack targetStack, EntityPlayer player) {
+    public void postRemove(ItemStack targetStack, PlayerEntity player) {
 
     }
 
     public T getData(ItemStack itemStack) {
-        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = NBTHelper.getTag(itemStack);
         String dataName = tag.getString(this.dataKey);
 
         return getData(dataName);
@@ -229,7 +229,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public TweakData[] getTweaks(ItemStack itemStack) {
-        NBTTagCompound tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = NBTHelper.getTag(itemStack);
         String variant = tag.getString(this.dataKey);
         return Arrays.stream(tweaks)
                 .filter(tweak -> variant.equals(tweak.variant))
@@ -288,7 +288,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
                 .toArray(ResourceLocation[]::new);
     }
 
-    public void hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {}
+    public void hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {}
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         return getData(itemStack).effects.getLevel(effect);

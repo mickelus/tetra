@@ -10,10 +10,10 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -135,7 +135,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 });
     }
 
-    public void applyEffects(World world, BlockPos pos, ItemStack itemStack, EntityPlayer player) {
+    public void applyEffects(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     if (te.hasEffect(EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
@@ -152,7 +152,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 .orElse(0);
     }
 
-    public static boolean removePlate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHammerPlate plate, EnumFacing face) {
+    public static boolean removePlate(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHammerPlate plate, EnumFacing face) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.removePlate(plate);
@@ -174,7 +174,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing adjustedFace) {
+    public static boolean reconfigure(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumFacing adjustedFace) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.reconfigure(adjustedFace);
@@ -186,7 +186,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand,
                                     EnumFacing facing, float hitX, float hitY, float hitZ) {
         EnumFacing blockFacing = state.getValue(propFacing);
         TileEntityHammerBase te = TileEntityOptional.from(world, pos, TileEntityHammerBase.class).orElse(null);
@@ -210,7 +210,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
                 }
 
                 return true;
@@ -221,7 +221,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
                 }
 
                 return true;
@@ -232,7 +232,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -243,7 +243,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((EntityPlayerMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -296,7 +296,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         return this.getDefaultState().withProperty(propFacing, placer.getHorizontalFacing().getOpposite());
     }
 

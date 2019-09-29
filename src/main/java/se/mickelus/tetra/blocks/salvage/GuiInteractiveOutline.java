@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
@@ -18,7 +18,7 @@ public class GuiInteractiveOutline extends GuiElement {
 
     private GuiInteractiveCapability capability;
 
-    public GuiInteractiveOutline(BlockInteraction blockInteraction, EntityPlayer player) {
+    public GuiInteractiveOutline(BlockInteraction blockInteraction, PlayerEntity player) {
         super((int) blockInteraction.minX * 2, (int) blockInteraction.minY * 2,
                 (int) (blockInteraction.maxX - blockInteraction.minX) * 2,
                 (int) (blockInteraction.maxY - blockInteraction.minY) * 2);

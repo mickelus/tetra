@@ -1,7 +1,7 @@
 package se.mickelus.tetra.capabilities;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ public class CapabilityHelper {
                 .orElse(Collections.emptyList());
     }
 
-    public static int getPlayerEffectLevel(EntityPlayer player, ItemEffect effect) {
+    public static int getPlayerEffectLevel(PlayerEntity player, ItemEffect effect) {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
@@ -44,7 +44,7 @@ public class CapabilityHelper {
                 .orElse(0);
     }
 
-    public static double getPlayerEffectEfficiency(EntityPlayer player, ItemEffect effect) {
+    public static double getPlayerEffectEfficiency(PlayerEntity player, ItemEffect effect) {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
@@ -54,7 +54,7 @@ public class CapabilityHelper {
                 .orElse(0d);
     }
 
-    public static int getPlayerCapabilityLevel(EntityPlayer player, Capability capability) {
+    public static int getPlayerCapabilityLevel(PlayerEntity player, Capability capability) {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
@@ -64,7 +64,7 @@ public class CapabilityHelper {
                 .orElse(0);
     }
 
-    public static Collection<Capability> getPlayerCapabilities(EntityPlayer player) {
+    public static Collection<Capability> getPlayerCapabilities(PlayerEntity player) {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
@@ -97,17 +97,17 @@ public class CapabilityHelper {
                 .orElse(Collections.emptyList());
     }
 
-    public static int getCombinedCapabilityLevel(EntityPlayer player, World world, BlockPos pos, IBlockState blockStateIn, Capability capability) {
+    public static int getCombinedCapabilityLevel(PlayerEntity player, World world, BlockPos pos, IBlockState blockStateIn, Capability capability) {
         return Math.max(getPlayerCapabilityLevel(player, capability), getBlockCapabilityLevel(world, pos, blockStateIn, capability));
     }
 
-    public static int[] getCombinedCapabilityLevels(EntityPlayer player, World world, BlockPos pos, IBlockState blockStateIn) {
+    public static int[] getCombinedCapabilityLevels(PlayerEntity player, World world, BlockPos pos, IBlockState blockStateIn) {
         return Arrays.stream(Capability.values())
                 .mapToInt(capability -> getCombinedCapabilityLevel(player, world, pos, blockStateIn, capability))
                 .toArray();
     }
 
-    public static ItemStack getProvidingItemStack(Capability capability, int level, EntityPlayer player) {
+    public static ItemStack getProvidingItemStack(Capability capability, int level, PlayerEntity player) {
         return Stream.concat(Stream.of(player.getHeldItemMainhand(), player.getHeldItemOffhand()), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)

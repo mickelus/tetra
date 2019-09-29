@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public boolean canPerformOn(EntityPlayer player, ItemStack itemStack) {
+    public boolean canPerformOn(PlayerEntity player, ItemStack itemStack) {
         return requirement.test(itemStack);
     }
 
@@ -37,7 +37,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public void perform(EntityPlayer player, ItemStack targetStack, TileEntityWorkbench workbench) {
+    public void perform(PlayerEntity player, ItemStack targetStack, TileEntityWorkbench workbench) {
         if (!player.world.isRemote) {
             WorldServer world = (WorldServer) player.world;
             LootTable table = world.getLootTableManager().getLootTableFromLocation(lootTable);
@@ -60,7 +60,7 @@ public class ConfigActionImpl extends ConfigAction {
                     Item.getIdFromItem(targetStack.getItem()), targetStack.getMetadata());
 
             // todo: add proper criteria
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, targetStack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((PlayerEntityMP) player, targetStack);
 
             targetStack.setCount(targetStack.getCount() - 1);
             workbench.markDirty();

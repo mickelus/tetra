@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.impl.statbar.getter;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.util.CastOptional;
@@ -14,7 +14,7 @@ public class StatGetterMagicCapacity implements IStatGetter {
     public StatGetterMagicCapacity() { }
 
     @Override
-    public double getValue(EntityPlayer player, ItemStack itemStack) {
+    public double getValue(PlayerEntity player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> item.getMajorModules(itemStack))
                 .map(Arrays::stream)
@@ -25,19 +25,19 @@ public class StatGetterMagicCapacity implements IStatGetter {
     }
 
     @Override
-    public double getValue(EntityPlayer player, ItemStack itemStack, String slot) {
+    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot).getMagicCapacityGain(itemStack))
                 .orElse(0);
     }
 
     @Override
-    public double getValue(EntityPlayer player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
         return 0;
     }
 
     @Override
-    public boolean shouldShow(EntityPlayer player, ItemStack currentStack, ItemStack previewStack) {
+    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
         return getValue(player, currentStack) > 0 || getValue(player, previewStack) > 0;
     }
 }

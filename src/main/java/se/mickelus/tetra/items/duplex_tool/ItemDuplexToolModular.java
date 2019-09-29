@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.duplex_tool;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -224,7 +224,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
@@ -234,7 +234,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(PlayerEntity player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         if (!player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
             return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, side);

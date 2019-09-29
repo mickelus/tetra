@@ -4,11 +4,11 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -116,7 +116,7 @@ public class ItemEffectHandler {
     @SubscribeEvent(priority=EventPriority.LOW)
     public void onExperienceDrop(LivingExperienceDropEvent event) {
         Optional.ofNullable(event.getAttackingPlayer())
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
@@ -131,9 +131,9 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onLootingLevel(LootingLevelEvent event) {
         Optional.ofNullable(event.getDamageSource().getTrueSource())
-                .filter(entity -> entity instanceof EntityPlayer)
-                .map(entity -> (EntityLivingBase) entity)
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(entity -> entity instanceof PlayerEntity)
+                .map(entity -> (LivingEntity) entity)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
@@ -144,15 +144,15 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
         Optional.ofNullable(event.getSource().getTrueSource())
-                .filter(entity -> entity instanceof EntityPlayer)
-                .map(entity -> (EntityLivingBase) entity)
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(entity -> entity instanceof PlayerEntity)
+                .map(entity -> (LivingEntity) entity)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
                     if (quickStrikeLevel > 0) {
-                        float maxDamage = (float) ((EntityLivingBase) event.getSource().getTrueSource())
+                        float maxDamage = (float) ((LivingEntity) event.getSource().getTrueSource())
                                 .getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
                         float multiplier = quickStrikeLevel * 0.05f + 0.2f;
 
@@ -174,9 +174,9 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent event) {
         Optional.ofNullable(event.getSource().getTrueSource())
-                .filter(entity -> entity instanceof EntityPlayer)
-                .map(entity -> (EntityLivingBase) entity)
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(entity -> entity instanceof PlayerEntity)
+                .map(entity -> (LivingEntity) entity)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
@@ -202,16 +202,16 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onCriticalHit(CriticalHitEvent event) {
         Optional.ofNullable(event.getEntityLiving())
-                .filter(entity -> entity instanceof EntityPlayer)
-                .map(entity -> (EntityLivingBase) entity)
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .filter(entity -> entity instanceof PlayerEntity)
+                .map(entity -> (LivingEntity) entity)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int backstabLevel = getEffectLevel(itemStack, ItemEffect.backstab);
-                    if (backstabLevel > 0 && event.getTarget() instanceof EntityLivingBase) {
-                        EntityLivingBase attacker = event.getEntityLiving();
-                        EntityLivingBase target = (EntityLivingBase) event.getTarget();
+                    if (backstabLevel > 0 && event.getTarget() instanceof LivingEntity) {
+                        LivingEntity attacker = event.getEntityLiving();
+                        LivingEntity target = (LivingEntity) event.getTarget();
                         if (180 - Math.abs(Math.abs(attacker.rotationYawHead - target.rotationYawHead) % 360 - 180) < 60) {
                             event.setDamageModifier(Math.max(1.25f + 0.25f * backstabLevel, event.getDamageModifier()));
                             event.setResult(Event.Result.ALLOW);
@@ -230,7 +230,7 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onPlayerPickupXp(PlayerPickupXpEvent event) {
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getPlayerEntity();
         Stream.concat(
                 player.inventory.mainInventory.stream(),
                 player.inventory.offHandInventory.stream())
@@ -263,7 +263,7 @@ public class ItemEffectHandler {
         }
 
         Optional.ofNullable(event.getHarvester())
-                .map(EntityLivingBase::getHeldItemMainhand)
+                .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
@@ -293,7 +293,7 @@ public class ItemEffectHandler {
                     World world = event.getWorld();
                     IBlockState blockState = world.getBlockState(pos);
                     String tool = ItemModularHandheld.getEffectiveTool(blockState);
-                    EntityPlayer breakingPlayer = event.getEntityPlayer();
+                    PlayerEntity breakingPlayer = event.getPlayerEntity();
 
                     if (tool != null) {
                         switch (tool) {
@@ -342,7 +342,7 @@ public class ItemEffectHandler {
                 });
     }
 
-    private boolean critBlock(World world, EntityPlayer breakingPlayer, BlockPos pos, IBlockState blockState, ItemStack itemStack, String tool, int critLevel) {
+    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, IBlockState blockState, ItemStack itemStack, String tool, int critLevel) {
         if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
             if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
@@ -378,7 +378,7 @@ public class ItemEffectHandler {
             AxisAlignedBB aabb = new AxisAlignedBB(event.getTargetX() - 24, event.getTargetY() - 24, event.getTargetZ() - 24,
                     event.getTargetX() + 24, event.getTargetY() + 24, event.getTargetZ() + 24);
 
-            event.getEntity().getEntityWorld().getEntitiesWithinAABB(EntityPlayer.class, aabb).forEach(player -> {
+            event.getEntity().getEntityWorld().getEntitiesWithinAABB(PlayerEntity.class, aabb).forEach(player -> {
                 int reverbLevel = CapabilityHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
                 if (reverbLevel > 0) {
                     double effectProbability = CapabilityHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
@@ -402,7 +402,7 @@ public class ItemEffectHandler {
      * @param blockState the state of the block that is to broken
      * @return True if the player was allowed to break the block, otherwise false
      */
-    public static boolean breakBlock(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
+    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
         boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
         if (canRemove && !world.isRemote) {
             blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
@@ -422,7 +422,7 @@ public class ItemEffectHandler {
      *             to match this
      * @param sweepingLevel the level of the sweeping effect on the toolStack
      */
-    private void breakBlocksAround(World world, EntityPlayer breakingPlayer, ItemStack toolStack, BlockPos originPos,
+    private void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos,
                                    String tool, int sweepingLevel) {
         if (world.isRemote) {
             return;
@@ -494,15 +494,15 @@ public class ItemEffectHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onArrowNock(ArrowNockEvent event) {
-        if (!event.hasAmmo() && event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).isEmpty()) {
-            ItemStack itemStack = UtilToolbelt.findToolbelt(event.getEntityPlayer());
+        if (!event.hasAmmo() && event.getPlayerEntity().getHeldItem(EnumHand.OFF_HAND).isEmpty()) {
+            ItemStack itemStack = UtilToolbelt.findToolbelt(event.getPlayerEntity());
             if (!itemStack.isEmpty()) {
                 InventoryQuiver inventory = new InventoryQuiver(itemStack);
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
-                        event.getEntityPlayer().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
-                        event.getEntityPlayer().setActiveHand(event.getHand());
+                        event.getPlayerEntity().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
+                        event.getPlayerEntity().setActiveHand(event.getHand());
                         inventory.markDirty();
 
                         event.setAction(new ActionResult<>(EnumActionResult.SUCCESS, event.getBow()));

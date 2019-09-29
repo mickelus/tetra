@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.gui.GuiCapabilityRequirement;
 import se.mickelus.tetra.capabilities.Capability;
@@ -60,7 +60,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         material = new GuiItem(0, 20);
         addChild(material);
 
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getInstance().player;
         capabilityLevels = new int[Capability.values().length];
         for (int i = 0; i < capabilityLevels.length; i++) {
             capabilityLevels[i] = CapabilityHelper.getPlayerCapabilityLevel(player, Capability.values()[i]);
@@ -139,7 +139,7 @@ public class GuiJournalVariantDetail extends GuiElement {
             }
 
             stats.update(selectedOutcome != null ? selectedOutcome.itemStack : hoveredOutcome.itemStack,
-                    baseOutcome.itemStack,null, null, Minecraft.getMinecraft().player);
+                    baseOutcome.itemStack,null, null, Minecraft.getInstance().player);
 
             show();
         } else {

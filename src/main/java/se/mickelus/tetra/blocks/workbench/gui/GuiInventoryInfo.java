@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiElement;
@@ -16,7 +16,7 @@ public class GuiInventoryInfo extends GuiElement {
 
     private GuiInventoryHighlight[] highlights;
 
-    public GuiInventoryInfo(int x, int y, EntityPlayer player) {
+    public GuiInventoryInfo(int x, int y, PlayerEntity player) {
         super(x, y, 224, 72);
 
         this.inventory = player.inventory;

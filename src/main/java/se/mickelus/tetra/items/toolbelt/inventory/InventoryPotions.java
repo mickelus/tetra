@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGlassBottle;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -75,7 +75,7 @@ public class InventoryPotions extends InventoryToolbelt {
     }
 
     @Override
-    public void emptyOverflowSlots(EntityPlayer player) {
+    public void emptyOverflowSlots(PlayerEntity player) {
         for (int i = getSizeInventory(); i < maxSize; i++) {
             ItemStack itemStack = getStackInSlot(i);
             while (!itemStack.isEmpty()) {

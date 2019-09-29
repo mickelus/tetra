@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.salvage;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ public class StateOutcome<T extends Comparable<T>, V extends T> implements Inter
     }
 
     @Override
-    public boolean apply(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, EnumFacing hitFace) {
+    public boolean apply(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing hitFace) {
         blockState.withProperty(property, value);
 
         return true;

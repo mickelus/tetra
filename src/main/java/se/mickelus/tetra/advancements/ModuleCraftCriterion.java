@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
@@ -29,7 +29,7 @@ public class ModuleCraftCriterion extends AbstractCriterionInstance {
         super(trigger.getId());
     }
 
-    public static void trigger(EntityPlayerMP player, ItemStack before, ItemStack after, String schema, String slot, String module,
+    public static void trigger(PlayerEntityMP player, ItemStack before, ItemStack after, String schema, String slot, String module,
             String variant, Capability capability, int capabilityLevel) {
         trigger.fulfillCriterion(player.getAdvancements(), criterion -> criterion.test(before, after, schema, slot, module, variant, capability,
                 capabilityLevel));

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiElement;
@@ -44,7 +44,7 @@ public class GuiModuleGlyph extends GuiElement {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(textureLocation);
+        Minecraft.getInstance().getTextureManager().bindTexture(textureLocation);
 
         float red = (float)(tint >> 16 & 255) / 255.0F;
         float blue = (float)(tint >> 8 & 255) / 255.0F;

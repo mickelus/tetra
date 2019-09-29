@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class GuiString extends GuiElement {
@@ -19,7 +19,7 @@ public class GuiString extends GuiElement {
     public GuiString(int x, int y, String string) {
         super(x, y, 0, 9);
 
-        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        fontRenderer = Minecraft.getInstance().fontRenderer;
 
         this.string = string;
         width = fontRenderer.getStringWidth(string);
@@ -30,7 +30,7 @@ public class GuiString extends GuiElement {
 
         fixedWidth = true;
 
-        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        fontRenderer = Minecraft.getInstance().fontRenderer;
 
         this.string = fontRenderer.trimStringToWidth(string, width);
     }
@@ -86,7 +86,11 @@ public class GuiString extends GuiElement {
 
         // if the vanilla fontrender considers the color to be almost transparent (0xfc) it flips the opacity back to 1
         if ((color & -67108864) != 0) {
-            fontRenderer.drawString(text, (float)x, (float)y, color, drawShadow);
+            if (drawShadow) {
+                fontRenderer.drawStringWithShadow(text, (float)x, (float)y, color);
+            } else {
+                fontRenderer.drawString(text, (float)x, (float)y, color);
+            }
         }
     }
 }

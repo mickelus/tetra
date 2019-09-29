@@ -1,8 +1,7 @@
 package se.mickelus.tetra.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketBuffer;
 
 import java.io.IOException;
 
@@ -11,28 +10,28 @@ import java.io.IOException;
  * AbstractPacket class. Should be the parent of all packets wishing to use the PacketHandler.
  * @author sirgingalot, mickelus
  */
-public abstract class AbstractPacket implements IMessage {
+public abstract class AbstractPacket {
 
     /**
      * Encode the packet data into the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
      *
      * @param buffer the buffer to encode into
      */
-    public abstract void toBytes(ByteBuf buffer);
+    public abstract void toBytes(PacketBuffer buffer);
 
     /**
      * Decode the packet data from the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
      *
      * @param buffer the buffer to decode from
      */
-    public abstract void fromBytes(ByteBuf buffer);
+    public abstract void fromBytes(PacketBuffer buffer);
 
     /**
      * Handle a packet on the server side. Note this occurs after decoding has completed.
      *
      * @param player the player reference
      */
-    public abstract void handle(EntityPlayer player);
+    public abstract void handle(PlayerEntity player);
 
     /**
      * Utility method that reads a string from a buffer object.
@@ -40,7 +39,7 @@ public abstract class AbstractPacket implements IMessage {
      * @return A string read from the buffer
      * @throws IOException
      */
-    protected static String readString(ByteBuf buffer) throws IOException {
+    protected static String readString(PacketBuffer buffer) throws IOException {
         String string = "";
         char c = buffer.readChar();
 
@@ -52,7 +51,7 @@ public abstract class AbstractPacket implements IMessage {
         return string;
     }
 
-    protected static void writeString(String string, ByteBuf buffer) throws IOException {
+    protected static void writeString(String string, PacketBuffer buffer) throws IOException {
         for (int i = 0; i < string.length(); i++) {
             buffer.writeChar(string.charAt(i));
         }

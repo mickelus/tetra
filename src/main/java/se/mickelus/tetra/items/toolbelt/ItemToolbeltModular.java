@@ -4,7 +4,7 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -95,7 +95,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     @Override
     public void clientPreInit() {
         super.clientPreInit();
-        MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getMinecraft()));
+        MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, EnumHand hand) {
         player.openGui(TetraMod.instance, GuiHandlerToolbelt.toolbeltId, world, hand.ordinal(), 0, 0);
 
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));

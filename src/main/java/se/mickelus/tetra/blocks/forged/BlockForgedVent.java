@@ -10,8 +10,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -113,7 +113,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         drops.clear();
     }
 
-    private static boolean breakBolt(World world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakBolt(World world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         world.setBlockState(pos, world.getBlockState(pos).withProperty(propBroken, true), 2);
 
@@ -135,7 +135,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         return true;
     }
 
-    private static boolean breakPlate(World world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakPlate(World world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.getValue(propX));
 
@@ -188,7 +188,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return BlockInteraction.attemptInteraction(world, state.getActualState(world, pos), pos, player, hand, facing, hitX, hitY, hitZ);
     }
 
@@ -204,7 +204,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         IBlockState iblockstate = super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
         iblockstate = iblockstate.withProperty(propX, EnumFacing.Axis.X.equals(placer.getHorizontalFacing().getAxis()));
 

@@ -13,7 +13,7 @@ import net.minecraft.block.state.pattern.BlockStateMatcher;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -21,14 +21,14 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntityShulker;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -98,7 +98,7 @@ public class ItemModularHandheld extends ItemModular {
     protected int entityHitDamage = 1;
 
     @Override
-    public boolean onBlockDestroyed(ItemStack itemStack, World world, IBlockState state, BlockPos pos, EntityLivingBase entity) {
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, IBlockState state, BlockPos pos, LivingEntity entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
 
@@ -124,7 +124,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         applyDamage(entityHitDamage, itemStack, attacker);
 
         if (!isBroken(itemStack)) {
@@ -182,7 +182,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
@@ -211,7 +211,7 @@ public class ItemModularHandheld extends ItemModular {
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
-    protected void causeFierySelfEffect(EntityLivingBase entity, ItemStack itemStack, double multiplier) {
+    protected void causeFierySelfEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.world.isRemote) {
             double fierySelfEfficiency = getEffectEfficiency(itemStack, ItemEffect.fierySelf);
             if (fierySelfEfficiency > 0) {
@@ -224,13 +224,13 @@ public class ItemModularHandheld extends ItemModular {
         }
     }
     
-    protected void causeEnderReverbEffect(EntityLivingBase entity, ItemStack itemStack, double multiplier) {
+    protected void causeEnderReverbEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.world.isRemote) {
             double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
             if (effectProbability > 0) {
                 if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
                     AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
-                    List<EntityLivingBase> nearbyTargets = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb,
+                    List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
                             target -> target instanceof EntityEnderman || target instanceof EntityEndermite || target instanceof EntityShulker || target instanceof EntityDragon);
                     if (nearbyTargets.size() > 0) {
                         nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
@@ -250,7 +250,7 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult flattenPath(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult flattenPath(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
@@ -283,7 +283,7 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult tillBlock(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult tillBlock(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
@@ -341,7 +341,7 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult denailBlock(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult denailBlock(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
@@ -389,9 +389,9 @@ public class ItemModularHandheld extends ItemModular {
      * @param sweepingLevel the level of the sweeping effect of the itemstack
      * @param knockbackLevel the level of the knockback effect of the itemstack
      */
-    private void sweepAttack(ItemStack itemStack, EntityLivingBase target, EntityLivingBase attacker, int sweepingLevel, int knockbackLevel) {
+    private void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel, int knockbackLevel) {
         float cooldown = 1;
-        if (attacker instanceof EntityPlayer) {
+        if (attacker instanceof PlayerEntity) {
             cooldown = ItemModularHandheld.getCooledAttackStrength(itemStack);
         }
 
@@ -401,7 +401,7 @@ public class ItemModularHandheld extends ItemModular {
             double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
             // range values set up to mimic vanilla behaviour
-            attacker.world.getEntitiesWithinAABB(EntityLivingBase.class,
+            attacker.world.getEntitiesWithinAABB(LivingEntity.class,
                     target.getEntityBoundingBox().grow(range, 0.25d, range)).stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
@@ -410,8 +410,8 @@ public class ItemModularHandheld extends ItemModular {
                         entity.knockBack(attacker, knockback,
                                 MathHelper.sin(attacker.rotationYaw * 0.017453292f),
                                 -MathHelper.cos(attacker.rotationYaw * 0.017453292f));
-                        if (attacker instanceof EntityPlayer) {
-                            entity.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), damage);
+                        if (attacker instanceof PlayerEntity) {
+                            entity.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) attacker), damage);
                         } else {
                             entity.attackEntityFrom(DamageSource.causeIndirectDamage(attacker, entity), damage);
                         }
@@ -440,7 +440,7 @@ public class ItemModularHandheld extends ItemModular {
         }
     }
 
-    public static void spawnSweepParticles(EntityLivingBase attacker) {
+    public static void spawnSweepParticles(LivingEntity attacker) {
         double xOffset = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
         double zOffset = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
 
@@ -448,7 +448,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+    public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
         setCooledAttackStrength(stack, player.getCooledAttackStrength(0.5f));
         return false;
     }
@@ -566,7 +566,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState) {
+    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable PlayerEntity player, @Nullable IBlockState blockState) {
         if (!isBroken(itemStack)) {
             int capabilityLevel = getCapabilityLevel(itemStack, toolClass);
             if (capabilityLevel > 0) {
@@ -640,7 +640,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, EntityPlayer player,
+    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
             Capability capability, int capabilityLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
@@ -655,7 +655,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(ItemStack providerStack, ItemStack targetStack, EntityPlayer player,
+    public ItemStack onActionConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
             Capability capability, int capabilityLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
@@ -673,7 +673,7 @@ public class ItemModularHandheld extends ItemModular {
     public void assemble(ItemStack itemStack) {
         super.assemble(itemStack);
 
-        NBTTagCompound nbt = NBTHelper.getTag(itemStack);
+        CompoundNBT nbt = NBTHelper.getTag(itemStack);
 
         nbt.removeTag("ench");
 

@@ -1,8 +1,7 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
@@ -10,7 +9,8 @@ import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GuiElement extends Gui {
+// todo 1.14: used to extend Gui, should extend GuiAbstract?
+public class GuiElement {
 
     protected int x;
     protected int y;
@@ -313,16 +313,16 @@ public class GuiElement extends Gui {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.color(red, green, blue, opacity);
+        GlStateManager.disableTexture();
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.color4f(red, green, blue, opacity);
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION);
-        bufferBuilder.pos((double)left, (double)bottom, zLevel).endVertex();
-        bufferBuilder.pos((double)right, (double)bottom, zLevel).endVertex();
-        bufferBuilder.pos((double)right, (double)top, zLevel).endVertex();
-        bufferBuilder.pos((double)left, (double)top, zLevel).endVertex();
+        bufferBuilder.pos((double)left, (double)bottom, 0).endVertex();
+        bufferBuilder.pos((double)right, (double)bottom, 0).endVertex();
+        bufferBuilder.pos((double)right, (double)top, 0).endVertex();
+        bufferBuilder.pos((double)left, (double)top, 0).endVertex();
         tessellator.draw();
-        GlStateManager.enableTexture2D();
+        GlStateManager.enableTexture();
         GlStateManager.disableBlend();
     }
 

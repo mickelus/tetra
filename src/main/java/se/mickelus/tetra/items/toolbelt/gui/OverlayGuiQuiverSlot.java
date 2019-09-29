@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -36,7 +36,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
 
         this.itemStack = itemStack;
 
-        mc = Minecraft.getMinecraft();
+        mc = Minecraft.getInstance();
 
         if (itemStack != null) {
             fontRenderer = itemStack.getItem().getFontRenderer(itemStack);

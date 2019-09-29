@@ -2,11 +2,11 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -61,14 +61,14 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         TileEntityWorkbench.actions = ArrayUtils.addAll(TileEntityWorkbench.actions, actions);
     }
 
-    public WorkbenchAction[] getAvailableActions(EntityPlayer player) {
+    public WorkbenchAction[] getAvailableActions(PlayerEntity player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
                 .filter(action -> action.canPerformOn(player, itemStack))
                 .toArray(WorkbenchAction[]::new);
     }
 
-    public void performAction(EntityPlayer player, String actionKey) {
+    public void performAction(PlayerEntity player, String actionKey) {
         if (world.isRemote) {
             PacketHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
             return;
@@ -103,7 +103,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 });
     }
 
-    private boolean checkActionCapabilities(EntityPlayer player, WorkbenchAction action, ItemStack itemStack) {
+    private boolean checkActionCapabilities(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
         return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
                 .allMatch(capability ->
                         CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
@@ -133,7 +133,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
      * @param currentSlot A slot key, or null if it should be unset
      * @param player
      */
-    public void update(UpgradeSchema currentSchema, String currentSlot, EntityPlayer player) {
+    public void update(UpgradeSchema currentSchema, String currentSlot, PlayerEntity player) {
         // todo: inventory change hack, better solution?
         if (currentSchema == null && player != null) {
             emptyMaterialSlots(player);
@@ -176,7 +176,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return stacks.subList(1, 4).toArray(new ItemStack[3]);
     }
 
-    public void initiateCrafting(EntityPlayer player) {
+    public void initiateCrafting(PlayerEntity player) {
         if (world.isRemote) {
             PacketHandler.sendToServer(new CraftWorkbenchPacket(pos));
         }
@@ -186,7 +186,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         sync();
     }
 
-    public void craft(EntityPlayer player) {
+    public void craft(PlayerEntity player) {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = ItemStack.EMPTY;
 
@@ -231,7 +231,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         setInventorySlotContents(0, upgradedStack);
     }
 
-    public void applyTweaks(EntityPlayer player, String slot, Map<String, Integer> tweaks) {
+    public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         if (world.isRemote) {
             PacketHandler.sendToServer(new TweakWorkbenchPacket(pos, slot, tweaks));
         }
@@ -241,7 +241,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         sync();
     }
 
-    public void tweak(EntityPlayer player, String slot, Map<String, Integer> tweaks) {
+    public void tweak(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         ItemStack tweakedStack = getTargetItemStack().copy();
         CastOptional.cast(tweakedStack.getItem(), ItemModular.class)
                 .ifPresent(item -> item.tweak(tweakedStack, slot, tweaks));
@@ -275,12 +275,12 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
+    public void handleUpdateTag(CompoundNBT tag) {
         super.handleUpdateTag(tag);
     }
 
@@ -290,7 +290,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
         NBTHelper.readItemStacks(compound, stacks);
@@ -309,7 +309,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         NBTHelper.writeItemStacks(stacks, compound);
@@ -329,7 +329,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
      * Empties all material slots into the given players inventory.
      * @param player
      */
-    private void emptyMaterialSlots(EntityPlayer player) {
+    private void emptyMaterialSlots(PlayerEntity player) {
         for (int i = 1; i < stacks.size(); i++) {
             transferStackToPlayer(player, i);
         }
@@ -356,7 +356,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         }
     }
 
-    private void transferStackToPlayer(EntityPlayer player, int index) {
+    private void transferStackToPlayer(PlayerEntity player, int index) {
         ItemStack itemStack = getStackInSlot(index);
         if (!itemStack.isEmpty()) {
             if (!player.inventory.addItemStackToInventory(itemStack)) {
@@ -440,17 +440,17 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
 
     }
 

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiAlignment;
@@ -21,7 +21,7 @@ public class GuiActionList extends GuiElement {
         actionButtons = new GuiActionButton[0];
     }
 
-    public void updateActions(ItemStack targetStack, WorkbenchAction[] actions, EntityPlayer player,
+    public void updateActions(ItemStack targetStack, WorkbenchAction[] actions, PlayerEntity player,
             Consumer<WorkbenchAction> clickHandler) {
         WorkbenchAction[] availableActions = Arrays.stream(actions)
                 .filter(action -> action.canPerformOn(player, targetStack))

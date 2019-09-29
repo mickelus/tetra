@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 
 public class GuiStringSmall extends GuiString {
@@ -74,7 +75,7 @@ public class GuiStringSmall extends GuiString {
         activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
         activeAnimations.forEach(KeyframeAnimation::preDraw);
         GlStateManager.pushMatrix();
-        GlStateManager.scale(.5, .5, .5);
+        GlStateManager.scaled(.5, .5, .5);
         GlStateManager.enableBlend();
         drawString(string, refX * 2 + x, refY * 2 + y,
                 color, opacity * getOpacity(), drawShadow);

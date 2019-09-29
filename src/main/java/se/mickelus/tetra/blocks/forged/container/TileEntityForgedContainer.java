@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
@@ -68,7 +68,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         return world.getBlockState(pos).getValue(BlockForgedContainer.propFlipped);
     }
 
-    public void open(EntityPlayer player) {
+    public void open(PlayerEntity player) {
         if (lidIntegrity > 0) {
             lidIntegrity--;
             markDirty();
@@ -131,7 +131,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
                 .toArray(Boolean[]::new);
     }
 
-    public void breakLock(EntityPlayer player, int index) {
+    public void breakLock(PlayerEntity player, int index) {
         if (lockIntegrity[index] > 0) {
             lockIntegrity[index]--;
 
@@ -167,8 +167,8 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override
@@ -177,7 +177,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
         NBTHelper.readItemStacks(compound, stacks);
@@ -190,7 +190,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         NBTHelper.writeItemStacks(stacks, compound);
@@ -201,13 +201,13 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         return compound;
     }
 
-    public static void writeLockData(NBTTagCompound compound, int[] lockIntegrity) {
+    public static void writeLockData(CompoundNBT compound, int[] lockIntegrity) {
         for (int i = 0; i < lockIntegrity.length; i++) {
             compound.setInteger("lock_integrity" + i, lockIntegrity[i]);
         }
     }
 
-    public static void writeLidData(NBTTagCompound compound, int lidIntegrity) {
+    public static void writeLidData(CompoundNBT compound, int lidIntegrity) {
         compound.setInteger("lid_integrity", lidIntegrity);
     }
 
@@ -269,15 +269,15 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) { }
+    public void openInventory(PlayerEntity player) { }
 
     @Override
-    public void closeInventory(EntityPlayer player) { }
+    public void closeInventory(PlayerEntity player) { }
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {

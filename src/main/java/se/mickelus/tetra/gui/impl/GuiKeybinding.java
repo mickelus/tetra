@@ -50,9 +50,9 @@ public class GuiKeybinding extends GuiElement {
             super(x, y, 0, 11);
 
             if (key.length() == 1) {
-                width = Minecraft.getMinecraft().fontRenderer.getCharWidth(key.charAt(0)) + 5;
+                width = Minecraft.getInstance().fontRenderer.getCharWidth(key.charAt(0)) + 5;
             } else {
-                width = Minecraft.getMinecraft().fontRenderer.getStringWidth(key);
+                width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
             }
 
             this.x = x - width;

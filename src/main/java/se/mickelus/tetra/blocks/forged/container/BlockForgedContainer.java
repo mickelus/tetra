@@ -14,8 +14,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -144,38 +144,38 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
         tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
-    private static void breakLock(IBlockAccess world, BlockPos pos, EntityPlayer player, int index) {
+    private static void breakLock(IBlockAccess world, BlockPos pos, PlayerEntity player, int index) {
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index);
         }
     }
 
-    private static boolean breakLock0(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakLock0(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         breakLock(world, pos, player, 0);
         return true;
     }
 
-    private static boolean breakLock1(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakLock1(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         breakLock(world, pos, player, 1);
         return true;
     }
 
-    private static boolean breakLock2(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakLock2(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         breakLock(world, pos, player, 2);
         return true;
     }
 
-    private static boolean breakLock3(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean breakLock3(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
         breakLock(world, pos, player, 3);
         return true;
     }
 
-    private static boolean open(IBlockAccess world, BlockPos pos, IBlockState blockState, EntityPlayer player,
+    private static boolean open(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
             EnumHand hand, EnumFacing facing) {
 
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
@@ -194,7 +194,7 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand,
             EnumFacing facing, float hitX, float hitY, float hitZ) {
         boolean didInteract = BlockInteraction.attemptInteraction(world, getActualState(world.getBlockState(pos), world, pos), pos, player, hand,
                 facing, hitX, hitY, hitZ);
@@ -333,14 +333,14 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, EnumHand hand) {
         IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
 
         return iblockstate.withProperty(propFacing, placer.getHorizontalFacing());
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, LivingEntity placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         EnumFacing facing = state.getValue(propFacing);
         worldIn.setBlockState(pos.offset(facing.rotateY()), getDefaultState().withProperty(propFlipped, true).withProperty(propFacing, facing));

@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -79,7 +79,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
 
 
-    public static EnumActionResult upgradeWorkbench(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public static EnumActionResult upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
         ItemStack itemStack = player.getHeldItem(hand);
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
             return EnumActionResult.FAIL;
@@ -92,7 +92,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
             if (!world.isRemote) {
                 world.setBlockState(pos, instance.getDefaultState());
 
-                BlockUseCriterion.trigger((EntityPlayerMP) player, instance.getDefaultState(), ItemStack.EMPTY);
+                BlockUseCriterion.trigger((PlayerEntityMP) player, instance.getDefaultState(), ItemStack.EMPTY);
             }
             return EnumActionResult.SUCCESS;
         }
@@ -145,7 +145,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         player.openGui(TetraMod.instance, GuiHandlerWorkbench.workbenchId, world, pos.getX(), pos.getY(), pos.getZ());
 
         return true;
@@ -170,7 +170,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return Blocks.CRAFTING_TABLE.getPickBlock(state, target, world, pos, player);
     }
 
@@ -195,7 +195,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
         BlockPos topPos = pos.offset(EnumFacing.UP);
         if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
             BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
@@ -205,7 +205,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, EntityPlayer player, boolean consumeResources) {
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
         BlockPos topPos = pos.offset(EnumFacing.UP);
         if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
             BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();

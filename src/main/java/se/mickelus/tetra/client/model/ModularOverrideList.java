@@ -8,9 +8,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ItemLayerModel;
@@ -32,8 +32,8 @@ public class ModularOverrideList extends ItemOverrideList {
 
     @Nonnull
     @Override
-    public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, final ItemStack stack, final World world, final EntityLivingBase entity) {
-        NBTTagCompound baseTag = NBTHelper.getTag(stack);
+    public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, final ItemStack stack, final World world, final LivingEntity entity) {
+        CompoundNBT baseTag = NBTHelper.getTag(stack);
         IBakedModel result = originalModel;
         if(!baseTag.hasNoTags()) {
             CacheKey key = getCacheKey(stack, originalModel);
@@ -52,7 +52,7 @@ public class ModularOverrideList extends ItemOverrideList {
         return new CacheKey(original, stack);
     }
 
-    protected IBakedModel getOverrideModel(ItemStack itemStack, World world, EntityLivingBase entity, IBakedModel original) {
+    protected IBakedModel getOverrideModel(ItemStack itemStack, World world, LivingEntity entity, IBakedModel original) {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
         BakedWrapper wrapper = (BakedWrapper) original;

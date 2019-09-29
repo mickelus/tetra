@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -31,7 +31,7 @@ public class GuiWorkbench extends GuiContainer {
     private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
     private static final String INVENTORY_TEXTURE = "textures/gui/player-inventory.png";
 
-    private EntityPlayer viewingPlayer;
+    private PlayerEntity viewingPlayer;
 
     private final TileEntityWorkbench tileEntity;
     private final ContainerWorkbench container;
@@ -57,7 +57,7 @@ public class GuiWorkbench extends GuiContainer {
 
     private boolean hadItem = false;
 
-    public GuiWorkbench(ContainerWorkbench container, TileEntityWorkbench tileEntity, EntityPlayer viewingPlayer) {
+    public GuiWorkbench(ContainerWorkbench container, TileEntityWorkbench tileEntity, PlayerEntity viewingPlayer) {
         super(container);
         this.allowUserInput = false;
         this.xSize = 320;
@@ -68,7 +68,7 @@ public class GuiWorkbench extends GuiContainer {
 
         this.viewingPlayer = viewingPlayer;
 
-        fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        fontRenderer = Minecraft.getInstance().fontRenderer;
         defaultGui = new GuiElement(0, 0, xSize, ySize);
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, WORKBENCH_TEXTURE));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, INVENTORY_TEXTURE));

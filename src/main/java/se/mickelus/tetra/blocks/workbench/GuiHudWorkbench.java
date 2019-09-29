@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.gui.hud.GuiRootHud;

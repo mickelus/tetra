@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class GuiItem extends GuiElement {
     public GuiItem(int x, int y) {
         super(x, y, 16, 16);
 
-        mc = Minecraft.getMinecraft();
+        mc = Minecraft.getInstance();
 
         setVisible(false);
     }
@@ -66,7 +66,7 @@ public class GuiItem extends GuiElement {
     @Override
     public List<String> getTooltipLines() {
         if (showTooltip && itemStack != null && hasFocus()) {
-            return itemStack.getTooltip(Minecraft.getMinecraft().player, this.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+            return itemStack.getTooltip(Minecraft.getInstance().player, this.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
         }
 
         return null;

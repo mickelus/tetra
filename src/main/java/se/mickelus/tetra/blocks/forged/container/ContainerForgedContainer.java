@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -20,7 +20,7 @@ public class ContainerForgedContainer extends Container {
     private ToggleableSlot[][] compartmentSlots;
     private int currentCompartment = 0;
 
-    public ContainerForgedContainer(IInventory playerInventory, TileEntityForgedContainer tileEntity, EntityPlayer player) {
+    public ContainerForgedContainer(IInventory playerInventory, TileEntityForgedContainer tileEntity, PlayerEntity player) {
         this.tileEntity = tileEntity;
         tileEntity.openInventory(player);
 
@@ -65,7 +65,7 @@ public class ContainerForgedContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return tileEntity.isUsableByPlayer(playerIn);
     }
 
@@ -73,7 +73,7 @@ public class ContainerForgedContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
         Slot slot = inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -103,7 +103,7 @@ public class ContainerForgedContainer extends Container {
      * Called when the container is closed.
      */
     @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
+    public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
 
         tileEntity.closeInventory(playerIn);

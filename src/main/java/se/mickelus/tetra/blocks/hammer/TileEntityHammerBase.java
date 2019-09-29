@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.hammer;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -275,8 +275,8 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override
@@ -285,17 +285,17 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         if (compound.hasKey(slotsKey)) {
             NBTTagList tagList = compound.getTagList(slotsKey, 10);
 
             for (int i = 0; i < tagList.tagCount(); i++) {
-                NBTTagCompound nbttagcompound = tagList.getCompoundTagAt(i);
-                int slot = nbttagcompound.getByte(indexKey) & 255;
+                CompoundNBT CompoundNBT = tagList.getCompoundTagAt(i);
+                int slot = CompoundNBT.getByte(indexKey) & 255;
 
                 if (slot < this.slots.length) {
-                    this.slots[slot] = new ItemStack(nbttagcompound);
+                    this.slots[slot] = new ItemStack(CompoundNBT);
                 }
             }
         }
@@ -319,7 +319,7 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         writeCells(compound, slots);
@@ -332,26 +332,26 @@ public class TileEntityHammerBase extends TileEntity {
         return compound;
     }
 
-    public static void writeCells(NBTTagCompound compound, ItemStack... cells) {
+    public static void writeCells(CompoundNBT compound, ItemStack... cells) {
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != null) {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                CompoundNBT CompoundNBT = new CompoundNBT();
 
-                nbttagcompound.setByte(indexKey, (byte) i);
-                cells[i].writeToNBT(nbttagcompound);
+                CompoundNBT.setByte(indexKey, (byte) i);
+                cells[i].writeToNBT(CompoundNBT);
 
-                nbttaglist.appendTag(nbttagcompound);
+                nbttaglist.appendTag(CompoundNBT);
             }
         }
         compound.setTag(slotsKey, nbttaglist);
     }
 
-    public static void writePlate(NBTTagCompound compound, EnumHammerPlate plate, boolean hasPlate) {
+    public static void writePlate(CompoundNBT compound, EnumHammerPlate plate, boolean hasPlate) {
         compound.setBoolean(plate.key, hasPlate);
     }
 
-    public static void writeConfig(NBTTagCompound compound, EnumHammerConfig configEast, EnumHammerConfig configWest) {
+    public static void writeConfig(CompoundNBT compound, EnumHammerConfig configEast, EnumHammerConfig configWest) {
         compound.setString(EnumHammerConfig.propE.getName(), configEast.toString());
         compound.setString(EnumHammerConfig.propW.getName(), configWest.toString());
     }

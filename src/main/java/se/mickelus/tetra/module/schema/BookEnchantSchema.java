@@ -3,8 +3,8 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -97,17 +97,17 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return isMaterialsValid(itemStack, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials);
     }
 
     @Override
-    public boolean isIntegrityViolation(EntityPlayer player, ItemStack itemStack, ItemStack[] materials, String slot) {
+    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return false;
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, EntityPlayer player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
@@ -116,8 +116,8 @@ public class BookEnchantSchema implements UpgradeSchema {
             if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
                 module.addImprovement(upgradedStack, improvement, entry.getValue());
 
-                if (consumeMaterials && player instanceof EntityPlayerMP) {
-                    ImprovementCraftCriterion.trigger((EntityPlayerMP) player, itemStack, upgradedStack, getKey(), slot, improvement, entry.getValue(), null, -1);
+                if (consumeMaterials && player instanceof PlayerEntityMP) {
+                    ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, entry.getValue(), null, -1);
                 }
             }
         }

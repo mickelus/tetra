@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -25,7 +25,7 @@ public class CapabililtyInteractiveOverlay {
     public void renderOverlay(DrawBlockHighlightEvent event) {
         RayTraceResult target = event.getTarget();
         if (target.typeOfHit == RayTraceResult.Type.BLOCK) {
-            EntityPlayer player = event.getPlayer();
+            PlayerEntity player = event.getPlayer();
             World world = player.getEntityWorld();
             BlockPos blockPos = target.getBlockPos();
             EnumFacing face = target.sideHit;

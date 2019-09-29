@@ -1,6 +1,6 @@
 package se.mickelus.tetra;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -17,7 +17,7 @@ public class PotionBleeding extends Potion {
     }
 
     @Override
-    public void performEffect(EntityLivingBase entity, int amplifier) {
+    public void performEffect(LivingEntity entity, int amplifier) {
         entity.attackEntityFrom(DamageSource.GENERIC, amplifier);
     }
 

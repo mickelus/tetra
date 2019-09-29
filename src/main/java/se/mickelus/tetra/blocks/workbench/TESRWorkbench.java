@@ -18,7 +18,7 @@ public class TESRWorkbench extends TileEntitySpecialRenderer<TileEntityWorkbench
 //    private GuiHudWorkbench gui;
 
     public TESRWorkbench() {
-        itemRenderer = Minecraft.getMinecraft().getRenderItem();
+        itemRenderer = Minecraft.getInstance().getRenderItem();
     }
 
     @Override
