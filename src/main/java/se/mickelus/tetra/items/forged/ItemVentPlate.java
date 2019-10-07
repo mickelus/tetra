@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.forged;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
 
 import javax.annotation.Nullable;
@@ -17,19 +17,19 @@ import java.util.List;
 
 public class ItemVentPlate extends TetraItem {
     private static final String unlocalizedName = "vent_plate";
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemVentPlate instance;
 
     public ItemVentPlate() {
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("item." + unlocalizedName + ".description"));
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("item." + unlocalizedName + ".description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 }

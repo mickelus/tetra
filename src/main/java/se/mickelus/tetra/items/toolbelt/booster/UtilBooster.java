@@ -56,17 +56,17 @@ public class UtilBooster {
 
     public static boolean hasFuel(CompoundNBT tag, boolean charged) {
         if (charged) {
-            return tag.getInteger(fuelKey) >= fuelCostCharged;
+            return tag.getInt(fuelKey) >= fuelCostCharged;
         }
-        return tag.getInteger(fuelKey) >= fuelCost;
+        return tag.getInt(fuelKey) >= fuelCost;
     }
 
     public static int getFuel(CompoundNBT tag) {
-        return tag.getInteger(fuelKey);
+        return tag.getInt(fuelKey);
     }
 
     public static float getFuelPercent(CompoundNBT tag) {
-        return tag.getInteger(fuelKey) * 1F / fuelCapacity;
+        return tag.getInt(fuelKey) * 1F / fuelCapacity;
     }
 
     public static void boostPlayer(PlayerEntity player, CompoundNBT tag, int level) {
@@ -117,23 +117,23 @@ public class UtilBooster {
 
     public static void consumeFuel(CompoundNBT tag, boolean charged) {
         if (charged) {
-            tag.setInteger(fuelKey, tag.getInteger(fuelKey) - fuelCostCharged);
+            tag.putInt(fuelKey, tag.getInt(fuelKey) - fuelCostCharged);
         } else {
-            tag.setInteger(fuelKey, tag.getInteger(fuelKey) - fuelCost);
+            tag.putInt(fuelKey, tag.getInt(fuelKey) - fuelCost);
         }
-        tag.setInteger(cooldownKey, cooldownTicks);
+        tag.putInt(cooldownKey, cooldownTicks);
     }
 
     public static void rechargeFuel(CompoundNBT tag, ItemStack itemStack) {
-        int fuel = tag.getInteger(fuelKey);
-        int buffer = tag.getInteger(bufferKey);
-        int cooldown = tag.getInteger(cooldownKey);
+        int fuel = tag.getInt(fuelKey);
+        int buffer = tag.getInt(bufferKey);
+        int cooldown = tag.getInt(cooldownKey);
         if (cooldown > 0) {
-            tag.setInteger(cooldownKey, cooldown - 1);
+            tag.putInt(cooldownKey, cooldown - 1);
         } else if (fuel + fuelRecharge < fuelCapacity) {
             if (buffer > 0) {
-                tag.setInteger(fuelKey, fuel + fuelRecharge);
-                tag.setInteger(bufferKey, buffer - 1);
+                tag.putInt(fuelKey, fuel + fuelRecharge);
+                tag.putInt(bufferKey, buffer - 1);
             } else {
                 refuelBuffer(tag, itemStack);
             }
@@ -145,7 +145,7 @@ public class UtilBooster {
         int index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.decrStackSize(index, 1);
-            tag.setInteger(bufferKey, gunpowderGain);
+            tag.putInt(bufferKey, gunpowderGain);
             return;
         }
 
@@ -153,11 +153,11 @@ public class UtilBooster {
         index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.decrStackSize(index, 1);
-            tag.setInteger(bufferKey, gunpowderGain);
+            tag.putInt(bufferKey, gunpowderGain);
             return;
         }
 
-        tag.setInteger(cooldownKey, cooldownTicks);
+        tag.putInt(cooldownKey, cooldownTicks);
     }
 
     public static boolean isActive(CompoundNBT tag) {

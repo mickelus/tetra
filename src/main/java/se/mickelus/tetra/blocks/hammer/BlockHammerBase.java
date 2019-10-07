@@ -1,19 +1,19 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
@@ -34,7 +34,7 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -45,7 +45,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
-    public static final PropertyDirection propFacing = BlockHorizontal.FACING;
+    public static final PropertyDirection propFacing = HorizontalBlock.FACING;
     public static final PropertyBool propCell1 = PropertyBool.create("cell1");
     public static final PropertyBool propCell1Charged = PropertyBool.create("cell1charged");
     public static final PropertyBool propCell2 = PropertyBool.create("cell2");
@@ -54,7 +54,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
     static final String unlocalizedName = "hammer_base";
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockHammerBase instance;
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
@@ -65,12 +65,12 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                     EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hand, hitFace) ->
                     removePlate(world, pos, blockState, player, EnumHammerPlate.WEST, hitFace)),
 
-            new BlockInteraction(Capability.hammer, 1, EnumFacing.EAST, 6, 10, 2, 9,
+            new BlockInteraction(Capability.hammer, 1, Direction.EAST, 6, 10, 2, 9,
                     EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
-                    reconfigure(world, pos, blockState, player, EnumFacing.EAST)),
-            new BlockInteraction(Capability.hammer, 1, EnumFacing.WEST, 6, 10, 2, 9,
+                    reconfigure(world, pos, blockState, player, Direction.EAST)),
+            new BlockInteraction(Capability.hammer, 1, Direction.WEST, 6, 10, 2, 9,
                     EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
-                    reconfigure(world, pos, blockState, player, EnumFacing.WEST))
+                    reconfigure(world, pos, blockState, player, Direction.WEST))
     };
 
     public BlockHammerBase() {
@@ -78,7 +78,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
         setBlockUnbreakable();
 
         GameRegistry.registerTileEntity(TileEntityHammerBase.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
@@ -86,7 +86,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         hasItem = true;
 
         this.setDefaultState(this.blockState.getBaseState()
-                .withProperty(propFacing, EnumFacing.EAST)
+                .withProperty(propFacing, Direction.EAST)
                 .withProperty(propCell1, false)
                 .withProperty(propCell1Charged, false)
                 .withProperty(propCell2, false)
@@ -94,18 +94,18 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .map(te -> state
                         .withProperty(propCell1, te.hasCellInSlot(0))
@@ -114,8 +114,8 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                         .withProperty(propCell2Charged, te.getCellFuel(1) > 0)
                         .withProperty(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
                         .withProperty(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
-                        .withProperty(EnumHammerConfig.propE, te.getConfiguration(EnumFacing.EAST))
-                        .withProperty(EnumHammerConfig.propW, te.getConfiguration(EnumFacing.WEST)))
+                        .withProperty(EnumHammerConfig.propE, te.getConfiguration(Direction.EAST))
+                        .withProperty(EnumHammerConfig.propW, te.getConfiguration(Direction.WEST)))
                 .orElse(state);
     }
 
@@ -128,7 +128,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     public void consumeFuel(World world, BlockPos pos) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
-                    IBlockState blockState = world.getBlockState(pos);
+                    BlockState blockState = world.getBlockState(pos);
                     te.consumeFuel();
 
                     world.notifyBlockUpdate(pos, blockState, blockState, 3);
@@ -152,7 +152,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 .orElse(0);
     }
 
-    public static boolean removePlate(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHammerPlate plate, EnumFacing face) {
+    public static boolean removePlate(World world, BlockPos pos, BlockState state, PlayerEntity player, EnumHammerPlate plate, Direction face) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.removePlate(plate);
@@ -174,7 +174,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumFacing adjustedFace) {
+    public static boolean reconfigure(World world, BlockPos pos, BlockState state, PlayerEntity player, Direction adjustedFace) {
         TileEntityOptional.from(world, pos, TileEntityHammerBase.class)
                 .ifPresent(te -> {
                     te.reconfigure(adjustedFace);
@@ -186,9 +186,9 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand,
-                                    EnumFacing facing, float hitX, float hitY, float hitZ) {
-        EnumFacing blockFacing = state.getValue(propFacing);
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand,
+                                    Direction facing, float hitX, float hitY, float hitZ) {
+        Direction blockFacing = state.getValue(propFacing);
         TileEntityHammerBase te = TileEntityOptional.from(world, pos, TileEntityHammerBase.class).orElse(null);
         ItemStack heldStack = player.getHeldItem(hand);
 
@@ -210,7 +210,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), ItemStack.EMPTY);
                 }
 
                 return true;
@@ -221,7 +221,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), heldStack);
                 }
 
                 return true;
@@ -232,7 +232,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -243,7 +243,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -268,7 +268,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.getValue(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);
@@ -280,7 +280,7 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
@@ -296,28 +296,28 @@ public class BlockHammerBase extends TetraBlock implements ITileEntityProvider, 
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
+    public BlockState getStateForPlacement(World worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         return this.getDefaultState().withProperty(propFacing, placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState()
-                .withProperty(propFacing, EnumFacing.getHorizontal(meta & 0xf));
+                .withProperty(propFacing, Direction.getHorizontal(meta & 0xf));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(propFacing).getHorizontalIndex();
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+    public BlockState withMirror(BlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(propFacing)));
     }
 }

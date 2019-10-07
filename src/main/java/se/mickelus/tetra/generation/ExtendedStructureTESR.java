@@ -1,13 +1,18 @@
 package se.mickelus.tetra.generation;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.sun.javafx.geom.Vec3f;
 import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityStructureRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraft.tileentity.TileEntityStructure;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -15,12 +20,12 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@SideOnly(Side.CLIENT)
-public class ExtendedStructureTESR extends TileEntityStructureRenderer {
+@OnlyIn(Dist.CLIENT)
+public class ExtendedStructureTESR extends TileEntityRenderer<StructureBlockTileEntity> {
 
     @Override
-    public void render(TileEntityStructure te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        super.render(te, x, y, z, partialTicks, destroyStage, alpha);
+    public void render(StructureBlockTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+        super.render(te, x, y, z, partialTicks, destroyStage);
 
         BlockPos rel = te.getPosition();
 

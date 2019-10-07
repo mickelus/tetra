@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiRect;
@@ -24,7 +24,7 @@ public class GuiModuleImprovement extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(ChatFormatting.DARK_RED + "-" + I18n.format(improvement + ".name", ""));
+            tooltipLines.add(TextFormatting.DARK_RED + "-" + I18n.format(improvement + ".name", ""));
         } else if (level == 0) {
             tooltipLines.add(I18n.format(improvement + ".name"));
         } else {
@@ -32,8 +32,8 @@ public class GuiModuleImprovement extends GuiElement {
         }
 
         Arrays.stream(I18n.format(improvement + ".description").split("\\\\n"))
-                .map(line -> line.replace(ChatFormatting.RESET.toString(), ChatFormatting.DARK_GRAY.toString()))
-                .map(line -> ChatFormatting.DARK_GRAY + line)
+                .map(line -> line.replace(TextFormatting.RESET.toString(), TextFormatting.DARK_GRAY.toString()))
+                .map(line -> TextFormatting.DARK_GRAY + line)
                 .forEachOrdered(tooltipLines::add);
 
         this.hoverHandler = hoverHandler;

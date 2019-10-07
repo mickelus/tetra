@@ -1,12 +1,12 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -188,11 +188,11 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
 
     private void notifyBlockUpdate() {
         markDirty();
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         world.notifyBlockUpdate(pos, state, state,3);
     }
 
-    public EnumFacing getFacing() {
+    public Direction getFacing() {
         return world.getBlockState(pos).getValue(BlockCoreExtractorBase.propFacing);
     }
 
@@ -201,15 +201,15 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     }
 
     private Optional<TileEntityCoreExtractorPiston> getPiston() {
-        return TileEntityOptional.from(world, pos.offset(EnumFacing.UP), TileEntityCoreExtractorPiston.class);
+        return TileEntityOptional.from(world, pos.offset(Direction.UP), TileEntityCoreExtractorPiston.class);
     }
 
     @Override
     public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
-        if (compound.hasKey(chargeKey)) {
-            currentCharge = compound.getInteger(chargeKey);
+        if (compound.contains(chargeKey)) {
+            currentCharge = compound.getInt(chargeKey);
         } else {
             currentCharge = 0;
         }
@@ -219,7 +219,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
-        compound.setInteger(chargeKey, currentCharge);
+        compound.putInt(chargeKey, currentCharge);
 
         return compound;
     }
@@ -238,7 +238,7 @@ public class TileEntityCoreExtractorBase extends TileEntity implements ITickable
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         this.readFromNBT(packet.getNbtCompound());
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
 
         updateTransferState();
         world.notifyBlockUpdate(pos, state, state,3);

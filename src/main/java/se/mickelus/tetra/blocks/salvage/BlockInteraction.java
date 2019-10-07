@@ -1,15 +1,16 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import com.google.common.base.Predicates;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.state.Property;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
@@ -28,20 +29,20 @@ public class BlockInteraction {
     public Capability requiredCapability;
     public int requiredLevel;
 
-    public EnumFacing face;
+    public Direction face;
     public float minX;
     public float minY;
     public float maxX;
     public float maxY;
 
-    public Predicate<IBlockState> predicate;
+    public Predicate<BlockState> predicate;
 
     public InteractionOutcome outcome;
 
     public float successChance = 1;
 
-    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
-            float maxY, IProperty<V> property, V propertyValue, InteractionOutcome outcome) {
+    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX, float maxX, float minY,
+            float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -55,8 +56,8 @@ public class BlockInteraction {
         this.outcome = outcome;
     }
 
-    public BlockInteraction(Capability requiredCapability, int requiredLevel, EnumFacing face, float minX, float maxX, float minY,
-                            float maxY, Predicate<IBlockState> predicate, InteractionOutcome outcome) {
+    public BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX, float maxX, float minY,
+                            float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -71,31 +72,31 @@ public class BlockInteraction {
     }
 
 
-    public boolean applicableForState(IBlockState blockState) {
+    public boolean applicableForState(BlockState blockState) {
         return predicate.test(blockState);
     }
 
-    public boolean isWithinBounds(float x, float y) {
+    public boolean isWithinBounds(double x, double y) {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(IBlockState blockState, EnumFacing hitFace, Collection<Capability> availableCapabilities) {
-        return isPotentialInteraction(blockState, EnumFacing.NORTH, hitFace, availableCapabilities);
+    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<Capability> availableCapabilities) {
+        return isPotentialInteraction(blockState, Direction.NORTH, hitFace, availableCapabilities);
     }
 
-    public boolean isPotentialInteraction(IBlockState blockState, EnumFacing blockFacing, EnumFacing hitFace,
+    public boolean isPotentialInteraction(BlockState blockState, Direction blockFacing, Direction hitFace,
                                           Collection<Capability> availableCapabilities) {
         return applicableForState(blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
                 && availableCapabilities.contains(requiredCapability);
     }
 
-    public void applyOutcome(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing hitFace) {
+    public void applyOutcome(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
-    public static boolean attemptInteraction(World world, IBlockState blockState, BlockPos pos, PlayerEntity player,
-                                             EnumHand hand, EnumFacing hitFace, float hitX, float hitY, float hitZ) {
+    public static boolean attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player,
+                                             Hand hand, Direction hitFace, double hitX, double hitY, double hitZ) {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
@@ -104,9 +105,10 @@ public class BlockInteraction {
             return false;
         }
 
-        AxisAlignedBB boundingBox = blockState.getBoundingBox(world, pos);
-        float hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
-        float hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
+        // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
+        AxisAlignedBB boundingBox = blockState.getRaytraceShape(world, pos).getBoundingBox();
+        double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
+        double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         BlockInteraction possibleInteraction = Optional.of(blockState.getBlock())
                 .filter(block -> block instanceof IBlockCapabilityInteractive)
@@ -121,19 +123,19 @@ public class BlockInteraction {
         if (possibleInteraction != null) {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, hitFace);
 
-            if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isItemStackDamageable()) {
+            if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isDamageable()) {
                 if (heldStack.getItem() instanceof ItemModular) {
                     ((ItemModular) heldStack.getItem()).applyDamage(2, heldStack, player);
                 } else {
-                    heldStack.damageItem(2, player);
+                    heldStack.damageItem(2, player, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
                 }
             }
 
-            if (player instanceof PlayerEntityMP) {
-                IBlockState newState = world.getBlockState(pos);
-                newState = newState.getActualState(world, pos);
+            if (player instanceof ServerPlayerEntity) {
+                BlockState newState = world.getBlockState(pos);
+                newState = newState.getExtendedState(world, pos);
 
-                BlockInteractionCriterion.trigger((PlayerEntityMP) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
+                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
             }
 
             player.resetCooldown();
@@ -142,11 +144,12 @@ public class BlockInteraction {
         return false;
     }
 
-    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, IBlockState blockState, BlockPos pos, EnumFacing hitFace, float hitX, float hitY,
-            float hitZ) {
-        AxisAlignedBB boundingBox = blockState.getBoundingBox(player.world, pos);
-        float hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
-        float hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
+    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace, double hitX, double hitY,
+            double hitZ) {
+        // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
+        AxisAlignedBB boundingBox = blockState.getRaytraceShape(player.world, pos).getBoundingBox();
+        double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
+        double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         return Optional.of(blockState.getBlock())
                 .filter(block -> block instanceof IBlockCapabilityInteractive)
@@ -158,38 +161,38 @@ public class BlockInteraction {
                 .orElse(null);
     }
 
-    private static float getHitU(EnumFacing facing, AxisAlignedBB boundingBox, float hitX, float hitY, float hitZ) {
+    private static double getHitU(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:
-                return (float) boundingBox.maxX - hitX;
+                return boundingBox.maxX - hitX;
             case UP:
-                return (float) boundingBox.maxX - hitX;
+                return boundingBox.maxX - hitX;
             case NORTH:
-                return (float) boundingBox.maxX - hitX;
+                return boundingBox.maxX - hitX;
             case SOUTH:
-                return hitX - (float) boundingBox.minX;
+                return hitX - boundingBox.minX;
             case WEST:
-                return hitZ - (float) boundingBox.minZ;
+                return hitZ - boundingBox.minZ;
             case EAST:
-                return (float) boundingBox.maxZ - hitZ;
+                return boundingBox.maxZ - hitZ;
         }
         return 0;
     }
 
-    private static float getHitV(EnumFacing facing, AxisAlignedBB boundingBox, float hitX, float hitY, float hitZ) {
+    private static double getHitV(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:
-                return (float) boundingBox.maxZ - hitZ;
+                return boundingBox.maxZ - hitZ;
             case UP:
-                return (float) boundingBox.maxZ - hitZ;
+                return boundingBox.maxZ - hitZ;
             case NORTH:
-                return (float) boundingBox.maxY - hitY;
+                return boundingBox.maxY - hitY;
             case SOUTH:
-                return (float) boundingBox.maxY - hitY;
+                return boundingBox.maxY - hitY;
             case WEST:
-                return (float) boundingBox.maxY - hitY;
+                return boundingBox.maxY - hitY;
             case EAST:
-                return (float) boundingBox.maxY - hitY;
+                return boundingBox.maxY - hitY;
         }
         return 0;
     }

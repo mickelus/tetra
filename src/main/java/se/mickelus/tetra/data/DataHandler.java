@@ -2,7 +2,7 @@ package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -10,20 +10,22 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.ILootFunction;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
-import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.io.FilenameUtils;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.generation.GenerationFeature;
 import se.mickelus.tetra.loot.LootEntryDeserializer;
 import se.mickelus.tetra.loot.LootPoolDeserializer;
-import se.mickelus.tetra.module.ReplacementDefinition;
-import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.ReplacementDefinition;
+import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.module.data.EffectData;
+import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
 
@@ -48,7 +50,7 @@ public class DataHandler {
 
     public DataHandler(File source) {
         this.source = source;
-        configDir = Loader.instance().getConfigDir();
+        configDir = new File(source, "config");
 
         // todo: use the same naming for all deserializers?
         gson = new GsonBuilder()
@@ -67,8 +69,8 @@ public class DataHandler {
                 .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
                 .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
                 .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
-                .registerTypeAdapter(LootFunction.class, new LootFunctionManager.Serializer())
-                .registerTypeAdapter(LootCondition.class, new LootConditionManager.Serializer())
+                .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
+                .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
                 .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
                 .create();
 
@@ -222,7 +224,7 @@ public class DataHandler {
     }
 
     public LootPool[] getExtendedLootPools(ResourceLocation poolLocation) {
-        return getAsset(poolLocation.getResourceDomain(), String.format("loot_pools_extended/%s", poolLocation.getResourcePath()), LootPool[].class);
+        return getAsset(poolLocation.getNamespace(), String.format("loot_pools_extended/%s", poolLocation.getPath()), LootPool[].class);
 
     }
 }

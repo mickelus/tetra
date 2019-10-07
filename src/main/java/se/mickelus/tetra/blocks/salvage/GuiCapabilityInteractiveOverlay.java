@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.animation.Applier;
@@ -21,7 +21,7 @@ public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
 
     }
 
-    public void update(IBlockState blockState, EnumFacing face, PlayerEntity player, boolean transition) {
+    public void update(BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
 
 
         if (blockState.getBlock() instanceof IBlockCapabilityInteractive) {

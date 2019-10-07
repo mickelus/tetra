@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.journal;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -8,13 +8,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.journal.gui.GuiJournal;
 
@@ -25,7 +25,7 @@ public class ItemJournal extends TetraItem {
 
     private static final String unlocalizedName = "journal";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemJournal instance;
 
     public ItemJournal() {
@@ -36,18 +36,18 @@ public class ItemJournal extends TetraItem {
 
         setMaxStackSize(1);
 
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("item.journal.tooltip1"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("item.journal.tooltip1"));
         tooltip.add("");
-        tooltip.add(ChatFormatting.GRAY + ChatFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
+        tooltip.add(TextFormatting.GRAY + TextFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (world.isRemote) {
             showGui();
         }
@@ -55,7 +55,7 @@ public class ItemJournal extends TetraItem {
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void showGui() {
         GuiJournal gui = GuiJournal.getInstance();
 

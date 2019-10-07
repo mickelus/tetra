@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.geode;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

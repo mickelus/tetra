@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -17,19 +17,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.data.DataHandler;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.network.PacketHandler;
 
 public class BlockGeode extends TetraBlock {
 
     static final String unlocalizedName = "block_geode";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockGeode instance;
 
     // hacky, but avoids some log warnings
@@ -49,7 +49,7 @@ public class BlockGeode extends TetraBlock {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
 
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
         this.setDefaultState(this.blockState.getBaseState().withProperty(variantProp, 0));
     }
 
@@ -59,16 +59,16 @@ public class BlockGeode extends TetraBlock {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(variantProp, meta);
     }
 
     @Override
-    public int getMetaFromState(IBlockState blockState) {
+    public int getMetaFromState(BlockState blockState) {
         return blockState.getValue(variantProp);
     }
 
-    private GeodeVariant getVariant(IBlockState state) {
+    private GeodeVariant getVariant(BlockState state) {
         int index = state.getValue(variantProp);
         if (index < variants.length) {
             return variants[index];
@@ -78,28 +78,28 @@ public class BlockGeode extends TetraBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState blockState, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState blockState, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return getSilkTouchDrop(blockState);
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public Item getItemDropped(BlockState state, Random rand, int fortune) {
         return ItemGeode.instance;
     }
 
     @Override
-    public int damageDropped(IBlockState blockState) {
+    public int damageDropped(BlockState blockState) {
         return getVariant(blockState).dropMeta;
     }
 
     @Override
-    protected ItemStack getSilkTouchDrop(IBlockState state) {
+    protected ItemStack getSilkTouchDrop(BlockState state) {
         GeodeVariant variant = getVariant(state);
         return new ItemStack(variant.block, 1, variant.blockMeta);
     }
 
     @Override
-    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+    public float getBlockHardness(BlockState blockState, World worldIn, BlockPos pos) {
         return getVariant(blockState).hardness;
     }
 

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumTransferConfig implements IStringSerializable {
@@ -9,7 +9,7 @@ public enum EnumTransferConfig implements IStringSerializable {
     B,
     C;
 
-    public static final PropertyEnum<EnumTransferConfig> prop = PropertyEnum.create("config", EnumTransferConfig.class);
+    public static final EnumProperty<EnumTransferConfig> prop = EnumProperty.create("config", EnumTransferConfig.class);
 
     @Override
     public String getName() {

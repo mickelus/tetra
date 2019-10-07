@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.sword;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.BasicMajorModule;
@@ -32,7 +32,7 @@ public class ItemSwordModular extends ItemModularHandheld {
     private final ItemModuleMajor macheteModule;
     private final ItemModuleMajor hiltModule;
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemSwordModular instance;
 
     public ItemSwordModular() {
@@ -120,7 +120,7 @@ public class ItemSwordModular extends ItemModularHandheld {
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState blockState) {
+    public boolean canHarvestBlock(BlockState blockState) {
         return blockState.getBlock() == Blocks.WEB;
     }
 }

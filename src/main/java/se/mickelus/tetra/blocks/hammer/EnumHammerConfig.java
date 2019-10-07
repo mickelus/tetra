@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumHammerConfig implements IStringSerializable {
@@ -10,8 +10,8 @@ public enum EnumHammerConfig implements IStringSerializable {
     C,
     D;
 
-    public static final PropertyEnum<EnumHammerConfig> propE = PropertyEnum.create("confige", EnumHammerConfig.class);
-    public static final PropertyEnum<EnumHammerConfig> propW = PropertyEnum.create("configw", EnumHammerConfig.class);
+    public static final EnumProperty<EnumHammerConfig> propE = EnumProperty.create("confige", EnumHammerConfig.class);
+    public static final EnumProperty<EnumHammerConfig> propW = EnumProperty.create("configw", EnumHammerConfig.class);
 
     @Override
     public String getName() {

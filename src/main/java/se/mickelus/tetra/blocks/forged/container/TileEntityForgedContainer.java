@@ -1,11 +1,14 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -15,6 +18,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
@@ -25,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 
-public class TileEntityForgedContainer extends TileEntity implements IInventory {
+public class TileEntityForgedContainer extends TileEntity implements IInventory, INamedContainerProvider {
 
     private NonNullList<ItemStack> stacks;
 
@@ -60,7 +65,7 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         return this;
     }
 
-    public EnumFacing getFacing() {
+    public Direction getFacing() {
         return world.getBlockState(pos).getValue(BlockForgedContainer.propFacing);
     }
 
@@ -91,17 +96,17 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
     private void causeOpeningEffects(WorldServer worldServer) {
-        EnumFacing facing = worldServer.getBlockState(pos).getValue(BlockHorizontal.FACING);
+        Direction facing = worldServer.getBlockState(pos).getValue(HorizontalBlock.FACING);
         Vec3d smokeDirection = new Vec3d(facing.rotateY().getDirectionVec());
         Random random = new Random();
         int smokeCount = 5 + random.nextInt(4);
 
         BlockPos smokeOrigin = pos;
-        if (EnumFacing.SOUTH.equals(facing)) {
+        if (Direction.SOUTH.equals(facing)) {
             smokeOrigin = smokeOrigin.add(1, 0, 0);
-        } else if (EnumFacing.WEST.equals(facing)) {
+        } else if (Direction.WEST.equals(facing)) {
             smokeOrigin = smokeOrigin.add(1, 0, 1);
-        } else if (EnumFacing.NORTH.equals(facing)) {
+        } else if (Direction.NORTH.equals(facing)) {
             smokeOrigin = smokeOrigin.add(0, 0, 1);
         }
 
@@ -183,10 +188,10 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
         NBTHelper.readItemStacks(compound, stacks);
 
         for (int i = 0; i < lockIntegrity.length; i++) {
-            lockIntegrity[i] = compound.getInteger("lock_integrity" + i);
+            lockIntegrity[i] = compound.getInt("lock_integrity" + i);
         }
 
-        lidIntegrity = compound.getInteger("lid_integrity");
+        lidIntegrity = compound.getInt("lid_integrity");
     }
 
     @Override
@@ -203,12 +208,12 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
 
     public static void writeLockData(CompoundNBT compound, int[] lockIntegrity) {
         for (int i = 0; i < lockIntegrity.length; i++) {
-            compound.setInteger("lock_integrity" + i, lockIntegrity[i]);
+            compound.putInt("lock_integrity" + i, lockIntegrity[i]);
         }
     }
 
     public static void writeLidData(CompoundNBT compound, int lidIntegrity) {
-        compound.setInteger("lid_integrity", lidIntegrity);
+        compound.putInt("lid_integrity", lidIntegrity);
     }
 
 
@@ -313,4 +318,14 @@ public class TileEntityForgedContainer extends TileEntity implements IInventory 
     }
 
 
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent(getType().getRegistryName().getPath());
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new ForgedContainerContainer(windowId, this, playerInventory, playerEntity);
+    }
 }

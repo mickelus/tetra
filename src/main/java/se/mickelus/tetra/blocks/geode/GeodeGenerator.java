@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -33,14 +33,14 @@ public class GeodeGenerator implements IWorldGenerator {
         for (int i = 0; i < variant.density; i++) {
             final BlockPos blockPos = chunkPos.getBlock(random.nextInt(16),
                     getY(variant, random), random.nextInt(16));
-            final IBlockState state = world.getBlockState(blockPos);
+            final BlockState state = world.getBlockState(blockPos);
             if (isValidBlockState(variant, state)) {
                 world.setBlockState(blockPos, BlockGeode.instance.getStateFromMeta(index), 16);
             }
         }
     }
 
-    private boolean isValidBlockState(GeodeVariant variant, IBlockState blockState) {
+    private boolean isValidBlockState(GeodeVariant variant, BlockState blockState) {
         return variant.block.equals(blockState.getBlock())
                 && variant.blockMeta == blockState.getBlock().getMetaFromState(blockState);
     }

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiWorkbench extends GuiContainer {
 
     private static GuiWorkbench instance;

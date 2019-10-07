@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -11,11 +11,11 @@ public class EquipToolbeltItemPacket extends AbstractPacket {
     private ToolbeltSlotType slotType;
     private int toolbeltItemIndex;
 
-    private EnumHand hand;
+    private Hand hand;
 
     public EquipToolbeltItemPacket() { }
 
-    public EquipToolbeltItemPacket(ToolbeltSlotType inventoryType, int toolbeltSlot, EnumHand hand) {
+    public EquipToolbeltItemPacket(ToolbeltSlotType inventoryType, int toolbeltSlot, Hand hand) {
         this.slotType = inventoryType;
         this.toolbeltItemIndex = toolbeltSlot;
         this.hand = hand;
@@ -36,8 +36,8 @@ public class EquipToolbeltItemPacket extends AbstractPacket {
         }
 
         int handOrdinal = buffer.readInt();
-        if (handOrdinal < EnumHand.values().length) {
-            hand = EnumHand.values()[handOrdinal];
+        if (handOrdinal < Hand.values().length) {
+            hand = Hand.values()[handOrdinal];
         }
 
         toolbeltItemIndex = buffer.readInt();

@@ -12,14 +12,22 @@ public class TetraLogger {
     }
 
     public static void log(Object message) {
+        log(Level.INFO, message);
+    }
+
+    public static void log(Level level, Object message) {
         if(message != null) {
-            logger.log(Level .INFO, message.toString());
+            logger.log(Level.INFO, message.toString());
         } else {
-            logger.log(Level .INFO, "null");
+            logger.log(Level.INFO, "null");
         }
     }
 
     public static void logf(String format, Object... args) {
-        logger.log(Level .INFO, String.format(format, args));
+        logf(Level.INFO, format, args);
+    }
+
+    public static void logf(Level level, String format, Object... args) {
+        logger.log(level, String.format(format, args));
     }
 }

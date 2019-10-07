@@ -4,14 +4,14 @@ import baubles.api.BaublesApi;
 import baubles.api.cap.BaublesCapabilities;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UtilToolbelt {
-    public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, EnumHand hand) {
+    public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
         InventoryToolbelt inventory = null;
         ItemStack toolbeltStack = findToolbelt(player);
 
@@ -80,12 +80,12 @@ public class UtilToolbelt {
      */
     public static boolean storeItemInToolbelt(PlayerEntity player) {
         ItemStack toolbeltStack = findToolbelt(player);
-        ItemStack itemStack = player.getHeldItem(EnumHand.OFF_HAND);
-        EnumHand sourceHand = EnumHand.OFF_HAND;
+        ItemStack itemStack = player.getHeldItem(Hand.OFF_HAND);
+        Hand sourceHand = Hand.OFF_HAND;
 
         if (itemStack.isEmpty()) {
-            itemStack = player.getHeldItem(EnumHand.MAIN_HAND);
-            sourceHand = EnumHand.MAIN_HAND;
+            itemStack = player.getHeldItem(Hand.MAIN_HAND);
+            sourceHand = Hand.MAIN_HAND;
         }
 
         if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ItemToolbeltModular.instance) {
@@ -183,7 +183,7 @@ public class UtilToolbelt {
      * @param blockState A blockstate
      * @return a quickslot inventory index if a suitable tool is found, otherwise -1
      */
-    public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, IBlockState blockState) {
+    public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, BlockState blockState) {
         ItemStack toolbeltStack = UtilToolbelt.findToolbelt(player);
         InventoryQuickslot inventory = new InventoryQuickslot(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();

@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui.impl.statbar.getter;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class LabelGetterBasic implements ILabelGetter {
-    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
-    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
+    protected static final String increaseColorFont = TextFormatting.GREEN.toString();
+    protected static final String decreaseColorFont = TextFormatting.RED.toString();
 
     protected String formatDiff;
     protected String formatDiffFlipped;
@@ -35,7 +35,7 @@ public class LabelGetterBasic implements ILabelGetter {
                         diffValue, value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value);
             } else {
                 return String.format(formatDiff,
-                        value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, ChatFormatting.RESET, diffValue);
+                        value < diffValue ? increaseColorFont : decreaseColorFont, diffValue - value, TextFormatting.RESET, diffValue);
             }
         } else {
             return String.format(format, diffValue);

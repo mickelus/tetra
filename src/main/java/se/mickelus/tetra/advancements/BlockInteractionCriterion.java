@@ -1,14 +1,14 @@
 package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionInstance;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
 
-public class BlockInteractionCriterion extends AbstractCriterionInstance {
+public class BlockInteractionCriterion extends CriterionInstance {
     private PropertyMatcher after = null;
     private  Capability capability = null;
     private int capabilityLevel = -1;
@@ -19,11 +19,11 @@ public class BlockInteractionCriterion extends AbstractCriterionInstance {
         super(trigger.getId());
     }
 
-    public static void trigger(PlayerEntityMP player, IBlockState state, Capability usedCapability, int usedCapabilityLevel) {
+    public static void trigger(ServerPlayerEntity player, BlockState state, Capability usedCapability, int usedCapabilityLevel) {
         trigger.fulfillCriterion(player.getAdvancements(), criterion -> criterion.test(state, usedCapability, usedCapabilityLevel));
     }
 
-    public boolean test(IBlockState state, Capability usedCapability, int usedCapabilityLevel) {
+    public boolean test(BlockState state, Capability usedCapability, int usedCapabilityLevel) {
         if (after != null && !after.test(state)) {
             return false;
         }

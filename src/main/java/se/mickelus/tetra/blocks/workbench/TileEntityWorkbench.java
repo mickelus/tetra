@@ -1,16 +1,18 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
@@ -20,17 +22,20 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TileEntityWorkbench extends TileEntity implements IInventory {
+
+    @ObjectHolder("tetra:workbench")
+    public static TileEntityType<TileEntityWorkbench> type;
 
     private static final String STACKS_KEY = "stacks";
     private static final String SLOT_KEY = "slot";
@@ -53,6 +58,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
 
     public TileEntityWorkbench() {
+        super(type);
         stacks = NonNullList.withSize(MATERIAL_SLOT_COUNT, ItemStack.EMPTY);
         changeListeners = new HashMap<>();
     }
@@ -74,7 +80,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             return;
         }
 
-        IBlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = world.getBlockState(getPos());
         ItemStack targetStack = getTargetItemStack();
 
         Arrays.stream(actions)
@@ -92,10 +98,9 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                                         targetStack, player, capability, requiredLevel,true);
                             }
                         } else {
-                            if (getBlockType() instanceof BlockWorkbench) {
-                                ((BlockWorkbench) getBlockType()).onActionConsumeCapability(world, getPos(), blockState,
-                                        targetStack, player, true);
-                            }
+                            CastOptional.cast(getBlockState().getBlock(), BlockWorkbench.class)
+                                    .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
+                                            player, true));
                         }
                     }
 
@@ -152,7 +157,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         if (world.isRemote) {
             PacketHandler.sendToServer(new UpdateWorkbenchPacket(pos, currentSchema, currentSlot));
         } else {
-            world.notifyBlockUpdate(pos, getBlockType().getDefaultState(), getBlockType().getDefaultState(), 3);
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             markDirty();
         }
     }
@@ -190,7 +195,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = ItemStack.EMPTY;
 
-        IBlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = world.getBlockState(getPos());
 
         int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, getWorld(), getPos(), blockState);
 
@@ -213,10 +218,10 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                                 upgradedStack, player, capability, requiredLevel,true);
                     }
                 } else {
-                    if (getBlockType() instanceof BlockWorkbench) {
-                        upgradedStack = ((BlockWorkbench) getBlockType()).onCraftConsumeCapability(world, getPos(), blockState,
-                                upgradedStack, player, true);
-                    }
+                    ItemStack consumeTarget = upgradedStack;
+                    CastOptional.cast(getBlockState().getBlock(), BlockWorkbench.class)
+                            .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, consumeTarget,
+                                    player, true));
                 }
             }
 
@@ -270,13 +275,13 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
 
     @Nullable
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return writeToNBT(new CompoundNBT());
+        return write(new CompoundNBT());
     }
 
     @Override
@@ -285,20 +290,20 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-        this.readFromNBT(packet.getNbtCompound());
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        this.read(pkt.getNbtCompound());
     }
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
+    public void read(CompoundNBT compound) {
+        super.read(compound);
 
         NBTHelper.readItemStacks(compound, stacks);
 
         String schemaKey = compound.getString(SCHEMA_KEY);
         currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
 
-        if (compound.hasKey(CURRENT_SLOT_KEY)) {
+        if (compound.contains(CURRENT_SLOT_KEY)) {
             currentSlot = compound.getString(CURRENT_SLOT_KEY);
         }
 
@@ -309,17 +314,17 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
 
         NBTHelper.writeItemStacks(stacks, compound);
 
         if (currentSchema != null) {
-            compound.setString(SCHEMA_KEY, currentSchema.getKey());
+            compound.putString(SCHEMA_KEY, currentSchema.getKey());
         }
 
         if (currentSlot != null) {
-            compound.setString(CURRENT_SLOT_KEY, currentSlot);
+            compound.putString(CURRENT_SLOT_KEY, currentSlot);
         }
 
         return compound;
@@ -344,9 +349,9 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             for (int i = 1; i < stacks.size(); i++) {
                 ItemStack materialStack = removeStackFromSlot(i);
                 if (!materialStack.isEmpty()) {
-                    EntityItem entityitem = new EntityItem(world, (double)pos.getX() + 0.5, (double)pos.getY() + 1.1, (double)pos.getZ() + 0.5, materialStack);
-                    entityitem.setDefaultPickupDelay();
-                    world.spawnEntity(entityitem);
+                    ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 1.1, (double)pos.getZ() + 0.5, materialStack);
+                    itemEntity.setDefaultPickupDelay();
+                    world.addEntity(itemEntity);
                 }
             }
         } else {
@@ -404,7 +409,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
         return itemstack;
     }
 
-    @Nullable
+    @Nonnull
     @Override
     public ItemStack removeStackFromSlot(int index) {
         ItemStack itemstack = ItemStackHelper.getAndRemove(this.stacks, index);
@@ -465,33 +470,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     }
 
     @Override
-    public int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value) {
-    }
-
-    @Override
-    public int getFieldCount() {
-        return 0;
-    }
-
-    @Override
     public void clear() {
         this.stacks.clear();
     }
-
-    @Override
-    public String getName() {
-        return "workbench";
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
-    }
-
-
 }

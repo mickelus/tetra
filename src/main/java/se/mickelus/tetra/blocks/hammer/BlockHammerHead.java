@@ -1,10 +1,10 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.state.Property;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +12,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,14 +21,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -48,7 +46,7 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityHammerHead.class, TetraMod.MOD_ID + ":" + "tile_" +unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
         setBlockUnbreakable();
 
         hasItem = true;
@@ -59,19 +57,19 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     @Override
-    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
-        BlockPos basePos = pos.offset(EnumFacing.UP);
+    public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
+        BlockPos basePos = pos.offset(Direction.UP);
         if (world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
 
@@ -83,8 +81,8 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
-        BlockPos basePos = pos.offset(EnumFacing.UP);
+    public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
+        BlockPos basePos = pos.offset(Direction.UP);
         if (Capability.hammer.equals(capability) && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
 
@@ -96,8 +94,8 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-        BlockPos basePos = pos.offset(EnumFacing.UP);
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
+        BlockPos basePos = pos.offset(Direction.UP);
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
             baseBlock.consumeFuel(world, basePos);
@@ -111,8 +109,8 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-    BlockPos basePos = pos.offset(EnumFacing.UP);
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
+    BlockPos basePos = pos.offset(Direction.UP);
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof BlockHammerBase) {
             BlockHammerBase baseBlock = (BlockHammerBase) world.getBlockState(basePos).getBlock();
             baseBlock.consumeFuel(world, basePos);
@@ -124,17 +122,17 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return boundingBox;
     }
 
     @Override
     public ExtendedBlockState createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
+        return new ExtendedBlockState(this, new Property[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
@@ -144,28 +142,28 @@ public class BlockHammerHead extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return state.withProperty(Properties.StaticProperty, false);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return getDefaultState();
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
+    public EnumBlockRenderType getRenderType(BlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) { return false; }
+    public boolean isOpaqueCube(BlockState state) { return false; }
 
     @Override
-    public boolean isFullCube(IBlockState state) { return false; }
+    public boolean isFullCube(BlockState state) { return false; }
 }

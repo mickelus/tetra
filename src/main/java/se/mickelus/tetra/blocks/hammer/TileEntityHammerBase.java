@@ -3,11 +3,11 @@ package se.mickelus.tetra.blocks.hammer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -76,7 +76,7 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     private void applyConsumeEffect() {
-        EnumFacing facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
+        Direction facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
         Vec3d pos = new Vec3d(getPos());
         pos = pos.addVector(0.5, 0.5, 0.5);
 
@@ -206,11 +206,11 @@ public class TileEntityHammerBase extends TileEntity {
         return false;
     }
 
-    public void reconfigure(EnumFacing side) {
-        if (EnumFacing.EAST.equals(side)) {
+    public void reconfigure(Direction side) {
+        if (Direction.EAST.equals(side)) {
             configEast = EnumHammerConfig.getNextConfiguration(configEast);
             applyReconfigurationEffect(EnumHammerEffect.fromConfig(configEast, world.getSeed()));
-        } else if (EnumFacing.WEST.equals(side)) {
+        } else if (Direction.WEST.equals(side)) {
             configWest = EnumHammerConfig.getNextConfiguration(configWest);
             applyReconfigurationEffect(EnumHammerEffect.fromConfig(configWest, world.getSeed()));
         }
@@ -218,7 +218,7 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     private void applyReconfigurationEffect(EnumHammerEffect effect) {
-        EnumFacing facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
+        Direction facing = getWorld().getBlockState(getPos()).getValue(BlockHammerBase.propFacing);
         Vec3d pos = new Vec3d(getPos());
         pos = pos.addVector(0.5, 0.5, 0.5);
 
@@ -249,10 +249,10 @@ public class TileEntityHammerBase extends TileEntity {
         }
     }
 
-    public EnumHammerConfig getConfiguration(EnumFacing side) {
-        if (EnumFacing.EAST.equals(side)) {
+    public EnumHammerConfig getConfiguration(Direction side) {
+        if (Direction.EAST.equals(side)) {
             return configEast;
-        } else if (EnumFacing.WEST.equals(side)) {
+        } else if (Direction.WEST.equals(side)) {
             return configWest;
         }
 
@@ -287,8 +287,8 @@ public class TileEntityHammerBase extends TileEntity {
     @Override
     public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey(slotsKey)) {
-            NBTTagList tagList = compound.getTagList(slotsKey, 10);
+        if (compound.contains(slotsKey)) {
+            ListNBT tagList = compound.getTagList(slotsKey, 10);
 
             for (int i = 0; i < tagList.tagCount(); i++) {
                 CompoundNBT CompoundNBT = tagList.getCompoundTagAt(i);
@@ -303,14 +303,14 @@ public class TileEntityHammerBase extends TileEntity {
         hasPlateEast = compound.getBoolean(EnumHammerPlate.EAST.key);
         hasPlateWest = compound.getBoolean(EnumHammerPlate.WEST.key);
 
-        if (compound.hasKey(EnumHammerConfig.propE.getName())) {
+        if (compound.contains(EnumHammerConfig.propE.getName())) {
             String enumName = compound.getString(EnumHammerConfig.propE.getName());
             if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
                 configEast = EnumHammerConfig.valueOf(enumName);
             }
         }
 
-        if (compound.hasKey(EnumHammerConfig.propW.getName())) {
+        if (compound.contains(EnumHammerConfig.propW.getName())) {
             String enumName = compound.getString(EnumHammerConfig.propW.getName());
             if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
                 configWest = EnumHammerConfig.valueOf(enumName);
@@ -333,7 +333,7 @@ public class TileEntityHammerBase extends TileEntity {
     }
 
     public static void writeCells(CompoundNBT compound, ItemStack... cells) {
-        NBTTagList nbttaglist = new NBTTagList();
+        ListNBT ListNBT = new ListNBT();
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != null) {
                 CompoundNBT CompoundNBT = new CompoundNBT();
@@ -341,10 +341,10 @@ public class TileEntityHammerBase extends TileEntity {
                 CompoundNBT.setByte(indexKey, (byte) i);
                 cells[i].writeToNBT(CompoundNBT);
 
-                nbttaglist.appendTag(CompoundNBT);
+                ListNBT.appendTag(CompoundNBT);
             }
         }
-        compound.setTag(slotsKey, nbttaglist);
+        compound.setTag(slotsKey, ListNBT);
     }
 
     public static void writePlate(CompoundNBT compound, EnumHammerPlate plate, boolean hasPlate) {

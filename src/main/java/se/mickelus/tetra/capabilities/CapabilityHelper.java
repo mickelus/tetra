@@ -1,6 +1,7 @@
 package se.mickelus.tetra.capabilities;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -9,6 +10,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -81,7 +83,7 @@ public class CapabilityHelper {
         return itemStack;
     }
 
-    public static int getBlockCapabilityLevel(World world, BlockPos pos, IBlockState blockStateIn, Capability capability) {
+    public static int getBlockCapabilityLevel(World world, BlockPos pos, BlockState blockStateIn, Capability capability) {
         return Optional.of(blockStateIn)
                 .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
                 .map(blockState -> (ITetraBlock) blockState.getBlock())
@@ -89,7 +91,7 @@ public class CapabilityHelper {
                 .orElse(-1);
     }
 
-    public static Collection<Capability> getBlockCapabilities(World world, BlockPos pos, IBlockState blockStateIn) {
+    public static Collection<Capability> getBlockCapabilities(World world, BlockPos pos, BlockState blockStateIn) {
         return Optional.of(blockStateIn)
                 .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
                 .map(blockState -> (ITetraBlock) blockState.getBlock())
@@ -97,18 +99,20 @@ public class CapabilityHelper {
                 .orElse(Collections.emptyList());
     }
 
-    public static int getCombinedCapabilityLevel(PlayerEntity player, World world, BlockPos pos, IBlockState blockStateIn, Capability capability) {
+    public static int getCombinedCapabilityLevel(PlayerEntity player, World world, BlockPos pos, BlockState blockStateIn, Capability capability) {
         return Math.max(getPlayerCapabilityLevel(player, capability), getBlockCapabilityLevel(world, pos, blockStateIn, capability));
     }
 
-    public static int[] getCombinedCapabilityLevels(PlayerEntity player, World world, BlockPos pos, IBlockState blockStateIn) {
+    public static int[] getCombinedCapabilityLevels(PlayerEntity player, World world, BlockPos pos, BlockState blockStateIn) {
         return Arrays.stream(Capability.values())
                 .mapToInt(capability -> getCombinedCapabilityLevel(player, world, pos, blockStateIn, capability))
                 .toArray();
     }
 
-    public static ItemStack getProvidingItemStack(Capability capability, int level, PlayerEntity player) {
-        return Stream.concat(Stream.of(player.getHeldItemMainhand(), player.getHeldItemOffhand()), player.inventory.mainInventory.stream())
+    public static ItemStack getProvidingItemStack(Capability capability, int level, Entity entity) {
+        return CastOptional.cast(entity, PlayerEntity.class)
+                .map(player -> Stream.concat(Stream.of(player.getHeldItemMainhand(), player.getHeldItemOffhand()), player.inventory.mainInventory.stream()))
+                .orElse(Stream.empty())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(CapabilityHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof ICapabilityProvider)

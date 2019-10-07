@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt.inventory;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.NBTHelper;
@@ -32,11 +32,11 @@ public class InventoryQuickslot extends InventoryToolbelt {
     @Override
     public void readFromNBT(CompoundNBT tagCompound) {
         super.readFromNBT(tagCompound);
-        NBTTagList shadows = tagCompound.getTagList(shadowsKey, Constants.NBT.TAG_COMPOUND);
+        ListNBT shadows = tagCompound.getTagList(shadowsKey, Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < shadows.tagCount(); i++) {
             CompoundNBT item = shadows.getCompoundTagAt(i);
-            int slot = item.getInteger(slotKey);
+            int slot = item.getInt(slotKey);
 
             if (0 <= slot && slot < getSizeInventory()) {
                 inventoryShadows.set(slot, new ItemStack(item));
@@ -46,11 +46,11 @@ public class InventoryQuickslot extends InventoryToolbelt {
 
     public void writeToNBT(CompoundNBT tagcompound) {
         super.writeToNBT(tagcompound);
-        NBTTagList shadows = new NBTTagList();
+        ListNBT shadows = new ListNBT();
 
         for (int i = 0; i < maxSize; i++) {
                 CompoundNBT item = new CompoundNBT();
-                item.setInteger(slotKey, i);
+                item.putInt(slotKey, i);
                 getShadowOfSlot(i).writeToNBT(item);
                 shadows.appendTag(item);
         }

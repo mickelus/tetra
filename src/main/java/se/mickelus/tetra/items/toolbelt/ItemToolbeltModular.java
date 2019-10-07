@@ -8,18 +8,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
 public class ItemToolbeltModular extends ItemModular implements IBauble {
     private final static String unlocalizedName = "toolbelt_modular";
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemToolbeltModular instance;
 
     public final static String slot1Key = "toolbelt/slot1";
@@ -62,7 +62,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
         setMaxStackSize(1);
 
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         majorModuleKeys = new String[] { slot1Key, slot2Key, slot3Key };
         minorModuleKeys = new String[] { beltKey };
@@ -122,7 +122,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
             itemList.add(createDefaultStack());
@@ -137,7 +137,7 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         player.openGui(TetraMod.instance, GuiHandlerToolbelt.toolbeltId, world, hand.ordinal(), 0, 0);
 
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));

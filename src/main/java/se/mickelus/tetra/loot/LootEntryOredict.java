@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntryItem;
@@ -28,7 +28,7 @@ public class LootEntryOredict extends LootEntryItem {
 
     @Nullable
     public static LootEntryItem deserialize(JsonObject jsonObject, JsonDeserializationContext deserializationContext, int weight, int quality, LootCondition[] conditions) {
-        String oreName = JsonUtils.getString(jsonObject, "ore");
+        String oreName = JSONUtils.getString(jsonObject, "ore");
         return OreDictionary.getOres(oreName).stream()
                 .filter(itemStack -> !itemStack.isEmpty())
                 .min(Comparator.comparing(itemStack -> itemStack.getItem().getUnlocalizedName()))
@@ -44,7 +44,7 @@ public class LootEntryOredict extends LootEntryItem {
                     }
 
                     functions.addAll(Arrays.asList(
-                            JsonUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], deserializationContext, LootFunction[].class)));
+                            JSONUtils.deserializeClass(jsonObject, "functions", new LootFunction[0], deserializationContext, LootFunction[].class)));
 
                     return new LootEntryOredict(itemStack.getItem(), weight, quality, functions.toArray(new LootFunction[0]), conditions, oreName);
                 })

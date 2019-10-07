@@ -1,17 +1,17 @@
 package se.mickelus.tetra.blocks.hammer;
 
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.Direction;
 
 public enum EnumHammerPlate {
-    EAST(EnumFacing.EAST, "platee"),
-    WEST(EnumFacing.WEST, "platew");
+    EAST(Direction.EAST, "platee"),
+    WEST(Direction.WEST, "platew");
 
-    public EnumFacing face;
+    public Direction face;
     public PropertyBool prop;
     public String key;
 
-    EnumHammerPlate(EnumFacing face, String key) {
+    EnumHammerPlate(Direction face, String key) {
         this.face = face;
         this.key = key;
         this.prop = PropertyBool.create(key);

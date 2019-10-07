@@ -2,7 +2,7 @@ package se.mickelus.tetra.module.schema;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -293,25 +293,25 @@ public class ConfigSchema extends BaseSchema {
     }
 
     private void triggerAdvancement(OutcomeDefinition outcome, PlayerEntity player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
-        if(player instanceof PlayerEntityMP) {
+        if(player instanceof ServerPlayerEntity) {
 
             if (outcome.moduleKey != null) {
                 if (outcome.requiredCapabilities.getValues().isEmpty()) {
-                    ModuleCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                    ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                             outcome.moduleVariant, null, -1);
                 } else {
                     outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
-                            ModuleCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                            ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                                     outcome.moduleVariant, capability, capabilityLevel));
                 }
             }
 
             outcome.improvements.forEach((improvement, level) -> {
                 if (outcome.requiredCapabilities.getValues().isEmpty()) {
-                    ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
+                    ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
                 } else {
                     outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
-                            ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
+                            ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
                             capability, capabilityLevel));
                 }
             });

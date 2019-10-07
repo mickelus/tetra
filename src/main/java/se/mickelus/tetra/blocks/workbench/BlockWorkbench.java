@@ -1,18 +1,18 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -29,7 +29,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import se.mickelus.tetra.ConfigHandler;
@@ -42,7 +41,7 @@ import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -54,7 +53,7 @@ import java.util.Random;
 
 public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
-    public static final PropertyEnum<Variant> propVariant = PropertyEnum.create("variant", Variant.class);
+    public static final EnumProperty<Variant> propVariant = EnumProperty.create("variant", Variant.class);
 
     static final String unlocalizedName = "workbench";
 
@@ -67,8 +66,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
-        GameRegistry.registerTileEntity(TileEntityWorkbench.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         hasItem = true;
 
@@ -79,7 +77,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
 
 
-    public static EnumActionResult upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public static EnumActionResult upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
             return EnumActionResult.FAIL;
@@ -92,7 +90,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
             if (!world.isRemote) {
                 world.setBlockState(pos, instance.getDefaultState());
 
-                BlockUseCriterion.trigger((PlayerEntityMP) player, instance.getDefaultState(), ItemStack.EMPTY);
+                BlockUseCriterion.trigger((ServerPlayerEntity) player, instance.getDefaultState(), ItemStack.EMPTY);
             }
             return EnumActionResult.SUCCESS;
         }
@@ -123,7 +121,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     @Override
     public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> items) {
-        if (TetraCreativeTabs.getInstance().equals(creativeTabs)) {
+        if (TetraItemGroup.getInstance().equals(creativeTabs)) {
             items.add(new ItemStack(this, 1, Variant.wood.ordinal()));
             if (ConfigHandler.generateFeatures) {
                 items.add(new ItemStack(this, 1, Variant.forged.ordinal()));
@@ -135,7 +133,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (stack.getItemDamage() == Variant.forged.ordinal()) {
-            tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+            tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
         }
     }
 
@@ -145,14 +143,14 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         player.openGui(TetraMod.instance, GuiHandlerWorkbench.workbenchId, world, pos.getX(), pos.getY(), pos.getZ());
 
         return true;
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public Item getItemDropped(BlockState state, Random rand, int fortune) {
         if (ConfigHandler.workbenchDropTable) {
             return Blocks.CRAFTING_TABLE.getItemDropped(Blocks.CRAFTING_TABLE.getDefaultState(), rand, fortune);
         } else {
@@ -161,7 +159,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+    public void breakBlock(World world, BlockPos pos, BlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
         if (tileentity instanceof IInventory) {
@@ -170,33 +168,33 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return Blocks.CRAFTING_TABLE.getPickBlock(state, target, world, pos, player);
     }
 
     @Override
-    public Collection<Capability> getCapabilities(World world, BlockPos pos, IBlockState blockState) {
-        IBlockState accessoryBlockState = world.getBlockState(pos.offset(EnumFacing.UP));
+    public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
+        BlockState accessoryBlockState = world.getBlockState(pos.offset(Direction.UP));
         if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
             ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
-            return block.getCapabilities(world, pos.offset(EnumFacing.UP), accessoryBlockState);
+            return block.getCapabilities(world, pos.offset(Direction.UP), accessoryBlockState);
         }
         return Collections.emptyList();
     }
 
     @Override
-    public int getCapabilityLevel(World world, BlockPos pos, IBlockState blockState, Capability capability) {
-        IBlockState accessoryBlockState = world.getBlockState(pos.offset(EnumFacing.UP));
+    public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
+        BlockState accessoryBlockState = world.getBlockState(pos.offset(Direction.UP));
         if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
             ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
-            return block.getCapabilityLevel(world, pos.offset(EnumFacing.UP), accessoryBlockState, capability);
+            return block.getCapabilityLevel(world, pos.offset(Direction.UP), accessoryBlockState, capability);
         }
         return -1;
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-        BlockPos topPos = pos.offset(EnumFacing.UP);
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
+        BlockPos topPos = pos.offset(Direction.UP);
         if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
             BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
             return hammer.onCraftConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
@@ -205,8 +203,8 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, IBlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-        BlockPos topPos = pos.offset(EnumFacing.UP);
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
+        BlockPos topPos = pos.offset(Direction.UP);
         if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
             BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
             return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
@@ -233,7 +231,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         if (meta < Variant.values().length) {
             return getDefaultState().withProperty(propVariant, Variant.values()[meta]);
         }
@@ -241,47 +239,47 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(propVariant).ordinal();
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return state.getValue(propVariant).equals(Variant.wood);
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return isFullCube(state);
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
         return state.getValue(propVariant).equals(Variant.wood) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return state.getValue(propVariant).equals(Variant.wood);
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return state.getValue(propVariant).equals(Variant.wood) ? FULL_BLOCK_AABB : forgedAABB;
     }
 
     @Override
-    public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public int getLightOpacity(BlockState state, IBlockAccess world, BlockPos pos) {
         return state.getValue(propVariant).equals(Variant.wood) ? lightOpacity : 0;
     }
 
     @Override
-    public Material getMaterial(IBlockState state) {
+    public Material getMaterial(BlockState state) {
         return state.getValue(propVariant).getMaterial();
     }
 
     @Override
-    public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
+    public float getBlockHardness(BlockState state, World world, BlockPos pos) {
         return state.getValue(propVariant).getHardness();
     }
 

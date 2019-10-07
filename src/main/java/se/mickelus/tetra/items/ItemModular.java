@@ -1,40 +1,43 @@
 package se.mickelus.tetra.items;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentDurability;
+import net.minecraft.enchantment.UnbreakingEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.lwjgl.input.Keyboard;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.module.*;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import com.google.common.collect.ImmutableList;
+import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.module.ItemModule;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.network.PacketHandler;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
 
@@ -57,6 +60,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     protected int baseIntegrity = 0;
 
     protected SynergyData[] synergies = new SynergyData[0];
+
+    public ItemModular(Properties properties) {
+        super(properties);
+    }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
@@ -192,11 +199,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
-        int damage = itemStack.getItemDamage();
+        int damage = itemStack.getDamage();
         int maxDamage = itemStack.getMaxDamage();
         if (damage < maxDamage) {
             int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
-            itemStack.damageItem(reducedAmount, responsibleEntity);
+            itemStack.damageItem(reducedAmount, responsibleEntity, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
 
             if (damage + reducedAmount >= maxDamage && responsibleEntity.world.isRemote) {
                 responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
@@ -225,20 +232,20 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         if (!isHoneable(itemStack)) {
             int honingProgress;
-            if (tag.hasKey(honeProgressKey)) {
-                honingProgress = tag.getInteger(honeProgressKey);
+            if (tag.contains(honeProgressKey)) {
+                honingProgress = tag.getInt(honeProgressKey);
             } else {
                 honingProgress = getHoningBase(itemStack);
             }
 
             honingProgress -= multiplier;
-            tag.setInteger(honeProgressKey, honingProgress);
+            tag.putInt(honeProgressKey, honingProgress);
 
             if (honingProgress <= 0 && !isHoneable(itemStack)) {
-                tag.setBoolean(honeAvailableKey, true);
+                tag.putBoolean(honeAvailableKey, true);
 
-                if (entity instanceof PlayerEntity && FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-                    PacketHandler.sendTo(new HonePacket(itemStack), (PlayerEntityMP) entity);
+                if (entity instanceof PlayerEntity && FMLEnvironment.dist.isDedicatedServer()) {
+                    PacketHandler.sendTo(new HonePacket(itemStack), (ServerPlayerEntity) entity);
                 }
             }
         }
@@ -248,15 +255,15 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     public int getHoningProgress(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
 
-        if (tag.hasKey(honeProgressKey)) {
-            return tag.getInteger(honeProgressKey);
+        if (tag.contains(honeProgressKey)) {
+            return tag.getInt(honeProgressKey);
         }
 
         return getHoningBase(itemStack);
     }
 
     public void setHoningProgress(ItemStack itemStack, int progress) {
-        NBTHelper.getTag(itemStack).setInteger(honeProgressKey, progress);
+        NBTHelper.getTag(itemStack).putInt(honeProgressKey, progress);
     }
 
     public int getHoningBase(ItemStack itemStack) {
@@ -264,22 +271,22 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public int getHonedCount(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInteger(honeCountKey);
+        return NBTHelper.getTag(itemStack).getInt(honeCountKey);
     }
 
     public static boolean isHoneable(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).hasKey(honeAvailableKey);
+        return NBTHelper.getTag(itemStack).contains(honeAvailableKey);
     }
 
     public static int getHoningSeed(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInteger(honeCountKey) + 1;
+        return NBTHelper.getTag(itemStack).getInt(honeCountKey) + 1;
     }
 
     public static void removeHoneable(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
-        tag.removeTag(honeAvailableKey);
-        tag.removeTag(honeProgressKey);
-        tag.setInteger(honeCountKey, tag.getInteger(honeCountKey) + 1);
+        tag.remove(honeAvailableKey);
+        tag.remove(honeProgressKey);
+        tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
     }
 
     @Override
@@ -293,7 +300,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             int reduction = 0;
 
             for (int i = 0; i < amount; i++) {
-                if (EnchantmentDurability.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
+                if (UnbreakingEnchantment.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
                     reduction++;
                 }
             }
@@ -303,38 +310,47 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public boolean isBroken(ItemStack itemStack) {
-        return itemStack.getMaxDamage() != 0 && itemStack.getItemDamage() >= itemStack.getMaxDamage();
+        return itemStack.getMaxDamage() != 0 && itemStack.getDamage() >= itemStack.getMaxDamage();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         if (isBroken(itemStack)) {
-            tooltip.add(TextFormatting.DARK_RED.toString() + TextFormatting.ITALIC + I18n.format("item.modular.broken"));
+            tooltip.add(new TranslationTextComponent("item.modular.broken")
+                    .setStyle(new Style().setColor(TextFormatting.DARK_RED).setItalic(true)));
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+        if (Screen.hasShiftDown()) {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add("\u00BB " + module.getName(itemStack));
+                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)));
                         Arrays.stream(module.getImprovements(itemStack))
-                                .map(improvement -> String.format(" %s- %s",
-                                        ChatFormatting.DARK_GRAY, getImprovementTooltip(improvement.key, improvement.level)))
+                                .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level)))
+                                .map(StringTextComponent::new)
+                                .map(textComponent -> textComponent.setStyle(new Style().setColor(TextFormatting.DARK_GRAY)))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
                     .map(module -> "* " + module.getName(itemStack))
+                    .map(StringTextComponent::new)
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression) {
                 if (isHoneable(itemStack)) {
-                    tooltip.add(ChatFormatting.AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.available"));
+                    tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.AQUA))
+                            .appendSibling(new TranslationTextComponent("hone.available")
+                                    .setStyle(new Style().setColor(TextFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningBase(itemStack);
-                    tooltip.add(ChatFormatting.DARK_AQUA + " > " + ChatFormatting.GRAY + I18n.format("hone.progress", String.format("%.1f", 100f * (base - progress) / base)));
+                    String result = String.format("%.1f", 100f * (base - progress) / base);
+                    tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.DARK_AQUA))
+                            .appendSibling(new TranslationTextComponent("hone.progress", result)
+                                    .setStyle(new Style().setColor(TextFormatting.GRAY))));
                 }
             }
         } else {
@@ -346,6 +362,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .entrySet()
                     .stream()
                     .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue()))
+                    .map(StringTextComponent::new)
                     .forEach(tooltip::add);
         }
     }
@@ -448,12 +465,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      * @return
      */
     private int getRepairCount(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInteger(repairCountKey);
+        return NBTHelper.getTag(itemStack).getInt(repairCountKey);
     }
 
     private void incrementRepairCount(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
-        tag.setInteger(repairCountKey, tag.getInteger(repairCountKey) + 1);
+        tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1);
     }
 
     public void repair(ItemStack itemStack) {
@@ -469,8 +486,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public void assemble(ItemStack itemStack) {
-        if (itemStack.getItemDamage() > itemStack.getMaxDamage()) {
-            itemStack.setItemDamage(itemStack.getMaxDamage());
+        if (itemStack.getDamage() > itemStack.getMaxDamage()) {
+            itemStack.setDamage(itemStack.getMaxDamage());
         }
     }
 
@@ -482,8 +499,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return;
         }
 
-        if (itemStack.isItemStackDamageable()) {
-            durabilityFactor = itemStack.getItemDamage() * 1f / itemStack.getMaxDamage();
+        if (itemStack.isDamageable()) {
+            durabilityFactor = itemStack.getDamage() * 1f / itemStack.getMaxDamage();
         }
 
         tweaks.forEach((tweakKey, step) -> {
@@ -492,8 +509,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             }
         });
 
-        if (itemStack.isItemStackDamageable()) {
-            itemStack.setItemDamage((int) (durabilityFactor * itemStack.getMaxDamage()
+        if (itemStack.isDamageable()) {
+            itemStack.setDamage((int) (durabilityFactor * itemStack.getMaxDamage()
                     - (durabilityFactor * durabilityFactor * module.getDurability(itemStack))));
         }
     }
@@ -671,11 +688,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack itemStack) {
-        // todo: since getItemStackDisplayName is called on the server we cannot use the new I18n service
-        if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)) {
-            return "";
+    public ITextComponent getDisplayName(ItemStack itemStack) {
+        // todo: since getItemStackDisplayName is called on the server we cannot use the I18n service
+        if (FMLEnvironment.dist.isDedicatedServer()) {
+            return new StringTextComponent("");
         }
+
         String name = Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.name)
                 .filter(Objects::nonNull)
@@ -693,7 +711,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
 
         String prefixes = getDisplayNamePrefixes(itemStack);
-        return WordUtils.capitalize(prefixes + name);
+        return new StringTextComponent(WordUtils.capitalize(prefixes + name));
     }
 
     public SynergyData[] getAllSynergyData(ItemStack itemStack) {

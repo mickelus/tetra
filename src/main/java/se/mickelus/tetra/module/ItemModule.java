@@ -64,8 +64,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     public ItemStack[] removeModule(ItemStack targetStack) {
         CompoundNBT tag = NBTHelper.getTag(targetStack);
 
-        tag.removeTag(slotKey);
-        tag.removeTag(dataKey);
+        tag.remove(slotKey);
+        tag.remove(dataKey);
 
         return new ItemStack[0];
     }
@@ -243,11 +243,11 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     }
 
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
-        return Math.max(Math.min(NBTHelper.getTag(itemStack).getInteger(slotKey + ":" + tweak.key), tweak.steps), -tweak.steps);
+        return Math.max(Math.min(NBTHelper.getTag(itemStack).getInt(slotKey + ":" + tweak.key), tweak.steps), -tweak.steps);
     }
 
     public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
-        NBTHelper.getTag(itemStack).setInteger(slotKey + ":" + tweakKey, step);
+        NBTHelper.getTag(itemStack).putInt(slotKey + ":" + tweakKey, step);
     }
 
     public double getDamageModifier(ItemStack itemStack) {

@@ -4,8 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
-import se.mickelus.tetra.blocks.workbench.gui.GuiWorkbench;
 import se.mickelus.tetra.network.TetraGuiHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -20,14 +18,14 @@ public class GuiHandlerForgedContainer implements TetraGuiHandler {
     public Object getClientGuiElement(PlayerEntity player, World world, int x, int y, int z) {
             TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
         return CastOptional.cast(tileEntity, TileEntityForgedContainer.class)
-                .map(te -> new GuiForgedContainer(getContainer(player, world, x, y, z), te))
+                .map(te -> new ForgedContainerScreen(getContainer(player, world, x, y, z), te))
                 .orElse(null);
     }
 
-    private ContainerForgedContainer getContainer(PlayerEntity player, World world, int x, int y, int z) {
+    private ForgedContainerContainer getContainer(PlayerEntity player, World world, int x, int y, int z) {
         TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
         return CastOptional.cast(tileEntity, TileEntityForgedContainer.class)
-                .map(te -> new ContainerForgedContainer(player.inventory, te, player))
+                .map(te -> new ForgedContainerContainer(player.inventory, te, player))
                 .orElse(null);
     }
 }

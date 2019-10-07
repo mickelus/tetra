@@ -1,37 +1,38 @@
 package se.mickelus.tetra;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
-import net.minecraftforge.advancements.critereon.ItemPredicates;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.BlockForgedContainer;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerScreen;
+import se.mickelus.tetra.blocks.forged.container.TileEntityForgedContainer;
 import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorBase;
 import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorPipe;
 import se.mickelus.tetra.blocks.forged.extractor.BlockCoreExtractorPiston;
@@ -41,12 +42,13 @@ import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
 import se.mickelus.tetra.blocks.hammer.BlockHammerHead;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.generation.WorldGenFeatures;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.forged.*;
@@ -62,38 +64,48 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
+import se.mickelus.tetra.proxy.ServerProxy;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
-@Mod(useMetadata = true, modid = TetraMod.MOD_ID, version = "#VERSION")
+@Mod(TetraMod.MOD_ID)
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class TetraMod {
     public static final String MOD_ID = "tetra";
 
-    @SidedProxy(clientSide = "se.mickelus.tetra.proxy.ClientProxy", serverSide = "se.mickelus.tetra.proxy.ServerProxy")
-    public static IProxy proxy;
+    public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
-    @Mod.Instance(TetraMod.MOD_ID)
     public static TetraMod instance;
 
     private Item[] items;
     private Block[] blocks;
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        ItemPredicates.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+    public TetraMod() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
+        ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
 
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
         LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
         LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());
 
-        new DataHandler(event.getSourceFile());
+        try {
+            new DataHandler(new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI()));
+        } catch (URISyntaxException e) {
+            TetraLogger.log(Level.SEVERE, e.getMessage());
+        }
+
 
         new ItemUpgradeRegistry();
 
-        new TetraCreativeTabs();
+        new TetraItemGroup();
 
         new GuiHandlerRegistry();
 
@@ -104,7 +116,7 @@ public class TetraMod {
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
-        MinecraftForge.EVENT_BUS.register(this);
+        // MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
         MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
 
@@ -150,10 +162,7 @@ public class TetraMod {
                 new ItemJournal()
         };
 
-        ForgeRegistries.POTIONS.registerAll(new PotionBleeding());
-        ForgeRegistries.POTIONS.registerAll(new PotionEarthbound());
-
-        proxy.preInit(event,
+        proxy.preInit(
                 Arrays.stream(items)
                         .filter(item -> item instanceof ITetraItem)
                         .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
@@ -161,17 +170,11 @@ public class TetraMod {
                         .filter(block -> block instanceof ITetraBlock)
                         .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
     }
-    
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
+
+    public void setup(FMLCommonSetupEvent event) {
         proxy.init(event);
 
-        if (ConfigHandler.generateFeatures) {
-            WorldGenFeatures worldGenFeatures = new WorldGenFeatures();
-            GameRegistry.registerWorldGenerator(worldGenFeatures, 11);
-        }
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, GuiHandlerRegistry.instance);
+        ScreenManager.registerFactory(BlockForgedContainer.containerType, ForgedContainerScreen::new);
 
         PacketHandler packetHandler = new PacketHandler();
 
@@ -184,13 +187,15 @@ public class TetraMod {
                 .map(block -> (ITetraBlock) block)
                 .forEach(block -> block.init(packetHandler));
 
-        packetHandler.registerPacket(HonePacket.class, Side.CLIENT);
-        packetHandler.registerPacket(SettlePacket.class, Side.CLIENT);
+        packetHandler.registerPacket(HonePacket.class, HonePacket::new);
+        packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
+
+        proxy.postInit();
     }
 
     @SubscribeEvent
     public void lootTableLoad(LootTableLoadEvent event) {
-        if (TetraMod.MOD_ID.equals(event.getName().getResourceDomain())) {
+        if (TetraMod.MOD_ID.equals(event.getName().getNamespace())) {
             LootTable lootTable = event.getTable();
             LootPool[] extendedPools = DataHandler.instance.getExtendedLootPools(event.getName());
             Optional.ofNullable(extendedPools)
@@ -200,14 +205,30 @@ public class TetraMod {
         }
     }
 
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        proxy.postInit(event);
+    public void serverStarting(FMLServerStartingEvent event) {
+        TGenCommand.register(event.getCommandDispatcher());
+
+        // todo 1.14: figure out feature generation again...
+        if (ConfigHandler.generateFeatures) {
+            WorldGenFeatures worldGenFeatures = new WorldGenFeatures(event.getServer());
+            // GameRegistry.registerWorldGenerator(worldGenFeatures, 11);
+        }
     }
 
-    @EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new TGenCommand());
+    @SubscribeEvent
+    public void registerPotions(RegistryEvent.Register<Potion> event) {
+        event.getRegistry().register(new PotionBleeding());
+        event.getRegistry().register(new PotionEarthbound());
+    }
+
+    @SubscribeEvent
+    public void registerContainerTypes(RegistryEvent.Register<ContainerType<?>> event) {
+        event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> {
+            BlockPos pos = data.readBlockPos();
+            TileEntityForgedContainer te = (TileEntityForgedContainer) Minecraft.getInstance().world.getTileEntity(pos);
+            return new ForgedContainerContainer(windowId, te, inv, Minecraft.getInstance().player);
+        }))
+                .setRegistryName(MOD_ID, BlockForgedContainer.unlocalizedName));
     }
 
     @SubscribeEvent
@@ -219,18 +240,24 @@ public class TetraMod {
     public void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(items);
 
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-            Arrays.stream(items)
-                    .forEach(item -> {
-                        ModelLoader.setCustomModelResourceLocation(item, 0,
-                                new ModelResourceLocation(item.getRegistryName(), "inventory"));
-                    });
-        }
+        // todo 1.14: this is supposedly not needed, item rendering works?
+//        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+//            Arrays.stream(items)
+//                    .forEach(item -> {
+//                        ModelLoader.setCustomModelResourceLocation(item, 0,
+//                                new ModelResourceLocation(item.getRegistryName(), "inventory"));
+//                    });
+//        }
 
         Arrays.stream(blocks)
                 .filter(block -> block instanceof ITetraBlock)
                 .map(block -> (ITetraBlock) block)
                 .filter(ITetraBlock::hasItem)
                 .forEach(block -> block.registerItem(event.getRegistry()));
+    }
+
+    public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
+        // todo 1.14: workbench TE registry, do we really pass null here? (from mcjty tutorial)
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityWorkbench::new, BlockWorkbench.instance).build(null));
     }
 }

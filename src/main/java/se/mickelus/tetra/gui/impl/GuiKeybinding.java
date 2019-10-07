@@ -2,7 +2,6 @@ package se.mickelus.tetra.gui.impl;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyModifier;
 import se.mickelus.tetra.gui.GuiElement;
@@ -15,7 +14,7 @@ public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
         this(x, y,
-                GameSettings.getKeyDisplayString(keyBinding.getKeyCode()),
+                keyBinding.getKeyDescription(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
                 I18n.format(keyBinding.getKeyDescription()));
     }
@@ -49,8 +48,9 @@ public class GuiKeybinding extends GuiElement {
         public GuiKey(int x, int y, String key) {
             super(x, y, 0, 11);
 
+            // todo 1.14: handle single character as string?
             if (key.length() == 1) {
-                width = Minecraft.getInstance().fontRenderer.getCharWidth(key.charAt(0)) + 5;
+                width = (int) Minecraft.getInstance().fontRenderer.getCharWidth(key.charAt(0)) + 5;
             } else {
                 width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
             }

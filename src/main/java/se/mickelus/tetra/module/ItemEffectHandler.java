@@ -3,7 +3,7 @@ package se.mickelus.tetra.module;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -267,7 +267,7 @@ public class ItemEffectHandler {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
-                    IBlockState state = event.getState();
+                    BlockState state = event.getState();
                     if (!event.isSilkTouching()) {
                         int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
                         if (fortuneLevel > 0) {
@@ -291,7 +291,7 @@ public class ItemEffectHandler {
                     int strikingLevel = 0;
                     BlockPos pos = event.getPos();
                     World world = event.getWorld();
-                    IBlockState blockState = world.getBlockState(pos);
+                    BlockState blockState = world.getBlockState(pos);
                     String tool = ItemModularHandheld.getEffectiveTool(blockState);
                     PlayerEntity breakingPlayer = event.getPlayerEntity();
 
@@ -342,7 +342,7 @@ public class ItemEffectHandler {
                 });
     }
 
-    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, IBlockState blockState, ItemStack itemStack, String tool, int critLevel) {
+    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, String tool, int critLevel) {
         if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
             if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
@@ -402,7 +402,7 @@ public class ItemEffectHandler {
      * @param blockState the state of the block that is to broken
      * @return True if the player was allowed to break the block, otherwise false
      */
-    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, IBlockState blockState) {
+    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState) {
         boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true);
         if (canRemove && !world.isRemote) {
             blockState.getBlock().onBlockDestroyedByPlayer(world, pos, blockState);
@@ -428,7 +428,7 @@ public class ItemEffectHandler {
             return;
         }
 
-        EnumFacing facing = breakingPlayer.getHorizontalFacing();
+        Direction facing = breakingPlayer.getHorizontalFacing();
         final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
         final boolean alternate = strikeCounter % 2 == 0;
 
@@ -444,7 +444,7 @@ public class ItemEffectHandler {
                 .map(pos -> rotatePos(pos, facing))
                 .map(originPos::add)
                 .forEachOrdered(pos -> {
-                    IBlockState blockState = world.getBlockState(pos);
+                    BlockState blockState = world.getBlockState(pos);
 
                     // make sure that only blocks which require the same tool are broken
                     if (tool.equals(ItemModularHandheld.getEffectiveTool(blockState))) {
@@ -478,7 +478,7 @@ public class ItemEffectHandler {
         return counter;
     }
 
-    private BlockPos rotatePos(BlockPos pos, EnumFacing facing) {
+    private BlockPos rotatePos(BlockPos pos, Direction facing) {
         switch (facing) {
             default:
             case SOUTH:
@@ -494,14 +494,14 @@ public class ItemEffectHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onArrowNock(ArrowNockEvent event) {
-        if (!event.hasAmmo() && event.getPlayerEntity().getHeldItem(EnumHand.OFF_HAND).isEmpty()) {
+        if (!event.hasAmmo() && event.getPlayerEntity().getHeldItem(Hand.OFF_HAND).isEmpty()) {
             ItemStack itemStack = UtilToolbelt.findToolbelt(event.getPlayerEntity());
             if (!itemStack.isEmpty()) {
                 InventoryQuiver inventory = new InventoryQuiver(itemStack);
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
-                        event.getPlayerEntity().setHeldItem(EnumHand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
+                        event.getPlayerEntity().setHeldItem(Hand.OFF_HAND, inventory.getStackInSlot(i).splitStack(1));
                         event.getPlayerEntity().setActiveHand(event.getHand());
                         inventory.markDirty();
 

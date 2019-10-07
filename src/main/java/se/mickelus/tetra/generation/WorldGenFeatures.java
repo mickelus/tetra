@@ -1,31 +1,31 @@
 package se.mickelus.tetra.generation;
 
+import com.mojang.datafixers.DataFixer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.chunk.AbstractChunkProvider;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.gen.structure.template.*;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.SidedProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.server.FMLServerHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
-import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.generation.processor.*;
 
 import java.util.*;
@@ -37,24 +37,19 @@ public class WorldGenFeatures implements IWorldGenerator {
 
     public static WorldGenFeatures instance;
 
-    public WorldGenFeatures() {
+    public WorldGenFeatures(MinecraftServer server) {
         features = DataHandler.instance.getGenerationFeatures();
 
-        DataFixer dataFixer;
-        if (FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) {
-            dataFixer = Minecraft.getInstance().getDataFixer();
-        } else {
-            dataFixer = FMLServerHandler.instance().getServer().getDataFixer();
-        }
-        templateManager = new TemplateManager(TetraMod.MOD_ID, dataFixer);
+        DataFixer dataFixer = server.getDataFixer();
+        templateManager = new TemplateManager(server, TetraMod.MOD_ID, server.getDataFixer());
 
         // reloads features once per second when in development mode
         if (ConfigHandler.development) {
             new Timer("featureReload").schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    GenerationFeature[] features = DataHandler.instance.getGenerationFeatures();
-                    Minecraft.getInstance().addScheduledTask(() -> WorldGenFeatures.instance.features = features);
+                    GenerationFeature[] newFeatures = DataHandler.instance.getGenerationFeatures();
+                    Minecraft.getInstance().enqueue(() -> WorldGenFeatures.instance.features = newFeatures);
                 }
             }, 0, 1000);
         }
@@ -81,7 +76,7 @@ public class WorldGenFeatures implements IWorldGenerator {
     }
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider) {
         Arrays.stream(features)
                 .filter(feature -> Arrays.stream(feature.dimensions).anyMatch(id -> world.provider.getDimension() == id))
                 .filter(feature -> {

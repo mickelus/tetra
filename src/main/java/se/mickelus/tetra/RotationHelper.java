@@ -1,10 +1,10 @@
 package se.mickelus.tetra;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 
 public class RotationHelper {
-    public static Rotation rotationFromFacing(EnumFacing facing) {
+    public static Rotation rotationFromFacing(Direction facing) {
         switch (facing) {
             case UP:
             case DOWN:

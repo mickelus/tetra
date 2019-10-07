@@ -1,56 +1,68 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.world.World;
+import se.mickelus.tetra.items.TetraItemGroup;
 
 /**
  * Custom itemblock for the forged container, so that the correct bounding box can be checked on placement.
  */
-public class ItemBlockForgedContainer extends ItemBlock {
+public class ItemBlockForgedContainer extends BlockItem {
 
     public ItemBlockForgedContainer(Block block) {
-        super(block);
+        super(block, new Item.Properties().group(TetraItemGroup.getInstance()));
+
+        setRegistryName(block.getRegistryName());
     }
 
     /**
      * Straight up copy of the vanilla implementation except that it does not check entity collisions in worldIn.mayPlace.
      */
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
+    public ActionResultType onItemUse(ItemUseContext context) {
+        PlayerEntity player = context.getPlayer();
+        Hand hand = context.getHand();
+        Direction face = context.getFace();
 
-        if (!block.isReplaceable(worldIn, pos)) {
-            pos = pos.offset(facing);
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        BlockState blockState = context.getWorld().getBlockState(pos);
+        Block block = blockState.getBlock();
+
+        BlockItemUseContext extendedContext = new BlockItemUseContext(context);
+
+        if (!blockState.isReplaceable(extendedContext)) {
+            pos = pos.offset(context.getFace());
         }
 
         ItemStack itemstack = player.getHeldItem(hand);
 
-        if (!itemstack.isEmpty() && player.canPlayerEdit(pos, facing, itemstack) && worldIn.mayPlace(this.block, pos, true, facing, (Entity)null)) {
-            int i = this.getMetadata(itemstack.getMetadata());
-            IBlockState iblockstate1 = this.block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, i, player, hand);
+        if (!itemstack.isEmpty()
+                && player.canPlayerEdit(pos, face, itemstack)
+                && world.func_217350_a(blockState, pos, ISelectionContext.forEntity(player))) {
 
-            if (placeBlockAt(itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ, iblockstate1)) {
-                iblockstate1 = worldIn.getBlockState(pos);
-                SoundType soundtype = iblockstate1.getBlock().getSoundType(iblockstate1, worldIn, pos, player);
-                worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+            BlockState newState = block.getStateForPlacement(extendedContext);
+
+            if (placeBlock(extendedContext, newState)) {
+                newState = world.getBlockState(pos);
+                SoundType soundtype = newState.getBlock().getSoundType(newState, world, pos, player);
+                world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 itemstack.shrink(1);
             }
 
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         } else {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
     }
 
@@ -58,12 +70,11 @@ public class ItemBlockForgedContainer extends ItemBlock {
      * Based on the vanilla implementation, but also checks that the multiblock part can be placed.
      */
     @Override
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, PlayerEntity player, ItemStack stack) {
-        if (worldIn.getBlockState(pos.offset(side)).getBlock().isReplaceable(worldIn, pos.offset(side))) {
-            BlockPos adjacentPos = pos.offset(side).offset(player.getHorizontalFacing().rotateY());
-            return worldIn.getBlockState(adjacentPos).getBlock().isReplaceable(worldIn, adjacentPos);
-        }
+    protected boolean canPlace(BlockItemUseContext context, BlockState blockState) {
+        Direction adjacentDirection = context.getPlayer().getHorizontalFacing().rotateY();
+        BlockPos adjacentPos = context.getPos().offset(context.getFace()).offset(adjacentDirection);
 
-        return false;
+        return super.canPlace(context, blockState)
+                && super.canPlace(BlockItemUseContext.func_221536_a(context, adjacentPos, adjacentDirection), blockState);
     }
 }

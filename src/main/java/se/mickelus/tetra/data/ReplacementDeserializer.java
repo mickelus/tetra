@@ -8,10 +8,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
@@ -28,14 +28,14 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         JsonObject jsonObject = element.getAsJsonObject();
 
         try {
-            replacement.predicate = ItemPredicate.deserialize(JsonUtils.getJsonObject(jsonObject, "predicate"));
+            replacement.predicate = ItemPredicate.deserialize(JSONUtils.getJsonObject(jsonObject, "predicate"));
         } catch (JsonSyntaxException e) {
             // todo: debug log here
-//                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JsonUtils.getJsonObject(jsonObject, "predicate").toString()));
+//                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JSONUtils.getJsonObject(jsonObject, "predicate").toString()));
             return replacement;
         }
 
-        ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "item"));
+        ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getString(jsonObject, "item"));
         Item item = Item.REGISTRY.getObject(resourcelocation);
         if (item == null) {
             throw new JsonSyntaxException("Failed to parse replacement data from " + jsonObject.getAsString());
@@ -43,7 +43,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         replacement.itemStack = new ItemStack(item);
 
         if (item instanceof ItemModular) {
-            for (Map.Entry<String, JsonElement> moduleDefinition: JsonUtils.getJsonObject(jsonObject, "modules").entrySet()) {
+            for (Map.Entry<String, JsonElement> moduleDefinition: JSONUtils.getJsonObject(jsonObject, "modules").entrySet()) {
                 String moduleKey = moduleDefinition.getValue().getAsJsonArray().get(0).getAsString();
                 String moduleVariant = moduleDefinition.getValue().getAsJsonArray().get(1).getAsString();
                 ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
@@ -54,7 +54,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
             }
 
             if (jsonObject.has("improvements")) {
-                for (Map.Entry<String, JsonElement> improvement: JsonUtils.getJsonObject(jsonObject, "improvements").entrySet()) {
+                for (Map.Entry<String, JsonElement> improvement: JSONUtils.getJsonObject(jsonObject, "improvements").entrySet()) {
                     String temp[] = improvement.getKey().split(":");
                     ItemModuleMajor.addImprovement(replacement.itemStack, temp[0], temp[1], improvement.getValue().getAsInt());
                 }

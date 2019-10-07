@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -60,7 +60,7 @@ public class ConfigActionImpl extends ConfigAction {
                     Item.getIdFromItem(targetStack.getItem()), targetStack.getMetadata());
 
             // todo: add proper criteria
-            CriteriaTriggers.CONSUME_ITEM.trigger((PlayerEntityMP) player, targetStack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, targetStack);
 
             targetStack.setCount(targetStack.getCount() - 1);
             workbench.markDirty();

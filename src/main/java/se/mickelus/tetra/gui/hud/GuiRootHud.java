@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.hud;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -25,7 +25,7 @@ public class GuiRootHud extends GuiElement {
                 rayTrace.sideHit, boundingBox);
     }
 
-    public void draw(double x, double y, double z, double hitX, double hitY, double hitZ, EnumFacing facing, AxisAlignedBB boundingBox) {
+    public void draw(double x, double y, double z, double hitX, double hitY, double hitZ, Direction facing, AxisAlignedBB boundingBox) {
         activeAnimations.removeIf(keyframeAnimation -> !keyframeAnimation.isActive());
         activeAnimations.forEach(KeyframeAnimation::preDraw);
 

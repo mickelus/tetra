@@ -1,13 +1,13 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
@@ -73,31 +73,31 @@ public class InventoryToolbelt implements IInventory {
 
 
     public void readFromNBT(CompoundNBT compound) {
-        NBTTagList items = compound.getTagList(inventoryKey, Constants.NBT.TAG_COMPOUND);
+        ListNBT items = compound.getList(inventoryKey, Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < items.tagCount(); i++) {
-            CompoundNBT itemTag = items.getCompoundTagAt(i);
-            int slot = itemTag.getInteger(slotKey);
+        for (int i = 0; i < items.size(); i++) {
+            CompoundNBT itemTag = items.getCompound(i);
+            int slot = itemTag.getByte(slotKey) & 255;
 
             if (0 <= slot && slot < maxSize) {
-                inventoryContents.set(slot, new ItemStack(itemTag));
+                inventoryContents.set(slot, ItemStack.read(itemTag));
             }
         }
     }
 
     public void writeToNBT(CompoundNBT tagcompound) {
-        NBTTagList items = new NBTTagList();
+        ListNBT items = new ListNBT();
 
         for (int i = 0; i < maxSize; i++) {
             if (getStackInSlot(i) != null) {
-                CompoundNBT item = new CompoundNBT();
-                item.setInteger(slotKey, i);
-                getStackInSlot(i).writeToNBT(item);
-                items.appendTag(item);
+                CompoundNBT compound = new CompoundNBT();
+                getStackInSlot(i).write(compound);
+                compound.putByte(slotKey, (byte)i);
+                items.add(compound);
             }
         }
 
-        tagcompound.setTag(inventoryKey, items);
+        tagcompound.put(inventoryKey, items);
     }
 
     @Override
@@ -187,36 +187,8 @@ public class InventoryToolbelt implements IInventory {
     }
 
     @Override
-    public int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value) {}
-
-    @Override
-    public int getFieldCount() {
-        return 0;
-    }
-
-    @Override
     public void clear() {
         inventoryContents.clear();
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return null;
     }
 
     public ItemStack takeItemStack(int index) {
@@ -287,9 +259,5 @@ public class InventoryToolbelt implements IInventory {
 
     public List<Collection<ItemEffect>> getSlotEffects() {
         return ItemToolbeltModular.instance.getSlotEffects(toolbeltItemStack, inventoryType);
-    }
-
-    public static void setPredicates(ItemPredicate[] predicates) {
-
     }
 }

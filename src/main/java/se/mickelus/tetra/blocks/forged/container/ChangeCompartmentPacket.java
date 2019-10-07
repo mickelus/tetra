@@ -27,7 +27,7 @@ public class ChangeCompartmentPacket extends AbstractPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        CastOptional.cast(player.openContainer, ContainerForgedContainer.class)
+        CastOptional.cast(player.openContainer, ForgedContainerContainer.class)
                 .ifPresent(container -> container.changeCompartment(compartmentIndex));
     }
 }

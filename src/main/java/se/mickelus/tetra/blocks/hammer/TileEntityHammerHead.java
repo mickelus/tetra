@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.hammer;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.animation.Animation;
@@ -33,12 +33,12 @@ public class TileEntityHammerHead extends TileEntity {
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
         return CapabilityAnimation.ANIMATION_CAPABILITY.equals(capability) || super.hasCapability(capability, facing);
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
+    public <T> T getCapability(Capability<T> capability, @Nullable Direction side) {
         if (capability == CapabilityAnimation.ANIMATION_CAPABILITY) {
             return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
         }

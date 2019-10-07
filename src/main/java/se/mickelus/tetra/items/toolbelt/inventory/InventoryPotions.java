@@ -1,14 +1,10 @@
 package se.mickelus.tetra.items.toolbelt.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGlassBottle;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.SlotType;
-
-import javax.annotation.Nullable;
 
 public class InventoryPotions extends InventoryToolbelt {
 
@@ -65,7 +61,7 @@ public class InventoryPotions extends InventoryToolbelt {
 
     public ItemStack takeItemStack(int index) {
         ItemStack itemStack = getStackInSlot(index);
-        itemStack = itemStack.splitStack(itemStack.getMaxStackSize());
+        itemStack = itemStack.split(itemStack.getMaxStackSize());
         if (getStackInSlot(index).isEmpty()) {
             setInventorySlotContents(index, ItemStack.EMPTY);
         } else {
@@ -79,7 +75,7 @@ public class InventoryPotions extends InventoryToolbelt {
         for (int i = getSizeInventory(); i < maxSize; i++) {
             ItemStack itemStack = getStackInSlot(i);
             while (!itemStack.isEmpty()) {
-                moveStackToPlayer(itemStack.splitStack(itemStack.getMaxStackSize()), player);
+                moveStackToPlayer(itemStack.split(itemStack.getMaxStackSize()), player);
             }
         }
         markDirty();

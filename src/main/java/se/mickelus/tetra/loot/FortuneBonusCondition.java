@@ -3,20 +3,19 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemEffect;
 
-import java.util.Random;
-
-public class FortuneBonusCondition implements LootCondition {
+public class FortuneBonusCondition implements ILootCondition {
     private float chance;
     private float fortuneMultiplier;
 
@@ -24,21 +23,21 @@ public class FortuneBonusCondition implements LootCondition {
     private int capabilityLevel = -1;
 
     @Override
-    public boolean testCondition(Random rand, LootContext context) {
+    public boolean test(LootContext context) {
         int fortuneLevel = 0;
-        PlayerEntity player = (PlayerEntity) context.getKillerPlayer();
+        Entity entity = context.get(LootParameters.THIS_ENTITY);
 
-        if (player != null && requiredCapability != null) {
-            ItemStack itemStack = CapabilityHelper.getProvidingItemStack(requiredCapability, capabilityLevel, player);
+        if (entity != null && requiredCapability != null) {
+            ItemStack itemStack = CapabilityHelper.getProvidingItemStack(requiredCapability, capabilityLevel, entity);
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
                 fortuneLevel = ((ItemModular) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.fortune);
             }
         }
 
-        return rand.nextFloat() < this.chance + fortuneLevel * this.fortuneMultiplier;
+        return context.getRandom().nextFloat() < this.chance + fortuneLevel * this.fortuneMultiplier;
     }
 
-    public static class Serializer extends LootCondition.Serializer<FortuneBonusCondition> {
+    public static class Serializer extends ILootCondition.AbstractSerializer<FortuneBonusCondition> {
         public Serializer() {
             super(new ResourceLocation("tetra:random_chance_with_fortune"), FortuneBonusCondition.class);
         }

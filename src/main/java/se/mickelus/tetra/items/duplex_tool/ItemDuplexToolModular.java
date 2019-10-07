@@ -9,7 +9,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.ConfigHandler;
@@ -20,7 +20,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
@@ -73,7 +73,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     public static BasicMajorModule handle;
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemDuplexToolModular instance;
 
     public ItemDuplexToolModular() {
@@ -81,7 +81,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         setMaxStackSize(1);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         entityHitDamage = 2;
 
@@ -206,7 +206,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
         if (isInCreativeTab(creativeTabs)) {
             itemList.add(createHammerStack("log", "stick"));
@@ -224,7 +224,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
@@ -234,7 +234,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(PlayerEntity player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
         if (!player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
             return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, side);

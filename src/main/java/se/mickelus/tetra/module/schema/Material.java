@@ -1,15 +1,21 @@
 package se.mickelus.tetra.module.schema;
 
 import com.google.gson.*;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.lang.reflect.Type;
 
@@ -28,28 +34,34 @@ public class Material {
     public int count = 1;
 
     private ItemStack itemStack;
-    private String ore;
+    private ResourceLocation tagLocation;
 
     public static class MaterialDeserializer implements JsonDeserializer<Material> {
 
         @Override
-        public Material deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public Material deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
             Material material = new Material();
 
             if (element != null && !element.isJsonNull()) {
-                JsonObject jsonObject = JsonUtils.getJsonObject(element, "material");
-                String type = JsonUtils.getString(jsonObject, "type", "");
+                JsonObject jsonObject = JSONUtils.getJsonObject(element, "material");
 
-                material.count = JsonUtils.getInt(jsonObject, "count", 1);
+                material.count = JSONUtils.getInt(jsonObject, "count", 1);
                 jsonObject.remove("count");
 
                 if (jsonObject.has("item")) {
-                    ResourceLocation resourcelocation = new ResourceLocation(JsonUtils.getString(jsonObject, "item"));
-                    Item item = Item.REGISTRY.getObject(resourcelocation);
-                    int data = JsonUtils.getInt(jsonObject, "data", 0);
-                    material.itemStack = new ItemStack(item, material.count, data);
-                } else if ("forge:ore_dict".equals(type) && jsonObject.has("ore")) {
-                    material.ore = JsonUtils.getString(jsonObject, "ore");
+                    Item item = JSONUtils.getItem(jsonObject, "item");
+                    material.itemStack = new ItemStack(item, material.count);
+
+                    if (jsonObject.has("nbt")) {
+                        try {
+                            CompoundNBT compoundnbt = JsonToNBT.getTagFromJson(JSONUtils.getString(jsonObject.get("nbt"), "nbt"));
+                            material.itemStack.setTag(compoundnbt);
+                        } catch (CommandSyntaxException exception) {
+                            throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
+                        }
+                    }
+                } else if (jsonObject.has("tag")) {
+                    material.tagLocation = new ResourceLocation(JSONUtils.getString(jsonObject, "tag"));
                 }
 
                 try {
@@ -62,36 +74,42 @@ public class Material {
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public String getDisplayName() {
+    @OnlyIn(Dist.CLIENT)
+    public ITextComponent getDisplayName() {
         if (itemStack != null) {
             return itemStack.getDisplayName();
-        } else if (ore != null) {
-            NonNullList<ItemStack> itemStacks = OreDictionary.getOres(ore);
-            if (!itemStacks.isEmpty()) {
-                return itemStacks.get(0).getDisplayName();
-            }
+        } else if (tagLocation != null) {
+            return ItemTags.getCollection()
+                    .getOrCreate(tagLocation)
+                    .getAllElements()
+                    .stream()
+                    .findFirst()
+                    .map(item -> item.getDisplayName(item.getDefaultInstance()))
+                    .orElse(new StringTextComponent("Unknown material"));
         }
 
-        return "Unknown material";
+        return new StringTextComponent("Unknown material");
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public ItemStack[] getApplicableItemstacks() {
         if (itemStack != null && !itemStack.isEmpty()) {
             return new ItemStack[] { itemStack };
-        } else if (ore != null) {
-            NonNullList<ItemStack> itemStacks = OreDictionary.getOres(ore);
-
-            itemStacks.forEach(stack -> stack.setCount(count));
-
-            itemStacks.stream()
-                    .filter(stack -> stack.getItemDamage() == OreDictionary.WILDCARD_VALUE)
-                    .forEach(stack -> stack.setItemDamage(0));
-
-            return itemStacks.toArray(new ItemStack[0]);
+        } else if (tagLocation != null) {
+            return ItemTags.getCollection()
+                    .getOrCreate(tagLocation)
+                    .getAllElements()
+                    .stream()
+                    .map(Item::getDefaultInstance)
+                    .map(this::setCount)
+                    .toArray(ItemStack[]::new);
         }
 
         return new ItemStack[0];
+    }
+
+    private ItemStack setCount(ItemStack itemStack) {
+        itemStack.setCount(count);
+        return itemStack;
     }
 }

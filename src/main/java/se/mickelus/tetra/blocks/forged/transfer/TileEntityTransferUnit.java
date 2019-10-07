@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -68,7 +68,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     public EnumTransferEffect getEffectPowered() {
         EnumTransferEffect effect = EnumTransferEffect.fromConfig(config, 0);
         if (effect.equals(EnumTransferEffect.REDSTONE)) {
-            EnumFacing facing = getFacing();
+            Direction facing = getFacing();
 
             if (world.isSidePowered(pos.offset(facing.rotateY()), facing.rotateY())) {
                 return EnumTransferEffect.SEND;
@@ -305,11 +305,11 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
 
     public void notifyBlockUpdate() {
         markDirty();
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         world.notifyBlockUpdate(pos, state, state,3);
     }
 
-    public EnumFacing getFacing() {
+    public Direction getFacing() {
         return world.getBlockState(pos).getValue(BlockTransferUnit.propFacing);
     }
 
@@ -317,14 +317,14 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
 
-        if (compound.hasKey("cell")) {
+        if (compound.contains("cell")) {
             cell = new ItemStack(compound.getCompoundTag("cell"));
         } else {
             cell = ItemStack.EMPTY;
         }
 
         config = EnumTransferConfig.A;
-        if (compound.hasKey(EnumTransferConfig.prop.getName())) {
+        if (compound.contains(EnumTransferConfig.prop.getName())) {
             String enumName = compound.getString(EnumTransferConfig.prop.getName());
             if (EnumUtils.isValidEnum(EnumTransferConfig.class, enumName)) {
                 config = EnumTransferConfig.valueOf(enumName);
@@ -377,7 +377,7 @@ public class TileEntityTransferUnit extends TileEntity implements ITickable, IHe
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         this.readFromNBT(packet.getNbtCompound());
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
 
         updateTransferState();
         world.notifyBlockUpdate(pos, state, state,3);

@@ -1,21 +1,21 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
@@ -37,7 +37,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -50,7 +50,7 @@ import java.util.List;
 import static com.google.common.base.Predicates.equalTo;
 
 public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
-    public static final PropertyDirection propFacing = BlockHorizontal.FACING;
+    public static final PropertyDirection propFacing = HorizontalBlock.FACING;
     public static final PropertyBool propPlate = PropertyBool.create("plate");
     public static final PropertyInteger propCell = PropertyInteger.create("cell", 0, 2);
     public static final PropertyInteger propTransfer = PropertyInteger.create("transfer", 0, 2);
@@ -58,12 +58,12 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(propPlate, equalTo(true)),
-                    BlockTransferUnit::removePlate),
-            new BlockInteraction(Capability.hammer, 1, EnumFacing.SOUTH, 11, 13, 2, 5,
+                    (world, pos, blockState, player, hand, hitFace) -> removePlate(world, pos, blockState, player, hand, hitFace)),
+            new BlockInteraction(Capability.hammer, 1, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(propPlate, equalTo(false)),
-                    BlockTransferUnit::reconfigure),
+                    (world, pos, blockState, player, hand, hitFace) -> reconfigure(world, pos, blockState, player, hand, hitFace)),
     };
 
     private static final AxisAlignedBB aabbEast = new AxisAlignedBB(0.1875,  0.0, 0.0625, 1, 0.75, 0.9375);
@@ -73,7 +73,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
     public static final String unlocalizedName = "transfer_unit";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockTransferUnit instance;
 
     public BlockTransferUnit() {
@@ -81,18 +81,18 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityTransferUnit.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         setBlockUnbreakable();
 
         hasItem = true;
 
         setDefaultState(getBlockState().getBaseState()
-                .withProperty(propFacing, EnumFacing.EAST));
+                .withProperty(propFacing, Direction.EAST));
     }
 
-    public static boolean removePlate(World world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-                                      EnumHand hand, EnumFacing hitFace) {
+    public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+                                      Hand hand, Direction hitFace) {
         TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
                 .ifPresent(te -> {
                     te.removePlate();
@@ -114,8 +114,8 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-                                      EnumHand hand, EnumFacing hitFace) {
+    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+                                      Hand hand, Direction hitFace) {
         TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
                 .ifPresent(te -> {
                     te.reconfigure();
@@ -127,34 +127,34 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
         return Arrays.stream(new BlockInteraction[]{
-                new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 3, 11, 4, 6,
+                new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
                         new PropertyMatcher().where(propPlate, equalTo(true)),
-                        BlockTransferUnit::removePlate),
-                new BlockInteraction(Capability.hammer, 1, EnumFacing.SOUTH, 4, 10, 5, 9,
+                        (world, pos, blockState, player, hand, hitFace) -> removePlate(world, pos, blockState, player, hand, hitFace)),
+                new BlockInteraction(Capability.hammer, 1, Direction.SOUTH, 4, 10, 5, 9,
                         new PropertyMatcher().where(propPlate, equalTo(false)),
-                        BlockTransferUnit::reconfigure),
+                        (world1, pos1, blockState1, player1, hand1, hitFace1) -> reconfigure(world1, pos1, blockState1, player1, hand1, hitFace1)),
         })
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.getValue(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand,
-            EnumFacing facing, float hitX, float hitY, float hitZ) {
-        EnumFacing blockFacing = state.getValue(propFacing);
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand,
+            Direction facing, float hitX, float hitY, float hitZ) {
+        Direction blockFacing = state.getValue(propFacing);
         TileEntityTransferUnit te = TileEntityOptional.from(world, pos, TileEntityTransferUnit.class).orElse(null);
         ItemStack heldStack = player.getHeldItem(hand);
 
@@ -162,7 +162,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
             return false;
         }
 
-        if (facing.equals(EnumFacing.UP)) {
+        if (facing.equals(Direction.UP)) {
             if (te.hasCell()) {
                 ItemStack cell = te.removeCell();
                 if (player.inventory.addItemStackToInventory(cell)) {
@@ -176,7 +176,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), ItemStack.EMPTY);
                 }
 
                 return true;
@@ -187,7 +187,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
                 world.notifyBlockUpdate(pos, state, state, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), ItemStack.EMPTY);
                 }
 
                 return true;
@@ -201,7 +201,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
             heldStack.shrink(1);
 
             if (!player.world.isRemote) {
-                BlockUseCriterion.trigger((PlayerEntityMP) player, getActualState(state, world, pos), ItemStack.EMPTY);
+                BlockUseCriterion.trigger((ServerPlayerEntity) player, getActualState(state, world, pos), ItemStack.EMPTY);
             }
 
             return true;
@@ -212,7 +212,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
         if (!pos.offset(world.getBlockState(pos).getValue(propFacing)).equals(fromPos)) {
             TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
                     .ifPresent(TileEntityTransferUnit::updateTransferState);
@@ -220,29 +220,29 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
         return BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
 
-        EnumFacing facing = getActualState(state, source, pos).getValue(propFacing);
+        Direction facing = getActualState(state, source, pos).getValue(propFacing);
 
         switch (facing) {
             case NORTH:
@@ -264,8 +264,8 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState actualState = super.getExtendedState(state, world, pos);
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
+        BlockState actualState = super.getExtendedState(state, world, pos);
 
 
         return TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
@@ -278,13 +278,13 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return super.getDefaultState()
-                .withProperty(propFacing, EnumFacing.getHorizontal(meta & 0b11));
+                .withProperty(propFacing, Direction.getHorizontal(meta & 0b11));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(propFacing).getHorizontalIndex();
     }
 
@@ -294,10 +294,10 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, EnumHand hand) {
-        IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
+        BlockState BlockState = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
 
-        return iblockstate.withProperty(propFacing, placer.getHorizontalFacing());
+        return BlockState.withProperty(propFacing, placer.getHorizontalFacing());
     }
 
     @Override
@@ -306,7 +306,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
     }
 }

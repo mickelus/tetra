@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.GuiElement;
@@ -53,7 +53,7 @@ public class GuiJournalImprovement extends GuiElement {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Arrays.asList(schema.getName(), ChatFormatting.GRAY + schema.getDescription(null));
+            return Arrays.asList(schema.getName(), TextFormatting.GRAY + schema.getDescription(null));
         }
         return null;
     }

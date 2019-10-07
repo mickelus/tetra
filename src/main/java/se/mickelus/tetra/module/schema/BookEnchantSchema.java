@@ -4,7 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -116,8 +116,8 @@ public class BookEnchantSchema implements UpgradeSchema {
             if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
                 module.addImprovement(upgradedStack, improvement, entry.getValue());
 
-                if (consumeMaterials && player instanceof PlayerEntityMP) {
-                    ImprovementCraftCriterion.trigger((PlayerEntityMP) player, itemStack, upgradedStack, getKey(), slot, improvement, entry.getValue(), null, -1);
+                if (consumeMaterials && player instanceof ServerPlayerEntity) {
+                    ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, entry.getValue(), null, -1);
                 }
             }
         }

@@ -1,13 +1,12 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.state.Property;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,20 +17,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.blocks.hammer.BlockHammerBase;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -40,7 +34,7 @@ public class BlockCoreExtractorPiston extends TetraBlock implements ITileEntityP
     static final String unlocalizedName = "extractor_piston";
     public static final AxisAlignedBB boundingBox = new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 1, 0.6875);
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockCoreExtractorPiston instance;
 
     public BlockCoreExtractorPiston() {
@@ -49,7 +43,7 @@ public class BlockCoreExtractorPiston extends TetraBlock implements ITileEntityP
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityCoreExtractorPiston.class, TetraMod.MOD_ID + ":" + "tile_" +unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
         setBlockUnbreakable();
 
         hasItem = true;
@@ -58,7 +52,7 @@ public class BlockCoreExtractorPiston extends TetraBlock implements ITileEntityP
     }
 
     @Override
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void randomDisplayTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         TileEntityOptional.from(worldIn, pos, TileEntityCoreExtractorPiston.class)
                 .ifPresent(te -> {
                     if (te.isActive()) {
@@ -76,54 +70,54 @@ public class BlockCoreExtractorPiston extends TetraBlock implements ITileEntityP
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return boundingBox;
     }
 
     @Override
     public ExtendedBlockState createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
+        return new ExtendedBlockState(this, new Property[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return state.withProperty(Properties.StaticProperty, false);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return getDefaultState();
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
+    public EnumBlockRenderType getRenderType(BlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) { return false; }
+    public boolean isOpaqueCube(BlockState state) { return false; }
 
     @Override
-    public boolean isFullCube(IBlockState state) { return false; }
+    public boolean isFullCube(BlockState state) { return false; }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 

@@ -2,7 +2,7 @@ package se.mickelus.tetra;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 
 public class NBTHelper {
@@ -14,39 +14,39 @@ public class NBTHelper {
             return new CompoundNBT();
         }
 
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new CompoundNBT());
+        if (!stack.hasTag()) {
+            stack.setTag(new CompoundNBT());
         }
 
-        return stack.getTagCompound();
+        return stack.getTag();
     }
 
     public static void writeItemStacks(NonNullList<ItemStack> itemStacks, CompoundNBT nbt) {
-        NBTTagList nbttaglist = new NBTTagList();
+        ListNBT ListNBT = new ListNBT();
         for (int i = 0; i < itemStacks.size(); i++) {
             if (!itemStacks.get(i).isEmpty()) {
-                CompoundNBT CompoundNBT = new CompoundNBT();
+                CompoundNBT compoundNBT = new CompoundNBT();
 
-                CompoundNBT.setByte(slotKey, (byte) i);
-                itemStacks.get(i).writeToNBT(CompoundNBT);
+                compoundNBT.putByte(slotKey, (byte) i);
+                itemStacks.get(i).write(compoundNBT);
 
-                nbttaglist.appendTag(CompoundNBT);
+                ListNBT.add(compoundNBT);
             }
         }
 
-        nbt.setTag(stacksKey, nbttaglist);
+        nbt.put(stacksKey, ListNBT);
     }
 
     public static void readItemStacks(CompoundNBT nbt, NonNullList<ItemStack> itemStacks) {
-        if (nbt.hasKey(stacksKey)) {
-            NBTTagList tagList = nbt.getTagList(stacksKey, 10);
+        if (nbt.contains(stacksKey)) {
+            ListNBT tagList = nbt.getList(stacksKey, 10);
 
-            for (int i = 0; i < tagList.tagCount(); ++i) {
-                CompoundNBT CompoundNBT = tagList.getCompoundTagAt(i);
-                int slot = CompoundNBT.getByte(slotKey) & 255;
+            for (int i = 0; i < tagList.size(); ++i) {
+                CompoundNBT compoundNBT = tagList.getCompound(i);
+                int slot = compoundNBT.getByte(slotKey) & 255;
 
                 if (slot < itemStacks.size()) {
-                    itemStacks.set(slot, new ItemStack(CompoundNBT));
+                    itemStacks.set(slot, ItemStack.read(compoundNBT));
                 }
             }
         }

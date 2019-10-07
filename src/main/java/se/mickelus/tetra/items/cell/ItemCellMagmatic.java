@@ -1,21 +1,25 @@
 package se.mickelus.tetra.items.cell;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
 
 import javax.annotation.Nullable;
@@ -24,7 +28,7 @@ import java.util.List;
 public class ItemCellMagmatic extends TetraItem {
 
     private static final String unlocalizedName = "magmatic_cell";
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemCellMagmatic instance;
 
     private final String chargedPropKey = "tetra:charged";
@@ -32,61 +36,67 @@ public class ItemCellMagmatic extends TetraItem {
     public static final int maxCharge = 128;
 
     public ItemCellMagmatic() {
+        super(new Item.Properties()
+                .group(TetraItemGroup.getInstance())
+                .maxStackSize(1)
+                .maxDamage(maxCharge)
+                .setNoRepair());
+
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
-        setMaxDamage(maxCharge);
-        setMaxStackSize(1);
 
         this.addPropertyOverride(new ResourceLocation(chargedPropKey), new IItemPropertyGetter() {
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack itemStack, @Nullable World worldIn, @Nullable LivingEntity entityIn) {
+            @OnlyIn(Dist.CLIENT)
+            public float call(@Nullable ItemStack itemStack, @Nullable World world, @Nullable LivingEntity livingEntity) {
                 return getCharge(itemStack) > 0 ? 1 : 0;
             }
         });
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         int charge = getCharge(stack);
 
         if (charge == maxCharge) {
-            tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_full")));
+            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_full")));
         } else if (charge > maxCharge * 0.4) {
 
-            tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_good")));
+            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_good")));
         } else if (charge > 0) {
-            tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_low")));
+            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_low")));
         } else {
-            tooltip.add(I18n.format("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_empty")));
+            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge", I18n.format("item.magmatic_cell.charge_empty")));
         }
 
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
     }
 
     @Override
-    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
-        if (isInCreativeTab(creativeTabs)) {
+    public void fillItemGroup(ItemGroup itemGroup, NonNullList<ItemStack> itemList) {
+        if (isInGroup(itemGroup)) {
             itemList.add(new ItemStack(this));
 
             ItemStack emptyStack = new ItemStack(this);
-            emptyStack.setItemDamage(maxCharge);
+            emptyStack.setDamage(maxCharge);
             itemList.add(emptyStack);
         }
     }
 
     public int getCharge(ItemStack itemStack) {
-        return itemStack.getMaxDamage() - itemStack.getItemDamage();
+        return itemStack.getMaxDamage() - itemStack.getDamage();
+    }
+
+    public void setCharge(ItemStack itemStack, int charge) {
+        setDamage(itemStack, itemStack.getMaxDamage() - charge);
     }
 
     public int drainCharge(ItemStack itemStack, int amount) {
-        if (itemStack.getItemDamage() + amount < itemStack.getMaxDamage()) {
-            setDamage(itemStack, itemStack.getItemDamage() + amount);
+        if (itemStack.getDamage() + amount < itemStack.getMaxDamage()) {
+            setDamage(itemStack, itemStack.getDamage() + amount);
             return amount;
         }
 
-        int actualAmount = itemStack.getMaxDamage() - itemStack.getItemDamage();
+        int actualAmount = itemStack.getMaxDamage() - itemStack.getDamage();
         setDamage(itemStack, itemStack.getMaxDamage());
         return actualAmount;
     }

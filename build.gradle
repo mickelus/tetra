@@ -13,8 +13,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-group= "se.mickelus.tetra" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "tetra-1.12.2"
+version = '1.0'
+group = 'se.mickelus.tetra' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'tetra-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -28,8 +29,6 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    replaceIn "TetraMod.java"
-    replace "#VERSION", project.version
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -90,7 +89,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.24'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.26'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

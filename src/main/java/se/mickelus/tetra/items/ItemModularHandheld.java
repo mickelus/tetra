@@ -7,7 +7,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.block.state.pattern.BlockStateMatcher;
 import net.minecraft.enchantment.Enchantment;
@@ -67,7 +67,7 @@ public class ItemModularHandheld extends ItemModular {
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.CLOTH);
 
     private static final String[] denailOreDict = new String[] { "plankWood", "slabWood", "stairWood", "fenceWood", "fenceGateWood", "doorWood", "chestWood"};
-    private static final List<Predicate<IBlockState>> denailBlocks = ImmutableList.of(
+    private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
             BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
             BlockStateMatcher.forBlock(BlockWorkbench.instance).where(BlockWorkbench.propVariant, Predicates.equalTo(BlockWorkbench.Variant.wood)),
             BlockMatcher.forBlock(Blocks.BOOKSHELF),
@@ -98,7 +98,7 @@ public class ItemModularHandheld extends ItemModular {
     protected int entityHitDamage = 1;
 
     @Override
-    public boolean onBlockDestroyed(ItemStack itemStack, World world, IBlockState state, BlockPos pos, LivingEntity entity) {
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
 
@@ -182,7 +182,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
@@ -250,14 +250,14 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult flattenPath(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult flattenPath(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
             return EnumActionResult.FAIL;
         }
 
-        if (facing != EnumFacing.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR
+        if (facing != Direction.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR
                 && world.getBlockState(pos).getBlock() == Blocks.GRASS) {
             world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1, 1);
 
@@ -283,7 +283,7 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult tillBlock(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult tillBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
@@ -303,11 +303,11 @@ public class ItemModularHandheld extends ItemModular {
             return EnumActionResult.SUCCESS;
         }
 
-        IBlockState currentState = world.getBlockState(pos);
+        BlockState currentState = world.getBlockState(pos);
         Block block = currentState.getBlock();
 
-        if (facing != EnumFacing.DOWN && world.isAirBlock(pos.up())) {
-            IBlockState newState = null;
+        if (facing != Direction.DOWN && world.isAirBlock(pos.up())) {
+            BlockState newState = null;
 
             if (block == Blocks.GRASS || block == Blocks.GRASS_PATH
                     || (block == Blocks.DIRT && BlockDirt.DirtType.DIRT == currentState.getValue(BlockDirt.VARIANT))) {
@@ -341,14 +341,14 @@ public class ItemModularHandheld extends ItemModular {
      * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
      * otherwise EnumActionResult.PASS
      */
-    public EnumActionResult denailBlock(PlayerEntity player, World world, BlockPos pos, EnumHand hand, EnumFacing facing) {
+    public EnumActionResult denailBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
             return EnumActionResult.FAIL;
         }
 
-        IBlockState blockState = world.getBlockState(pos);
+        BlockState blockState = world.getBlockState(pos);
         if (canDenail(blockState, world, pos)) {
             boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState);
             if (success) {
@@ -364,7 +364,7 @@ public class ItemModularHandheld extends ItemModular {
         return EnumActionResult.PASS;
     }
 
-    private boolean canDenail(IBlockState blockState, World world, BlockPos pos) {
+    private boolean canDenail(BlockState blockState, World world, BlockPos pos) {
         boolean matchOre = Optional.of(blockState.getBlock().getPickBlock(blockState, null, world, pos, null))
                 .map(OreDictionary::getOreIDs)
                 .map(Stream::of)
@@ -566,7 +566,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable PlayerEntity player, @Nullable IBlockState blockState) {
+    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
         if (!isBroken(itemStack)) {
             int capabilityLevel = getCapabilityLevel(itemStack, toolClass);
             if (capabilityLevel > 0) {
@@ -577,7 +577,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState blockState, ItemStack itemStack) {
+    public boolean canHarvestBlock(BlockState blockState, ItemStack itemStack) {
         if (pickaxeMaterials.contains(blockState.getMaterial())) {
             return getHarvestLevel(itemStack, "pickaxe", null, null) >= 0;
         } else if (blockState.getBlock().equals(Blocks.WEB)) {
@@ -587,7 +587,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public float getDestroySpeed(ItemStack itemStack, IBlockState blockState) {
+    public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             String tool = getEffectiveTool(blockState);
 
@@ -606,7 +606,7 @@ public class ItemModularHandheld extends ItemModular {
         return 1;
     }
 
-    public static String getEffectiveTool(IBlockState blockState) {
+    public static String getEffectiveTool(BlockState blockState) {
         String tool = blockState.getBlock().getHarvestTool(blockState);
 
         if (tool != null) {
@@ -675,10 +675,10 @@ public class ItemModularHandheld extends ItemModular {
 
         CompoundNBT nbt = NBTHelper.getTag(itemStack);
 
-        nbt.removeTag("ench");
+        nbt.remove("ench");
 
         // this stops the tooltip renderer from showing enchantments
-        nbt.setInteger("HideFlags", 1);
+        nbt.putInt("HideFlags", 1);
 
         if (getEffects(itemStack).contains(ItemEffect.silkTouch)) {
             Map<Enchantment, Integer> enchantments = new HashMap<>();

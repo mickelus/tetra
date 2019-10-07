@@ -1,43 +1,41 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.blocks.forged.transfer.EnumTransferConfig;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockCoreExtractorBase extends TetraBlock implements ITileEntityProvider {
-    public static final PropertyDirection propFacing = BlockHorizontal.FACING;
+    public static final PropertyDirection propFacing = HorizontalBlock.FACING;
 
     public static final String unlocalizedName = "core_extractor";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockCoreExtractorBase instance;
 
     public BlockCoreExtractorBase() {
@@ -45,29 +43,29 @@ public class BlockCoreExtractorBase extends TetraBlock implements ITileEntityPro
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityCoreExtractorBase.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         setBlockUnbreakable();
 
         hasItem = true;
 
         setDefaultState(getBlockState().getBaseState()
-                .withProperty(propFacing, EnumFacing.EAST));
+                .withProperty(propFacing, Direction.EAST));
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos) {
         if (!pos.offset(world.getBlockState(pos).getValue(propFacing)).equals(fromPos)) {
             TileEntityOptional.from(world, pos, TileEntityCoreExtractorBase.class)
                     .ifPresent(TileEntityCoreExtractorBase::updateTransferState);
@@ -75,22 +73,22 @@ public class BlockCoreExtractorBase extends TetraBlock implements ITileEntityPro
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
         return BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
@@ -100,13 +98,13 @@ public class BlockCoreExtractorBase extends TetraBlock implements ITileEntityPro
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return getDefaultState()
-                .withProperty(propFacing, EnumFacing.getHorizontal(meta));
+                .withProperty(propFacing, Direction.getHorizontal(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(propFacing).getHorizontalIndex();
     }
 
@@ -116,14 +114,14 @@ public class BlockCoreExtractorBase extends TetraBlock implements ITileEntityPro
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, EnumHand hand) {
-        IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
+        BlockState BlockState = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
 
-        return iblockstate.withProperty(propFacing, placer.getHorizontalFacing());
+        return BlockState.withProperty(propFacing, placer.getHorizontalFacing());
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
     }
 }

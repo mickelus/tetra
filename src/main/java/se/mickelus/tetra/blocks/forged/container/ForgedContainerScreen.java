@@ -1,10 +1,11 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiRect;
 import se.mickelus.tetra.gui.GuiTexture;
@@ -13,17 +14,15 @@ import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.impl.GuiTabVerticalGroup;
 
-import java.io.IOException;
 import java.util.stream.IntStream;
 
-@SideOnly(Side.CLIENT)
-public class GuiForgedContainer extends GuiContainer {
+@OnlyIn(Dist.CLIENT)
+public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContainer> {
 
     private static final String containerTexture = "textures/gui/forged-container.png";
     private static final String playerInventoryTexture = "textures/gui/player-inventory.png";
 
-    private final TileEntityForgedContainer tileEntity;
-    private final ContainerForgedContainer container;
+    // private final TileEntityForgedContainer tileEntity;
 
     private final GuiElement gui;
 
@@ -31,14 +30,13 @@ public class GuiForgedContainer extends GuiContainer {
 
     private final GuiTabVerticalGroup compartmentButtons;
 
-    public GuiForgedContainer(ContainerForgedContainer container, TileEntityForgedContainer tileEntity) {
-        super(container);
-        this.allowUserInput = false;
+    public ForgedContainerScreen(ForgedContainerContainer screenContainer, PlayerInventory playerInventory, ITextComponent title) {
+        super(screenContainer, playerInventory, title);
+
         this.xSize = 179;
         this.ySize = 176;
 
-        this.tileEntity = tileEntity;
-        this.container = container;
+        // this.tileEntity = tileEntity;
 
         gui = new GuiElement(0, 0, xSize, ySize);
         gui.addChild(new GuiTexture(0, -13, 179, 128, containerTexture));
@@ -66,18 +64,20 @@ public class GuiForgedContainer extends GuiContainer {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        compartmentButtons.keyTyped(typedChar);
-        super.keyTyped(typedChar, keyCode);
+    // todo 1.14: or should it be keyReleased? Used to be "keyTyped" before 1.14
+    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        // todo 1.14: used to pass a char here, none of those around so we probably need to do a conversion
+        compartmentButtons.keyTyped((char) p_keyPressed_1_);
+        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
     }
 
     @Override
-    public void updateScreen() {
+    public void tick() {
         int size = TileEntityForgedContainer.compartmentSize;
         for (int i = 0; i < TileEntityForgedContainer.compartmentCount; i++) {
             boolean hasContent = false;
             for (int j = 0; j < size; j++) {
-                if (!tileEntity.getStackInSlot(i * size + j).isEmpty()) {
+                if (!container.getTileEntity().getStackInSlot(i * size + j).isEmpty()) {
                     hasContent = true;
                     break;
                 }
@@ -87,9 +87,8 @@ public class GuiForgedContainer extends GuiContainer {
     }
 
     @Override
-    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-        drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
+    public void render(int mouseX, int mouseY, float partialTicks) {
+        super.render(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
 
         drawGuiContainerForegroundLayer(mouseX, mouseY);
@@ -104,9 +103,9 @@ public class GuiForgedContainer extends GuiContainer {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        gui.onClick(mouseX, mouseY);
+        return gui.onClick((int) mouseX, (int) mouseY);
     }
 }

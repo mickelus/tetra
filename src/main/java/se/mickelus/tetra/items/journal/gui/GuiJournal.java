@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.journal.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.gui.GuiElement;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SideOnly(Side.CLIENT)
-public class GuiJournal extends GuiScreen {
+@OnlyIn(Dist.CLIENT)
+public class GuiJournal extends Screen {
 
     private final GuiJournalHeader header;
 
@@ -31,13 +31,12 @@ public class GuiJournal extends GuiScreen {
     private static GuiJournal instance;
 
     public GuiJournal() {
-        super();
+        super(new StringTextComponent("tetra:holosphere"));
 
-        this.allowUserInput = false;
         width = 320;
         height = 240;
 
-        fontRenderer = Minecraft.getInstance().fontRenderer;
+        // fontRenderer = Minecraft.getInstance().fontRenderer;
         defaultGui = new GuiElement(0, 0, width, height);
 
         header = new GuiJournalHeader(0, 0, width, this::changePage);
@@ -80,8 +79,8 @@ public class GuiJournal extends GuiScreen {
     }
 
     @Override
-    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-        drawDefaultBackground();
+    public void render(final int mouseX, final int mouseY, final float partialTicks) {
+        super.render(mouseX, mouseY, partialTicks);
 
         defaultGui.draw((width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
@@ -97,27 +96,23 @@ public class GuiJournal extends GuiScreen {
                     .flatMap(line -> Arrays.stream(line.split("\n")))
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, 300, fontRenderer);
+            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, 300, font);
         }
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        defaultGui.onClick((int) mouseX, (int) mouseY);
 
-        defaultGui.onClick(mouseX, mouseY);
+        return super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    // todo 1.14: or should it be keyReleased? Used to be "keyTyped" before 1.14
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        super.keyTyped(typedChar, keyCode);
+    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        // todo 1.14: used to pass a char here, none of those around so we probably need to do a conversion
+        currentPage.onKeyTyped((char) p_keyPressed_1_);
 
-        currentPage.onKeyTyped(typedChar);
-    }
-
-    @Override
-    public void updateScreen() {
-        super.updateScreen();
-
+        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
     }
 }

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.schema;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import se.mickelus.tetra.module.data.GlyphData;
 
 /**

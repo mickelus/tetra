@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.item.ItemStack;
 
 /**

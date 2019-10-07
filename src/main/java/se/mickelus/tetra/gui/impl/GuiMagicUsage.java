@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.impl;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.gui.*;
@@ -47,12 +47,12 @@ public class GuiMagicUsage extends GuiElement {
 
             if (diffMax != 0) {
                 bar.setValue(max, max + diffMax);
-                valueString.setString(String.format("%s(%+d)%s %d/%d", diffMax < 0 ? ChatFormatting.RED : ChatFormatting.GREEN,
-                        diffMax, ChatFormatting.RESET, max + diffMax, max + diffMax));
+                valueString.setString(String.format("%s(%+d)%s %d/%d", diffMax < 0 ? TextFormatting.RED : TextFormatting.GREEN,
+                        diffMax, TextFormatting.RESET, max + diffMax, max + diffMax));
             } else if (diffValue != 0) {
                 bar.setValue(max - value, max - value - diffValue);
-                valueString.setString(String.format("%s(%+d)%s %d/%d", diffValue > 0 ? ChatFormatting.RED : ChatFormatting.GREEN,
-                        -diffValue, ChatFormatting.RESET, max - value - diffValue, max));
+                valueString.setString(String.format("%s(%+d)%s %d/%d", diffValue > 0 ? TextFormatting.RED : TextFormatting.GREEN,
+                        -diffValue, TextFormatting.RESET, max - value - diffValue, max));
             } else {
                 bar.setValue(max - value, max - value);
                 valueString.setString(String.format("%d/%d", max - value, max));

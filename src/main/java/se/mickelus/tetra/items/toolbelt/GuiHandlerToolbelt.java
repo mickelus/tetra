@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import se.mickelus.tetra.items.toolbelt.gui.GuiToolbelt;
 import se.mickelus.tetra.network.TetraGuiHandler;
@@ -19,10 +19,10 @@ public class GuiHandlerToolbelt implements TetraGuiHandler {
     }
 
     private ItemStack getItem(PlayerEntity player, int handOrdinal) {
-        EnumHand hand = EnumHand.values()[handOrdinal];
+        Hand hand = Hand.values()[handOrdinal];
         ItemStack itemStack = player.getHeldItemOffhand();
 
-        if (hand == EnumHand.MAIN_HAND) {
+        if (hand == Hand.MAIN_HAND) {
             itemStack = player.getHeldItemMainhand();
         }
 

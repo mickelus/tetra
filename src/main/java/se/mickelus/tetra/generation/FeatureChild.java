@@ -1,6 +1,6 @@
 package se.mickelus.tetra.generation;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
@@ -27,7 +27,7 @@ public class FeatureChild {
      * The direction in which the child feature should be facing.
      * Possible json values: "DOWN", "UP", "NORTH", "SOUTH", "WEST", "EAST"
      */
-    public EnumFacing facing = EnumFacing.NORTH;
+    public Direction facing = Direction.NORTH;
 
     /**
      * The chance for this child feature to generate. Has to be a decimal number between 0.0 and 1.1, where a value of

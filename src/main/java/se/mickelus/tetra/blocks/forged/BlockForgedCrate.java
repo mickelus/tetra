@@ -1,36 +1,35 @@
 package se.mickelus.tetra.blocks.forged;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFalling;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockStateMatcher;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FallingBlock;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.Materials;
@@ -38,7 +37,6 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.TetraCreativeTabs;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -47,61 +45,53 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBlockCapabilityInteractive {
-    public static final PropertyDirection propFacing = BlockHorizontal.FACING;
-    public static final PropertyBool propStacked = PropertyBool.create("stacked");
-    public static final PropertyInteger propIntegrity = PropertyInteger.create("integrity", 0, 3);
+public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockCapabilityInteractive {
+    public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
+    public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
+    public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, EnumFacing.EAST, 6, 8, 6, 8,
+            new BlockInteraction(Capability.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakPry),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 1, 4, 1, 4,
+            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakHammer),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.EAST, 10, 13, 10, 13,
+            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 10, 13, 10, 13,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakHammer),
     };
 
     static final String unlocalizedName = "forged_crate";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedCrate instance;
 
     public static final ResourceLocation crateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_break");
 
     public BlockForgedCrate() {
-        super(Materials.forgedCrate);
-        setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        super(Block.Properties.create(Materials.forgedCrate)
+                .hardnessAndResistance(10));
 
-        setHardness(10);
 
-        this.setDefaultState(this.blockState.getBaseState()
-                .withProperty(propFacing, EnumFacing.EAST)
-                .withProperty(propStacked, false)
-                .withProperty(propIntegrity, 3));
+        this.setDefaultState(getStateContainer().getBaseState()
+                .with(propFacing, Direction.EAST)
+                .with(propStacked, false)
+                .with(propIntegrity, 3));
     }
 
-    @Override
-    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
-        return 1;
-    }
-
-    private static boolean attemptBreakHammer(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing facing) {
+    private static boolean attemptBreakHammer(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
         return attemptBreak(world, pos, blockState, player, player.getHeldItem(hand), Capability.hammer, 2, 1);
     }
 
-    private static boolean attemptBreakPry(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, EnumHand hand, EnumFacing facing) {
+    private static boolean attemptBreakPry(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
         return attemptBreak(world, pos, blockState, player, player.getHeldItem(hand), Capability.pry, 0, 2);
     }
 
-    private static boolean attemptBreak(World world, BlockPos pos, IBlockState blockState, PlayerEntity player, ItemStack itemStack,
+    private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, PlayerEntity player, ItemStack itemStack,
             Capability capability, int min, int multiplier) {
 
-        int integrity = blockState.getValue(propIntegrity);
+        int integrity = blockState.get(propIntegrity);
 
         int progress = CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> item.getCapabilityLevel(itemStack, capability))
@@ -115,7 +105,7 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
                 world.playSound(player, pos, SoundEvents.BLOCK_LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
             }
 
-            world.setBlockState(pos, blockState.withProperty(propIntegrity, integrity - progress));
+            world.setBlockState(pos, blockState.with(propIntegrity, integrity - progress));
         } else {
             world.playEvent(player, 2001, pos, Block.getStateId(blockState));
             ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState);
@@ -125,108 +115,64 @@ public class BlockForgedCrate extends BlockFalling implements ITetraBlock, IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
             return interactions;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return BlockInteraction.attemptInteraction(world, state.getActualState(world, pos), pos, player, hand, facing, hitX, hitY, hitZ);
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
+        Vec3d hitVector = rayTrace.getHitVec();
+        return BlockInteraction.attemptInteraction(world, state.getExtendedState(world, pos), pos, player, hand, rayTrace.getFace(),
+                hitVector.x, hitVector.y, hitVector.z);
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        CastOptional.cast(world, WorldServer.class)
-                .ifPresent(worldServer -> {
-                    LootTable table = worldServer.getLootTableManager().getLootTableFromLocation(crateLootTable);
-                    LootContext.Builder builder = new LootContext.Builder(worldServer);
-
-                    drops.addAll(table.generateLootForPools(worldServer.rand, builder.build()));
-                });
+    public ResourceLocation getLootTable() {
+        // todo 1.14: changed to new drops setup, check if crates properly drop loot
+        return crateLootTable;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+    public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
     }
 
+    @Nullable
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, propFacing, propStacked, propIntegrity);
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return getDefaultState().with(propFacing, context.getPlacementHorizontalFacing());
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
-        return this.getDefaultState().withProperty(propFacing, placer.getHorizontalFacing().getOpposite());
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        if (equals(worldIn.getBlockState(pos.down()).getBlock())) {
-            return super.getActualState(state, worldIn, pos).withProperty(propStacked, true);
+    public BlockState getExtendedState(BlockState state, IBlockReader world, BlockPos pos) {
+        if (equals(world.getBlockState(pos.down()).getBlock())) {
+            return super.getExtendedState(state, world, pos).with(propStacked, true);
         }
-        return super.getActualState(state, worldIn, pos);
+        return super.getExtendedState(state, world, pos);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        IBlockState blockState = this.getDefaultState();
-        int facingIndex = meta & 3;
-        if (facingIndex < EnumFacing.HORIZONTALS.length) {
-            blockState = blockState.withProperty(propFacing, EnumFacing.HORIZONTALS[facingIndex]);
-        }
-
-        return blockState.withProperty(propIntegrity, meta >> 2);
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+        return state.with(propFacing, direction.rotate(state.get(propFacing)));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(propFacing).getHorizontalIndex()
-                | (state.getValue(propIntegrity) << 2);
-    }
-
-    @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
-        return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
-    }
-
-    @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean causesSuffocation(BlockState blockState, IBlockReader world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
-        return false;
-    }
+    public VoxelShape getShape(BlockState blockState, IBlockReader world, BlockPos pos, ISelectionContext selectionContext) {
+        Vec3d facingOffset = new Vec3d(blockState.get(propFacing).getDirectionVec()).scale(0.0625);
+        VoxelShape shape = Block.makeCuboidShape(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375)
+                .withOffset(facingOffset.x, facingOffset.y, facingOffset.z);
 
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        AxisAlignedBB aabb = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375)
-                .offset(new Vec3d(state.getValue(propFacing).getDirectionVec()).scale(0.0625));
-
-        if (getActualState(state, source, pos).getValue(propStacked)) {
-            return aabb.offset(0, -0.125, 0);
+        if (getExtendedState(blockState, world, pos).get(propStacked)) {
+            return shape.withOffset(0, -0.125, 0);
         }
 
-        return aabb;
-    }
-
-    @Override
-    public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return 0;
+        return shape;
     }
 
     @Override

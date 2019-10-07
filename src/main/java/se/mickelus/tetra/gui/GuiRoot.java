@@ -1,8 +1,7 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import org.lwjgl.input.Mouse;
 
 public class GuiRoot extends GuiElement {
 
@@ -14,12 +13,13 @@ public class GuiRoot extends GuiElement {
     }
 
     public void draw() {
-        ScaledResolution scaledResolution = new ScaledResolution(mc);
-        int width = scaledResolution.getScaledWidth();
-        int height = scaledResolution.getScaledHeight();
-        int mouseX = Mouse.getX() * width / mc.displayWidth;
-        int mouseY = height - Mouse.getY() * height / mc.displayHeight - 1;
-        drawChildren(0,0, width, height, mouseX, mouseY, 1);
+        MainWindow window = mc.mainWindow;
+
+        int width = window.getScaledWidth();
+        int height = window.getScaledHeight();
+        double mouseX = mc.mouseHelper.getMouseX() * width / window.getWidth();
+        double mouseY = height - mc.mouseHelper.getMouseY() * height / window.getHeight() - 1;
+        drawChildren(0,0, width, height, (int) mouseX, (int) mouseY, 1);
     }
 
 }

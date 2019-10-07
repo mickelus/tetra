@@ -1,42 +1,49 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import com.google.common.primitives.Booleans;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.network.TetraGuiHandler;
@@ -48,43 +55,43 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class BlockForgedContainer extends TetraBlock implements ITileEntityProvider, IBlockCapabilityInteractive {
-    public static final PropertyDirection propFacing = BlockHorizontal.FACING;
-    public static final PropertyBool propFlipped = PropertyBool.create("flipped");
-    public static final PropertyBool propLocked1 = PropertyBool.create("locked1");
-    public static final PropertyBool propLocked2 = PropertyBool.create("locked2");
-    public static final PropertyBool propLockedAdjacent = PropertyBool.create("adjacent");
-    public static final PropertyBool propOpen = PropertyBool.create("open");
+public class BlockForgedContainer extends TetraBlock implements IBlockCapabilityInteractive {
+    public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
+    public static final BooleanProperty propFlipped = BooleanProperty.create("flipped");
+    public static final BooleanProperty propLocked1 = BooleanProperty.create("locked1");
+    public static final BooleanProperty propLocked2 = BooleanProperty.create("locked2");
+    public static final BooleanProperty propLockedAdjacent = BooleanProperty.create("adjacent");
+    public static final BooleanProperty propOpen = BooleanProperty.create("open");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(propLocked1, equalTo(true)).where(propFlipped, equalTo(false)),
-                    BlockForgedContainer::breakLock0),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 11, 13, 2, 5,
+                    (world, pos, blockState, player, hand, facing) -> breakLock0(world, pos, blockState, player, hand, facing)),
+            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(false)),
-                    BlockForgedContainer::breakLock1),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 17, 19, 2, 5,
+                    (world, pos, blockState, player, hand, facing) -> breakLock1(world, pos, blockState, player, hand, facing)),
+            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(propLocked1, equalTo(true)).where(propFlipped, equalTo(true)),
-                    BlockForgedContainer::breakLock2),
-            new BlockInteraction(Capability.hammer, 3, EnumFacing.SOUTH, 23, 25, 2, 5,
+                    (world, pos, blockState, player, hand, facing) -> breakLock2(world, pos, blockState, player, hand, facing)),
+            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(propLocked2, equalTo(true)).where(propFlipped, equalTo(true)),
-                    BlockForgedContainer::breakLock3),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 1, 15, 3, 4,
+                    (world, pos, blockState, player, hand, facing) -> breakLock3(world, pos, blockState, player, hand, facing)),
+            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
                             .where(propLockedAdjacent, equalTo(false))
                             .where(propOpen, equalTo(false))
                             .where(propFlipped, equalTo(false)),
-                    BlockForgedContainer::open),
-            new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 15, 28, 3, 4,
+                    (world, pos, blockState, player, hand, facing) -> open(world, pos, blockState, player, hand, facing)),
+            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(propLocked1, equalTo(false))
                             .where(propLocked2, equalTo(false))
                             .where(propLockedAdjacent, equalTo(false))
                             .where(propOpen, equalTo(false))
                             .where(propFlipped, equalTo(true)),
-                    BlockForgedContainer::open)
+                    (world, pos, blockState, player, hand, facing) -> open(world, pos, blockState, player, hand, facing))
     };
 
     private static AxisAlignedBB aabbZ1 = new AxisAlignedBB(0.0625,  0.0, -0.9375, 0.9375, 0.75, 0.9375);
@@ -94,33 +101,37 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
 
     public static final String unlocalizedName = "forged_container";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedContainer instance;
+
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ContainerType<ForgedContainerContainer> containerType;
 
     public BlockForgedContainer() {
         super(Material.IRON);
         setRegistryName(unlocalizedName);
         setUnlocalizedName(unlocalizedName);
         GameRegistry.registerTileEntity(TileEntityForgedContainer.class, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName));
-        setCreativeTab(TetraCreativeTabs.getInstance());
+        setCreativeTab(TetraItemGroup.getInstance());
 
         setBlockUnbreakable();
 
         hasItem = true;
 
         setDefaultState(getBlockState().getBaseState()
-                .withProperty(propFacing, EnumFacing.EAST)
+                .withProperty(propFacing, Direction.EAST)
                 .withProperty(propFlipped, false));
     }
 
     @Override
     public void init(PacketHandler packetHandler) {
+        ScreenManager.registerFactory();
         GuiHandlerRegistry.instance.registerHandler(TetraGuiHandler.forgedContainerId, new GuiHandlerForgedContainer());
         packetHandler.registerPacket(ChangeCompartmentPacket.class, Side.SERVER);
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         drops.clear();
     }
 
@@ -133,50 +144,51 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
         Item item = new ItemBlockForgedContainer(this);
         item.setRegistryName(getRegistryName());
         registry.register(item);
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+
+        if (FMLEnvironment.dist.isClient()) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ChatFormatting.DARK_GRAY + I18n.format("forged_description"));
+    public void addInformation(ItemStack stack, @Nullable IBlockReader player, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
     }
 
-    private static void breakLock(IBlockAccess world, BlockPos pos, PlayerEntity player, int index) {
+    private static void breakLock(World world, BlockPos pos, PlayerEntity player, int index) {
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index);
         }
     }
 
-    private static boolean breakLock0(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-            EnumHand hand, EnumFacing facing) {
+    private static boolean breakLock0(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+            Hand hand, Direction facing) {
         breakLock(world, pos, player, 0);
         return true;
     }
 
-    private static boolean breakLock1(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-            EnumHand hand, EnumFacing facing) {
+    private static boolean breakLock1(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+            Hand hand, Direction facing) {
         breakLock(world, pos, player, 1);
         return true;
     }
 
-    private static boolean breakLock2(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-            EnumHand hand, EnumFacing facing) {
+    private static boolean breakLock2(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+            Hand hand, Direction facing) {
         breakLock(world, pos, player, 2);
         return true;
     }
 
-    private static boolean breakLock3(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-            EnumHand hand, EnumFacing facing) {
+    private static boolean breakLock3(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+            Hand hand, Direction facing) {
         breakLock(world, pos, player, 3);
         return true;
     }
 
-    private static boolean open(IBlockAccess world, BlockPos pos, IBlockState blockState, PlayerEntity player,
-            EnumHand hand, EnumFacing facing) {
+    private static boolean open(World world, BlockPos pos, BlockState blockState, PlayerEntity player,
+            Hand hand, Direction facing) {
 
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
         if (te != null) {
@@ -187,58 +199,39 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(IBlockState state, EnumFacing face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.getValue(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, PlayerEntity player, EnumHand hand,
-            EnumFacing facing, float hitX, float hitY, float hitZ) {
-        boolean didInteract = BlockInteraction.attemptInteraction(world, getActualState(world.getBlockState(pos), world, pos), pos, player, hand,
-                facing, hitX, hitY, hitZ);
+    public boolean onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+        Vec3d hit = rayTraceResult.getHitVec();
+        boolean didInteract = BlockInteraction.attemptInteraction(world, getExtendedState(blockState, world, pos), pos, player, hand,
+                rayTraceResult.getFace(), hit.x, hit.y, hit.z);
 
         if (!didInteract) {
-            TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
-            if (te != null) {
-                if (te.getOrDelegate().isOpen()) {
-                    player.openGui(TetraMod.instance, TetraGuiHandler.forgedContainerId, world, pos.getX(), pos.getY(), pos.getZ());
+            if (!world.isRemote) {
+                TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
+                if (te != null && te.getOrDelegate().isOpen()) {
+                    NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos);
                 }
+
             }
         } else {
-            world.notifyBlockUpdate(pos, state, state, 3);
+            world.notifyBlockUpdate(pos, blockState, blockState, 3);
         }
 
         return true;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean causesSuffocation(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         AxisAlignedBB aabb = null;
 
         state = getActualState(state, source, pos);
-        EnumFacing facing = state.getValue(propFacing);
+        Direction facing = state.getValue(propFacing);
         boolean flipped = state.getValue(propFlipped);
         boolean open = state.getValue(propOpen);
 
@@ -282,13 +275,8 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, propFacing, propFlipped, propLocked1, propLocked2, propLockedAdjacent, propOpen);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState actualState = super.getExtendedState(state, world, pos);
+    public BlockState getExtendedState(BlockState state, IBlockReader world, BlockPos pos) {
+        BlockState actualState = super.getExtendedState(state, world, pos);
         TileEntityForgedContainer te = (TileEntityForgedContainer) world.getTileEntity(pos);
 
         if (te != null) {
@@ -296,58 +284,51 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
 
             boolean anyLocked = Arrays.stream(te.getOrDelegate().isLocked()).anyMatch(isLocked -> isLocked);
 
-            if (state.getValue(propFlipped)) {
+            if (state.get(propFlipped)) {
                 actualState = actualState
-                        .withProperty(propLocked1, te.isLocked(2))
-                        .withProperty(propLocked2, te.isLocked(3));
+                        .with(propLocked1, te.isLocked(2))
+                        .with(propLocked2, te.isLocked(3));
             } else {
                 actualState =  actualState
-                        .withProperty(propLocked1, te.isLocked(0))
-                        .withProperty(propLocked2, te.isLocked(1));
+                        .with(propLocked1, te.isLocked(0))
+                        .with(propLocked2, te.isLocked(1));
             }
 
             actualState =  actualState
-                    .withProperty(propOpen, te.isOpen())
-                    .withProperty(propLockedAdjacent, anyLocked);
+                    .with(propOpen, te.isOpen())
+                    .with(propLockedAdjacent, anyLocked);
         }
 
         return actualState;
     }
 
+    @Nullable
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return super.getDefaultState()
-                .withProperty(propFacing, EnumFacing.getHorizontal(meta & 0b11))
-                .withProperty(propFlipped, ( meta >> 2 & 1 ) == 1);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(propFacing).getHorizontalIndex()
-                | (state.getValue(propFlipped) ? 1 << 2 : 0);
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityForgedContainer();
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, EnumHand hand) {
-        IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
-
-        return iblockstate.withProperty(propFacing, placer.getHorizontalFacing());
+    public boolean hasTileEntity() {
+        return true;
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, LivingEntity placer, ItemStack stack) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
+        BlockState BlockState = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
+
+        return BlockState.withProperty(propFacing, placer.getHorizontalFacing());
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        EnumFacing facing = state.getValue(propFacing);
+        Direction facing = state.getValue(propFacing);
         worldIn.setBlockState(pos.offset(facing.rotateY()), getDefaultState().withProperty(propFlipped, true).withProperty(propFacing, facing));
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
         BlockPos relativePos;
         if (state.getValue(propFlipped)) {
             relativePos = pos.offset(state.getValue(propFacing).rotateYCCW());
@@ -361,17 +342,17 @@ public class BlockForgedContainer extends TetraBlock implements ITileEntityProvi
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
+    public EnumBlockRenderType getRenderType(BlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
-        EnumFacing facing = state.getValue(propFacing);
+    public BlockState withRotation(BlockState state, Rotation rot) {
+        Direction facing = state.getValue(propFacing);
 
         if (Rotation.CLOCKWISE_180.equals(rot)
-                || Rotation.CLOCKWISE_90.equals(rot) && ( EnumFacing.NORTH.equals(facing) || EnumFacing.SOUTH.equals(facing))
-                || Rotation.COUNTERCLOCKWISE_90.equals(rot) && ( EnumFacing.EAST.equals(facing) || EnumFacing.WEST.equals(facing))) {
+                || Rotation.CLOCKWISE_90.equals(rot) && ( Direction.NORTH.equals(facing) || Direction.SOUTH.equals(facing))
+                || Rotation.COUNTERCLOCKWISE_90.equals(rot) && ( Direction.EAST.equals(facing) || Direction.WEST.equals(facing))) {
             state = state.withProperty(propFlipped, state.getValue(propFlipped));
         }
 

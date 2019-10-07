@@ -39,12 +39,12 @@ public class TileEntityCoreExtractorPiston extends TileEntity implements ITickab
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
         return CapabilityAnimation.ANIMATION_CAPABILITY.equals(capability) || super.hasCapability(capability, facing);
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
+    public <T> T getCapability(Capability<T> capability, @Nullable Direction side) {
         if (capability == CapabilityAnimation.ANIMATION_CAPABILITY) {
             return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
         }
@@ -77,7 +77,7 @@ public class TileEntityCoreExtractorPiston extends TileEntity implements ITickab
     @Override
     public void update() {
         if (endTime < world.getTotalWorldTime() ) {
-            TileEntityOptional.from(world, pos.offset(EnumFacing.DOWN), TileEntityCoreExtractorBase.class)
+            TileEntityOptional.from(world, pos.offset(Direction.DOWN), TileEntityCoreExtractorBase.class)
                     .ifPresent(base -> base.fill(fillAmount));
 
             runEndEffects();

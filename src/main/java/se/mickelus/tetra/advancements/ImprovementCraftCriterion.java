@@ -1,14 +1,14 @@
 package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionInstance;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
 
-public class ImprovementCraftCriterion extends AbstractCriterionInstance {
+public class ImprovementCraftCriterion extends CriterionInstance {
     private ItemPredicate before = null;
     private ItemPredicate after = null;
 
@@ -27,7 +27,7 @@ public class ImprovementCraftCriterion extends AbstractCriterionInstance {
         super(trigger.getId());
     }
 
-    public static void trigger(PlayerEntityMP player, ItemStack before, ItemStack after, String schema, String slot, String improvement,
+    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schema, String slot, String improvement,
             int improvementLevel, Capability capability, int capabilityLevel) {
         trigger.fulfillCriterion(player.getAdvancements(), criterion -> criterion.test(before, after, schema, slot, improvement, improvementLevel,
                 capability, capabilityLevel));

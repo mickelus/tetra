@@ -1,20 +1,22 @@
 package se.mickelus.tetra.items.toolbelt;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 import se.mickelus.tetra.items.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.items.toolbelt.inventory.ToolbeltSlotType;
 import se.mickelus.tetra.network.PacketHandler;
@@ -42,10 +44,10 @@ public class OverlayToolbelt {
 
         gui = new OverlayGuiToolbelt(mc);
 
-        accessBinding = new KeyBinding("toolbelt.binding.access", KeyConflictContext.IN_GAME,
-                Keyboard.KEY_V, bindingGroup);
-        restockBinding = new KeyBinding("toolbelt.binding.restock", KeyConflictContext.IN_GAME,
-                KeyModifier.SHIFT, Keyboard.KEY_V, bindingGroup);
+        accessBinding = new KeyBinding("toolbelt.binding.access", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
+                GLFW.GLFW_KEY_V, bindingGroup);
+        restockBinding = new KeyBinding("toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
+                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_V, bindingGroup);
 
         ClientRegistry.registerKeyBinding(accessBinding);
         ClientRegistry.registerKeyBinding(restockBinding);
@@ -56,8 +58,8 @@ public class OverlayToolbelt {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (restockBinding.isPressed()) {
-            equipToolbeltItem(ToolbeltSlotType.quickslot, -1, EnumHand.OFF_HAND);
-        } else if (accessBinding.isPressed() && mc.inGameHasFocus) {
+            equipToolbeltItem(ToolbeltSlotType.quickslot, -1, Hand.OFF_HAND);
+        } else if (accessBinding.isPressed() && mc.isGameFocused()) {
             showView();
         }
     }
@@ -79,28 +81,28 @@ public class OverlayToolbelt {
     private void showView() {
         boolean canOpen = updateGuiData();
         if (canOpen) {
-            mc.inGameHasFocus = false;
-            mc.mouseHelper.ungrabMouseCursor();
+            // todo 1.14: this changed, check if overlay still works
+            mc.mouseHelper.ungrabMouse();
             isActive = true;
             openTime = System.currentTimeMillis();
         }
     }
 
     private void hideView() {
-        mc.inGameHasFocus = true;
+        // todo 1.14: this changed, check if overlay still works
         gui.setVisible(false);
-        mc.mouseHelper.grabMouseCursor();
+        mc.mouseHelper.grabMouse();
         isActive = false;
 
         int focusIndex = findIndex();
         if (focusIndex != -1) {
-            equipToolbeltItem(findSlotType(), focusIndex, EnumHand.OFF_HAND);
+            equipToolbeltItem(findSlotType(), focusIndex, Hand.OFF_HAND);
         } else if (System.currentTimeMillis() - openTime < 500) {
             quickEquip();
         }
     }
 
-    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, EnumHand hand) {
+    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, Hand hand) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex, hand);
         PacketHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
@@ -108,18 +110,19 @@ public class OverlayToolbelt {
         } else {
             boolean storeItemSuccess = UtilToolbelt.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
-                mc.player.sendStatusMessage(new TextComponentTranslation("toolbelt.full"), true);
+                mc.player.sendStatusMessage(new TranslationTextComponent("toolbelt.full"), true);
             }
         }
     }
 
     private void quickEquip() {
-        if (mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
-            IBlockState blockState = mc.world.getBlockState(mc.objectMouseOver.getBlockPos());
+        if (mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
+            // todo 1.14: this changed, check if quick equip still works
+            BlockState blockState = mc.world.getBlockState(new BlockPos(mc.objectMouseOver.getHitVec()));
             int index = UtilToolbelt.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
 
             if (index > -1) {
-                equipToolbeltItem(ToolbeltSlotType.quickslot, index, EnumHand.MAIN_HAND);
+                equipToolbeltItem(ToolbeltSlotType.quickslot, index, Hand.MAIN_HAND);
             }
         }
     }

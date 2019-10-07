@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,14 +13,15 @@ import se.mickelus.tetra.network.PacketHandler;
 import java.util.Arrays;
 
 
-public class ContainerForgedContainer extends Container {
+public class ForgedContainerContainer extends Container {
     private TileEntityForgedContainer tileEntity;
     private IInventory playerInventory;
 
     private ToggleableSlot[][] compartmentSlots;
     private int currentCompartment = 0;
 
-    public ContainerForgedContainer(IInventory playerInventory, TileEntityForgedContainer tileEntity, PlayerEntity player) {
+    public ForgedContainerContainer(int windowId,TileEntityForgedContainer tileEntity, IInventory playerInventory, PlayerEntity player) {
+        super(BlockForgedContainer.containerType, windowId);
         this.tileEntity = tileEntity;
         tileEntity.openInventory(player);
 
@@ -107,5 +108,9 @@ public class ContainerForgedContainer extends Container {
         super.onContainerClosed(playerIn);
 
         tileEntity.closeInventory(playerIn);
+    }
+
+    public TileEntityForgedContainer getTileEntity() {
+        return tileEntity;
     }
 }

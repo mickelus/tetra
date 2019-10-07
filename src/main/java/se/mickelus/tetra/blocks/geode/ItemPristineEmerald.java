@@ -1,26 +1,27 @@
 package se.mickelus.tetra.blocks.geode;
 
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.item.Item;
+import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraCreativeTabs;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.network.PacketHandler;
 
 public class ItemPristineEmerald extends TetraItem {
     private static final String unlocalizedName = "pristine_emerald";
 
-    @GameRegistry.ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemPristineEmerald instance;
 
     public ItemPristineEmerald() {
+        super(new Item.Properties()
+                .group(TetraItemGroup.getInstance()));
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraCreativeTabs.getInstance());
     }
 
     @Override
     public void init(PacketHandler packetHandler) {
-        OreDictionary.registerOre("gemEmerald", this);
+        // todo 1.14: find additional forge tags
+        // OreDictionary.registerOre("gemEmerald", this);
     }
 }
