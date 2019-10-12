@@ -3,6 +3,7 @@ package se.mickelus.tetra.items;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
@@ -26,7 +27,7 @@ public interface IItemModular {
      * through other means. Call this after each time the module setup changes.
      * @param itemStack The modular item itemstack
      */
-    public void assemble(ItemStack itemStack);
+    public void assemble(ItemStack itemStack, World world);
 
     public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
 }

@@ -93,45 +93,107 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
 
         basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "basic_hammer", leftSuffix,
-                "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_hammer",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         basicHammerHeadRight = new DuplexHeadModule(headRightKey, "basic_hammer", rightSuffix,
-                "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_hammer",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         basicAxeLeft = new DuplexHeadModule(headLeftKey, "basic_axe", leftSuffix,
-                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_axe",
+                "duplex/improvements/basic_axe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         basicAxeRight = new DuplexHeadModule(headRightKey, "basic_axe", rightSuffix,
-                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_axe",
+                "duplex/improvements/basic_axe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "basic_pickaxe", leftSuffix,
-                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_pickaxe",
+                "duplex/improvements/basic_pickaxe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         basicPickaxeRight = new DuplexHeadModule(headRightKey, "basic_pickaxe", rightSuffix,
-                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/basic_pickaxe",
+                "duplex/improvements/basic_pickaxe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         hoeLeft = new DuplexHeadModule(headLeftKey, "hoe", leftSuffix,
-                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/hoe",
+                "duplex/improvements/hoe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         hoeRight = new DuplexHeadModule(headRightKey, "hoe", rightSuffix,
-                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/hoe",
+                "duplex/improvements/hoe_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         adzeLeft = new DuplexHeadModule(headLeftKey, "adze", leftSuffix,
-                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/adze",
+                "duplex/improvements/adze_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         adzeRight = new DuplexHeadModule(headRightKey, "adze", rightSuffix,
-                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/adze",
+                "duplex/improvements/adze_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         sickleLeft = new DuplexHeadModule(headLeftKey, "sickle", leftSuffix,
-                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/sickle",
+                "duplex/improvements/sickle_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         sickleRight = new DuplexHeadModule(headRightKey, "sickle", rightSuffix,
-                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/sickle",
+                "duplex/improvements/sickle_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         clawLeft = new DuplexHeadModule(headLeftKey, "claw", leftSuffix,
-                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/claw",
+                "duplex/improvements/claw_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
         clawRight = new DuplexHeadModule(headRightKey, "claw", rightSuffix,
-                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/claw",
+                "duplex/improvements/claw_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix,
-                "duplex/improvements/butt", "duplex/improvements/butt_hone", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/improvements/butt",
+                "duplex/improvements/butt_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
         handle = new BasicMajorModule(handleKey, "duplex/basic_handle",
-                "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone", "settling_improvements")
+                "duplex/improvements/basic_handle",
+                "duplex/improvements/basic_handle_hone",
+                "duplex/improvements/shared_head_hone",
+                "settling_improvements",
+                "destabilization_improvements")
                 .withRenderLayer(Priority.LOWER);
 
 

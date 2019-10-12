@@ -76,7 +76,7 @@ public class GuiSchemaDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchema schema, ItemStack itemStack, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
+    public void update(UpgradeSchema schema, ItemStack itemStack, String slot, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
         this.schema = schema;
 
         title.setString(schema.getName());
@@ -138,7 +138,7 @@ public class GuiSchemaDetail extends GuiElement {
 
         capabilityIndicatorList.update(schema, itemStack, materials, availableCapabilities);
 
-        int xpCost = schema.getExperienceCost(itemStack, materials);
+        int xpCost = schema.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
         if (xpCost > 0) {
             experienceIndicator.update(xpCost, xpCost <= playerLevel);

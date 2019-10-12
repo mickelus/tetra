@@ -21,6 +21,7 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -47,6 +48,8 @@ import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -119,6 +122,7 @@ public class ItemModularHandheld extends ItemModular {
 
         causeFierySelfEffect(entity, itemStack, 1);
         causeEnderReverbEffect(entity, itemStack, 1);
+        causeHauntEffect(entity, itemStack, 1);
 
         return true;
     }
@@ -174,6 +178,7 @@ public class ItemModularHandheld extends ItemModular {
 
             causeFierySelfEffect(attacker, itemStack, 1.4);
             causeEnderReverbEffect(attacker, itemStack, 1.5);
+            causeHauntEffect(attacker, itemStack, 1.5);
 
             tickProgression(attacker, itemStack, 1);
         }
@@ -235,6 +240,44 @@ public class ItemModularHandheld extends ItemModular {
                     if (nearbyTargets.size() > 0) {
                         nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
                     }
+                }
+            }
+        }
+    }
+
+    protected void causeHauntEffect(EntityLivingBase entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
+            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.haunted);
+            if (effectProbability > 0) {
+                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                    int effectLevel = getEffectLevel(itemStack, ItemEffect.haunted);
+
+                    EntityVex vex = new EntityVex(entity.world);
+                    vex.setLimitedLife(effectLevel * 20);
+                    vex.setLocationAndAngles(entity.posX, entity.posY + 1, entity.posZ, entity.rotationYaw, 0.0F);
+                    vex.setHeldItem(EnumHand.MAIN_HAND, itemStack.copy());
+                    vex.setDropItemsWhenDead(true);
+                    vex.setDropChance(EntityEquipmentSlot.MAINHAND, 1);
+                    vex.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 2000 + effectLevel * 20));
+                    entity.world.spawnEntity(vex);
+
+                    // todo: use temporary modules for this instead once implemented
+                    CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                            .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
+                            .orElse(Stream.empty())
+                            .filter(Objects::nonNull)
+                            .filter(module -> module.getImprovement(itemStack, ItemEffect.hauntedKey) != null)
+                            .findAny()
+                            .ifPresent(module -> {
+                                int level = module.getImprovementLevel(itemStack, ItemEffect.hauntedKey);
+                                if (level > 0) {
+                                    module.addImprovement(itemStack, ItemEffect.hauntedKey, level - 1);
+                                } else {
+                                    module.removeImprovement(itemStack, ItemEffect.hauntedKey);
+                                }
+                            });
+
+                    entity.world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
                 }
             }
         }
@@ -647,6 +690,7 @@ public class ItemModularHandheld extends ItemModular {
 
             causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
             causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+            causeHauntEffect(player, providerStack, capabilityLevel * 2);
 
             tickProgression(player, providerStack, capabilityLevel * 2);
         }
@@ -662,6 +706,7 @@ public class ItemModularHandheld extends ItemModular {
 
             causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
             causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
+            causeHauntEffect(player, providerStack, capabilityLevel * 2);
 
             tickProgression(player, providerStack, capabilityLevel * 2);
         }
@@ -670,8 +715,8 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public void assemble(ItemStack itemStack) {
-        super.assemble(itemStack);
+    public void assemble(ItemStack itemStack, World world) {
+        super.assemble(itemStack, world);
 
         NBTTagCompound nbt = NBTHelper.getTag(itemStack);
 

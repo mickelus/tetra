@@ -14,19 +14,16 @@ import se.mickelus.tetra.gui.GuiTexture;
 import se.mickelus.tetra.gui.animation.AnimationChain;
 import se.mickelus.tetra.gui.animation.Applier;
 import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
 import se.mickelus.tetra.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class GuiSlotDetail extends GuiElement {
@@ -129,7 +126,7 @@ public class GuiSlotDetail extends GuiElement {
             ItemStack[] materials = tileEntity.getMaterials();
 
 
-            schemaDetail.update(currentSchema, itemStack, materials, availableCapabilities, player.experienceLevel);
+            schemaDetail.update(currentSchema, itemStack, selectedSlot, materials, availableCapabilities, player.experienceLevel);
             schemaDetail.updateMagicCapacity(currentSchema, selectedSlot, itemStack,
                     currentSchema.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
             schemaDetail.toggleButton(currentSchema.canApplyUpgrade(player, itemStack, materials,
