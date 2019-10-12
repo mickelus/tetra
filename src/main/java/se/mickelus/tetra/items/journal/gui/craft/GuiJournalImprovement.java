@@ -30,7 +30,11 @@ public class GuiJournalImprovement extends GuiElement {
 
         addChild(new GuiModuleGlyph(0, 0, 16, 16, schema.getGlyph()).setShift(false));
 
-        label = new GuiString(20, 2, schema.getName().substring(0, 4));
+        String schemaName = schema.getName();
+        if (schemaName.length() > 4) {
+            schemaName = schemaName.substring(0, 4);
+        }
+        label = new GuiString(20, 2, schemaName);
         addChild(label);
     }
 
