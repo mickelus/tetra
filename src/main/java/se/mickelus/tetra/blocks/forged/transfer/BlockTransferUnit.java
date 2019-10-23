@@ -57,7 +57,7 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
-    public static final BlockInteraction[] interactions = new BlockInteraction[]{
+    public static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(Capability.pry, 1, EnumFacing.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(propPlate, equalTo(true)),
                     BlockTransferUnit::removePlate),
@@ -265,16 +265,13 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState actualState = super.getExtendedState(state, world, pos);
-
-
         return TileEntityOptional.from(world, pos, TileEntityTransferUnit.class)
-                .map(te -> actualState
+                .map(te -> state
                         .withProperty(propPlate, te.hasPlate())
                         .withProperty(propCell, te.hasCell() ? te.getCharge() > 0 ? 2 : 1 : 0)
                         .withProperty(propTransfer, te.isReceiving() ? 2 : te.isSending() ? 1 : 0)
                         .withProperty(EnumTransferConfig.prop, te.getConfiguration()))
-                .orElse(actualState);
+                .orElse(state);
     }
 
     @Override
@@ -286,6 +283,11 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(propFacing).getHorizontalIndex();
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
 
     @Override
@@ -308,5 +310,10 @@ public class BlockTransferUnit extends TetraBlock implements ITileEntityProvider
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(propFacing, rot.rotate(state.getValue(propFacing)));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+        return state.withRotation(mirrorIn.toRotation(state.getValue(propFacing)));
     }
 }
