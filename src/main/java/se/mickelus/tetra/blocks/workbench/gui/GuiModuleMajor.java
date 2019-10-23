@@ -130,7 +130,7 @@ public class GuiModuleMajor extends GuiModule {
             final String improvementKey = improvements[i];
             int currentValue = module.getImprovementLevel(itemStack, improvements[i]);
             int previewValue = previewModule.getImprovementLevel(previewStack, improvements[i]);
-            int color = GuiColors.normal;
+            int color;
 
             if (currentValue == -1) {
                 color = GuiColors.add;
@@ -138,6 +138,8 @@ public class GuiModuleMajor extends GuiModule {
                 color = GuiColors.remove;
             } else if (currentValue != previewValue) {
                 color = GuiColors.change;
+            } else {
+                color = module.getImprovement(itemStack, improvementKey).glyph.tint;
             }
 
             if (GuiAttachment.topRight.equals(attachmentPoint)) {

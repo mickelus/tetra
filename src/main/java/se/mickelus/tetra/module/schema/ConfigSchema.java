@@ -326,7 +326,7 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials) {
+    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         int cost = 0;
         if (definition.materialSlotCount > 0) {
             for (int i = 0; i < materials.length; i++) {

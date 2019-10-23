@@ -1,0 +1,77 @@
+[
+    {
+        "destabilizationKey":  "destabilized/haunted",
+        "minLevel": 1,
+        "maxLevel": 4,
+        "probability": 0.08
+    },
+    {
+        "improvementKey": "enchantment/fire_aspect",
+        "destabilizationKey":  "destabilized/fire_aspect",
+        "probability": 0.05
+    },
+    {
+        "improvementKey": "enchantment/looting",
+        "destabilizationKey":  "destabilized/looting",
+        "probability": 0.03
+    },
+    {
+        "improvementKey": "enchantment/unbreaking",
+        "destabilizationKey":  "destabilized/unbreaking",
+        "minLevel": 1,
+        "maxLevel": 2,
+        "probability": 0.03
+    },
+    {
+        "improvementKey": "enchantment/sharpness",
+        "destabilizationKey":  "destabilized/sharpness",
+        "minLevel": 1,
+        "maxLevel": 5,
+        "probability": 0.06
+    },
+    {
+        "improvementKey": "enchantment/smite",
+        "destabilizationKey":  "destabilized/smite",
+        "minLevel": 1,
+        "maxLevel": 5,
+        "probability": 0.04
+    },
+    {
+        "improvementKey": "enchantment/bane_of_arthropods",
+        "destabilizationKey":  "destabilized/bane_of_arthropods",
+        "minLevel": 1,
+        "maxLevel": 5,
+        "probability": 0.08
+    },
+    {
+        "improvementKey": "enchantment/knockback",
+        "destabilizationKey":  "destabilized/knockback",
+        "probability": 0.02
+    },
+    {
+        "improvementKey": "enchantment/mending",
+        "destabilizationKey":  "destabilized/mending",
+        "probability": 0.01
+    },
+    {
+        "improvementKey": "enchantment/sweeping",
+        "destabilizationKey":  "destabilized/sweeping",
+        "minLevel": 1,
+        "maxLevel": 3,
+        "probability": 0.05
+    },
+    {
+        "improvementKey": "enchantment/efficiency",
+        "destabilizationKey":  "destabilized/efficiency",
+        "minLevel": 1,
+        "maxLevel": 5,
+        "probability": 0.03
+    },
+    {
+        "improvementKey": "enchantment/fortune",
+        "destabilizationKey":  "destabilized/fortune",
+        "minLevel": 1,
+        "maxLevel": 2,
+        "probability": 0.02
+    }
+]

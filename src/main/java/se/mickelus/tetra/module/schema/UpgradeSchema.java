@@ -80,7 +80,7 @@ public interface UpgradeSchema {
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials);
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability);
 
-    public default int getExperienceCost(final ItemStack targetStack, final ItemStack[] materials) {
+    public default int getExperienceCost(final ItemStack targetStack, final ItemStack[] materials, String slot) {
         return 0;
     }
 

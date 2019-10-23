@@ -176,8 +176,11 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
                         .forEach(improvement -> removeImprovement(itemStack, slotKey, improvement.key)));
     }
 
-    public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
+    public void removeImprovement(ItemStack itemStack, String improvement) {
+        removeImprovement(itemStack, slotKey, improvement);
+    }
 
+    public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
         NBTHelper.getTag(itemStack).removeTag(slot + ":" + improvement);
     }
 

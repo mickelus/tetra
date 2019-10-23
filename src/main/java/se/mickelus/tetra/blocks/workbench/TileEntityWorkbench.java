@@ -20,7 +20,6 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -201,7 +200,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
             upgradedStack = currentSchema.applyUpgrade(targetStack, getMaterials(), true, currentSlot, player);
 
             if (upgradedStack.getItem() instanceof ItemModular) {
-                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack);
+                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world);
             }
 
             for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materialsCopy)) {
@@ -220,7 +219,7 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
                 }
             }
 
-            int xpCost = currentSchema.getExperienceCost(targetStack, materialsCopy);
+            int xpCost = currentSchema.getExperienceCost(targetStack, materialsCopy, getCurrentSlot());
             if (xpCost > 0) {
                 player.addExperienceLevel(-xpCost);
             }

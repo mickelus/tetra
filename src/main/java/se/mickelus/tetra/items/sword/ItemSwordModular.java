@@ -48,16 +48,34 @@ public class ItemSwordModular extends ItemModularHandheld {
         requiredModules = new String[] { bladeKey, hiltKey };
 
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/basic_blade", "settling_improvements");
+                "sword/improvements/shared_blade",
+                "sword/improvements/shared_blade_hone",
+                "sword/improvements/basic_blade",
+                "settling_improvements",
+                "destabilization_improvements");
         shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/short_blade", "settling_improvements");
+                "sword/improvements/shared_blade",
+                "sword/improvements/shared_blade_hone",
+                "sword/improvements/short_blade",
+                "settling_improvements",
+                "destabilization_improvements");
         heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/heavy_blade", "settling_improvements");
-        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone",
-                "settling_improvements");
+                "sword/improvements/shared_blade",
+                "sword/improvements/shared_blade_hone",
+                "sword/improvements/heavy_blade",
+                "settling_improvements",
+                "destabilization_improvements");
+        macheteModule = new BasicMajorModule(bladeKey, "sword/machete",
+                "sword/improvements/shared_blade",
+                "sword/improvements/shared_blade_hone",
+                "settling_improvements",
+                "destabilization_improvements");
 
-        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/shared_hilt", "sword/improvements/shared_hilt_hone",
-                "settling_improvements")
+        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt",
+                "sword/improvements/shared_hilt",
+                "sword/improvements/shared_hilt_hone",
+                "settling_improvements",
+                "destabilization_improvements")
                 .withRenderLayer(Priority.LOWER);
 
         new BasicModule(guardKey, "sword/makeshift_guard");

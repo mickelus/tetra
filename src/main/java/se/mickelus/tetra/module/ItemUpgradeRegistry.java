@@ -91,7 +91,9 @@ public class ItemUpgradeRegistry {
     }
 
     public void registerRepairDefinition(RepairDefinition definition) {
-        repairMap.put(definition.moduleVariant, definition);
+        if (!repairMap.containsKey(definition.moduleVariant)) {
+            repairMap.put(definition.moduleVariant, definition);
+        }
     }
 
     public RepairDefinition getRepairDefinition(String moduleVariant) {
