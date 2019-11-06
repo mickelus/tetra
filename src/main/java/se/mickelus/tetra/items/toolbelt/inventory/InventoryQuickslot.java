@@ -32,14 +32,14 @@ public class InventoryQuickslot extends InventoryToolbelt {
     @Override
     public void readFromNBT(CompoundNBT tagCompound) {
         super.readFromNBT(tagCompound);
-        ListNBT shadows = tagCompound.getTagList(shadowsKey, Constants.NBT.TAG_COMPOUND);
+        ListNBT shadows = tagCompound.getList(shadowsKey, Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < shadows.tagCount(); i++) {
-            CompoundNBT item = shadows.getCompoundTagAt(i);
+        for (int i = 0; i < shadows.size(); i++) {
+            CompoundNBT item = shadows.getCompound(i);
             int slot = item.getInt(slotKey);
 
             if (0 <= slot && slot < getSizeInventory()) {
-                inventoryShadows.set(slot, new ItemStack(item));
+                inventoryShadows.set(slot, ItemStack.read(item));
             }
         }
     }
@@ -51,10 +51,10 @@ public class InventoryQuickslot extends InventoryToolbelt {
         for (int i = 0; i < maxSize; i++) {
                 CompoundNBT item = new CompoundNBT();
                 item.putInt(slotKey, i);
-                getShadowOfSlot(i).writeToNBT(item);
-                shadows.appendTag(item);
+                getShadowOfSlot(i).write(item);
+                shadows.add(item);
         }
-        tagcompound.setTag(shadowsKey, shadows);
+        tagcompound.put(shadowsKey, shadows);
     }
 
     public ItemStack getShadowOfSlot(int index) {

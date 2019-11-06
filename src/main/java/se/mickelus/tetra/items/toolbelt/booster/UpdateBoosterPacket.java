@@ -42,7 +42,7 @@ public class UpdateBoosterPacket extends AbstractPacket {
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
             UtilBooster.setActive(NBTHelper.getTag(itemStack), active, charged);
 
-            UtilToolbelt.updateBauble(player);
+            // UtilToolbelt.updateBauble(player);
         }
 
     }

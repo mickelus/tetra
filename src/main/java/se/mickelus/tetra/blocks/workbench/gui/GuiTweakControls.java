@@ -3,10 +3,10 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiButton;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiButton;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.TweakData;
 

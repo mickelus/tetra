@@ -3,10 +3,9 @@ package se.mickelus.tetra.items.toolbelt.booster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 
@@ -24,7 +23,7 @@ public class OverlayBooster {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         float fuelPercent = -1;
 
-        if (event.side != Side.CLIENT) {
+        if (!event.side.isClient()) {
             return;
         }
 

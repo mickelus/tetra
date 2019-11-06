@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.tetra.gui.GuiTextureOffset;
+import se.mickelus.mgui.gui.GuiTextureOffset;
+import se.mickelus.tetra.gui.GuiTextures;
 
 public class GuiModuleBackdrop extends GuiTextureOffset {
 
@@ -9,7 +10,7 @@ public class GuiModuleBackdrop extends GuiTextureOffset {
     }
 
     protected GuiModuleBackdrop(int x, int y, int color, int width, int height, int textureX, int textureY) {
-        super(x, y, width, height, textureX, textureY, "textures/gui/workbench.png");
+        super(x, y, width, height, textureX, textureY, GuiTextures.workbench);
 
         this.color = color;
     }

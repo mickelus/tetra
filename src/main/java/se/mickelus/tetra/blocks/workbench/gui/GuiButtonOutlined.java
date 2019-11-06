@@ -1,11 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.Minecraft;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 public class GuiButtonOutlined extends GuiClickable {
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     private GuiTexture borderLeft;
     private GuiTexture borderRight;
@@ -22,9 +22,9 @@ public class GuiButtonOutlined extends GuiClickable {
 
         addChild(new GuiRect(9, 0, width - 18, 11, 0));
 
-        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
+        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, GuiTextures.workbench).setColor(GuiColors.muted);
         addChild(borderLeft);
-        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
+        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, GuiTextures.workbench).setColor(GuiColors.muted);
         addChild(borderRight);
 
         borderTop = new GuiRect(9, 1, width - 18, 1, GuiColors.muted);

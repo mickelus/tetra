@@ -1,22 +1,22 @@
 package se.mickelus.tetra.items.duplex_tool;
 
-import com.google.common.collect.ImmutableList;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -77,11 +77,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     public static ItemDuplexToolModular instance;
 
     public ItemDuplexToolModular() {
-
-        setUnlocalizedName(unlocalizedName);
+        super(new Properties().maxStackSize(1).group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
-        setMaxStackSize(1);
-        setCreativeTab(TetraItemGroup.getInstance());
 
         entityHitDamage = 2;
 
@@ -206,11 +203,10 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
-        if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createHammerStack("log", "stick"));
-            itemList.add(createHammerStack("obsidian", "iron"));
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        if (isInGroup(group)) {
+            items.add(createHammerStack("log", "stick"));
+            items.add(createHammerStack("obsidian", "iron"));
         }
     }
 
@@ -224,22 +220,16 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
-        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-    }
-
-    @Override
-    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
-        return super.getTextures(itemStack);
-    }
-
-    @Override
-    public EnumActionResult onItemUseFirst(PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
+    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        PlayerEntity player = context.getPlayer();
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        Hand hand = context.getHand();
         if (!player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
-            return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, side);
+            return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, context.getFace());
         }
-        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+        return super.onItemUseFirst(stack, context);
     }
 
     @Override

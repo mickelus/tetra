@@ -1,29 +1,18 @@
 package se.mickelus.tetra.items.toolbelt;
 
-import baubles.api.BaublesApi;
-import baubles.api.cap.BaublesCapabilities;
-import baubles.api.cap.IBaublesItemHandler;
-import baubles.api.inv.BaublesInventoryWrapper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.common.Loader;
-import se.mickelus.tetra.IntegrationHelper;
-import net.minecraft.util.text.TextComponentTranslation;
-import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.List;
@@ -66,7 +55,7 @@ public class UtilToolbelt {
                 if (!player.inventory.addItemStackToInventory(heldItemStack)) {
                     inventory.storeItemInInventory(player.getHeldItem(hand));
                     player.setHeldItem(hand, heldItemStack);
-                    player.sendStatusMessage(new TextComponentTranslation("toolbelt.blocked"), true);
+                    player.sendStatusMessage(new TranslationTextComponent("toolbelt.blocked"), true);
                 }
             }
         }
@@ -121,40 +110,15 @@ public class UtilToolbelt {
 
     /**
      * Attempts to find the first itemstack containing a toolbelt in the given players inventory.
-     * todo: add baubles support
      * @param player A player
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
-        ItemStack baubleToolbelt = getBaubleToolbelt(player);
-        if (!baubleToolbelt.isEmpty()) {
-            return baubleToolbelt;
-        }
-
-        InventoryPlayer inventoryPlayer = player.inventory;
+        PlayerInventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
             if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
                 return itemStack;
-            }
-        }
-        return ItemStack.EMPTY;
-    }
-
-    public static ItemStack getBaubleToolbelt(PlayerEntity player) {
-        if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
-            IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
-
-            if (handler != null) {
-                handler.setPlayer(player);
-                IInventory baubleInventory = new BaublesInventoryWrapper(handler, player);
-
-                for (int i = 0; i < baubleInventory.getSizeInventory(); i++) {
-                    ItemStack itemStack = baubleInventory.getStackInSlot(i);
-                    if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
-                        return itemStack;
-                    }
-                }
             }
         }
         return ItemStack.EMPTY;
@@ -165,15 +129,6 @@ public class UtilToolbelt {
         new InventoryPotions(itemStack).emptyOverflowSlots(player);
         new InventoryStorage(itemStack).emptyOverflowSlots(player);
         new InventoryQuiver(itemStack).emptyOverflowSlots(player);
-    }
-
-    public static void updateBauble(PlayerEntity player) {
-        if (Loader.isModLoaded(IntegrationHelper.baublesModId)) {
-            int baubleSlot = BaublesApi.isBaubleEquipped(player, ItemToolbeltModular.instance);
-            if (baubleSlot != -1) {
-                BaublesApi.getBaublesHandler(player).setChanged(baubleSlot, true);
-            }
-        }
     }
 
     /**
@@ -188,32 +143,36 @@ public class UtilToolbelt {
         InventoryQuickslot inventory = new InventoryQuickslot(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
-        Vec3d hitVector = traceResult.hitVec;
-        BlockPos blockPos = traceResult.getBlockPos();
+        if (traceResult instanceof BlockRayTraceResult) {
+            BlockRayTraceResult trace = (BlockRayTraceResult) traceResult;
+            Vec3d hitVector = trace.getHitVec();
+            BlockPos blockPos = trace.getPos();
 
-        BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
-                .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, traceResult.sideHit,
-                        (float) hitVector.x - blockPos.getX(),
-                        (float) hitVector.y - blockPos.getY(),
-                        (float) hitVector.z - blockPos.getZ()))
-                .orElse(null);
+            // todo 1.14: renable when feature gen (and block interactions) is back
+//            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
+//                    .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
+//                            (float) hitVector.x - blockPos.getX(),
+//                            (float) hitVector.y - blockPos.getY(),
+//                            (float) hitVector.z - blockPos.getZ()))
+//                    .orElse(null);
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            ItemStack itemStack = inventory.getStackInSlot(i);
-            if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
-                String requiredTool = blockState.getBlock().getHarvestTool(blockState);
-                if (requiredTool != null && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) > -1) {
-                    return i;
-                }
-
-                if (blockInteraction != null) {
-                    if (itemStack.getItem() instanceof ICapabilityProvider) {
-                        ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
-                        if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
-                            return i;
-                        }
+            for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                ItemStack itemStack = inventory.getStackInSlot(i);
+                if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
+                    ToolType requiredTool = blockState.getHarvestTool();
+                    if (requiredTool != null && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) > -1) {
+                        return i;
                     }
 
+                    // todo 1.14: renable when feature gen (and block interactions) is back
+//                    if (blockInteraction != null) {
+//                        if (itemStack.getItem() instanceof ICapabilityProvider) {
+//                            ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
+//                            if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
+//                                return i;
+//                            }
+//                        }
+//                    }
                 }
             }
         }

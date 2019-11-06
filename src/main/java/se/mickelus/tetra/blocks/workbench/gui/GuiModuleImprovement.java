@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiRect;
 
 import java.util.ArrayList;
 import java.util.Arrays;

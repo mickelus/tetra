@@ -1,14 +1,13 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.impl.GuiModuleOffsets;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

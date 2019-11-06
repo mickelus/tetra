@@ -2,12 +2,12 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringSmall;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 import se.mickelus.tetra.module.schema.SchemaType;

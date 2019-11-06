@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -26,7 +27,7 @@ public class RemoveSchema extends BaseSchema {
     private ItemModular item;
     private String slot;
 
-    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 52, 32);
+    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
     public RemoveSchema(ItemModular item, String slot) {
         this.item = item;
@@ -43,7 +44,7 @@ public class RemoveSchema extends BaseSchema {
 
     @Override
     public String getKey() {
-        return key + "/" + item.getUnlocalizedName() + "/" + slot;
+        return key + "/" + item.getRegistryName() + "/" + slot;
     }
 
     @Override
@@ -104,8 +105,8 @@ public class RemoveSchema extends BaseSchema {
 
 
         float durabilityFactor = 0;
-        if (consumeMaterials && upgradedStack.isItemStackDamageable()) {
-            durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
+        if (consumeMaterials && upgradedStack.isDamageable()) {
+            durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
         }
 
         float honingFactor = Math.min(Math.max(1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack), 0), 1);
@@ -123,8 +124,8 @@ public class RemoveSchema extends BaseSchema {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
             }
 
-            if (upgradedStack.isItemStackDamageable()) {
-                upgradedStack.setItemDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
+            if (upgradedStack.isDamageable()) {
+                upgradedStack.setDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
             }
         }
 

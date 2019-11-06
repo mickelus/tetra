@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.client.Minecraft;
-import se.mickelus.tetra.gui.GuiRoot;
+import se.mickelus.mgui.gui.GuiRoot;
 
 public class OverlayGuiBooster extends GuiRoot {
 

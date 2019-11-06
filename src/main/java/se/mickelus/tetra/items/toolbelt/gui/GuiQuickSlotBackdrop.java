@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.*;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.items.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 

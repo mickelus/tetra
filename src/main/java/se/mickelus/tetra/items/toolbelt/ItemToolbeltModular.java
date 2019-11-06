@@ -1,29 +1,33 @@
 package se.mickelus.tetra.items.toolbelt;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import se.mickelus.tetra.IntegrationHelper;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
+import se.mickelus.tetra.items.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
@@ -32,12 +36,11 @@ import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
-@Optional.Interface(modid = IntegrationHelper.baublesModId, iface = IntegrationHelper.baublesApiClass)
-public class ItemToolbeltModular extends ItemModular implements IBauble {
+public class ItemToolbeltModular extends ItemModular implements INamedContainerProvider {
     private final static String unlocalizedName = "toolbelt_modular";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemToolbeltModular instance;
@@ -54,15 +57,14 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     private ItemModule defaultBelt;
     private ItemModule defaultStrap;
 
+
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ContainerType<ToolbeltContainer> containerType;
+
     public ItemToolbeltModular() {
-        super();
+        super(new Properties().maxStackSize(1).group(TetraItemGroup.instance));
 
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-
-        setMaxStackSize(1);
-
-        setCreativeTab(TetraItemGroup.getInstance());
 
         majorModuleKeys = new String[] { slot1Key, slot2Key, slot3Key };
         minorModuleKeys = new String[] { beltKey };
@@ -100,10 +102,10 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        GuiHandlerRegistry.instance.registerHandler(GuiHandlerToolbelt.toolbeltId, new GuiHandlerToolbelt());
+        ScreenManager.registerFactory(containerType, ToolbeltGui::new);
 
-        packetHandler.registerPacket(EquipToolbeltItemPacket.class, Side.SERVER);
-        packetHandler.registerPacket(UpdateBoosterPacket.class, Side.SERVER);
+        packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
+        packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
         InventoryToolbelt.initializePredicates();
@@ -122,10 +124,9 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> itemList) {
-        if (isInCreativeTab(creativeTabs)) {
-            itemList.add(createDefaultStack());
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        if (isInGroup(group)) {
+            items.add(createDefaultStack());
         }
     }
 
@@ -138,9 +139,9 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        player.openGui(TetraMod.instance, GuiHandlerToolbelt.toolbeltId, world, hand.ordinal(), 0, 0);
+        NetworkHooks.openGui((ServerPlayerEntity) player, this);
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
     }
 
     public int getNumSlots(ItemStack itemStack, SlotType slotType) {
@@ -177,13 +178,14 @@ public class ItemToolbeltModular extends ItemModular implements IBauble {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Tells baubles which slot this item can go into. Implements a method in the IBauble interface.
-     * @param itemstack The itemstack
-     * @return
-     */
-    @Optional.Method(modid = IntegrationHelper.baublesModId)
-    public BaubleType getBaubleType(ItemStack itemstack) {
-        return BaubleType.BELT;
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent(getRegistryName().getPath());
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity playerEntity) {
+        return null;
     }
 }

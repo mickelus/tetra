@@ -3,12 +3,12 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringSmall;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Collections;
@@ -87,17 +87,17 @@ public class GuiIntegrityBar extends GuiElement {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         for (int i = 0; i < -integrityCost; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,
-                    colorWithOpacity(i >= integrityGain ? overuseColor : costColor, opacity * getOpacity()));
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, i >= integrityGain ? overuseColor : costColor,
+                    opacity * getOpacity());
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, colorWithOpacity(gainColor, opacity * getOpacity()));
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor, opacity * getOpacity());
         }
     }
 
-    private void drawSegment(int x, int y, int color) {
-        drawRect(x, y,x + segmentWidth, y + segmentHeight, color);
+    private void drawSegment(int x, int y, int color, float opacity) {
+        drawRect(x, y,x + segmentWidth, y + segmentHeight, color, opacity);
     }
 
 }

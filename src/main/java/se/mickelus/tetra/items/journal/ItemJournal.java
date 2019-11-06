@@ -1,21 +1,20 @@
 package se.mickelus.tetra.items.journal;
 
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.journal.gui.GuiJournal;
 
 import javax.annotation.Nullable;
@@ -29,30 +28,30 @@ public class ItemJournal extends TetraItem {
     public static ItemJournal instance;
 
     public ItemJournal() {
-        super();
+        super(new Properties()
+                .maxStackSize(1)
+                .group(TetraItemGroup.instance));
 
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-
-        setMaxStackSize(1);
-
-        setCreativeTab(TetraItemGroup.getInstance());
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("item.journal.tooltip1"));
-        tooltip.add("");
-        tooltip.add(TextFormatting.GRAY + TextFormatting.ITALIC.toString() + I18n.format("item.journal.tooltip2"));
-    }
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("item.journal.tooltip1")
+                .setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
 
+        tooltip.add(new StringTextComponent(""));
+
+        tooltip.add(new TranslationTextComponent("item.journal.tooltip2")
+                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+    }
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (world.isRemote) {
             showGui();
         }
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -2,9 +2,9 @@ package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.network.PacketHandler;
 
 public class JumpHandlerBooster {
@@ -22,7 +22,7 @@ public class JumpHandlerBooster {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (mc.inGameHasFocus) {
+        if (mc.isGameFocused()) {
             if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isSneaking()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
                 PacketHandler.sendToServer(packet);

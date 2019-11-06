@@ -27,7 +27,7 @@ public interface ITetraBlock {
     void registerItem(IForgeRegistry<Item> registry);
 
     default void registerItem(IForgeRegistry<Item> registry, Block block) {
-        Item item = new BlockItem(block, new Item.Properties().group(TetraItemGroup.getInstance()))
+        Item item = new BlockItem(block, new Item.Properties().group(TetraItemGroup.instance))
                 .setRegistryName(block.getRegistryName());
 
         registry.register(item);

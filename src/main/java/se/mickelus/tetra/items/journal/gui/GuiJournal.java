@@ -6,7 +6,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
 import se.mickelus.tetra.items.journal.JournalPage;
 import se.mickelus.tetra.items.journal.gui.blueprint.GuiJournalBlueprintRoot;

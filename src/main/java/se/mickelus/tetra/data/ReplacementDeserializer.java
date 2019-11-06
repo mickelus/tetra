@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -36,7 +37,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         }
 
         ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getString(jsonObject, "item"));
-        Item item = Item.REGISTRY.getObject(resourcelocation);
+        Item item = ForgeRegistries.ITEMS.getValue(resourcelocation);
         if (item == null) {
             throw new JsonSyntaxException("Failed to parse replacement data from " + jsonObject.getAsString());
         }

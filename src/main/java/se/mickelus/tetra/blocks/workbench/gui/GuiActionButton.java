@@ -3,16 +3,15 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.function.Consumer;
 
 public class GuiActionButton extends GuiElement {
-
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     private WorkbenchAction action;
     private ItemStack targetStack;
@@ -55,9 +54,9 @@ public class GuiActionButton extends GuiElement {
 
         labelClickable.addChild(new GuiRect(9, 0, width - 18, 11, 0));
 
-        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
+        borderLeft = new GuiTexture(0, 0, 9, 11, 79, 0, GuiTextures.workbench).setColor(GuiColors.muted);
         labelClickable.addChild(borderLeft);
-        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, WORKBENCH_TEXTURE).setColor(GuiColors.muted);
+        borderRight = new GuiTexture(width - 9, 0, 9, 11, 88, 0, GuiTextures.workbench).setColor(GuiColors.muted);
         labelClickable.addChild(borderRight);
 
         borderTop = new GuiRect(9, 1, width - 18, 1, GuiColors.muted);
@@ -90,7 +89,7 @@ public class GuiActionButton extends GuiElement {
             iconClickable.setX(-iconClickable.getX());
         }
 
-        iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, WORKBENCH_TEXTURE));
+        iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench));
         addChild(iconClickable);
 
         Capability[] capabilities = action.getRequiredCapabilitiesFor(targetStack);

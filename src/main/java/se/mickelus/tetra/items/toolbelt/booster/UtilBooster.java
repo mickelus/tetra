@@ -1,18 +1,18 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldServer;
-import se.mickelus.tetra.module.ItemEffect;
+import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
+import se.mickelus.tetra.module.ItemEffect;
 
 public class UtilBooster {
 
@@ -74,10 +74,10 @@ public class UtilBooster {
         if (player.isElytraFlying()) {
             Vec3d vec3d = player.getLookVec();
             player.addVelocity(
-                    vec3d.x * 0.01f + (vec3d.x * 1.5f - player.motionX) * 0.05f,
-                    vec3d.y * 0.01f + (vec3d.y * 1.5f - player.motionY) * 0.05f,
-                    vec3d.z * 0.01f + (vec3d.z * 1.5f - player.motionZ) * 0.05f);
-        } else if (player.motionY > -0.1) {
+                    vec3d.x * 0.01f + (vec3d.x * 1.5f - player.getMotion().x) * 0.05f,
+                    vec3d.y * 0.01f + (vec3d.y * 1.5f - player.getMotion().y) * 0.05f,
+                    vec3d.z * 0.01f + (vec3d.z * 1.5f - player.getMotion().z) * 0.05f);
+        } else if (player.getMotion().y > -0.1) {
             if (player.isSneaking()) {
                 player.addVelocity(0, boostBase / 1.5, 0);
             } else {
@@ -85,11 +85,11 @@ public class UtilBooster {
             }
             player.fallDistance = 0;
         } else {
-            player.addVelocity(0, boostBase + 0.8 * -player.motionY, 0);
+            player.addVelocity(0, boostBase + 0.8 * -player.getMotion().y, 0);
         }
 
-        if (player.world instanceof WorldServer) {
-            ((WorldServer) player.world).spawnParticle(EnumParticleTypes.SMOKE_NORMAL, player.posX - 0.2 + Math.random() * 0.4,
+        if (player.world instanceof ServerWorld) {
+            ((ServerWorld) player.world).spawnParticle(ParticleTypes.SMOKE, player.posX - 0.2 + Math.random() * 0.4,
                     player.posY + Math.random() * 0.2, player.posZ - 0.2 + Math.random() * 0.4, 10, 0,
                     0, 0, 0.1D);
         }
@@ -105,11 +105,11 @@ public class UtilBooster {
         player.velocityChanged = true;
 
 
-        if (player.world instanceof WorldServer) {
-            ((WorldServer)player.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, player.posX,
+        if (player.world instanceof ServerWorld) {
+            ((ServerWorld)player.world).spawnParticle(ParticleTypes.LARGE_SMOKE, player.posX,
                     player.posY, player.posZ, 10, 0,
                     0, 0, 0.1D);
-            ((WorldServer)player.world).spawnParticle(EnumParticleTypes.FLAME, player.posX,
+            ((ServerWorld)player.world).spawnParticle(ParticleTypes.FLAME, player.posX,
                     player.posY, player.posZ, 3, 0,
                     0, 0, 0.1D);
         }
@@ -165,9 +165,9 @@ public class UtilBooster {
     }
 
     public static void setActive(CompoundNBT tag, boolean active, boolean charged) {
-        tag.setBoolean(activeKey, active);
+        tag.putBoolean(activeKey, active);
         if (charged) {
-            tag.setBoolean(chargedKey, charged);
+            tag.putBoolean(chargedKey, charged);
         }
     }
 

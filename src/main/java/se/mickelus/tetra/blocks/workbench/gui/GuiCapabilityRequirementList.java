@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.Collection;

@@ -3,11 +3,11 @@ package se.mickelus.tetra.items.toolbelt.gui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
 
 import java.util.Arrays;

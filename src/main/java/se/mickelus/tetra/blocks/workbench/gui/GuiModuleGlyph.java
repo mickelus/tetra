@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.data.GlyphData;
 
 public class GuiModuleGlyph extends GuiElement {
@@ -51,18 +51,18 @@ public class GuiModuleGlyph extends GuiElement {
         float green = (float)(tint & 255) / 255.0F;
 
         if (shift) {
-            GlStateManager.translate(0.5F, 0.5F, 0);
+            GlStateManager.translatef(0.5F, 0.5F, 0);
         }
 
-        GlStateManager.color(red, blue, green, opacity * this.opacity);
-        drawTexturedModalRect(
+        GlStateManager.color4f(red, blue, green, opacity * this.opacity);
+        blit(
                 refX + x,
                 refY + y,
                 textureX, textureY, width - 1, height - 1);
-        GlStateManager.color(1, 1, 1, 1);
+        GlStateManager.color4f(1, 1, 1, 1);
 
         if (shift) {
-            GlStateManager.translate(-0.5F, -0.5F, 0);
+            GlStateManager.translatef(-0.5F, -0.5F, 0);
         }
     }
 }

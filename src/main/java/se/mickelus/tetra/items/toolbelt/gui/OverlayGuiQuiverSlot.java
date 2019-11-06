@@ -6,11 +6,11 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
 
 public class OverlayGuiQuiverSlot extends GuiElement {
 
@@ -24,9 +24,9 @@ public class OverlayGuiQuiverSlot extends GuiElement {
 
     private FontRenderer fontRenderer;
 
-    GuiTexture backdrop;
-    GuiString count;
-    GuiString hoverLabel;
+    private GuiTexture backdrop;
+    private GuiString count;
+    private GuiString hoverLabel;
 
     public OverlayGuiQuiverSlot(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 23, 23);
@@ -56,7 +56,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
             addChild(count);
             count.setVisible(false);
 
-            hoverLabel = new GuiString(-5, 0, itemStack.getDisplayName());
+            hoverLabel = new GuiString(-5, 0, itemStack.getDisplayName().getFormattedText());
             hoverLabel.setAttachmentPoint(GuiAttachment.middleRight);
             hoverLabel.setAttachmentAnchor(GuiAttachment.middleLeft);
             addChild(hoverLabel);
@@ -100,13 +100,14 @@ public class OverlayGuiQuiverSlot extends GuiElement {
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.enableDepth();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.enableDepthTest();
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
-        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
-        GlStateManager.disableDepth();
+        // todo 1.14: replace with GuiItem?
+        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
+        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
+        GlStateManager.disableDepthTest();
 
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();

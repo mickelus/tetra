@@ -1,7 +1,8 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
-import se.mickelus.tetra.gui.*;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 
 import java.util.function.Consumer;
@@ -12,7 +13,7 @@ public class GuiJournalVariantMajorItem extends GuiJournalVariantItem {
             Consumer<OutcomePreview> onSelect) {
         super(x, y, 16, 16, outcome, onHover, onBlur, onSelect);
 
-        backdrop = new GuiTexture(1, 0, 15, 15, 52,0, texture);
+        backdrop = new GuiTexture(1, 0, 15, 15, 52,0, GuiTextures.workbench);
         addChild(backdrop);
 
         addChild(new GuiModuleGlyph(0, 0, 16, 16, outcome.glyph).setShift(false));

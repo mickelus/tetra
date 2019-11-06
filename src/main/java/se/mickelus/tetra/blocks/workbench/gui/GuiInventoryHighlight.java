@@ -1,16 +1,16 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.AnimationChain;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.animation.AnimationChain;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 public class GuiInventoryHighlight extends GuiElement {
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     private AnimationChain animation;
     GuiElement dots;
@@ -18,7 +18,7 @@ public class GuiInventoryHighlight extends GuiElement {
     public GuiInventoryHighlight(int x, int y, int offset) {
         super(x, y, 16, 16);
 
-        GuiTexture texture = new GuiTexture(0, 0, 16, 16, 80, 16, WORKBENCH_TEXTURE);
+        GuiTexture texture = new GuiTexture(0, 0, 16, 16, 80, 16, GuiTextures.workbench);
         addChild(texture);
 
         dots = new GuiElement(2, 2, 12, 12);

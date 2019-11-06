@@ -3,10 +3,10 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
-import se.mickelus.tetra.gui.GuiAlignment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiAlignment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 import java.util.Arrays;
 import java.util.function.Consumer;

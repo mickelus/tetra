@@ -1,11 +1,13 @@
 package se.mickelus.tetra.blocks.geode;
 
+import com.google.common.collect.ImmutableSet;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.oredict.OreDictionary;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.items.TetraItemGroup;
+
+import java.util.Set;
 
 public class ItemPristineLapis extends TetraItem {
     private static final String unlocalizedName = "pristine_lapis";
@@ -14,13 +16,12 @@ public class ItemPristineLapis extends TetraItem {
     public static ItemPristineLapis instance;
 
     public ItemPristineLapis() {
+        super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraItemGroup.getInstance());
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
-        OreDictionary.registerOre("gemLapis", this);
+    public Set<ResourceLocation> getTags() {
+        return ImmutableSet.of(new ResourceLocation("gems/lapis"));
     }
 }

@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.GuiColors;
 
 import java.util.Collections;
 import java.util.List;

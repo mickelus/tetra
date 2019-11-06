@@ -1,16 +1,13 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiInventoryInfo extends GuiElement {
-    private InventoryPlayer inventory;
+    private PlayerInventory inventory;
     private ItemStack targetStack;
     private UpgradeSchema schema;
 

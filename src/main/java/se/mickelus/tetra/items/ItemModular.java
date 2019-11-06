@@ -16,6 +16,7 @@ import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
@@ -515,6 +516,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
     }
 
+    public int getCapabilityLevel(ItemStack itemStack, ToolType toolType) {
+        if (toolType != null) {
+            return getCapabilityLevel(itemStack, toolType.getName());
+        }
+        return -1;
+    }
+
     public int getCapabilityLevel(ItemStack itemStack, String capability) {
         if (EnumUtils.isValidEnum(Capability.class, capability)) {
             return getCapabilityLevel(itemStack, Capability.valueOf(capability));
@@ -539,6 +547,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sum();
 
         return base + synergyBonus;
+    }
+
+    public float getCapabilityEfficiency(ItemStack itemStack, ToolType toolType) {
+        if (toolType != null) {
+            return getCapabilityEfficiency(itemStack, toolType.getName());
+        }
+        return -1;
     }
 
     public float getCapabilityEfficiency(ItemStack itemStack, String capability) {

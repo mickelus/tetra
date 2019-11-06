@@ -57,8 +57,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
     public void addModule(ItemStack targetStack, String variantKey, PlayerEntity player) {
         CompoundNBT tag = NBTHelper.getTag(targetStack);
 
-        tag.setString(slotKey, moduleKey);
-        tag.setString(dataKey, variantKey);
+        tag.putString(slotKey, moduleKey);
+        tag.putString(dataKey, variantKey);
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {

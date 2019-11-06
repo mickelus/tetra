@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 import se.mickelus.tetra.module.schema.UpgradeSchema;

@@ -3,8 +3,11 @@ package se.mickelus.tetra.blocks.workbench;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -12,9 +15,12 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
@@ -32,9 +38,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TileEntityWorkbench extends TileEntity implements IInventory {
+public class TileEntityWorkbench extends TileEntity implements IInventory, INamedContainerProvider {
 
-    @ObjectHolder("tetra:workbench")
+    @ObjectHolder(TetraMod.MOD_ID + ":" + BlockWorkbench.unlocalizedName)
     public static TileEntityType<TileEntityWorkbench> type;
 
     private static final String STACKS_KEY = "stacks";
@@ -472,5 +478,16 @@ public class TileEntityWorkbench extends TileEntity implements IInventory {
     @Override
     public void clear() {
         this.stacks.clear();
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent(BlockWorkbench.unlocalizedName);
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new WorkbenchContainer(windowId, this, playerInventory, playerEntity);
     }
 }

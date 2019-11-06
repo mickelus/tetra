@@ -1,14 +1,13 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringOutline;
-import se.mickelus.tetra.gui.GuiTexture;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringOutline;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiTextures;
 
 public class GuiCapability extends GuiElement {
-
-    private static final String texture = "textures/gui/workbench.png";
 
     protected Capability capability;
 
@@ -18,7 +17,7 @@ public class GuiCapability extends GuiElement {
         super(x, y, 16, 16);
         this.capability = capability;
 
-        addChild(new GuiTexture(0, 0, 16, 16, capability.ordinal() * 16, 52, texture));
+        addChild(new GuiTexture(0, 0, 16, 16, capability.ordinal() * 16, 52, GuiTextures.workbench));
 
         levelIndicator = new GuiStringOutline(10, 8, "");
         addChild(levelIndicator);

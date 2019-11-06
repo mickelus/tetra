@@ -5,10 +5,10 @@ import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 public class OverlayGuiQuickslot extends GuiElement {
 
@@ -67,7 +67,7 @@ public class OverlayGuiQuickslot extends GuiElement {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
-            fontRenderer.drawStringWithShadow(itemStack.getDisplayName(), x + refX + 63, y + refY + 4, GuiColors.hover);
+            fontRenderer.drawStringWithShadow(itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
         }
 
         drawItemStack(itemStack, x + refX + 38, y + refY + 1);
@@ -75,15 +75,16 @@ public class OverlayGuiQuickslot extends GuiElement {
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.enableDepth();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.enableDepthTest();
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
-        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
+        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
+        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
         if (opacity < 1) {
-            this.zLevel = 300;
-            GlStateManager.disableDepth();
+            // todo 1.14: check that this works
+            // this.zLevel = 300;
+            GlStateManager.disableDepthTest();
             drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }
         GlStateManager.popMatrix();

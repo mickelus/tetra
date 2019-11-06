@@ -2,9 +2,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.function.Consumer;

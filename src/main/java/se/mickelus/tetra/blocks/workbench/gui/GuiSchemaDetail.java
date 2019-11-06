@@ -2,16 +2,15 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.impl.GuiMagicUsage;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiMagicUsage;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 public class GuiSchemaDetail extends GuiElement {
-
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     private static final int MAX_NUM_SLOTS = 2;
 
@@ -58,7 +57,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotQuantities[i].setVisible(false);
             addChild(slotQuantities[i]);
 
-            slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, WORKBENCH_TEXTURE);
+            slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, GuiTextures.workbench);
             slotBorders[i].setVisible(false);
             addChild(slotBorders[i]);
         }
@@ -88,13 +87,13 @@ public class GuiSchemaDetail extends GuiElement {
         GuiTexture border = null;
         GuiTexture glyphTexture;
         if (schema.getType() == SchemaType.major) {
-            border = new GuiTexture(0, 2, 16, 9, 52, 3, WORKBENCH_TEXTURE);
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, GuiTextures.workbench);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.minor) {
-            border = new GuiTexture(2, 1, 11, 11, 68, 0, WORKBENCH_TEXTURE);
+            border = new GuiTexture(2, 1, 11, 11, 68, 0, GuiTextures.workbench);
             glyphTexture = new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else if (schema.getType() == SchemaType.improvement) {
-            border = new GuiTexture(0, 2, 16, 9, 52, 3, WORKBENCH_TEXTURE);
+            border = new GuiTexture(0, 2, 16, 9, 52, 3, GuiTextures.workbench);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else {
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
@@ -109,7 +108,7 @@ public class GuiSchemaDetail extends GuiElement {
         glyph.addChild(glyphTexture);
 
         if (schema.getType() == SchemaType.improvement) {
-            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, WORKBENCH_TEXTURE));
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
         }
 
 

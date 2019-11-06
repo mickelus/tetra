@@ -1,17 +1,16 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiStringOutline;
-import se.mickelus.tetra.gui.GuiTexture;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringOutline;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.Collections;
 import java.util.List;
 
 public class GuiExperience extends GuiElement {
-    private static final String texture = "textures/gui/workbench.png";
-
     private static final int positiveColor = 0xc8ff8f;
     private static final int negativeColor = 0x8c605d;
 
@@ -28,7 +27,7 @@ public class GuiExperience extends GuiElement {
     public GuiExperience(int x, int y, String unlocalizedTooltip) {
         super(x, y, 16, 16);
 
-        indicator = new GuiTexture(0, 0, 16, 16, 0, 0, texture);
+        indicator = new GuiTexture(0, 0, 16, 16, 0, 0, GuiTextures.workbench);
         addChild(indicator);
 
         levelString = new GuiStringOutline(8, 2, "");

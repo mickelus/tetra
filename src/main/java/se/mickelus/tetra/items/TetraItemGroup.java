@@ -2,11 +2,13 @@ package se.mickelus.tetra.items;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 
 public class TetraItemGroup extends ItemGroup {
 
-    private static TetraItemGroup instance;
+    public static TetraItemGroup instance;
 
     public TetraItemGroup() {
         super("tetra");
@@ -16,10 +18,6 @@ public class TetraItemGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return ItemDuplexToolModular.instance.createHammerStack("log", "stick");
-    }
-
-    public static TetraItemGroup getInstance() {
-        return instance;
+        return new ItemStack(ItemGeode.instance);
     }
 }

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
 
 import java.util.Arrays;

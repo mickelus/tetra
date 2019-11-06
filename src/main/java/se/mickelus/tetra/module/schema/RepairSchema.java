@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -22,7 +23,7 @@ public class RepairSchema extends BaseSchema {
 
     private ItemModular item;
 
-    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 0, 52);
+    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
     public RepairSchema(ItemModular item) {
         this.item = item;
@@ -37,7 +38,7 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public String getKey() {
-        return key + "/" + item.getUnlocalizedName();
+        return key + "/" + item.getRegistryName().getPath();
     }
 
     @Override
@@ -67,7 +68,7 @@ public class RepairSchema extends BaseSchema {
     public String getSlotName(final ItemStack itemStack, final int index) {
         if (itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
-            return item.getRepairMaterial(itemStack).getDisplayName();
+            return item.getRepairMaterial(itemStack).getDisplayName().getUnformattedComponentText();
         }
         return "?";
     }

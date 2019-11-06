@@ -3,9 +3,9 @@ package se.mickelus.tetra.items.toolbelt.booster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
 
@@ -36,7 +36,7 @@ public class TickHandlerBooster {
         }
 
         if (charged) {
-            tag.setBoolean(UtilBooster.chargedKey, false);
+            tag.putBoolean(UtilBooster.chargedKey, false);
         }
     }
 }

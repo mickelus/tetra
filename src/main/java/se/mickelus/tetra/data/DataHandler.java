@@ -7,19 +7,15 @@ import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.ILootFunction;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
-import org.apache.commons.io.FilenameUtils;
+import net.minecraftforge.fml.loading.FMLPaths;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.generation.GenerationFeature;
-import se.mickelus.tetra.loot.LootEntryDeserializer;
-import se.mickelus.tetra.loot.LootPoolDeserializer;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.CapabilityData;
@@ -32,25 +28,21 @@ import se.mickelus.tetra.module.schema.SchemaDefinition;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.*;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 public class DataHandler {
-    private final File source;
     public final Gson gson;
 
-    private File configDir;
+    private Path configDir;
 
     public static DataHandler instance;
 
-    public DataHandler(File source) {
-        this.source = source;
-        configDir = new File(source, "config");
+    public DataHandler() {
+        configDir = FMLPaths.CONFIGDIR.get().resolve("config");
 
         // todo: use the same naming for all deserializers?
         gson = new GsonBuilder()
@@ -65,9 +57,6 @@ public class DataHandler {
                 .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
                 .registerTypeAdapter(Block.class, new BlockDeserializer())
                 .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
-                .registerTypeAdapter(LootPool.class, new LootPoolDeserializer())
-                .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
-                .registerTypeAdapter(LootEntry.class, new LootEntryDeserializer())
                 .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
                 .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
                 .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
@@ -102,24 +91,22 @@ public class DataHandler {
 
     public <T> T getData(String path, Class<T> dataClass) {
         String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
-        File configOverride = new File (configDir, String.format("%s/%s.json", TetraMod.MOD_ID, path));
-
+        Path configOverride = configDir.resolve(String.format("%s/%s.json", TetraMod.MOD_ID, path));
         try {
             T data = null;
-            if (configOverride.exists()) {
-                data = readData(configOverride.toPath(), dataClass);
-            } else if (source.isFile()) {
-                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    data = readData(fs.getPath(pathString), dataClass);
+            if (Files.exists(configOverride)) {
+                data = readData(configOverride, dataClass);
+            } else {
+                URL url = ClassLoader.getSystemClassLoader().getResource(pathString);
+                if (url != null) {
+                    data = readData(Paths.get(url.toURI()), dataClass);
                 }
-            } else if (source.isDirectory()) {
-                data = readData(source.toPath().resolve(pathString), dataClass);
             }
 
             if (data != null) {
                 return data;
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         System.err.printf("Could not read data from '%s'. Initializing from empty array.\n", path);
@@ -132,24 +119,22 @@ public class DataHandler {
 
     public <T> T getAsset(String namespace, String path, Class<T> assetClass) {
         String pathString = String.format("assets/%s/%s.json", namespace, path);
-        File configOverride = new File (configDir, String.format("%s/assets/%s/%s.json", TetraMod.MOD_ID, namespace, path));
-
+        Path configOverride = configDir.resolve(String.format("%s/assets/%s/%s.json", TetraMod.MOD_ID, namespace, path));
         try {
             T asset = null;
-            if (configOverride.exists()) {
-                asset = readData(configOverride.toPath(), assetClass);
-            } else if (source.isFile()) {
-                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    asset = readData(fs.getPath(pathString), assetClass);
+            if (Files.exists(configOverride)) {
+                asset = readData(configOverride, assetClass);
+            } else {
+                URL url = ClassLoader.getSystemClassLoader().getResource(pathString);
+                if (url != null) {
+                    asset = readData(Paths.get(url.toURI()), assetClass);
                 }
-            } else if (source.isDirectory()) {
-                asset = readData(source.toPath().resolve(pathString), assetClass);
             }
 
             if (asset != null) {
                 return asset;
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         System.err.printf("Could not read assets from '%s'. Initializing from empty array.\n", path);
@@ -163,63 +148,6 @@ public class DataHandler {
             }
         }
 
-        return null;
-    }
-
-    public GenerationFeature[] getGenerationFeatures() {
-        String pathString = String.format("assets/%s/structures", TetraMod.MOD_ID);
-
-        try {
-            GenerationFeature[] features = null;
-            if (source.isFile()) {
-                try (FileSystem fs = FileSystems.newFileSystem(source.toPath(), null)) {
-                    features = getGenerationFeatures(fs.getPath(pathString));
-                }
-            } else if (source.isDirectory()) {
-                features = getGenerationFeatures(source.toPath().resolve(pathString));
-            }
-
-            if (features != null) {
-                return features;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new GenerationFeature[0];
-    }
-
-    private GenerationFeature[] getGenerationFeatures(Path structuresPath) throws IOException {
-        if (structuresPath != null && Files.exists(structuresPath)) {
-            try (Stream<Path> stream = Files.list(structuresPath)) {
-                return stream
-                        .filter(path -> FilenameUtils.isExtension(path.toString(), "json"))
-                        .map(this::getGenerationFeature)
-                        .filter(Objects::nonNull)
-                        .toArray(GenerationFeature[]::new);
-            }
-        }
-
-        return null;
-    }
-
-    private GenerationFeature getGenerationFeature(Path path) {
-
-        try (BufferedReader reader = Files.newBufferedReader(path)){
-            GenerationFeature generationFeature = gson.fromJson(reader, GenerationFeature.class);
-
-            if (generationFeature != null && generationFeature.location == null) {
-                generationFeature.location = new ResourceLocation(TetraMod.MOD_ID, FilenameUtils.removeExtension(path.getFileName().toString()));
-            }
-
-
-            return generationFeature;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.err.println("Failed to read generation feature from: " + path);
         return null;
     }
 

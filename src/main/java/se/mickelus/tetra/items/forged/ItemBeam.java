@@ -1,16 +1,18 @@
 package se.mickelus.tetra.items.forged;
 
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.TetraItem;
+import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -21,14 +23,13 @@ public class ItemBeam extends TetraItem {
     public static ItemBeam instance;
 
     public ItemBeam() {
+        super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
-        setUnlocalizedName(unlocalizedName);
-        setCreativeTab(TetraItemGroup.getInstance());
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(TextFormatting.DARK_GRAY + I18n.format("forged_description"));
+    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY )));
     }
 }

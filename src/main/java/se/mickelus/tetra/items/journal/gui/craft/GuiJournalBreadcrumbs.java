@@ -1,11 +1,14 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.impl.GuiKeybinding;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiButton;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiKeybinding;
 
 import java.util.ArrayList;
 import java.util.List;

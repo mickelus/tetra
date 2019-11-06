@@ -1,9 +1,12 @@
 package se.mickelus.tetra.items.journal.gui;
 
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiButton;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.journal.JournalPage;
 
 import java.util.ArrayList;

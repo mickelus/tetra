@@ -3,6 +3,7 @@ package se.mickelus.tetra.data;
 import com.google.gson.*;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 
@@ -12,8 +13,8 @@ public class BlockDeserializer implements JsonDeserializer<Block> {
         String string = json.getAsString();
         if (string != null) {
             ResourceLocation resourceLocation = new ResourceLocation(string);
-            if (Block.REGISTRY.containsKey(resourceLocation)) {
-                return Block.REGISTRY.getObject(resourceLocation);
+            if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
+                return ForgeRegistries.BLOCKS.getValue(resourceLocation);
             }
         }
 

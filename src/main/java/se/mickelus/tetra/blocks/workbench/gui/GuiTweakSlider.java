@@ -1,9 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.impl.GuiSliderSegmented;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.tetra.gui.GuiSliderSegmented;
 import se.mickelus.tetra.module.data.TweakData;
 
 import java.util.Collections;

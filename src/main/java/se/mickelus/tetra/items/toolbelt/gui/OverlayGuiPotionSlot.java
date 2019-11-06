@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 public class OverlayGuiPotionSlot extends GuiElement {
 
@@ -82,13 +82,13 @@ public class OverlayGuiPotionSlot extends GuiElement {
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.enableDepth();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.enableDepthTest();
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
-        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
-        GlStateManager.disableDepth();
+        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
+        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
+        GlStateManager.disableDepthTest();
 
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();

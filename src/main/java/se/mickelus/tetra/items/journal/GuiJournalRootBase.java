@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.journal;
 
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 public class GuiJournalRootBase extends GuiElement {
 

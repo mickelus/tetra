@@ -125,7 +125,7 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:hide",
+                    "item": "minecraft:rabbit_hide",
                     "count": 1
                 },
                 "requiredCapabilities": {
@@ -242,7 +242,7 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:hide",
+                    "item": "minecraft:rabbit_hide",
                     "count": 2
                 },
                 "requiredCapabilities": {

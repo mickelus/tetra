@@ -3,10 +3,11 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiMagicUsage;
-import se.mickelus.tetra.gui.impl.GuiSettleProgress;
-import se.mickelus.tetra.gui.impl.GuiSynergyIndicator;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.gui.GuiMagicUsage;
+import se.mickelus.tetra.gui.GuiSettleProgress;
+import se.mickelus.tetra.gui.GuiSynergyIndicator;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -80,12 +81,12 @@ public class GuiModuleDetails extends GuiElement {
             GlyphData glyphData = module.getData(itemStack).glyph;
 
             if (module instanceof ItemModuleMajor) {
-                glyph.addChild(new GuiTexture(0, 0, 15, 15, 52, 0, "textures/gui/workbench.png"));
+                glyph.addChild(new GuiTexture(0, 0, 15, 15, 52, 0, GuiTextures.workbench));
                 glyph.addChild(new GuiModuleGlyph(-1, 0, 16, 16, glyphData).setShift(false));
 
                 settleBar.update(itemStack, (ItemModuleMajor) module);
             } else {
-                glyph.addChild(new GuiTexture(3, 2, 11, 11, 68, 0, "textures/gui/workbench.png"));
+                glyph.addChild(new GuiTexture(3, 2, 11, 11, 68, 0, GuiTextures.workbench));
                 glyph.addChild(new GuiModuleGlyph(5, 4, 8, 8, glyphData).setShift(false));
             }
 

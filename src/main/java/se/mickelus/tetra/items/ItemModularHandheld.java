@@ -1,48 +1,48 @@
 package se.mickelus.tetra.items;
 
 import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.state.pattern.BlockMatcher;
-import net.minecraft.block.state.pattern.BlockStateMatcher;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.pattern.BlockMatcher;
+import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityEndermite;
-import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.EndermiteEntity;
+import net.minecraft.entity.monster.ShulkerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.eventbus.api.Event;
+import se.mickelus.tetra.BleedingEffect;
+import se.mickelus.tetra.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.PotionBleeding;
-import se.mickelus.tetra.PotionEarthbound;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
@@ -56,38 +56,83 @@ import java.util.stream.Stream;
 
 public class ItemModularHandheld extends ItemModular {
 
-    private static final Set<Block> axeBlocks = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE);
+    private static final Set<Block> axeBlocks = Sets.newHashSet(Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS,
+            Blocks.BIRCH_PLANKS, Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS, Blocks.OAK_LOG,
+            Blocks.SPRUCE_LOG, Blocks.BIRCH_LOG, Blocks.JUNGLE_LOG, Blocks.ACACIA_LOG, Blocks.DARK_OAK_LOG,
+            Blocks.STRIPPED_OAK_LOG, Blocks.STRIPPED_SPRUCE_LOG, Blocks.STRIPPED_BIRCH_LOG, Blocks.STRIPPED_JUNGLE_LOG,
+            Blocks.STRIPPED_ACACIA_LOG, Blocks.STRIPPED_DARK_OAK_LOG, Blocks.BOOKSHELF, Blocks.CHEST, Blocks.PUMPKIN,
+            Blocks.CARVED_PUMPKIN, Blocks.MELON, Blocks.LADDER, Blocks.OAK_BUTTON, Blocks.SPRUCE_BUTTON,
+            Blocks.BIRCH_BUTTON, Blocks.JUNGLE_BUTTON, Blocks.ACACIA_BUTTON, Blocks.DARK_OAK_BUTTON,
+            Blocks.OAK_PRESSURE_PLATE, Blocks.SPRUCE_PRESSURE_PLATE, Blocks.BIRCH_PRESSURE_PLATE,
+            Blocks.JUNGLE_PRESSURE_PLATE, Blocks.ACACIA_PRESSURE_PLATE, Blocks.DARK_OAK_PRESSURE_PLATE);
+
     private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD);
 
-    private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
+    private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.COAL_ORE, Blocks.COBBLESTONE,
+            Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK,
+            Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK,
+            Blocks.PACKED_ICE, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE,
+            Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.RAIL, Blocks.ACTIVATOR_RAIL,
+            Blocks.DETECTOR_RAIL, Blocks.POWERED_RAIL);
+
     private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
 
-    private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
+    private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND,
+            Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND,
+            Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER,
+            Blocks.MAGENTA_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER,
+            Blocks.LIME_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER,
+            Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER,
+            Blocks.BLUE_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER,
+            Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
 
-    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.VINE, Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.CLOTH);
+    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS,
+            Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.WOOL, Material.CARPET);
 
-    private static final String[] denailOreDict = new String[] { "plankWood", "slabWood", "stairWood", "fenceWood", "fenceGateWood", "doorWood", "chestWood"};
+    // todo 1.14: test that this still works, possible cleanup. Possibly missing planks, stairs, slabs, doors
+    private static final String[] denailTags = new String[] { "fence_gates/wooden", "fences/wooden", "chests/wooden"};
     private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
-            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
-            BlockStateMatcher.forBlock(BlockWorkbench.instance).where(BlockWorkbench.propVariant, Predicates.equalTo(BlockWorkbench.Variant.wood)),
-            BlockMatcher.forBlock(Blocks.BOOKSHELF),
-            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST),
-            BlockMatcher.forBlock(Blocks.RAIL),
-            BlockMatcher.forBlock(Blocks.ACTIVATOR_RAIL),
-            BlockMatcher.forBlock(Blocks.DETECTOR_RAIL),
-            BlockMatcher.forBlock(Blocks.GOLDEN_RAIL),
-            BlockMatcher.forBlock(Blocks.STANDING_SIGN),
-            BlockMatcher.forBlock(Blocks.WALL_SIGN),
-            BlockMatcher.forBlock(Blocks.BED),
-            BlockMatcher.forBlock(Blocks.LADDER),
-            BlockMatcher.forBlock(Blocks.JUKEBOX),
-            BlockMatcher.forBlock(Blocks.NOTEBLOCK),
-            BlockMatcher.forBlock(Blocks.TRAPDOOR),
-            BlockMatcher.forBlock(Blocks.WOODEN_PRESSURE_PLATE),
-            BlockMatcher.forBlock(Blocks.WOODEN_BUTTON),
-            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR),
-            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR_INVERTED)
+            BlockMatcher.forBlock(BlockWorkbench.instance),
+            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE), BlockMatcher.forBlock(Blocks.BOOKSHELF),
+            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST), BlockMatcher.forBlock(Blocks.RAIL),
+            BlockMatcher.forBlock(Blocks.ACTIVATOR_RAIL), BlockMatcher.forBlock(Blocks.DETECTOR_RAIL),
+            BlockMatcher.forBlock(Blocks.POWERED_RAIL), BlockMatcher.forBlock(Blocks.OAK_SIGN),
+            BlockMatcher.forBlock(Blocks.SPRUCE_SIGN), BlockMatcher.forBlock(Blocks.BIRCH_SIGN),
+            BlockMatcher.forBlock(Blocks.ACACIA_SIGN), BlockMatcher.forBlock(Blocks.JUNGLE_SIGN),
+            BlockMatcher.forBlock(Blocks.DARK_OAK_SIGN), BlockMatcher.forBlock(Blocks.OAK_WALL_SIGN),
+            BlockMatcher.forBlock(Blocks.SPRUCE_WALL_SIGN), BlockMatcher.forBlock(Blocks.BIRCH_WALL_SIGN),
+            BlockMatcher.forBlock(Blocks.ACACIA_WALL_SIGN), BlockMatcher.forBlock(Blocks.JUNGLE_WALL_SIGN),
+            BlockMatcher.forBlock(Blocks.DARK_OAK_WALL_SIGN), BlockMatcher.forBlock(Blocks.WHITE_BED),
+            BlockMatcher.forBlock(Blocks.ORANGE_BED), BlockMatcher.forBlock(Blocks.MAGENTA_BED),
+            BlockMatcher.forBlock(Blocks.LIGHT_BLUE_BED), BlockMatcher.forBlock(Blocks.YELLOW_BED),
+            BlockMatcher.forBlock(Blocks.LIME_BED), BlockMatcher.forBlock(Blocks.PINK_BED),
+            BlockMatcher.forBlock(Blocks.GRAY_BED), BlockMatcher.forBlock(Blocks.LIGHT_GRAY_BED),
+            BlockMatcher.forBlock(Blocks.CYAN_BED), BlockMatcher.forBlock(Blocks.PURPLE_BED),
+            BlockMatcher.forBlock(Blocks.BLUE_BED), BlockMatcher.forBlock(Blocks.BROWN_BED),
+            BlockMatcher.forBlock(Blocks.GREEN_BED), BlockMatcher.forBlock(Blocks.RED_BED),
+            BlockMatcher.forBlock(Blocks.BLACK_BED), BlockMatcher.forBlock(Blocks.LADDER),
+            BlockMatcher.forBlock(Blocks.JUKEBOX), BlockMatcher.forBlock(Blocks.NOTE_BLOCK),
+            BlockMatcher.forBlock(Blocks.OAK_TRAPDOOR), BlockMatcher.forBlock(Blocks.SPRUCE_TRAPDOOR),
+            BlockMatcher.forBlock(Blocks.BIRCH_TRAPDOOR), BlockMatcher.forBlock(Blocks.JUNGLE_TRAPDOOR),
+            BlockMatcher.forBlock(Blocks.ACACIA_TRAPDOOR), BlockMatcher.forBlock(Blocks.DARK_OAK_TRAPDOOR),
+            BlockMatcher.forBlock(Blocks.OAK_BUTTON), BlockMatcher.forBlock(Blocks.SPRUCE_BUTTON),
+            BlockMatcher.forBlock(Blocks.BIRCH_BUTTON), BlockMatcher.forBlock(Blocks.JUNGLE_BUTTON),
+            BlockMatcher.forBlock(Blocks.ACACIA_BUTTON), BlockMatcher.forBlock(Blocks.DARK_OAK_BUTTON),
+            BlockMatcher.forBlock(Blocks.OAK_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.SPRUCE_PRESSURE_PLATE),
+            BlockMatcher.forBlock(Blocks.BIRCH_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.JUNGLE_PRESSURE_PLATE),
+            BlockMatcher.forBlock(Blocks.ACACIA_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.DARK_OAK_PRESSURE_PLATE),
+            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR)
             );
+
+    protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
+            Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
+            Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(),
+            Blocks.DIRT, Blocks.FARMLAND.getDefaultState(),
+            Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
+
+    protected static final Map<Block, BlockState> flattenLookup = Maps.newHashMap(ImmutableMap.of(
+            Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
+
 
     protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
 
@@ -97,8 +142,13 @@ public class ItemModularHandheld extends ItemModular {
     // the base amount of damage the item should take after hitting an entity
     protected int entityHitDamage = 1;
 
+    public ItemModularHandheld(Properties properties) {
+        super(properties);
+    }
+
     @Override
-    public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos,
+            LivingEntity entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
 
@@ -110,7 +160,8 @@ public class ItemModularHandheld extends ItemModular {
         if (!world.isRemote) {
             int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
             if (intuitLevel > 0) {
-                int xp = state.getBlock().getExpDrop(state, world, pos, getEffectLevel(itemStack, ItemEffect.fortune));
+                int xp = state.getExpDrop(world, pos, getEffectLevel(itemStack, ItemEffect.fortune),
+                        getEffectLevel(itemStack, ItemEffect.silkTouch));
                 if (xp > 0) {
                     tickHoningProgression(entity, itemStack, xp);
                 }
@@ -149,26 +200,29 @@ public class ItemModularHandheld extends ItemModular {
 
             int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
             if (bleedingLevel > 0) {
-                if (!EnumCreatureAttribute.UNDEAD.equals(target.getCreatureAttribute()) && attacker.getRNG().nextFloat() < 0.3f) {
-                    target.addPotionEffect(new PotionEffect(PotionBleeding.instance, 40, bleedingLevel));
+                if (!CreatureAttribute.UNDEAD.equals(target.getCreatureAttribute())
+                        && attacker.getRNG().nextFloat() < 0.3f) {
+                    target.addPotionEffect(new EffectInstance(BleedingEffect.instance, 40, bleedingLevel));
                 }
             }
 
             int arthropodLevel = getEffectLevel(itemStack, ItemEffect.arthropod);
-            if (arthropodLevel > 0 && EnumCreatureAttribute.ARTHROPOD.equals(target.getCreatureAttribute())) {
+            if (arthropodLevel > 0 && CreatureAttribute.ARTHROPOD.equals(target.getCreatureAttribute())) {
                 int ticks = 20 + attacker.getRNG().nextInt(10 * arthropodLevel);
-                target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, ticks, 3));
+                target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, ticks, 3));
             }
 
             // todo: only trigger if target is standing on stone/earth/sand/gravel
             int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
             if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
-                target.addPotionEffect(new PotionEffect(PotionEarthbound.instance, 80, 0, false, true));
+                target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
 
-                if (target.world instanceof WorldServer) {
-                    ((WorldServer)target.world).spawnParticle(EnumParticleTypes.BLOCK_CRACK, target.posX, target.posY + 0.1, target.posZ,
-                            16, 0, 0.1,0, target.world.rand.nextGaussian() * 0.2,
-                            Block.getStateId(target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ))));
+                // todo 1.14: check that this still renders
+                if (target.world instanceof ServerWorld) {
+                    BlockState blockState = target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ));
+                    ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
+                            target.posX, target.posY + 0.1, target.posZ,
+                            16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
                 }
             }
 
@@ -182,7 +236,13 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(ItemUseContext context) {
+        PlayerEntity player = context.getPlayer();
+        Hand hand = context.getHand();
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        Direction facing = context.getFace();
+
         ItemStack itemStack = player.getHeldItem(hand);
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
@@ -193,22 +253,22 @@ public class ItemModularHandheld extends ItemModular {
         if (flatteningLevel > 0 && (tillingLevel > 0 && player.isSneaking() || tillingLevel == 0)) {
             return flattenPath(player, world, pos, hand, facing);
         } else if (tillingLevel > 0) {
-            return tillBlock(player, world, pos, hand, facing);
+            return tillBlock(context);
         }
 
 
         int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
         if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
-            EnumActionResult result = denailBlock(player, world, pos, hand, facing);
+            ActionResultType result = denailBlock(player, world, pos, hand, facing);
 
-            if (result.equals(EnumActionResult.SUCCESS)) {
+            if (result.equals(ActionResultType.SUCCESS)) {
                 player.resetCooldown();
             }
 
             return result;
         }
 
-        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(context);
     }
 
     protected void causeFierySelfEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
@@ -231,7 +291,8 @@ public class ItemModularHandheld extends ItemModular {
                 if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
                     AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
                     List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
-                            target -> target instanceof EntityEnderman || target instanceof EntityEndermite || target instanceof EntityShulker || target instanceof EntityDragon);
+                            target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
+                                    || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
                     if (nearbyTargets.size() > 0) {
                         nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
                     }
@@ -247,14 +308,14 @@ public class ItemModularHandheld extends ItemModular {
      * @param pos the position in the world
      * @param hand the hand holding the tool
      * @param facing the clicked face
-     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
-     * otherwise EnumActionResult.PASS
+     * @return ActionResultType.SUCCESS if successful, ActionResultType.FAIL if block cannot be edited by player,
+     * otherwise ActionResultType.PASS
      */
-    public EnumActionResult flattenPath(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
+    public ActionResultType flattenPath(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         if (facing != Direction.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR
@@ -267,54 +328,45 @@ public class ItemModularHandheld extends ItemModular {
                 tickProgression(player, itemStack, blockDestroyDamage);
             }
 
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
-        return EnumActionResult.PASS;
+        return ActionResultType.PASS;
     }
 
     /**
      * Tills dirt or grass, turning it into farmland. Tilling coarse dirt turns it into dirt.
-     * @param player the responsible player entity
-     * @param world the world in which the action takes place
-     * @param pos the position in the world
-     * @param hand the hand holding the tool
-     * @param facing the clicked face
-     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
-     * otherwise EnumActionResult.PASS
+     * @param context the context of the item's usage
+     * otherwise ActionResultType.PASS
      */
-    public EnumActionResult tillBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
+    public ActionResultType tillBlock(ItemUseContext context) {
+        PlayerEntity player = context.getPlayer();
+        Hand hand = context.getHand();
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        Direction facing = context.getFace();
+
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         // fire the forge event manually as the helper damages durability
-        UseHoeEvent event = new UseHoeEvent(player, itemStack, world, pos);
+        UseHoeEvent event = new UseHoeEvent(context);
         MinecraftForge.EVENT_BUS.post(event);
 
         if (event.isCanceled()) {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
         if (event.getResult() == Event.Result.ALLOW) {
             applyDamage(blockDestroyDamage, itemStack, player);
             tickProgression(player, itemStack, blockDestroyDamage);
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
-        BlockState currentState = world.getBlockState(pos);
-        Block block = currentState.getBlock();
-
         if (facing != Direction.DOWN && world.isAirBlock(pos.up())) {
-            BlockState newState = null;
-
-            if (block == Blocks.GRASS || block == Blocks.GRASS_PATH
-                    || (block == Blocks.DIRT && BlockDirt.DirtType.DIRT == currentState.getValue(BlockDirt.VARIANT))) {
-                newState = Blocks.FARMLAND.getDefaultState();
-            } else if (block == Blocks.DIRT && BlockDirt.DirtType.COARSE_DIRT == currentState.getValue(BlockDirt.VARIANT)) {
-                newState = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT);
-            }
+            BlockState newState = tillLookup.get(world.getBlockState(pos).getBlock());
 
             if (newState != null) {
                 world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1, 1);
@@ -324,11 +376,11 @@ public class ItemModularHandheld extends ItemModular {
                     applyDamage(blockDestroyDamage, itemStack, player);
                 }
 
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             }
         }
 
-        return EnumActionResult.PASS;
+        return ActionResultType.PASS;
     }
 
     /**
@@ -338,14 +390,14 @@ public class ItemModularHandheld extends ItemModular {
      * @param pos the position in the world
      * @param hand the hand holding the tool
      * @param facing the clicked face
-     * @return EnumActionResult.SUCCESS if successful, EnumActionResult.FAIL if block cannot be edited by player,
-     * otherwise EnumActionResult.PASS
+     * @return ActionResultType.SUCCESS if successful, ActionResultType.FAIL if block cannot be edited by player,
+     * otherwise ActionResultType.PASS
      */
-    public EnumActionResult denailBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
+    public ActionResultType denailBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
 
         BlockState blockState = world.getBlockState(pos);
@@ -357,21 +409,20 @@ public class ItemModularHandheld extends ItemModular {
 
                 world.playEvent(player, 2001, pos, Block.getStateId(blockState));
                 player.resetCooldown();
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             }
         }
 
-        return EnumActionResult.PASS;
+        return ActionResultType.PASS;
     }
 
     private boolean canDenail(BlockState blockState, World world, BlockPos pos) {
-        boolean matchOre = Optional.of(blockState.getBlock().getPickBlock(blockState, null, world, pos, null))
-                .map(OreDictionary::getOreIDs)
-                .map(Stream::of)
+        boolean matchOre = Optional.of(blockState.getBlock())
+                .map(Block::getTags)
+                .map(Collection::stream)
                 .orElseGet(Stream::empty)
-                .flatMapToInt(Arrays::stream)
-                .mapToObj(OreDictionary::getOreName)
-                .anyMatch(ore1 -> Arrays.asList(denailOreDict).contains(ore1));
+                .map(ResourceLocation::toString)
+                .anyMatch(tag -> Arrays.asList(denailTags).contains(tag));
 
         if (matchOre) {
             return true;
@@ -402,7 +453,7 @@ public class ItemModularHandheld extends ItemModular {
 
             // range values set up to mimic vanilla behaviour
             attacker.world.getEntitiesWithinAABB(LivingEntity.class,
-                    target.getEntityBoundingBox().grow(range, 0.25d, range)).stream()
+                    target.getBoundingBox().grow(range, 0.25d, range)).stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .filter(entity -> attacker.getDistanceSq(entity) < (range + 2) * (range + 2))
@@ -434,8 +485,8 @@ public class ItemModularHandheld extends ItemModular {
      * @param zOffset z offset which is later multiplied by a random number (0-1)
      */
     public static void spawnSweepParticles(World world, double x, double y, double z, double xOffset, double zOffset) {
-        if (world instanceof WorldServer) {
-            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, x, y, z,
+        if (world instanceof ServerWorld) {
+            ((ServerWorld)world).spawnParticle(ParticleTypes.SWEEP_ATTACK, x, y, z,
                     1, xOffset, 0, zOffset, 0);
         }
     }
@@ -444,7 +495,8 @@ public class ItemModularHandheld extends ItemModular {
         double xOffset = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
         double zOffset = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
 
-        spawnSweepParticles(attacker.world, attacker.posX + xOffset, attacker.posY + attacker.height * 0.5D, attacker.posZ + zOffset, xOffset, zOffset);
+        spawnSweepParticles(attacker.world, attacker.posX + xOffset, attacker.posY + attacker.getHeight() * 0.5D,
+                attacker.posZ + zOffset, xOffset, zOffset);
     }
 
     @Override
@@ -454,7 +506,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     public void setCooledAttackStrength(ItemStack itemStack, float strength) {
-        NBTHelper.getTag(itemStack).setFloat(cooledStrengthKey, strength);
+        NBTHelper.getTag(itemStack).putFloat(cooledStrengthKey, strength);
     }
 
     public static float getCooledAttackStrength(ItemStack itemStack) {
@@ -462,21 +514,22 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack itemStack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, itemStack);
 
-        if (slot == EntityEquipmentSlot.MAINHAND) {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
-                new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageModifier(itemStack), 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
-                new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getSpeedModifier(itemStack), 0));
+        if (slot == EquipmentSlotType.MAINHAND) {
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
+                    "Weapon modifier", getDamageModifier(itemStack), AttributeModifier.Operation.ADDITION));
+
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER,
+                    "Weapon modifier", getSpeedModifier(itemStack), AttributeModifier.Operation.ADDITION));
         }
 
-        if (slot == EntityEquipmentSlot.MAINHAND || slot == EntityEquipmentSlot.OFFHAND) {
+        if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
             int armor = getEffectLevel(itemStack, ItemEffect.armor);
             if  (armor > 0) {
-                multimap.put(SharedMonsterAttributes.ARMOR.getName(),
-                        new AttributeModifier(ARMOR_MODIFIER, "Weapon modifier", armor, 0));
+                multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER,
+                        "Weapon modifier", armor, AttributeModifier.Operation.ADDITION));
             }
         }
 
@@ -556,19 +609,20 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public Set<String> getToolClasses(ItemStack itemStack) {
-        if (!isBroken(itemStack)) {
-            return getCapabilities(itemStack).stream()
-                .map(Enum::toString)
-                .collect(Collectors.toSet());
+    public Set<ToolType> getToolTypes(ItemStack stack) {
+        if (!isBroken(stack)) {
+            return getCapabilities(stack).stream()
+                    .map(Enum::toString)
+                    .map(ToolType::get)
+                    .collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
 
     @Override
-    public int getHarvestLevel(ItemStack itemStack, String toolClass, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
-        if (!isBroken(itemStack)) {
-            int capabilityLevel = getCapabilityLevel(itemStack, toolClass);
+    public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
+        if (!isBroken(stack)) {
+            int capabilityLevel = getCapabilityLevel(stack, tool);
             if (capabilityLevel > 0) {
                 return capabilityLevel - 1;
             }
@@ -577,11 +631,11 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public boolean canHarvestBlock(BlockState blockState, ItemStack itemStack) {
-        if (pickaxeMaterials.contains(blockState.getMaterial())) {
-            return getHarvestLevel(itemStack, "pickaxe", null, null) >= 0;
-        } else if (blockState.getBlock().equals(Blocks.WEB)) {
-            return getHarvestLevel(itemStack, "cut", null, null) >= 0;
+    public boolean canHarvestBlock(ItemStack stack, BlockState state) {
+        if (pickaxeMaterials.contains(state.getMaterial())) {
+            return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
+        } else if (state.getBlock().equals(Blocks.COBWEB)) {
+            return getHarvestLevel(stack, ToolTypes.CUT, null, null) >= 0;
         }
         return false;
     }
@@ -589,12 +643,12 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
-            String tool = getEffectiveTool(blockState);
+            ToolType tool = getEffectiveTool(blockState);
 
             float speed = (float) (4 + getSpeedModifier(itemStack)) * getCapabilityEfficiency(itemStack, tool);
 
             // todo: need a better way to handle this
-            if ("cut".equals(tool) && blockState.getBlock().equals(Blocks.WEB)) {
+            if (ToolTypes.CUT.equals(tool) && blockState.getBlock().equals(Blocks.COBWEB)) {
                 speed *= 10;
             }
 
@@ -606,25 +660,25 @@ public class ItemModularHandheld extends ItemModular {
         return 1;
     }
 
-    public static String getEffectiveTool(BlockState blockState) {
-        String tool = blockState.getBlock().getHarvestTool(blockState);
+    public static ToolType getEffectiveTool(BlockState blockState) {
+        ToolType tool = blockState.getBlock().getHarvestTool(blockState);
 
         if (tool != null) {
             return tool;
         }
 
         if (axeMaterials.contains(blockState.getMaterial())) {
-            return "axe";
+            return ToolType.AXE;
         } else if (pickaxeMaterials.contains(blockState.getMaterial())) {
-            return "pickaxe";
+            return ToolType.PICKAXE;
         } else if (axeBlocks.contains(blockState.getBlock())) {
-            return "axe";
+            return ToolType.AXE;
         } else if (pickaxeBlocks.contains(blockState.getBlock())) {
-            return "pickaxe";
+            return ToolType.PICKAXE;
         } else if (cuttingMaterials.contains(blockState.getMaterial())) {
-            return "cut";
+            return ToolTypes.CUT;
         } else if (shovelBlocks.contains(blockState.getBlock())) {
-            return "shovel";
+            return ToolType.SHOVEL;
         }
         return null;
     }

@@ -5,10 +5,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemEnchantedBook;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -27,7 +28,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     protected ItemModuleMajor module;
 
-    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
+    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
 
     public BookEnchantSchema(ItemModuleMajor module) {
         this.module = module;
@@ -67,7 +68,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
-        return !materialStack.isEmpty() && materialStack.getItem() instanceof ItemEnchantedBook;
+        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem;
     }
 
     @Override

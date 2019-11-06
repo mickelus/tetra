@@ -1,14 +1,16 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiClickable;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.function.Consumer;
 
 public class GuiJournalSlotMajor extends GuiClickable {
-
-    private final static String texture = "textures/gui/workbench.png";
     private final GuiTexture backdrop;
     private final GuiString slotString;
 
@@ -16,7 +18,7 @@ public class GuiJournalSlotMajor extends GuiClickable {
         super(x, y, 64, 17, () -> onSelect.accept(slot));
         setAttachmentPoint(attachment);
 
-        backdrop = new GuiTexture(0, 0, 15, 15, 52, 0, texture);
+        backdrop = new GuiTexture(0, 0, 15, 15, 52, 0, GuiTextures.workbench);
         if (GuiAttachment.topRight.equals(attachment)) {
             backdrop.setX(-1);
         }

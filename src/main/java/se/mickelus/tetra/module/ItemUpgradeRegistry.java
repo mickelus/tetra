@@ -110,7 +110,7 @@ public class ItemUpgradeRegistry {
         for (ReplacementDefinition replacementDefinition: replacementDefinitions) {
             if (replacementDefinition.predicate.test(itemStack)) {
                 ItemStack replacementStack = replacementDefinition.itemStack.copy();
-                replacementStack.setItemDamage(itemStack.getItemDamage());
+                replacementStack.setDamage(itemStack.getDamage());
                 transferEnchantments(itemStack, replacementStack);
 
                 return replacementStack;
@@ -167,7 +167,7 @@ public class ItemUpgradeRegistry {
 
     public String getImprovementFromEnchantment(Enchantment enchantment) {
         return Optional.ofNullable(enchantment.getRegistryName())
-                .map(ResourceLocation::getResourcePath)
+                .map(ResourceLocation::getPath)
                 .map(path -> "enchantment/" + path)
                 .orElse(null);
     }

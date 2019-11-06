@@ -1,42 +1,46 @@
 package se.mickelus.tetra.client.model;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemOverrideList;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.texture.ISprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ItemLayerModel;
-import net.minecraftforge.common.model.IModelState;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class BakedWrapper implements IBakedModel {
 
     protected final IBakedModel parent;
-    private final IModelState state;
-    private final VertexFormat format;
-    private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
+    private final ModelBakery bakery;
 
-    public BakedWrapper(IModelState state, VertexFormat format, ItemOverrideList overrideList,
-            Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-        parent = new ItemLayerModel(ImmutableList.of(), overrideList).bake(state, format, bakedTextureGetter);
-        this.state = state;
+    private final Function<ResourceLocation, TextureAtlasSprite> spriteGetter;
+    private final ISprite sprite;
+    private final VertexFormat format;
+
+    public BakedWrapper(ModelBakery bakery, Function<ResourceLocation, TextureAtlasSprite> spriteGetter, ISprite sprite,
+            VertexFormat format) {
+        parent = new ItemLayerModel(ImmutableList.of(), ModularOverrideList.INSTANCE)
+                .bake(bakery, spriteGetter, sprite, format);
+
+        this.bakery = bakery;
+        this.spriteGetter = spriteGetter;
+        this.sprite = sprite;
         this.format = format;
-        this.bakedTextureGetter = bakedTextureGetter;
     }
 
-    @Nonnull
     @Override
-    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
         return parent.getQuads(state, side, rand);
     }
 
@@ -63,25 +67,23 @@ public class BakedWrapper implements IBakedModel {
 
     @Nonnull
     @Override
-    public ItemCameraTransforms getItemCameraTransforms() {
-        return parent.getItemCameraTransforms();
-    }
-
-    @Nonnull
-    @Override
     public ItemOverrideList getOverrides() {
         return parent.getOverrides();
     }
 
-    public IModelState getOriginalState() {
-        return state;
+    public ModelBakery getBakery() {
+        return bakery;
     }
 
-    public VertexFormat getOriginalFormat() {
+    public Function<ResourceLocation, TextureAtlasSprite> getSpriteGetter() {
+        return spriteGetter;
+    }
+
+    public ISprite getSprite() {
+        return sprite;
+    }
+
+    public VertexFormat getFormat() {
         return format;
-    }
-
-    public Function<ResourceLocation, TextureAtlasSprite> getBakedTextureGetter() {
-        return bakedTextureGetter;
     }
 }

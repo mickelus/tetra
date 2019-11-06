@@ -2,10 +2,14 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.mgui.gui.GuiTextureOffset;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -84,7 +88,7 @@ public class GuiModuleMajor extends GuiModule {
         addChild(backdrop);
 
         if (tweakable) {
-            tweakingIndicator = new GuiTextureOffset(1, 0, 15, 15, 96, 32, "textures/gui/workbench.png");
+            tweakingIndicator = new GuiTextureOffset(1, 0, 15, 15, 96, 32, GuiTextures.workbench);
             tweakingIndicator.setAttachment(attachmentPoint);
             addChild(tweakingIndicator);
         }

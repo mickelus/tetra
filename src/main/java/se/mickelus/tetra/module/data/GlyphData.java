@@ -50,4 +50,10 @@ public class GlyphData {
         this.textureX = textureX;
         this.textureY = textureY;
     }
+
+    public GlyphData(ResourceLocation textureLocation, int textureX, int textureY) {
+        this.textureLocation = textureLocation;
+        this.textureX = textureX;
+        this.textureY = textureY;
+    }
 }

@@ -3,9 +3,9 @@ package se.mickelus.tetra.items.toolbelt.gui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
 
 import java.util.Arrays;
@@ -83,7 +83,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
         int focus = getFocus();
         if (focus != -1) {
-            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName());
+            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getFormattedText());
         } else {
             focusSlot.setString("");
         }

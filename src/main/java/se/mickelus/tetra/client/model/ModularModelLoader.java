@@ -1,16 +1,17 @@
 package se.mickelus.tetra.client.model;
 
-import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.renderer.model.BlockModel;
+import net.minecraft.client.renderer.model.IUnbakedModel;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.resources.IResource;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
-import net.minecraftforge.client.model.IModel;
 import org.apache.commons.io.IOUtils;
 import se.mickelus.tetra.TetraMod;
 
-import java.io.*;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 public class ModularModelLoader implements ICustomModelLoader {
@@ -20,27 +21,27 @@ public class ModularModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return modelLocation.getResourceDomain().equals(TetraMod.MOD_ID)
+        return modelLocation.getNamespace().equals(TetraMod.MOD_ID)
                 && !(modelLocation instanceof ModelResourceLocation)
-                && modelLocation.getResourcePath().contains("modular");
+                && modelLocation.getPath().contains("modular");
     }
 
     @Override
-    public IModel loadModel(ResourceLocation location) throws Exception {
+    public IUnbakedModel loadModel(ResourceLocation location) throws Exception {
 
-        ModelBlock modelBlock = loadModelBlock(getModelLocation(location));
+        BlockModel modelBlock = loadBlockModel(getModelLocation(location));
         return new ModularModel(modelBlock);
     }
 
-    public ModelBlock loadModelBlock(ResourceLocation location) throws Exception {
+    public BlockModel loadBlockModel(ResourceLocation location) throws Exception {
         IResource resource = null;
         Reader reader = null;
-        ModelBlock modelBlock;
+        BlockModel modelBlock;
 
         try {
             resource = this.resourceManager.getResource(location);
             reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-            modelBlock = ModelBlock.deserialize(reader);
+            modelBlock = BlockModel.deserialize(reader);
             modelBlock.name = location.toString();
         } finally {
             IOUtils.closeQuietly(reader);
@@ -48,7 +49,7 @@ public class ModularModelLoader implements ICustomModelLoader {
         }
 
         if (modelBlock.getParentLocation() != null) {
-            modelBlock.parent = loadModelBlock(modelBlock.getParentLocation());
+            modelBlock.parent = loadBlockModel(modelBlock.getParentLocation());
         }
 
         return modelBlock;
@@ -59,11 +60,7 @@ public class ModularModelLoader implements ICustomModelLoader {
         this.resourceManager = resourceManager;
     }
 
-    public void registerSprites() {
-
-    }
-
     private ResourceLocation getModelLocation(ResourceLocation location) {
-        return new ResourceLocation(location.getResourceDomain(), location.getResourcePath() + ".json");
+        return new ResourceLocation(location.getNamespace(), location.getPath() + ".json");
     }
 }

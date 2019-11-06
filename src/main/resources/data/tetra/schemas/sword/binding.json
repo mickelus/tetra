@@ -32,7 +32,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:hide",
+                    "item": "minecraft:rabbit_hide",
                     "count": 2
                 },
                 "requiredCapabilities": {

@@ -5,33 +5,29 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import se.mickelus.mgui.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.gui.GuiButton;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiRect;
-import se.mickelus.tetra.gui.GuiTexture;
-import se.mickelus.tetra.gui.animation.AnimationChain;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.impl.GuiTabVerticalGroup;
+import se.mickelus.mgui.gui.GuiButton;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.animation.AnimationChain;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class GuiSlotDetail extends GuiElement {
-
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     private int tab = 0;
 
@@ -55,7 +51,7 @@ public class GuiSlotDetail extends GuiElement {
 
         this.selectSchemaHandler = selectSchemaHandler;
 
-        addChild(new GuiTexture(0, 0, width, height, 0, 68, WORKBENCH_TEXTURE));
+        addChild(new GuiTexture(0, 0, width, height, 0, 68, GuiTextures.workbench));
 
         addChild(new GuiRect(1, 6, 2, 49, 0));
 

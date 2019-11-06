@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.impl.GuiColors;
+import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schema.SchemaRarity;
 
 public class HoneToast implements IToast {

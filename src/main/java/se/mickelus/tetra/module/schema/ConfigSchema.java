@@ -223,8 +223,8 @@ public class ConfigSchema extends BaseSchema {
         ItemStack upgradedStack = itemStack.copy();
 
         float durabilityFactor = 0;
-        if (consumeMaterials && upgradedStack.isItemStackDamageable()) {
-            durabilityFactor = upgradedStack.getItemDamage() * 1f / upgradedStack.getMaxDamage();
+        if (consumeMaterials && upgradedStack.isDamageable()) {
+            durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
         }
 
         float honingFactor = CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
@@ -266,8 +266,8 @@ public class ConfigSchema extends BaseSchema {
                         .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
             }
 
-            if (upgradedStack.isItemStackDamageable()) {
-                upgradedStack.setItemDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
+            if (upgradedStack.isDamageable()) {
+                upgradedStack.setDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
             }
         }
         return upgradedStack;

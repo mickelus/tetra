@@ -2,10 +2,11 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.GuiString;
-import se.mickelus.tetra.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.Arrays;
@@ -13,7 +14,6 @@ import java.util.List;
 
 public class GuiJournalImprovement extends GuiElement {
 
-    private final static String texture = "textures/gui/workbench.png";
     private final GuiTexture backdrop;
     private final GuiString label;
 
@@ -24,9 +24,9 @@ public class GuiJournalImprovement extends GuiElement {
 
         this.schema = schema;
 
-        backdrop = new GuiTexture(1, 3, 16, 9, 52, 3, texture);
+        backdrop = new GuiTexture(1, 3, 16, 9, 52, 3, GuiTextures.workbench);
         addChild(backdrop);
-        addChild(new GuiTexture(7, 8, 7, 7, 68, 16, texture));
+        addChild(new GuiTexture(7, 8, 7, 7, 68, 16, GuiTextures.workbench));
 
         addChild(new GuiModuleGlyph(0, 0, 16, 16, schema.getGlyph()).setShift(false));
 

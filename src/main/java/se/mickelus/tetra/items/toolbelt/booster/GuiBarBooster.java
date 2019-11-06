@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.toolbelt.booster;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import se.mickelus.tetra.gui.GuiElement;
-import se.mickelus.tetra.gui.animation.VisibilityFilter;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.animation.VisibilityFilter;
 
 public class GuiBarBooster extends GuiElement {
 
@@ -24,7 +24,7 @@ public class GuiBarBooster extends GuiElement {
     public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         opacity = filter.apply(visibleIndicators) * opacity;
         if (opacity > 0) {
-            GlStateManager.translate(opacity * -10, 0, 0);
+            GlStateManager.translatef(opacity * -10, 0, 0);
 
 
             for (int i = 0; i < visibleIndicators; i++) {
@@ -58,7 +58,7 @@ public class GuiBarBooster extends GuiElement {
                     refX + x + 10,
                     refY + y + 6,
                     0xffffff, opacity * 0.3f);
-            GlStateManager.translate(opacity * 10, 0, 0);
+            GlStateManager.translatef(opacity * 10, 0, 0);
         }
     }
 }

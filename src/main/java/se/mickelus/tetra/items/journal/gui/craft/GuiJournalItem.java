@@ -1,10 +1,11 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import se.mickelus.tetra.gui.*;
-import se.mickelus.tetra.gui.animation.Applier;
-import se.mickelus.tetra.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.impl.GuiModuleOffsets;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class GuiJournalItem extends GuiClickable {
-    private static final String WORKBENCH_TEXTURE = "textures/gui/workbench.png";
 
     GuiElement slotGroup;
 
@@ -31,7 +31,7 @@ public class GuiJournalItem extends GuiClickable {
         selectAnimations = new ArrayList<>();
         deselectAnimations = new ArrayList<>();
 
-        backdrop = new GuiTexture(0, 0, 52, 52, WORKBENCH_TEXTURE);
+        backdrop = new GuiTexture(0, 0, 52, 52, GuiTextures.workbench);
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
