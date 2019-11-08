@@ -23,7 +23,7 @@ public class GuiMagicUsage extends GuiElement {
     public GuiMagicUsage(int x, int y, int barLength) {
         super(x, y, barLength, 12);
 
-        addChild(new GuiStringSmall(0, 0, I18n.format("item.modular.magic_capacity.label")));
+        addChild(new GuiStringSmall(0, 0, I18n.format("item.tetra.modular.magic_capacity.label")));
 
         valueString = new GuiStringSmall(0, 0, "");
         valueString.setAttachment(GuiAttachment.topRight);
@@ -44,7 +44,7 @@ public class GuiMagicUsage extends GuiElement {
 
             bar.setMax(Math.max(max + diffMax, max));
 
-            tooltip = Collections.singletonList(I18n.format("item.modular.magic_capacity.description", max, value + diffValue));
+            tooltip = Collections.singletonList(I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue));
 
             if (diffMax != 0) {
                 bar.setValue(max, max + diffMax);
@@ -62,7 +62,7 @@ public class GuiMagicUsage extends GuiElement {
             int value = getCost(itemStack, slot);
             int max = getGain(itemStack, slot);
 
-            tooltip = Collections.singletonList(I18n.format("item.modular.magic_capacity.description", max, value));
+            tooltip = Collections.singletonList(I18n.format("item.tetra.modular.magic_capacity.description", max, value));
             valueString.setString(String.format("%d/%d", max - value, max));
 
             bar.setMax(max);

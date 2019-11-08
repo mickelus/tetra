@@ -26,6 +26,6 @@ public class ItemGeode extends TetraItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.geode.tooltip"));
+        tooltip.add(new TranslationTextComponent("item.tetra.geode.tooltip"));
     }
 }

@@ -318,7 +318,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         if (isBroken(itemStack)) {
-            tooltip.add(new TranslationTextComponent("item.modular.broken")
+            tooltip.add(new TranslationTextComponent("item.tetra.modular.broken")
                     .setStyle(new Style().setColor(TextFormatting.DARK_RED).setItalic(true)));
         }
 

@@ -44,7 +44,7 @@ public class GuiSynergyIndicator extends GuiElement {
         boolean hasActive = alwaysShowStats;
 
         tooltip = new ArrayList<>();
-        tooltip.add(TextFormatting.GRAY + I18n.format("item.modular.synergy_indicator.header"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("item.tetra.modular.synergy_indicator.header"));
 
         if (itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
@@ -71,7 +71,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
 
         if (tooltip.size() <= 1) {
-            tooltip = Collections.singletonList(TextFormatting.GRAY + I18n.format("item.modular.synergy_indicator.empty"));
+            tooltip = Collections.singletonList(TextFormatting.GRAY + I18n.format("item.tetra.modular.synergy_indicator.empty"));
             indicator.setTextureCoordinates(emptyCoord, 0);
         } else if (!hasActive) {
             indicator.setTextureCoordinates(inactiveCoord, 0);

@@ -97,7 +97,7 @@ public class GuiModuleMajor extends GuiModule {
         if (moduleName != null) {
             moduleString.setString(moduleName);
         } else {
-            moduleString.setString(I18n.format("item.modular.empty_slot"));
+            moduleString.setString(I18n.format("item.tetra.modular.empty_slot"));
         }
         if (GuiAttachment.topRight.equals(attachmentPoint)) {
             moduleString.setX(-16);

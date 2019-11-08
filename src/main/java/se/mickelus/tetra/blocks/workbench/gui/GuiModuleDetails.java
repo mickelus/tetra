@@ -53,10 +53,10 @@ public class GuiModuleDetails extends GuiElement {
         repairGroup = new GuiElement(150, 5, 60, 16);
         addChild(repairGroup);
 
-        repairTitle = new GuiStringSmall(0, 7, I18n.format("item.modular.repair_material.label"));
+        repairTitle = new GuiStringSmall(0, 7, I18n.format("item.tetra.modular.repair_material.label"));
         repairGroup.addChild(repairTitle);
 
-        noRepairLabel = new GuiStringSmall(0, 7, TextFormatting.GRAY + I18n.format("item.modular.repair_material.empty"));
+        noRepairLabel = new GuiStringSmall(0, 7, TextFormatting.GRAY + I18n.format("item.tetra.modular.repair_material.empty"));
         noRepairLabel.setAttachment(GuiAttachment.topCenter);
         noRepairLabel.setVisible(false);
         repairGroup.addChild(noRepairLabel);
