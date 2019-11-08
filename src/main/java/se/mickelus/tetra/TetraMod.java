@@ -100,13 +100,6 @@ public class TetraMod {
         LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
         LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());
 
-//        try {
-            new DataHandler();
-//        } catch (URISyntaxException e) {
-//            TetraLogger.log(Level.SEVERE, e.getMessage());
-//        }
-
-
         new ItemUpgradeRegistry();
 
         new TetraItemGroup();
@@ -176,6 +169,7 @@ public class TetraMod {
     }
 
     public void setup(FMLCommonSetupEvent event) {
+        new DataHandler();
         proxy.init(event);
 
 //        ScreenManager.registerFactory(BlockForgedContainer.containerType, ForgedContainerScreen::new);

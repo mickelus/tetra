@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
+import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.loot.LootContext;
@@ -14,6 +15,10 @@ import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.ILootFunction;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.packs.ModFileResourcePack;
+import net.minecraftforge.fml.packs.ResourcePackLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.module.Priority;
@@ -26,23 +31,35 @@ import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class DataHandler {
+
+    private Logger logger = LogManager.getLogger();
+
     public final Gson gson;
 
     private Path configDir;
 
     public static DataHandler instance;
 
+    ModFileResourcePack pack;
+
     public DataHandler() {
         configDir = FMLPaths.CONFIGDIR.get().resolve("config");
+
+        pack = ResourcePackLoader.getResourcePackFor(TetraMod.MOD_ID)
+                .orElseThrow(() -> new RuntimeException("Failed to initialized data handler, cannot get resource pack"));
 
         // todo: use the same naming for all deserializers?
         gson = new GsonBuilder()
@@ -90,26 +107,14 @@ public class DataHandler {
     }
 
     public <T> T getData(String path, Class<T> dataClass) {
-        String pathString = String.format("data/%s/%s.json", TetraMod.MOD_ID, path);
-        Path configOverride = configDir.resolve(String.format("%s/%s.json", TetraMod.MOD_ID, path));
-        try {
-            T data = null;
-            if (Files.exists(configOverride)) {
-                data = readData(configOverride, dataClass);
-            } else {
-                URL url = ClassLoader.getSystemClassLoader().getResource(pathString);
-                if (url != null) {
-                    data = readData(Paths.get(url.toURI()), dataClass);
-                }
-            }
-
-            if (data != null) {
-                return data;
-            }
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+        try (InputStream is = pack.getResourceStream(ResourcePackType.SERVER_DATA,
+                new ResourceLocation(TetraMod.MOD_ID, path + ".json"))) {
+            Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            return gson.fromJson(reader, dataClass);
+        } catch (IOException e) {
+            logger.warn(e);
         }
-        System.err.printf("Could not read data from '%s'. Initializing from empty array.\n", path);
+        logger.warn("Could not read data from '{}'. Initializing from empty array.", path);
         return gson.fromJson("[]", dataClass);
     }
 
