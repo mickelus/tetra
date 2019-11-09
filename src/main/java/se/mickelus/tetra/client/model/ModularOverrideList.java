@@ -3,20 +3,39 @@ package se.mickelus.tetra.client.model;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ItemOverrideList;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.SimpleBakedModel;
+import net.minecraft.client.renderer.texture.ISprite;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.BasicState;
 import net.minecraftforge.client.model.ItemLayerModel;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
+import net.minecraftforge.client.model.SimpleModelState;
+import net.minecraftforge.common.model.IModelState;
+import net.minecraftforge.common.model.TRSRTransformation;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.ItemModular;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class ModularOverrideList extends ItemOverrideList {
 
@@ -25,10 +44,15 @@ public class ModularOverrideList extends ItemOverrideList {
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
 
-    public static ModularOverrideList INSTANCE = new ModularOverrideList();
 
-    protected ModularOverrideList() {
+    private final ModelBakery bakery;
+    private final BlockModel unbaked;
+
+    public ModularOverrideList(final ModelBakery bakery, final BlockModel unbaked) {
         super();
+
+        this.bakery = bakery;
+        this.unbaked = unbaked;
     }
 
     @Nullable
@@ -40,7 +64,7 @@ public class ModularOverrideList extends ItemOverrideList {
             CacheKey key = getCacheKey(stack, originalModel);
 
             try {
-                result = bakedModelCache.get(key, () -> getOverrideModel(stack, originalModel));
+                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
             } catch(ExecutionException e) {
                 // do nothing, return original model
                 e.printStackTrace();
@@ -53,17 +77,26 @@ public class ModularOverrideList extends ItemOverrideList {
         return new CacheKey(original, stack);
     }
 
-    protected IBakedModel getOverrideModel(ItemStack itemStack, IBakedModel original) {
+    protected IBakedModel getOverrideModel(ItemStack itemStack) {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
-        BakedWrapper wrapper = (BakedWrapper) original;
-        ImmutableList<ResourceLocation> textures = item.getTextures(itemStack);
+        // todo 1.14: look at ItemModelGenerator
 
-        return new ItemLayerModel(textures).bake(
-                wrapper.getBakery(),
-                wrapper.getSpriteGetter(),
-                wrapper.getSprite(),
-                wrapper.getFormat());
+        ItemCameraTransforms transforms = unbaked.getAllTransforms();
+        Map<ItemCameraTransforms.TransformType, TRSRTransformation> tMap = Maps.newHashMap();
+        tMap.putAll(PerspectiveMapWrapper.getTransforms(transforms));
+        // tMap.putAll(PerspectiveMapWrapper.getTransforms(new BasicState(unbaked.getDefaultState(), false).getState()));
+        SimpleModelState perState = new SimpleModelState(ImmutableMap.copyOf(tMap));
+
+//        Map<String, String> textures = new HashMap<>();
+//        item.getTextures(itemStack).forEach(resourceLocation -> textures.put("", resourceLocation.toString()));
+//        unbaked.retexture(ImmutableMap.copyOf(textures));
+//
+//        return unbaked.bake(bakery, ModelLoader.defaultTextureGetter(), new BasicState(unbaked.getDefaultState(), false),
+//                DefaultVertexFormats.ITEM);
+
+         return new ItemLayerModel(item.getTextures(itemStack)).bake(bakery, ModelLoader.defaultTextureGetter(),
+                 perState, DefaultVertexFormats.ITEM);
     }
 
     protected static class CacheKey {

@@ -1,12 +1,14 @@
 package se.mickelus.tetra;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.model.*;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
@@ -20,10 +22,10 @@ import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.BakedItemModel;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -34,28 +36,33 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.advancements.*;
+import se.mickelus.tetra.advancements.BlockInteractionCriterion;
+import se.mickelus.tetra.advancements.BlockLookTrigger;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
+import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
+import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.geode.*;
+import se.mickelus.tetra.blocks.geode.BlockGeode;
+import se.mickelus.tetra.blocks.geode.ItemGeode;
+import se.mickelus.tetra.blocks.geode.ItemPristineDiamond;
+import se.mickelus.tetra.blocks.geode.ItemPristineEmerald;
+import se.mickelus.tetra.blocks.geode.ItemPristineLapis;
 import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
 import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
-import se.mickelus.tetra.blocks.workbench.gui.WorkbenchGui;
-import se.mickelus.tetra.client.model.BakedItemModelWrapper;
-import se.mickelus.tetra.client.model.BakedWrapper;
-import se.mickelus.tetra.client.model.ModularOverrideList;
+import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.forged.*;
+import se.mickelus.tetra.items.forged.ItemBeam;
+import se.mickelus.tetra.items.forged.ItemBolt;
+import se.mickelus.tetra.items.forged.ItemMesh;
+import se.mickelus.tetra.items.forged.ItemMetalScrap;
+import se.mickelus.tetra.items.forged.ItemQuickLatch;
+import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.items.journal.ItemJournal;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
-import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
-import se.mickelus.tetra.items.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
@@ -68,14 +75,6 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
-
-import java.io.File;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
@@ -203,6 +202,7 @@ public class TetraMod {
         }
     }
 
+    @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
         // TGenCommand.register(event.getCommandDispatcher());
 
@@ -211,21 +211,14 @@ public class TetraMod {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void loadModels(final ModelBakeEvent event) {
-        TetraLogger.log(event);
-        ModelResourceLocation resourceLocation = new ModelResourceLocation(ItemSwordModular.instance.getRegistryName(), "inventory");
-        IBakedModel oldModel = event.getModelRegistry().get(resourceLocation);
-        BlockModel unbaked = (BlockModel) event.getModelLoader().getUnbakedModel(resourceLocation);
 
-//        TextureAtlasSprite particleSprite = ModelLoader.defaultTextureGetter().apply(new ResourceLocation(unbaked.resolveTextureName("particle")));
-//        IBakedModel model = new SimpleBakedModel.Builder(unbaked, ModularOverrideList.INSTANCE).setTexture(particleSprite).build();
-
-        BakedWrapper wrapper = new BakedWrapper(event.getModelLoader(), ModelLoader.defaultTextureGetter(), ModelRotation.X0_Y0, net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
-
-        event.getModelRegistry().put(resourceLocation, wrapper);
+        ModularModelLoader.loadModels(event);
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
         ItemUpgradeRegistry.instance.getAllModules().stream()
                 .flatMap(itemModule -> Arrays.stream(itemModule.getAllTextures()))

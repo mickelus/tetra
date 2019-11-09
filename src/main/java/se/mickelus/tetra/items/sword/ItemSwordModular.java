@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
@@ -45,6 +46,12 @@ public class ItemSwordModular extends ItemModularHandheld {
 
 
         updateConfig(ConfigHandler.honeSwordBase, ConfigHandler.honeSwordIntegrityMultiplier);
+    }
+
+    @Override
+    public void clientPreInit() {
+
+        ModularModelLoader.registerItem(this);
     }
 
     @Override

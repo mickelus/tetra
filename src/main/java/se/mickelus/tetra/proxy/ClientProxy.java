@@ -25,7 +25,6 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void preInit(ITetraItem[] items, ITetraBlock[] blocks) {
-        ModelLoaderRegistry.registerLoader(ModularModelLoader.instance);
         Arrays.stream(items).forEach(ITetraItem::clientPreInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientPreInit);
     }

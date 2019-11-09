@@ -51,7 +51,7 @@ public class ModularModel implements IUnbakedModel {
 //        tMap.putAll(PerspectiveMapWrapper.getTransforms(sprite.getState()));
 //        IModelState perState = new SimpleModelState(ImmutableMap.copyOf(tMap));
 
-        return new BakedWrapper(bakery, spriteGetter, sprite, format);
+        return null; //return new BakedWrapper(bakery, spriteGetter, sprite, format);
     }
 
     @Override
