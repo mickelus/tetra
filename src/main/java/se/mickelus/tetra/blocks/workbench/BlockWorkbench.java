@@ -11,7 +11,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -31,7 +30,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
-import se.mickelus.tetra.blocks.workbench.gui.WorkbenchGui;
+import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -171,7 +170,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
         TileEntityWorkbench.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
 
-        ScreenManager.registerFactory(containerType, WorkbenchGui::new);
+        ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
         PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, UpdateWorkbenchPacket::new);
         PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, CraftWorkbenchPacket::new);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);

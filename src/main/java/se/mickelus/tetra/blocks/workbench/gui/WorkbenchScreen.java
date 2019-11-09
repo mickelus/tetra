@@ -33,7 +33,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
-public class WorkbenchGui extends ContainerScreen<WorkbenchContainer> {
+public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private static final ResourceLocation inventoryTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
 
     private PlayerEntity viewingPlayer;
@@ -62,7 +62,7 @@ public class WorkbenchGui extends ContainerScreen<WorkbenchContainer> {
 
     private boolean hadItem = false;
 
-    public WorkbenchGui(WorkbenchContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public WorkbenchScreen(WorkbenchContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
         this.xSize = 320;
@@ -115,6 +115,7 @@ public class WorkbenchGui extends ContainerScreen<WorkbenchContainer> {
 
     @Override
     public void render(final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
 
