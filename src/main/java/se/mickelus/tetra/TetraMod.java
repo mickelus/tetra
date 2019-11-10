@@ -55,6 +55,7 @@ import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.forged.ItemBeam;
 import se.mickelus.tetra.items.forged.ItemBolt;
 import se.mickelus.tetra.items.forged.ItemMesh;
@@ -147,7 +148,7 @@ public class TetraMod {
                 new ItemPristineEmerald(),
                 new ItemPristineDiamond(),
 //                new ItemToolbeltModular(),
-//                new ItemDuplexToolModular(),
+                new ItemDuplexToolModular(),
 //                new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),

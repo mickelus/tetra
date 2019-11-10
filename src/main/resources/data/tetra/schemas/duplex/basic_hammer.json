@@ -9,6 +9,20 @@
         "outcomes": [
             {
                 "material": {
+                    "tag": "logs"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:stone"
+                },
+                "moduleKey": "duplex/basic_hammer",
+                "moduleVariant": "basic_hammer/stone"
+            },
+            {
+                "material": {
                     "item": "minecraft:iron_ingot",
                     "count": 3
                 },
@@ -33,8 +47,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper",
+                    "tag": "ingots/copper",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -45,8 +58,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin",
+                    "tag": "ingots/tin",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -57,8 +69,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel",
+                    "tag": "ingots/nickel",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -69,8 +80,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead",
+                    "tag": "ingots/lead",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -81,8 +91,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze",
+                    "tag": "ingots/bronze",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -93,8 +102,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum",
+                    "tag": "ingots/electrum",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -105,8 +113,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel",
+                    "tag": "ingots/steel",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -117,20 +124,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0,
-                    "count": 3
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood",
+                    "tag": "ingots/ironwood",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -141,8 +135,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf",
+                    "tag": "ingots/steeleaf",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -153,8 +146,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery",
+                    "tag": "ingots/fiery",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -165,8 +157,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal",
+                    "tag": "ingots/knightmetal",
                     "count": 3
                 },
                 "requiredCapabilities": {
@@ -174,22 +165,6 @@
                 },
                 "moduleKey": "duplex/basic_hammer",
                 "moduleVariant": "basic_hammer/knightmetal"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "logWood"
-                },
-                "moduleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/log"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stone"
-                },
-                "moduleKey": "duplex/basic_hammer",
-                "moduleVariant": "basic_hammer/stone"
             }
         ]
     }

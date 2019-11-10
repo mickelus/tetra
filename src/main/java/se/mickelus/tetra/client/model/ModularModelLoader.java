@@ -43,7 +43,7 @@ public class ModularModelLoader {
 
         //        TextureAtlasSprite particleSprite = ModelLoader.defaultTextureGetter().apply(new ResourceLocation(unbaked.resolveTextureName("particle")));
         items.forEach(item -> {
-            ModelResourceLocation resourceLocation = new ModelResourceLocation(ItemSwordModular.instance.getRegistryName(), "inventory");
+            ModelResourceLocation resourceLocation = new ModelResourceLocation(item.getRegistryName(), "inventory");
             SimpleBakedModel originalModel = (SimpleBakedModel) event.getModelRegistry().get(resourceLocation);
             try {
                 IBakedModel model = loadModel(event.getModelLoader(), originalModel, resourceLocation);

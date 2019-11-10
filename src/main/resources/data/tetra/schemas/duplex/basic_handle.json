@@ -22,6 +22,16 @@
             },
             {
                 "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/iron"
+            },
+            {
+                "material": {
                     "item": "minecraft:blaze_rod"
                 },
                 "requiredCapabilities": {
@@ -48,18 +58,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:iron_ingot"
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "duplex/basic_handle",
-                "moduleVariant": "basic_handle/iron"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze"
+                    "tag": "ingots/bronze"
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -69,8 +68,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel"
+                    "tag": "ingots/steel"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -80,8 +78,17 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 1
+                    "item": "minecraft:oak_planks"
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "duplex/basic_handle",
+                "moduleVariant": "basic_handle/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:spruce_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -91,8 +98,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 2
+                    "item": "minecraft:birch_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -102,8 +108,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 3
+                    "item": "minecraft:jungle_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -113,8 +118,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 4
+                    "item": "minecraft:acacia_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -124,8 +128,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 5
+                    "item": "minecraft:dark_oak_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -135,8 +138,7 @@
             },
             {
                 "material": {
-                    "item": "forestry:planks",
-                    "data": 6
+                    "tag": "planks/maple"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -146,8 +148,7 @@
             },
             {
                 "material": {
-                    "item": "forestry:planks",
-                    "data": 15
+                    "tag": "planks/cherry"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -157,7 +158,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:plank_greatwood"
+                    "tag": "planks/greatwood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -167,8 +168,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankTreatedWood"
+                    "tag": "planks/treated_wood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -178,8 +178,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stickTreatedWood"
+                    "tag": "rods/treated_wood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -189,25 +188,13 @@
             },
             {
                 "material": {
-                    "item": "rustic:planks",
-                    "data": 1
+                    "tag": "planks/ironwood"
                 },
                 "requiredCapabilities": {
                     "axe": 2
                 },
                 "moduleKey": "duplex/basic_handle",
                 "moduleVariant": "basic_handle/ironwood"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankWood"
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "duplex/basic_handle",
-                "moduleVariant": "basic_handle/oak"
             },
             {
                 "material": {
