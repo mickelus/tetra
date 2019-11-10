@@ -18,16 +18,6 @@
             },
             {
                 "material": {
-                    "item": "minecraft:iron_ingot"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/iron"
-            },
-            {
-                "material": {
                     "item": "minecraft:bone"
                 },
                 "requiredCapabilities": {
@@ -35,6 +25,16 @@
                 },
                 "moduleKey": "sword/basic_hilt",
                 "moduleVariant": "basic_hilt/bone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:iron_ingot"
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/basic_hilt",
+                "moduleVariant": "basic_hilt/iron"
             },
             {
                 "material": {

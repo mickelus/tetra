@@ -25,6 +25,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -64,6 +65,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public ItemModular(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public void clientPreInit() {
+        ModularModelLoader.registerItem(this);
     }
 
     @Override

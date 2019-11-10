@@ -8,7 +8,7 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:oak_log",
+                    "tag": "minecraft:oak_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -19,7 +19,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:spruce_log",
+                    "tag": "minecraft:spruce_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -30,7 +30,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:birch_log",
+                    "tag": "minecraft:birch_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -41,7 +41,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:jungle_log",
+                    "tag": "minecraft:jungle_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -52,7 +52,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:acacia_log",
+                    "tag": "minecraft:acacia_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -63,7 +63,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:dark_oak_log",
+                    "tag": "minecraft:dark_oak_logs",
                     "count": 8
                 },
                 "requiredCapabilities": {

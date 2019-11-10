@@ -1,13 +1,11 @@
 package se.mickelus.tetra.items;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.pattern.BlockMatcher;
-import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
