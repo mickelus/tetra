@@ -7,7 +7,7 @@
         "outcomes": [
             {
                 "material": {
-                    "tag": "minecraft:oak_planks",
+                    "item": "minecraft:oak_planks",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -70,6 +70,17 @@
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/dark_oak"
+            },
+            {
+                "material": {
+                    "tag": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/basic_blade",
+                "moduleVariant": "basic_blade/cobblestone"
             },
             {
                 "material": {
@@ -316,17 +327,6 @@
                 },
                 "moduleKey": "sword/basic_blade",
                 "moduleVariant": "basic_blade/knightmetal"
-            },
-            {
-                "material": {
-                    "tag": "cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/cobblestone"
             }
         ]
     }

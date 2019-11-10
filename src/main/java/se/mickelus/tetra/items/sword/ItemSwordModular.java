@@ -30,9 +30,9 @@ public class ItemSwordModular extends ItemModularHandheld {
     public static final String unlocalizedName = "sword_modular";
 
     private ItemModuleMajor basicBladeModule;
-//    private final ItemModuleMajor shortBladeModule;
-//    private final ItemModuleMajor heavyBladeModule;
-//    private final ItemModuleMajor macheteModule;
+    private ItemModuleMajor shortBladeModule;
+    private ItemModuleMajor heavyBladeModule;
+    private ItemModuleMajor macheteModule;
     private ItemModuleMajor hiltModule;
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -60,14 +60,23 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         requiredModules = new String[] { bladeKey, hiltKey };
 
+        setupModules();
+        setupSchemas();
+
+        ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
+    }
+
+    private void setupModules() {
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/basic_blade", "settling_improvements");
-        //        shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-        //                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/short_blade", "settling_improvements");
-        //        heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-        //                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/heavy_blade", "settling_improvements");
-        //        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone",
-        //                "settling_improvements");
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/basic_blade",
+                "settling_improvements");
+        shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/short_blade",
+                "settling_improvements");
+        heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
+                "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/heavy_blade", "settling_improvements");
+        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone",
+                "settling_improvements");
 
         hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/shared_hilt", "sword/improvements/shared_hilt_hone",
                 "settling_improvements")
@@ -84,20 +93,22 @@ public class ItemSwordModular extends ItemModularHandheld {
         //        new BasicModule(pommelKey, "sword/grip_loop");
         //
         //        new BasicModule(fullerKey, "sword/reinforced_fuller");
+    }
 
+    private void setupSchemas() {
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade_improvements");
         new BookEnchantSchema(basicBladeModule);
 
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade_improvements");
-//        new BookEnchantSchema(shortBladeModule);
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade");
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade_improvements");
+        new BookEnchantSchema(shortBladeModule);
 //
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/heavy_blade");
-//        new BookEnchantSchema(heavyBladeModule);
-//
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/machete");
-//        new BookEnchantSchema(macheteModule);
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/heavy_blade");
+        new BookEnchantSchema(heavyBladeModule);
+
+        ItemUpgradeRegistry.instance.registerConfigSchema("sword/machete");
+        new BookEnchantSchema(macheteModule);
 
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
         ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt_improvements");
@@ -117,8 +128,6 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
-
-        ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

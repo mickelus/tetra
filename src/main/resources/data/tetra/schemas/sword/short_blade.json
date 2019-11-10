@@ -8,8 +8,17 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 1
+                    "item": "minecraft:oak_planks"
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/short_blade",
+                "moduleVariant": "short_blade/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:spruce_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -19,8 +28,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 2
+                    "item": "minecraft:birch_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -30,8 +38,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 3
+                    "item": "minecraft:jungle_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -41,8 +48,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 4
+                    "item": "minecraft:acacia_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -52,8 +58,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "data": 5
+                    "item": "minecraft:dark_oak_planks"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -103,8 +108,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper"
+                    "tag": "ingots/copper"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -114,8 +118,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin"
+                    "tag": "ingots/tin"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -125,8 +128,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver"
+                    "tag": "ingots/silver"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -136,8 +138,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel"
+                    "tag": "ingots/nickel"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -147,8 +148,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead"
+                    "tag": "ingots/lead"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -158,8 +158,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze"
+                    "tag": "ingots/bronze"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -169,8 +168,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum"
+                    "tag": "ingots/electrum"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -180,8 +178,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel"
+                    "tag": "ingots/steel"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -191,19 +188,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood"
+                    "tag": "ingots/ironwood"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -213,8 +198,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf"
+                    "tag": "ingots/steeleaf"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -227,8 +211,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery"
+                    "tag": "ingots/fiery"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -241,25 +224,13 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal"
+                    "tag": "ingots/knightmetal"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
                 },
                 "moduleKey": "sword/short_blade",
                 "moduleVariant": "short_blade/knightmetal"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankWood"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/oak"
             }
         ]
     }

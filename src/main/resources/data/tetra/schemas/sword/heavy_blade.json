@@ -8,8 +8,18 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:log",
-                    "data": 1,
+                    "item": "minecraft:oak_log",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "axe": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/oak_log"
+            },
+            {
+                "material": {
+                    "item": "minecraft:spruce_log",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -20,8 +30,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:log",
-                    "data": 2,
+                    "item": "minecraft:birch_log",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -32,8 +41,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:log",
-                    "data": 3,
+                    "item": "minecraft:jungle_log",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -44,8 +52,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:log2",
-                    "data": 0,
+                    "item": "minecraft:acacia_log",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -56,8 +63,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:log2",
-                    "data": 1,
+                    "item": "minecraft:dark_oak_log",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -68,8 +74,29 @@
             },
             {
                 "material": {
+                    "tag": "cobblestone",
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/cobblestone"
+            },
+            {
+                "material": {
                     "item": "minecraft:stone",
-                    "data": 1,
+                    "count": 8
+                },
+                "requiredCapabilities": {
+                    "hammer": 3
+                },
+                "moduleKey": "sword/heavy_blade",
+                "moduleVariant": "heavy_blade/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:granite",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -80,8 +107,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:stone",
-                    "data": 3,
+                    "item": "minecraft:diorite",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -92,8 +118,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:stone",
-                    "data": 5,
+                    "item": "minecraft:andesite",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -140,8 +165,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper",
+                    "tag": "ingots/copper",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -152,8 +176,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin",
+                    "tag": "ingots/tin",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -164,8 +187,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver",
+                    "tag": "ingots/silver",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -176,8 +198,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel",
+                    "tag": "ingots/nickel",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -188,8 +209,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead",
+                    "tag": "ingots/lead",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -200,8 +220,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze",
+                    "tag": "ingots/bronze",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -212,8 +231,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum",
+                    "tag": "ingots/electrum",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -224,8 +242,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel",
+                    "tag": "ingots/steel",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -236,20 +253,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0,
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood",
+                    "tag": "ingots/ironwood",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -260,8 +264,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf",
+                    "tag": "ingots/steeleaf",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -275,8 +278,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery",
+                    "tag": "ingots/fiery",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -290,8 +292,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal",
+                    "tag": "ingots/knightmetal",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -302,42 +303,6 @@
                 "improvements": {
                     "heavy_blade/crushing": 1
                 }
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "logWood",
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/oak_log"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "cobblestone",
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/cobblestone"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stone",
-                    "count": 8
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/heavy_blade",
-                "moduleVariant": "heavy_blade/stone"
             }
         ]
     }

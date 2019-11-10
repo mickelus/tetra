@@ -11,9 +11,19 @@
         "outcomes": [
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 1
+                    "item": "minecraft:oak_planks",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "axe": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/oak"
+            },
+            {
+                "material": {
+                    "item": "minecraft:spruce_planks",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -23,9 +33,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 2
+                    "item": "minecraft:birch_planks",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -35,9 +44,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 3
+                    "item": "minecraft:jungle_planks",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -47,9 +55,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 4
+                    "item": "minecraft:acacia_planks",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -59,9 +66,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:planks",
-                    "count": 2,
-                    "data": 5
+                    "item": "minecraft:dark_oak_planks",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -71,9 +77,30 @@
             },
             {
                 "material": {
+                    "tag": "cobblestone",
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/cobblestone"
+            },
+            {
+                "material": {
                     "item": "minecraft:stone",
-                    "count": 2,
-                    "data": 1
+                    "count": 2
+                },
+                "requiredCapabilities": {
+                    "hammer": 2
+                },
+                "moduleKey": "sword/machete",
+                "moduleVariant": "machete/stone"
+            },
+            {
+                "material": {
+                    "item": "minecraft:granite",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -83,9 +110,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:stone",
-                    "count": 2,
-                    "data": 3
+                    "item": "minecraft:diorite",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -95,9 +121,8 @@
             },
             {
                 "material": {
-                    "item": "minecraft:stone",
-                    "count": 2,
-                    "data": 5
+                    "item": "minecraft:andesite",
+                    "count": 2
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -140,7 +165,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:diamond",
+                    "tag": "gems/diamond",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -168,8 +193,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper",
+                    "tag": "ingots/copper",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -180,8 +204,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin",
+                    "tag": "ingots/tin",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -192,8 +215,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver",
+                    "tag": "ingots/silver",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -204,8 +226,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel",
+                    "tag": "ingots/nickel",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -216,8 +237,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead",
+                    "tag": "ingots/lead",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -228,8 +248,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze",
+                    "tag": "ingots/bronze",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -240,8 +259,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum",
+                    "tag": "ingots/electrum",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -252,8 +270,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel",
+                    "tag": "ingots/steel",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -264,20 +281,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0,
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/machete",
-                "moduleVariant": "machete/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood",
+                    "tag": "ingots/ironwood",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -288,8 +292,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf",
+                    "tag": "ingots/steeleaf",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -303,8 +306,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery",
+                    "tag": "ingots/fiery",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -318,8 +320,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal",
+                    "tag": "ingots/knightmetal",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -327,42 +328,6 @@
                 },
                 "moduleKey": "sword/machete",
                 "moduleVariant": "machete/knightmetal"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankWood",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/machete",
-                "moduleVariant": "machete/oak"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/machete",
-                "moduleVariant": "machete/cobblestone"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/machete",
-                "moduleVariant": "machete/stone"
             }
         ]
     }
