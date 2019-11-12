@@ -5,48 +5,60 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IWorldPosCallable;
+import net.minecraftforge.forgespi.Environment;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import se.mickelus.mgui.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 
 public class WorkbenchContainer extends Container {
-    private TileEntityWorkbench workbench;
+    private WorkbenchTile workbench;
 
-    private ToggleableSlot[] materialSlots;
+    private ToggleableSlot[] materialSlots = new ToggleableSlot[0];
 
-    public WorkbenchContainer(int windowId, TileEntityWorkbench workbench, IInventory playerInventory, PlayerEntity player) {
-        super(BlockWorkbench.containerType, windowId);
+    public WorkbenchContainer(int windowId, WorkbenchTile workbench, IInventory playerInventory, PlayerEntity player) {
+        super(WorkbenchBlock.containerType, windowId);
         this.workbench = workbench;
-        workbench.openInventory(player);
-
-        materialSlots = new ToggleableSlot[3];
-
-
-        addSlot(new Slot(workbench, 0, 152, 58));
 
         // material inventory
-        for (int i = 0; i < 3; i++) {
-            materialSlots[i] = new ToggleableSlot(workbench, i + 1, 167, 107 + 18 * i);
-            materialSlots[i].toggle(false);
-            addSlot(materialSlots[i]);
-        }
+        workbench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+            addSlot(new SlotItemHandler(handler, 0, 152, 58));
+
+            materialSlots = new ToggleableSlot[3];
+            for (int i = 0; i < materialSlots.length; i++) {
+                materialSlots[i] = new ToggleableSlot(handler, i + 1, 167, 107 + 18 * i);
+                addSlot(materialSlots[i]);
+            }
+        });
+
+        IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
 
         // player inventory
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 3; y++) {
-                addSlot(new Slot(playerInventory, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
+                addSlot(new SlotItemHandler(playerInventoryHandler, y * 9 + x + 9, x * 17 + 84, y * 17 + 166));
             }
         }
 
         // player toolbar
         for (int i = 0; i < 9; i++) {
-            addSlot(new Slot(playerInventory, i, i * 17 + 84, 221));
+            addSlot(new SlotItemHandler(playerInventoryHandler, i, i * 17 + 84, 221));
         }
+    }
+
+    private int getSlots() {
+        return workbench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                .map(IItemHandler::getSlots)
+                .orElse(0);
     }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.workbench.isUsableByPlayer(playerIn);
+        return isWithinUsableDistance(IWorldPosCallable.of(workbench.getWorld(), workbench.getPos()), playerIn, WorkbenchBlock.instance);
     }
 
     /**
@@ -54,28 +66,27 @@ public class WorkbenchContainer extends Container {
      */
     @Override
     public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
-
         if (slot != null && slot.getHasStack()) {
-            ItemStack itemStack = slot.getStack();
-
-            if (index < this.workbench.getSizeInventory()) {
-                if (!this.mergeItemStack(itemStack,  this.workbench.getSizeInventory(), this.inventorySlots.size(), true)) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            if (index < getSlots()) {
+                if (!this.mergeItemStack(itemstack1, getSlots(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemStack, 0,  this.workbench.getSizeInventory(), false)) {
+            } else if (!this.mergeItemStack(itemstack1, 0, getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemStack.getCount() == 0) {
+            if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
-            return itemStack.copy();
         }
 
-        return ItemStack.EMPTY;
+        return itemstack;
     }
 
     public void updateSlots() {
@@ -86,26 +97,12 @@ public class WorkbenchContainer extends Container {
             numMaterialSlots = currentSchema.getNumMaterialSlots();
         }
 
-        for (int i = 0; i < numMaterialSlots; i++) {
-            materialSlots[i].toggle(true);
-        }
-
-        for (int i = numMaterialSlots; i < materialSlots.length; i++) {
-            materialSlots[i].toggle(false);
+        for (int i = 0; i < materialSlots.length; i++) {
+            materialSlots[i].toggle(i < numMaterialSlots);
         }
     }
 
-    /**
-     * Called when the container is closed.
-     */
-    @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
-        super.onContainerClosed(playerIn);
-
-        workbench.closeInventory(playerIn);
-    }
-
-    public TileEntityWorkbench getTileEntity() {
+    public WorkbenchTile getTileEntity() {
         return workbench;
     }
 }

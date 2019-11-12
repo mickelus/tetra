@@ -4,17 +4,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import se.mickelus.tetra.network.BlockPosPacket;
 
-public class CraftWorkbenchPacket extends BlockPosPacket {
+public class WorkbenchPacketCraft extends BlockPosPacket {
 
-    public CraftWorkbenchPacket() {}
+    public WorkbenchPacketCraft() {}
 
-    public CraftWorkbenchPacket(BlockPos pos) {
+    public WorkbenchPacketCraft(BlockPos pos) {
         super(pos);
     }
 
     @Override
     public void handle(PlayerEntity player) {
-        TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
+        WorkbenchTile workbench = (WorkbenchTile) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.craft(player);
         }

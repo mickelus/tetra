@@ -13,7 +13,7 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 
 public class ConfigActionImpl extends ConfigAction {
@@ -39,7 +39,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public void perform(PlayerEntity player, ItemStack targetStack, TileEntityWorkbench workbench) {
+    public void perform(PlayerEntity player, ItemStack targetStack, WorkbenchTile workbench) {
         if (!player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);

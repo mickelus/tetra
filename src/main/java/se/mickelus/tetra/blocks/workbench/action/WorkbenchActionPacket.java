@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.network.BlockPosPacket;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
+        WorkbenchTile workbench = (WorkbenchTile) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.performAction(player, actionKey);
         }

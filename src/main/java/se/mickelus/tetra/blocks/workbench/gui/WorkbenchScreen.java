@@ -18,7 +18,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.GuiTextureOffset;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -38,7 +38,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private PlayerEntity viewingPlayer;
 
-    private final TileEntityWorkbench tileEntity;
+    private final WorkbenchTile tileEntity;
     private final WorkbenchContainer container;
 
     private GuiElement defaultGui;
@@ -102,7 +102,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
         tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
 
-        currentMaterials = new ItemStack[TileEntityWorkbench.MATERIAL_SLOT_COUNT];
+        currentMaterials = new ItemStack[WorkbenchTile.inventorySlots];
         Arrays.fill(currentMaterials, ItemStack.EMPTY);
     }
 

@@ -41,7 +41,7 @@ import se.mickelus.tetra.BleedingEffect;
 import se.mickelus.tetra.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
@@ -90,7 +90,7 @@ public class ItemModularHandheld extends ItemModular {
     // todo 1.14: test that this still works, possible cleanup. Possibly missing planks, stairs, slabs, doors
     private static final String[] denailTags = new String[] { "fence_gates/wooden", "fences/wooden", "chests/wooden"};
     private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
-            BlockMatcher.forBlock(BlockWorkbench.instance),
+            BlockMatcher.forBlock(WorkbenchBlock.instance),
             BlockMatcher.forBlock(Blocks.CRAFTING_TABLE), BlockMatcher.forBlock(Blocks.BOOKSHELF),
             BlockMatcher.forBlock(Blocks.TRAPPED_CHEST), BlockMatcher.forBlock(Blocks.RAIL),
             BlockMatcher.forBlock(Blocks.ACTIVATOR_RAIL), BlockMatcher.forBlock(Blocks.DETECTOR_RAIL),

@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -43,7 +43,7 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public void perform(PlayerEntity player, ItemStack itemStack, TileEntityWorkbench workbench) {
+    public void perform(PlayerEntity player, ItemStack itemStack, WorkbenchTile workbench) {
         UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
         Arrays.stream(schemas)
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))

@@ -10,16 +10,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TweakWorkbenchPacket extends BlockPosPacket {
+public class WorkbenchPacketTweak extends BlockPosPacket {
 
     String slot;
     Map<String, Integer> tweaks;
 
-    public TweakWorkbenchPacket() {
+    public WorkbenchPacketTweak() {
         tweaks = new HashMap<>();
     }
 
-    public TweakWorkbenchPacket(BlockPos pos, String slot, Map<String, Integer> tweaks) {
+    public WorkbenchPacketTweak(BlockPos pos, String slot, Map<String, Integer> tweaks) {
         super(pos);
 
         this.slot = slot;
@@ -63,7 +63,7 @@ public class TweakWorkbenchPacket extends BlockPosPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        CastOptional.cast(player.world.getTileEntity(pos), TileEntityWorkbench.class)
+        CastOptional.cast(player.world.getTileEntity(pos), WorkbenchTile.class)
                 .ifPresent(workbench -> workbench.tweak(player, slot, tweaks));
     }
 }

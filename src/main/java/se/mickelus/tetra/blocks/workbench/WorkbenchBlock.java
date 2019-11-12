@@ -41,19 +41,19 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
+public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     public static final String unlocalizedName = "workbench";
 
     public static final AxisAlignedBB forgedAABB = new AxisAlignedBB(0.125, 0, 0, 0.875, 1, 1);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static BlockWorkbench instance;
+    public static WorkbenchBlock instance;
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ContainerType<WorkbenchContainer> containerType;
 
     // todo 1.14: split off forged workbench into separate block
-    public BlockWorkbench() {
+    public WorkbenchBlock() {
         super(Properties.create(Material.WOOD).hardnessAndResistance(2.5f));
 
         setRegistryName(unlocalizedName);
@@ -94,7 +94,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!world.isRemote) {
-            TileEntityOptional.from(world, pos, TileEntityWorkbench.class)
+            TileEntityOptional.from(world, pos, WorkbenchTile.class)
                     .ifPresent(te -> NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos));
         }
         return true;
@@ -111,7 +111,7 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        TileEntityOptional.from(world, pos, TileEntityWorkbench.class)
+        TileEntityOptional.from(world, pos, WorkbenchTile.class)
                 .ifPresent(te -> InventoryHelper.dropInventoryItems(world, pos, (IInventory) te));
     }
 
@@ -168,18 +168,18 @@ public class BlockWorkbench extends TetraBlock implements ITileEntityProvider {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
-        TileEntityWorkbench.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
+        WorkbenchTile.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
 
         ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
-        PacketHandler.instance.registerPacket(UpdateWorkbenchPacket.class, UpdateWorkbenchPacket::new);
-        PacketHandler.instance.registerPacket(CraftWorkbenchPacket.class, CraftWorkbenchPacket::new);
+        PacketHandler.instance.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
+        PacketHandler.instance.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
-        PacketHandler.instance.registerPacket(TweakWorkbenchPacket.class, TweakWorkbenchPacket::new);
+        PacketHandler.instance.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader world) {
-        return new TileEntityWorkbench();
+        return new WorkbenchTile();
     }
 }

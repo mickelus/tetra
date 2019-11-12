@@ -14,11 +14,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataHandler;
 import se.mickelus.tetra.items.BasicMajorModule;
-import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -240,7 +239,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         Hand hand = context.getHand();
         if (player != null && !player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
-            return BlockWorkbench.upgradeWorkbench(player, world, pos, hand, context.getFace());
+            return WorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
         }
         return super.onItemUseFirst(stack, context);
     }

@@ -11,16 +11,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class TESRWorkbench extends TileEntityRenderer<TileEntityWorkbench> {
+public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
 
     private ItemRenderer itemRenderer;
 
-    public TESRWorkbench() {
+    public WorkbenchTESR() {
         itemRenderer = Minecraft.getInstance().getItemRenderer();
     }
 
     @Override
-    public void render(TileEntityWorkbench te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(WorkbenchTile te, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushTextureAttributes();
         GlStateManager.pushMatrix();
 
@@ -36,8 +36,8 @@ public class TESRWorkbench extends TileEntityRenderer<TileEntityWorkbench> {
         GlStateManager.popAttributes();
     }
 
-    private void renderItem(TileEntityWorkbench te) {
-        ItemStack stack = te.getStackInSlot(0);
+    private void renderItem(WorkbenchTile te) {
+        ItemStack stack = te.getTargetItemStack();
         if (stack != null) {
             GlStateManager.translated(.5, 0.94, .5);
 

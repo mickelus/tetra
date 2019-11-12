@@ -47,8 +47,8 @@ import se.mickelus.tetra.blocks.geode.ItemGeode;
 import se.mickelus.tetra.blocks.geode.ItemPristineDiamond;
 import se.mickelus.tetra.blocks.geode.ItemPristineEmerald;
 import se.mickelus.tetra.blocks.geode.ItemPristineLapis;
-import se.mickelus.tetra.blocks.workbench.BlockWorkbench;
-import se.mickelus.tetra.blocks.workbench.TileEntityWorkbench;
+import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataHandler;
@@ -118,7 +118,7 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
 
         blocks = new Block[] {
-                new BlockWorkbench(),
+                new WorkbenchBlock(),
                 new BlockGeode(),
         };
 
@@ -246,10 +246,10 @@ public class TetraMod {
 
             ContainerType workbenchContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
-                TileEntityWorkbench te = (TileEntityWorkbench) Minecraft.getInstance().world.getTileEntity(pos);
+                WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().world.getTileEntity(pos);
                 return new WorkbenchContainer(windowId, te, inv, Minecraft.getInstance().player);
             }))
-                    .setRegistryName(MOD_ID, BlockWorkbench.unlocalizedName);
+                    .setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
         }
 
@@ -281,9 +281,9 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
             // todo 1.14: workbench TE registry, do we really pass null here? (from mcjty tutorial)
-            event.getRegistry().register(TileEntityType.Builder.create(TileEntityWorkbench::new, BlockWorkbench.instance)
+            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new, WorkbenchBlock.instance)
                     .build(null)
-                    .setRegistryName(MOD_ID, BlockWorkbench.unlocalizedName));
+                    .setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName));
         }
 
         @SubscribeEvent

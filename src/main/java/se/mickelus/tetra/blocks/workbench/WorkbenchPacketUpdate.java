@@ -9,15 +9,15 @@ import se.mickelus.tetra.network.AbstractPacket;
 
 import java.io.IOException;
 
-public class UpdateWorkbenchPacket extends AbstractPacket {
+public class WorkbenchPacketUpdate extends AbstractPacket {
 
     private BlockPos pos;
     private UpgradeSchema schema;
     private String selectedSlot;
 
-    public UpdateWorkbenchPacket() {}
+    public WorkbenchPacketUpdate() {}
 
-    public UpdateWorkbenchPacket(BlockPos pos, UpgradeSchema schema, String selectedSlot) {
+    public WorkbenchPacketUpdate(BlockPos pos, UpgradeSchema schema, String selectedSlot) {
         this.pos = pos;
         this.schema = schema;
         this.selectedSlot = selectedSlot;
@@ -69,7 +69,7 @@ public class UpdateWorkbenchPacket extends AbstractPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        TileEntityWorkbench workbench = (TileEntityWorkbench) player.world.getTileEntity(pos);
+        WorkbenchTile workbench = (WorkbenchTile) player.world.getTileEntity(pos);
         if (workbench != null) {
             workbench.update(schema, selectedSlot, player);
         }
