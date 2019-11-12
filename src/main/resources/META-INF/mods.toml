@@ -53,6 +53,6 @@ Tetra revolves around modular items and attemps to blend it together with other 
 [[dependencies.tetra]]
     modId="mgui"
     mandatory=true
-    versionRange="[1.0]"
+    versionRange="[1.0.1]"
     ordering="NONE"
     side="BOTH"
