@@ -17,7 +17,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -82,6 +81,14 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             @Override
             protected void onContentsChanged(int slot) {
+                ItemStack itemStack = getStackInSlot(slot);
+                if (slot == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
+                    currentSchema = null;
+                    currentSlot = null;
+
+                    emptyMaterialSlots();
+                }
+
                 markDirty();
             }
 
@@ -91,19 +98,6 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     return currentSchema.getNumMaterialSlots() + 1;
                 }
                 return 1;
-            }
-
-            @Override
-            public void setStackInSlot(int index, @Nonnull ItemStack itemStack) {
-                // todo: figure out something less hacky
-                if (index == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
-                    currentSchema = null;
-                    currentSlot = null;
-
-                    emptyMaterialSlots();
-                }
-
-                super.setStackInSlot(index, itemStack);
             }
         };
     }
@@ -409,7 +403,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     private void emptyMaterialSlots() {
         handler.ifPresent(handler -> {
             if (!world.isRemote) {
-                for (int i = 1; i < handler.getSlots(); i++) {
+                for (int i = 1; i < inventorySlots; i++) {
                     ItemStack materialStack = handler.extractItem(i, handler.getSlotLimit(i), false);
                     if (!materialStack.isEmpty()) {
                         ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 1.1, (double)pos.getZ() + 0.5, materialStack);
@@ -418,7 +412,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     }
                 }
             } else {
-                for (int i = 1; i < handler.getSlots(); i++) {
+                for (int i = 1; i < inventorySlots; i++) {
                     handler.extractItem(i, handler.getSlotLimit(i), false);
                 }
             }
