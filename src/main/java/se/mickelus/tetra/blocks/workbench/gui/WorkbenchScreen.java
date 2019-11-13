@@ -329,21 +329,22 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         int newPreviewMaterialSlot = -1;
         Slot hoveredSlot = getSlotUnderMouse();
         UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
+        ItemStack targetStack = tileEntity.getTargetItemStack();
         if (currentSchema != null && hoveredSlot != null && hoveredSlot.getHasStack()) {
             newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
         }
 
-        if (newPreviewMaterialSlot != previewMaterialSlot) {
+        if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof ItemModular) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
-                ItemStack previewStack = buildPreviewStack(currentSchema, tileEntity.getTargetItemStack(), new ItemStack[]{hoveredSlot.getStack()});
-                updateItemDisplay(tileEntity.getTargetItemStack(), previewStack);
+                ItemStack previewStack = buildPreviewStack(currentSchema, targetStack, new ItemStack[]{hoveredSlot.getStack()});
+                updateItemDisplay(targetStack, previewStack);
             } else {
                 ItemStack previewStack = ItemStack.EMPTY;
                 if (currentSchema != null) {
-                    previewStack = buildPreviewStack(currentSchema, tileEntity.getTargetItemStack(), materials);
+                    previewStack = buildPreviewStack(currentSchema, targetStack, materials);
                 }
-                updateItemDisplay(tileEntity.getTargetItemStack(), previewStack);
+                updateItemDisplay(targetStack, previewStack);
             }
             previewMaterialSlot = newPreviewMaterialSlot;
         }
