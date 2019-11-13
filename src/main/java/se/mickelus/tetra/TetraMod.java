@@ -246,10 +246,8 @@ public class TetraMod {
 
             ContainerType workbenchContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
-                WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().world.getTileEntity(pos);
-                return new WorkbenchContainer(windowId, te, inv, Minecraft.getInstance().player);
-            }))
-                    .setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName);
+                return WorkbenchContainer.create(windowId, pos, inv);
+            })).setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
         }
 

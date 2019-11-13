@@ -1,11 +1,16 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.forgespi.Environment;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -48,6 +53,12 @@ public class WorkbenchContainer extends Container {
         for (int i = 0; i < 9; i++) {
             addSlot(new SlotItemHandler(playerInventoryHandler, i, i * 17 + 84, 221));
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static WorkbenchContainer create(int windowId, BlockPos pos, PlayerInventory inv) {
+        WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().world.getTileEntity(pos);
+        return new WorkbenchContainer(windowId, te, inv, Minecraft.getInstance().player);
     }
 
     private int getSlots() {
