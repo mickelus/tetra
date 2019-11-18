@@ -41,7 +41,7 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
 
         applyCorrections(itemStack);
 
-        Minecraft.getInstance().getItemRenderer().renderItem(itemStack, TransformType.FIXED);
+        Minecraft.getInstance().getItemRenderer().renderItem(itemStack, TransformType.GROUND);
     }
 
 
