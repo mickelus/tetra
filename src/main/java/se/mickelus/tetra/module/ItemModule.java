@@ -104,7 +104,7 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public String getItemName(ItemStack itemStack) {
-        String name = getData(itemStack).key + ".item_name";
+        String name = getData(itemStack).key + ".name";
         if (I18n.hasKey(name)) {
             return I18n.format(name);
         } else if (I18n.hasKey(getUnlocalizedName() + ".item_name")) {
