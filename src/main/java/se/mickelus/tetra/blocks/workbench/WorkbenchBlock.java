@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ITileEntityProvider;
@@ -198,5 +199,15 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     @Override
     public TileEntity createNewTileEntity(IBlockReader world) {
         return new WorkbenchTile();
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 }

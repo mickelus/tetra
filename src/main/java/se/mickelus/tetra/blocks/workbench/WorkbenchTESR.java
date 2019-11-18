@@ -22,34 +22,26 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
 
     @Override
     public void render(WorkbenchTile te, double x, double y, double z, float partialTicks, int destroyStage) {
-        GlStateManager.pushTextureAttributes();
-        GlStateManager.pushMatrix();
+        ItemStack itemStack = te.getTargetItemStack();
+        if (itemStack != null && !itemStack.isEmpty()) {
+            GlStateManager.pushMatrix();
 
-        // Translate to the location of our tile entity
-        GlStateManager.translated(x, y, z);
+            // Translate to the location of our tile entity
+            GlStateManager.translated(x, y, z);
 
-        GlStateManager.disableRescaleNormal();
+            // Render our item
+            renderItem(itemStack);
 
-        // Render our item
-        renderItem(te);
-
-        GlStateManager.popMatrix();
-        GlStateManager.popAttributes();
+            GlStateManager.popMatrix();
+        }
     }
 
-    private void renderItem(WorkbenchTile te) {
-        ItemStack stack = te.getTargetItemStack();
-        if (stack != null && !stack.isEmpty()) {
-            GlStateManager.translated(.5, 0.94, .5);
+    private void renderItem(ItemStack itemStack) {
+        GlStateManager.translated(.5, 0.94, .5);
 
-            applyCorrections(stack);
+        applyCorrections(itemStack);
 
-            // todo 1.14: lightmap might still have to be set here
-            // itemRenderer.setLightmap();
-            // adjustLight(te);
-
-            itemRenderer.renderItem(stack, TransformType.GROUND);
-        }
+        Minecraft.getInstance().getItemRenderer().renderItem(itemStack, TransformType.FIXED);
     }
 
 
