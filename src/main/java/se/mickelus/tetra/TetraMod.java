@@ -138,7 +138,7 @@ public class TetraMod {
                 new ItemPristineLapis(),
                 new ItemPristineEmerald(),
                 new ItemPristineDiamond(),
-//                new ItemToolbeltModular(),
+                new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
 //                new ItemCellMagmatic(),
                 new ItemBolt(),

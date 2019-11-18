@@ -111,19 +111,19 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
         ScreenManager.registerFactory(ItemToolbeltModular.containerType, ToolbeltGui::new);
     }
 
-    @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (isInGroup(group)) {
-            items.add(createDefaultStack());
-        }
-    }
-
-    private ItemStack createDefaultStack() {
-        ItemStack itemStack = new ItemStack(this);
-        defaultBelt.addModule(itemStack, "belt/rope", null);
-        defaultStrap.addModule(itemStack, "strap1/leather", null);
-        return itemStack;
-    }
+//    @Override
+//    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+//        if (isInGroup(group)) {
+//            items.add(createDefaultStack());
+//        }
+//    }
+//
+//    private ItemStack createDefaultStack() {
+//        ItemStack itemStack = new ItemStack(this);
+//        defaultBelt.addModule(itemStack, "belt/rope", null);
+//        defaultStrap.addModule(itemStack, "strap1/leather", null);
+//        return itemStack;
+//    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
