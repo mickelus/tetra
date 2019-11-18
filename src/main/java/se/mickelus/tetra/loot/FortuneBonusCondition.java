@@ -11,7 +11,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemEffect;
 
@@ -43,11 +43,11 @@ public class FortuneBonusCondition implements ILootCondition {
         }
 
         public void serialize(JsonObject json, FortuneBonusCondition value, JsonSerializationContext context) {
-            DataHandler.instance.gson.toJsonTree(value).getAsJsonObject().entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
+            DataManager.instance.gson.toJsonTree(value).getAsJsonObject().entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
         }
 
         public FortuneBonusCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-            return DataHandler.instance.gson.fromJson(json, FortuneBonusCondition.class);
+            return DataManager.instance.gson.fromJson(json, FortuneBonusCondition.class);
         }
     }
 }

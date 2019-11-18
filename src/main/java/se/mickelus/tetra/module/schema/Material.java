@@ -24,9 +24,8 @@ import java.lang.reflect.Type;
  * item predicate. Count is stored separately and has to be smaller than size of a provided itemstack for it to match.
  * Example json:
  * {
- *     "item": "minecraft:planks",
- *     "count": 2,
- *     "data": 0
+ *     "item": "minecraft:oak_planks",
+ *     "count": 2
  * }
  */
 public class Material {

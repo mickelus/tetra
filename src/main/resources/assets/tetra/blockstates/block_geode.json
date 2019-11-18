@@ -1,18 +1,10 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "model": "block/cube_all",
-        "textures": {
-            "all": "minecraft:blocks/stone"
-        }
-    },
     "variants": {
-        "normal": [{}],
-        "variant": {
-            "0": { "textures": { "all": "minecraft:blocks/stone" } },
-            "1": { "textures": { "all": "minecraft:blocks/stone_granite" } },
-            "2": { "textures": { "all": "minecraft:blocks/stone_diorite" } },
-            "3": { "textures": { "all": "minecraft:blocks/stone_andesite" } }
-        }
+        "": [
+            { "model": "minecraft:block/stone" },
+            { "model": "minecraft:block/stone_mirrored" },
+            { "model": "minecraft:block/stone", "y": 180 },
+            { "model": "minecraft:block/stone_mirrored", "y": 180 }
+        ]
     }
 }

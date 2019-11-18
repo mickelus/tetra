@@ -74,7 +74,7 @@
             },
             {
                 "material": {
-                    "tag": "cobblestone",
+                    "tag": "forge:cobblestone",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -165,7 +165,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/copper",
+                    "tag": "forge:ingots/copper",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -176,7 +176,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/tin",
+                    "tag": "forge:ingots/tin",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -187,7 +187,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/silver",
+                    "tag": "forge:ingots/silver",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -198,7 +198,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/nickel",
+                    "tag": "forge:ingots/nickel",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -209,7 +209,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/lead",
+                    "tag": "forge:ingots/lead",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -220,7 +220,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/bronze",
+                    "tag": "forge:ingots/bronze",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -231,7 +231,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/electrum",
+                    "tag": "forge:ingots/electrum",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -242,7 +242,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/steel",
+                    "tag": "forge:ingots/steel",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -253,7 +253,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/ironwood",
+                    "tag": "forge:ingots/ironwood",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -264,7 +264,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/steeleaf",
+                    "tag": "forge:ingots/steeleaf",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -278,7 +278,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/fiery",
+                    "tag": "forge:ingots/fiery",
                     "count": 8
                 },
                 "requiredCapabilities": {
@@ -292,7 +292,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/knightmetal",
+                    "tag": "forge:ingots/knightmetal",
                     "count": 8
                 },
                 "requiredCapabilities": {

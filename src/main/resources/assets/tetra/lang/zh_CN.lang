@@ -193,7 +193,7 @@ basic_hilt_schema.name=简易剑柄
 basic_hilt_schema.description=用给定的剑柄替换当前的剑柄，或者用原材料重铸它。
 basic_hilt_schema.slot1=剑柄材料
 
-basic_hilt/hilt_stick=劣质剑柄
+basic_hilt/stick=劣质剑柄
 basic_hilt/iron=铁剑柄
 basic_hilt/bone=骨头剑柄
 basic_hilt/blaze_rod=烈焰棒剑柄

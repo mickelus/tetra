@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -38,7 +39,7 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
 
     private void renderItem(WorkbenchTile te) {
         ItemStack stack = te.getTargetItemStack();
-        if (stack != null) {
+        if (stack != null && !stack.isEmpty()) {
             GlStateManager.translated(.5, 0.94, .5);
 
             applyCorrections(stack);

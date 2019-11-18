@@ -1,4 +1,4 @@
-package se.mickelus.tetra.data;
+package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

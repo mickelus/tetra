@@ -35,7 +35,7 @@
             },
             {
                 "material": {
-                    "tag": "gems/amber"
+                    "tag": "forge:gems/amber"
                 },
                 "experienceCost": 2,
                 "moduleKey": "duplex/socket",
@@ -43,8 +43,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "gemDiamond"
+                    "tag": "forge:gems/diamond"
                 },
                 "experienceCost": 2,
                 "moduleKey": "duplex/socket",
@@ -52,8 +51,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "gemEmerald"
+                    "tag": "forge:gems/emerald"
                 },
                 "experienceCost": 2,
                 "moduleKey": "duplex/socket",
@@ -61,8 +59,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "gemLapis"
+                    "tag": "forge:gems/lapis"
                 },
                 "experienceCost": 2,
                 "moduleKey": "duplex/socket",

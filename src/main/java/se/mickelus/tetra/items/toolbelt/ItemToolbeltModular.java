@@ -31,9 +31,8 @@ import se.mickelus.tetra.items.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.MultiSlotModule;
 import se.mickelus.tetra.module.schema.RemoveSchema;
-import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
@@ -73,54 +72,43 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
 
         defaultBelt = new BasicModule(beltKey, beltKey);
 
-        defaultStrap = new ToolbeltModule(slot1Key, "strap", slot1Suffix);
-        new ToolbeltModule(slot2Key, "strap", slot2Suffix);
-        new ToolbeltModule(slot3Key, "strap", slot3Suffix);
+        defaultStrap = new MultiSlotModule(slot1Key, "toolbelt/strap", slot1Suffix, "toolbelt/strap");
+        new MultiSlotModule(slot2Key, "toolbelt/strap", slot2Suffix, "toolbelt/strap");
+        new MultiSlotModule(slot3Key, "toolbelt/strap", slot3Suffix, "toolbelt/strap");
 
-        new ToolbeltModule(slot1Key, "potion_storage", slot1Suffix);
-        new ToolbeltModule(slot2Key, "potion_storage", slot2Suffix);
-        new ToolbeltModule(slot3Key, "potion_storage", slot3Suffix);
+        new MultiSlotModule(slot1Key, "toolbelt/potion_storage", slot1Suffix, "toolbelt/potion_storage");
+        new MultiSlotModule(slot2Key, "toolbelt/potion_storage", slot2Suffix, "toolbelt/potion_storage");
+        new MultiSlotModule(slot3Key, "toolbelt/potion_storage", slot3Suffix, "toolbelt/potion_storage");
 
-        new ToolbeltModule(slot1Key, "storage", slot1Suffix);
-        new ToolbeltModule(slot2Key, "storage", slot2Suffix);
-        new ToolbeltModule(slot3Key, "storage", slot3Suffix);
+        new MultiSlotModule(slot1Key, "toolbelt/storage", slot1Suffix, "toolbelt/storage");
+        new MultiSlotModule(slot2Key, "toolbelt/storage", slot2Suffix, "toolbelt/storage");
+        new MultiSlotModule(slot3Key, "toolbelt/storage", slot3Suffix, "toolbelt/storage");
 
-        new ToolbeltModule(slot1Key, "quiver", slot1Suffix);
-        new ToolbeltModule(slot2Key, "quiver", slot2Suffix);
-        new ToolbeltModule(slot3Key, "quiver", slot3Suffix);
+        new MultiSlotModule(slot1Key, "toolbelt/quiver", slot1Suffix, "toolbelt/quiver");
+        new MultiSlotModule(slot2Key, "toolbelt/quiver", slot2Suffix, "toolbelt/quiver");
+        new MultiSlotModule(slot3Key, "toolbelt/quiver", slot3Suffix, "toolbelt/quiver");
 
-        new ToolbeltModule(slot1Key, "booster", slot1Suffix);
-        new ToolbeltModule(slot2Key, "booster", slot2Suffix);
-        new ToolbeltModule(slot3Key, "booster", slot3Suffix);
-    }
-
-    @Override
-    public void clientPreInit() {
-        super.clientPreInit();
-        MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
+        new MultiSlotModule(slot1Key, "toolbelt/booster", slot1Suffix, "toolbelt/booster");
+        new MultiSlotModule(slot2Key, "toolbelt/booster", slot2Suffix, "toolbelt/booster");
+        new MultiSlotModule(slot3Key, "toolbelt/booster", slot3Suffix, "toolbelt/booster");
     }
 
     @Override
     public void init(PacketHandler packetHandler) {
-        ScreenManager.registerFactory(containerType, ToolbeltGui::new);
-
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
         InventoryToolbelt.initializePredicates();
 
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/belt");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/strap_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/booster");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/potion_storage");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/storage_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver");
-        ItemUpgradeRegistry.instance.registerConfigSchema("toolbelt/quiver_improvements");
-
         RemoveSchema.registerRemoveSchemas(this);
+    }
+
+    @Override
+    public void clientInit() {
+        super.clientInit();
+        MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
+        ScreenManager.registerFactory(ItemToolbeltModular.containerType, ToolbeltGui::new);
     }
 
     @Override

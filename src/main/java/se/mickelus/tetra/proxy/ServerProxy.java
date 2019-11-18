@@ -11,7 +11,7 @@ public class ServerProxy implements IProxy {
     }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
 
     }
 

@@ -14,7 +14,7 @@
                     "hammer": 1
                 },
                 "moduleKey": "sword/basic_hilt",
-                "moduleVariant": "basic_hilt/hilt_stick"
+                "moduleVariant": "basic_hilt/stick"
             },
             {
                 "material": {
@@ -64,7 +64,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/bronze"
+                    "tag": "forge:ingots/bronze"
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -74,7 +74,7 @@
             },
             {
                 "material": {
-                    "tag": "ingots/steel"
+                    "tag": "forge:ingots/steel"
                 },
                 "requiredCapabilities": {
                     "hammer": 3
@@ -144,7 +144,7 @@
             },
             {
                 "material": {
-                    "tag": "planks/maple"
+                    "tag": "forge:planks/maple"
                 },
                 "requiredCapabilities": {
                     "axe": 2
@@ -154,7 +154,7 @@
             },
             {
                 "material": {
-                    "tag": "planks/cherry"
+                    "tag": "forge:planks/cherry"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -164,7 +164,7 @@
             },
             {
                 "material": {
-                    "tag": "planks/greatwood"
+                    "tag": "forge:planks/greatwood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -174,7 +174,7 @@
             },
             {
                 "material": {
-                    "tag": "planks/treated_wood"
+                    "tag": "forge:planks/treated_wood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -184,7 +184,7 @@
             },
             {
                 "material": {
-                    "tag": "rods/treated_wood"
+                    "tag": "forge:rods/treated_wood"
                 },
                 "requiredCapabilities": {
                     "axe": 3
@@ -194,7 +194,7 @@
             },
             {
                 "material": {
-                    "tag": "planks/ironwood"
+                    "tag": "forge:planks/ironwood"
                 },
                 "requiredCapabilities": {
                     "axe": 2

@@ -19,9 +19,9 @@ import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 
-public abstract class ItemModule<T extends ModuleData> implements ICapabilityProvider {
+public abstract class ItemModule implements ICapabilityProvider {
 
-    protected T[] data;
+    protected ModuleData[] data = new ModuleData[0];
 
     protected TweakData[] tweaks = new TweakData[0];
 
@@ -37,7 +37,7 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         this.dataKey = moduleKey + "_material";
     }
 
-    public ItemModule<T> withRenderLayer(Priority layer) {
+    public ItemModule withRenderLayer(Priority layer) {
         this.renderLayer = layer;
         return this;
     }
@@ -74,21 +74,21 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
 
     }
 
-    public T getData(ItemStack itemStack) {
+    public ModuleData getData(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         String dataName = tag.getString(this.dataKey);
 
         return getData(dataName);
     }
 
-    public T getData(String variantKey) {
+    public ModuleData getData(String variantKey) {
         return Arrays.stream(data)
                 .filter(moduleData -> moduleData.key.equals(variantKey))
-                .findAny().orElse(getDefaultData());
+                .findAny().orElseGet(this::getDefaultData);
     }
 
-    public T getDefaultData() {
-        return data[0];
+    public ModuleData getDefaultData() {
+        return data.length > 0 ? data[0] : new ModuleData();
     }
 
     public String getName(ItemStack itemStack) {
@@ -282,6 +282,8 @@ public abstract class ItemModule<T extends ModuleData> implements ICapabilityPro
         return renderLayer;
     }
 
+    // todo 1.14: remove this as all textures are loaded regardless of modules
+    @Deprecated
     public ResourceLocation[] getAllTextures() {
         return Arrays.stream(data)
                 .map(ModuleData::getTextureLocation)

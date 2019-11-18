@@ -6,7 +6,7 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 
 public class ImprovementCraftCriterion extends CriterionInstance {
     private ItemPredicate before = null;
@@ -72,6 +72,6 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     }
 
     private static ImprovementCraftCriterion deserialize(JsonObject json) {
-        return DataHandler.instance.gson.fromJson(json, ImprovementCraftCriterion.class);
+        return DataManager.instance.gson.fromJson(json, ImprovementCraftCriterion.class);
     }
 }

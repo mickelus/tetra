@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T> {
+public abstract class ItemModuleMajor extends ItemModule {
 
     protected ImprovementData[] improvements = new ImprovementData[0];
 
@@ -357,7 +357,7 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     protected ResourceLocation[] getAllImprovementTextures() {
         return Arrays.stream(improvements)
                 .filter(improvement -> improvement.textured)
-                .map(improvement -> "items/" + improvement.key)
+                .map(improvement -> "items/module/" + improvement.key)
                 .map(resourceString -> new ResourceLocation(TetraMod.MOD_ID, resourceString))
                 .toArray(ResourceLocation[]::new);
     }
@@ -370,7 +370,7 @@ public abstract class ItemModuleMajor<T extends ModuleData> extends ItemModule<T
     protected ResourceLocation[] getImprovementTextures(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.textured)
-                .map(improvement -> "items/" + improvement.key)
+                .map(improvement -> "items/module/" + improvement.key)
                 .map(resourceString -> new ResourceLocation(TetraMod.MOD_ID, resourceString))
                 .toArray(ResourceLocation[]::new);
     }

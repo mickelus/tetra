@@ -55,8 +55,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper"
+                    "tag": "forge:ingots/copper"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -66,8 +65,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin"
+                    "tag": "forge:ingots/tin"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -77,8 +75,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver"
+                    "tag": "forge:ingots/silver"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -88,8 +85,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel"
+                    "tag": "forge:ingots/nickel"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -99,8 +95,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead"
+                    "tag": "forge:ingots/lead"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -110,8 +105,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze"
+                    "tag": "forge:ingots/bronze"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -121,8 +115,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum"
+                    "tag": "forge:ingots/electrum"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -132,8 +125,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel"
+                    "tag": "forge:ingots/steel"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -143,19 +135,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "duplex/claw",
-                "moduleVariant": "claw/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood"
+                    "tag": "forge:ingots/ironwood"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -168,8 +148,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf"
+                    "tag": "forge:ingots/steeleaf"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -182,8 +161,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery"
+                    "tag": "forge:ingots/fiery"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -193,8 +171,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal"
+                    "tag": "forge:ingots/knightmetal"
                 },
                 "requiredCapabilities": {
                     "hammer": 2
@@ -204,8 +181,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankWood"
+                    "tag": "minecraft:planks"
                 },
                 "requiredCapabilities": {
                     "axe": 1
@@ -215,8 +191,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "cobblestone"
+                    "tag": "forge:cobblestone"
                 },
                 "requiredCapabilities": {
                     "hammer": 1
@@ -226,8 +201,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stone"
+                    "tag": "forge:stone"
                 },
                 "requiredCapabilities": {
                     "hammer": 1

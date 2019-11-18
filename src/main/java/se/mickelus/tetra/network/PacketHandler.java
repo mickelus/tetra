@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import se.mickelus.tetra.TetraLogger;
 import se.mickelus.tetra.TetraMod;
@@ -74,21 +75,15 @@ public class PacketHandler {
 
         return null;
     }
-    /**
-     * Send this message to the specified player.
-     *
-     * @param message The message to send
-     * @param player  The player to send it to
-     */
+
     public static void sendTo(AbstractPacket message, ServerPlayerEntity player) {
         channel.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    /**
-     * Send this message to the server.
-     *
-     * @param message The message to send
-     */
+    public static void sendToAllPlayers(AbstractPacket message) {
+        channel.send(PacketDistributor.ALL.noArg(), message);
+    }
+
     public static void sendToServer(AbstractPacket message) {
         channel.sendToServer(message);
     }

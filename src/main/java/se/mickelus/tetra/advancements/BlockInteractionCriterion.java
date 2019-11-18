@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 
 public class BlockInteractionCriterion extends CriterionInstance {
     private PropertyMatcher after = null;
@@ -40,6 +40,6 @@ public class BlockInteractionCriterion extends CriterionInstance {
     }
 
     private static BlockInteractionCriterion deserialize(JsonObject json) {
-        return DataHandler.instance.gson.fromJson(json, BlockInteractionCriterion.class);
+        return DataManager.instance.gson.fromJson(json, BlockInteractionCriterion.class);
     }
 }

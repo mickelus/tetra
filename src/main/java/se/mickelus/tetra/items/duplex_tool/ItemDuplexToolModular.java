@@ -16,11 +16,13 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.BasicMajorModule;
+import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.MultiSlotModule;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.RemoveSchema;
@@ -47,28 +49,28 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     private static final String unlocalizedName = "duplex_tool_modular";
 
-    public static DuplexHeadModule basicHammerHeadLeft;
-    public static DuplexHeadModule basicHammerHeadRight;
+    public static MultiSlotModule basicHammerHeadLeft;
+    public static MultiSlotModule basicHammerHeadRight;
 
-    public static DuplexHeadModule basicAxeLeft;
-    public static DuplexHeadModule basicAxeRight;
+    public static MultiSlotModule basicAxeLeft;
+    public static MultiSlotModule basicAxeRight;
 
-    public static DuplexHeadModule basicPickaxeLeft;
-    public static DuplexHeadModule basicPickaxeRight;
+    public static MultiSlotModule basicPickaxeLeft;
+    public static MultiSlotModule basicPickaxeRight;
 
-    public static DuplexHeadModule hoeLeft;
-    public static DuplexHeadModule hoeRight;
+    public static MultiSlotModule hoeLeft;
+    public static MultiSlotModule hoeRight;
 
-    public static DuplexHeadModule adzeLeft;
-    public static DuplexHeadModule adzeRight;
+    public static MultiSlotModule adzeLeft;
+    public static MultiSlotModule adzeRight;
 
-    public static DuplexHeadModule sickleLeft;
-    public static DuplexHeadModule sickleRight;
+    public static MultiSlotModule sickleLeft;
+    public static MultiSlotModule sickleRight;
 
-    public static DuplexHeadModule clawLeft;
-    public static DuplexHeadModule clawRight;
+    public static MultiSlotModule clawLeft;
+    public static MultiSlotModule clawRight;
 
-    public static DuplexHeadModule butt;
+    public static MultiSlotModule butt;
 
     public static BasicMajorModule handle;
 
@@ -103,115 +105,87 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        synergies = DataHandler.instance.getSynergyData("modules/duplex/synergies");
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("duplex"));
 
-        basicHammerHeadLeft = new DuplexHeadModule(headLeftKey, "basic_hammer", leftSuffix,
+
+        basicHammerHeadLeft = new MultiSlotModule(headLeftKey, "duplex/basic_hammer", leftSuffix,
                 "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
-        basicHammerHeadRight = new DuplexHeadModule(headRightKey, "basic_hammer", rightSuffix,
+        basicHammerHeadRight = new MultiSlotModule(headRightKey, "duplex/basic_hammer", rightSuffix,
                 "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_hammer");
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_hammer_hone");
         new BookEnchantSchema(basicHammerHeadLeft);
         new BookEnchantSchema(basicHammerHeadRight);
 
-//        basicAxeLeft = new DuplexHeadModule(headLeftKey, "basic_axe", leftSuffix,
-//                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        basicAxeRight = new DuplexHeadModule(headRightKey, "basic_axe", rightSuffix,
-//                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_axe");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_axe_hone");
-//        new BookEnchantSchema(basicAxeLeft);
-//        new BookEnchantSchema(basicAxeRight);
-//
-//        basicPickaxeLeft = new DuplexHeadModule(headLeftKey, "basic_pickaxe", leftSuffix,
-//                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        basicPickaxeRight = new DuplexHeadModule(headRightKey, "basic_pickaxe", rightSuffix,
-//                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_pickaxe");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_pickaxe_hone");
-//        new BookEnchantSchema(basicPickaxeLeft);
-//        new BookEnchantSchema(basicPickaxeRight);
-//
-//        hoeLeft = new DuplexHeadModule(headLeftKey, "hoe", leftSuffix,
-//                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        hoeRight = new DuplexHeadModule(headRightKey, "hoe", rightSuffix,
-//                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/hoe");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/hoe_hone");
-//        new BookEnchantSchema(hoeLeft);
-//        new BookEnchantSchema(hoeRight);
-//
-//        adzeLeft = new DuplexHeadModule(headLeftKey, "adze", leftSuffix,
-//                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        adzeRight = new DuplexHeadModule(headRightKey, "adze", rightSuffix,
-//                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/adze");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/adze_hone");
-//        new BookEnchantSchema(adzeLeft);
-//        new BookEnchantSchema(adzeRight);
-//
-//        sickleLeft = new DuplexHeadModule(headLeftKey, "sickle", leftSuffix,
-//                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        sickleRight = new DuplexHeadModule(headRightKey, "sickle", rightSuffix,
-//                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/sickle");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/sickle_hone");
-//        new BookEnchantSchema(sickleLeft);
-//        new BookEnchantSchema(sickleRight);
-//
-//        clawLeft = new DuplexHeadModule(headLeftKey, "claw", leftSuffix,
-//                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        clawRight = new DuplexHeadModule(headRightKey, "claw", rightSuffix,
-//                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/claw");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/claw_hone");
-//        new BookEnchantSchema(clawLeft);
-//        new BookEnchantSchema(clawRight);
-//
-//        butt = new DuplexHeadModule(headRightKey, "butt", rightSuffix,
-//                "duplex/improvements/butt", "duplex/improvements/butt_hone", "duplex/improvements/shared_head_hone",
-//                "settling_improvements");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/butt_hone");
-//        new BookEnchantSchema(butt);
+        basicAxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_axe", leftSuffix,
+                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        basicAxeRight = new MultiSlotModule(headRightKey, "duplex/basic_axe", rightSuffix,
+                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(basicAxeLeft);
+        new BookEnchantSchema(basicAxeRight);
+
+        basicPickaxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_pickaxe", leftSuffix,
+                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        basicPickaxeRight = new MultiSlotModule(headRightKey, "duplex/basic_pickaxe", rightSuffix,
+                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(basicPickaxeLeft);
+        new BookEnchantSchema(basicPickaxeRight);
+
+        hoeLeft = new MultiSlotModule(headLeftKey, "duplex/hoe", leftSuffix,
+                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        hoeRight = new MultiSlotModule(headRightKey, "duplex/hoe", rightSuffix,
+                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(hoeLeft);
+        new BookEnchantSchema(hoeRight);
+
+        adzeLeft = new MultiSlotModule(headLeftKey, "duplex/adze", leftSuffix,
+                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        adzeRight = new MultiSlotModule(headRightKey, "duplex/adze", rightSuffix,
+                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(adzeLeft);
+        new BookEnchantSchema(adzeRight);
+
+        sickleLeft = new MultiSlotModule(headLeftKey, "duplex/sickle", leftSuffix,
+                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        sickleRight = new MultiSlotModule(headRightKey, "duplex/sickle", rightSuffix,
+                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(sickleLeft);
+        new BookEnchantSchema(sickleRight);
+
+        clawLeft = new MultiSlotModule(headLeftKey, "duplex/claw", leftSuffix,
+                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        clawRight = new MultiSlotModule(headRightKey, "duplex/claw", rightSuffix,
+                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(clawLeft);
+        new BookEnchantSchema(clawRight);
+
+        butt = new MultiSlotModule(headRightKey, "duplex/butt", rightSuffix,
+                "duplex/improvements/butt", "duplex/improvements/butt_hone", "duplex/improvements/shared_head_hone",
+                "settling_improvements");
+        new BookEnchantSchema(butt);
 
         handle = new BasicMajorModule(handleKey, "duplex/basic_handle",
                 "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone",
                 "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle");
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle_hone");
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/basic_handle_improvements");
         new BookEnchantSchema(handle);
 
-//        new BasicModule(bindingKey, "duplex/binding", "duplex/tweaks/binding");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/binding");
-//
-//        new BasicModule(bindingKey, "duplex/socket");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/binding");
+        new BasicModule(bindingKey, "duplex/binding", "duplex/tweaks/binding");
 
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/shared_head_hone");
+        new BasicModule(bindingKey, "duplex/socket");
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
-
-//        ItemUpgradeRegistry.instance.registerReplacementDefinition("axe");
-//        ItemUpgradeRegistry.instance.registerReplacementDefinition("pickaxe");
-//        ItemUpgradeRegistry.instance.registerReplacementDefinition("hoe");
-
-        ItemUpgradeRegistry.instance.registerConfigSchema("duplex/socket");
 
         setupHammerStack(creativeWoodHammer, "log", "stick");
         setupHammerStack(creativeObsidianHammer, "obsidian", "iron");

@@ -1,6 +1,10 @@
 package se.mickelus.tetra.module.schema;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class InvalidSchemaException extends Exception {
+    private static Logger logger = LogManager.getLogger();
 
     private String key;
     private String[] faultyModules;
@@ -11,9 +15,9 @@ public class InvalidSchemaException extends Exception {
     }
 
     public void printMessage() {
-        System.err.println(String.format("Skipping schema '%s' due to faulty module keys:", key));
+        logger.warn("Skipping schema '{}' due to faulty module keys:", key);
         for (String faultyKey : faultyModules) {
-            System.err.println("\t" + faultyKey);
+            logger.warn("\t" + faultyKey);
         }
     }
 }

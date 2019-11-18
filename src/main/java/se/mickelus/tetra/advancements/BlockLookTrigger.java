@@ -12,7 +12,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +58,7 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
     }
 
     public static Instance deserialize(JsonObject json) {
-        return DataHandler.instance.gson.fromJson(json, Instance.class);
+        return DataManager.instance.gson.fromJson(json, Instance.class);
     }
 
     public void trigger(ServerPlayerEntity player, BlockState state) {

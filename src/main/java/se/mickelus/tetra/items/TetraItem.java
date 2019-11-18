@@ -10,7 +10,7 @@ public class TetraItem extends Item implements ITetraItem {
     }
 
     @Override
-    public void clientPreInit() {
+    public void clientInit() {
     }
 
     @Override

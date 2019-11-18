@@ -1,4 +1,4 @@
-package se.mickelus.tetra.data;
+package se.mickelus.tetra.data.deserializer;
 
 import java.util.Map;
 import java.lang.reflect.Type;

@@ -28,7 +28,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:wool",
+                    "tag": "minecraft:wool",
                     "count": 2
                 },
                 "moduleKey": "toolbelt/quiver",

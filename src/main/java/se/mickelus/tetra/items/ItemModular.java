@@ -68,7 +68,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public void clientPreInit() {
+    public void clientInit() {
         ModularModelLoader.registerItem(this);
     }
 
@@ -189,7 +189,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
-
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getTextures(itemStack)))

@@ -5,14 +5,20 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.data.DataHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.schema.*;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ItemUpgradeRegistry {
+
+    private static final Logger logger = LogManager.getLogger();
 
     public static ItemUpgradeRegistry instance;
 
@@ -27,10 +33,40 @@ public class ItemUpgradeRegistry {
     public ItemUpgradeRegistry() {
         instance = this;
         replacementFunctions = new ArrayList<> ();
-        replacementDefinitions = new ArrayList<> ();
         schemaMap = new HashMap<>();
         repairMap = new HashMap<>();
         moduleMap = new HashMap<>();
+
+        replacementDefinitions = Collections.emptyList();
+        DataManager.replacementData.onReload(() -> {
+            replacementDefinitions = DataManager.replacementData.getData().values().stream()
+                    .flatMap(Arrays::stream)
+                    .filter(replacementDefinition -> replacementDefinition.predicate != null)
+                    .collect(Collectors.toList());
+        });
+
+        DataManager.schemaData.onReload(() -> {
+            DataManager.schemaData.getData().values().stream()
+                    .flatMap(Arrays::stream)
+                    .forEach(definition -> {
+                        if (definition.slots.length == definition.keySuffixes.length) {
+                            for (int i = 0; i < definition.slots.length; i++) {
+                                try {
+                                    registerConfigSchema(definition,
+                                            new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i]));
+                                } catch (InvalidSchemaException e) {
+                                    e.printMessage();
+                                }
+                            }
+                        } else {
+                            try {
+                                registerConfigSchema(definition, new ConfigSchema(definition));
+                            } catch (InvalidSchemaException e) {
+                                e.printMessage();
+                            }
+                        }
+                    });
+        });
     }
 
     public UpgradeSchema[] getAvailableSchemas(PlayerEntity player, ItemStack itemStack) {
@@ -58,27 +94,7 @@ public class ItemUpgradeRegistry {
         schemaMap.put(upgradeSchema.getKey(), upgradeSchema);
     }
 
-    public void registerConfigSchema(String path) {
-        for (SchemaDefinition definition : DataHandler.instance.getSchemaDefinitions(path)) {
-            if (definition.slots.length == definition.keySuffixes.length) {
-                for (int i = 0; i < definition.slots.length; i++) {
-                    try {
-                        registerConfigSchema(definition, new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i]));
-                    } catch (InvalidSchemaException e) {
-                        e.printMessage();
-                    }
-                }
-            } else {
-                try {
-                    registerConfigSchema(definition, new ConfigSchema(definition));
-                } catch (InvalidSchemaException e) {
-                    e.printMessage();
-                }
-            }
-        }
-    }
-
-    private void registerConfigSchema(SchemaDefinition definition, ConfigSchema schema) throws InvalidSchemaException {
+    private void registerConfigSchema(SchemaDefinition definition, ConfigSchema schema) {
         registerSchema(schema);
 
         if (definition.repair) {
@@ -96,10 +112,6 @@ public class ItemUpgradeRegistry {
 
     public RepairDefinition getRepairDefinition(String moduleVariant) {
         return repairMap.get(moduleVariant);
-    }
-
-    public void registerReplacementDefinition(String path) {
-        Collections.addAll(replacementDefinitions, DataHandler.instance.getReplacementDefinition(path));
     }
 
     public void registerReplacementFunction(Function<ItemStack, ItemStack> replacementFunction) {

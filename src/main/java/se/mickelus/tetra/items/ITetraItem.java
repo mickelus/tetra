@@ -1,8 +1,11 @@
 package se.mickelus.tetra.items;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.network.PacketHandler;
 
 public interface ITetraItem {
-    public void clientPreInit();
+    @OnlyIn(Dist.CLIENT)
+    public default void clientInit() {}
     public void init(PacketHandler packetHandler);
 }

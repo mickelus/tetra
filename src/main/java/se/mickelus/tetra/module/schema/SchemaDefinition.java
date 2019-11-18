@@ -14,9 +14,8 @@ import se.mickelus.tetra.module.data.GlyphData;
  *     "outcomes": [
  *         {
  *             "material": {
- *                 "item": "minecraft:planks",
- *                 "count": 2,
- *                 "data": 4
+ *                 "item": "minecraft:oak_planks",
+ *                 "count": 2
  *             },
  *             "requiredCapabilities": {
  *                 "axe": 1,

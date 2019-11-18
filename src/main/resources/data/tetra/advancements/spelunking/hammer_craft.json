@@ -1,8 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:workbench",
-            "data": 1
+            "item": "tetra:workbench"
         },
         "frame": "goal",
         "title": "Magmatic Press Channel",

@@ -9,10 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.SlotType;
@@ -52,14 +53,17 @@ public class InventoryToolbelt implements IInventory {
     }
 
     public static void initializePredicates() {
-        potionPredicate = getPredicate("potion");
-        quickPredicate = getPredicate("quick");
-        quiverPredicate = getPredicate("quiver");
-        storagePredicate = getPredicate("storage");
+        DataManager.predicateData.onReload(() -> {
+            potionPredicate = getPredicate("potion");
+            quickPredicate = getPredicate("quick");
+            quiverPredicate = getPredicate("quiver");
+            storagePredicate = getPredicate("storage");
+        });
     }
 
     private static ItemPredicate getPredicate(String inventory) {
-        ItemPredicate[] predicates = Arrays.stream(DataHandler.instance.getData(String.format("toolbelt/%s_predicates", inventory), ItemPredicate[].class))
+        ItemPredicate[] predicates = Arrays.stream(DataManager.predicateData.getData(
+                new ResourceLocation(TetraMod.MOD_ID, String.format("toolbelt/%s", inventory))))
                 .filter(Objects::nonNull)
                 .toArray(ItemPredicate[]::new);
 

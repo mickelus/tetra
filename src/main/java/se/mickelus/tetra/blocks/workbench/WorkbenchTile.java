@@ -57,10 +57,9 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private LazyOptional<ItemStackHandler> handler = LazyOptional.of(this::createHandler);
 
-    private static WorkbenchAction[] actions = new WorkbenchAction[] {
-            new RepairAction()
-    };
+    private static WorkbenchAction[] defaultActions = new WorkbenchAction[] { new RepairAction() };
 
+    private static WorkbenchAction[] actions = new WorkbenchAction[0];
 
     public WorkbenchTile() {
         super(type);
@@ -102,8 +101,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         };
     }
 
-    public static void initConfigActions(WorkbenchAction[] actions) {
-        WorkbenchTile.actions = ArrayUtils.addAll(WorkbenchTile.actions, actions);
+    public static void setupConfigActions(WorkbenchAction[] actions) {
+        WorkbenchTile.actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, actions);
     }
 
     public WorkbenchAction[] getAvailableActions(PlayerEntity player) {

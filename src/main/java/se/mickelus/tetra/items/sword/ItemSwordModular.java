@@ -57,65 +57,45 @@ public class ItemSwordModular extends ItemModularHandheld {
         basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
                 "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/basic_blade",
                 "settling_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_blade_improvements");
         new BookEnchantSchema(basicBladeModule);
 
         shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
                 "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/short_blade",
                 "settling_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/short_blade_improvements");
         new BookEnchantSchema(shortBladeModule);
 
         heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
                 "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone", "sword/improvements/heavy_blade", "settling_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/heavy_blade");
         new BookEnchantSchema(heavyBladeModule);
 
         macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/improvements/shared_blade", "sword/improvements/shared_blade_hone",
                 "settling_improvements");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/machete");
         new BookEnchantSchema(macheteModule);
 
         hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/improvements/shared_hilt", "sword/improvements/shared_hilt_hone",
                 "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/basic_hilt_improvements");
         new BookEnchantSchema(hiltModule);
 
         new BasicModule(guardKey, "sword/makeshift_guard");
 
-//        new BasicModule(guardKey, "sword/wide_guard");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/wide_guard");
+        new BasicModule(guardKey, "sword/wide_guard");
 
-//        new BasicModule(guardKey, "sword/forefinger_ring");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/forefinger_ring");
+        new BasicModule(guardKey, "sword/forefinger_ring");
 
-//        new BasicModule(guardKey, "sword/binding", "sword/tweaks/binding");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/binding");
+        new BasicModule(guardKey, "sword/binding", "sword/tweaks/binding");
 
-//        new BasicModule(guardKey, "sword/socket");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/socket");
+        new BasicModule(guardKey, "sword/socket");
 
         new BasicModule(pommelKey, "sword/decorative_pommel");
-//        new BasicModule(pommelKey, "sword/counterweight");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/counterweight");
+        new BasicModule(pommelKey, "sword/counterweight");
 
-//        new BasicModule(pommelKey, "sword/grip_loop");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/grip_loop");
-//
-//        new BasicModule(fullerKey, "sword/reinforced_fuller");
-//        ItemUpgradeRegistry.instance.registerConfigSchema("sword/reinforced_fuller");
+        new BasicModule(pommelKey, "sword/grip_loop");
 
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_blade_hone");
-        ItemUpgradeRegistry.instance.registerConfigSchema("sword/shared_hilt_hone");
+        new BasicModule(fullerKey, "sword/reinforced_fuller");
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
-
-        ItemUpgradeRegistry.instance.registerReplacementDefinition("sword");
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

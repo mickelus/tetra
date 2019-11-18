@@ -7,7 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 
 public class BlockUseCriterion extends CriterionInstance {
     private PropertyMatcher before = null;
@@ -42,6 +42,6 @@ public class BlockUseCriterion extends CriterionInstance {
     }
 
     private static BlockUseCriterion deserialize(JsonObject json) {
-        return DataHandler.instance.gson.fromJson(json, BlockUseCriterion.class);
+        return DataManager.instance.gson.fromJson(json, BlockUseCriterion.class);
     }
 }

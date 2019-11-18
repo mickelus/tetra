@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "items/emerald",
+    "layer0": "item/emerald",
     "layer1": "tetra:items/pristine"
   }
 }

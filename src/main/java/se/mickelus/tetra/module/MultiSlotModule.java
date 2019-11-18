@@ -3,13 +3,14 @@ package se.mickelus.tetra.module;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
+public class MultiSlotModule extends ItemModuleMajor {
 
     protected String slotSuffix;
 
@@ -24,18 +25,27 @@ public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
 
         this.dataKey = moduleKey + slotSuffix + "_material";
 
+        // this uses the unsuffixed module key, to use the same data for both sides
+        DataManager.moduleData.onReload(() -> data = DataManager.moduleData.getData(new ResourceLocation(TetraMod.MOD_ID, moduleKey)));
+
         if (improvementKeys.length > 0) {
-            improvements = Arrays.stream(improvementKeys)
-                    .map(key -> DataHandler.instance.getModuleData(key, ImprovementData[].class))
-                    .flatMap(Arrays::stream)
-                    .toArray(ImprovementData[]::new);
+            DataManager.improvementData.onReload(() -> {
+                improvements = Arrays.stream(improvementKeys)
+                        .map(key -> DataManager.improvementData.getData(new ResourceLocation(TetraMod.MOD_ID, key)))
+                        .filter(Objects::nonNull)
+                        .flatMap(Arrays::stream)
+                        .toArray(ImprovementData[]::new);
+
+                settleMax = Arrays.stream(improvements)
+                        .filter(data -> data.key.equals(settleImprovement))
+                        .mapToInt(ImprovementData::getLevel)
+                        .max()
+                        .orElse(0);
+            });
         }
 
-        settleMax = Arrays.stream(improvements)
-                .filter(data -> data.key.equals(settleImprovement))
-                .mapToInt(ImprovementData::getLevel)
-                .max()
-                .orElse(0);
+        // this uses the suffixed module key, to avoid passing the slot key to every method that makes use of data
+        ItemUpgradeRegistry.instance.registerModule(this.moduleKey, this);
     }
 
     @Override
@@ -46,13 +56,13 @@ public class MultiSlotModule<T extends ModuleData> extends ItemModuleMajor<T> {
     public ResourceLocation[] getAllTextures() {
         return Arrays.stream(data)
                 .map(moduleData -> moduleData.key)
-                .map(key -> "items/" + key + slotSuffix)
+                .map(key -> "items/module/" + key + slotSuffix)
                 .map(key -> new ResourceLocation(TetraMod.MOD_ID, key))
                 .toArray(ResourceLocation[]::new);
     }
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
-        String string = "items/" + getData(itemStack).key + slotSuffix;
+        String string = "items/module/" + getData(itemStack).key + slotSuffix;
         return new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, string)};
     }
 }

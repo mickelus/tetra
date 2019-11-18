@@ -13,7 +13,7 @@
         "displayType": "minor",
         "outcomes": [{
             "material": {
-                "item": "minecraft:wool"
+                "tag": "minecraft:wool"
             },
             "moduleKey": "toolbelt/belt",
             "moduleVariant": "belt/sash"

@@ -1,10 +1,5 @@
 package se.mickelus.tetra;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
@@ -34,36 +29,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import se.mickelus.tetra.advancements.BlockInteractionCriterion;
-import se.mickelus.tetra.advancements.BlockLookTrigger;
-import se.mickelus.tetra.advancements.BlockUseCriterion;
-import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
-import se.mickelus.tetra.advancements.ModuleCraftCriterion;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.geode.BlockGeode;
-import se.mickelus.tetra.blocks.geode.ItemGeode;
-import se.mickelus.tetra.blocks.geode.ItemPristineDiamond;
-import se.mickelus.tetra.blocks.geode.ItemPristineEmerald;
-import se.mickelus.tetra.blocks.geode.ItemPristineLapis;
+import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.forged.ItemBeam;
-import se.mickelus.tetra.items.forged.ItemBolt;
-import se.mickelus.tetra.items.forged.ItemMesh;
-import se.mickelus.tetra.items.forged.ItemMetalScrap;
-import se.mickelus.tetra.items.forged.ItemQuickLatch;
-import se.mickelus.tetra.items.forged.ItemVentPlate;
+import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
+import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
@@ -77,10 +63,14 @@ import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
 public class TetraMod {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     public static final String MOD_ID = "tetra";
 
@@ -93,6 +83,12 @@ public class TetraMod {
 
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
+        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
+        MinecraftForge.EVENT_BUS.register(new DataManager());
+        MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
+        MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
 
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
 
@@ -111,11 +107,6 @@ public class TetraMod {
         CriteriaTriggers.register(BlockInteractionCriterion.trigger);
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
-
-        MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
-        // MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
-        MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
 
         blocks = new Block[] {
                 new WorkbenchBlock(),
@@ -169,10 +160,14 @@ public class TetraMod {
     }
 
     public void setup(FMLCommonSetupEvent event) {
-        new DataHandler();
-        proxy.init(event);
+        proxy.init(event,
+                Arrays.stream(items)
+                        .filter(item -> item instanceof ITetraItem)
+                        .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
+                Arrays.stream(blocks)
+                        .filter(block -> block instanceof ITetraBlock)
+                        .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
 
-//        ScreenManager.registerFactory(BlockForgedContainer.containerType, ForgedContainerScreen::new);
 
         PacketHandler packetHandler = new PacketHandler();
 
@@ -187,6 +182,7 @@ public class TetraMod {
 
         packetHandler.registerPacket(HonePacket.class, HonePacket::new);
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
+        packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
 
         proxy.postInit();
     }
@@ -195,7 +191,7 @@ public class TetraMod {
     public static void lootTableLoad(final LootTableLoadEvent event) {
         if (TetraMod.MOD_ID.equals(event.getName().getNamespace())) {
             LootTable lootTable = event.getTable();
-            LootPool[] extendedPools = DataHandler.instance.getExtendedLootPools(event.getName());
+            LootPool[] extendedPools = DataManager.instance.getExtendedLootPools(event.getName());
             Optional.ofNullable(extendedPools)
                     .map(Arrays::stream)
                     .orElseGet(Stream::empty)
@@ -204,7 +200,7 @@ public class TetraMod {
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(FMLServerAboutToStartEvent event) {
         // TGenCommand.register(event.getCommandDispatcher());
 
         // todo 1.14: figure out feature generation again...
@@ -214,16 +210,19 @@ public class TetraMod {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void loadModels(final ModelBakeEvent event) {
-
         ModularModelLoader.loadModels(event);
     }
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
-        ItemUpgradeRegistry.instance.getAllModules().stream()
-                .flatMap(itemModule -> Arrays.stream(itemModule.getAllTextures()))
-                .forEach(event::addSprite);
+        if ("textures".equals(event.getMap().getBasePath())) {
+            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
+                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
+                    // 9 is the length of "textures/" & 4 is the length of ".png"
+                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
+                    .forEach(event::addSprite);
+        }
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

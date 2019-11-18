@@ -59,8 +59,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotCopper",
+                    "tag": "forge:ingots/copper",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -71,8 +70,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotTin",
+                    "tag": "forge:ingots/tin",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -83,8 +81,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSilver",
+                    "tag": "forge:ingots/silver",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -95,8 +92,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotNickel",
+                    "tag": "forge:ingots/nickel",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -107,8 +103,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotLead",
+                    "tag": "forge:ingots/lead",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -119,8 +114,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotBronze",
+                    "tag": "forge:ingots/bronze",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -131,8 +125,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotElectrum",
+                    "tag": "forge:ingots/electrum",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -143,8 +136,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteel",
+                    "tag": "forge:ingots/steel",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -155,20 +147,7 @@
             },
             {
                 "material": {
-                    "item": "thaumcraft:ingot",
-                    "data": 0,
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "duplex/sickle",
-                "moduleVariant": "sickle/thaumium"
-            },
-            {
-                "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotIronwood",
+                    "tag": "forge:ingots/ironwood",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -182,8 +161,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotSteeleaf",
+                    "tag": "forge:ingots/steeleaf",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -197,8 +175,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotFiery",
+                    "tag": "forge:ingots/fiery",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -209,8 +186,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "ingotKnightmetal",
+                    "tag": "forge:ingots/knightmetal",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -221,8 +197,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "plankWood",
+                    "tag": "minecraft:planks",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -233,8 +208,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "cobblestone",
+                    "tag": "forge:cobblestone",
                     "count": 2
                 },
                 "requiredCapabilities": {
@@ -245,8 +219,7 @@
             },
             {
                 "material": {
-                    "type": "forge:ore_dict",
-                    "ore": "stone",
+                    "tag": "forge:stone",
                     "count": 2
                 },
                 "requiredCapabilities": {

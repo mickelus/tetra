@@ -21,25 +21,33 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
+import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataHandler;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     public static final String unlocalizedName = "workbench";
@@ -59,9 +67,12 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
         setRegistryName(unlocalizedName);
 
         hasItem = true;
+
+        DataManager.actionData.onReload(() -> {
+            WorkbenchTile.setupConfigActions(DataManager.actionData.getData().values().stream()
+                    .flatMap(Arrays::stream).toArray(ConfigAction[]::new));
+        });
     }
-
-
 
     public static ActionResultType upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
@@ -169,12 +180,17 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
         super.init(packetHandler);
 
         WorkbenchTile.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
-
-        ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
         PacketHandler.instance.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
         PacketHandler.instance.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
         PacketHandler.instance.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void clientInit() {
+        ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
+        ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
     }
 
     @Nullable

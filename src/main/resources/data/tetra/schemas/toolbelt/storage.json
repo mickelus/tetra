@@ -27,7 +27,7 @@
             },
             {
                 "material": {
-                    "item": "minecraft:wool"
+                    "tag": "minecraft:wool"
                 },
                 "moduleKey": "toolbelt/storage",
                 "moduleVariant": "storage/wool"

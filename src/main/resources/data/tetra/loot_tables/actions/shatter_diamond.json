@@ -1,12 +1,13 @@
 {
+    "type": "minecraft:gift",
     "pools": [
         {
-            "name": "shatter_emerald",
+            "name": "shatter_diamond",
             "rolls": 1,
             "entries": [
                 {
                     "type": "item",
-                    "name": "minecraft:emerald",
+                    "name": "minecraft:diamond",
                     "functions": [
                         {
                             "function": "tetra:fortune_enchant",

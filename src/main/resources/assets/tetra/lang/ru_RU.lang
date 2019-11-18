@@ -76,7 +76,7 @@ hilt_schema.name=Простая рукоять
 hilt_schema.description=Заменяет текущую рукоять на новую, изготовленную из нового материала.
 hilt_schema.slot1=Материал рукояти
 
-basic_hilt/hilt_stick=Деревянная рукоять
+basic_hilt/stick=Деревянная рукоять
 basic_hilt/oak=Прочная деревянная рукоять
 basic_hilt/iron=Железная рукоять
 basic_hilt/bone=Костяная рукоять

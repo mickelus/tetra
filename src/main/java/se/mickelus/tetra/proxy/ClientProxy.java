@@ -1,15 +1,10 @@
 package se.mickelus.tetra.proxy;
 
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.TetraLogger;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.ITetraItem;
 
 import java.util.Arrays;
@@ -18,13 +13,12 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void preInit(ITetraItem[] items, ITetraBlock[] blocks) {
-        Arrays.stream(items).forEach(ITetraItem::clientPreInit);
-        Arrays.stream(blocks).forEach(ITetraBlock::clientPreInit);
     }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
+    public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
+        Arrays.stream(items).forEach(ITetraItem::clientInit);
+        Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
         // todo 1.14: readd when terrain gen is back
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHammerHead.class, new TileEntityRendererAnimation<>());
@@ -41,11 +35,6 @@ public class ClientProxy implements IProxy {
 //        MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
 //        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
 //        MinecraftForge.EVENT_BUS.register(new CapabililtyInteractiveOverlay());
-    }
-
-    @SubscribeEvent
-    public void loadModels(ModelBakeEvent event) {
-        TetraLogger.log(event);
     }
 
     @SubscribeEvent

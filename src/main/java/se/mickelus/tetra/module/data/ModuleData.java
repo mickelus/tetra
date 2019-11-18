@@ -147,6 +147,6 @@ public class ModuleData {
     }
 
     public ResourceLocation getTextureLocation() {
-        return new ResourceLocation(TetraMod.MOD_ID, "items/" + key);
+        return new ResourceLocation(TetraMod.MOD_ID, "items/module/" + key);
     }
 }

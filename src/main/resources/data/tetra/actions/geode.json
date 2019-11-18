@@ -1,0 +1,42 @@
+[
+    {
+        "key": "break_geode_action",
+        "requirement": {
+            "item": "tetra:geode"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:actions/geode"
+    },
+    {
+        "key": "shatter_diamond_action",
+        "requirement": {
+            "item": "tetra:pristine_diamond"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:actions/shatter_diamond"
+    },
+    {
+        "key": "shatter_emerald_action",
+        "requirement": {
+            "item": "tetra:pristine_emerald"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:actions/shatter_emerald"
+    },
+    {
+        "key": "shatter_lapis_action",
+        "requirement": {
+            "item": "tetra:pristine_lapis"
+        },
+        "requiredCapabilities": {
+            "hammer": 2
+        },
+        "lootTable": "tetra:actions/shatter_lapis"
+    }
+]
