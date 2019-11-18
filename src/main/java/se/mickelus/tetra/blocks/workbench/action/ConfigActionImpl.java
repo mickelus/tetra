@@ -43,10 +43,13 @@ public class ConfigActionImpl extends ConfigAction {
         if (!player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+
+            // todo 1.14: set up new loot param set to fit action needs
             LootContext context = new LootContext.Builder(world)
                     .withLuck(player.getLuck())
                     .withParameter(LootParameters.THIS_ENTITY, player)
-                    .build(LootParameterSets.GENERIC);
+                    .withParameter(LootParameters.POSITION, player.getPosition())
+                    .build(LootParameterSets.GIFT);
 
             table.generate(context).forEach(itemStack -> {
                 if (!player.inventory.addItemStackToInventory(itemStack)) {
