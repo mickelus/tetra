@@ -2,9 +2,7 @@ package se.mickelus.tetra.items;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import se.mickelus.tetra.blocks.geode.ItemGeode;
-import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
+import se.mickelus.tetra.blocks.geode.GeodeItem;
 
 public class TetraItemGroup extends ItemGroup {
 
@@ -18,6 +16,6 @@ public class TetraItemGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(ItemGeode.instance);
+        return new ItemStack(GeodeItem.instance);
     }
 }

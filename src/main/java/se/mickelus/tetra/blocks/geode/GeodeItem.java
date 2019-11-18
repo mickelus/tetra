@@ -15,13 +15,13 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemGeode extends TetraItem {
+public class GeodeItem extends TetraItem {
     private static final String unlocalizedName = "geode";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemGeode instance;
+    public static GeodeItem instance;
 
-    public ItemGeode() {
+    public GeodeItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }

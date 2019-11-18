@@ -9,19 +9,19 @@ import se.mickelus.tetra.items.TetraItemGroup;
 
 import java.util.Set;
 
-public class ItemPristineLapis extends TetraItem {
-    private static final String unlocalizedName = "pristine_lapis";
+public class PristineDiamondItem extends TetraItem {
+    private static final String unlocalizedName = "pristine_diamond";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemPristineLapis instance;
+    public static PristineDiamondItem instance;
 
-    public ItemPristineLapis() {
+    public PristineDiamondItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
 
     @Override
     public Set<ResourceLocation> getTags() {
-        return ImmutableSet.of(new ResourceLocation("gems/lapis"));
+        return ImmutableSet.of(new ResourceLocation("gems/diamond"));
     }
 }
