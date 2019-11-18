@@ -3,6 +3,8 @@ package se.mickelus.tetra.blocks.geode;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
@@ -26,6 +28,6 @@ public class ItemGeode extends TetraItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.geode.tooltip"));
+        tooltip.add(new TranslationTextComponent("item.tetra.geode.tooltip").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
     }
 }

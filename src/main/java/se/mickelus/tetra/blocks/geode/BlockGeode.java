@@ -25,7 +25,8 @@ public class BlockGeode extends TetraBlock {
         super(Properties.create(Material.ROCK)
         .sound(SoundType.STONE)
         .harvestTool(ToolType.PICKAXE)
-        .harvestLevel(0));
+        .harvestLevel(0)
+        .hardnessAndResistance(1.5F, 6.0F));
 
         setRegistryName(unlocalizedName);
     }

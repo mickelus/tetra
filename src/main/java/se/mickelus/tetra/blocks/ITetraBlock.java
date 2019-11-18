@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.IForgeRegistry;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -18,7 +20,8 @@ import java.util.Collections;
 
 public interface ITetraBlock {
 
-    default void clientPreInit() { }
+    @OnlyIn(Dist.CLIENT)
+    default void clientInit() { }
 
     default void init(PacketHandler packetHandler) {}
 
