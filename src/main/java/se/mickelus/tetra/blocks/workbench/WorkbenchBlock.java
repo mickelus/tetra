@@ -111,19 +111,21 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
         return true;
     }
 
-//    @Override
-//    public Item asItem() {
-//        if (ConfigHandler.workbenchDropTable) {
-//            return Blocks.CRAFTING_TABLE.asItem();
-//        } else {
-//            return super.asItem();
-//        }
-//    }
-
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                .ifPresent(te -> InventoryHelper.dropInventoryItems(world, pos, (IInventory) te));
+                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                .orElse(LazyOptional.empty())
+                .ifPresent(cap -> {
+                    for (int i = 0; i < cap.getSlots(); i++) {
+                        ItemStack itemStack = cap.getStackInSlot(i);
+                        if (!itemStack.isEmpty()) {
+                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
+                        }
+                    }
+                });
+
+        TileEntityOptional.from(world, pos, WorkbenchTile.class).ifPresent(TileEntity::remove);
     }
 
     @Override
@@ -179,7 +181,6 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
-        WorkbenchTile.initConfigActions(DataHandler.instance.getData("actions", ConfigActionImpl[].class));
         PacketHandler.instance.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
         PacketHandler.instance.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
         PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
