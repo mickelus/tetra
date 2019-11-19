@@ -21,8 +21,10 @@ public class GuiIntegrityBar extends GuiElement {
     private static final int segmentOffset = 6;
 
     private static final int gainColor = 0x22ffffff;
+    private static final float gainOpacity = 0.15f;
     private static final int costColor = 0xffffffff;
     private static final int overuseColor = 0x88ff5555;
+    private static final float overuseOpacity = 0.55f;
 
     private int integrityGain;
     private int integrityCost;
@@ -87,12 +89,16 @@ public class GuiIntegrityBar extends GuiElement {
         super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         for (int i = 0; i < -integrityCost; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, i >= integrityGain ? overuseColor : costColor,
-                    opacity * getOpacity());
+            if (i < integrityGain) {
+                drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,  costColor, opacity * getOpacity());
+            } else {
+                drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, overuseColor,
+                        opacity * getOpacity() * overuseOpacity);
+            }
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor, opacity * getOpacity());
+            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor, opacity * getOpacity() * gainOpacity);
         }
     }
 
