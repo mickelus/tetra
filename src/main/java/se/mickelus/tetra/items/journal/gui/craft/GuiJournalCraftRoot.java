@@ -46,7 +46,7 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
     }
 
     @Override
-    public void onKeyTyped(char typedChar) {
+    public void charTyped(char typedChar) {
         switch (typedChar) {
             case backBinding:
                 if (depth > 0) {

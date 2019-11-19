@@ -13,7 +13,6 @@ import se.mickelus.tetra.items.journal.gui.blueprint.GuiJournalBlueprintRoot;
 import se.mickelus.tetra.items.journal.gui.craft.GuiJournalCraftRoot;
 import se.mickelus.tetra.items.journal.gui.system.GuiJournalSystemRoot;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,12 +106,9 @@ public class GuiJournal extends Screen {
         return super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    // todo 1.14: or should it be keyReleased? Used to be "keyTyped" before 1.14
     @Override
-    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
-        // todo 1.14: used to pass a char here, none of those around so we probably need to do a conversion
-        currentPage.onKeyTyped((char) p_keyPressed_1_);
-
-        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
+    public boolean charTyped(char typecChar, int keyCode) {
+        currentPage.charTyped(typecChar);
+        return false;
     }
 }

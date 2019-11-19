@@ -26,7 +26,7 @@ public class GuiJournalRootBase extends GuiElement {
                 .start();
     }
 
-    public void onKeyTyped(char typedChar) {
+    public void charTyped(char typedChar) {
 
     }
 
