@@ -109,73 +109,73 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
 
         basicHammerHeadLeft = new MultiSlotModule(headLeftKey, "duplex/basic_hammer", leftSuffix,
-                "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements");
         basicHammerHeadRight = new MultiSlotModule(headRightKey, "duplex/basic_hammer", rightSuffix,
-                "duplex/improvements/basic_hammer", "duplex/improvements/shared_head_hone", "settling_improvements");
+                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements");
         new BookEnchantSchema(basicHammerHeadLeft);
         new BookEnchantSchema(basicHammerHeadRight);
 
         basicAxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_axe", leftSuffix,
-                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/basic_axe", "duplex/basic_axe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         basicAxeRight = new MultiSlotModule(headRightKey, "duplex/basic_axe", rightSuffix,
-                "duplex/improvements/basic_axe", "duplex/improvements/basic_axe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/basic_axe", "duplex/basic_axe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(basicAxeLeft);
         new BookEnchantSchema(basicAxeRight);
 
         basicPickaxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_pickaxe", leftSuffix,
-                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/basic_pickaxe", "duplex/basic_pickaxe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         basicPickaxeRight = new MultiSlotModule(headRightKey, "duplex/basic_pickaxe", rightSuffix,
-                "duplex/improvements/basic_pickaxe", "duplex/improvements/basic_pickaxe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/basic_pickaxe", "duplex/basic_pickaxe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
         hoeLeft = new MultiSlotModule(headLeftKey, "duplex/hoe", leftSuffix,
-                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/hoe", "duplex/hoe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         hoeRight = new MultiSlotModule(headRightKey, "duplex/hoe", rightSuffix,
-                "duplex/improvements/hoe", "duplex/improvements/hoe_hone", "duplex/improvements/shared_head_hone",
+                "duplex/hoe", "duplex/hoe_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(hoeLeft);
         new BookEnchantSchema(hoeRight);
 
         adzeLeft = new MultiSlotModule(headLeftKey, "duplex/adze", leftSuffix,
-                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
+                "duplex/adze", "duplex/adze_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         adzeRight = new MultiSlotModule(headRightKey, "duplex/adze", rightSuffix,
-                "duplex/improvements/adze", "duplex/improvements/adze_hone", "duplex/improvements/shared_head_hone",
+                "duplex/adze", "duplex/adze_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(adzeLeft);
         new BookEnchantSchema(adzeRight);
 
         sickleLeft = new MultiSlotModule(headLeftKey, "duplex/sickle", leftSuffix,
-                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
+                "duplex/sickle", "duplex/sickle_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         sickleRight = new MultiSlotModule(headRightKey, "duplex/sickle", rightSuffix,
-                "duplex/improvements/sickle", "duplex/improvements/sickle_hone", "duplex/improvements/shared_head_hone",
+                "duplex/sickle", "duplex/sickle_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(sickleLeft);
         new BookEnchantSchema(sickleRight);
 
         clawLeft = new MultiSlotModule(headLeftKey, "duplex/claw", leftSuffix,
-                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
+                "duplex/claw", "duplex/claw_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         clawRight = new MultiSlotModule(headRightKey, "duplex/claw", rightSuffix,
-                "duplex/improvements/claw", "duplex/improvements/claw_hone", "duplex/improvements/shared_head_hone",
+                "duplex/claw", "duplex/claw_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(clawLeft);
         new BookEnchantSchema(clawRight);
 
         butt = new MultiSlotModule(headRightKey, "duplex/butt", rightSuffix,
-                "duplex/improvements/butt", "duplex/improvements/butt_hone", "duplex/improvements/shared_head_hone",
+                "duplex/butt", "duplex/butt_hone", "duplex/shared_head_hone",
                 "settling_improvements");
         new BookEnchantSchema(butt);
 
         handle = new BasicMajorModule(handleKey, "duplex/basic_handle",
-                "duplex/improvements/basic_handle", "duplex/improvements/basic_handle_hone", "duplex/improvements/shared_head_hone",
+                "duplex/basic_handle", "duplex/basic_handle_hone", "duplex/shared_head_hone",
                 "settling_improvements")
                 .withRenderLayer(Priority.LOWER);
         new BookEnchantSchema(handle);
