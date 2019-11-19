@@ -180,7 +180,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
                 .withRenderLayer(Priority.LOWER);
         new BookEnchantSchema(handle);
 
-        new BasicModule(bindingKey, "duplex/binding", "duplex/tweaks/binding");
+        new BasicModule(bindingKey, "duplex/binding", "duplex/binding");
 
         new BasicModule(bindingKey, "duplex/socket");
 

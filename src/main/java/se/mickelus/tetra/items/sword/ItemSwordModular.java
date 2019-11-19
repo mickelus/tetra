@@ -83,7 +83,7 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         new BasicModule(guardKey, "sword/forefinger_ring");
 
-        new BasicModule(guardKey, "sword/binding", "sword/tweaks/binding");
+        new BasicModule(guardKey, "sword/binding", "sword/binding");
 
         new BasicModule(guardKey, "sword/socket");
 
