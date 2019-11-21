@@ -74,10 +74,6 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
     public static BasicMajorModule handle;
 
-    // hacky, but the creative tabs are filled before init so we need to setup itemstacks and populate them with modules later
-    private ItemStack creativeWoodHammer;
-    private ItemStack creativeObsidianHammer;
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemDuplexToolModular instance;
 
@@ -92,21 +88,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
 
-        creativeWoodHammer = new ItemStack(this);
-        creativeObsidianHammer = new ItemStack(this);
-
         updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
-    }
-
-    public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
-        this.honeBase = honeBase;
-        this.honeIntegrityMultiplier = honeIntegrityMultiplier;
-    }
-
-    @Override
-    public void init(PacketHandler packetHandler) {
-        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("duplex"));
-
 
         basicHammerHeadLeft = new MultiSlotModule(headLeftKey, "duplex/basic_hammer", leftSuffix,
                 "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements");
@@ -186,23 +168,34 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
+    }
 
-        setupHammerStack(creativeWoodHammer, "log", "stick");
-        setupHammerStack(creativeObsidianHammer, "obsidian", "iron");
+    public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
+        this.honeBase = honeBase;
+        this.honeIntegrityMultiplier = honeIntegrityMultiplier;
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("duplex"));
     }
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (isInGroup(group)) {
-            items.add(creativeWoodHammer);
-            items.add(creativeObsidianHammer);
+            items.add(setupHammerStack("log", "stick"));
+            items.add(setupHammerStack("obsidian", "iron"));
         }
     }
 
-    private void setupHammerStack(ItemStack itemStack, String headMaterial, String handleMaterial) {
+    private ItemStack setupHammerStack(String headMaterial, String handleMaterial) {
+        ItemStack itemStack = new ItemStack(this);
+
         basicHammerHeadLeft.addModule(itemStack, "basic_hammer/" + headMaterial, null);
         basicHammerHeadRight.addModule(itemStack, "basic_hammer/" + headMaterial, null);
         handle.addModule(itemStack, "basic_handle/" + handleMaterial, null);
+
+        return itemStack;
     }
 
     @Override

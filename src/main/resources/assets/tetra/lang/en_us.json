@@ -1663,28 +1663,25 @@
   "toolbelt_belt3.slot1": "Shulker shells",
 
   "toolbelt/belt.name": "Toolbelt",
+  "toolbelt/belt.item_name": "Toolbelt",
 
   "belt/rope": "Rope",
   "belt/rope.name": "Rope",
   "belt/rope.item_name": "Rope",
   "belt/rope.description": "A very basic waistband fashioned from a rope. Can hold a very limited amount of attachments.",
 
-  "belt/sash": "Sash",
-  "belt/sash.name": "Wool sash",
-  "belt/sash.item_name": "Sash",
+  "belt/sash": "Wool sash",
+  "belt/sash.name": "Sash",
   "belt/sash.description": "A woolen sash that can hold a small amount of attachments.",
 
   "belt/leather": "Leather wrap",
-  "belt/leather.name": "Leather wrap",
-  "belt/leather.item_name": "Wrap",
+  "belt/leather.name": "Wrap",
   "belt/leather.description": "A sturdy leather strap that can be wrapped around ones waist. Can hold a decent amount of attachments.",
 
   "belt/buckled": "Leather belt",
-  "belt/buckled.name": "Leather belt",
   "belt/buckled.description": "A sturdy leather belt, locked in place with a buckle. Can hold a large amount of attachments.",
 
   "belt/inlaid": "Shulker inlaid belt",
-  "belt/inlaid.name": "Shulker inlaid belt",
   "belt/inlaid.prefix": "Inlaid",
   "belt/inlaid.description": "A sturdy leather belt that has been inlaid with shulker shells. Can hold an impressive amount of attachments.",
 

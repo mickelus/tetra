@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
+import se.mickelus.tetra.items.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class UpdateBoosterPacket extends AbstractPacket {
@@ -37,7 +37,7 @@ public class UpdateBoosterPacket extends AbstractPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        ItemStack itemStack = UtilToolbelt.findToolbelt(player);
+        ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
             UtilBooster.setActive(NBTHelper.getTag(itemStack), active, charged);

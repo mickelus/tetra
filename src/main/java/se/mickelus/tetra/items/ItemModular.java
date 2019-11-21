@@ -204,19 +204,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return ItemUpgradeRegistry.instance.getModule(NBTHelper.getTag(itemStack).getString(slot));
     }
 
-    public void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
-        int damage = itemStack.getDamage();
-        int maxDamage = itemStack.getMaxDamage();
-        if (damage < maxDamage) {
-            int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
-            itemStack.damageItem(reducedAmount, responsibleEntity, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
-
-            if (damage + reducedAmount >= maxDamage && responsibleEntity.world.isRemote) {
-                responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
-            }
-        }
-    }
-
     public void tickProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
         if (!ConfigHandler.moduleProgression) {
             return;
@@ -297,7 +284,21 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     @Override
     public void setDamage(ItemStack itemStack, int damage) {
-        super.setDamage(itemStack, Math.min(itemStack.getMaxDamage(), damage));
+        super.setDamage(itemStack, Math.min(itemStack.getMaxDamage() - 1, damage));
+    }
+
+    public void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
+        int damage = itemStack.getDamage();
+        int maxDamage = itemStack.getMaxDamage();
+
+        if (damage < maxDamage) {
+            int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
+            itemStack.damageItem(reducedAmount, responsibleEntity, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
+
+            if (damage + reducedAmount >= maxDamage && responsibleEntity.world.isRemote) {
+                responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
+            }
+        }
     }
 
     private int getReducedDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
@@ -316,7 +317,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     public boolean isBroken(ItemStack itemStack) {
-        return itemStack.getMaxDamage() != 0 && itemStack.getDamage() >= itemStack.getMaxDamage();
+        return itemStack.getMaxDamage() != 0 && itemStack.getDamage() >= itemStack.getMaxDamage() - 1;
     }
 
     @OnlyIn(Dist.CLIENT)

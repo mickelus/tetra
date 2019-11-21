@@ -57,9 +57,9 @@ public class OverlayToolbelt {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (restockBinding.isPressed()) {
+        if (restockBinding.isKeyDown()) {
             equipToolbeltItem(ToolbeltSlotType.quickslot, -1, Hand.OFF_HAND);
-        } else if (accessBinding.isPressed() && mc.isGameFocused()) {
+        } else if (accessBinding.isKeyDown() && mc.isGameFocused() && !isActive) {
             showView();
         }
     }
@@ -106,9 +106,9 @@ public class OverlayToolbelt {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex, hand);
         PacketHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
-            UtilToolbelt.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, hand);
+            ToolbeltHelper.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, hand);
         } else {
-            boolean storeItemSuccess = UtilToolbelt.storeItemInToolbelt(mc.player);
+            boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
                 mc.player.sendStatusMessage(new TranslationTextComponent("toolbelt.full"), true);
             }
@@ -119,7 +119,7 @@ public class OverlayToolbelt {
         if (mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
             // todo 1.14: this changed, check if quick equip still works
             BlockState blockState = mc.world.getBlockState(new BlockPos(mc.objectMouseOver.getHitVec()));
-            int index = UtilToolbelt.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
+            int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
 
             if (index > -1) {
                 equipToolbeltItem(ToolbeltSlotType.quickslot, index, Hand.MAIN_HAND);
@@ -128,7 +128,7 @@ public class OverlayToolbelt {
     }
 
     private boolean updateGuiData() {
-        ItemStack itemStack = UtilToolbelt.findToolbelt(mc.player);
+        ItemStack itemStack = ToolbeltHelper.findToolbelt(mc.player);
         if (!itemStack.isEmpty()) {
             gui.setInventories(itemStack);
             gui.setVisible(true);

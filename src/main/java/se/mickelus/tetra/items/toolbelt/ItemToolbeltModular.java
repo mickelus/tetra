@@ -21,6 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -40,9 +41,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemToolbeltModular extends ItemModular implements INamedContainerProvider {
-    private final static String unlocalizedName = "toolbelt_modular";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemToolbeltModular instance;
+    public final static String unlocalizedName = "toolbelt_modular";
 
     public final static String slot1Key = "toolbelt/slot1";
     public final static String slot2Key = "toolbelt/slot2";
@@ -56,6 +55,8 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
     private ItemModule defaultBelt;
     private ItemModule defaultStrap;
 
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ItemToolbeltModular instance;
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ContainerType<ToolbeltContainer> containerType;
@@ -72,25 +73,25 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
 
         defaultBelt = new BasicModule(beltKey, beltKey);
 
-        defaultStrap = new MultiSlotModule(slot1Key, "toolbelt/strap", slot1Suffix, "toolbelt/strap");
-        new MultiSlotModule(slot2Key, "toolbelt/strap", slot2Suffix, "toolbelt/strap");
-        new MultiSlotModule(slot3Key, "toolbelt/strap", slot3Suffix, "toolbelt/strap");
+        defaultStrap = new ToolbeltModule(slot1Key, "toolbelt/strap", slot1Suffix, "toolbelt/strap");
+        new ToolbeltModule(slot2Key, "toolbelt/strap", slot2Suffix, "toolbelt/strap");
+        new ToolbeltModule(slot3Key, "toolbelt/strap", slot3Suffix, "toolbelt/strap");
 
-        new MultiSlotModule(slot1Key, "toolbelt/potion_storage", slot1Suffix, "toolbelt/potion_storage");
-        new MultiSlotModule(slot2Key, "toolbelt/potion_storage", slot2Suffix, "toolbelt/potion_storage");
-        new MultiSlotModule(slot3Key, "toolbelt/potion_storage", slot3Suffix, "toolbelt/potion_storage");
+        new ToolbeltModule(slot1Key, "toolbelt/potion_storage", slot1Suffix, "toolbelt/potion_storage");
+        new ToolbeltModule(slot2Key, "toolbelt/potion_storage", slot2Suffix, "toolbelt/potion_storage");
+        new ToolbeltModule(slot3Key, "toolbelt/potion_storage", slot3Suffix, "toolbelt/potion_storage");
 
-        new MultiSlotModule(slot1Key, "toolbelt/storage", slot1Suffix, "toolbelt/storage");
-        new MultiSlotModule(slot2Key, "toolbelt/storage", slot2Suffix, "toolbelt/storage");
-        new MultiSlotModule(slot3Key, "toolbelt/storage", slot3Suffix, "toolbelt/storage");
+        new ToolbeltModule(slot1Key, "toolbelt/storage", slot1Suffix, "toolbelt/storage");
+        new ToolbeltModule(slot2Key, "toolbelt/storage", slot2Suffix, "toolbelt/storage");
+        new ToolbeltModule(slot3Key, "toolbelt/storage", slot3Suffix, "toolbelt/storage");
 
-        new MultiSlotModule(slot1Key, "toolbelt/quiver", slot1Suffix, "toolbelt/quiver");
-        new MultiSlotModule(slot2Key, "toolbelt/quiver", slot2Suffix, "toolbelt/quiver");
-        new MultiSlotModule(slot3Key, "toolbelt/quiver", slot3Suffix, "toolbelt/quiver");
+        new ToolbeltModule(slot1Key, "toolbelt/quiver", slot1Suffix, "toolbelt/quiver");
+        new ToolbeltModule(slot2Key, "toolbelt/quiver", slot2Suffix, "toolbelt/quiver");
+        new ToolbeltModule(slot3Key, "toolbelt/quiver", slot3Suffix, "toolbelt/quiver");
 
-        new MultiSlotModule(slot1Key, "toolbelt/booster", slot1Suffix, "toolbelt/booster");
-        new MultiSlotModule(slot2Key, "toolbelt/booster", slot2Suffix, "toolbelt/booster");
-        new MultiSlotModule(slot3Key, "toolbelt/booster", slot3Suffix, "toolbelt/booster");
+        new ToolbeltModule(slot1Key, "toolbelt/booster", slot1Suffix, "toolbelt/booster");
+        new ToolbeltModule(slot2Key, "toolbelt/booster", slot2Suffix, "toolbelt/booster");
+        new ToolbeltModule(slot3Key, "toolbelt/booster", slot3Suffix, "toolbelt/booster");
     }
 
     @Override
@@ -98,6 +99,7 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
+
 
         InventoryToolbelt.initializePredicates();
 
@@ -108,28 +110,48 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
     public void clientInit() {
         super.clientInit();
         MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         ScreenManager.registerFactory(ItemToolbeltModular.containerType, ToolbeltGui::new);
     }
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-//        if (isInGroup(group)) {
-//            items.add(createDefaultStack());
-//        }
+        if (isInGroup(group)) {
+            items.add(createStack("belt/rope"));
+            items.add(createStack("belt/inlaid"));
+        }
     }
 
-//    private ItemStack createDefaultStack() {
-//        ItemStack itemStack = new ItemStack(this);
-//        defaultBelt.addModule(itemStack, "belt/rope", null);
-//        defaultStrap.addModule(itemStack, "strap1/leather", null);
-//        return itemStack;
-//    }
+    private ItemStack createStack(String beltMaterial) {
+        ItemStack itemStack = new ItemStack(this);
+        defaultBelt.addModule(itemStack, beltMaterial, null);
+        defaultStrap.addModule(itemStack, "strap1/leather", null);
+        return itemStack;
+    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        NetworkHooks.openGui((ServerPlayerEntity) player, this);
+        if (!world.isRemote) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, this);
+        }
 
         return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent(getRegistryName().getPath());
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
+        ItemStack itemStack = player.getHeldItemMainhand();
+        if (!this.equals(itemStack.getItem())) {
+            itemStack = player.getHeldItemOffhand();
+        }
+
+        return new ToolbeltContainer(windowId, inventory, itemStack, player);
     }
 
     public int getNumSlots(ItemStack itemStack, SlotType slotType) {
@@ -164,16 +186,5 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
                 })
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return new StringTextComponent(getRegistryName().getPath());
-    }
-
-    @Nullable
-    @Override
-    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity playerEntity) {
-        return null;
     }
 }

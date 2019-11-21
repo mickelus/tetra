@@ -8,6 +8,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
@@ -56,6 +57,7 @@ import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
@@ -249,6 +251,13 @@ public class TetraMod {
 //        }))
 //                .setRegistryName(MOD_ID, BlockForgedContainer.unlocalizedName));
 
+            // toolbelt
+            ContainerType toolbeltContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
+                return ToolbeltContainer.create(windowId, inv);
+            })).setRegistryName(MOD_ID, ItemToolbeltModular.unlocalizedName);
+            event.getRegistry().register(toolbeltContainerType);
+
+            // workbench
             ContainerType workbenchContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return WorkbenchContainer.create(windowId, pos, inv);

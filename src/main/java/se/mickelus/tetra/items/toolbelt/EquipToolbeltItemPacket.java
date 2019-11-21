@@ -46,9 +46,9 @@ public class EquipToolbeltItemPacket extends AbstractPacket {
     @Override
     public void handle(PlayerEntity player) {
         if (toolbeltItemIndex > -1) {
-            UtilToolbelt.equipItemFromToolbelt(player, slotType, toolbeltItemIndex, hand);
+            ToolbeltHelper.equipItemFromToolbelt(player, slotType, toolbeltItemIndex, hand);
         } else {
-            UtilToolbelt.storeItemInToolbelt(player);
+            ToolbeltHelper.storeItemInToolbelt(player);
         }
     }
 }

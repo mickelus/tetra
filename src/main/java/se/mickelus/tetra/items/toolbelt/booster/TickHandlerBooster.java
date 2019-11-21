@@ -7,13 +7,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
+import se.mickelus.tetra.items.toolbelt.ToolbeltHelper;
 
 public class TickHandlerBooster {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        ItemStack itemStack = UtilToolbelt.findToolbelt(event.player);
+        ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
         int level = UtilBooster.getBoosterLevel(itemStack);
         if (level > 0) {
             tickItem(event.player, itemStack, level);

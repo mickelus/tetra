@@ -8,7 +8,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.toolbelt.UtilToolbelt;
+import se.mickelus.tetra.items.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
@@ -35,7 +35,7 @@ public class UtilBooster {
     public static final float boostLevelMultiplier = 0.4f;
 
     public static boolean hasBooster(PlayerEntity player) {
-        ItemStack itemStack = UtilToolbelt.findToolbelt(player);
+        ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
 
         return canBoost(itemStack);
     }

@@ -70,6 +70,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
 

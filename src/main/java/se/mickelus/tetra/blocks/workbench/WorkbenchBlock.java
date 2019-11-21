@@ -107,7 +107,7 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!world.isRemote) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                    .ifPresent(te -> NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos));
+                    .ifPresent(te -> NetworkHooks.openGui((ServerPlayerEntity) player, te, pos));
         }
         return true;
     }

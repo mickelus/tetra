@@ -1,11 +1,17 @@
 package se.mickelus.tetra.items.toolbelt;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mgui.gui.DisabledSlot;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 
@@ -82,6 +88,16 @@ public class ToolbeltContainer extends Container {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static ToolbeltContainer create(int windowId, PlayerInventory inv) {
+        ItemStack itemStack = inv.player.getHeldItemMainhand();
+        if (!ItemToolbeltModular.instance.equals(itemStack.getItem())) {
+            itemStack = inv.player.getHeldItemOffhand();
+        }
+
+        return new ToolbeltContainer(windowId, inv, itemStack, inv.player);
+    }
+
     /**
      * Attempts to merge the given stack into the slots between the given indexes, prioritizing slot stack limits
      * over item stack limits.
@@ -131,8 +147,7 @@ public class ToolbeltContainer extends Container {
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-
-        if (clickTypeIn == ClickType.PICKUP && 0 < slotId && slotId < potionsInventory.getSizeInventory()) {
+        if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getSizeInventory()) {
             Slot slot = getSlot(slotId);
             if (player.inventory.getItemStack().isEmpty()) {
                 player.inventory.setItemStack(slot.decrStackSize(64));

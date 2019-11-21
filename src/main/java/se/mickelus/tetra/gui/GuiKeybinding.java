@@ -3,18 +3,20 @@ package se.mickelus.tetra.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.client.settings.KeyModifier;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiStringOutline;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
         this(x, y,
-                keyBinding.getKeyDescription(),
+                getLocalizedKey(keyBinding.getKey()),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
                 I18n.format(keyBinding.getKeyDescription()));
     }
@@ -41,6 +43,27 @@ public class GuiKeybinding extends GuiElement {
             addChild(new GuiKey(guiKey.getX() - 7, 0, modifier));
             addChild(new GuiStringOutline(guiKey.getX() - 6, 2, "+", GuiColors.muted));
         }
+    }
+
+    // Based on {@KeyBinding.getLocalizedName} but skips the modifier, since we plop that in a separate box
+    private static String getLocalizedKey(InputMappings.Input keyCode) {
+        String s = keyCode.getTranslationKey();
+        int i = keyCode.getKeyCode();
+        String s1 = null;
+
+        switch(keyCode.getType()) {
+            case KEYSYM:
+                s1 = InputMappings.func_216507_a(i);
+                break;
+            case SCANCODE:
+                s1 = InputMappings.func_216502_b(i);
+                break;
+            case MOUSE:
+                String s2 = I18n.format(s);
+                s1 = Objects.equals(s2, s) ? I18n.format(InputMappings.Type.MOUSE.func_216500_a(), i + 1) : s2;
+        }
+
+        return s1 == null ? I18n.format(s) : s1;
     }
 
     private class GuiKey extends GuiElement {
