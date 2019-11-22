@@ -33,6 +33,7 @@ import se.mickelus.tetra.items.ItemModular;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -58,19 +59,20 @@ public class ModularOverrideList extends ItemOverrideList {
     @Nullable
     @Override
     public IBakedModel getModelWithOverrides(IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
-        CompoundNBT baseTag = NBTHelper.getTag(stack);
-        IBakedModel result = originalModel;
-        if(!baseTag.isEmpty()) {
-            CacheKey key = getCacheKey(stack, originalModel);
-
-            try {
-                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
-            } catch(ExecutionException e) {
-                // do nothing, return original model
-                e.printStackTrace();
-            }
-        }
-        return result;
+        return getOverrideModel(stack);
+//        CompoundNBT baseTag = NBTHelper.getTag(stack);
+//        IBakedModel result = originalModel;
+//        if(!baseTag.isEmpty()) {
+//            CacheKey key = getCacheKey(stack, originalModel);
+//
+//            try {
+//                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
+//            } catch(ExecutionException e) {
+//                // do nothing, return original model
+//                e.printStackTrace();
+//            }
+//        }
+//        return result;
     }
 
     protected CacheKey getCacheKey(ItemStack stack, IBakedModel original) {
@@ -95,7 +97,7 @@ public class ModularOverrideList extends ItemOverrideList {
 //        return unbaked.bake(bakery, ModelLoader.defaultTextureGetter(), new BasicState(unbaked.getDefaultState(), false),
 //                DefaultVertexFormats.ITEM);
 
-         return new ItemLayerModel(item.getTextures(itemStack)).bake(bakery, ModelLoader.defaultTextureGetter(),
+         return new ModularItemModel(item.getTextures(itemStack)).bake(bakery, ModelLoader.defaultTextureGetter(),
                  perState, DefaultVertexFormats.ITEM);
     }
 
@@ -127,7 +129,7 @@ public class ModularOverrideList extends ItemOverrideList {
             if(parent != null ? parent != cacheKey.parent : cacheKey.parent != null) {
                 return false;
             }
-            return data != null ? data.equals(cacheKey.data) : cacheKey.data == null;
+            return Objects.equals(data, cacheKey.data);
 
         }
 
