@@ -27,6 +27,7 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -38,6 +39,7 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -235,7 +237,7 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerPickupXp(PlayerPickupXpEvent event) {
+    public void onPlayerPickupXp(PlayerXpEvent.PickupXp event) {
         PlayerEntity player = event.getPlayer();
         Stream.concat(
                 player.inventory.mainInventory.stream(),
@@ -278,7 +280,6 @@ public class ItemEffectHandler {
                         int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
                         if (fortuneLevel > 0) {
                             // todo 1.14: passing fortune level to loot func appear to longer be possible, perhaps A loot entry processor is required intstead?
-                            System.out.println("ONBLOCKHARVEST, CALLED REALLY?");
                             // event.getDrops().clear();
                             // calling the new getDrops method directly cause some mod compatibility issues
                             // state.getBlock().getDrops(list, event.getWorld(), event.getPos(), state, fortuneLevel);
@@ -291,7 +292,6 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-
         Optional.of(event.getItemStack())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
@@ -326,6 +326,9 @@ public class ItemEffectHandler {
                                     breakBlock(world, breakingPlayer, itemStack, pos, blockState);
                                 }
                             }
+
+                            CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class)
+                                    .ifPresent(item -> item.applyUsageEffects(breakingPlayer, itemStack, 1));
                             itemStack.damageItem(2, breakingPlayer, t -> {});
                         }
                         event.setCanceled(true);

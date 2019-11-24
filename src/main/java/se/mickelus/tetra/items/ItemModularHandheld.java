@@ -300,6 +300,20 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     /**
+     * Applies usage effects and ticks progression based on the given multiplier, should typically be called when the item is used
+     * for something.
+     *
+     * @param entity The using entity
+     * @param itemStack The used itemstack
+     * @param multiplier A multiplier representing the effort and effect yielded from the use
+     */
+    public void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        tickProgression(entity, itemStack, (int) multiplier);
+        causeFierySelfEffect(entity, itemStack, multiplier);
+        causeEnderReverbEffect(entity, itemStack, multiplier);
+    }
+
+    /**
      * Flattens grass into a path similar to how vanilla shovels does it.
      * @param player the responsible player entity
      * @param world the world in which the action takes place
