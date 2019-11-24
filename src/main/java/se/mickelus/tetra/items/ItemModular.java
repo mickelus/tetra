@@ -323,6 +323,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        Style basicStyle = new Style().setColor(TextFormatting.GRAY);
         if (isBroken(itemStack)) {
             tooltip.add(new TranslationTextComponent("item.tetra.modular.broken")
                     .setStyle(new Style().setColor(TextFormatting.DARK_RED).setItalic(true)));
@@ -332,7 +333,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)));
+                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)).setStyle(basicStyle));
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level)))
                                 .map(StringTextComponent::new)
@@ -343,6 +344,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .filter(Objects::nonNull)
                     .map(module -> "* " + module.getName(itemStack))
                     .map(StringTextComponent::new)
+                    .map(textComponent -> textComponent.setStyle(basicStyle))
                     .forEach(tooltip::add);
 
             // honing tooltip
@@ -350,14 +352,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 if (isHoneable(itemStack)) {
                     tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.AQUA))
                             .appendSibling(new TranslationTextComponent("hone.available")
-                                    .setStyle(new Style().setColor(TextFormatting.GRAY))));
+                                    .setStyle(basicStyle)));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningBase(itemStack);
                     String result = String.format("%.1f", 100f * (base - progress) / base);
                     tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.DARK_AQUA))
                             .appendSibling(new TranslationTextComponent("hone.progress", result)
-                                    .setStyle(new Style().setColor(TextFormatting.GRAY))));
+                                    .setStyle(basicStyle)));
                 }
             }
         } else {
@@ -370,6 +372,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .stream()
                     .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue()))
                     .map(StringTextComponent::new)
+                    .map(text -> text.setStyle(basicStyle))
                     .forEach(tooltip::add);
         }
     }
