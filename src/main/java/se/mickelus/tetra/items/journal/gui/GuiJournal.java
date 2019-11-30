@@ -79,6 +79,7 @@ public class GuiJournal extends Screen {
 
     @Override
     public void render(final int mouseX, final int mouseY, final float partialTicks) {
+        renderBackground();
         super.render(mouseX, mouseY, partialTicks);
 
         defaultGui.draw((width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
