@@ -29,14 +29,17 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ModularOverrideList extends ItemOverrideList {
 
@@ -59,20 +62,19 @@ public class ModularOverrideList extends ItemOverrideList {
     @Nullable
     @Override
     public IBakedModel getModelWithOverrides(IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
-        return getOverrideModel(stack);
-//        CompoundNBT baseTag = NBTHelper.getTag(stack);
-//        IBakedModel result = originalModel;
-//        if(!baseTag.isEmpty()) {
-//            CacheKey key = getCacheKey(stack, originalModel);
-//
-//            try {
-//                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
-//            } catch(ExecutionException e) {
-//                // do nothing, return original model
-//                e.printStackTrace();
-//            }
-//        }
-//        return result;
+        CompoundNBT baseTag = NBTHelper.getTag(stack);
+        IBakedModel result = originalModel;
+        if(!baseTag.isEmpty()) {
+            CacheKey key = getCacheKey(stack, originalModel);
+
+            try {
+                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
+            } catch(ExecutionException e) {
+                // do nothing, return original model
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     protected CacheKey getCacheKey(ItemStack stack, IBakedModel original) {
@@ -83,7 +85,6 @@ public class ModularOverrideList extends ItemOverrideList {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
         // todo 1.14: look at ItemModelGenerator
-
         ItemCameraTransforms transforms = unbaked.getAllTransforms();
         Map<ItemCameraTransforms.TransformType, TRSRTransformation> tMap = Maps.newHashMap();
         tMap.putAll(PerspectiveMapWrapper.getTransforms(transforms));
@@ -97,7 +98,19 @@ public class ModularOverrideList extends ItemOverrideList {
 //        return unbaked.bake(bakery, ModelLoader.defaultTextureGetter(), new BasicState(unbaked.getDefaultState(), false),
 //                DefaultVertexFormats.ITEM);
 
-         return new ModularItemModel(item.getTextures(itemStack)).bake(bakery, ModelLoader.defaultTextureGetter(),
+        List<ModuleModel> models = item.getModels(itemStack);
+
+        if (models.isEmpty()) {
+            models = item.getTextures(itemStack).stream()
+                    .map(texture -> {
+                        ModuleModel model = new ModuleModel();
+                        model.location = texture;
+                        return model;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+         return new ModularItemModel(models).bake(bakery, ModelLoader.defaultTextureGetter(),
                  perState, DefaultVertexFormats.ITEM);
     }
 

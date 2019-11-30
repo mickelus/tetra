@@ -140,6 +140,8 @@ public class ModuleData {
      */
     public CapabilityData capabilities = new CapabilityData();
 
+    public ModuleModel[] models = new ModuleModel[0];
+
     public int magicCapacity = 0;
 
     public String getKey() {

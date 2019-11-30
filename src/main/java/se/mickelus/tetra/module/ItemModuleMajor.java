@@ -16,6 +16,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.network.PacketHandler;
@@ -378,5 +379,17 @@ public abstract class ItemModuleMajor extends ItemModule {
     @Override
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return ArrayUtils.addAll(super.getTextures(itemStack), getImprovementTextures(itemStack));
+    }
+
+    protected ModuleModel[] getImprovementModels(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack))
+                .filter(improvement -> improvement.textured)
+                .flatMap(improvement -> Arrays.stream(improvement.models))
+                .toArray(ModuleModel[]::new);
+    }
+
+    @Override
+    public ModuleModel[] getModels(ItemStack itemStack) {
+        return ArrayUtils.addAll(super.getModels(itemStack), getImprovementModels(itemStack));
     }
 }

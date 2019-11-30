@@ -15,6 +15,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
@@ -276,6 +277,10 @@ public abstract class ItemModule implements ICapabilityProvider {
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[] { getData(itemStack).getTextureLocation() };
+    }
+
+    public ModuleModel[] getModels(ItemStack itemStack) {
+        return getData(itemStack).models;
     }
 
     public Priority getRenderLayer() {

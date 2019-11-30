@@ -45,6 +45,7 @@ public class DataManager {
             .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
+            .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
             .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())

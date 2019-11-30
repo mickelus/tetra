@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.data.ModuleModel;
 
 public interface IItemModular {
 
@@ -29,4 +30,5 @@ public interface IItemModular {
     public void assemble(ItemStack itemStack);
 
     public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
+    public ImmutableList<ModuleModel> getModels(ItemStack itemStack);
 }

@@ -19,9 +19,11 @@ import net.minecraftforge.common.model.TRSRTransformation;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import se.mickelus.tetra.module.data.ModuleModel;
 
 /**
  * Forge reimplementation of vanilla {@link ItemModelGenerator}, i.e. builtin/generated models,
@@ -32,13 +34,10 @@ import com.google.common.collect.ImmutableMap;
  * - Not limited to 4 layers maximum.
  */
 public final class ModularItemModel implements IUnbakedModel {
-    private static final Direction[] HORIZONTALS = {Direction.UP, Direction.DOWN};
-    private static final Direction[] VERTICALS = {Direction.WEST, Direction.EAST};
+    private final List<ModuleModel> models;
 
-    private final ImmutableList<ResourceLocation> textures;
-
-    public ModularItemModel(ImmutableList<ResourceLocation> textures) {
-        this.textures = textures;
+    public ModularItemModel(List<ModuleModel> models) {
+        this.models = models;
     }
 
     private static ImmutableList<ResourceLocation> getTextures(BlockModel model)
@@ -53,7 +52,9 @@ public final class ModularItemModel implements IUnbakedModel {
 
     @Override
     public Collection<ResourceLocation> getTextures(Function<ResourceLocation, IUnbakedModel> modelGetter, Set<String> missingTextureErrors) {
-        return textures;
+        return models.stream()
+                .map(model -> model.location)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -62,21 +63,20 @@ public final class ModularItemModel implements IUnbakedModel {
     }
 
     @Override
-    public ModularItemModel retexture(ImmutableMap<String, String> textures)
-    {
-        ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
-        for(int i = 0; i < textures.size() + this.textures.size(); i++)
-        {
-            if(textures.containsKey("layer" + i))
-            {
-                builder.add(new ResourceLocation(textures.get("layer" + i)));
-            }
-            else if(i < this.textures.size())
-            {
-                builder.add(this.textures.get(i));
-            }
-        }
-        return new ModularItemModel(builder.build());
+    public ModularItemModel retexture(ImmutableMap<String, String> textures) {
+//        ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
+//        for(int i = 0; i < textures.size() + this.textures.size(); i++)
+//        {
+//            if(textures.containsKey("layer" + i))
+//            {
+//                builder.add(new ResourceLocation(textures.get("layer" + i)));
+//            }
+//            else if(i < this.textures.size())
+//            {
+//                builder.add(this.textures.get(i));
+//            }
+//        }
+        return new ModularItemModel(models);
     }
 
     @Nullable
@@ -88,16 +88,18 @@ public final class ModularItemModel implements IUnbakedModel {
         ImmutableMap<TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(sprite.getState());
         boolean identity = !transform.isPresent() || transform.get().isIdentity();
 
-        for(int i = 0; i < textures.size(); i++) {
-            TextureAtlasSprite tas = spriteGetter.apply(textures.get(i));
-            builder.addAll(getQuadsForSprite(i, tas, format, transform));
+        for(int i = 0; i < models.size(); i++) {
+            ModuleModel model = models.get(i);
+            TextureAtlasSprite tas = spriteGetter.apply(model.location);
+            builder.addAll(getQuadsForSprite(i, tas, format, transform, model.tint));
         }
-        TextureAtlasSprite particle = spriteGetter.apply(textures.isEmpty() ? new ResourceLocation("missingno") : textures.get(0));
+        TextureAtlasSprite particle = spriteGetter.apply(models.isEmpty() ? new ResourceLocation("missingno") : models.get(0).location);
 
         return new BakedItemModel(builder.build(), particle, map, ItemOverrideList.EMPTY, identity);
     }
 
-    public static List<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform) {
+    public static List<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, VertexFormat format,
+            Optional<TRSRTransformation> transform, int color) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
         int uMax = sprite.getWidth();
@@ -105,24 +107,24 @@ public final class ModularItemModel implements IUnbakedModel {
 
         // todo 1.14: figure out why this doesn't work when considering fully transparent rows
         for (int v = 0; v < vMax; v++) {
-            builder.add(buildSideQuad(format, transform, Direction.UP, tint, sprite, 0, v, uMax));
-            builder.add(buildSideQuad(format, transform, Direction.DOWN, tint, sprite, 0, v + 1, uMax));
+            builder.add(buildSideQuad(format, transform, Direction.UP, tintIndex, color, sprite, 0, v, uMax));
+            builder.add(buildSideQuad(format, transform, Direction.DOWN, tintIndex, color, sprite, 0, v + 1, uMax));
         }
 
         for (int u = 0; u < uMax; u++) {
-            builder.add(buildSideQuad(format, transform, Direction.EAST, tint, sprite, u + 1, 0, vMax));
-            builder.add(buildSideQuad(format, transform, Direction.WEST, tint, sprite, u, 0, vMax));
+            builder.add(buildSideQuad(format, transform, Direction.EAST, tintIndex, color, sprite, u + 1, 0, vMax));
+            builder.add(buildSideQuad(format, transform, Direction.WEST, tintIndex, color, sprite, u, 0, vMax));
         }
 
         // front
-        builder.add(buildQuad(format, transform, Direction.NORTH, sprite, tint, 0xffffffff,
+        builder.add(buildQuad(format, transform, Direction.NORTH, sprite, tintIndex, color,
                 0, 0, 7.5f / 16f, sprite.getMinU(), sprite.getMaxV(),
                 0, 1, 7.5f / 16f, sprite.getMinU(), sprite.getMinV(),
                 1, 1, 7.5f / 16f, sprite.getMaxU(), sprite.getMinV(),
                 1, 0, 7.5f / 16f, sprite.getMaxU(), sprite.getMaxV()
         ));
         // back
-        builder.add(buildQuad(format, transform, Direction.SOUTH, sprite, tint, 0xffffffff,
+        builder.add(buildQuad(format, transform, Direction.SOUTH, sprite, tintIndex, color,
                 0, 0, 8.5f / 16f, sprite.getMinU(), sprite.getMaxV(),
                 1, 0, 8.5f / 16f, sprite.getMaxU(), sprite.getMaxV(),
                 1, 1, 8.5f / 16f, sprite.getMaxU(), sprite.getMinV(),
@@ -134,8 +136,7 @@ public final class ModularItemModel implements IUnbakedModel {
 
 
     private static BakedQuad buildSideQuad(VertexFormat format, Optional<TRSRTransformation> transform, Direction side, int tintIndex,
-            TextureAtlasSprite sprite, int u, int v, int size) {
-        int color = 0xffffffff;
+            int color, TextureAtlasSprite sprite, int u, int v, int size) {
 
         final float eps = 1e-2f;
 
@@ -231,6 +232,10 @@ public final class ModularItemModel implements IUnbakedModel {
                     float g = ((color >>  8) & 0xFF) / 255f; // green
                     float b = ((color >>  0) & 0xFF) / 255f; // blue
                     float a = ((color >> 24) & 0xFF) / 255f; // alpha
+
+                    // reset alpha to 1 if it's 0 to avoid mistakes & make things cleaner
+                    a = a == 0 ? 1 : a;
+
                     consumer.put(e, r, g, b, a);
                     break;
                 case NORMAL:

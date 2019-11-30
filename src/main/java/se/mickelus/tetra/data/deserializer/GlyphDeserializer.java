@@ -6,6 +6,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import se.mickelus.tetra.items.ItemColors;
 import se.mickelus.tetra.module.data.GlyphData;
 
 public class GlyphDeserializer implements JsonDeserializer<GlyphData> {
@@ -28,7 +29,12 @@ public class GlyphDeserializer implements JsonDeserializer<GlyphData> {
         }
 
         if (jsonObject.has("tint")) {
-            data.tint = (int) Long.parseLong(jsonObject.get("tint").getAsString(), 16);
+            String tint = jsonObject.get("tint").getAsString();
+            if (ItemColors.exists(tint)) {
+                data.tint = ItemColors.get(tint);
+            } else {
+                data.tint = (int) Long.parseLong(tint, 16);
+            }
         }
 
         return data;
