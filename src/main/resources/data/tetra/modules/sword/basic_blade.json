@@ -6,13 +6,17 @@
         "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "9d804e" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "oak_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "oak"
+        }]
     },
     {
         "key": "basic_blade/spruce",
@@ -21,13 +25,17 @@
         "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0.4,
-        "glyph": { "tint": "694f2f" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "spruce_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "basic_blade/birch",
@@ -36,13 +44,17 @@
         "magicCapacity": 15,
         "damage": 3,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "c8b77d" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "birch_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "birch"
+        }]
     },
     {
         "key": "basic_blade/jungle",
@@ -51,13 +63,17 @@
         "magicCapacity": 17,
         "damage": 3,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "996e4c" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "jungle_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "basic_blade/acacia",
@@ -66,13 +82,17 @@
         "magicCapacity": 15,
         "damage": 4,
         "attackSpeed": 0,
-        "glyph": { "tint": "ac5d33" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "acacia_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "basic_blade/dark_oak",
@@ -81,13 +101,17 @@
         "magicCapacity": 17,
         "damage": 3,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "3c2712" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "dark_oak_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "basic_blade/cobblestone",
@@ -96,13 +120,17 @@
         "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "9a9a9a" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "cobblestone_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/crude",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "basic_blade/stone",
@@ -111,13 +139,17 @@
         "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "9a9a9a" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "stone_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "stone"
+        }]
     },
     {
         "key": "basic_blade/granite",
@@ -126,13 +158,17 @@
         "magicCapacity": 5,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "8a6658" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "granite_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/grainy",
+            "tint": "granite"
+        }]
     },
     {
         "key": "basic_blade/diorite",
@@ -141,13 +177,17 @@
         "magicCapacity": 7,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "b1b1b3" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "diorite_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/grainy",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "basic_blade/andesite",
@@ -156,13 +196,17 @@
         "magicCapacity": 5,
         "damage": 5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "79797a" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "andesite_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/grainy",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "basic_blade/flint",
@@ -171,13 +215,17 @@
         "magicCapacity": 15,
         "damage": 5,
         "attackSpeed": 0.1,
-        "glyph": { "tint": "343434" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "flint_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/grainy",
+            "tint": "flint"
+        }]
     },
     {
         "key": "basic_blade/iron",
@@ -186,13 +234,17 @@
         "magicCapacity": 14,
         "damage": 5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "d8d8d8" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "iron_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "iron"
+        }]
     },
     {
         "key": "basic_blade/gold",
@@ -201,13 +253,17 @@
         "magicCapacity": 22,
         "damage": 3,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "eaee57" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "gold_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/shiny",
+            "tint": "gold"
+        }]
     },
     {
         "key": "basic_blade/diamond",
@@ -216,13 +272,17 @@
         "magicCapacity": 10,
         "damage": 6,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "33ebcb" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "diamond_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "basic_blade/obsidian",
@@ -231,13 +291,17 @@
         "magicCapacity": 7,
         "damage": 8,
         "attackSpeed": 0.1,
-        "glyph": { "tint": "3c3056" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "obsidian_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/grainy",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "basic_blade/copper",
@@ -246,13 +310,17 @@
         "magicCapacity": 13,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "df7646" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "copper_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "copper"
+        }]
     },
     {
         "key": "basic_blade/tin",
@@ -261,13 +329,17 @@
         "magicCapacity": 12,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "b3c9c1" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "tin_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "tin"
+        }]
     },
     {
         "key": "basic_blade/silver",
@@ -276,13 +348,17 @@
         "magicCapacity": 21,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "d6f6ff" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "silver_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/shiny",
+            "tint": "silver"
+        }]
     },
     {
         "key": "basic_blade/nickel",
@@ -291,13 +367,17 @@
         "magicCapacity": 12,
         "damage": 5.5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "c2d3a6" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "nickel_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "basic_blade/lead",
@@ -306,13 +386,17 @@
         "magicCapacity": 11,
         "damage": 6,
         "attackSpeed": 0.1,
-        "glyph": { "tint": "897a9b" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "lead_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "lead"
+        }]
     },
     {
         "key": "basic_blade/bronze",
@@ -321,13 +405,17 @@
         "magicCapacity": 13,
         "damage": 5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "b2712c" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "bronze_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "basic_blade/electrum",
@@ -336,13 +424,17 @@
         "magicCapacity": 24,
         "damage": 4,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "e4da4c" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "electrum_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/shiny",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "basic_blade/steel",
@@ -351,13 +443,17 @@
         "magicCapacity": 11,
         "damage": 6,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "999999" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "steel_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "steel"
+        }]
     },
     {
         "key": "basic_blade/thaumium",
@@ -366,13 +462,17 @@
         "magicCapacity": 25,
         "damage": 5.5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "4d3984" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "thaumium_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "basic_blade/ironwood",
@@ -381,13 +481,16 @@
         "magicCapacity": 18,
         "damage": 5,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "5ea917" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "ironwood_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/ironwood"
+        }]
     },
     {
         "key": "basic_blade/steeleaf",
@@ -396,13 +499,17 @@
         "magicCapacity": 15,
         "damage": 6,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "458430" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "steeleaf_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "basic_blade/fierymetal",
@@ -411,13 +518,16 @@
         "magicCapacity": 12,
         "damage": 7,
         "attackSpeed": 0.2,
-        "glyph": { "tint": "fa9f00" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "fierymetal_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/fierymetal"
+        }]
     },
     {
         "key": "basic_blade/knightmetal",
@@ -426,12 +536,16 @@
         "magicCapacity": 12,
         "damage": 6,
         "attackSpeed": 0.5,
-        "glyph": { "tint": "b8cf9c" },
         "effects": {
             "sweeping": 1
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "glyph": { "tint": "knightmetal_glyph" },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/metal",
+            "tint": "knightmetal"
+        }]
     }
 ]
