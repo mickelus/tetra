@@ -8,16 +8,8 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.CountRangeConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -26,7 +18,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -35,10 +26,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
@@ -64,8 +53,10 @@ import se.mickelus.tetra.loot.FortuneBonusFunction;
 import se.mickelus.tetra.loot.SetMetadataFunction;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
+import se.mickelus.tetra.module.schema.CleanseSchema;
 import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
@@ -194,6 +185,9 @@ public class TetraMod {
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
 
         proxy.postInit();
+
+        DestabilizationEffect.init();
+        new CleanseSchema();
     }
 
     @SubscribeEvent

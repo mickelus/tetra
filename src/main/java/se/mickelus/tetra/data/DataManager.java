@@ -27,6 +27,7 @@ import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
 
@@ -70,9 +71,11 @@ public class DataManager {
     public static DataStore<SchemaDefinition[]> schemaData = new DataStore<>(gson, "schemas", SchemaDefinition[].class);
     public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicates", ItemPredicate[].class);
     public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
+    public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
+            DestabilizationEffect[].class);
 
     private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, tweakData, synergyData, geodeData, replacementData,
-            schemaData, predicateData, actionData };
+            schemaData, predicateData, actionData, destabilizationData };
 
     public static DataManager instance;
 

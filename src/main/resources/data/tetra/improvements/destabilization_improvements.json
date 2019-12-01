@@ -1,0 +1,343 @@
+[
+    {
+        "key": "destabilized/haunted",
+        "level": 1,
+        "effects": {
+            "haunted": [10, 0.1]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/haunted",
+        "level": 2,
+        "effects": {
+            "haunted": [10, 0.2]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/haunted",
+        "level": 3,
+        "effects": {
+            "haunted": [10, 0.3]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/haunted",
+        "level": 4,
+        "effects": {
+            "haunted": [10, 0.4]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/fire_aspect",
+        "effects": {
+            "fierySelf": [2, 0.08]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/looting",
+        "effects": {
+            "looting": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/unbreaking",
+        "level": 1,
+        "effects": {
+            "unbreaking": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/unbreaking",
+        "level": 2,
+        "effects": {
+            "unbreaking": -2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sharpness",
+        "level": 1,
+        "damageMultiplier": 0.95,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sharpness",
+        "level": 2,
+        "damageMultiplier": 0.9,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sharpness",
+        "level": 3,
+        "damageMultiplier": 0.85,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sharpness",
+        "level": 4,
+        "damageMultiplier": 0.8,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sharpness",
+        "level": 5,
+        "damageMultiplier": 0.75,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/smite",
+        "level": 1,
+        "effects": {
+            "smite": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/smite",
+        "level": 2,
+        "effects": {
+            "smite": -2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/smite",
+        "level": 3,
+        "effects": {
+            "smite": -3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/smite",
+        "level": 4,
+        "effects": {
+            "smite": -4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/smite",
+        "level": 5,
+        "effects": {
+            "smite": -5
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bane_of_arthropods",
+        "level": 1,
+        "effects": {
+            "arthropod": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bane_of_arthropods",
+        "level": 2,
+        "effects": {
+            "arthropod": -2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bane_of_arthropods",
+        "level": 3,
+        "effects": {
+            "arthropod": -3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bane_of_arthropods",
+        "level": 4,
+        "effects": {
+            "arthropod": -4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bane_of_arthropods",
+        "level": 5,
+        "effects": {
+            "arthropod": -5
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/knockback",
+        "effects": {
+            "knockback": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/mending",
+        "effects": {
+            "mending": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sweeping",
+        "level": 1,
+        "effects": {
+            "sweeping": [0, -0.3]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sweeping",
+        "level": 2,
+        "effects": {
+            "sweeping": [0, -0.4]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sweeping",
+        "level": 3,
+        "effects": {
+            "sweeping": [0, -0.5]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 1,
+        "capabilities": {
+            "hammer": [0, -1.5],
+            "axe": [0, -1.5],
+            "pickaxe": [0, -1.5],
+            "shovel": [0, -1.5],
+            "cut": [0, -1.5],
+            "pry": [0, -1.5]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 2,
+        "capabilities": {
+            "hammer": [0, -3],
+            "axe": [0, -3],
+            "pickaxe": [0, -3],
+            "shovel": [0, -3],
+            "cut": [0, -3],
+            "pry": [0, -3]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 3,
+        "capabilities": {
+            "hammer": [0, -6],
+            "axe": [0, -6],
+            "pickaxe": [0, -6],
+            "shovel": [0, -6],
+            "cut": [0, -6],
+            "pry": [0, -6]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 4,
+        "capabilities": {
+            "hammer": [0, -12],
+            "axe": [0, -12],
+            "pickaxe": [0, -12],
+            "shovel": [0, -12],
+            "cut": [0, -12],
+            "pry": [0, -12]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 5,
+        "capabilities": {
+            "hammer": [0, -24],
+            "axe": [0, -24],
+            "pickaxe": [0, -24],
+            "shovel": [0, -24],
+            "cut": [0, -24],
+            "pry": [0, -24]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

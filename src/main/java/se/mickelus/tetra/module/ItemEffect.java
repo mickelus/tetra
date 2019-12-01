@@ -192,6 +192,15 @@ public enum ItemEffect {
     enderReverb,
 
     /**
+     * Haunted: Using the item has a chance to spawn an invisible vex that holds a copy of the item, the vex will live for 1 second per effect level
+     * and the probability for the effect to occur is equal to the effect efficiency.
+     *
+     * todo: less hack, If the item has a module with the "destabilized/haunted" improvement it's level will be reduced by 1 or removed if its level
+     * is 1.
+     */
+    haunted,
+
+    /**
      * Critical strike: Hitting entities and destroying blocks has a chance to critically strike, the probability is equal to the level of the effect.
      *
      * A critical strike on an entity deals damage multiplied by the effects efficiency, e.g. a 1.5 efficiency would cause a critical strike to deal
@@ -265,5 +274,7 @@ public enum ItemEffect {
      * Cell socket: Cells (e.g. a magmatic cell) placed in slots with this effect can provide power to other
      * modules attached to the toolbelt. The effect level decides the number of slots affected at a 1:1 ratio.
      */
-    cellSocket
+    cellSocket;
+
+    public static final String hauntedKey = "destabilized/haunted";
 }

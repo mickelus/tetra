@@ -250,7 +250,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             upgradedStack = currentSchema.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             if (upgradedStack.getItem() instanceof ItemModular) {
-                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack);
+                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world);
             }
 
             for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materials)) {
@@ -269,7 +269,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 }
             }
 
-            int xpCost = currentSchema.getExperienceCost(targetStack, materials);
+            int xpCost = currentSchema.getExperienceCost(targetStack, materials, currentSlot);
             if (xpCost > 0) {
                 player.addExperienceLevel(-xpCost);
             }

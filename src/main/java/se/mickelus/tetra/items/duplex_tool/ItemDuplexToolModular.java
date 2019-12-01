@@ -91,74 +91,74 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
 
         basicHammerHeadLeft = new MultiSlotModule(headLeftKey, "duplex/basic_hammer", leftSuffix,
-                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements");
+                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements", "destabilization_improvements");
         basicHammerHeadRight = new MultiSlotModule(headRightKey, "duplex/basic_hammer", rightSuffix,
-                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements");
+                "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(basicHammerHeadLeft);
         new BookEnchantSchema(basicHammerHeadRight);
 
         basicAxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_axe", leftSuffix,
                 "duplex/basic_axe", "duplex/basic_axe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         basicAxeRight = new MultiSlotModule(headRightKey, "duplex/basic_axe", rightSuffix,
                 "duplex/basic_axe", "duplex/basic_axe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(basicAxeLeft);
         new BookEnchantSchema(basicAxeRight);
 
         basicPickaxeLeft = new MultiSlotModule(headLeftKey, "duplex/basic_pickaxe", leftSuffix,
                 "duplex/basic_pickaxe", "duplex/basic_pickaxe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         basicPickaxeRight = new MultiSlotModule(headRightKey, "duplex/basic_pickaxe", rightSuffix,
                 "duplex/basic_pickaxe", "duplex/basic_pickaxe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(basicPickaxeLeft);
         new BookEnchantSchema(basicPickaxeRight);
 
         hoeLeft = new MultiSlotModule(headLeftKey, "duplex/hoe", leftSuffix,
                 "duplex/hoe", "duplex/hoe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         hoeRight = new MultiSlotModule(headRightKey, "duplex/hoe", rightSuffix,
                 "duplex/hoe", "duplex/hoe_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(hoeLeft);
         new BookEnchantSchema(hoeRight);
 
         adzeLeft = new MultiSlotModule(headLeftKey, "duplex/adze", leftSuffix,
                 "duplex/adze", "duplex/adze_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         adzeRight = new MultiSlotModule(headRightKey, "duplex/adze", rightSuffix,
                 "duplex/adze", "duplex/adze_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(adzeLeft);
         new BookEnchantSchema(adzeRight);
 
         sickleLeft = new MultiSlotModule(headLeftKey, "duplex/sickle", leftSuffix,
                 "duplex/sickle", "duplex/sickle_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         sickleRight = new MultiSlotModule(headRightKey, "duplex/sickle", rightSuffix,
                 "duplex/sickle", "duplex/sickle_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(sickleLeft);
         new BookEnchantSchema(sickleRight);
 
         clawLeft = new MultiSlotModule(headLeftKey, "duplex/claw", leftSuffix,
                 "duplex/claw", "duplex/claw_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         clawRight = new MultiSlotModule(headRightKey, "duplex/claw", rightSuffix,
                 "duplex/claw", "duplex/claw_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(clawLeft);
         new BookEnchantSchema(clawRight);
 
         butt = new MultiSlotModule(headRightKey, "duplex/butt", rightSuffix,
                 "duplex/butt", "duplex/butt_hone", "duplex/shared_head_hone",
-                "settling_improvements");
+                "settling_improvements", "destabilization_improvements");
         new BookEnchantSchema(butt);
 
         handle = new BasicMajorModule(handleKey, "duplex/basic_handle",
                 "duplex/basic_handle", "duplex/basic_handle_hone", "duplex/shared_head_hone",
-                "settling_improvements")
+                "settling_improvements", "destabilization_improvements")
                 .withRenderLayer(Priority.LOWER);
         new BookEnchantSchema(handle);
 

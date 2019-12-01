@@ -33,6 +33,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.network.PacketHandler;
@@ -388,10 +389,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     private String getImprovementTooltip(String key, int level) {
+        String tooltip = I18n.format(key + ".name");
         if (level > 0) {
-            return I18n.format(key + ".name") + " " + I18n.format("enchantment.level." + level);
+            tooltip += " " + I18n.format("enchantment.level." + level);
         }
-        return I18n.format(key + ".name");
+
+        return TextFormatting.getTextWithoutFormattingCodes(tooltip);
     }
 
     /**
@@ -505,9 +508,40 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public void assemble(ItemStack itemStack) {
+    public void assemble(ItemStack itemStack, World world) {
         if (itemStack.getDamage() > itemStack.getMaxDamage()) {
             itemStack.setDamage(itemStack.getMaxDamage());
+        }
+
+        applyDestabilizationEffects(itemStack, world);
+    }
+
+    private void applyDestabilizationEffects(ItemStack itemStack, World world) {
+        if (!world.isRemote) {
+            Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .forEach(module -> {
+                        int instability = -module.getMagicCapacity(itemStack);
+
+                        for (DestabilizationEffect effect:
+                                DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack))) {
+                            int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
+                            int newLevel;
+
+                            if (currentEffectLevel >= 0) {
+                                newLevel = currentEffectLevel + 1;
+                            } else if (effect.minLevel == effect.maxLevel) {
+                                newLevel = effect.minLevel;
+                            } else {
+                                newLevel = effect.minLevel + world.rand.nextInt(effect.maxLevel - effect.minLevel);
+                            }
+
+                            if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)
+                                    && effect.probability * instability > world.rand.nextFloat()) {
+                                module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
+                            }
+                        }
+                    });
         }
     }
 

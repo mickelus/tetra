@@ -146,7 +146,7 @@ public class RepairSchema extends BaseSchema {
     }
 
     @Override
-    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials) {
+    public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();
             return item.getRepairRequiredExperience(targetStack);
