@@ -280,7 +280,15 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public ModuleModel[] getModels(ItemStack itemStack) {
-        return getData(itemStack).models;
+        ModuleData data = getData(itemStack);
+
+        if (data.models == null || data.models.length == 0) {
+            return Arrays.stream(getTextures(itemStack))
+                    .map(ModuleModel::new)
+                    .toArray(ModuleModel[]::new);
+        }
+
+        return data.models;
     }
 
     public Priority getRenderLayer() {

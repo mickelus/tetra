@@ -6,4 +6,10 @@ public class ModuleModel {
     public String type = "item";
     public ResourceLocation location;
     public int tint = 0xffffffff;
+
+    public ModuleModel() {}
+
+    public ModuleModel(ResourceLocation location) {
+        this.location = location;
+    }
 }

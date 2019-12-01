@@ -100,16 +100,6 @@ public class ModularOverrideList extends ItemOverrideList {
 
         List<ModuleModel> models = item.getModels(itemStack);
 
-        if (models.isEmpty()) {
-            models = item.getTextures(itemStack).stream()
-                    .map(texture -> {
-                        ModuleModel model = new ModuleModel();
-                        model.location = texture;
-                        return model;
-                    })
-                    .collect(Collectors.toList());
-        }
-
          return new ModularItemModel(models).bake(bakery, ModelLoader.defaultTextureGetter(),
                  perState, DefaultVertexFormats.ITEM);
     }
