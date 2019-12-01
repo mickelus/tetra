@@ -19,9 +19,4 @@ public class PristineEmeraldItem extends TetraItem {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
-
-    @Override
-    public Set<ResourceLocation> getTags() {
-        return ImmutableSet.of(new ResourceLocation("gems/emerald"));
-    }
 }

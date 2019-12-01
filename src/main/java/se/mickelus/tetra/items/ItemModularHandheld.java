@@ -87,7 +87,7 @@ public class ItemModularHandheld extends ItemModular {
             Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.WOOL, Material.CARPET);
 
     // todo 1.14: test that this still works, possible cleanup. Possibly missing planks, stairs, slabs, doors
-    private static final String[] denailTags = new String[] { "fence_gates/wooden", "fences/wooden", "chests/wooden"};
+    private static final String[] denailTags = new String[] { "forge:fence_gates/wooden", "forge:fences/wooden", "forge:chests/wooden"};
     private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
             BlockMatcher.forBlock(WorkbenchBlock.instance),
             BlockMatcher.forBlock(Blocks.CRAFTING_TABLE), BlockMatcher.forBlock(Blocks.BOOKSHELF),

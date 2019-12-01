@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.geode;
 
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
@@ -18,10 +19,5 @@ public class PristineLapisItem extends TetraItem {
     public PristineLapisItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
-    }
-
-    @Override
-    public Set<ResourceLocation> getTags() {
-        return ImmutableSet.of(new ResourceLocation("gems/lapis"));
     }
 }
