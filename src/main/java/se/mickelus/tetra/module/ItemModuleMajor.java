@@ -59,7 +59,7 @@ public abstract class ItemModuleMajor extends ItemModule {
                 addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
                 tag.remove(settleProgressKey);
 
-                if (entity instanceof ServerPlayerEntity && FMLEnvironment.dist.isDedicatedServer()) {
+                if (entity instanceof ServerPlayerEntity) {
                     PacketHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayerEntity) entity);
                 }
             }

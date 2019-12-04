@@ -248,7 +248,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             if (honingProgress <= 0 && !isHoneable(itemStack)) {
                 tag.putBoolean(honeAvailableKey, true);
 
-                if (entity instanceof PlayerEntity && FMLEnvironment.dist.isDedicatedServer()) {
+                if (entity instanceof ServerPlayerEntity) {
                     PacketHandler.sendTo(new HonePacket(itemStack), (ServerPlayerEntity) entity);
                 }
             }
