@@ -13,7 +13,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hone/speed": -1
+                "!handle_hone/speed": -1
             }
         },
         "outcomes": [
@@ -22,7 +22,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/speed": 1
+                    "handle_hone/speed": 1
                 }
             }
         ]
@@ -41,7 +41,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 1
+                "handle_hone/speed": 1
             }
         },
         "outcomes": [
@@ -50,7 +50,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/speed": 2
+                    "handle_hone/speed": 2
                 }
             }
         ]
@@ -69,7 +69,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 2
+                "handle_hone/speed": 2
             }
         },
         "outcomes": [
@@ -78,7 +78,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 3
+                    "handle_hone/speed": 3
                 }
             }
         ]
@@ -97,7 +97,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 3
+                "handle_hone/speed": 3
             }
         },
         "outcomes": [
@@ -106,7 +106,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 4
+                    "handle_hone/speed": 4
                 }
             }
         ]
@@ -125,7 +125,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 4
+                "handle_hone/speed": 4
             }
         },
         "outcomes": [
@@ -134,7 +134,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 5
+                    "handle_hone/speed": 5
                 }
             }
         ]

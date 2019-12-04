@@ -1049,8 +1049,8 @@
   "duplex_head_hone_durability_5_schema.name": "Hone: Durability V",
   "duplex_head_hone_durability_5_schema.description": "Further hone the durability improvement for this module, increasing the durability bonus from 18%% to 22%%.",
 
-  "hone/durability.name": "Hone: Durability",
-  "hone/durability.description": "Increases durability",
+  "head_hone/durability.name": "Hone: Durability",
+  "head_hone/durability.description": "Increases durability",
 
   "duplex_head_hone_speed_1_schema.name": "Hone: Speed I",
   "duplex_head_hone_speed_1_schema.description": "Hone the module to increase the overall swing speed by 0.03.",
@@ -1063,8 +1063,8 @@
   "duplex_head_hone_speed_5_schema.name": "Hone: Speed V",
   "duplex_head_hone_speed_5_schema.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 0.14 to 0.17.",
 
-  "hone/speed.name": "Hone: Speed",
-  "hone/speed.description": "Increases swing speed",
+  "head_hone/speed.name": "Hone: Speed",
+  "head_hone/speed.description": "Increases swing speed",
 
   "duplex_hone_damage_flat_1_schema.name": "Hone: Damage I",
   "duplex_hone_damage_flat_1_schema.description": "Hone the module to increase the damage dealt by 0.5.",
@@ -1077,8 +1077,8 @@
   "duplex_hone_damage_flat_5_schema.name": "Hone: Damage V",
   "duplex_hone_damage_flat_5_schema.description": "Further hone the damage improvement for this module, increasing the damage bonus from 2 to 3.",
 
-  "hone/damage.name": "Hone: Damage",
-  "hone/damage.description": "Increases damage dealt",
+  "head_hone/damage.name": "Hone: Damage",
+  "head_hone/damage.description": "Increases damage dealt",
 
   "duplex_hone_axe_efficiency_1_schema.name": "Hone: Chop Eff. I",
   "duplex_hone_axe_efficiency_1_schema.description": "Hone the module to increase efficiency for chopping by 1.",
@@ -1091,14 +1091,14 @@
   "duplex_hone_axe_efficiency_5_schema.name": "Hone: Chop Eff. V",
   "duplex_hone_axe_efficiency_5_schema.description": "Further hone the chop efficiency improvement for this module, increasing the efficiency bonus from 10 to 15.",
 
-  "hone/axe_efficiency.name": "Hone: Chop Efficiency",
-  "hone/axe_efficiency.description": "Increases chopping efficiency",
+  "head_hone/axe_efficiency.name": "Hone: Chop Efficiency",
+  "head_hone/axe_efficiency.description": "Increases chopping efficiency",
 
   "duplex_hone_axe_tier_1_schema.name": "Hone: Chop Tier I",
   "duplex_hone_axe_tier_1_schema.description": "Hone the module to increase chopping tier by 1.",
 
-  "hone/axe_tier.name": "Hone: Chop Tier",
-  "hone/axe_tier.description": "Increases chopping tier by 1",
+  "head_hone/axe_tier.name": "Hone: Chop Tier",
+  "head_hone/axe_tier.description": "Increases chopping tier by 1",
 
   "duplex_hone_shovel_efficiency_1_schema.name": "Hone: Dig Eff. I",
   "duplex_hone_shovel_efficiency_1_schema.description": "Hone the module to increase efficiency for digging by 1.",
@@ -1111,14 +1111,14 @@
   "duplex_hone_shovel_efficiency_5_schema.name": "Hone: Dig Eff. V",
   "duplex_hone_shovel_efficiency_5_schema.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 10 to 15.",
 
-  "hone/shovel_efficiency.name": "Hone: Dig Efficiency",
-  "hone/shovel_efficiency.description": "Increases digging efficiency",
+  "head_hone/shovel_efficiency.name": "Hone: Dig Efficiency",
+  "head_hone/shovel_efficiency.description": "Increases digging efficiency",
 
   "duplex_hone_shovel_tier_1_schema.name": "Hone: Dig Tier I",
   "duplex_hone_shovel_tier_1_schema.description": "Hone the module to increase digging tier by 1.",
 
-  "hone/shovel_tier.name": "Hone: Dig Tier",
-  "hone/shovel_tier.description": "Increases digging tier by 1",
+  "head_hone/shovel_tier.name": "Hone: Dig Tier",
+  "head_hone/shovel_tier.description": "Increases digging tier by 1",
 
   "duplex_hone_pickaxe_efficiency_1_schema.name": "Hone: Mine Eff. I",
   "duplex_hone_pickaxe_efficiency_1_schema.description": "Hone the module to increase efficiency for mining by 1.",
@@ -1131,14 +1131,14 @@
   "duplex_hone_pickaxe_efficiency_5_schema.name": "Hone: Mine Eff. V",
   "duplex_hone_pickaxe_efficiency_5_schema.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 10 to 15.",
 
-  "hone/pickaxe_efficiency.name": "Hone: Mine Efficiency",
-  "hone/pickaxe_efficiency.description": "Increases mining efficiency",
+  "head_hone/pickaxe_efficiency.name": "Hone: Mine Efficiency",
+  "head_hone/pickaxe_efficiency.description": "Increases mining efficiency",
 
   "duplex_hone_pickaxe_tier_1_schema.name": "Hone: Mine Tier I",
   "duplex_hone_pickaxe_tier_1_schema.description": "Hone the module to increase mining tier by 1.",
 
-  "hone/pickaxe_tier.name": "Hone: Mine Tier",
-  "hone/pickaxe_tier.description": "Increases mining tier by 1",
+  "head_hone/pickaxe_tier.name": "Hone: Mine Tier",
+  "head_hone/pickaxe_tier.description": "Increases mining tier by 1",
 
   "duplex/axe_hammer": "Carpenter's hammer",
   "duplex/axe_axe": "Greataxe",
@@ -1214,6 +1214,9 @@
   "handle_hone_speed_4_schema.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 13%% to 18%%.",
   "handle_hone_speed_5_schema.name": "Hone: Speed V",
   "handle_hone_speed_5_schema.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 18%% to 22%%.",
+
+  "handle_hone/speed.name": "Hone: Speed",
+  "handle_hone/speed.description": "Increases swing speed",
 
   "duplex_socket_schema.name": "Socket",
   "duplex_socket_schema.description": "Socket a gem into the tool, providing different effects depending on the gem.",
@@ -1430,12 +1433,12 @@
   "basic_hammer/knightmetal.prefix": "Knightmetal",
 
   "adze_schema.name": "Adze head",
-  "adze_schema.description": "Craft an adze head from the given material. The adze can primarily be used for digging but can also be used for cutting wood.",
+  "adze_schema.description": "Craft an adze head from the given material. The adze can primarily be used for digging but can also be used for chopping wood.",
   "adze_schema.slot1": "Head material",
 
   "duplex/adze.item_name": "Adze",
   "duplex/adze.name": "Adze head",
-  "duplex/adze.description": "A hefty arched blade at right angles to the handle. The adze can primarily be used for digging but can also be used for cutting wood.",
+  "duplex/adze.description": "A hefty arched blade at right angles to the handle. The adze can primarily be used for digging but can also be used for chopping wood.",
 
   "adze/oak": "Wooden adze",
   "adze/oak.prefix": "Wooden",

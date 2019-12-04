@@ -19,7 +19,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "!hone/damage": -1
+                "!head_hone/damage": -1
             }
         },
         "outcomes": [
@@ -28,7 +28,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/damage": 1
+                    "head_hone/damage": 1
                 }
             }
         ]
@@ -53,7 +53,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/damage": 1
+                "head_hone/damage": 1
             }
         },
         "outcomes": [
@@ -62,7 +62,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/damage": 2
+                    "head_hone/damage": 2
                 }
             }
         ]
@@ -87,7 +87,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/damage": 2
+                "head_hone/damage": 2
             }
         },
         "outcomes": [
@@ -96,7 +96,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/damage": 3
+                    "head_hone/damage": 3
                 }
             }
         ]
@@ -121,7 +121,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/damage": 3
+                "head_hone/damage": 3
             }
         },
         "outcomes": [
@@ -130,7 +130,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/damage": 4
+                    "head_hone/damage": 4
                 }
             }
         ]
@@ -155,7 +155,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/damage": 4
+                "head_hone/damage": 4
             }
         },
         "outcomes": [
@@ -164,7 +164,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/damage": 5
+                    "head_hone/damage": 5
                 }
             }
         ]
@@ -188,7 +188,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "!hone/axe_efficiency": -1
+                "!head_hone/axe_efficiency": -1
             }
         },
         "outcomes": [
@@ -197,7 +197,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/axe_efficiency": 1
+                    "head_hone/axe_efficiency": 1
                 }
             }
         ]
@@ -221,7 +221,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/axe_efficiency": 1
+                "head_hone/axe_efficiency": 1
             }
         },
         "outcomes": [
@@ -230,7 +230,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/axe_efficiency": 2
+                    "head_hone/axe_efficiency": 2
                 }
             }
         ]
@@ -254,7 +254,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/axe_efficiency": 2
+                "head_hone/axe_efficiency": 2
             }
         },
         "outcomes": [
@@ -263,7 +263,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/axe_efficiency": 3
+                    "head_hone/axe_efficiency": 3
                 }
             }
         ]
@@ -287,7 +287,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/axe_efficiency": 3
+                "head_hone/axe_efficiency": 3
             }
         },
         "outcomes": [
@@ -296,7 +296,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/axe_efficiency": 4
+                    "head_hone/axe_efficiency": 4
                 }
             }
         ]
@@ -320,7 +320,7 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "hone/axe_efficiency": 4
+                "head_hone/axe_efficiency": 4
             }
         },
         "outcomes": [
@@ -329,7 +329,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/axe_efficiency": 5
+                    "head_hone/axe_efficiency": 5
                 }
             }
         ]
@@ -353,11 +353,11 @@
                 ["duplex/basic_axe_left"]
             ],
             "improvements": {
-                "!hone/axe_tier": -1,
-                "hone/axe_efficiency": 5,
-                "hone/durability": 5,
-                "hone/speed": 5,
-                "hone/damage": 5
+                "!head_hone/axe_tier": -1,
+                "head_hone/axe_efficiency": 5,
+                "head_hone/durability": 5,
+                "head_hone/speed": 5,
+                "head_hone/damage": 5
             }
         },
         "outcomes": [
@@ -366,7 +366,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/axe_tier": 0
+                    "head_hone/axe_tier": 0
                 }
             }
         ]

@@ -10,9 +10,9 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hone/hammer": -1,
-                "hone/durability": 5,
-                "hone/speed": 5
+                "!head_hone/hammer": -1,
+                "head_hone/durability": 5,
+                "head_hone/speed": 5
             }
         },
         "outcomes": [
@@ -21,7 +21,7 @@
                     "hammer": 4
                 },
                 "improvements": {
-                    "hone/hammer": 1
+                    "head_hone/hammer": 1
                 }
             }
         ]

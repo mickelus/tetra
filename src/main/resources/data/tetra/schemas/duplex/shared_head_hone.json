@@ -13,7 +13,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hone/durability": -1
+                "!head_hone/durability": -1
             }
         },
         "outcomes": [
@@ -22,7 +22,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/durability": 1
+                    "head_hone/durability": 1
                 }
             }
         ]
@@ -41,7 +41,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/durability": 1
+                "head_hone/durability": 1
             }
         },
         "outcomes": [
@@ -50,7 +50,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/durability": 2
+                    "head_hone/durability": 2
                 }
             }
         ]
@@ -69,7 +69,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/durability": 2
+                "head_hone/durability": 2
             }
         },
         "outcomes": [
@@ -78,7 +78,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/durability": 3
+                    "head_hone/durability": 3
                 }
             }
         ]
@@ -97,7 +97,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/durability": 3
+                "head_hone/durability": 3
             }
         },
         "outcomes": [
@@ -106,7 +106,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/durability": 4
+                    "head_hone/durability": 4
                 }
             }
         ]
@@ -125,7 +125,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/durability": 4
+                "head_hone/durability": 4
             }
         },
         "outcomes": [
@@ -134,7 +134,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/durability": 5
+                    "head_hone/durability": 5
                 }
             }
         ]
@@ -154,7 +154,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "!hone/speed": -1
+                "!head_hone/speed": -1
             }
         },
         "outcomes": [
@@ -163,7 +163,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/speed": 1
+                    "head_hone/speed": 1
                 }
             }
         ]
@@ -183,7 +183,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 1
+                "head_hone/speed": 1
             }
         },
         "outcomes": [
@@ -192,7 +192,7 @@
                     "hammer": 2
                 },
                 "improvements": {
-                    "hone/speed": 2
+                    "head_hone/speed": 2
                 }
             }
         ]
@@ -212,7 +212,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 2
+                "head_hone/speed": 2
             }
         },
         "outcomes": [
@@ -221,7 +221,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 3
+                    "head_hone/speed": 3
                 }
             }
         ]
@@ -241,7 +241,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 3
+                "head_hone/speed": 3
             }
         },
         "outcomes": [
@@ -250,7 +250,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 4
+                    "head_hone/speed": 4
                 }
             }
         ]
@@ -270,7 +270,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "hone/speed": 4
+                "head_hone/speed": 4
             }
         },
         "outcomes": [
@@ -279,7 +279,7 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "hone/speed": 5
+                    "head_hone/speed": 5
                 }
             }
         ]

@@ -1,13 +1,13 @@
 [
     {
-        "key": "hone/pickaxe_efficiency",
+        "key": "head_hone/pickaxe_efficiency",
         "level": 1,
         "capabilities": {
             "pickaxe": [0, 1]
         }
     },
     {
-        "key": "hone/pickaxe_efficiency",
+        "key": "head_hone/pickaxe_efficiency",
         "level": 2,
         "integrity": -1,
         "capabilities": {
@@ -15,7 +15,7 @@
         }
     },
     {
-        "key": "hone/pickaxe_efficiency",
+        "key": "head_hone/pickaxe_efficiency",
         "level": 3,
         "integrity": -1,
         "capabilities": {
@@ -23,7 +23,7 @@
         }
     },
     {
-        "key": "hone/pickaxe_efficiency",
+        "key": "head_hone/pickaxe_efficiency",
         "level": 4,
         "integrity": -2,
         "capabilities": {
@@ -31,7 +31,7 @@
         }
     },
     {
-        "key": "hone/pickaxe_efficiency",
+        "key": "head_hone/pickaxe_efficiency",
         "level": 5,
         "integrity": -2,
         "capabilities": {
@@ -39,7 +39,7 @@
         }
     },
     {
-        "key": "hone/pickaxe_tier",
+        "key": "head_hone/pickaxe_tier",
         "integrity": -1,
         "capabilities": {
             "pickaxe": 1

@@ -5,7 +5,7 @@
         },
         "title": "Spelunking",
         "description": "Delve deep underground",
-        "background": "minecraft:textures/blocks/black_concrete_powder.png"
+        "background": "minecraft:textures/block/black_concrete_powder.png"
     },
     "criteria": {
         "spelunking": {
