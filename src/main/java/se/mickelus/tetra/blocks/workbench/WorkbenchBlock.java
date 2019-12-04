@@ -130,15 +130,6 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        if (ConfigHandler.workbenchDropTable) {
-            return Blocks.CRAFTING_TABLE.getPickBlock(state, target, world, pos, player);
-        } else {
-            return super.getPickBlock(state, target, world, pos, player);
-        }
-    }
-
-    @Override
     public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
         BlockState accessoryBlockState = world.getBlockState(pos.offset(Direction.UP));
         if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
