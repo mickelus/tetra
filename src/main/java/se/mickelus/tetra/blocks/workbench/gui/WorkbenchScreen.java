@@ -137,6 +137,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         if (tooltipLines != null) {
             tooltipLines = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
+                    .flatMap(line -> Arrays.stream(line.split("\n")))
                     .collect(Collectors.toList());
 
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, minecraft.fontRenderer);
