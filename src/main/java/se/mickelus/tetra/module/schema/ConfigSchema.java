@@ -133,7 +133,7 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && (!ConfigHandler.moduleProgression || !ItemModular.isHoneable(itemStack))) {
+        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !ItemModular.isHoneable(itemStack))) {
             return false;
         }
 
@@ -259,7 +259,7 @@ public class ConfigSchema extends BaseSchema {
         if (consumeMaterials) {
             if (definition.hone) {
                 ItemModular.removeHoneable(upgradedStack);
-            } else if (ConfigHandler.moduleProgression && !ItemModular.isHoneable(upgradedStack)) {
+            } else if (ConfigHandler.moduleProgression.get() && !ItemModular.isHoneable(upgradedStack)) {
                 CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
                         .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
             }

@@ -55,7 +55,7 @@ public class GuiJournal extends Screen {
     }
 
     public static GuiJournal getInstance() {
-        if (instance == null || ConfigHandler.development) {
+        if (instance == null || ConfigHandler.development.get()) {
             instance = new GuiJournal();
         }
 

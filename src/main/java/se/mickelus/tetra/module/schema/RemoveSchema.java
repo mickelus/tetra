@@ -10,7 +10,6 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -120,7 +119,7 @@ public class RemoveSchema extends BaseSchema {
         }
 
         if (consumeMaterials) {
-            if (ConfigHandler.moduleProgression && ItemModular.isHoneable(upgradedStack)) {
+            if (ConfigHandler.moduleProgression.get() && ItemModular.isHoneable(upgradedStack)) {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
             }
 

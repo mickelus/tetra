@@ -74,13 +74,13 @@ public class GuiSettleProgress extends GuiElement {
             valueString.setString("");
             bar.setValue(1f, 1f);
         } else {
-            float durabilityPenalty = Math.max(module.getImprovementLevel(itemStack, ItemModuleMajor.settleImprovement) * ConfigHandler.settleLimitLevelMultiplier, 1f)
-                    * module.getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier;
+            double durabilityPenalty = Math.max(module.getImprovementLevel(itemStack, ItemModuleMajor.settleImprovement) * ConfigHandler.settleLimitLevelMultiplier.get(), 1f)
+                    * module.getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier.get();
 
             labelString.setString(I18n.format("item.tetra.modular.settle_progress.label"));
             labelString.setAttachment(GuiAttachment.topLeft);
             tooltip = Collections.singletonList(I18n.format(isGain ? "item.tetra.modular.settle_progress_gain.description" : "item.tetra.modular.settle_progress_cost.description",
-                    limit - value /*String.format("%.0f", (100f * progress))*/, limit, ConfigHandler.settleLimitBase, (int) durabilityPenalty));
+                    limit - value /*String.format("%.0f", (100f * progress))*/, limit, ConfigHandler.settleLimitBase.get(), (int) durabilityPenalty));
 
             valueString.setString(String.format("%.0f%%", (100f * progress)));
 

@@ -14,6 +14,7 @@ import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.items.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.toolbelt.ToolbeltContainer;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,6 +95,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
         if (tooltipLines != null) {
             tooltipLines = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
+                    .flatMap(line -> Arrays.stream(line.split("\n")))
                     .collect(Collectors.toList());
 
             GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, font);

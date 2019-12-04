@@ -49,7 +49,7 @@ public class ItemSwordModular extends ItemModularHandheld {
 
         requiredModules = new String[] { bladeKey, hiltKey };
 
-        updateConfig(ConfigHandler.honeSwordBase, ConfigHandler.honeSwordIntegrityMultiplier);
+        updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
     }
 
     @Override

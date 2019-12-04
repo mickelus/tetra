@@ -15,7 +15,6 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.improvement.SettlePacket;
@@ -87,8 +86,8 @@ public abstract class ItemModuleMajor extends ItemModule {
      * @return
      */
     public int getSettleLimit(ItemStack itemStack) {
-        return (int) (( ConfigHandler.settleLimitBase + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier)
-                * Math.max(getImprovementLevel(itemStack, settleImprovement) * ConfigHandler.settleLimitLevelMultiplier, 1f));
+        return (int) (( ConfigHandler.settleLimitBase.get() + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier.get())
+                * Math.max(getImprovementLevel(itemStack, settleImprovement) * ConfigHandler.settleLimitLevelMultiplier.get(), 1f));
     }
 
     /**

@@ -39,7 +39,7 @@ public class ClientProxy implements IProxy {
 
     @SubscribeEvent
     public void registerModels(ModelRegistryEvent event) {
-        if (ConfigHandler.generateFeatures) {
+        if (ConfigHandler.generateFeatures.get()) {
             // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
 
             // todo 1.14: statemappers should no longer be required as props can be ignored in the blockstate .json instead

@@ -88,7 +88,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
 
-        updateConfig(ConfigHandler.honeDuplexBase, ConfigHandler.honeDuplexIntegrityMultiplier);
+        updateConfig(ConfigHandler.honeDuplexBase.get(), ConfigHandler.honeDuplexIntegrityMultiplier.get());
 
         basicHammerHeadLeft = new MultiSlotModule(headLeftKey, "duplex/basic_hammer", leftSuffix,
                 "duplex/basic_hammer", "duplex/shared_head_hone", "settling_improvements", "destabilization_improvements");

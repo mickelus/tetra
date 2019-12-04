@@ -18,6 +18,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.network.PacketHandler;
@@ -46,16 +47,18 @@ public class GeodeBlock extends TetraBlock {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        for (Biome biome : ForgeRegistries.BIOMES) {
-            biome.addFeature(
-                    GenerationStage.Decoration.UNDERGROUND_ORES,
-                    Biome.createDecoratedFeature(
-                            Feature.ORE,
-                            new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3),
-                            Placement.COUNT_RANGE,
-                            new CountRangeConfig(120, 0, 0, 32)
-                    )
-            );
+        if (ConfigHandler.generateGeodes.get()) {
+            for (Biome biome : ForgeRegistries.BIOMES) {
+                biome.addFeature(
+                        GenerationStage.Decoration.UNDERGROUND_ORES,
+                        Biome.createDecoratedFeature(
+                                Feature.ORE,
+                                new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3),
+                                Placement.COUNT_RANGE,
+                                new CountRangeConfig(120, 0, 0, 32)
+                        )
+                );
+            }
         }
     }
 }
