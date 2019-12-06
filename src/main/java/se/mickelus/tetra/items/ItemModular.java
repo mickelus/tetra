@@ -302,11 +302,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         int damage = itemStack.getDamage();
         int maxDamage = itemStack.getMaxDamage();
 
-        if (damage < maxDamage) {
+        if (!isBroken(damage, maxDamage)) {
             int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
             itemStack.damageItem(reducedAmount, responsibleEntity, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
 
-            if (damage + reducedAmount >= maxDamage && responsibleEntity.world.isRemote) {
+            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.world.isRemote) {
+                responsibleEntity.sendBreakAnimation(responsibleEntity.getActiveHand());
                 responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
             }
         }
@@ -317,18 +318,25 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             int level = getEffectLevel(itemStack, ItemEffect.unbreaking);
             int reduction = 0;
 
-            for (int i = 0; i < amount; i++) {
-                if (UnbreakingEnchantment.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
-                    reduction++;
+            if (level > 0) {
+                for (int i = 0; i < amount; i++) {
+                    if (UnbreakingEnchantment.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
+                        reduction++;
+                    }
                 }
             }
+
             return amount - reduction;
         }
         return amount;
     }
 
     public boolean isBroken(ItemStack itemStack) {
-        return itemStack.getMaxDamage() != 0 && itemStack.getDamage() >= itemStack.getMaxDamage() - 1;
+        return isBroken(itemStack.getDamage(), itemStack.getMaxDamage());
+    }
+
+    private boolean isBroken(int damage, int maxDamage) {
+        return maxDamage != 0 && damage >= maxDamage - 1;
     }
 
     @OnlyIn(Dist.CLIENT)
