@@ -166,6 +166,7 @@
   "item.tetra.modular.repair_material.label": "Repair material:",
   "item.tetra.modular.repair_material.empty": "Does not need to be repaired",
 
+  "block.tetra.workbench": "Workbench",
   "block.tetra.block_geode": "Geode block",
   "item.tetra.geode": "Geode",
   "item.tetra.geode.tooltip": "Breaking open at a workbench may yield valuable minerals",
