@@ -3,19 +3,13 @@
         "key": "enchantment/mending",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -15,
-        "effects": {
-            "mending": 1
-        }
+        "magicCapacity": -15
     },
     {
         "key": "enchantment/mending",
         "level": 2,
         "enchantment": true,
-        "magicCapacity": -25,
-        "effects": {
-            "mending": 2
-        }
+        "magicCapacity": -25
     },
     {
         "key": "enchantment/unbreaking",

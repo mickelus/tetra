@@ -3,6 +3,7 @@ package se.mickelus.tetra.data;
 import com.google.gson.*;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -27,13 +28,11 @@ import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -54,6 +53,7 @@ public class DataManager {
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
+            .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
             .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
@@ -63,6 +63,8 @@ public class DataManager {
 
     public static DataStore<ModuleData[]> moduleData = new DataStore<>(gson, "modules", ModuleData[].class);
     public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
+    public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",
+            EnchantmentMapping[].class);
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
     public static DataStore<GeodeVariant[]> geodeData = new DataStore<>(gson, "geode", GeodeVariant[].class);
@@ -74,8 +76,8 @@ public class DataManager {
     public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
             DestabilizationEffect[].class);
 
-    private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, tweakData, synergyData, geodeData, replacementData,
-            schemaData, predicateData, actionData, destabilizationData };
+    private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, enchantmentData, tweakData, synergyData, geodeData,
+            replacementData, schemaData, predicateData, actionData, destabilizationData };
 
     public static DataManager instance;
 

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui.statbar;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantments;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
@@ -87,27 +88,27 @@ public class GuiStats {
                 0, 10, false, unarmoredDamageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.unarmoredDamage.tooltip", unarmoredDamageGetter));
 
-    public static final IStatGetter knockbackGetter = new StatGetterEffectLevel(ItemEffect.knockback, 0.5);
+    public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, I18n.format("stats.knockback"),
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("stats.knockback.tooltip", knockbackGetter));
 
-    public static final IStatGetter lootingGetter = new StatGetterEffectLevel(ItemEffect.looting, 1);
+    public static final IStatGetter lootingGetter = new StatGetterEnchantmentLevel(Enchantments.LOOTING, 1);
     public static final GuiStatBar looting = new GuiStatBar(0, 0, barLength, I18n.format("stats.looting"),
                 0, 20, false, lootingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.looting.tooltip", lootingGetter));
 
-    public static final IStatGetter fieryGetter = new StatGetterEffectLevel(ItemEffect.fiery, 4);
+    public static final IStatGetter fieryGetter = new StatGetterEnchantmentLevel(Enchantments.FIRE_ASPECT, 4);
     public static final GuiStatBar fiery = new GuiStatBar(0, 0, barLength, I18n.format("stats.fiery"),
                 0, 32, false, fieryGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.fiery.tooltip", fieryGetter));
 
-    public static final IStatGetter smiteGetter = new StatGetterEffectLevel(ItemEffect.smite, 2.5);
+    public static final IStatGetter smiteGetter = new StatGetterEnchantmentLevel(Enchantments.SMITE, 2.5);
     public static final GuiStatBar smite = new GuiStatBar(0, 0, barLength, I18n.format("stats.smite"),
                 0, 25, false, smiteGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("stats.smite.tooltip", smiteGetter));
 
-    public static final IStatGetter arthropodGetter = new StatGetterEffectLevel(ItemEffect.arthropod, 2.5);
+    public static final IStatGetter arthropodGetter = new StatGetterEnchantmentLevel(Enchantments.BANE_OF_ARTHROPODS, 2.5);
     public static final GuiStatBar arthropod = new GuiStatBar(0, 0, barLength, I18n.format("stats.arthropod"),
                 0, 25, false, arthropodGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterArthropod());
@@ -117,17 +118,17 @@ public class GuiStats {
                 0, 20, true, unbreakingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterUnbreaking());
 
-    public static final IStatGetter mendingGetter = new StatGetterEffectLevel(ItemEffect.mending, 2);
+    public static final IStatGetter mendingGetter = new StatGetterEnchantmentLevel(Enchantments.MENDING, 2);
     public static final GuiStatBar mending = new GuiStatBar(0, 0, barLength, I18n.format("stats.mending"),
-                0, 10, false, mendingGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterDecimal("stats.mending.tooltip", mendingGetter));
+                0, 10, false, mendingGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.mending.tooltip", mendingGetter));
 
-    public static final IStatGetter silkTouchGetter = new StatGetterEffectLevel(ItemEffect.silkTouch, 1);
+    public static final IStatGetter silkTouchGetter = new StatGetterEnchantmentLevel(Enchantments.SILK_TOUCH, 1);
     public static final GuiStatBar silkTouch = new GuiStatBar(0, 0, barLength, I18n.format("stats.silkTouch"),
-                0, 1, false, silkTouchGetter, LabelGetterBasic.percentageLabelDecimal,
+                0, 1, false, silkTouchGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterDecimal("stats.silkTouch.tooltip", silkTouchGetter));
 
-    public static final IStatGetter fortuneGetter = new StatGetterEffectLevel(ItemEffect.fortune, 1);
+    public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.FORTUNE, 1);
     public static final GuiStatBar fortune = new GuiStatBar(0, 0, barLength, I18n.format("stats.fortune"),
                 0, 20, false, fortuneGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.fortune.tooltip", fortuneGetter));

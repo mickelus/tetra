@@ -14,7 +14,9 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.EnchantmentMapping;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -68,19 +70,18 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
-        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem;
+        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem &&
+                EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
+                .anyMatch(entry -> {
+                    return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey()))
+                            .anyMatch(mapping ->
+                                    module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier)));
+                });
     }
 
     @Override
     public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        if (acceptsMaterial(itemStack, 0, materials[0])) {
-            return EnchantmentHelper.getEnchantments(materials[0]).entrySet().stream()
-                    .anyMatch(entry -> {
-                        String improvementKey = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-                        return module.acceptsImprovementLevel(improvementKey, entry.getValue());
-                    });
-        }
-        return false;
+        return acceptsMaterial(itemStack, 0, materials[0]);
     }
 
     @Override
@@ -113,12 +114,14 @@ public class BookEnchantSchema implements UpgradeSchema {
 
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
-                module.addImprovement(upgradedStack, improvement, entry.getValue());
+            for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
+                if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
+                    module.addImprovement(upgradedStack, mapping.improvement, entry.getValue());
 
-                if (consumeMaterials && player instanceof ServerPlayerEntity) {
-                    ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, entry.getValue(), null, -1);
+                    if (consumeMaterials && player instanceof ServerPlayerEntity) {
+                        ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot,
+                                mapping.improvement, (int) (entry.getValue() / mapping.multiplier), null, -1);
+                    }
                 }
             }
         }
@@ -150,9 +153,10 @@ public class BookEnchantSchema implements UpgradeSchema {
         int cost = 0;
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-            if (module.acceptsImprovementLevel(improvement, entry.getValue())) {
-                cost += entry.getValue();
+            for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
+                if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
+                    cost += entry.getValue() / mapping.multiplier;
+                }
             }
         }
 

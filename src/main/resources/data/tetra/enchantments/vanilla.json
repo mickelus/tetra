@@ -1,0 +1,94 @@
+[
+    {
+        "enchantment": "minecraft:mending",
+        "improvement": "enchantment/mending"
+    },
+    {
+        "enchantment": "minecraft:mending",
+        "improvement": "destabilized/mending",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:unbreaking",
+        "improvement": "enchantment/unbreaking",
+        "apply": false
+    },
+    {
+        "enchantment": "minecraft:knockback",
+        "improvement": "enchantment/knockback"
+    },
+    {
+        "enchantment": "minecraft:knockback",
+        "improvement": "destabilized/knockback",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:sharpness",
+        "improvement": "enchantment/sharpness",
+        "apply": false
+    },
+    {
+        "enchantment": "minecraft:smite",
+        "improvement": "enchantment/smite"
+    },
+    {
+        "enchantment": "minecraft:smite",
+        "improvement": "destabilized/smite",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:bane_of_arthropods",
+        "improvement": "enchantment/bane_of_arthropods"
+    },
+    {
+        "enchantment": "minecraft:bane_of_arthropods",
+        "improvement": "destabilized/bane_of_arthropods",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:fire_aspect",
+        "improvement": "enchantment/fire_aspect"
+    },
+    {
+        "enchantment": "minecraft:fire_aspect",
+        "improvement": "destabilized/fire_aspect",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:looting",
+        "improvement": "enchantment/looting"
+    },
+    {
+        "enchantment": "minecraft:looting",
+        "improvement": "destabilized/looting",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:sweeping",
+        "improvement": "enchantment/sweeping",
+        "apply": false
+    },
+    {
+        "enchantment": "minecraft:fortune",
+        "improvement": "enchantment/fortune"
+    },
+    {
+        "enchantment": "minecraft:silk_touch",
+        "improvement": "enchantment/silk_touch"
+    },
+    {
+        "enchantment": "minecraft:efficiency",
+        "improvement": "enchantment/efficiency",
+        "apply": false
+    },
+    {
+        "enchantment": "minecraft:vanishing_curse",
+        "improvement": "destabilized/vanishing"
+    }
+]

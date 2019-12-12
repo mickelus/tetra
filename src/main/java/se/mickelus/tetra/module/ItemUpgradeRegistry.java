@@ -4,12 +4,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.schema.*;
 
 import java.util.*;
@@ -29,6 +28,8 @@ public class ItemUpgradeRegistry {
     private Map<String, RepairDefinition> repairMap;
 
     private Map<String, ItemModule> moduleMap;
+
+    private List<EnchantmentMapping> enchantmentMappings;
 
     public ItemUpgradeRegistry() {
         instance = this;
@@ -142,27 +143,46 @@ public class ItemUpgradeRegistry {
             ItemModular item = (ItemModular) modularStack.getItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                String improvement = ItemUpgradeRegistry.instance.getImprovementFromEnchantment(entry.getKey());
-                ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(modularStack))
-                        .filter(module -> module.acceptsImprovement(improvement))
-                        .toArray(ItemModuleMajor[]::new);
-                if (modules.length > 0) {
-                    float level = 1f * entry.getValue() / modules.length;
+                for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
+                    ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(modularStack))
+                            .filter(module -> module.acceptsImprovement(mapping.improvement))
+                            .toArray(ItemModuleMajor[]::new);
+                    if (modules.length > 0) {
+                        float level = 1f * entry.getValue() / modules.length / mapping.multiplier;
 
-                    for (int i = 0; i < modules.length; i++) {
-                        if (i == 0) {
-                            if (modules[i].acceptsImprovementLevel(improvement, (int) Math.ceil(level))) {
-                                modules[i].addImprovement(modularStack, improvement, (int) Math.ceil(level));
-                            }
-                        } else {
-                            if (modules[i].acceptsImprovementLevel(improvement, (int) level)) {
-                                modules[i].addImprovement(modularStack, improvement, (int) level);
+                        for (int i = 0; i < modules.length; i++) {
+                            if (i == 0) {
+                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
+                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) Math.ceil(level));
+                                }
+                            } else {
+                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) level);
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    public EnchantmentMapping[] getEnchantmentMappings(String improvement) {
+        return DataManager.enchantmentData.getData().values().stream()
+                .flatMap(Arrays::stream)
+                .filter(mapping -> mapping.enchantment != null)
+                .filter(mapping -> improvement.equals(mapping.improvement))
+                .filter(mapping -> mapping.apply)
+                .toArray(EnchantmentMapping[]::new);
+    }
+
+    public EnchantmentMapping[] getEnchantmentMappings(Enchantment enchantment) {
+        return DataManager.enchantmentData.getData().values().stream()
+                .flatMap(Arrays::stream)
+                .filter(mapping -> mapping.enchantment != null)
+                .filter(mapping -> enchantment.equals(mapping.enchantment))
+                .filter(mapping -> mapping.extract)
+                .toArray(EnchantmentMapping[]::new);
     }
 
     public void registerModule(String key, ItemModule module) {
@@ -175,12 +195,5 @@ public class ItemUpgradeRegistry {
 
     public Collection<ItemModule> getAllModules() {
 	    return moduleMap.values();
-    }
-
-    public String getImprovementFromEnchantment(Enchantment enchantment) {
-        return Optional.ofNullable(enchantment.getRegistryName())
-                .map(ResourceLocation::getPath)
-                .map(path -> "enchantment/" + path)
-                .orElse(null);
     }
 }
