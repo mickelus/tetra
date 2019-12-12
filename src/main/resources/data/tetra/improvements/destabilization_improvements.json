@@ -297,5 +297,12 @@
         "glyph": {
             "tint": "ee5599"
         }
+    },
+    {
+        "key": "destabilized/vanishing",
+        "enchantment": true,
+        "glyph": {
+            "tint": "ee5599"
+        }
     }
 ]

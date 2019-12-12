@@ -90,5 +90,9 @@
     {
         "enchantment": "minecraft:vanishing_curse",
         "improvement": "destabilized/vanishing"
+    },
+    {
+        "enchantment": "minecraft:binding_curse",
+        "improvement": "destabilized/binding"
     }
 ]
