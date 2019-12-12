@@ -14,9 +14,12 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.7'
+if (System.getenv('version') != null)
+    tetra_version = System.getenv('version')
+
+version = "${mc_version}-${tetra_version}"
 group = 'se.mickelus.tetra' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'tetra-1.14.4'
+archivesBaseName = "tetra"
 
 repositories {
     mavenLocal()
