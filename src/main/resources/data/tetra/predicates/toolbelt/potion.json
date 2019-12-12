@@ -4,5 +4,21 @@
     { "item": "minecraft:splash_potion" },
     { "item": "minecraft:glass_bottle" },
     { "item": "rustic:elixir" },
-    { "item": "rustic:fluid_bottle" }
+    { "item": "rustic:fluid_bottle" },
+    { "item": "firefly:potion_druids_delight" },
+    { "item": "firefly:potion_bloodfury" },
+    { "item": "firefly:potion_liquid_luck" },
+    { "item": "firefly:potion_mandragora" },
+    { "item": "firefly:potion_wisdom_draught" },
+    { "item": "firefly:potion_dragons_wrath" },
+    { "item": "enigmaticlegacy:recall_potion" },
+    { "item": "enigmaticlegacy:common_potion" },
+    { "item": "enigmaticlegacy:common_potion_splash" },
+    { "item": "enigmaticlegacy:common_potion_lingering" },
+    { "item": "enigmaticlegacy:ultimate_potion" },
+    { "item": "enigmaticlegacy:ultimate_potion_splash" },
+    { "item": "enigmaticlegacy:ultimate_potion_lingering" },
+    { "item": "bountifulbaubles:potion_recall" },
+    { "item": "bountifulbaubles:potion_wormhole" },
+    { "tag": "forge:potion" }
 ]
