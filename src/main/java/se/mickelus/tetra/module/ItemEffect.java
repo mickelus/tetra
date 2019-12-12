@@ -47,38 +47,6 @@ public enum ItemEffect {
     unarmoredDamage,
 
     /**
-     * Knockback: Increases how far hit entities are knocked back, similar to the vanilla knockback enchant.
-     * Each level increases the knockback strength by 0.5, whatever that means...
-     */
-    knockback,
-
-    /**
-     * Looting: Similar to the vanilla looting enchant. Increases the looting level equal to the effect level when
-     * killing an entity (or possibly in other events where the looting level is used).
-     */
-    looting,
-
-    /**
-     * Fiery: Similar to vanilla fire aspect. Hitting an entity sets it on fire for 4 seconds, multiplied by the effect
-     * level.
-     */
-    fiery,
-
-    /**
-     * Smite: Similar to vanilla smiting. Hitting an undead entity cause an additional 2.5 damage, multiplied by the
-     * effect level.
-     */
-    smite,
-
-    /**
-     * Arthropod: Hitting an arthropod (spiders, silverfish, etc) deals additional damage and applies the slowness IV
-     * effect to the target, similar to vanilla bane of arthropods. Causes an additional 2.5 damage, multiplied
-     * by the effect level. The duration of the slowness effect is a random value between 1 and 1.5 seconds, the max
-     * duration is increased by 0.5 seconds for each effect level.
-     */
-    arthropod,
-
-    /**
      * Sweeping: Attacking an entity also hits all enemies adjacent to the target, similar to the vanilla sweeping edge
      * enchant.
      * - deals 12.5% of weapon damage per sweeping level to sweeped entities, minimum damage is 1 before reductions
@@ -112,18 +80,6 @@ public enum ItemEffect {
      * that the item will take damage. Uses the same mechanic as the vanilla does for the unbreaking enchantment.
      */
     unbreaking,
-
-    /**
-     * Mending: If an item held in the mainhand or offhand has this effect it will be repaired when the player collects
-     * XP orbs, but the player gains no experience instead. If both items has the effect the mainhand item will be
-     * prioritized. The item gains ( 1 + effect level ) points of durability for each point of XP.
-     */
-    mending,
-
-    /**
-     * Silk Touch: Harvesting blocks cause the block to drop instead of the usual item, similar to the vanilla behaviour.
-     */
-    silkTouch,
 
     /**
      * Fortune: Increases drop chances when harvesting blocks. Each effect level increase the fortune level by 1.

@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.UnbreakingEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,10 +35,12 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -354,7 +358,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .forEach(module -> {
                         tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)).setStyle(basicStyle));
                         Arrays.stream(module.getImprovements(itemStack))
-                                .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level)))
+                                .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
                                 .map(StringTextComponent::new)
                                 .map(textComponent -> textComponent.setStyle(new Style().setColor(TextFormatting.DARK_GRAY)))
                                 .forEach(tooltip::add);
@@ -389,20 +393,23 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .collect(Collectors.groupingBy(ImprovementData::getKey, Collectors.summingInt(ImprovementData::getLevel)))
                     .entrySet()
                     .stream()
-                    .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue()))
+                    .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
                     .map(StringTextComponent::new)
                     .map(text -> text.setStyle(basicStyle))
                     .forEach(tooltip::add);
         }
     }
 
-    private String getImprovementTooltip(String key, int level) {
+    private String getImprovementTooltip(String key, int level, boolean clearFormatting) {
         String tooltip = I18n.format(key + ".name");
         if (level > 0) {
             tooltip += " " + I18n.format("enchantment.level." + level);
         }
 
-        return TextFormatting.getTextWithoutFormattingCodes(tooltip);
+        if (clearFormatting) {
+            return TextFormatting.getTextWithoutFormattingCodes(tooltip);
+        }
+        return tooltip;
     }
 
     /**
@@ -522,6 +529,69 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
 
         applyDestabilizationEffects(itemStack, world);
+
+        CompoundNBT nbt = NBTHelper.getTag(itemStack);
+
+        // this stops the tooltip renderer from showing enchantments
+        nbt.putInt("HideFlags", 1);
+
+        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
+    }
+
+    public Map<Enchantment, Integer> getEnchantmentsFromImprovements(ItemStack itemStack) {
+        Map<Enchantment, Integer> enchantments = new HashMap<>();
+        CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
+                .orElseGet(Stream::empty)
+                .filter(Objects::nonNull)
+                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
+                .forEach(improvement -> {
+                    for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key)) {
+                        enchantments.merge(mapping.enchantment, (int) (improvement.level * mapping.multiplier), Integer::sum);
+                    }
+                });
+
+        return enchantments;
+    }
+
+    public int getEnchantmentLevelFromImprovements(ItemStack itemStack, Enchantment enchantment) {
+        return Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
+                .mapToInt(improvement ->
+                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
+                        .filter(mapping -> enchantment.equals(mapping.enchantment))
+                        .map(mapping -> mapping.multiplier)
+                        .reduce(0f, Float::sum))
+                    )
+                .sum();
+    }
+
+    public int getEnchantmentLevelFromImprovements(ItemStack itemStack, String slot, Enchantment enchantment) {
+        return CastOptional.cast(getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
+                .map(module -> Arrays.stream(module.getImprovements(itemStack)))
+                .orElseGet(Stream::empty)
+                .mapToInt(improvement ->
+                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
+                        .filter(mapping -> enchantment.equals(mapping.enchantment))
+                        .map(mapping -> mapping.multiplier)
+                        .reduce(0f, Float::sum))
+                )
+                .sum();
+    }
+
+    public int getEnchantmentLevelFromImprovements(ItemStack itemStack, String slot, String improvementKey, Enchantment enchantment) {
+        return CastOptional.cast(getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
+                .map(module -> Arrays.stream(module.getImprovements(itemStack)))
+                .orElseGet(Stream::empty)
+                .filter(improvement -> improvementKey.equals(improvement.key))
+                .mapToInt(improvement ->
+                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
+                                .filter(mapping -> enchantment.equals(mapping.enchantment))
+                                .map(mapping -> mapping.multiplier)
+                                .reduce(0f, Float::sum))
+                )
+                .sum();
     }
 
     private void applyDestabilizationEffects(ItemStack itemStack, World world) {

@@ -326,6 +326,8 @@
   "destabilized/efficiency.description": "Reduces efficiency",
   "destabilized/fortune.name": "§5Destabilized: Fortune",
   "destabilized/fortune.description": "Reduces effectiveness of fortune effects",
+  "destabilized/vanishing.name": "§cCurse of Vanishing",
+  "destabilized/vanishing.description": "Causes the item to disappear if the wielder dies",
 
   "cleanse_schema.name": "Cleanse",
   "cleanse_schema.description": "Cleanse negative effects caused by magic instability.\n\nExperience cost is increased based on exceeded magic capacity and the amount of instability effects.",

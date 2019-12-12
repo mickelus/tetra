@@ -73,5 +73,10 @@
         "minLevel": 1,
         "maxLevel": 2,
         "probability": 0.02
+    },
+    {
+        "destabilizationKey":  "destabilized/vanishing",
+        "probability": 0.1,
+        "instabilityLimit": 7
     }
 ]

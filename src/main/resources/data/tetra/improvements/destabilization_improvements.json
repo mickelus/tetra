@@ -41,18 +41,12 @@
     },
     {
         "key": "destabilized/fire_aspect",
-        "effects": {
-            "fierySelf": [2, 0.08]
-        },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/looting",
-        "effects": {
-            "looting": -1
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -120,9 +114,6 @@
     {
         "key": "destabilized/smite",
         "level": 1,
-        "effects": {
-            "smite": -1
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -130,9 +121,6 @@
     {
         "key": "destabilized/smite",
         "level": 2,
-        "effects": {
-            "smite": -2
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -140,9 +128,6 @@
     {
         "key": "destabilized/smite",
         "level": 3,
-        "effects": {
-            "smite": -3
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -150,9 +135,6 @@
     {
         "key": "destabilized/smite",
         "level": 4,
-        "effects": {
-            "smite": -4
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -160,9 +142,6 @@
     {
         "key": "destabilized/smite",
         "level": 5,
-        "effects": {
-            "smite": -5
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -170,9 +149,6 @@
     {
         "key": "destabilized/bane_of_arthropods",
         "level": 1,
-        "effects": {
-            "arthropod": -1
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -180,9 +156,6 @@
     {
         "key": "destabilized/bane_of_arthropods",
         "level": 2,
-        "effects": {
-            "arthropod": -2
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -190,9 +163,6 @@
     {
         "key": "destabilized/bane_of_arthropods",
         "level": 3,
-        "effects": {
-            "arthropod": -3
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -200,9 +170,6 @@
     {
         "key": "destabilized/bane_of_arthropods",
         "level": 4,
-        "effects": {
-            "arthropod": -4
-        },
         "glyph": {
             "tint": "ee5599"
         }
@@ -210,27 +177,18 @@
     {
         "key": "destabilized/bane_of_arthropods",
         "level": 5,
-        "effects": {
-            "arthropod": -5
-        },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/knockback",
-        "effects": {
-            "knockback": -1
-        },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/mending",
-        "effects": {
-            "mending": -1
-        },
         "glyph": {
             "tint": "ee5599"
         }

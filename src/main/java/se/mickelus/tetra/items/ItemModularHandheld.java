@@ -29,6 +29,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
@@ -157,8 +158,8 @@ public class ItemModularHandheld extends ItemModular {
         if (!world.isRemote) {
             int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
             if (intuitLevel > 0) {
-                int xp = state.getExpDrop(world, pos, getEffectLevel(itemStack, ItemEffect.fortune),
-                        getEffectLevel(itemStack, ItemEffect.silkTouch));
+                int xp = state.getExpDrop(world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemStack),
+                        EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack));
                 if (xp > 0) {
                     tickHoningProgression(entity, itemStack, xp);
                 }
@@ -179,21 +180,9 @@ public class ItemModularHandheld extends ItemModular {
         if (!isBroken(itemStack)) {
             getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
 
-            int fieryLevel = getEffectLevel(itemStack, ItemEffect.fiery);
-            if (fieryLevel > 0) {
-                target.setFire(fieryLevel * 4);
-            }
-
-            int knockbackLevel = getEffectLevel(itemStack, ItemEffect.knockback);
-            if (knockbackLevel > 0) {
-                target.knockBack(attacker, knockbackLevel * 0.5f,
-                        MathHelper.sin(attacker.rotationYaw * 0.017453292F),
-                        -MathHelper.cos(attacker.rotationYaw * 0.017453292F));
-            }
-
             int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
             if (sweepingLevel > 0) {
-                sweepAttack(itemStack, target, attacker, sweepingLevel, knockbackLevel);
+                sweepAttack(itemStack, target, attacker, sweepingLevel);
             }
 
             int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
@@ -202,12 +191,6 @@ public class ItemModularHandheld extends ItemModular {
                         && attacker.getRNG().nextFloat() < 0.3f) {
                     target.addPotionEffect(new EffectInstance(BleedingEffect.instance, 40, bleedingLevel));
                 }
-            }
-
-            int arthropodLevel = getEffectLevel(itemStack, ItemEffect.arthropod);
-            if (arthropodLevel > 0 && CreatureAttribute.ARTHROPOD.equals(target.getCreatureAttribute())) {
-                int ticks = 20 + attacker.getRNG().nextInt(10 * arthropodLevel);
-                target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, ticks, 3));
             }
 
             // todo: only trigger if target is standing on stone/earth/sand/gravel
@@ -282,7 +265,7 @@ public class ItemModularHandheld extends ItemModular {
             }
         }
     }
-    
+
     protected void causeEnderReverbEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.world.isRemote) {
             double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
@@ -488,9 +471,8 @@ public class ItemModularHandheld extends ItemModular {
      * @param target the attacking entity
      * @param attacker the attacked entity
      * @param sweepingLevel the level of the sweeping effect of the itemstack
-     * @param knockbackLevel the level of the knockback effect of the itemstack
      */
-    private void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel, int knockbackLevel) {
+    private void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel) {
         float cooldown = 1;
         if (attacker instanceof PlayerEntity) {
             cooldown = ItemModularHandheld.getCooledAttackStrength(itemStack);
@@ -498,7 +480,7 @@ public class ItemModularHandheld extends ItemModular {
 
         if (cooldown > 0.9) {
             float damage = (float) Math.max((getDamageModifier(itemStack) + 1) * (sweepingLevel * 0.125f), 1);
-            float knockback = sweepingLevel > 4 ? (knockbackLevel + 1) * 0.5f : 0.5f;
+            float knockback = sweepingLevel > 4 ? (getEnchantmentLevelFromImprovements(itemStack, Enchantments.KNOCKBACK) + 1) * 0.5f : 0.5f;
             double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
             // range values set up to mimic vanilla behaviour
@@ -773,23 +755,5 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
-    }
-
-    @Override
-    public void assemble(ItemStack itemStack, World world) {
-        super.assemble(itemStack, world);
-
-        CompoundNBT nbt = NBTHelper.getTag(itemStack);
-
-        nbt.remove("ench");
-
-        // this stops the tooltip renderer from showing enchantments
-        nbt.putInt("HideFlags", 1);
-
-        if (getEffects(itemStack).contains(ItemEffect.silkTouch)) {
-            Map<Enchantment, Integer> enchantments = new HashMap<>();
-            enchantments.put(Enchantments.SILK_TOUCH, 1);
-            EnchantmentHelper.setEnchantments(enchantments, itemStack);
-        }
     }
 }

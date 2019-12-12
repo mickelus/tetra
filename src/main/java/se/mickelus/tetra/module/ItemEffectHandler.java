@@ -137,19 +137,6 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onLootingLevel(LootingLevelEvent event) {
-        Optional.ofNullable(event.getDamageSource().getTrueSource())
-                .filter(entity -> entity instanceof PlayerEntity)
-                .map(entity -> (LivingEntity) entity)
-                .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
-                .ifPresent(itemStack -> {
-                    event.setLootingLevel(getEffectLevel(itemStack, ItemEffect.looting) + event.getLootingLevel());
-                });
-    }
-
-    @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
         Optional.ofNullable(event.getSource().getTrueSource())
                 .filter(entity -> entity instanceof PlayerEntity)
@@ -167,14 +154,6 @@ public class ItemEffectHandler {
                         if (event.getAmount() <  multiplier * maxDamage) {
                             event.setAmount(multiplier * maxDamage);
                         }
-                    }
-
-                    if (CreatureAttribute.UNDEAD.equals(event.getEntityLiving().getCreatureAttribute())) {
-                        event.setAmount(event.getAmount() + getEffectLevel(itemStack, ItemEffect.smite) * 2.5f);
-                    }
-
-                    if (CreatureAttribute.ARTHROPOD.equals(event.getEntityLiving().getCreatureAttribute())) {
-                        event.setAmount(event.getAmount() + getEffectLevel(itemStack, ItemEffect.arthropod) * 2.5f);
                     }
                 });
     }
@@ -232,34 +211,6 @@ public class ItemEffectHandler {
                             event.setDamageModifier(Math.max((float) getEffectEfficiency(itemStack, ItemEffect.criticalStrike), event.getDamageModifier()));
                             event.setResult(Event.Result.ALLOW);
                         }
-                    }
-                });
-    }
-
-    @SubscribeEvent
-    public void onPlayerPickupXp(PlayerXpEvent.PickupXp event) {
-        PlayerEntity player = event.getPlayer();
-        Stream.concat(
-                player.inventory.mainInventory.stream(),
-                player.inventory.offHandInventory.stream())
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
-                .filter(ItemStack::isDamaged)
-                .filter(itemStack -> getEffectLevel(itemStack, ItemEffect.mending) > 0)
-                .findAny()
-                .ifPresent(itemStack -> {
-                    int multiplier = getEffectLevel(itemStack, ItemEffect.mending) + 1;
-                    ExperienceOrbEntity orb = event.getOrb();
-                    int durabilityGain = Math.min(orb.xpValue * multiplier, itemStack.getDamage());
-                    orb.xpValue -= durabilityGain / multiplier;
-                    itemStack.setDamage(itemStack.getDamage() - durabilityGain);
-
-                    if (orb.xpValue <= 0) {
-                        orb.xpValue = 0;
-                        player.xpCooldown = 2;
-                        player.onItemPickup(orb, 1);
-                        orb.remove();
-                        event.setCanceled(true);
                     }
                 });
     }
