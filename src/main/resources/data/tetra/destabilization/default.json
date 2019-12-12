@@ -76,7 +76,7 @@
     },
     {
         "destabilizationKey":  "destabilized/vanishing",
-        "probability": 0.1,
+        "probability": 0.01,
         "instabilityLimit": 7
     }
 ]
