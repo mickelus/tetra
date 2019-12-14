@@ -60,46 +60,31 @@
         "key": "enchantment/knockback",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -1,
-        "effects": {
-            "knockback": 1
-        }
+        "magicCapacity": -1
     },
     {
         "key": "enchantment/knockback",
         "level": 2,
         "enchantment": true,
-        "magicCapacity": -2,
-        "effects": {
-            "knockback": 2
-        }
+        "magicCapacity": -2
     },
     {
         "key": "enchantment/knockback",
         "level": 3,
         "enchantment": true,
-        "magicCapacity": -3,
-        "effects": {
-            "knockback": 3
-        }
+        "magicCapacity": -3
     },
     {
         "key": "enchantment/knockback",
         "level": 4,
         "enchantment": true,
-        "magicCapacity": -4,
-        "effects": {
-            "knockback": 4
-        }
+        "magicCapacity": -4
     },
     {
         "key": "enchantment/knockback",
         "level": 5,
         "enchantment": true,
-        "magicCapacity": -5,
-        "effects": {
-            "knockback": 5
-        }
+        "magicCapacity": -5
     },
     {
         "key": "basic_handle/blazing",

@@ -9,7 +9,7 @@ package se.mickelus.tetra.module.data;
  *     "level": 2,
  *     "enchantment": true,
  *     "effects": {
- *         "smite": 2
+ *         "bleeding": 2
  *     }
  * }
  */

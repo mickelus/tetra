@@ -48,9 +48,6 @@
         "key": "enchantment/silk_touch",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -15,
-        "effects": {
-            "silkTouch": 1
-        }
+        "magicCapacity": -15
     }
 ]
