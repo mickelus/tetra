@@ -8,14 +8,12 @@
                 {
                     "type": "minecraft:item",
                     "name": "tetra:pristine_diamond",
-                    "weight": 4,
+                    "weight": 6,
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.4,
-                            "fortuneMultiplier": 0.1,
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "chance": 0.1,
+                            "fortuneMultiplier": 0.15
                         }
                     ]
                 },
@@ -26,58 +24,66 @@
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.4,
-                            "fortuneMultiplier": 0.1,
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "chance": 0.1,
+                            "fortuneMultiplier": 0.15
                         }
                     ]
                 },
                 {
                     "type": "minecraft:item",
                     "name": "tetra:pristine_lapis",
-                    "weight": 4,
+                    "weight": 8,
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.4,
-                            "fortuneMultiplier": 0.1,
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "chance": 0.1,
+                            "fortuneMultiplier": 0.15
                         }
                     ]
                 },
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:diamond",
-                    "functions": [
+                    "weight": 4,
+                    "conditions": [
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 0.3
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.5,
+                            "fortuneMultiplier": 0.2
                         }
                     ],
-                    "weight": 2
+                    "functions": [
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment":"minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:emerald",
-                    "functions": [
+                    "weight": 2,
+                    "conditions": [
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 0.3
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.5,
+                            "fortuneMultiplier": 0.2
                         }
                     ],
-                    "weight": 1
+                    "functions": [
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "minecraft:item",
@@ -91,13 +97,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 0.8
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 4
+                            }
                         }
                     ],
                     "weight": 4
@@ -114,13 +119,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 1.2
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 3
+                            }
                         }
                     ],
                     "weight": 5
@@ -137,13 +141,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 1.2
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 3
+                            }
                         }
                     ],
                     "weight": 5
@@ -160,13 +163,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 0.8
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
                         }
                     ],
                     "weight": 6
@@ -183,16 +185,84 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 2
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 4
+                            }
                         }
                     ],
                     "weight": 8
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "forge:nuggets/copper",
+                    "expand": true,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 6
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 3
+                            }
+                        }
+                    ],
+                    "weight": 7
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "forge:nuggets/aluminum",
+                    "expand": true,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 6
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 3
+                            }
+                        }
+                    ],
+                    "weight": 7
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "forge:nuggets/silver",
+                    "expand": true,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 6
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ],
+                    "weight": 6
                 }
             ]
         }

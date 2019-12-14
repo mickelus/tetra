@@ -3,6 +3,8 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -14,6 +16,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.util.CastOptional;
 
 public class FortuneBonusCondition implements ILootCondition {
     private float chance;
@@ -25,13 +28,17 @@ public class FortuneBonusCondition implements ILootCondition {
     @Override
     public boolean test(LootContext context) {
         int fortuneLevel = 0;
-        Entity entity = context.get(LootParameters.THIS_ENTITY);
 
-        if (entity != null && requiredCapability != null) {
-            ItemStack itemStack = CapabilityHelper.getProvidingItemStack(requiredCapability, capabilityLevel, entity);
-            if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
-                fortuneLevel = ((ItemModular) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.fortune);
+        if (requiredCapability != null) {
+            ItemStack toolStack = context.get(LootParameters.TOOL);
+
+            if (toolStack != null && toolStack.getItem() instanceof ItemModular) {
+                if (((ItemModular) toolStack.getItem()).getCapabilityLevel(toolStack, requiredCapability) > capabilityLevel) {
+                    fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, toolStack);
+                }
             }
+        } else {
+            fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, context.get(LootParameters.TOOL));
         }
 
         return context.getRandom().nextFloat() < this.chance + fortuneLevel * this.fortuneMultiplier;

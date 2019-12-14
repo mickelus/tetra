@@ -51,8 +51,6 @@ import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
-import se.mickelus.tetra.loot.FortuneBonusFunction;
-import se.mickelus.tetra.loot.SetMetadataFunction;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
@@ -97,8 +95,6 @@ public class TetraMod {
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
 
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
-        LootFunctionManager.registerFunction(new FortuneBonusFunction.Serializer());
-        LootFunctionManager.registerFunction(new SetMetadataFunction.Serializer());
 
         new ItemUpgradeRegistry();
 

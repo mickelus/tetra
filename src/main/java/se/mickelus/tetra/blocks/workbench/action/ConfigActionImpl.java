@@ -9,14 +9,21 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.*;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.CapabilityHelper;
+
+import java.util.Comparator;
+import java.util.Map;
 
 public class ConfigActionImpl extends ConfigAction {
+
+    private static final LootParameterSet lootParameters = new LootParameterSet.Builder()
+            .required(LootParameters.TOOL)
+            .required(LootParameters.THIS_ENTITY)
+            .required(LootParameters.POSITION)
+            .build();
 
     @Override
     public String getKey() {
@@ -43,13 +50,18 @@ public class ConfigActionImpl extends ConfigAction {
         if (!player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+            ItemStack toolStack = requiredCapabilities.valueMap.entrySet().stream()
+                    .sorted(Comparator.comparing(Map.Entry::getValue))
+                    .findFirst()
+                    .map(entry -> CapabilityHelper.getProvidingItemStack(entry.getKey(), entry.getValue(), player))
+                    .orElse(ItemStack.EMPTY);
 
-            // todo 1.14: set up new loot param set to fit action needs
             LootContext context = new LootContext.Builder(world)
                     .withLuck(player.getLuck())
+                    .withParameter(LootParameters.TOOL, toolStack)
                     .withParameter(LootParameters.THIS_ENTITY, player)
                     .withParameter(LootParameters.POSITION, player.getPosition())
-                    .build(LootParameterSets.GIFT);
+                    .build(lootParameters);
 
             table.generate(context).forEach(itemStack -> {
                 if (!player.inventory.addItemStackToInventory(itemStack)) {
@@ -63,7 +75,8 @@ public class ConfigActionImpl extends ConfigAction {
 
             world.spawnParticle(new ItemParticleData(ParticleTypes.ITEM, targetStack),
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
-                    1, 0, world.rand.nextGaussian() * 0.2, 0, 0);
+                    4, 0, 0, 0,
+                    0.1f);
 
             // todo: add proper criteria
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, targetStack);

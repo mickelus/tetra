@@ -17,13 +17,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 1.2
-                            },
-                            "requiredCapability": "hammer",
-                            "capabilityLevel": 2
+                            "function": "minecraft:apply_bonus",
+                            "enchantment":"minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 3
+                            }
                         }
                     ]
                 }
