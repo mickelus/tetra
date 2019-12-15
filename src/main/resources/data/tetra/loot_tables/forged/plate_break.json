@@ -12,9 +12,7 @@
                         {
                             "condition": "tetra:random_chance_with_fortune",
                             "chance": 0.5,
-                            "fortuneMultiplier": 0.1,
-                            "requiredCapability": "pry",
-                            "capabilityLevel": 1
+                            "fortuneMultiplier": 0.1
                         }
                     ]
                 },
@@ -31,13 +29,12 @@
                             }
                         },
                         {
-                            "function": "tetra:fortune_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 2
-                            },
-                            "requiredCapability": "pry",
-                            "capabilityLevel": 1
+                            "function": "minecraft:apply_bonus",
+                            "enchantment":"minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
                         }
                     ]
                 }

@@ -12,4 +12,10 @@ public class ModuleModel {
     public ModuleModel(ResourceLocation location) {
         this.location = location;
     }
+
+    public ModuleModel(String type, ResourceLocation location, int tint) {
+        this.type = type;
+        this.location = location;
+        this.tint = tint;
+    }
 }

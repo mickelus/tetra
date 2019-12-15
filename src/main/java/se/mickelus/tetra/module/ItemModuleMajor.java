@@ -2,6 +2,7 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Streams;
+import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.items.ItemColors;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -383,15 +385,17 @@ public abstract class ItemModuleMajor extends ItemModule {
         return ArrayUtils.addAll(super.getTextures(itemStack), getImprovementTextures(itemStack));
     }
 
-    protected ModuleModel[] getImprovementModels(ItemStack itemStack) {
+    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.textured)
                 .flatMap(improvement -> Arrays.stream(improvement.models))
+                .map(model -> ItemColors.inherit == model.tint ? new ModuleModel(model.type, model.location, tint) : model)
                 .toArray(ModuleModel[]::new);
     }
 
     @Override
     public ModuleModel[] getModels(ItemStack itemStack) {
-        return ArrayUtils.addAll(super.getModels(itemStack), getImprovementModels(itemStack));
+        ModuleModel[] models = super.getModels(itemStack);
+        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].tint : 0xffffff));
     }
 }

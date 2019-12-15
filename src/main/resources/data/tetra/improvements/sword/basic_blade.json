@@ -6,7 +6,12 @@
         "integrity": -1,
         "effects": {
             "bleeding": 1
-        }
+        },
+
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "basic_blade/serrated",
@@ -15,7 +20,12 @@
         "integrity": -1,
         "effects": {
             "bleeding": 2
-        }
+        },
+
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "basic_blade/serrated",
@@ -24,6 +34,11 @@
         "integrity": -2,
         "effects": {
             "bleeding": 4
-        }
+        },
+
+        "models": [{
+            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "tint": "inherit"
+        }]
     }
 ]

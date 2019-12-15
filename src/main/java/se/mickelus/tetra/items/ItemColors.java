@@ -64,6 +64,10 @@ public class ItemColors {
     public static int fierymetal_glyph  = define(0xfa9f00, "fierymetal_glyph");
     public static int knightmetal       = define(0xb8cf9c, "knightmetal");
     public static int knightmetal_glyph = define(0xb8cf9c, "knightmetal_glyph");
+    public static int prismarine        = define(0x8cffdb, "prismarine");
+    public static int prismarine_glyph  = define(0x73b5aa, "prismarine_glyph");
+
+    public static int inherit           = define(0x000000, "inherit");
 
     public static int define(int value, String color) {
         colors.put(color, value);
