@@ -14,6 +14,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 if (System.getenv('version') != null)
     tetra_version = System.getenv('version')
 
