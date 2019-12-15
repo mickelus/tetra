@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 buildscript {
     repositories {
         mavenLocal()
@@ -119,6 +122,27 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+}
+
+processResources {
+    
+    doLast {
+    
+        def jsonMinifyStart = System.currentTimeMillis()
+        def jsonMinified = 0
+        def jsonBytesSaved = 0
+        
+        fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
+        
+            File file = it
+            jsonMinified++
+            def oldLength = file.length()
+            file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+            jsonBytesSaved += oldLength - file.length()
+        }
+        
+        println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+    }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
