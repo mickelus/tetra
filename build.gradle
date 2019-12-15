@@ -14,8 +14,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-if (System.getenv('version') != null)
-    tetra_version = System.getenv('version')
+if (System.getenv('VERSION') != null) {
+    tetra_version = System.getenv('VERSION')
+}
 
 version = "${mc_version}-${tetra_version}"
 group = 'se.mickelus.tetra' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -102,7 +103,7 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-    compile fg.deobf('se.mickelus.mgui:mgui:1.0.1')
+    compile fg.deobf("se.mickelus.mgui:mgui:${mgui_version}")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
