@@ -6,7 +6,11 @@
         "integrity": -1,
         "effects": {
             "backstab": 1
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/hooked",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/hooked",
@@ -15,7 +19,11 @@
         "integrity": -1,
         "effects": {
             "backstab": 2
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/hooked",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/hooked",
@@ -24,7 +32,11 @@
         "integrity": -2,
         "effects": {
             "backstab": 4
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/hooked",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/tempered",
@@ -33,7 +45,11 @@
         "integrity": -1,
         "effects": {
             "armorPenetration": 2
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/tempered",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/tempered",
@@ -42,7 +58,11 @@
         "integrity": -1,
         "effects": {
             "armorPenetration": 3
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/tempered",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/tempered",
@@ -51,7 +71,11 @@
         "integrity": -2,
         "effects": {
             "armorPenetration": 5
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/tempered",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/serrated",
@@ -60,7 +84,11 @@
         "integrity": -1,
         "effects": {
             "bleeding": 1
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/serrated",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/serrated",
@@ -69,7 +97,11 @@
         "integrity": -1,
         "effects": {
             "bleeding": 2
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/serrated",
+            "tint": "inherit"
+        }]
     },
     {
         "key": "short_blade/serrated",
@@ -78,6 +110,10 @@
         "integrity": -2,
         "effects": {
             "bleeding": 4
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/improvements/serrated",
+            "tint": "inherit"
+        }]
     }
 ]

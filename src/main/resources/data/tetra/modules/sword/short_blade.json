@@ -7,12 +7,16 @@
         "damage": 1,
         "attackSpeed": 2.2,
         "glyph": {
-            "tint": "866526",
+            "tint": "oak_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint":"oak"
+        }]
     },
     {
         "key": "short_blade/spruce",
@@ -22,12 +26,16 @@
         "damage": 1,
         "attackSpeed": 2.4,
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "short_blade/birch",
@@ -37,12 +45,16 @@
         "damage": 1,
         "attackSpeed": 2.2,
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "birch"
+        }]
     },
     {
         "key": "short_blade/jungle",
@@ -52,12 +64,16 @@
         "damage": 2,
         "attackSpeed": 1.6,
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "short_blade/acacia",
@@ -67,12 +83,16 @@
         "damage": 2,
         "attackSpeed": 2.6,
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "short_blade/dark_oak",
@@ -82,12 +102,16 @@
         "damage": 1,
         "attackSpeed": 2.4,
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "short_blade/flint",
@@ -97,12 +121,16 @@
         "damage": 3,
         "attackSpeed": 1.8,
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/crude",
+            "tint": "flint"
+        }]
     },
     {
         "key": "short_blade/iron",
@@ -112,12 +140,16 @@
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "iron"
+        }]
     },
     {
         "key": "short_blade/gold",
@@ -127,12 +159,16 @@
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/shiny",
+            "tint": "gold"
+        }]
     },
     {
         "key": "short_blade/prismarine",
@@ -142,12 +178,16 @@
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "73b5aa",
+            "tint": "prismarine_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/grainy",
+            "tint": "prismarine"
+        }]
     },
     {
         "key": "short_blade/copper",
@@ -157,12 +197,16 @@
         "damage": 4,
         "attackSpeed": 1.4,
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "copper"
+        }]
     },
     {
         "key": "short_blade/tin",
@@ -172,12 +216,16 @@
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "tin"
+        }]
     },
     {
         "key": "short_blade/silver",
@@ -187,12 +235,16 @@
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/shiny",
+            "tint": "silver"
+        }]
     },
     {
         "key": "short_blade/nickel",
@@ -202,12 +254,16 @@
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "short_blade/lead",
@@ -217,12 +273,16 @@
         "damage": 5.5,
         "attackSpeed": 1,
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "lead"
+        }]
     },
     {
         "key": "short_blade/bronze",
@@ -232,12 +292,16 @@
         "damage": 4.5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "short_blade/electrum",
@@ -247,12 +311,16 @@
         "damage": 4,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/shiny",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "short_blade/steel",
@@ -262,12 +330,16 @@
         "damage": 5.5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "steel"
+        }]
     },
     {
         "key": "short_blade/thaumium",
@@ -277,12 +349,16 @@
         "damage": 5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "short_blade/ironwood",
@@ -292,12 +368,15 @@
         "damage": 4.5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/ironwood"
+        }]
     },
     {
         "key": "short_blade/steeleaf",
@@ -307,12 +386,16 @@
         "damage": 5.5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "short_blade/fierymetal",
@@ -322,12 +405,15 @@
         "damage": 6.5,
         "attackSpeed": 1.5,
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/fierymetal"
+        }]
     },
     {
         "key": "short_blade/knightmetal",
@@ -337,11 +423,15 @@
         "damage": 5,
         "attackSpeed": 2.2,
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 32
         },
         "capabilities": {
             "cut": [2, 0.7]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/short/metal",
+            "tint": "knightmetal"
+        }]
     }
 ]
