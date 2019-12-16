@@ -259,5 +259,77 @@
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.04]
         }
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -2
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -3
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -5
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 6,
+        "enchantment": true,
+        "magicCapacity": -7
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 7,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 1,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 2,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 3,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 4,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 5,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 6,
+        "glyph": { "tint": "ee5599" }
     }
 ]

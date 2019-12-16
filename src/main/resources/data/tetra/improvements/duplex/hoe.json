@@ -1,1 +1,36 @@
-[]
+[
+    {
+        "key": "enchantment/apotheosis_natures_blessing",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -5
+    },
+    {
+        "key": "enchantment/apotheosis_natures_blessing",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -7
+    },
+    {
+        "key": "enchantment/apotheosis_natures_blessing",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -10
+    },
+    {
+        "key": "destabilized/apotheosis_natures_blessing",
+        "level": 1,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_natures_blessing",
+        "level": 2,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "enchantment/apotheosis_tempting",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -5
+    }
+]

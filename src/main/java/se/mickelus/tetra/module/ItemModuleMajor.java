@@ -2,13 +2,11 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Streams;
-import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;

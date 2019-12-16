@@ -1,0 +1,66 @@
+[
+    {
+        "enchantment": "apotheosis:hell_infusion",
+        "improvement": "enchantment/apotheosis_hell_infusion"
+    },
+    {
+        "enchantment": "apotheosis:hell_infusion",
+        "improvement": "destabilized/apotheosis_hell_infusion",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "apotheosis:mounted_strike",
+        "improvement": "enchantment/apotheosis_mounted_strike"
+    },
+    {
+        "enchantment": "apotheosis:mounted_strike",
+        "improvement": "destabilized/apotheosis_mounted_strike",
+        "extract": false,
+        "multiplier":  -1
+    },
+    {
+        "enchantment": "apotheosis:depth_miner",
+        "improvement": "enchantment/apotheosis_depth_miner"
+    },
+    {
+        "enchantment": "apotheosis:depth_miner",
+        "improvement": "destabilized/apotheosis_depth_miner",
+        "extract": false,
+        "multiplier":  -1
+    },
+    {
+        "enchantment": "apotheosis:scavenger",
+        "improvement": "enchantment/apotheosis_scavenger"
+    },
+    {
+        "enchantment": "apotheosis:scavenger",
+        "improvement": "destabilized/apotheosis_scavenger",
+        "extract": false,
+        "multiplier":  -1
+    },
+    {
+        "enchantment": "apotheosis:tempting",
+        "improvement": "enchantment/apotheosis_tempting"
+    },
+    {
+        "enchantment": "apotheosis:knowledge",
+        "improvement": "enchantment/apotheosis_knowledge"
+    },
+    {
+        "enchantment": "apotheosis:knowledge",
+        "improvement": "destabilized/apotheosis_knowledge",
+        "extract": false,
+        "multiplier":  -1
+    },
+    {
+        "enchantment": "apotheosis:natures_blessing",
+        "improvement": "enchantment/apotheosis_natures_blessing"
+    },
+    {
+        "enchantment": "apotheosis:natures_blessing",
+        "improvement": "destabilized/apotheosis_natures_blessing",
+        "extract": false,
+        "multiplier":  -1
+    }
+]
