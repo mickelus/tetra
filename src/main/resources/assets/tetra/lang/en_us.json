@@ -329,6 +329,15 @@
   "destabilized/vanishing.name": "§cCurse of Vanishing",
   "destabilized/vanishing.description": "Causes the item to disappear if the wielder dies",
 
+  "enchantment/bluepower_vorpal.name": "Vorpal",
+  "enchantment/bluepower_vorpal.description": "Increases the chances of mobs and players dropping a head on death",
+  "destabilized/bluepower_vorpal.name": "§5Destabilized: Vorpal",
+  "destabilized/bluepower_vorpal.description": "Reduces the effect of the vorpal enchantment",
+  "enchantment/bluepower_disjunction.name": "Disjunction",
+  "enchantment/bluepower_disjunction.description": "Increases Damage vs Endermen and the Dragon",
+  "destabilized/bluepower_disjunction.name": "§5Destabilized: Disjunction",
+  "destabilized/bluepower_disjunction.description": "Reduces the effect of the disjunction enchantment",
+
   "cleanse_schema.name": "Cleanse",
   "cleanse_schema.description": "Cleanse negative effects caused by magic instability.\n\nExperience cost is increased based on exceeded magic capacity and the amount of instability effects.",
 

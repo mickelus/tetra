@@ -293,5 +293,81 @@
         "effects": {
             "sweeping": 7
         }
+    },
+    {
+        "key": "enchantment/bluepower_vorpal",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/bluepower_vorpal",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "destabilized/bluepower_vorpal",
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "enchantment/bluepower_disjunction",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -2
+    },
+    {
+        "key": "enchantment/bluepower_disjunction",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -3
+    },
+    {
+        "key": "enchantment/bluepower_disjunction",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/bluepower_disjunction",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -5
+    },
+    {
+        "key": "enchantment/bluepower_disjunction",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "destabilized/bluepower_disjunction",
+        "level": 1,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bluepower_disjunction",
+        "level": 2,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bluepower_disjunction",
+        "level": 3,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/bluepower_disjunction",
+        "level": 4,
+        "glyph": {
+            "tint": "ee5599"
+        }
     }
 ]
