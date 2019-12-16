@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -32,10 +32,10 @@ import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.SynergyData;
-import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
@@ -836,7 +836,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public ITextComponent getDisplayName(ItemStack itemStack) {
         // todo: since getItemStackDisplayName is called on the server we cannot use the I18n service
-        if (FMLEnvironment.dist.isDedicatedServer()) {
+        if (Environment.get().getDist().isDedicatedServer()) {
             return new StringTextComponent("");
         }
 

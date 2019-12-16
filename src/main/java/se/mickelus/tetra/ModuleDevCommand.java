@@ -34,7 +34,7 @@ public class ModuleDevCommand {
 
         ItemStack baseStack = new ItemStack(ItemSwordModular.instance);
 
-        OutcomePreview[] outcomes = Optional.ofNullable(ItemUpgradeRegistry.instance.getSchema("short_blade_schema"))
+        OutcomePreview[] outcomes = Optional.ofNullable(ItemUpgradeRegistry.instance.getSchema("heavy_blade_schema"))
                 .map(schema -> Arrays.stream(schema.getPreviews(baseStack, "sword/blade")))
                 .orElseGet(Stream::empty)
                 .toArray(OutcomePreview[]::new);
