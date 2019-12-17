@@ -167,6 +167,7 @@
   "item.tetra.modular.repair_material.empty": "Does not need to be repaired",
 
   "block.tetra.workbench": "Workbench",
+  "block.tetra.workbench.description": "Right click a crafting table with a hammer to create a workbench",
   "block.tetra.block_geode": "Geode block",
   "item.tetra.geode": "Geode",
   "item.tetra.geode.tooltip": "Breaking open at a workbench may yield valuable minerals",
@@ -180,6 +181,8 @@
 
   "item.tetra.pristine_lapis": "Pristine Lapis Lazuli",
   "shatter_lapis_action.label": "Shatter",
+
+  "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered into several regular-quality pieces at a workbench",
 
   "item.tetra.magmatic_cell": "Thermal cell",
   "item.tetra.magmatic_cell.charge": "Charge: %s",

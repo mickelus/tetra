@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -20,6 +21,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
@@ -74,7 +77,10 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
                     .flatMap(Arrays::stream).toArray(ConfigAction[]::new));
         });
     }
-
+    @Override
+    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("block.tetra.workbench.description"));
+    }
     public static ActionResultType upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {

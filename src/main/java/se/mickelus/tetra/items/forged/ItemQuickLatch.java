@@ -33,7 +33,7 @@ public class ItemQuickLatch extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY )));
+        tooltip.add(new TranslationTextComponent("forged_description"));
     }
 
     @Override

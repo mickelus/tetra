@@ -1,14 +1,17 @@
 package se.mickelus.tetra.blocks.geode;
 
-import com.google.common.collect.ImmutableSet;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
-import java.util.Set;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class PristineLapisItem extends TetraItem {
     private static final String unlocalizedName = "pristine_lapis";
@@ -19,5 +22,10 @@ public class PristineLapisItem extends TetraItem {
     public PristineLapisItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
+    }
+
+    @Override
+    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("item.tetra.pristine_gem.description"));
     }
 }

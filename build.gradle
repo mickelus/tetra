@@ -125,15 +125,12 @@ dependencies {
 }
 
 processResources {
-    
     doLast {
-    
         def jsonMinifyStart = System.currentTimeMillis()
         def jsonMinified = 0
         def jsonBytesSaved = 0
         
         fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-        
             File file = it
             jsonMinified++
             def oldLength = file.length()
