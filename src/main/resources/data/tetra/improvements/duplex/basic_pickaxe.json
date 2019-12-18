@@ -50,7 +50,7 @@
         "enchantment": true,
         "magicCapacity": -7,
         "capabilities": {
-            "axe": [0, 34.2591]
+            "pickaxe": [0, 34.2591]
         }
     },
     {
@@ -59,7 +59,7 @@
         "enchantment": true,
         "magicCapacity": -8,
         "capabilities": {
-            "axe": [0, 46.2962]
+            "pickaxe": [0, 46.2962]
         }
     },
     {
@@ -68,7 +68,7 @@
         "enchantment": true,
         "magicCapacity": -9,
         "capabilities": {
-            "axe": [0, 60.1851]
+            "pickaxe": [0, 60.1851]
         }
     },
     {
@@ -77,7 +77,7 @@
         "enchantment": true,
         "magicCapacity": -10,
         "capabilities": {
-            "axe": [0, 75.9259]
+            "pickaxe": [0, 75.9259]
         }
     },
     {
@@ -86,7 +86,7 @@
         "enchantment": true,
         "magicCapacity": -11,
         "capabilities": {
-            "axe": [0, 93.5185]
+            "pickaxe": [0, 93.5185]
         }
     },
     {
