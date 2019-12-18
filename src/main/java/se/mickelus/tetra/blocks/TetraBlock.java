@@ -18,9 +18,4 @@ public class TetraBlock extends Block implements ITetraBlock {
     public boolean hasItem() {
         return hasItem;
     }
-
-    @Override
-    public void registerItem(IForgeRegistry<Item> registry) {
-        registerItem(registry, this);
-    }
 }

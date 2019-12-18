@@ -103,13 +103,6 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (TetraItemGroup.instance.equals(group)) {
-            items.add(new ItemStack(this, 1));
-        }
-    }
-
-    @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!world.isRemote) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)

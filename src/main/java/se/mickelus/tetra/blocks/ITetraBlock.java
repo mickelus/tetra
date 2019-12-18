@@ -27,7 +27,11 @@ public interface ITetraBlock {
 
     boolean hasItem();
 
-    void registerItem(IForgeRegistry<Item> registry);
+    default void registerItem(IForgeRegistry<Item> registry) {
+        if (this instanceof Block) {
+            registerItem(registry, (Block) this);
+        }
+    }
 
     default void registerItem(IForgeRegistry<Item> registry, Block block) {
         Item item = new BlockItem(block, new Item.Properties().group(TetraItemGroup.instance))
