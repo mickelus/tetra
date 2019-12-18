@@ -154,7 +154,7 @@ public class BookEnchantSchema implements UpgradeSchema {
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
-                if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
+                if (module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier))) {
                     cost += entry.getValue() / mapping.multiplier;
                 }
             }
