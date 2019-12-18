@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.pattern.BlockMatcher;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
@@ -20,7 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -29,7 +27,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
@@ -659,7 +656,7 @@ public class ItemModularHandheld extends ItemModular {
         if (pickaxeMaterials.contains(state.getMaterial())) {
             return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
         } else if (state.getBlock().equals(Blocks.COBWEB)) {
-            return getHarvestLevel(stack, ToolTypes.CUT, null, null) >= 0;
+            return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
         }
         return false;
     }
@@ -672,7 +669,7 @@ public class ItemModularHandheld extends ItemModular {
             float speed = (float) (4 + getSpeedModifier(itemStack)) * getCapabilityEfficiency(itemStack, tool);
 
             // todo: need a better way to handle this
-            if (ToolTypes.CUT.equals(tool) && blockState.getBlock().equals(Blocks.COBWEB)) {
+            if (ToolTypes.cut.equals(tool) && blockState.getBlock().equals(Blocks.COBWEB)) {
                 speed *= 10;
             }
 
@@ -700,7 +697,7 @@ public class ItemModularHandheld extends ItemModular {
         } else if (pickaxeBlocks.contains(blockState.getBlock())) {
             return ToolType.PICKAXE;
         } else if (cuttingMaterials.contains(blockState.getMaterial())) {
-            return ToolTypes.CUT;
+            return ToolTypes.cut;
         } else if (shovelBlocks.contains(blockState.getBlock())) {
             return ToolType.SHOVEL;
         }

@@ -3,5 +3,6 @@ package se.mickelus.tetra;
 import net.minecraftforge.common.ToolType;
 
 public class ToolTypes {
-    public static final ToolType CUT = ToolType.get("cut");
+    public static final ToolType cut = ToolType.get("cut");
+    public static final ToolType hammer = ToolType.get("hammer");
 }

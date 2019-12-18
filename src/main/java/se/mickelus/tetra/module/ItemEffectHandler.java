@@ -4,10 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -26,8 +24,6 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -44,7 +40,6 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 public class ItemEffectHandler {
 
@@ -258,7 +253,7 @@ public class ItemEffectHandler {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingAxe);
                     } else if (ToolType.PICKAXE.equals(tool)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
-                    } else if (ToolTypes.CUT.equals(tool)) {
+                    } else if (ToolTypes.cut.equals(tool)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingCut);
                     } else if (ToolType.SHOVEL.equals(tool)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingShovel);

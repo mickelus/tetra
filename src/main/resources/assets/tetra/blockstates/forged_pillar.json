@@ -1,15 +1,7 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:forged_pillar"
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "axis": {
-      "x":  { "x": 90, "y": 90 },
-      "y":  {},
-      "z":  { "x": 90 }
-    }
+    "axis=y": { "model": "tetra:block/forged_pillar" },
+    "axis=z": { "model": "tetra:block/forged_pillar", "x": 90 },
+    "axis=x": { "model": "tetra:block/forged_pillar", "x": 90, "y": 90 }
   }
 }
