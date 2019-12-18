@@ -162,7 +162,7 @@
   "item.tetra.modular.broken": "Broken",
   "item.tetra.modular.empty_slot": "Empty",
   "item.tetra.modular.magic_capacity.label": "Magic capacity",
-  "item.tetra.modular.magic_capacity.description": "The amount of magic this module may hold and how much of that capacity is in use.\\nThe capacity may be exceeded, but working the module will cost experience and magical improvements may destabilize and cause negative effects when the item is altered.\\n\\n§7Magic capacity: §e%s\\n§7Capacity usage: §e%s",
+  "item.tetra.modular.magic_capacity.description": "The amount of magic this module may hold and how much of that capacity is in use.\n§7The capacity may be exceeded, but working the module will cost experience and magical improvements may destabilize and cause negative effects when the item is altered.\n\n§7Magic capacity: §e%s\n§7Capacity usage: §e%s",
   "item.tetra.modular.repair_material.label": "Repair material:",
   "item.tetra.modular.repair_material.empty": "Does not need to be repaired",
 
