@@ -26,8 +26,8 @@ import se.mickelus.tetra.module.data.GlyphData;
  *         },
  *         {
  *             "material": {
- *                 "type": "forge:ore_dict",
- *                 "ore": "ingotSteeleaf",
+ *                 "type": "minecraft:tag",
+ *                 "name": "forge:ingots/steeleaf",
  *                 "count": 2
  *             },
  *             "requiredCapabilities": {
