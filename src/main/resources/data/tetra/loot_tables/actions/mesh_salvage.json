@@ -48,6 +48,7 @@
                 {
                     "type": "minecraft:tag",
                     "name": "forge:ingots/steel",
+                    "expand": true,
                     "weight": 2,
                     "functions": [
                         {
@@ -67,6 +68,7 @@
                 {
                     "type": "minecraft:tag",
                     "name": "forge:nuggets/steel",
+                    "expand": true,
                     "weight": 6,
                     "functions": [
                         {

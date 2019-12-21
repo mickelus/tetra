@@ -2,12 +2,45 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "name": "geode",
             "rolls": 1,
             "entries": [
                 {
-                    "type": "minecraft:item",
-                    "name": "tetra:geode"
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:match_tool",
+                                    "predicate": {
+                                        "enchantments": [
+                                            {
+                                                "enchantment": "minecraft:silk_touch",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "name": "tetra:forged_pillar"
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "functions": [
+                                {
+                                    "function": "minecraft:set_count",
+                                    "min": 1,
+                                    "max": 4
+                                },
+                                {
+                                    "function": "minecraft:explosion_decay"
+                                }
+                            ],
+                            "name": "minecraft:metal_scrap"
+                        }
+                    ]
                 }
             ]
         }

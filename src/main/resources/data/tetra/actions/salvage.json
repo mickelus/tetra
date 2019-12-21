@@ -7,7 +7,7 @@
         "requiredCapabilities": {
             "hammer": 3
         },
-        "lootTable": "tetra:forged/bolt_salvage"
+        "lootTable": "tetra:action/bolt_salvage"
     },
     {
         "key": "salvage_beam_action",
@@ -17,7 +17,7 @@
         "requiredCapabilities": {
             "hammer": 4
         },
-        "lootTable": "tetra:forged/beam_salvage"
+        "lootTable": "tetra:action/beam_salvage"
     },
     {
         "key": "salvage_mesh_action",
@@ -27,7 +27,7 @@
         "requiredCapabilities": {
             "hammer": 3
         },
-        "lootTable": "tetra:forged/mesh_salvage"
+        "lootTable": "tetra:action/mesh_salvage"
     },
     {
         "key": "salvage_vent_plate_action",
@@ -37,7 +37,7 @@
         "requiredCapabilities": {
             "hammer": 3
         },
-        "lootTable": "tetra:forged/vent_plate_salvage"
+        "lootTable": "tetra:action/vent_plate_salvage"
     },
     {
         "key": "salvage_metal_scrap_action",
@@ -47,7 +47,7 @@
         "requiredCapabilities": {
             "hammer": 3
         },
-        "lootTable": "tetra:forged/metal_scrap_salvage"
+        "lootTable": "tetra:action/metal_scrap_salvage"
     },
     {
         "key": "salvage_quick_latch_action_hammer",
@@ -57,7 +57,7 @@
         "requiredCapabilities": {
             "hammer": 3
         },
-        "lootTable": "tetra:forged/quick_latch_salvage_hammer"
+        "lootTable": "tetra:action/quick_latch_salvage_hammer"
     },
     {
         "key": "salvage_quick_latch_action_pry",
@@ -67,6 +67,6 @@
         "requiredCapabilities": {
             "pry": 1
         },
-        "lootTable": "tetra:forged/quick_latch_salvage_pry"
+        "lootTable": "tetra:action/quick_latch_salvage_pry"
     }
 ]
