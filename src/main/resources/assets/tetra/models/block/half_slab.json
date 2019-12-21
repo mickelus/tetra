@@ -1,4 +1,6 @@
-{   "parent": "block/block",
+{
+    "_comment": "The texture uv of this slab is shifted up to allow reuse of the regular forged platform side texture",
+    "parent": "block/block",
     "textures": {
         "particle": "#side"
     },

@@ -35,7 +35,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.forged.BlockForgedPillar;
+import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
@@ -119,11 +119,11 @@ public class TetraMod {
             blocks = ArrayUtils.addAll(blocks,
 //                    new BlockHammerHead(),
 //                    new BlockHammerBase(),
-//                    new BlockForgedWall(),
-                    new BlockForgedPillar()
-//                    new BlockForgedPlatform(),
-//                    new BlockForgedPlatformSlab(),
-//                    new BlockForgedVent(),
+                    new BlockForgedWall(),
+                    new BlockForgedPillar(),
+                    new BlockForgedPlatform(),
+                    new BlockForgedPlatformSlab(),
+                    new BlockForgedVent()
 //                    new BlockForgedContainer(),
 //                    new BlockForgedCrate(),
 //                    new BlockTransferUnit(),

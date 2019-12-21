@@ -8,13 +8,11 @@
     }
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
     "rotation": {
-      "0": { "model": "tetra:forged_vent0" },
-      "1": { "model": "tetra:forged_vent1" },
-      "2": { "model": "tetra:forged_vent2" },
-      "3": { "model": "tetra:forged_vent3" }
+      "0": { "model": "tetra:block/forged_vent0" },
+      "1": { "model": "tetra:block/forged_vent1" },
+      "2": { "model": "tetra:block/forged_vent2" },
+      "3": { "model": "tetra:block/forged_vent3" }
     },
     "x": {
       "true": { "y":  270 },

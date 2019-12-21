@@ -1,0 +1,6 @@
+{
+  "parent": "tetra:block/forged_wall",
+  "textures": {
+    "texture": "tetra:blocks/forged_wall"
+  }
+}
