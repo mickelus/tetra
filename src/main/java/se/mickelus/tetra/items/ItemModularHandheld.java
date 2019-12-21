@@ -88,39 +88,31 @@ public class ItemModularHandheld extends ItemModular {
             Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.WOOL, Material.CARPET);
 
     // todo 1.14: test that this still works, possible cleanup. Possibly missing planks, stairs, slabs, doors
-    private static final String[] denailTags = new String[] { "forge:fence_gates/wooden", "forge:fences/wooden", "forge:chests/wooden"};
+    private static final String[] denailTags = new String[] {
+            "minecraft:banners",
+            "minecraft:beds",
+            "minecraft:planks",
+            "minecraft:rails",
+            "minecraft:signs",
+            "minecraft:wooden_buttons",
+            "minecraft:wooden_doors",
+            "minecraft:wooden_fences",
+            "minecraft:wooden_pressure_plates",
+            "minecraft:wooden_slabs",
+            "minecraft:wooden_stairs",
+            "minecraft:wooden_trapdoors",
+            "forge:fence_gates/wooden",
+            "forge:fences/wooden",
+            "forge:chests/wooden"};
     private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
             BlockMatcher.forBlock(WorkbenchBlock.instance),
-            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE), BlockMatcher.forBlock(Blocks.BOOKSHELF),
-            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST), BlockMatcher.forBlock(Blocks.RAIL),
-            BlockMatcher.forBlock(Blocks.ACTIVATOR_RAIL), BlockMatcher.forBlock(Blocks.DETECTOR_RAIL),
-            BlockMatcher.forBlock(Blocks.POWERED_RAIL), BlockMatcher.forBlock(Blocks.OAK_SIGN),
-            BlockMatcher.forBlock(Blocks.SPRUCE_SIGN), BlockMatcher.forBlock(Blocks.BIRCH_SIGN),
-            BlockMatcher.forBlock(Blocks.ACACIA_SIGN), BlockMatcher.forBlock(Blocks.JUNGLE_SIGN),
-            BlockMatcher.forBlock(Blocks.DARK_OAK_SIGN), BlockMatcher.forBlock(Blocks.OAK_WALL_SIGN),
-            BlockMatcher.forBlock(Blocks.SPRUCE_WALL_SIGN), BlockMatcher.forBlock(Blocks.BIRCH_WALL_SIGN),
-            BlockMatcher.forBlock(Blocks.ACACIA_WALL_SIGN), BlockMatcher.forBlock(Blocks.JUNGLE_WALL_SIGN),
-            BlockMatcher.forBlock(Blocks.DARK_OAK_WALL_SIGN), BlockMatcher.forBlock(Blocks.WHITE_BED),
-            BlockMatcher.forBlock(Blocks.ORANGE_BED), BlockMatcher.forBlock(Blocks.MAGENTA_BED),
-            BlockMatcher.forBlock(Blocks.LIGHT_BLUE_BED), BlockMatcher.forBlock(Blocks.YELLOW_BED),
-            BlockMatcher.forBlock(Blocks.LIME_BED), BlockMatcher.forBlock(Blocks.PINK_BED),
-            BlockMatcher.forBlock(Blocks.GRAY_BED), BlockMatcher.forBlock(Blocks.LIGHT_GRAY_BED),
-            BlockMatcher.forBlock(Blocks.CYAN_BED), BlockMatcher.forBlock(Blocks.PURPLE_BED),
-            BlockMatcher.forBlock(Blocks.BLUE_BED), BlockMatcher.forBlock(Blocks.BROWN_BED),
-            BlockMatcher.forBlock(Blocks.GREEN_BED), BlockMatcher.forBlock(Blocks.RED_BED),
-            BlockMatcher.forBlock(Blocks.BLACK_BED), BlockMatcher.forBlock(Blocks.LADDER),
-            BlockMatcher.forBlock(Blocks.JUKEBOX), BlockMatcher.forBlock(Blocks.NOTE_BLOCK),
-            BlockMatcher.forBlock(Blocks.OAK_TRAPDOOR), BlockMatcher.forBlock(Blocks.SPRUCE_TRAPDOOR),
-            BlockMatcher.forBlock(Blocks.BIRCH_TRAPDOOR), BlockMatcher.forBlock(Blocks.JUNGLE_TRAPDOOR),
-            BlockMatcher.forBlock(Blocks.ACACIA_TRAPDOOR), BlockMatcher.forBlock(Blocks.DARK_OAK_TRAPDOOR),
-            BlockMatcher.forBlock(Blocks.OAK_BUTTON), BlockMatcher.forBlock(Blocks.SPRUCE_BUTTON),
-            BlockMatcher.forBlock(Blocks.BIRCH_BUTTON), BlockMatcher.forBlock(Blocks.JUNGLE_BUTTON),
-            BlockMatcher.forBlock(Blocks.ACACIA_BUTTON), BlockMatcher.forBlock(Blocks.DARK_OAK_BUTTON),
-            BlockMatcher.forBlock(Blocks.OAK_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.SPRUCE_PRESSURE_PLATE),
-            BlockMatcher.forBlock(Blocks.BIRCH_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.JUNGLE_PRESSURE_PLATE),
-            BlockMatcher.forBlock(Blocks.ACACIA_PRESSURE_PLATE), BlockMatcher.forBlock(Blocks.DARK_OAK_PRESSURE_PLATE),
-            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR)
-            );
+            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
+            BlockMatcher.forBlock(Blocks.BOOKSHELF),
+            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST),
+            BlockMatcher.forBlock(Blocks.LADDER),
+            BlockMatcher.forBlock(Blocks.JUKEBOX),
+            BlockMatcher.forBlock(Blocks.NOTE_BLOCK),
+            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR));
 
     protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
             Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
