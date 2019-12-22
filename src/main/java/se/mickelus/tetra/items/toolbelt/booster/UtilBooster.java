@@ -30,7 +30,7 @@ public class UtilBooster {
 
     public static final int gunpowderGain = 80;
 
-    public static final float boostStrength = 0.035f;
+    public static final float boostStrength = 0.04f;
     public static final float chargedBoostStrength = 1.2f;
     public static final float boostLevelMultiplier = 0.4f;
 
@@ -98,9 +98,13 @@ public class UtilBooster {
     public static void boostPlayerCharged(PlayerEntity player, CompoundNBT tag, int level) {
         float boostBase = chargedBoostStrength + chargedBoostStrength * (level - 1) * boostLevelMultiplier;
         Vec3d lookVector = player.getLookVec();
+
+        // current velocity projected onto the look vector
+        player.setMotion(lookVector.scale(player.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
+
         player.addVelocity(
                 lookVector.x * boostBase,
-                Math.max(lookVector.y * boostBase / 2, 0.1),
+                Math.max(lookVector.y * boostBase / 2 + 0.3, 0.1),
                 lookVector.z * boostBase);
         player.velocityChanged = true;
 
