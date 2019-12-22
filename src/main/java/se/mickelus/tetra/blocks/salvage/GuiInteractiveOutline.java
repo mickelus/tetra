@@ -1,15 +1,16 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.TetraMod;
 
 public class GuiInteractiveOutline extends GuiElement {
-
-    private static final String texture = "textures/gui/block-interaction.png";
+    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
 
     private BlockInteraction blockInteraction;
 
@@ -149,5 +150,10 @@ public class GuiInteractiveOutline extends GuiElement {
                         new Applier.TranslateY(5))
                 .onStop(finished -> onStop.run())
                 .start();
+    }
+
+    @Override
+    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

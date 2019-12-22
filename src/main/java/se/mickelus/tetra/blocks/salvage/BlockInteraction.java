@@ -10,6 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import se.mickelus.tetra.RotationHelper;
@@ -95,8 +96,8 @@ public class BlockInteraction {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
-    public static boolean attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player,
-                                             Hand hand, Direction hitFace, double hitX, double hitY, double hitZ) {
+    public static boolean attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand,
+            BlockRayTraceResult rayTrace) {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
@@ -105,23 +106,28 @@ public class BlockInteraction {
             return false;
         }
 
-        // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
-        AxisAlignedBB boundingBox = blockState.getRaytraceShape(world, pos).getBoundingBox();
-        double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
-        double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
+        AxisAlignedBB boundingBox = blockState.getShape(world, pos).getBoundingBox();
+        double hitU = 16 * getHitU(rayTrace.getFace(), boundingBox,
+                rayTrace.getHitVec().x - pos.getX(),
+                rayTrace.getHitVec().y - pos.getY(),
+                rayTrace.getHitVec().z - pos.getZ());
+        double hitV = 16 * getHitV(rayTrace.getFace(), boundingBox,
+                rayTrace.getHitVec().x - pos.getX(),
+                rayTrace.getHitVec().y - pos.getY(),
+                rayTrace.getHitVec().z - pos.getZ());
 
         BlockInteraction possibleInteraction = Optional.of(blockState.getBlock())
                 .filter(block -> block instanceof IBlockCapabilityInteractive)
                 .map(block -> (IBlockCapabilityInteractive) block)
-                .map(block -> block.getPotentialInteractions(blockState, hitFace, availableCapabilities))
+                .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableCapabilities))
                 .map(Arrays::stream).orElseGet(Stream::empty)
-                .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
+                .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
                 .filter(interaction -> CapabilityHelper.getItemCapabilityLevel(heldStack, interaction.requiredCapability) >= interaction.requiredLevel)
                 .findFirst()
                 .orElse(null);
 
         if (possibleInteraction != null) {
-            possibleInteraction.applyOutcome(world, pos, blockState, player, hand, hitFace);
+            possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getFace());
 
             if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isDamageable()) {
                 if (heldStack.getItem() instanceof ItemModular) {
@@ -161,6 +167,15 @@ public class BlockInteraction {
                 .orElse(null);
     }
 
+    /**
+     * Returns the horizontal coordinate for where the face was clicked, between 0-1.
+     * @param facing
+     * @param boundingBox
+     * @param hitX
+     * @param hitY
+     * @param hitZ
+     * @return
+     */
     private static double getHitU(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:
@@ -179,6 +194,15 @@ public class BlockInteraction {
         return 0;
     }
 
+    /**
+     * Returns the vertical coordinate for where the face was clicked, between 0-1.
+     * @param facing
+     * @param boundingBox
+     * @param hitX
+     * @param hitY
+     * @param hitZ
+     * @return
+     */
     private static double getHitV(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:

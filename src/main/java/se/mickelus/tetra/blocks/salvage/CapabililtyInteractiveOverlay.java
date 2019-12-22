@@ -38,7 +38,6 @@ public class CapabililtyInteractiveOverlay {
             blockState = blockState.getExtendedState(world, blockPos);
 
             if (!shape.isEmpty()) {
-
                 if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
                     gui.update(blockState, face, Minecraft.getInstance().player, blockPos.equals(previousPos) && face.equals(previousFace));
 
@@ -47,7 +46,6 @@ public class CapabililtyInteractiveOverlay {
                     previousState = blockState;
                 }
 
-                gui.setOpacity(1f);
                 gui.draw(Minecraft.getInstance().player, rayTrace, shape, event.getPartialTicks());
             }
         }

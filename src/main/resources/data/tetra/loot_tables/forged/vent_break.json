@@ -11,8 +11,8 @@
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.2,
-                            "fortuneMultiplier": 0.2
+                            "chance": 0.3,
+                            "fortuneMultiplier": 0.15
                         }
                     ]
                 },
@@ -51,10 +51,8 @@
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.1,
-                            "fortuneMultiplier": 0,
-                            "requiredCapability": "pry",
-                            "capabilityLevel": 1
+                            "chance": 0.2,
+                            "fortuneMultiplier": 0.1
                         }
                     ]
                 },

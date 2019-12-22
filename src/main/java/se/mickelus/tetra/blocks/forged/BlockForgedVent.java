@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -84,10 +83,10 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
             new BlockInteraction(Capability.pry, 1, Direction.EAST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
-                    BlockForgedVent::breakPlate),
+                    BlockForgedVent::breakBeam),
             new BlockInteraction(Capability.pry, 1, Direction.WEST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
-                    BlockForgedVent::breakPlate),
+                    BlockForgedVent::breakBeam),
     };
 
     private static final ResourceLocation boltLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/bolt_break");
@@ -120,6 +119,9 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
             LootContext context = new LootContext.Builder(serverWorld)
                     .withLuck(player.getLuck())
                     .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.BLOCK_STATE, blockState)
+                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
+                    .withParameter(LootParameters.THIS_ENTITY, player)
                     .withParameter(LootParameters.POSITION, player.getPosition())
                     .build(LootParameterSets.BLOCK);
 
@@ -129,16 +131,19 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
                 }
             });
 
-            serverWorld.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
+            serverWorld.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
         }
 
         return true;
     }
 
-    private static boolean breakPlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    private static boolean breakBeam(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
         List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.get(propX));
 
         if (connectedVents.stream().anyMatch(blockPos -> !world.getBlockState(blockPos).get(propBroken))) {
+            if (!world.isRemote) {
+                world.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.4f, 2);
+            }
             return false;
         }
 
@@ -153,6 +158,9 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
             LootContext context = new LootContext.Builder(serverWorld)
                     .withLuck(player.getLuck())
+                    .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.BLOCK_STATE, blockState)
+                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
                     .withParameter(LootParameters.THIS_ENTITY, player)
                     .withParameter(LootParameters.POSITION, player.getPosition())
                     .build(LootParameterSets.BLOCK);
@@ -195,8 +203,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
-        return BlockInteraction.attemptInteraction(world, state.getExtendedState(world, pos), pos, player, hand, rayTrace.getFace(),
-                rayTrace.getHitVec().x, rayTrace.getHitVec().y, rayTrace.getHitVec().z);
+        return BlockInteraction.attemptInteraction(world, state.getExtendedState(world, pos), pos, player, hand, rayTrace);
     }
 
     @Override
@@ -217,7 +224,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         Direction playerFacing = context.getPlayer() != null ? context.getPlayer().getHorizontalFacing() : Direction.NORTH;
 
         blockState = blockState != null ? blockState : getDefaultState();
-        blockState = blockState.with(propX, !Direction.Axis.X.equals(playerFacing.getAxis()));
+        blockState = blockState.with(propX, Direction.Axis.X.equals(playerFacing.getAxis()));
 
         int rotation = 0;
 
@@ -225,7 +232,8 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
             rotation = 2;
         }
 
-        if (context.getFace() != Direction.UP && (context.getFace() == Direction.DOWN || context.getHitVec().y > 0.5)) {
+        if (context.getFace() != Direction.UP
+                && (context.getFace() == Direction.DOWN || context.getHitVec().y - context.getPos().getY() > 0.5)) {
             rotation++;
         }
 

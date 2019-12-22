@@ -52,7 +52,8 @@ public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
                         .forEach(this::addChild);
 
             }
+        } else {
+            clearChildren();
         }
-
     }
 }
