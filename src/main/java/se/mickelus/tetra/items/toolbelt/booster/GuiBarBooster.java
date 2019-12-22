@@ -13,7 +13,8 @@ public class GuiBarBooster extends GuiElement {
 
     public GuiBarBooster(int x, int y, int width, int height) {
         super(x, y, width, height);
-        filter = new VisibilityFilter(-1, indicatorCount);
+        opacity = 0;
+        filter = new VisibilityFilter(0, indicatorCount);
     }
 
     public void setFuel(float fuel) {

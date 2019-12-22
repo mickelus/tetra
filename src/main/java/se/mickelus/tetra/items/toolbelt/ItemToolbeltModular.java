@@ -26,6 +26,7 @@ import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
+import se.mickelus.tetra.items.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.gui.ToolbeltGui;
@@ -111,6 +112,7 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
         super.clientInit();
         MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
         ScreenManager.registerFactory(ItemToolbeltModular.containerType, ToolbeltGui::new);
     }
 

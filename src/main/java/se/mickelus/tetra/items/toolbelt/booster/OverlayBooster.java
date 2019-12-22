@@ -21,7 +21,7 @@ public class OverlayBooster {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        float fuelPercent = -1;
+        float fuelPercent = 0;
 
         if (!event.side.isClient()) {
             return;
