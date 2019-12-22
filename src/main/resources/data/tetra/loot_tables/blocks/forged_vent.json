@@ -5,42 +5,20 @@
             "rolls": 1,
             "entries": [
                 {
-                    "type": "minecraft:alternatives",
-                    "children": [
+                    "type": "minecraft:item",
+                    "functions": [
                         {
-                            "type": "minecraft:item",
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:match_tool",
-                                    "predicate": {
-                                        "enchantments": [
-                                            {
-                                                "enchantment": "minecraft:silk_touch",
-                                                "levels": {
-                                                    "min": 1
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "name": "tetra:forged_vent"
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
                         },
                         {
-                            "type": "minecraft:item",
-                            "functions": [
-                                {
-                                    "function": "minecraft:set_count",
-                                    "min": 1,
-                                    "max": 4
-                                },
-                                {
-                                    "function": "minecraft:explosion_decay"
-                                }
-                            ],
-                            "name": "minecraft:metal_scrap"
+                            "function": "minecraft:explosion_decay"
                         }
-                    ]
+                    ],
+                    "name": "tetra:metal_scrap"
                 }
             ]
         }

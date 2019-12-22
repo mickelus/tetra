@@ -31,14 +31,16 @@
                             "functions": [
                                 {
                                     "function": "minecraft:set_count",
-                                    "min": 1,
-                                    "max": 4
+                                    "count": {
+                                        "min": 1,
+                                        "max": 4
+                                    }
                                 },
                                 {
                                     "function": "minecraft:explosion_decay"
                                 }
                             ],
-                            "name": "minecraft:metal_scrap"
+                            "name": "tetra:metal_scrap"
                         }
                     ]
                 }
