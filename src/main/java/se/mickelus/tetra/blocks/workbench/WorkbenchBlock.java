@@ -38,6 +38,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.hammer.HammerHeadBlock;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
@@ -53,7 +54,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
+public class WorkbenchBlock extends TetraBlock {
     public static final String unlocalizedName = "workbench";
 
     public static final AxisAlignedBB forgedAABB = new AxisAlignedBB(0.125, 0, 0, 0.875, 1, 1);
@@ -148,25 +149,27 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
         return -1;
     }
 
-//    @Override
-//    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-//        BlockPos topPos = pos.offset(Direction.UP);
-//        if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
-//            BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
-//            return hammer.onCraftConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
-//        }
-//        return targetStack;
-//    }
-//
-//    @Override
-//    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-//        BlockPos topPos = pos.offset(Direction.UP);
-//        if (world.getBlockState(topPos).getBlock() instanceof BlockHammerHead) {
-//            BlockHammerHead hammer = (BlockHammerHead) world.getBlockState(topPos).getBlock();
-//            return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
-//        }
-//        return targetStack;
-//    }
+    @Override
+    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+            boolean consumeResources) {
+        BlockPos topPos = pos.offset(Direction.UP);
+        if (world.getBlockState(topPos).getBlock() instanceof HammerHeadBlock) {
+            HammerHeadBlock hammer = (HammerHeadBlock) world.getBlockState(topPos).getBlock();
+            return hammer.onCraftConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+        }
+        return targetStack;
+    }
+
+    @Override
+    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+            boolean consumeResources) {
+        BlockPos topPos = pos.offset(Direction.UP);
+        if (world.getBlockState(topPos).getBlock() instanceof HammerHeadBlock) {
+            HammerHeadBlock hammer = (HammerHeadBlock) world.getBlockState(topPos).getBlock();
+            return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+        }
+        return targetStack;
+    }
 
     @Override
     public void init(PacketHandler packetHandler) {
@@ -185,9 +188,14 @@ public class WorkbenchBlock extends TetraBlock implements ITileEntityProvider {
         ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
     }
 
+    @Override
+    public boolean hasTileEntity(final BlockState state) {
+        return true;
+    }
+
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return new WorkbenchTile();
     }
 

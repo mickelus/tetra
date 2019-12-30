@@ -263,9 +263,9 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     }
                 } else {
                     ItemStack consumeTarget = upgradedStack;
-                    CastOptional.cast(getBlockState().getBlock(), WorkbenchBlock.class)
-                            .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, consumeTarget,
-                                    player, true));
+                    upgradedStack = CastOptional.cast(getBlockState().getBlock(), WorkbenchBlock.class)
+                            .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
+                            .orElse(upgradedStack);
                 }
             }
 
@@ -329,7 +329,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
     }
 
     @Override
@@ -338,13 +338,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag) {
-        super.handleUpdateTag(tag);
-    }
-
-    @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
+        read(pkt.getNbtCompound());
     }
 
     @Override
@@ -361,7 +356,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         }
 
         // todo : due to the null check perhaps this is not the right place to do this
-        if (this.world != null && this.world.isRemote) {
+        if (world != null && world.isRemote) {
             changeListeners.values().forEach(Runnable::run);
         }
     }

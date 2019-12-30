@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "tetra:hammer_base",
+    "model": "tetra:block/hammer_base",
     "textures": {
       "socket1": "tetra:blocks/hammer_base_socket",
       "socket2": "tetra:blocks/hammer_base_socket",
@@ -27,7 +27,7 @@
     "cell1": {
       "true": {
         "submodel": {
-          "cell1": { "model": "tetra:cell_protude1", "x": 90 }
+          "cell1": { "model": "tetra:block/cell_protude1", "x": 90 }
         }
       },
       "false": {}
@@ -35,7 +35,7 @@
     "cell2": {
       "true": {
         "submodel": {
-          "cell2": { "model": "tetra:cell_protude2", "x": -90 }
+          "cell2": { "model": "tetra:block/cell_protude2", "x": -90 }
         }
       },
       "false": {}

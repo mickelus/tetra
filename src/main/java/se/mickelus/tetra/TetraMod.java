@@ -36,6 +36,10 @@ import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.geode.*;
+import se.mickelus.tetra.blocks.hammer.HammerBaseBlock;
+import se.mickelus.tetra.blocks.hammer.HammerBaseTile;
+import se.mickelus.tetra.blocks.hammer.HammerHeadBlock;
+import se.mickelus.tetra.blocks.hammer.HammerHeadTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -47,6 +51,7 @@ import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
@@ -118,8 +123,8 @@ public class TetraMod {
 
         if (ConfigHandler.generateFeatures.get()) {
             blocks = ArrayUtils.addAll(blocks,
-//                    new BlockHammerHead(),
-//                    new BlockHammerBase(),
+                    new HammerHeadBlock(),
+                    new HammerBaseBlock(),
                     new BlockForgedWall(),
                     new BlockForgedPillar(),
                     new BlockForgedPlatform(),
@@ -143,7 +148,7 @@ public class TetraMod {
                 new PristineDiamondItem(),
                 new ItemToolbeltModular(),
                 new ItemDuplexToolModular(),
-//                new ItemCellMagmatic(),
+                new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),
                 new ItemMesh(),
@@ -293,6 +298,14 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new, WorkbenchBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(HammerBaseTile::new, HammerBaseBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, HammerBaseBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(HammerHeadTile::new, HammerHeadBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, HammerHeadBlock.unlocalizedName));
         }
     }
 }

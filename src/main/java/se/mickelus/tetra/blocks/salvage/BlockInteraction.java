@@ -8,11 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.Property;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameterSets;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.LootTable;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -219,5 +225,24 @@ public class BlockInteraction {
                 return boundingBox.maxY - hitY;
         }
         return 0;
+    }
+
+    public static void dropLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
+        LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+
+        LootContext context = new LootContext.Builder(world)
+                .withLuck(player.getLuck())
+                .withParameter(LootParameters.THIS_ENTITY, player)
+                .withParameter(LootParameters.BLOCK_STATE, blockState)
+                .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
+                .withParameter(LootParameters.THIS_ENTITY, player)
+                .withParameter(LootParameters.POSITION, player.getPosition())
+                .build(LootParameterSets.BLOCK);
+
+        table.generate(context).forEach(itemStack -> {
+            if (!player.inventory.addItemStackToInventory(itemStack)) {
+                player.dropItem(itemStack, false);
+            }
+        });
     }
 }

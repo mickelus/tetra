@@ -1,15 +1,9 @@
 {
   "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:hammer_head",
-    "transform": "forge:default-block"
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "static": {
-      "true": {},
-      "false": {}
-    }
+    "": [{
+      "model": "tetra:block/hammer_head",
+      "transform": "forge:default-block"
+    }]
   }
 }
