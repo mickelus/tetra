@@ -32,6 +32,8 @@ import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.capabilities.Capability;
 
+import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+
 public class HammerHeadBlock extends TetraBlock {
     public static final String unlocalizedName = "hammer_head";
 
@@ -61,7 +63,7 @@ public class HammerHeadBlock extends TetraBlock {
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
             final ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("forged_description"));
+        tooltip.add(forgedBlockTooltip);
     }
 
     @Override

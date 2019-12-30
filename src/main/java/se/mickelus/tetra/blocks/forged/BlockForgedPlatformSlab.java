@@ -10,6 +10,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TextHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.Materials;
@@ -36,7 +37,7 @@ public class BlockForgedPlatformSlab extends SlabBlock implements ITetraBlock {
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("forged_description"));
+        tooltip.add(TextHelper.forgedBlockTooltip);
     }
 
     @Override

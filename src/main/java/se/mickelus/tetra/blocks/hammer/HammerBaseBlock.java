@@ -47,6 +47,8 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+
 public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
     public static final String unlocalizedName = "hammer_base";
 
@@ -91,7 +93,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("forged_description"));
+        tooltip.add(forgedBlockTooltip);
     }
 
     @Override

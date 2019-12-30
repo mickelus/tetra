@@ -54,7 +54,7 @@
   "stats.durability.tooltip": "This item has §e%s§r durability",
 
   "stats.speed": "Speed",
-  "stats.speed.tooltip": "Affects how fast this item can be swinged\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier",
+  "stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier",
 
   "stats.speed_normalized": "Speed",
   "stats.speed_normalized.tooltip": "Changes attack speed by §e%s",

@@ -17,6 +17,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
+import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+
 public class ItemCellMagmatic extends TetraItem {
     private static final String unlocalizedName = "magmatic_cell";
 
@@ -53,7 +55,7 @@ public class ItemCellMagmatic extends TetraItem {
             tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_empty"));
         }
 
-        tooltip.add(new TranslationTextComponent("forged_description").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
+        tooltip.add(forgedBlockTooltip);
     }
 
     @Override

@@ -28,6 +28,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TextHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -49,9 +50,6 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedVent instance;
-
-    private static final VoxelShape shapeX = makeCuboidShape(0, 0, 7, 16, 16, 9);
-    private static final VoxelShape shapeZ = makeCuboidShape(7, 0, 0, 9, 16, 16);
 
     public static final IntegerProperty propRotation = IntegerProperty.create("rotation", 0, 3);
     public static final BooleanProperty propX = BooleanProperty.create("x");
@@ -116,9 +114,26 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         world.setBlockState(pos, world.getBlockState(pos).with(propBroken, true), 2);
 
         if (!world.isRemote) {
-            BlockInteraction.dropLoot(boltLootTable, player, hand, (ServerWorld) world, blockState);
+            ServerWorld serverWorld = (ServerWorld) world;
+            LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(boltLootTable);
+
+            LootContext context = new LootContext.Builder(serverWorld)
+                    .withLuck(player.getLuck())
+                    .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.BLOCK_STATE, blockState)
+                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
+                    .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.POSITION, player.getPosition())
+                    .build(LootParameterSets.BLOCK);
+
+            table.generate(context).forEach(itemStack -> {
+                if (!player.inventory.addItemStackToInventory(itemStack)) {
+                    player.dropItem(itemStack, false);
+                }
+            });
+
+            serverWorld.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
         }
-        world.playSound(player, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
 
         return true;
     }
@@ -139,7 +154,23 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         });
 
         if (!world.isRemote) {
-            BlockInteraction.dropLoot(ventLootTable, player, hand, (ServerWorld) world, blockState);
+            ServerWorld serverWorld = (ServerWorld) world;
+            LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(ventLootTable);
+
+            LootContext context = new LootContext.Builder(serverWorld)
+                    .withLuck(player.getLuck())
+                    .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.BLOCK_STATE, blockState)
+                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
+                    .withParameter(LootParameters.THIS_ENTITY, player)
+                    .withParameter(LootParameters.POSITION, player.getPosition())
+                    .build(LootParameterSets.BLOCK);
+
+            table.generate(context).forEach(itemStack -> {
+                if (!player.inventory.addItemStackToInventory(itemStack)) {
+                    player.dropItem(itemStack, false);
+                }
+            });
         }
 
         return true;
@@ -178,7 +209,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("forged_description"));
+        tooltip.add(TextHelper.forgedBlockTooltip);
     }
 
     @Override
@@ -236,9 +267,9 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext contex) {
         if (state.get(propX)) {
-            return shapeX;
+            return makeCuboidShape(0, 0, 7, 16, 16, 9);
         }
-        return shapeZ;
+        return makeCuboidShape(7, 0, 0, 9, 16, 16);
     }
 
     @Override
