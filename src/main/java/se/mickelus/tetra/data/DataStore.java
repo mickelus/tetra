@@ -121,7 +121,13 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
                         entry -> gson.fromJson(entry.getValue(), dataClass)
                 ));
 
+        processData();
+
         listeners.forEach(Runnable::run);
+    }
+
+    protected void processData() {
+
     }
 
     public Map<ResourceLocation, JsonElement> getRawData() {

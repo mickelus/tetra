@@ -10,10 +10,10 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -24,10 +24,9 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.ArrayUtils;
@@ -43,6 +42,8 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.generation.FeatureEntry;
+import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.ItemPredicateModular;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -193,24 +194,16 @@ public class TetraMod {
     }
 
     @SubscribeEvent
-    public static void lootTableLoad(final LootTableLoadEvent event) {
-        if (TetraMod.MOD_ID.equals(event.getName().getNamespace())) {
-            LootTable lootTable = event.getTable();
-            LootPool[] extendedPools = DataManager.instance.getExtendedLootPools(event.getName());
-            Optional.ofNullable(extendedPools)
-                    .map(Arrays::stream)
-                    .orElseGet(Stream::empty)
-                    .forEach(lootTable::addPool);
+    public void serverStarting(FMLServerAboutToStartEvent event) {
+        if (ConfigHandler.generateFeatures.get()) {
+            FeatureEntry.instance.setup(event.getServer());
         }
     }
 
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
         ModuleDevCommand.register(event.getCommandDispatcher());
-        // TGenCommand.register(event.getCommandDispatcher());
-
-        // todo 1.14: figure out feature generation again...
-        // if (ConfigHandler.generateFeatures) { }
+        TGenCommand.register(event.getCommandDispatcher());
     }
 
     @SubscribeEvent
@@ -233,6 +226,12 @@ public class TetraMod {
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+        @SubscribeEvent
+        public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
+            if (ConfigHandler.generateFeatures.get()) {
+                event.getRegistry().register(new FeatureEntry());
+            }
+        }
 
         @SubscribeEvent
         public static void registerEffects(final RegistryEvent.Register<Effect> event) {

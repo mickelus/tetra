@@ -319,7 +319,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void markDirty() {
         super.markDirty();
 
-        if (this.world.isRemote) {
+        if (world != null && world.isRemote) {
             // TODO: this is called several times everytime a change occurs
 
             changeListeners.values().forEach(Runnable::run);

@@ -25,6 +25,7 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.geode.GeodeVariant;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.data.deserializer.*;
+import se.mickelus.tetra.generation.FeatureParameters;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
@@ -75,9 +76,10 @@ public class DataManager {
     public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
     public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
             DestabilizationEffect[].class);
+    public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
     private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, enchantmentData, tweakData, synergyData, geodeData,
-            replacementData, schemaData, predicateData, actionData, destabilizationData };
+            replacementData, schemaData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;
 
