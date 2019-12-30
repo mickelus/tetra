@@ -126,8 +126,4 @@ public class DataManager {
         }
         return data;
     }
-
-    public LootPool[] getExtendedLootPools(ResourceLocation poolLocation) {
-        return new LootPool[0]; // getAsset(poolLocation.getNamespace(), String.format("loot_pools_extended/%s", poolLocation.getPath()), LootPool[].class);
-    }
 }

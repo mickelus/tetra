@@ -1,12 +1,15 @@
 package se.mickelus.tetra.proxy;
 
+import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
+import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
 
 import java.util.Arrays;
@@ -27,9 +30,9 @@ public class ClientProxy implements IProxy {
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreExtractorPiston.class, new TileEntityRendererAnimation<>());
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForgedContainer.class, new TESRForgedContainer());
 
-//        if (ConfigHandler.development) {
-//            ClientRegistry.bindTileEntitySpecialRenderer(StructureBlockTileEntity.class, new ExtendedStructureTESR());
-//        }
+        if (ConfigHandler.development.get()) {
+            ClientRegistry.bindTileEntitySpecialRenderer(StructureBlockTileEntity.class, new ExtendedStructureTESR());
+        }
     }
 
     @Override

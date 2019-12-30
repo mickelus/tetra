@@ -123,7 +123,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
 
             if (depth == 0) {
                 pos = template.getZeroPositionWithTransform(pos, mirror, rotation);
-                // pos = adjustRootPosition(template, pos, rotation);
+
+                // todo: adjust root so that feature anchor is at pos instead, needed for more advanced placement options
+//                pos = adjustRootPosition(template, pos, rotation);
             }
 
             settings.addProcessor(new IntegrityProcessor(
