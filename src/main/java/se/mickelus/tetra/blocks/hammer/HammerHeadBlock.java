@@ -12,9 +12,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -31,6 +33,7 @@ import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.util.TileEntityOptional;
 
 import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
 
@@ -57,7 +60,7 @@ public class HammerHeadBlock extends TetraBlock {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(HammerHeadTile.class, new TileEntityRendererAnimation<>());
+        ClientRegistry.bindTileEntitySpecialRenderer(HammerHeadTile.class, new HammerHeadTESR());
     }
 
     @Override
@@ -102,7 +105,7 @@ public class HammerHeadBlock extends TetraBlock {
 
             baseBlock.applyEffects(world, basePos, targetStack, player);
 
-            ((HammerHeadTile) world.getTileEntity(pos)).activate();
+            TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
             world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
         }
         return targetStack;
@@ -116,7 +119,7 @@ public class HammerHeadBlock extends TetraBlock {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             baseBlock.consumeFuel(world, basePos);
 
-            ((HammerHeadTile) world.getTileEntity(pos)).activate();
+            TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
             world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
         }
         return targetStack;

@@ -1,9 +1,5 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "": [{
-      "model": "tetra:block/hammer_head",
-      "transform": "forge:default-block"
-    }]
+    "": [{ "model": "tetra:block/hammer_head" }]
   }
 }
