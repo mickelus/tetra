@@ -1,120 +1,178 @@
-[
-    {
-        "modules": ["duplex/basic_hammer", "duplex/basic_axe"],
-        "name": "duplex/axe_hammer"
-    },
-    {
-        "modules": ["duplex/basic_axe", "duplex/basic_axe"],
-        "name": "duplex/axe_axe",
-        "damageMultiplier": 1.2,
-        "attackSpeedMultiplier": 0.9
-    },
-    {
-        "modules": ["duplex/basic_axe", "duplex/basic_pickaxe"],
-        "name": "duplex/axe_pickaxe"
-    },
-    {
-        "modules": ["duplex/basic_hammer", "duplex/basic_pickaxe"],
-        "name": "duplex/hammer_pickaxe"
-    },
-    {
-        "modules": ["duplex/adze", "duplex/basic_pickaxe"],
-        "name": "duplex/adze_pickaxe"
-    },
-    {
-        "modules": ["duplex/adze", "duplex/basic_axe"],
-        "name": "duplex/adze_axe"
-    },
-    {
-        "modules": ["duplex/claw", "duplex/basic_hammer"],
-        "name": "duplex/claw_hammer"
-    },
-    {
-        "modules": ["duplex/claw", "duplex/basic_axe"],
-        "name": "duplex/claw_axe"
-    },
-    {
-        "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/iron", "basic_hammer/iron"],
-        "damage": 1,
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
-        "integrity": 1
-    },
-    {
-        "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
-        "integrity": 1,
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/obsidian", "basic_hammer/obsidian"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/cobblestone", "basic_pickaxe/cobblestone"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/steel", "basic_pickaxe/steel"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/steeleaf", "basic_pickaxe/steeleaf"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/fierymetal", "basic_pickaxe/fierymetal"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    }
+[{
+		"modules": ["duplex/basic_hammer", "duplex/basic_axe"],
+		"name": "duplex/axe_hammer"
+	}, {
+		"modules": ["duplex/basic_axe", "duplex/basic_axe"],
+		"name": "duplex/axe_axe",
+		"damageMultiplier": 1.2,
+		"attackSpeedMultiplier": 0.9
+	}, {
+		"modules": ["duplex/basic_axe", "duplex/basic_pickaxe"],
+		"name": "duplex/axe_pickaxe"
+	}, {
+		"modules": ["duplex/basic_hammer", "duplex/basic_pickaxe"],
+		"name": "duplex/hammer_pickaxe"
+	}, {
+		"modules": ["duplex/adze", "duplex/basic_pickaxe"],
+		"name": "duplex/adze_pickaxe"
+	}, {
+		"modules": ["duplex/adze", "duplex/basic_axe"],
+		"name": "duplex/adze_axe"
+	}, {
+		"modules": ["duplex/claw", "duplex/basic_hammer"],
+		"name": "duplex/claw_hammer"
+	}, {
+		"modules": ["duplex/claw", "duplex/basic_axe"],
+		"name": "duplex/claw_axe"
+	}, {
+		"moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/iron", "basic_hammer/iron"],
+		"damage": 1,
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
+		"integrity": 1
+	}, {
+		"moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
+		"integrity": 1,
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/obsidian", "basic_hammer/obsidian"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
+		"capabilities": {
+			"hammer": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/cobblestone", "basic_pickaxe/cobblestone"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/flint", "basic_pickaxe/flint"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/bone", "basic_pickaxe/bone"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/tin", "basic_pickaxe/tin"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/iron", "basic_pickaxe/iron"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/silver", "basic_pickaxe/silver"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/copper", "basic_pickaxe/copper"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/lead", "basic_pickaxe/lead"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/diamond", "basic_pickaxe/diamond"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/amethyst", "basic_pickaxe/amethyst"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/gold", "basic_pickaxe/gold"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/nickel", "basic_pickaxe/nickel"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/steel", "basic_pickaxe/steel"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/bronze", "basic_pickaxe/bronze"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/electrum", "basic_pickaxe/electrum"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/thaumium", "basic_pickaxe/thaumium"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/ironwood", "basic_pickaxe/ironwood"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/knightmetal", "basic_pickaxe/knightmetal"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/steeleaf", "basic_pickaxe/steeleaf"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}, {
+		"moduleVariants": ["basic_pickaxe/fierymetal", "basic_pickaxe/fierymetal"],
+		"capabilities": {
+			"pickaxe": 1
+		}
+	}
 ]
