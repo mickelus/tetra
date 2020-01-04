@@ -186,7 +186,12 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         if (blockFacing.getAxis().equals(facing.getAxis())) {
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
-                player.dropItem(te.removeCellFromSlot(slotIndex), false);
+                ItemStack cell = te.removeCellFromSlot(slotIndex);
+                if (player.inventory.addItemStackToInventory(cell)) {
+                    player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
+                } else {
+                    spawnAsEntity(world, pos.up(), cell);
+                }
 
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
                 world.notifyBlockUpdate(pos, blockState, blockState, 3);

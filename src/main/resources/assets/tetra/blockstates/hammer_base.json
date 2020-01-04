@@ -16,8 +16,6 @@
     }
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
     "facing": {
       "north":  {},
       "south":  { "y": 180 },
