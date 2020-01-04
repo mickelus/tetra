@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "tetra:transfer_unit",
+    "model": "tetra:block/transfer_unit",
     "textures": {
       "indicator": "tetra:blocks/transfer_unit_indicator_idle",
       "cell_top": "tetra:blocks/cell_top",
@@ -12,8 +12,6 @@
     }
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
     "facing": {
       "north":  {},
       "south":  { "y": 180 },
@@ -24,12 +22,12 @@
       "0": {},
       "1": {
         "submodel": {
-          "cell": { "model": "tetra:cell_protude_top" }
+          "cell": { "model": "tetra:block/cell_protude_top" }
         }
       },
       "2": {
         "submodel": {
-          "cell": { "model": "tetra:cell_protude_top" }
+          "cell": { "model": "tetra:block/cell_protude_top" }
         },
         "textures": {
           "cell_side": "tetra:blocks/cell_side_charged",
@@ -39,13 +37,13 @@
       }
     },
     "transfer": {
-      "0": {},
-      "1": {
+      "none": {},
+      "sending": {
         "textures": {
           "indicator": "tetra:blocks/transfer_unit_indicator_send"
         }
       },
-      "2": {
+      "receiving": {
         "textures": {
           "indicator": "tetra:blocks/transfer_unit_indicator_receive"
         }

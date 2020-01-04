@@ -32,6 +32,8 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.hammer.HammerBaseTile;
@@ -126,10 +128,10 @@ public class TetraMod {
                     new BlockForgedPillar(),
                     new BlockForgedPlatform(),
                     new BlockForgedPlatformSlab(),
-                    new BlockForgedVent()
+                    new BlockForgedVent(),
 //                    new BlockForgedContainer(),
 //                    new BlockForgedCrate(),
-//                    new BlockTransferUnit(),
+                    new TransferUnitBlock()
 //                    new BlockCoreExtractorBase(),
 //                    new BlockCoreExtractorPiston(),
 //                    new BlockCoreExtractorPipe(),
@@ -303,6 +305,10 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(HammerHeadTile::new, HammerHeadBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, HammerHeadBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(TransferUnitTile::new, TransferUnitBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, TransferUnitBlock.unlocalizedName));
         }
     }
 }

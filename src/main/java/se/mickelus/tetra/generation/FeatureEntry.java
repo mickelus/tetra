@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitProcessor;
 import se.mickelus.tetra.data.DataManager;
 
 import java.util.Arrays;
@@ -119,7 +120,6 @@ public class FeatureEntry extends Feature<FeatureReference> {
             // todo: child mirroring needs to be in place for this to work properly
             // settings.setMirror(mirror);
             settings.setRandom(random);
-//        settings.setIntegrity(random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin);
 
             if (depth == 0) {
                 pos = template.getZeroPositionWithTransform(pos, mirror, rotation);
@@ -128,13 +128,15 @@ public class FeatureEntry extends Feature<FeatureReference> {
 //                pos = adjustRootPosition(template, pos, rotation);
             }
 
-            settings.addProcessor(new IntegrityProcessor(
-                    random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin));
+            if (feature.integrityMin < 1) {
+                settings.addProcessor(
+                        new IntegrityProcessor(random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin));
+            }
 //                settings.addProcessor(new BlockRotationProcessor(pos, settings))
 //                settings.addProcessor(new HammerProcessor(settings.getRandom(pos)))
 //                settings.addProcessor(new ForgedCrateProcessor(settings.getRandom(pos)))
 //                settings.addProcessor(new ForgedContainerProcessor(settings.getRandom(pos)))
-//                settings.addProcessor(new TransferUnitProcessor(settings.getRandom(pos))
+            settings.addProcessor(new TransferUnitProcessor());
 
             boolean blocksAdded = template.addBlocksToWorld(world, pos, settings, 2);
 
