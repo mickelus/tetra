@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.hammer;
+package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;

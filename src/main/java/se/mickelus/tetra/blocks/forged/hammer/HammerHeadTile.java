@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.hammer;
+package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;

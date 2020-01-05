@@ -36,10 +36,10 @@ import se.mickelus.tetra.blocks.forged.extractor.*;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
-import se.mickelus.tetra.blocks.hammer.HammerBaseBlock;
-import se.mickelus.tetra.blocks.hammer.HammerBaseTile;
-import se.mickelus.tetra.blocks.hammer.HammerHeadBlock;
-import se.mickelus.tetra.blocks.hammer.HammerHeadTile;
+import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
+import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
+import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
+import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -72,8 +72,6 @@ import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)

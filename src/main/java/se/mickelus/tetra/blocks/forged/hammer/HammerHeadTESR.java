@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.hammer;
+package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -13,14 +13,11 @@ import net.minecraftforge.client.model.data.EmptyModelData;
 
 import java.util.Random;
 
-
 public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
     private static BlockRendererDispatcher blockRenderer;
     private static final float animationDuration = 400;
 
-    public HammerHeadTESR() {
-
-    }
+    public HammerHeadTESR() { }
 
     @Override
     public void renderTileEntityFast(HammerHeadTile te, double x, double y, double z, float partialTicks, int destroyStage, BufferBuilder buffer) {

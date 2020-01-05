@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.hammer;
+package se.mickelus.tetra.blocks.forged.hammer;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.capabilities.Capability;
