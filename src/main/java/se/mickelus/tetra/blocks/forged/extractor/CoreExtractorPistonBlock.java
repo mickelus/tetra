@@ -18,6 +18,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -53,6 +55,7 @@ public class CoreExtractorPistonBlock extends TetraBlock {
         return true;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
         ClientRegistry.bindTileEntitySpecialRenderer(CoreExtractorPistonTile.class, new CoreExtractorPistonTESR());
