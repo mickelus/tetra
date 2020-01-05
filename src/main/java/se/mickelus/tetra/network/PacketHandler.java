@@ -2,6 +2,8 @@ package se.mickelus.tetra.network;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -68,8 +70,7 @@ public class PacketHandler {
 
     public AbstractPacket onMessage(AbstractPacket message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ServerPlayerEntity sender = ctx.get().getSender();
-            message.handle(sender);
+            message.handle(TetraMod.proxy.getNetworkPlayer(ctx.get()));
         });
         ctx.get().setPacketHandled(true);
 
@@ -82,6 +83,10 @@ public class PacketHandler {
 
     public static void sendToAllPlayers(AbstractPacket message) {
         channel.send(PacketDistributor.ALL.noArg(), message);
+    }
+
+    public static void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, DimensionType dim) {
+        channel.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), r2, dim)), message);
     }
 
     public static void sendToServer(AbstractPacket message) {

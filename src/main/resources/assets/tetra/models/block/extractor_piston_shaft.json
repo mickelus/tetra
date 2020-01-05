@@ -1,0 +1,20 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "texture": "tetra:blocks/extractor_piston",
+        "particle": "tetra:blocks/extractor_piston"
+    },
+    "elements": [
+        {
+            "from": [ 6, 0, 6 ],
+            "to": [ 10, 16, 10 ],
+            "faces": {
+                "north": { "texture": "#texture", "uv": [ 6, 0, 10, 16 ] },
+                "east": { "texture": "#texture", "uv":  [ 6, 0, 10, 16 ] },
+                "south": { "texture": "#texture", "uv": [ 6, 0, 10, 16 ] },
+                "west": { "texture": "#texture", "uv":  [ 6, 0, 10, 16 ] },
+                "down": { "texture": "#texture", "uv":  [ 11, 1, 15, 5 ] }
+            }
+        }
+    ]
+}

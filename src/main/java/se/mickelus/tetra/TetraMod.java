@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.extractor.*;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
@@ -131,11 +132,11 @@ public class TetraMod {
                     new BlockForgedVent(),
 //                    new BlockForgedContainer(),
 //                    new BlockForgedCrate(),
-                    new TransferUnitBlock()
-//                    new BlockCoreExtractorBase(),
-//                    new BlockCoreExtractorPiston(),
-//                    new BlockCoreExtractorPipe(),
-//                    new BlockSeepingBedrock()
+                    new TransferUnitBlock(),
+                    new CoreExtractorBaseBlock(),
+                    new CoreExtractorPistonBlock(),
+                    new CoreExtractorPipeBlock(),
+                    new SeepingBedrockBlock()
             );
         }
 
@@ -309,6 +310,14 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(TransferUnitTile::new, TransferUnitBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, TransferUnitBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, CoreExtractorBaseBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, CoreExtractorPistonBlock.unlocalizedName));
         }
     }
 }

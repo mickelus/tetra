@@ -1,14 +1,12 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "tetra:extractor_pipe",
+    "model": "tetra:block/extractor_pipe",
     "textures": {
       "texture": "tetra:blocks/extractor_pipe"
     }
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
     "facing": {
       "down": { "x": 180 },
       "up": {},

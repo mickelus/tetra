@@ -9,7 +9,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
@@ -24,7 +23,6 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class TransferUnitTile extends TileEntity implements ITickableTileEntity, IHeatTransfer {
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
     public static TileEntityType<TransferUnitTile> type;
 
@@ -289,9 +287,5 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
         this.read(packet.getNbtCompound());
-        BlockState state = getBlockState();
-
-        updateTransferState();
-        world.notifyBlockUpdate(pos, state, state,3);
     }
 }

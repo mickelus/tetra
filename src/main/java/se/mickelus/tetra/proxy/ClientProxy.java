@@ -1,11 +1,14 @@
 package se.mickelus.tetra.proxy;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.network.NetworkEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
@@ -27,7 +30,7 @@ public class ClientProxy implements IProxy {
 
         // todo 1.14: readd when terrain gen is back
 //        ClientRegistry.bindTileEntitySpecialRenderer(HammerHeadTile.class, new TileEntityRendererAnimation<>());
-//        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreExtractorPiston.class, new TileEntityRendererAnimation<>());
+//        ClientRegistry.bindTileEntitySpecialRenderer(CoreExtractorPistonTile.class, new TileEntityRendererAnimation<>());
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForgedContainer.class, new TESRForgedContainer());
 
         if (ConfigHandler.development.get()) {
@@ -54,14 +57,11 @@ public class ClientProxy implements IProxy {
 //            });
 //
 //            ModelLoader.setCustomStateMapper(BlockForgedCrate.instance, new StateMap.Builder().ignore(BlockForgedCrate.propIntegrity).build());
-//
-//            ModelLoader.setCustomStateMapper(BlockSeepingBedrock.instance, new StateMapperBase() {
-//                @Override
-//                protected ModelResourceLocation getModelResourceLocation(BlockState state) {
-//                    return new ModelResourceLocation(TetraMod.MOD_ID + ":seeping_bedrock",
-//                            "active=" + (state.getValue(BlockSeepingBedrock.propActive) > 0));
-//                }
-//            });
         }
+    }
+
+    @Override
+    public PlayerEntity getNetworkPlayer(NetworkEvent.Context context) {
+        return Minecraft.getInstance().player;
     }
 }

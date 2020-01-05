@@ -1,12 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "tetra:core_extractor",
-    "transform": "forge:default-block"
+    "model": "tetra:block/core_extractor"
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
     "facing": {
       "north":  {},
       "south":  { "y": 180 },

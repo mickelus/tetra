@@ -1,17 +1,6 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:seeping_bedrock",
-    "textures": {
-      "face": "tetra:blocks/seeping_bedrock_active"
+    "variants": {
+        "active=0": { "model": "tetra:block/seeping_bedrock_inactive" },
+        "active=1": { "model": "tetra:block/seeping_bedrock_active" }
     }
-  },
-  "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "active": {
-      "true": { "textures": { "face": "tetra:blocks/seeping_bedrock_active" }},
-      "false": { "textures": { "face": "tetra:blocks/seeping_bedrock_inactive" }}
-    }
-  }
 }

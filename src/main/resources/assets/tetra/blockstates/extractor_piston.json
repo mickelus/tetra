@@ -1,15 +1,6 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:extractor_piston",
-    "transform": "forge:default-block"
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "static": {
-      "true": {},
-      "false": {}
-    }
+    "hack=false": { "model": "tetra:block/extractor_piston_cover" },
+    "hack=true": { "model": "tetra:block/extractor_piston_shaft" }
   }
 }
