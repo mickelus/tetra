@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +28,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -37,8 +35,8 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
-import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
@@ -47,7 +45,7 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
 public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
     public static final String unlocalizedName = "hammer_base";
@@ -80,11 +78,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     };
 
     public HammerBaseBlock() {
-        super(Properties.create(Materials.forgedBlock)
-                .sound(SoundType.METAL)
-                .harvestTool(ToolTypes.hammer)
-                .harvestLevel(4)
-                .hardnessAndResistance(10F, 25));
+        super(ForgedBlockCommon.properties);
 
         setRegistryName(unlocalizedName);
 
@@ -93,7 +87,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
-        tooltip.add(forgedBlockTooltip);
+        tooltip.add(hintTooltip);
     }
 
     @Override

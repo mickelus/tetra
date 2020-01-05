@@ -12,30 +12,26 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.animation.TileEntityRendererAnimation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
 public class HammerHeadBlock extends TetraBlock {
     public static final String unlocalizedName = "hammer_head";
@@ -46,11 +42,7 @@ public class HammerHeadBlock extends TetraBlock {
     public static HammerHeadBlock instance;
 
     public HammerHeadBlock() {
-        super(Properties.create(Materials.forgedBlock)
-                .sound(SoundType.METAL)
-                .harvestTool(ToolTypes.hammer)
-                .harvestLevel(4)
-                .hardnessAndResistance(10F, 25));
+        super(ForgedBlockCommon.properties);
 
         setRegistryName(unlocalizedName);
 
@@ -66,7 +58,7 @@ public class HammerHeadBlock extends TetraBlock {
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
             final ITooltipFlag advanced) {
-        tooltip.add(forgedBlockTooltip);
+        tooltip.add(hintTooltip);
     }
 
     @Override

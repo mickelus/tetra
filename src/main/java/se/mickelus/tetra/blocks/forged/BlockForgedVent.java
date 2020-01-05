@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -28,9 +27,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TextHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -94,11 +91,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
     private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
 
     public BlockForgedVent() {
-        super(Properties.create(Materials.forgedBlock)
-                .sound(SoundType.METAL)
-                .harvestTool(ToolTypes.hammer)
-                .harvestLevel(4)
-                .hardnessAndResistance(10F, 25));
+        super(ForgedBlockCommon.properties);
 
         hasItem = true;
 
@@ -209,7 +202,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(TextHelper.forgedBlockTooltip);
+        tooltip.add(ForgedBlockCommon.hintTooltip);
     }
 
     @Override

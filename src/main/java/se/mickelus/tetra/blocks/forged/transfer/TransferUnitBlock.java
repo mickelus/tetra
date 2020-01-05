@@ -22,12 +22,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TextHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
-import se.mickelus.tetra.blocks.Materials;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
@@ -71,11 +70,7 @@ public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInt
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {
-        super(Properties.create(Materials.forgedBlock)
-                .sound(SoundType.METAL)
-                .harvestTool(ToolTypes.hammer)
-                .harvestLevel(4)
-                .hardnessAndResistance(10F, 25));
+        super(ForgedBlockCommon.properties);
 
         setRegistryName(unlocalizedName);
 
@@ -301,7 +296,7 @@ public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInt
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(TextHelper.forgedBlockTooltip);
+        tooltip.add(ForgedBlockCommon.hintTooltip);
     }
 
     @Override

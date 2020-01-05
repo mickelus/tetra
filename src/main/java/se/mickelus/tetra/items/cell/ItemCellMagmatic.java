@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
@@ -17,7 +15,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
-import static se.mickelus.tetra.TextHelper.forgedBlockTooltip;
+import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
 public class ItemCellMagmatic extends TetraItem {
     private static final String unlocalizedName = "magmatic_cell";
@@ -55,7 +53,7 @@ public class ItemCellMagmatic extends TetraItem {
             tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_empty"));
         }
 
-        tooltip.add(forgedBlockTooltip);
+        tooltip.add(hintTooltip);
     }
 
     @Override
