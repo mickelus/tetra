@@ -166,11 +166,12 @@
   "item.tetra.modular.repair_material.label": "Repair material:",
   "item.tetra.modular.repair_material.empty": "Does not need to be repaired",
 
-  "block.tetra.workbench": "Workbench",
-  "block.tetra.workbench.description": "Right click a crafting table with a hammer to create a workbench",
+  "block.tetra.basic_workbench": "Workbench",
+  "block.tetra.basic_workbench.description": "Right click a crafting table with a hammer to create a workbench",
+
   "block.tetra.block_geode": "Geode block",
   "item.tetra.geode": "Geode",
-  "item.tetra.geode.tooltip": "Breaking open at a workbench may yield valuable minerals",
+  "item.tetra.geode.tooltip": "Breaking open at a workbench may yield valuable minerals\n\n§8Drops are affected by the fortune enchantment",
   "break_geode_action.label": "Break open",
 
   "item.tetra.pristine_diamond": "Pristine Diamond",
@@ -182,7 +183,7 @@
   "item.tetra.pristine_lapis": "Pristine Lapis Lazuli",
   "shatter_lapis_action.label": "Shatter",
 
-  "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered into several regular-quality pieces at a workbench",
+  "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered at a workbench, which may yield several regular-quality pieces\n\n§8Drops are affected by the fortune enchantment",
 
   "item.tetra.magmatic_cell": "Thermal cell",
   "item.tetra.magmatic_cell.charge": "Charge: %s",
@@ -203,6 +204,8 @@
 
   "block.tetra.hammer_base": "Hammer base",
   "block.tetra.hammer_head": "Hammer head",
+
+  "block.tetra.forged_workbench": "Forged Workbench",
 
   "block.tetra.transfer_unit": "Transfer unit",
   "block.tetra.core_extractor": "Core extractor",

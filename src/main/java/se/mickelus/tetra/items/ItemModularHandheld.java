@@ -37,7 +37,8 @@ import se.mickelus.tetra.BleedingEffect;
 import se.mickelus.tetra.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
@@ -102,7 +103,7 @@ public class ItemModularHandheld extends ItemModular {
             "forge:fences/wooden",
             "forge:chests/wooden"};
     private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
-            BlockMatcher.forBlock(WorkbenchBlock.instance),
+            BlockMatcher.forBlock(BasicWorkbenchBlock.instance),
             BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
             BlockMatcher.forBlock(Blocks.BOOKSHELF),
             BlockMatcher.forBlock(Blocks.TRAPPED_CHEST),

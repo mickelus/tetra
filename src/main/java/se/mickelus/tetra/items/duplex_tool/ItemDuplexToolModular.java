@@ -14,14 +14,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.BasicMajorModule;
 import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.MultiSlotModule;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.schema.BookEnchantSchema;
@@ -206,7 +206,7 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
         Hand hand = context.getHand();
         if (player != null && !player.isSneaking() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
-            return WorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
+            return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
         }
         return super.onItemUseFirst(stack, context);
     }

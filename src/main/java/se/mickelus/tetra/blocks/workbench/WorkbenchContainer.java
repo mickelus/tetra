@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -11,7 +12,6 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.forgespi.Environment;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -26,7 +26,7 @@ public class WorkbenchContainer extends Container {
     private ToggleableSlot[] materialSlots = new ToggleableSlot[0];
 
     public WorkbenchContainer(int windowId, WorkbenchTile workbench, IInventory playerInventory, PlayerEntity player) {
-        super(WorkbenchBlock.containerType, windowId);
+        super(WorkbenchTile.containerType, windowId);
         this.workbench = workbench;
 
         // material inventory
@@ -68,8 +68,15 @@ public class WorkbenchContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(workbench.getWorld(), workbench.getPos()), playerIn, WorkbenchBlock.instance);
+    public boolean canInteractWith(PlayerEntity player) {
+        BlockPos pos = workbench.getPos();
+
+        // based on Container.isWithinUsableDistance but with more generic blockcheck
+        if (workbench.getWorld().getBlockState(workbench.getPos()).getBlock() instanceof AbstractWorkbenchBlock) {
+            return player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+        }
+
+        return false;
     }
 
     /**

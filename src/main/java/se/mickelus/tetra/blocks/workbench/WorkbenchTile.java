@@ -5,6 +5,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,11 +22,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -39,9 +42,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WorkbenchTile extends TileEntity implements INamedContainerProvider {
+    public static final String unlocalizedName = "workbench";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + WorkbenchBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static TileEntityType<WorkbenchTile> type;
+
+    @ObjectHolder(TetraMod.MOD_ID + ":" + WorkbenchTile.unlocalizedName)
+    public static ContainerType<WorkbenchContainer> containerType;
 
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
@@ -60,10 +67,25 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     private static WorkbenchAction[] defaultActions = new WorkbenchAction[] { new RepairAction() };
 
     private static WorkbenchAction[] actions = new WorkbenchAction[0];
+    static {
+        DataManager.actionData.onReload(() -> {
+            WorkbenchAction[] configActions = DataManager.actionData.getData().values().stream()
+                    .flatMap(Arrays::stream).toArray(ConfigAction[]::new);
+
+            actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, configActions);
+        });
+    }
 
     public WorkbenchTile() {
         super(type);
         changeListeners = new HashMap<>();
+    }
+
+    public static void init(PacketHandler packetHandler) {
+        packetHandler.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
+        packetHandler.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
+        packetHandler.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
+        packetHandler.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
     }
 
     @Nonnull
@@ -101,10 +123,6 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         };
     }
 
-    public static void setupConfigActions(WorkbenchAction[] actions) {
-        WorkbenchTile.actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, actions);
-    }
-
     public WorkbenchAction[] getAvailableActions(PlayerEntity player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
@@ -136,7 +154,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                                         targetStack, player, capability, requiredLevel,true);
                             }
                         } else {
-                            CastOptional.cast(getBlockState().getBlock(), WorkbenchBlock.class)
+                            CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
                                     .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
                                             player, true));
                         }
@@ -263,7 +281,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     }
                 } else {
                     ItemStack consumeTarget = upgradedStack;
-                    upgradedStack = CastOptional.cast(getBlockState().getBlock(), WorkbenchBlock.class)
+                    upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
                             .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
                             .orElse(upgradedStack);
                 }
@@ -426,7 +444,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     @Override
     public ITextComponent getDisplayName() {
-        return new StringTextComponent(WorkbenchBlock.unlocalizedName);
+        return new StringTextComponent(unlocalizedName);
     }
 
     @Nullable

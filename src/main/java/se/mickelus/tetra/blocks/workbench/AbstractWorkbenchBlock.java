@@ -2,100 +2,37 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
-import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
-import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
-import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-public class WorkbenchBlock extends TetraBlock {
-    public static final String unlocalizedName = "workbench";
-
+public abstract class AbstractWorkbenchBlock extends TetraBlock {
     public static final AxisAlignedBB forgedAABB = new AxisAlignedBB(0.125, 0, 0, 0.875, 1, 1);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static WorkbenchBlock instance;
-
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ContainerType<WorkbenchContainer> containerType;
-
-    // todo 1.14: split off forged workbench into separate block
-    public WorkbenchBlock() {
-        super(Properties.create(Material.WOOD).hardnessAndResistance(2.5f));
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
-
-        DataManager.actionData.onReload(() -> {
-            WorkbenchTile.setupConfigActions(DataManager.actionData.getData().values().stream()
-                    .flatMap(Arrays::stream).toArray(ConfigAction[]::new));
-        });
-    }
-    @Override
-    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("block.tetra.workbench.description").setStyle(new Style()
-                .setColor(TextFormatting.GRAY)));
-    }
-    public static ActionResultType upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return ActionResultType.FAIL;
-        }
-
-        if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
-
-            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
-
-            if (!world.isRemote) {
-                world.setBlockState(pos, instance.getDefaultState());
-
-                BlockUseCriterion.trigger((ServerPlayerEntity) player, instance.getDefaultState(), ItemStack.EMPTY);
-            }
-            return ActionResultType.SUCCESS;
-        }
-
-        return ActionResultType.PASS;
+    public AbstractWorkbenchBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -109,7 +46,7 @@ public class WorkbenchBlock extends TetraBlock {
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
                     .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                     .orElse(LazyOptional.empty())
@@ -166,23 +103,6 @@ public class WorkbenchBlock extends TetraBlock {
             return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
         }
         return targetStack;
-    }
-
-    @Override
-    public void init(PacketHandler packetHandler) {
-        super.init(packetHandler);
-
-        PacketHandler.instance.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
-        PacketHandler.instance.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
-        PacketHandler.instance.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
-        PacketHandler.instance.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
-        ScreenManager.registerFactory(containerType, WorkbenchScreen::new);
     }
 
     @Override

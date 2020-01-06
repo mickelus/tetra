@@ -40,7 +40,7 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
-import se.mickelus.tetra.blocks.workbench.WorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
@@ -115,7 +115,7 @@ public class TetraMod {
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
         blocks = new Block[] {
-                new WorkbenchBlock(),
+                new BasicWorkbenchBlock(),
                 new GeodeBlock(),
         };
 
@@ -128,6 +128,7 @@ public class TetraMod {
                     new BlockForgedPlatform(),
                     new BlockForgedPlatformSlab(),
                     new BlockForgedVent(),
+                    new ForgedWorkbenchBlock(),
 //                    new BlockForgedContainer(),
 //                    new BlockForgedCrate(),
                     new TransferUnitBlock(),
@@ -189,6 +190,8 @@ public class TetraMod {
         packetHandler.registerPacket(HonePacket.class, HonePacket::new);
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
+
+        WorkbenchTile.init(packetHandler);
 
         proxy.postInit();
 
@@ -261,7 +264,7 @@ public class TetraMod {
             ContainerType workbenchContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return WorkbenchContainer.create(windowId, pos, inv);
-            })).setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName);
+            })).setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
         }
 
@@ -274,15 +277,6 @@ public class TetraMod {
         public static void registerItems(final RegistryEvent.Register<Item> event) {
             event.getRegistry().registerAll(items);
 
-            // todo 1.14: this is supposedly not needed, item rendering works?
-//        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-//            Arrays.stream(items)
-//                    .forEach(item -> {
-//                        ModelLoader.setCustomModelResourceLocation(item, 0,
-//                                new ModelResourceLocation(item.getRegistryName(), "inventory"));
-//                    });
-//        }
-
             Arrays.stream(blocks)
                     .filter(block -> block instanceof ITetraBlock)
                     .map(block -> (ITetraBlock) block)
@@ -293,9 +287,9 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
             // todo 1.14: workbench TE registry, do we really pass null here? (from mcjty tutorial)
-            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new, WorkbenchBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new, BasicWorkbenchBlock.instance)
                     .build(null)
-                    .setRegistryName(MOD_ID, WorkbenchBlock.unlocalizedName));
+                    .setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName));
 
             event.getRegistry().register(TileEntityType.Builder.create(HammerBaseTile::new, HammerBaseBlock.instance)
                     .build(null)
