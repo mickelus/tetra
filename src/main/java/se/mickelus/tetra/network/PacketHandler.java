@@ -70,7 +70,11 @@ public class PacketHandler {
 
     public AbstractPacket onMessage(AbstractPacket message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            message.handle(TetraMod.proxy.getNetworkPlayer(ctx.get()));
+            if (ctx.get().getDirection().getReceptionSide().isServer()) {
+                message.handle(ctx.get().getSender());
+            } else {
+                message.handle(TetraMod.proxy.getClientPlayer());
+            }
         });
         ctx.get().setPacketHandled(true);
 

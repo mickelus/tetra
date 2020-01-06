@@ -27,9 +27,9 @@ public abstract class AbstractPacket {
     public abstract void fromBytes(PacketBuffer buffer);
 
     /**
-     * Handle a packet on the server side. Note this occurs after decoding has completed.
+     * Handle the reception of this packet.
      *
-     * @param player the player reference
+     * @param player A reference to the sending player when handled on the server side
      */
     public abstract void handle(PlayerEntity player);
 

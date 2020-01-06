@@ -8,7 +8,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.network.NetworkEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.CapabililtyInteractiveOverlay;
@@ -61,7 +60,7 @@ public class ClientProxy implements IProxy {
     }
 
     @Override
-    public PlayerEntity getNetworkPlayer(NetworkEvent.Context context) {
+    public PlayerEntity getClientPlayer() {
         return Minecraft.getInstance().player;
     }
 }
