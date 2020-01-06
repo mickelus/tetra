@@ -3,6 +3,9 @@ package se.mickelus.tetra.blocks.forged.hammer;
 import java.util.Collections;
 import java.util.LinkedList;
 import javax.annotation.Nullable;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.state.BooleanProperty;
 import org.apache.commons.lang3.EnumUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -31,25 +34,13 @@ public class HammerBaseTile extends TileEntity {
     private static final String indexKey = "slot";
     private ItemStack[] slots;
 
-    private boolean hasPlateWest = true;
-    private boolean hasPlateEast = true;
-
-    private EnumHammerConfig configEast = EnumHammerConfig.A;
-    private EnumHammerConfig configWest = EnumHammerConfig.A;
-
-
     public HammerBaseTile() {
         super(type);
         slots = new ItemStack[2];
     }
 
     public boolean hasEffect(EnumHammerEffect effect) {
-        if (effect.requiresBoth) {
-            return effect.equals(EnumHammerEffect.fromConfig(configEast, getWorld().getSeed()))
-                    && effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
-        }
-        return effect.equals(EnumHammerEffect.fromConfig(configEast, getWorld().getSeed()))
-                || effect.equals(EnumHammerEffect.fromConfig(configWest, getWorld().getSeed()));
+        return HammerBaseBlock.hasEffect(world, getBlockState(), effect);
     }
 
     public int getHammerLevel() {
@@ -79,6 +70,12 @@ public class HammerBaseTile extends TileEntity {
         if (index >= 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
             ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
             item.drainCharge(slots[index], amount);
+
+            if (item.getCharge(slots[index]) >= 0) {
+                BooleanProperty prop = index == 0 ? HammerBaseBlock.propCell1Charged : HammerBaseBlock.propCell2Charged;
+                world.setBlockState(pos, getBlockState().with(prop, false), 3);
+            }
+
         }
     }
 
@@ -129,10 +126,10 @@ public class HammerBaseTile extends TileEntity {
 
     private int fuelUsage() {
         int usage = 5;
-        if (!hasPlateEast) {
+        if (!getBlockState().get(EnumHammerPlate.EAST.prop)) {
             usage += 2;
         }
-        if (!hasPlateWest) {
+        if (!getBlockState().get(EnumHammerPlate.WEST.prop)) {
             usage += 2;
         }
 
@@ -165,8 +162,22 @@ public class HammerBaseTile extends TileEntity {
         if (index >= 0 && index < slots.length && slots[index] != null) {
             ItemStack itemStack = slots[index];
             slots[index] = null;
+
+            if (index == 0) {
+                world.setBlockState(pos, getBlockState()
+                        .with(HammerBaseBlock.propCell1, false)
+                        .with(HammerBaseBlock.propCell1Charged, false),
+                        3);
+            } else {
+                world.setBlockState(pos, getBlockState()
+                        .with(HammerBaseBlock.propCell2, false)
+                        .with(HammerBaseBlock.propCell2Charged, false),
+                        3);
+            }
+
             return itemStack;
         }
+
         return ItemStack.EMPTY;
     }
 
@@ -181,57 +192,27 @@ public class HammerBaseTile extends TileEntity {
         if (itemStack.getItem() instanceof ItemCellMagmatic
                 && index >= 0 && index < slots.length && slots[index] == null) {
             slots[index] = itemStack;
+
+            boolean hasCharge = ((ItemCellMagmatic) itemStack.getItem()).getCharge(itemStack) > 0;
+            if (index == 0) {
+                world.setBlockState(pos, getBlockState()
+                        .with(HammerBaseBlock.propCell1, true)
+                        .with(HammerBaseBlock.propCell1Charged, hasCharge),
+                        3);
+            } else {
+                world.setBlockState(pos, getBlockState()
+                        .with(HammerBaseBlock.propCell2, true)
+                        .with(HammerBaseBlock.propCell2Charged, hasCharge),
+                        3);
+            }
+
             return true;
         }
+
         return false;
     }
 
-    public void removePlate(EnumHammerPlate plate) {
-        switch (plate) {
-            case EAST:
-                hasPlateEast = false;
-                break;
-            case WEST:
-                hasPlateWest = false;
-                break;
-        }
-        markDirty();
-    }
-
-    public void attachPlate(EnumHammerPlate plate) {
-        switch (plate) {
-            case EAST:
-                hasPlateEast = true;
-                break;
-            case WEST:
-                hasPlateWest = true;
-                break;
-        }
-        markDirty();
-    }
-
-    public boolean hasPlate(EnumHammerPlate plate) {
-        switch (plate) {
-            case EAST:
-                return hasPlateEast;
-            case WEST:
-                return hasPlateWest;
-        }
-        return false;
-    }
-
-    public void reconfigure(Direction side) {
-        if (Direction.EAST.equals(side)) {
-            configEast = EnumHammerConfig.getNextConfiguration(configEast);
-            applyReconfigurationEffect(EnumHammerEffect.fromConfig(configEast, world.getSeed()));
-        } else if (Direction.WEST.equals(side)) {
-            configWest = EnumHammerConfig.getNextConfiguration(configWest);
-            applyReconfigurationEffect(EnumHammerEffect.fromConfig(configWest, world.getSeed()));
-        }
-        markDirty();
-    }
-
-    private void applyReconfigurationEffect(EnumHammerEffect effect) {
+    public void applyReconfigurationEffect(EnumHammerEffect effect) {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
         Vec3d pos = new Vec3d(getPos());
         pos = pos.add(0.5, 0.5, 0.5);
@@ -261,16 +242,6 @@ public class HammerBaseTile extends TileEntity {
                 spawnParticle(ParticleTypes.LARGE_SMOKE, rotPos, 3, 0f);
             }
         }
-    }
-
-    public EnumHammerConfig getConfiguration(Direction side) {
-        if (Direction.EAST.equals(side)) {
-            return configEast;
-        } else if (Direction.WEST.equals(side)) {
-            return configWest;
-        }
-
-        return EnumHammerConfig.A;
     }
 
     /**
@@ -313,23 +284,6 @@ public class HammerBaseTile extends TileEntity {
                 }
             }
         }
-
-        hasPlateEast = compound.getBoolean(EnumHammerPlate.EAST.key);
-        hasPlateWest = compound.getBoolean(EnumHammerPlate.WEST.key);
-
-        if (compound.contains(EnumHammerConfig.propE.getName())) {
-            String enumName = compound.getString(EnumHammerConfig.propE.getName());
-            if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
-                configEast = EnumHammerConfig.valueOf(enumName);
-            }
-        }
-
-        if (compound.contains(EnumHammerConfig.propW.getName())) {
-            String enumName = compound.getString(EnumHammerConfig.propW.getName());
-            if (EnumUtils.isValidEnum(EnumHammerConfig.class, enumName)) {
-                configWest = EnumHammerConfig.valueOf(enumName);
-            }
-        }
     }
 
     @Override
@@ -337,11 +291,6 @@ public class HammerBaseTile extends TileEntity {
         super.write(compound);
 
         writeCells(compound, slots);
-
-        writePlate(compound, EnumHammerPlate.EAST, hasPlateEast);
-        writePlate(compound, EnumHammerPlate.WEST, hasPlateWest);
-
-        writeConfig(compound, configEast, configWest);
 
         return compound;
     }
@@ -360,14 +309,4 @@ public class HammerBaseTile extends TileEntity {
         }
         compound.put(slotsKey, nbttaglist);
     }
-
-    public static void writePlate(CompoundNBT compound, EnumHammerPlate plate, boolean hasPlate) {
-        compound.putBoolean(plate.key, hasPlate);
-    }
-
-    public static void writeConfig(CompoundNBT compound, EnumHammerConfig configEast, EnumHammerConfig configWest) {
-        compound.putString(EnumHammerConfig.propE.getName(), configEast.toString());
-        compound.putString(EnumHammerConfig.propW.getName(), configWest.toString());
-    }
-
 }

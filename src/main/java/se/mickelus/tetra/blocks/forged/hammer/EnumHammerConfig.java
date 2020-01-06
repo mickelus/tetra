@@ -10,8 +10,8 @@ public enum EnumHammerConfig implements IStringSerializable {
     C,
     D;
 
-    public static final EnumProperty<EnumHammerConfig> propE = EnumProperty.create("confige", EnumHammerConfig.class);
-    public static final EnumProperty<EnumHammerConfig> propW = EnumProperty.create("configw", EnumHammerConfig.class);
+    public static final EnumProperty<EnumHammerConfig> eastProp = EnumProperty.create("confige", EnumHammerConfig.class);
+    public static final EnumProperty<EnumHammerConfig> westProp = EnumProperty.create("configw", EnumHammerConfig.class);
 
     @Override
     public String getName() {

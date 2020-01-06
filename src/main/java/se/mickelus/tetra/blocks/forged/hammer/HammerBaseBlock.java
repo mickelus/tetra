@@ -13,6 +13,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -27,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -50,8 +53,6 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
 public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
-    public static final String unlocalizedName = "hammer_base";
-
     public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty propCell1 = BooleanProperty.create("cell1");
     public static final BooleanProperty propCell1Charged = BooleanProperty.create("cell1charged");
@@ -60,6 +61,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
+    public static final String unlocalizedName = "hammer_base";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static HammerBaseBlock instance;
 
@@ -100,21 +102,6 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         tooltip.add(hintTooltip);
     }
 
-    @Override
-    public BlockState getExtendedState(final BlockState state, final IBlockReader world, final BlockPos pos) {
-        return TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .map(te -> state
-                        .with(propCell1, te.hasCellInSlot(0))
-                        .with(propCell1Charged, te.getCellFuel(0) > 0)
-                        .with(propCell2, te.hasCellInSlot(1))
-                        .with(propCell2Charged, te.getCellFuel(1) > 0)
-                        .with(EnumHammerPlate.EAST.prop, te.hasPlate(EnumHammerPlate.EAST))
-                        .with(EnumHammerPlate.WEST.prop, te.hasPlate(EnumHammerPlate.WEST))
-                        .with(EnumHammerConfig.propE, te.getConfiguration(Direction.EAST))
-                        .with(EnumHammerConfig.propW, te.getConfiguration(Direction.WEST)))
-                .orElse(state);
-    }
-
     public boolean isFueled(World world, BlockPos pos) {
         return TileEntityOptional.from(world, pos, HammerBaseTile.class)
                 .map(HammerBaseTile::isFueled)
@@ -132,14 +119,11 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     public void applyEffects(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player) {
-        TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .ifPresent(te -> {
-                    if (te.hasEffect(EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
-                        ItemModular item = (ItemModular) itemStack.getItem();
-                        int damage = (int) (itemStack.getMaxDamage() * 0.1);
-                        item.applyDamage(damage, itemStack, player);
-                    }
-                });
+        if (hasEffect(world, world.getBlockState(pos), EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
+            ItemModular item = (ItemModular) itemStack.getItem();
+            int damage = (int) (itemStack.getMaxDamage() * 0.1);
+            item.applyDamage(damage, itemStack, player);
+        }
     }
 
     public int getHammerLevel(World world, BlockPos pos) {
@@ -149,30 +133,45 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, EnumHammerPlate plate) {
+        if (!world.isRemote) {
+            BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+        }
+
+        world.setBlockState(pos, blockState.with(plate.prop, false), 3);
+
+        world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
+
+        return true;
+    }
+
+    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Direction face) {
         TileEntityOptional.from(world, pos, HammerBaseTile.class)
                 .ifPresent(te -> {
-                    te.removePlate(plate);
+                    if (Direction.EAST.equals(face)) {
+                        EnumHammerConfig newConfig = EnumHammerConfig.getNextConfiguration(blockState.get(EnumHammerConfig.eastProp));
+                        world.setBlockState(pos, blockState.with(EnumHammerConfig.eastProp, newConfig), 3);
 
-                    if (!world.isRemote) {
-                        BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+                        te.applyReconfigurationEffect(EnumHammerEffect.fromConfig(newConfig, world.getSeed()));
+                    } else if (Direction.WEST.equals(face)) {
+                        EnumHammerConfig newConfig = EnumHammerConfig.getNextConfiguration(blockState.get(EnumHammerConfig.westProp));
+                        world.setBlockState(pos, blockState.with(EnumHammerConfig.westProp, newConfig), 3);
+
+                        te.applyReconfigurationEffect(EnumHammerEffect.fromConfig(newConfig, world.getSeed()));
                     }
 
-                    world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
-                    world.notifyBlockUpdate(pos, blockState, blockState, 3);
+                    world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
         });
 
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Direction adjustedFace) {
-        TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .ifPresent(te -> {
-                    te.reconfigure(adjustedFace);
-                    world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
-                    world.notifyBlockUpdate(pos, blockState, blockState, 3);
-        });
-
-        return true;
+    public static boolean hasEffect(World world, BlockState blockState, EnumHammerEffect effect) {
+        if (effect.requiresBoth) {
+            return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), world.getSeed()))
+                    && effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), world.getSeed()));
+        }
+        return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), world.getSeed()))
+                || effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), world.getSeed()));
     }
 
     @Override
@@ -198,7 +197,6 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 }
 
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
-                world.notifyBlockUpdate(pos, blockState, blockState, 3);
 
                 if (!player.world.isRemote) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), ItemStack.EMPTY);
@@ -218,9 +216,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 return true;
             }
         } else if (heldStack.getItem() instanceof ItemVentPlate) {
-            if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.EAST)) {
-                te.attachPlate(EnumHammerPlate.EAST);
-                world.notifyBlockUpdate(pos, blockState, blockState, 3);
+            if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.EAST.prop)) {
+                world.setBlockState(pos, blockState.with(EnumHammerPlate.EAST.prop, true), 3);
 
                 if (!player.world.isRemote) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), heldStack);
@@ -229,9 +226,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 heldStack.shrink(1);
 
                 return true;
-            } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !te.hasPlate(EnumHammerPlate.WEST)) {
-                te.attachPlate(EnumHammerPlate.WEST);
-                world.notifyBlockUpdate(pos, blockState, blockState, 3);
+            } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.WEST.prop)) {
+                world.setBlockState(pos, blockState.with(EnumHammerPlate.WEST.prop, true), 3);
 
                 if (!player.world.isRemote) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), heldStack);
@@ -251,7 +247,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, HammerBaseTile.class)
                     .ifPresent(tile -> {
-                        for (int i = 0; i < 1; i++) {
+                        for (int i = 0; i < 2; i++) {
                             if (tile.hasCellInSlot(i)) {
                                 InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getStackInSlot(i).copy());
                             }
@@ -288,7 +284,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     @Override
     protected void fillStateContainer(final StateContainer.Builder<Block, BlockState> builder) {
         builder.add(propFacing, propCell1, propCell1Charged, propCell2 , propCell2Charged,
-                EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerConfig.propE, EnumHammerConfig.propW);
+                EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerConfig.eastProp, EnumHammerConfig.westProp);
     }
 
     @Nullable
