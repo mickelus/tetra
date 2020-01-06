@@ -29,8 +29,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 public abstract class AbstractWorkbenchBlock extends TetraBlock {
-    public static final AxisAlignedBB forgedAABB = new AxisAlignedBB(0.125, 0, 0, 0.875, 1, 1);
-
     public AbstractWorkbenchBlock(Properties properties) {
         super(properties);
     }
