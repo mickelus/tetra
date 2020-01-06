@@ -7,6 +7,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
@@ -77,7 +78,7 @@ public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInt
         hasItem = true;
 
         setDefaultState(getDefaultState()
-                .with(plateProp, true)
+                .with(plateProp, false)
                 .with(cellProp, 0)
                 .with(configProp, EnumTransferConfig.a)
                 .with(transferProp, EnumTransferState.none));
@@ -234,6 +235,20 @@ public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInt
         }
 
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!equals(newState.getBlock())) {
+            TileEntityOptional.from(world, pos, TransferUnitTile.class)
+                    .ifPresent(tile -> {
+                        if (tile.hasCell()) {
+                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
+                        }
+                    });
+
+            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TileEntity::remove);
+        }
     }
 
     @Override

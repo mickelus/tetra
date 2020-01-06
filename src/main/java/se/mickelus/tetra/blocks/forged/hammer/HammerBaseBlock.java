@@ -10,6 +10,7 @@ import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -30,6 +31,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
@@ -37,6 +40,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
@@ -81,6 +85,14 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         setRegistryName(unlocalizedName);
 
         hasItem = true;
+
+        setDefaultState(getDefaultState()
+                .with(EnumHammerPlate.EAST.prop, false)
+                .with(EnumHammerPlate.WEST.prop, false)
+                .with(propCell1, false)
+                .with(propCell1Charged, false)
+                .with(propCell2, false)
+                .with(propCell2Charged, false));
     }
 
     @Override
@@ -232,6 +244,22 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         }
 
         return BlockInteraction.attemptInteraction(world, getExtendedState(blockState, world, pos), pos, player, hand, rayTraceResult);
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!equals(newState.getBlock())) {
+            TileEntityOptional.from(world, pos, HammerBaseTile.class)
+                    .ifPresent(tile -> {
+                        for (int i = 0; i < 1; i++) {
+                            if (tile.hasCellInSlot(i)) {
+                                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getStackInSlot(i).copy());
+                            }
+                        }
+                    });
+
+            TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(TileEntity::remove);
+        }
     }
 
     @Override

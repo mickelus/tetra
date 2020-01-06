@@ -81,6 +81,10 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
         return removedCell;
     }
 
+    public ItemStack getCell() {
+        return cell;
+    }
+
     public boolean putCell(ItemStack itemStack) {
         if (itemStack.getItem() instanceof ItemCellMagmatic) {
             cell = itemStack;

@@ -170,6 +170,13 @@ public class HammerBaseTile extends TileEntity {
         return ItemStack.EMPTY;
     }
 
+    public ItemStack getStackInSlot(int index) {
+        if (index >= 0 && index < slots.length && slots[index] != null) {
+            return slots[index];
+        }
+        return ItemStack.EMPTY;
+    }
+
     public boolean putCellInSlot(ItemStack itemStack, int index) {
         if (itemStack.getItem() instanceof ItemCellMagmatic
                 && index >= 0 && index < slots.length && slots[index] == null) {

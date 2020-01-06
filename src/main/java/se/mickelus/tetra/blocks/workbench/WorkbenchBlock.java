@@ -109,19 +109,21 @@ public class WorkbenchBlock extends TetraBlock {
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
-                .orElse(LazyOptional.empty())
-                .ifPresent(cap -> {
-                    for (int i = 0; i < cap.getSlots(); i++) {
-                        ItemStack itemStack = cap.getStackInSlot(i);
-                        if (!itemStack.isEmpty()) {
-                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntityOptional.from(world, pos, WorkbenchTile.class)
+                    .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                    .orElse(LazyOptional.empty())
+                    .ifPresent(cap -> {
+                        for (int i = 0; i < cap.getSlots(); i++) {
+                            ItemStack itemStack = cap.getStackInSlot(i);
+                            if (!itemStack.isEmpty()) {
+                                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
+                            }
                         }
-                    }
-                });
+                    });
 
-        TileEntityOptional.from(world, pos, WorkbenchTile.class).ifPresent(TileEntity::remove);
+            TileEntityOptional.from(world, pos, WorkbenchTile.class).ifPresent(TileEntity::remove);
+        }
     }
 
     @Override
