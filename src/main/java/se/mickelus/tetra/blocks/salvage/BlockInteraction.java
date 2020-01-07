@@ -27,6 +27,7 @@ import se.mickelus.tetra.items.ItemModular;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -226,7 +227,7 @@ public class BlockInteraction {
         return 0;
     }
 
-    public static void dropLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
+    public static List<ItemStack> getLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
         LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
 
         LootContext context = new LootContext.Builder(world)
@@ -238,7 +239,11 @@ public class BlockInteraction {
                 .withParameter(LootParameters.POSITION, player.getPosition())
                 .build(LootParameterSets.BLOCK);
 
-        table.generate(context).forEach(itemStack -> {
+        return table.generate(context);
+    }
+
+    public static void dropLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
+        getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
             if (!player.inventory.addItemStackToInventory(itemStack)) {
                 player.dropItem(itemStack, false);
             }

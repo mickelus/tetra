@@ -130,7 +130,7 @@ public class TetraMod {
                     new BlockForgedVent(),
                     new ForgedWorkbenchBlock(),
 //                    new BlockForgedContainer(),
-//                    new BlockForgedCrate(),
+                    new BlockForgedCrate(),
                     new TransferUnitBlock(),
                     new CoreExtractorBaseBlock(),
                     new CoreExtractorPistonBlock(),
