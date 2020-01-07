@@ -26,16 +26,14 @@ public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
         }
 
         BlockPos pos = te.getPos();
-
         IEnviromentBlockReader world = MinecraftForgeClient.getRegionRenderCache(te.getWorld(), pos);
-        BlockState state = world.getBlockState(pos);
-        IBakedModel model = blockRenderer.getBlockModelShapes().getModel(state);
+        IBakedModel model = blockRenderer.getBlockModelShapes().getModel(HammerHeadBlock.instance.getDefaultState());
 
         double offset = Math.min(1, Math.max(0, (1d * System.currentTimeMillis() - te.getActivationTime()) / animationDuration)) - 0.125;
         buffer.setTranslation(x - pos.getX(), y - pos.getY() + offset, z - pos.getZ());
 
-        blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, buffer, false, new Random(), 42,
-                EmptyModelData.INSTANCE);
+        blockRenderer.getBlockModelRenderer().renderModel(world, model, HammerHeadBlock.instance.getDefaultState(), pos, buffer,
+                false, new Random(), 42, EmptyModelData.INSTANCE);
 
     }
 }

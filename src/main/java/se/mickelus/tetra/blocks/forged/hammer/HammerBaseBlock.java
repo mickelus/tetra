@@ -6,8 +6,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -32,6 +34,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
@@ -287,10 +290,29 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerConfig.eastProp, EnumHammerConfig.westProp);
     }
 
+    @Override
+    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (Direction.DOWN.equals(facing) && !HammerHeadBlock.instance.equals(facingState.getBlock())) {
+            return Blocks.AIR.getDefaultState();
+        }
+
+        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+    }
+
+    // based on same method implementation in BedBlock
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        world.setBlockState(pos.down(), HammerHeadBlock.instance.getDefaultState(), 3);
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        return this.getDefaultState().with(propFacing, context.getPlacementHorizontalFacing().getOpposite());
+        if (context.getWorld().getBlockState(context.getPos().down()).isReplaceable(context)) {
+            return this.getDefaultState().with(propFacing, context.getPlacementHorizontalFacing().getOpposite());
+        }
+
+        // returning null here stops the block from being placed
+        return null;
     }
 
     @Override
