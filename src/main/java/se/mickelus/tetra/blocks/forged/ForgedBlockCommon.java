@@ -17,7 +17,7 @@ public class ForgedBlockCommon {
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(4)
-            .hardnessAndResistance(10F, 25);
+            .hardnessAndResistance(12F, 25);
 
     public static final ITextComponent hintTooltip = new TranslationTextComponent("forged_description")
             .setStyle(new Style().setColor(TextFormatting.GRAY));

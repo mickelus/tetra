@@ -33,7 +33,7 @@
                             "enchantment":"minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
-                                "bonusMultiplier": 2
+                                "bonusMultiplier": 1
                             }
                         }
                     ]

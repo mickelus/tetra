@@ -287,7 +287,8 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
             // todo 1.14: workbench TE registry, do we really pass null here? (from mcjty tutorial)
-            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new, BasicWorkbenchBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new,
+                    BasicWorkbenchBlock.instance, ForgedWorkbenchBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName));
 

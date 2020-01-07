@@ -11,7 +11,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 1
+            "hammer": [1, 5]
         }
     },
     {
@@ -26,7 +26,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 1
+            "hammer": [1, 5]
         }
     },
     {
@@ -41,7 +41,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": [2, 10]
         }
     },
     {
@@ -56,7 +56,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 4
+            "hammer": [4, 20]
         }
     },
     {
@@ -71,7 +71,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": [2, 5]
         }
     },
     {
@@ -86,7 +86,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 1
+            "hammer": [1, 10]
         }
     },
     {
@@ -101,7 +101,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": [3, 15]
         }
     },
     {
@@ -116,7 +116,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": [2, 15]
         }
     },
     {
@@ -131,7 +131,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": [3, 15]
         }
     },
     {
@@ -146,7 +146,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 1
+            "hammer": [1, 10]
         }
     },
     {
@@ -161,7 +161,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 4
+            "hammer": [4, 18]
         }
     },
     {
@@ -176,7 +176,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": [2, 10]
         }
     },
     {
@@ -191,7 +191,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 2
+            "hammer": [2, 10]
         }
     },
     {
@@ -206,7 +206,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": [3, 15]
         }
     },
     {
@@ -221,7 +221,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": [3, 15]
         }
     },
     {
@@ -236,7 +236,7 @@
             "textureX": 64
         },
         "capabilities": {
-            "hammer": 3
+            "hammer": [3, 15]
         }
     }
 ]
