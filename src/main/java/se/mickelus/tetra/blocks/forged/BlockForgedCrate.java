@@ -155,6 +155,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
         if (Direction.DOWN.equals(facing) && equals(facingState.getBlock())) {
             return state.with(propStacked, true);
         }
