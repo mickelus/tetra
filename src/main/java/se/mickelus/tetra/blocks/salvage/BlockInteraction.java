@@ -48,8 +48,8 @@ public class BlockInteraction {
 
     public float successChance = 1;
 
-    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX, float maxX, float minY,
-            float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
+    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX,
+            float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -64,7 +64,7 @@ public class BlockInteraction {
     }
 
     public BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX, float maxX, float minY,
-                            float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
+            float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
 
         this.requiredCapability = requiredCapability;
         this.requiredLevel = requiredLevel;
@@ -128,7 +128,8 @@ public class BlockInteraction {
                 .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableCapabilities))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
-                .filter(interaction -> CapabilityHelper.getItemCapabilityLevel(heldStack, interaction.requiredCapability) >= interaction.requiredLevel)
+                .filter(interaction ->
+                        CapabilityHelper.getItemCapabilityLevel(heldStack, interaction.requiredCapability) >= interaction.requiredLevel)
                 .findFirst()
                 .orElse(null);
 
@@ -145,9 +146,9 @@ public class BlockInteraction {
 
             if (player instanceof ServerPlayerEntity) {
                 BlockState newState = world.getBlockState(pos);
-                newState = newState.getExtendedState(world, pos);
 
-                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredCapability, possibleInteraction.requiredLevel);
+                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredCapability,
+                        possibleInteraction.requiredLevel);
             }
 
             player.resetCooldown();
@@ -156,8 +157,8 @@ public class BlockInteraction {
         return false;
     }
 
-    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace, double hitX, double hitY,
-            double hitZ) {
+    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace,
+            double hitX, double hitY, double hitZ) {
         // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
         AxisAlignedBB boundingBox = blockState.getRaytraceShape(player.world, pos).getBoundingBox();
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
@@ -227,7 +228,8 @@ public class BlockInteraction {
         return 0;
     }
 
-    public static List<ItemStack> getLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
+    public static List<ItemStack> getLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world,
+            BlockState blockState) {
         LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
 
         LootContext context = new LootContext.Builder(world)

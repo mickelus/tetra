@@ -197,7 +197,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
-        return BlockInteraction.attemptInteraction(world, state.getExtendedState(world, pos), pos, player, hand, rayTrace);
+        return BlockInteraction.attemptInteraction(world, state, pos, player, hand, rayTrace);
     }
 
     @Override

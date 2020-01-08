@@ -1,9 +1,5 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,30 +11,18 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
@@ -46,12 +30,16 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
@@ -113,12 +101,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     public void consumeFuel(World world, BlockPos pos) {
         TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .ifPresent(te -> {
-                    BlockState blockState = world.getBlockState(pos);
-                    te.consumeFuel();
-
-                    world.notifyBlockUpdate(pos, blockState, blockState, 3);
-                });
+                .ifPresent(HammerBaseTile::consumeFuel);
     }
 
     public void applyEffects(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player) {
@@ -202,7 +185,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), ItemStack.EMPTY);
                 }
 
                 return true;
@@ -210,10 +193,9 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setHeldItem(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
-                world.notifyBlockUpdate(pos, blockState, blockState, 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
                 }
 
                 return true;
@@ -223,7 +205,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 world.setBlockState(pos, blockState.with(EnumHammerPlate.EAST.prop, true), 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -233,7 +215,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 world.setBlockState(pos, blockState.with(EnumHammerPlate.WEST.prop, true), 3);
 
                 if (!player.world.isRemote) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, getExtendedState(blockState, world, pos), heldStack);
+                    BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
                 }
 
                 heldStack.shrink(1);
@@ -242,7 +224,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
             }
         }
 
-        return BlockInteraction.attemptInteraction(world, getExtendedState(blockState, world, pos), pos, player, hand, rayTraceResult);
+        return BlockInteraction.attemptInteraction(world, world.getBlockState(pos), pos, player, hand, rayTraceResult);
     }
 
     @Override

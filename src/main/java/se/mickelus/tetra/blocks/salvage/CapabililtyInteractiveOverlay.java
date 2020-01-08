@@ -35,7 +35,6 @@ public class CapabililtyInteractiveOverlay {
             Direction face = rayTrace.getFace();
 
             BlockState blockState = world.getBlockState(blockPos);
-            blockState = blockState.getExtendedState(world, blockPos);
 
             if (!shape.isEmpty()) {
                 if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
