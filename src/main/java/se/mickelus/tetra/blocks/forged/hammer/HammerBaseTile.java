@@ -71,7 +71,7 @@ public class HammerBaseTile extends TileEntity {
             ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
             item.drainCharge(slots[index], amount);
 
-            if (item.getCharge(slots[index]) >= 0) {
+            if (item.getCharge(slots[index]) <= 0) {
                 BooleanProperty prop = index == 0 ? HammerBaseBlock.propCell1Charged : HammerBaseBlock.propCell2Charged;
                 world.setBlockState(pos, getBlockState().with(prop, false), 3);
             }
