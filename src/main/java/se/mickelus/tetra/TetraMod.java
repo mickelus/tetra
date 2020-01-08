@@ -32,14 +32,17 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.forged.extractor.*;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
-import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
+import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -65,7 +68,6 @@ import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schema.CleanseSchema;
-import se.mickelus.tetra.network.GuiHandlerRegistry;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
@@ -106,8 +108,6 @@ public class TetraMod {
 
         new TetraItemGroup();
 
-        new GuiHandlerRegistry();
-
         CriteriaTriggers.register(BlockLookTrigger.instance);
         CriteriaTriggers.register(BlockUseCriterion.trigger);
         CriteriaTriggers.register(BlockInteractionCriterion.trigger);
@@ -129,7 +129,7 @@ public class TetraMod {
                     new BlockForgedPlatformSlab(),
                     new BlockForgedVent(),
                     new ForgedWorkbenchBlock(),
-//                    new BlockForgedContainer(),
+                    new ForgedContainerBlock(),
                     new BlockForgedCrate(),
                     new TransferUnitBlock(),
                     new CoreExtractorBaseBlock(),
@@ -247,13 +247,6 @@ public class TetraMod {
 
         @SubscribeEvent
         public static void registerContainerTypes(final RegistryEvent.Register<ContainerType<?>> event) {
-//        event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> {
-//            BlockPos pos = data.readBlockPos();
-//            TileEntityForgedContainer te = (TileEntityForgedContainer) Minecraft.getInstance().world.getTileEntity(pos);
-//            return new ForgedContainerContainer(windowId, te, inv, Minecraft.getInstance().player);
-//        }))
-//                .setRegistryName(MOD_ID, BlockForgedContainer.unlocalizedName));
-
             // toolbelt
             ContainerType toolbeltContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 return ToolbeltContainer.create(windowId, inv);
@@ -266,6 +259,13 @@ public class TetraMod {
                 return WorkbenchContainer.create(windowId, pos, inv);
             })).setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
+
+            // forged container
+            ContainerType forgedContainerContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                return ForgedContainerContainer.create(windowId, pos, inv);
+            })).setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName);
+            event.getRegistry().register(forgedContainerContainerType);
         }
 
         @SubscribeEvent
@@ -311,6 +311,10 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, CoreExtractorPistonBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
         }
     }
 }

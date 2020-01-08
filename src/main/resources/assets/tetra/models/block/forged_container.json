@@ -21,9 +21,9 @@
             "from": [ 0, 0, 1 ],
             "to": [ 15, 9, 15 ],
             "faces": {
-                "north": { "texture": "#back",   "uv": [ 0, 0, 15, 9 ] },
+                "north": { "texture": "#front",  "uv": [ 0, 0, 15, 9 ] },
                 "east":  { "texture": "#side",   "uv": [ 14, 0, 0, 9 ] },
-                "south": { "texture": "#front",  "uv": [ 15, 0, 0, 9 ] },
+                "south": { "texture": "#back",   "uv": [ 15, 0, 0, 9 ] },
                 "west":  { "texture": "#side",   "uv": [ 14, 0, 0, 9 ] },
                 "up":    { "texture": "#top",    "uv": [ 15, 0, 0, 14 ] },
                 "down":  { "texture": "#bottom", "uv": [ 15, 0, 0, 14 ] }
@@ -34,9 +34,9 @@
             "from": [ 0, 9, 1 ],
             "to": [ 15, 12, 15 ],
             "faces": {
-                "north": { "texture": "#lid_back",   "uv": [ 0, 0, 15, 3 ] },
+                "north": { "texture": "#lid_front",  "uv": [ 0, 0, 15, 3 ] },
                 "east":  { "texture": "#lid_side",   "uv": [ 14, 0, 0, 3 ] },
-                "south": { "texture": "#lid_front",  "uv": [ 15, 0, 0, 3 ] },
+                "south": { "texture": "#lid_back",   "uv": [ 15, 0, 0, 3 ] },
                 "west":  { "texture": "#lid_side",   "uv": [ 14, 0, 0, 3 ] },
                 "up":    { "texture": "#lid_top",    "uv": [ 15, 0, 0, 14 ] },
                 "down":  { "texture": "#lid_bottom", "uv": [ 15, 0, 0, 14 ] }
@@ -44,18 +44,18 @@
         },
         {
             "name": "lock1",
-            "from": [ 2, 7, 14 ],
-            "to": [ 4, 10, 15.01 ],
+            "from": [ 2, 7, 0.99 ],
+            "to": [ 4, 10, 2 ],
             "faces": {
-                "south": { "texture": "#lock1",  "uv": [ 0, 0, 2, 3 ] }
+                "north": { "texture": "#lock1", "uv": [ 0, 0, 2, 3 ] }
             }
         },
         {
             "name": "lock2",
-            "from": [ 8, 7, 14 ],
-            "to": [ 10, 10, 15.01 ],
+            "from": [ 8, 7, 0.99 ],
+            "to": [ 10, 10, 2 ],
             "faces": {
-                "south": { "texture": "#lock2",  "uv": [ 0, 0, 2, 3 ] }
+                "north": { "texture": "#lock2", "uv": [ 0, 0, 2, 3 ] }
             }
         }
     ]

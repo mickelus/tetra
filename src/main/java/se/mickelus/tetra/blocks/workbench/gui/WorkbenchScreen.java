@@ -162,6 +162,12 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         return true;
     }
 
+    @Override
+    public boolean charTyped(char typecChar, int keyCode) {
+        slotDetail.keyTyped(typecChar);
+        return false;
+    }
+
     private void selectSlot(String slotKey) {
         selectedSlot = slotKey;
         tileEntity.clearSchema();
@@ -356,11 +362,5 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             return schema.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
         }
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean charTyped(char typecChar, int keyCode) {
-        slotDetail.keyTyped(typecChar);
-        return false;
     }
 }

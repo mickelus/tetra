@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -8,7 +7,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -84,27 +82,30 @@ public class WorkbenchContainer extends Container {
      */
     @Override
     public ItemStack transferStackInSlot(PlayerEntity player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        ItemStack resultStack = ItemStack.EMPTY;
+
+        Slot slot = inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+            ItemStack slotStack = slot.getStack();
+
+            resultStack = slotStack.copy();
+
             if (index < getSlots()) {
-                if (!this.mergeItemStack(itemstack1, getSlots(), this.inventorySlots.size(), true)) {
+                if (!mergeItemStack(slotStack, getSlots(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, getSlots(), false)) {
+            } else if (!mergeItemStack(slotStack, 0, getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.isEmpty()) {
+            if (slotStack.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
         }
 
-        return itemstack;
+        return resultStack;
     }
 
     public void updateSlots() {

@@ -32,7 +32,6 @@ public class ClientProxy implements IProxy {
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
         // todo 1.14: readd when terrain gen is back
-//        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForgedContainer.class, new TESRForgedContainer());
         ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
 
@@ -44,23 +43,6 @@ public class ClientProxy implements IProxy {
     @Override
     public void postInit() {
         MinecraftForge.EVENT_BUS.register(new CapabililtyInteractiveOverlay());
-    }
-
-    @SubscribeEvent
-    public void registerModels(ModelRegistryEvent event) {
-        if (ConfigHandler.generateFeatures.get()) {
-            // provides a decent item model for the container (which uses a TESR) without messing around with millions of blockstate variants
-
-            // todo 1.14: statemappers should no longer be required as props can be ignored in the blockstate .json instead
-//            ModelLoader.setCustomStateMapper(BlockForgedContainer.instance, new StateMapperBase() {
-//                @Override
-//                protected ModelResourceLocation getModelResourceLocation(BlockState state) {
-//                    return new ModelResourceLocation(TetraMod.MOD_ID + ":forged_container");
-//                }
-//            });
-//
-//            ModelLoader.setCustomStateMapper(BlockForgedCrate.instance, new StateMap.Builder().ignore(BlockForgedCrate.propIntegrity).build());
-        }
     }
 
     @Override
