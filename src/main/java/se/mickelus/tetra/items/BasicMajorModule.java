@@ -8,6 +8,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class BasicMajorModule extends ItemModuleMajor {
                         .map(key -> DataManager.improvementData.getData(new ResourceLocation(TetraMod.MOD_ID, key)))
                         .filter(Objects::nonNull)
                         .flatMap(Arrays::stream)
+                        .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
                         .toArray(ImprovementData[]::new);
 
 
