@@ -1,0 +1,56 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/iron\", \"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\", \"sword/blade:blade/hooked\": 1, \"sword/blade:blade/serrated\": 1}"
+        },
+        "title": "Double Up!",
+        "description": "Apply an improvement to a sword module, and then hone that improvement to increase its effect"
+    },
+    "parent": "tetra:upgrades/sword_hone",
+    "criteria": {
+        "hooked": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/hooked"
+            }
+        },
+        "tempered": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/tempered"
+            }
+        },
+        "serrated": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/serrated"
+            }
+        },
+        "hooked+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/hooked",
+                "improvementLevel": 2
+            }
+        },
+        "tempered+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/tempered",
+                "improvementLevel": 2
+            }
+        },
+        "serrated+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/serrated",
+                "improvementLevel": 2
+            }
+        }
+    },
+    "requirements": [
+        ["hooked", "tempered", "serrated"],
+        ["hooked+", "tempered+", "serrated+"]
+    ]
+}

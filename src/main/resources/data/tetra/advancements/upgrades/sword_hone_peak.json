@@ -1,0 +1,47 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword/blade\": \"sword/heavy_blade\", \"sword/heavy_blade_material\": \"heavy_blade/obsidian\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/blaze_rod\",\"sword/pommel\": \"sword/decorative_pommel\",\"sword/decorative_pommel_material\": \"decorative_pommel/obsidian\"}"
+        },
+        "title": "Tall Build",
+        "description": "Hone the speed or damage of a hilt or a blade to level 5"
+    },
+    "parent": "tetra:upgrades/sword_hone",
+    "criteria": {
+        "blade_hone/damage":  {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/damage",
+                "improvementLevel": 5
+            }
+        },
+        "blade_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/speed",
+                "improvementLevel": 5
+            }
+        },
+        "hilt_hone/damage":  {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/damage",
+                "improvementLevel": 5
+            }
+        },
+        "hilt_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/speed",
+                "improvementLevel": 5
+            }
+        }
+    },
+    "requirements": [[
+        "blade_hone/damage",
+        "blade_hone/speed",
+        "hilt_hone/damage",
+        "hilt_hone/speed"
+    ]]
+}

@@ -1,0 +1,31 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:forged_crate"
+        },
+        "title": "\"Salvage\"",
+        "description": "Hit the highlighted areas on crates and containers with the correct tools to break them open"
+    },
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "crate1": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "capability": "pry",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
+        },
+        "crate2": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "capability": "hammer",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
+        }
+    },
+    "requirements": [["crate1", "crate2"]]
+}

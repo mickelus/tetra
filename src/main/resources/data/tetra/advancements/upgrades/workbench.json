@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:crafting_table"
+            "item": "tetra:basic_workbench"
         },
         "title": "Bench mk II",
         "description": "Upgrade a crafting table by right-clicking it with a mallet"

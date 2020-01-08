@@ -1,0 +1,43 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword/blade\": \"sword/machete\", \"sword/machete_material\": \"machete/diorite\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+        },
+        "title": "Honed Blade",
+        "description": "Use a sword until it can be honed, then hone it at a workbench"
+    },
+    "parent": "tetra:upgrades/sword_upgrade",
+    "criteria": {
+        "blade_hone/damage":  {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/damage"
+            }
+        },
+        "blade_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/speed"
+            }
+        },
+        "hilt_hone/damage":  {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/damage"
+            }
+        },
+        "hilt_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/speed"
+            }
+        }
+    },
+    "requirements": [[
+        "blade_hone/damage",
+        "blade_hone/speed",
+        "hilt_hone/damage",
+        "hilt_hone/speed"
+    ]]
+}

@@ -1,0 +1,20 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:duplex_tool_modular",
+            "nbt": "{\"duplex/head_left\": \"duplex/basic_hammer_left\",\"duplex/basic_hammer_left_material\": \"basic_hammer/obsidian\",\"duplex/head_right\": \"duplex/basic_hammer_right\",\"duplex/basic_hammer_right_material\": \"basic_hammer/obsidian\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "frame": "challenge",
+        "title": "Four to go",
+        "description": "Figure out how to use a forge hammer to craft an obsidian hammer"
+    },
+    "parent": "tetra:upgrades/hammer_4",
+    "criteria": {
+        "head": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "basic_hammer/obsidian"
+            }
+        }
+    }
+}

@@ -2,14 +2,14 @@
     "display": {
         "icon": {
             "item": "tetra:magmatic_cell",
-            "data": 128
+            "nbt": "{\"Damage\": 128}"
         },
         "title": "Thermal Theft",
         "description": "Find a thermal cell in the ancient ruins"
     },
     "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {
-        "get_geode": {
+        "get_cell": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [

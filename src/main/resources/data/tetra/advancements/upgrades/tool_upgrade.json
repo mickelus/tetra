@@ -1,0 +1,36 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:duplex_tool_modular",
+            "nbt": "{\"duplex/head_left\": \"duplex/basic_pickaxe_left\",\"duplex/basic_pickaxe_left_material\": \"basic_pickaxe/flint\",\"duplex/head_right\": \"duplex/basic_pickaxe_right\",\"duplex/basic_pickaxe_right_material\": \"basic_pickaxe/flint\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\", \"duplex/handle:basic_handle/wrap_leather\": 1}"
+        },
+        "title": "Getting Another Upgrade",
+        "description": "Upgrade a pickaxe, axe or a hoe in a workbench"
+    },
+    "parent": "tetra:upgrades/workbench",
+    "criteria": {
+        "pickaxe": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "duplex/basic_pickaxe"
+            }
+        },
+        "axe": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "duplex/basic_axe"
+            }
+        },
+        "hoe": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "duplex/hoe"
+            }
+        },
+    },
+    "requirements": [[
+        "pickaxe",
+        "axe",
+        "hoe"
+    ]]
+}

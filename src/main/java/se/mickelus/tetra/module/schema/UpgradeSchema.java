@@ -53,7 +53,7 @@ public interface UpgradeSchema {
     public boolean isApplicableForSlot(String slot, ItemStack itemStack);
 
     /**
-     * This is a final check if the player should be able to see the schema in schema listings, based on the player or it's surroundings.
+     * This is a final check if the player should be able to see the schema in schema listings, based on the player or its surroundings.
      * @param player The player
      * @param targetStack The target itemstack for the schema
      * @return true if it should be visible, otherwise false

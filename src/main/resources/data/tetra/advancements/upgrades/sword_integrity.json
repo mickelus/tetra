@@ -1,0 +1,32 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/gold\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\", \"sword/guard\": \"sword/binding\",\"sword/binding_material\": \"sword_binding/leather\", \"sword/pommel\": \"sword/counterweight\",\"sword/counterweight_material\": \"counterweight/iron\", \"sword/blade:blade/tempered\": 1}"
+        },
+        "title": "Tightly Wrought",
+        "description": "Upgrade a sword's hilt or strengthen the sword with a binding to increase its integrity"
+    },
+    "parent": "tetra:upgrades/sword_upgrade",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "sword/basic_hilt",
+                "after": {
+                    "item": "tetra:sword_modular"
+                }
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "sword/binding",
+                "after": {
+                    "item": "tetra:sword_modular"
+                }
+            }
+        }
+    },
+    "requirements": [["module", "improvement"]]
+}

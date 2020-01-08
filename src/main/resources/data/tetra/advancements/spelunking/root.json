@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:diamond_ore"
+            "item": "tetra:geode"
         },
         "title": "Spelunking",
         "description": "Delve deep underground",

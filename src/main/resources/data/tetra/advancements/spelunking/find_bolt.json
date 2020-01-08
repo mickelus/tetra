@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:forged_bolt"
+        },
+        "title": "Thunderbolt 4",
+        "description": "Salvage some bolts from the ancient ruins"
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "forged_bolt": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:forged_bolt"
+                    }
+                ]
+            }
+        }
+    }
+}

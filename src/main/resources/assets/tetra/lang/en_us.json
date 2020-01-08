@@ -519,7 +519,7 @@
   "serrated_blade_3_schema.description": "Further hone the serrated improvement, increases the damage dealt to 16.",
 
   "tempered_blade_schema.name": "Temper",
-  "tempered_blade_schema.description": "Temper the point of the blade, greatly increasing it's hardness. Causes some of the damage dealt to ignore armor.",
+  "tempered_blade_schema.description": "Temper the point of the blade, greatly increasing its hardness. Causes some of the damage dealt to ignore armor.",
   "tempered_blade_2_schema.name": "Hone: Tempered II",
   "tempered_blade_2_schema.description": "Hone the tempered improvement, increases the amount of damage that penetrates armor to 3.",
   "tempered_blade_3_schema.name": "Hone: Tempered III",
@@ -1693,7 +1693,7 @@
   "toolbelt_belt2.slot1": "Buckle material",
 
   "toolbelt_belt3.name": "Shulker inlay",
-  "toolbelt_belt3.description": "Shulker shells proved exceptional as support when carrying chests, inlaying shells into the belt should further increase it's integrity.",
+  "toolbelt_belt3.description": "Shulker shells proved exceptional as support when carrying chests, inlaying shells into the belt should further increase its integrity.",
   "toolbelt_belt3.slot1": "Shulker shells",
 
   "toolbelt/belt.name": "Toolbelt",

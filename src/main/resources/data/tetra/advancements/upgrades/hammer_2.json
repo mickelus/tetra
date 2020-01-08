@@ -24,8 +24,5 @@
                 "variant": "basic_hammer/stone"
             }
         }
-    },
-    "requirements": [
-        ["head_left"], ["head_right"]
-    ]
+    }
 }
