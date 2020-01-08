@@ -29,12 +29,6 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     public static final String unlocalizedName = "sword_modular";
 
-    private ItemModuleMajor basicBladeModule;
-    private ItemModuleMajor shortBladeModule;
-    private ItemModuleMajor heavyBladeModule;
-    private ItemModuleMajor macheteModule;
-    private ItemModuleMajor hiltModule;
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemSwordModular instance;
 
@@ -54,43 +48,69 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/shared_blade", "sword/shared_blade_hone", "sword/basic_blade",
-                "settling_improvements", "destabilization_improvements");
+        ItemModuleMajor basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
+                "sword/blade/basic_blade",
+                "sword/blade/serrated",
+                "sword/blade/hooked",
+                "sword/blade/tempered",
+                "sword/blade/shared",
+                "sword/blade/shared_hone",
+                "settling_improvements",
+                "destabilization_improvements"
+        );
         new BookEnchantSchema(basicBladeModule);
 
-        shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-                "sword/shared_blade", "sword/shared_blade_hone", "sword/short_blade",
-                "settling_improvements", "destabilization_improvements");
+        ItemModuleMajor shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
+                "sword/blade/short_blade",
+                "sword/blade/serrated",
+                "sword/blade/hooked",
+                "sword/blade/tempered",
+                "sword/blade/shared",
+                "sword/blade/shared_hone",
+                "settling_improvements",
+                "destabilization_improvements"
+        );
         new BookEnchantSchema(shortBladeModule);
 
-        heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-                "sword/shared_blade", "sword/shared_blade_hone", "sword/heavy_blade", "settling_improvements",
-                "destabilization_improvements");
+        ItemModuleMajor heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
+                "sword/blade/heavy_blade",
+                "sword/blade/serrated",
+                "sword/blade/tempered",
+                "sword/blade/shared",
+                "sword/blade/shared_hone",
+                "settling_improvements",
+                "destabilization_improvements"
+        );
         new BookEnchantSchema(heavyBladeModule);
 
-        macheteModule = new BasicMajorModule(bladeKey, "sword/machete", "sword/shared_blade", "sword/shared_blade_hone",
-                "settling_improvements", "destabilization_improvements");
+        ItemModuleMajor macheteModule = new BasicMajorModule(bladeKey, "sword/machete",
+                "sword/blade/machete",
+                "sword/blade/serrated",
+                "sword/blade/tempered",
+                "sword/blade/shared",
+                "sword/blade/shared_hone",
+                "settling_improvements",
+                "destabilization_improvements"
+        );
         new BookEnchantSchema(macheteModule);
 
-        hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt", "sword/shared_hilt", "sword/shared_hilt_hone",
-                "settling_improvements", "destabilization_improvements")
+        ItemModuleMajor hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt",
+                "sword/hilt/shared",
+                "sword/hilt/shared_hone",
+                "settling_improvements",
+                "destabilization_improvements"
+        )
                 .withRenderLayer(Priority.LOWER);
         new BookEnchantSchema(hiltModule);
 
         new BasicModule(guardKey, "sword/makeshift_guard");
-
         new BasicModule(guardKey, "sword/wide_guard");
-
         new BasicModule(guardKey, "sword/forefinger_ring");
-
         new BasicModule(guardKey, "sword/binding", "sword/binding");
-
         new BasicModule(guardKey, "sword/socket");
 
         new BasicModule(pommelKey, "sword/decorative_pommel");
         new BasicModule(pommelKey, "sword/counterweight");
-
         new BasicModule(pommelKey, "sword/grip_loop");
 
         new BasicModule(fullerKey, "sword/reinforced_fuller");

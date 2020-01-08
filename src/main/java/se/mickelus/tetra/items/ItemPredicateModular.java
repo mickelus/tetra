@@ -69,26 +69,26 @@ public class ItemPredicateModular extends ItemPredicate {
         if (slot != null) {
             ItemModule module = item.getModuleFromSlot(itemStack, slot);
             if (module != null) {
-                for (String[] inner : modules) {
-                    if (inner.length == 1 && inner[0].equals(module.getKey())) {
+                for (String[] outer : modules) {
+                    if (outer.length == 1 && outer[0].equals(module.getKey())) {
                         return true;
                     }
                 }
             }
         } else {
             Collection<ItemModule> itemModules = item.getAllModules(itemStack);
-            for (String[] inner : modules) {
-                for (int j = 0; j < inner.length; j++) {
+            for (String[] outer : modules) {
+                for (int j = 0; j < outer.length; j++) {
                     int matchCount = 0;
 
                     for (ItemModule module : itemModules) {
-                        if (module.getKey().equals(inner[j])) {
+                        if (module.getKey().equals(outer[j])) {
                             matchCount++;
                             break;
                         }
                     }
 
-                    if (matchCount == inner.length) {
+                    if (matchCount == outer.length) {
                         return true;
                     }
                 }

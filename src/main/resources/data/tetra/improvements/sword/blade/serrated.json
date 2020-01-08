@@ -1,43 +1,40 @@
 [
     {
-        "key": "basic_blade/serrated",
-        "textured": false,
+        "key": "blade/serrated",
+        "textured": true,
         "level": 1,
         "integrity": -1,
         "effects": {
             "bleeding": 1
         },
-
         "models": [{
-            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "location": "tetra:items/module/sword/blade/improvements/serrated",
             "tint": "inherit"
         }]
     },
     {
-        "key": "basic_blade/serrated",
-        "textured": false,
+        "key": "blade/serrated",
+        "textured": true,
         "level": 2,
         "integrity": -1,
         "effects": {
             "bleeding": 2
         },
-
         "models": [{
-            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "location": "tetra:items/module/sword/blade/improvements/serrated",
             "tint": "inherit"
         }]
     },
     {
-        "key": "basic_blade/serrated",
-        "textured": false,
+        "key": "blade/serrated",
+        "textured": true,
         "level": 3,
         "integrity": -2,
         "effects": {
             "bleeding": 4
         },
-
         "models": [{
-            "location": "tetra:items/module/sword/blade/basic/improvements/serrated",
+            "location": "tetra:items/module/sword/blade/improvements/serrated",
             "tint": "inherit"
         }]
     }

@@ -1,16 +1,12 @@
 [
     {
-        "key": "serrated_basic_blade_schema",
-        "localizationKey": "serrated_blade_schema",
+        "key": "serrated_blade_schema",
         "slots": ["sword/blade"],
         "materialSlotCount": 0,
         "requirement": {
             "type": "tetra:modular_item",
-            "modules": [
-                ["sword/basic_blade"]
-            ],
             "improvements": {
-                "!basic_blade/serrated": -1
+                "!blade/serrated": -1
             }
         },
         "displayType": "improvement",
@@ -20,14 +16,13 @@
                     "hammer": 3
                 },
                 "improvements": {
-                    "basic_blade/serrated": 1
+                    "blade/serrated": 1
                 }
             }
         ]
     },
     {
-        "key": "basic_blade_hone_serrated_2_schema",
-        "localizationKey": "blade_hone_serrated_2_schema",
+        "key": "serrated_blade_2_schema",
         "slots": ["sword/blade"],
         "materialSlotCount": 0,
         "hone": true,
@@ -36,7 +31,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "basic_blade/serrated": 1
+                "blade/serrated": 1
             }
         },
         "outcomes": [
@@ -45,14 +40,14 @@
                     "hammer": 4
                 },
                 "improvements": {
-                    "basic_blade/serrated": 2
+                    "blade/serrated": 2
                 }
             }
         ]
     },
     {
-        "key": "basic_blade_hone_serrated_3_schema",
-        "localizationKey": "blade_hone_serrated_3_schema",
+        "key": "serrated_blade_3_schema",
+        "localizationKey": "serrated_blade_3_schema",
         "slots": ["sword/blade"],
         "materialSlotCount": 0,
         "hone": true,
@@ -61,7 +56,7 @@
         "requirement": {
             "type": "tetra:modular_item",
             "improvements": {
-                "basic_blade/serrated": 2
+                "blade/serrated": 2
             }
         },
         "outcomes": [
@@ -70,7 +65,7 @@
                     "hammer": 4
                 },
                 "improvements": {
-                    "basic_blade/serrated": 3
+                    "blade/serrated": 3
                 }
             }
         ]
