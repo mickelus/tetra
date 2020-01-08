@@ -18,7 +18,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "oak"
+        }]
     },
     {
         "key": "machete/spruce",
@@ -39,7 +43,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "machete/birch",
@@ -60,7 +68,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "birch"
+        }]
     },
     {
         "key": "machete/jungle",
@@ -81,7 +93,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "machete/acacia",
@@ -102,7 +118,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "machete/dark_oak",
@@ -123,7 +143,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "machete/cobblestone",
@@ -144,7 +168,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/crude",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "machete/stone",
@@ -165,7 +193,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "stone"
+        }]
     },
     {
         "key": "machete/granite",
@@ -186,7 +218,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/grainy",
+            "tint": "granite"
+        }]
     },
     {
         "key": "machete/diorite",
@@ -207,7 +243,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/grainy",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "machete/andesite",
@@ -228,7 +268,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/grainy",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "machete/iron",
@@ -249,7 +293,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/grainy",
+            "tint": "flint"
+        }]
     },
     {
         "key": "machete/flint",
@@ -270,7 +318,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "iron"
+        }]
     },
     {
         "key": "machete/gold",
@@ -291,7 +343,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/shiny",
+            "tint": "gold"
+        }]
     },
     {
         "key": "machete/diamond",
@@ -312,7 +368,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "machete/obsidian",
@@ -333,7 +393,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/grainy",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "machete/copper",
@@ -354,7 +418,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "copper"
+        }]
     },
     {
         "key": "machete/tin",
@@ -375,7 +443,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "tin"
+        }]
     },
     {
         "key": "machete/silver",
@@ -396,7 +468,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/shiny",
+            "tint": "silver"
+        }]
     },
     {
         "key": "machete/nickel",
@@ -417,7 +493,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "machete/lead",
@@ -438,7 +518,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "lead"
+        }]
     },
     {
         "key": "machete/bronze",
@@ -459,7 +543,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "machete/electrum",
@@ -480,7 +568,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/shiny",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "machete/steel",
@@ -501,7 +593,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "steel"
+        }]
     },
     {
         "key": "machete/thaumium",
@@ -522,7 +618,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "machete/ironwood",
@@ -543,7 +643,10 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/ironwood"
+        }]
     },
     {
         "key": "machete/steeleaf",
@@ -564,7 +667,11 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "machete/fierymetal",
@@ -585,7 +692,10 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/fierymetal"
+        }]
     },
     {
         "key": "machete/knightmetal",
@@ -606,6 +716,10 @@
         },
         "capabilities": {
             "cut": [1, 0.9375]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/machete/metal",
+            "tint": "knightmetal"
+        }]
     }
 ]
