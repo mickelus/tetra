@@ -33,9 +33,9 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
     // todo 1.14: validate that this still works
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.player.ticksExisted % 20 == 0 && !event.player.world.isRemote) {
+        if (TickEvent.Phase.START == event.phase && event.player.ticksExisted % 20 == 0 && !event.player.world.isRemote) {
             event.player.world.getProfiler().startSection("lookTrigger");
-            Vec3d playerPosition = event.player.getPositionVec().add(event.player.getEyePosition(0));
+            Vec3d playerPosition = event.player.getEyePosition(0);
             Vec3d lookingPosition = playerPosition.add(event.player.getLookVec()
                     .scale(event.player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue()));
 
