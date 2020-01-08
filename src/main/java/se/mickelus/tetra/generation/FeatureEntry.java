@@ -30,7 +30,10 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitProcessor;
+import se.mickelus.tetra.generation.processing.ForgedContainerProcessor;
+import se.mickelus.tetra.generation.processing.ForgedCrateProcessor;
+import se.mickelus.tetra.generation.processing.ForgedHammerProcessor;
+import se.mickelus.tetra.generation.processing.TransferUnitProcessor;
 import se.mickelus.tetra.data.DataManager;
 
 import java.util.Arrays;
@@ -132,10 +135,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
                 settings.addProcessor(
                         new IntegrityProcessor(random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin));
             }
-//                settings.addProcessor(new BlockRotationProcessor(pos, settings))
-//                settings.addProcessor(new HammerProcessor(settings.getRandom(pos)))
-//                settings.addProcessor(new ForgedCrateProcessor(settings.getRandom(pos)))
-//                settings.addProcessor(new ForgedContainerProcessor(settings.getRandom(pos)))
+            settings.addProcessor(new ForgedContainerProcessor());
+            settings.addProcessor(new ForgedCrateProcessor());
+            settings.addProcessor(new ForgedHammerProcessor());
             settings.addProcessor(new TransferUnitProcessor());
 
             boolean blocksAdded = template.addBlocksToWorld(world, pos, settings, 2);

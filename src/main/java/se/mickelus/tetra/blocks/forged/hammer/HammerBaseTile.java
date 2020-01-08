@@ -4,9 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
-import org.apache.commons.lang3.EnumUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -126,10 +124,10 @@ public class HammerBaseTile extends TileEntity {
 
     private int fuelUsage() {
         int usage = 5;
-        if (!getBlockState().get(EnumHammerPlate.EAST.prop)) {
+        if (!getBlockState().get(EnumHammerPlate.east.prop)) {
             usage += 2;
         }
-        if (!getBlockState().get(EnumHammerPlate.WEST.prop)) {
+        if (!getBlockState().get(EnumHammerPlate.west.prop)) {
             usage += 2;
         }
 

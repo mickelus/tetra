@@ -4,8 +4,8 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 
 public enum EnumHammerPlate {
-    EAST(Direction.EAST, "platee"),
-    WEST(Direction.WEST, "platew");
+    east(Direction.EAST, "platee"),
+    west(Direction.WEST, "platew");
 
     public Direction face;
     public BooleanProperty prop;

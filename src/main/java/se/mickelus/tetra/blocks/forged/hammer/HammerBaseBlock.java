@@ -57,18 +57,18 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     public static HammerBaseBlock instance;
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.EAST.face, 5, 11, 9, 11,
-                    EnumHammerPlate.EAST.prop, true, (world, pos, blockState, player, hand, hitFace) ->
-                    removePlate(world, pos, blockState, player, hand, EnumHammerPlate.EAST)),
-            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.WEST.face, 5, 11, 9, 11,
-                    EnumHammerPlate.WEST.prop, true, (world, pos, blockState, player, hand, hitFace) ->
-                    removePlate(world, pos, blockState, player, hand, EnumHammerPlate.WEST)),
+            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.east.face, 5, 11, 9, 11,
+                    EnumHammerPlate.east.prop, true, (world, pos, blockState, player, hand, hitFace) ->
+                    removePlate(world, pos, blockState, player, hand, EnumHammerPlate.east)),
+            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.west.face, 5, 11, 9, 11,
+                    EnumHammerPlate.west.prop, true, (world, pos, blockState, player, hand, hitFace) ->
+                    removePlate(world, pos, blockState, player, hand, EnumHammerPlate.west)),
 
             new BlockInteraction(Capability.hammer, 1, Direction.EAST, 6, 10, 2, 9,
-                    EnumHammerPlate.EAST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
+                    EnumHammerPlate.east.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, Direction.EAST)),
             new BlockInteraction(Capability.hammer, 1, Direction.WEST, 6, 10, 2, 9,
-                    EnumHammerPlate.WEST.prop, false, (world, pos, blockState, player, hand, hitFace) ->
+                    EnumHammerPlate.west.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, Direction.WEST))
     };
 
@@ -80,8 +80,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         hasItem = true;
 
         setDefaultState(getDefaultState()
-                .with(EnumHammerPlate.EAST.prop, false)
-                .with(EnumHammerPlate.WEST.prop, false)
+                .with(EnumHammerPlate.east.prop, false)
+                .with(EnumHammerPlate.west.prop, false)
                 .with(propCell1, false)
                 .with(propCell1Charged, false)
                 .with(propCell2, false)
@@ -201,8 +201,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 return true;
             }
         } else if (heldStack.getItem() instanceof ItemVentPlate) {
-            if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.EAST.prop)) {
-                world.setBlockState(pos, blockState.with(EnumHammerPlate.EAST.prop, true), 3);
+            if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.east.prop)) {
+                world.setBlockState(pos, blockState.with(EnumHammerPlate.east.prop, true), 3);
 
                 if (!player.world.isRemote) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
@@ -211,8 +211,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 heldStack.shrink(1);
 
                 return true;
-            } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.WEST.prop)) {
-                world.setBlockState(pos, blockState.with(EnumHammerPlate.WEST.prop, true), 3);
+            } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.west.prop)) {
+                world.setBlockState(pos, blockState.with(EnumHammerPlate.west.prop, true), 3);
 
                 if (!player.world.isRemote) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
@@ -269,7 +269,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     @Override
     protected void fillStateContainer(final StateContainer.Builder<Block, BlockState> builder) {
         builder.add(propFacing, propCell1, propCell1Charged, propCell2 , propCell2Charged,
-                EnumHammerPlate.EAST.prop, EnumHammerPlate.WEST.prop, EnumHammerConfig.eastProp, EnumHammerConfig.westProp);
+                EnumHammerPlate.east.prop, EnumHammerPlate.west.prop, EnumHammerConfig.eastProp, EnumHammerConfig.westProp);
     }
 
     @Override

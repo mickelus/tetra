@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -131,19 +132,26 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     private void updateBlockState() {
-        world.setBlockState(pos, getBlockState()
-        .with(ForgedContainerBlock.locked1Prop, isLocked(0))
-        .with(ForgedContainerBlock.locked2Prop, isLocked(1))
-        .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(isLocked()).anyMatch(isLocked -> isLocked))
-        .with(ForgedContainerBlock.openProp, isOpen()), 3);
+        world.setBlockState(pos, getUpdatedBlockState(getBlockState(), lockIntegrity, lidIntegrity), 3);
 
         BlockPos offsetPos = pos.offset(getFacing().rotateY());
-        world.setBlockState(offsetPos, world.getBlockState(offsetPos)
-                .with(ForgedContainerBlock.locked1Prop, isLocked(2))
-                .with(ForgedContainerBlock.locked2Prop, isLocked(3))
-                .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(isLocked()).anyMatch(isLocked -> isLocked))
-                .with(ForgedContainerBlock.openProp, isOpen()), 3);
+        world.setBlockState(offsetPos, getUpdatedBlockState(world.getBlockState(offsetPos), lockIntegrity, lidIntegrity), 3);
+    }
 
+    public static BlockState getUpdatedBlockState(BlockState blockState, int[] lockIntegrity, int lidIntegrity) {
+        if (blockState.get(ForgedContainerBlock.flippedProp)) {
+            return blockState
+                    .with(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
+                    .with(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
+                    .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                    .with(ForgedContainerBlock.openProp, lidIntegrity > 0);
+        }
+
+        return blockState
+                .with(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
+                .with(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
+                .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                .with(ForgedContainerBlock.openProp, lidIntegrity > 0);
     }
 
     public Direction getFacing() {
