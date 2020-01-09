@@ -1,0 +1,36 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:forged_platform_slab"
+        },
+        "title": "Silk Touched Tiles",
+        "description": "Successfully harvest flooring from the ancient ruins"
+    },
+    "parent": "tetra:spelunking/hammer_config",
+    "criteria": {
+        "platform": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:forged_platform"
+                    }
+                ]
+            }
+        },
+        "platform_slab": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:forged_platform_slab"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [[
+        "platform",
+        "platform_slab"
+    ]]
+}
