@@ -1,4 +1,5 @@
 {
+    "type": "minecraft:block",
     "pools": [
         {
             "name": "forged/crate_break_case",

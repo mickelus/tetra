@@ -2,17 +2,19 @@
     "type": "minecraft:block",
     "pools": [
         {
+            "name": "forged/crate_break_content",
             "rolls": 1,
             "entries": [
                 {
-                    "type": "minecraft:item",
+                    "type": "item",
                     "name": "tetra:metal_scrap",
+                    "weight": 5,
                     "functions": [
                         {
-                            "function": "minecraft:set_count",
+                            "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 2
+                                "min": 4,
+                                "max": 10
                             }
                         },
                         {
@@ -22,11 +24,13 @@
                             "parameters": {
                                 "bonusMultiplier": 1
                             }
-                        },
-                        {
-                            "function": "minecraft:explosion_decay"
                         }
                     ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:iron_block",
+                    "weight": 1
                 }
             ]
         }

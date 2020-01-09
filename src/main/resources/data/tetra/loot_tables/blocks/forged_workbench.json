@@ -9,7 +9,7 @@
                     "children": [
                         {
                             "type": "minecraft:item",
-                            "name": "tetra:forged_platform",
+                            "name": "tetra:forged_workbench",
                             "conditions": [
                                 {
                                     "condition": "minecraft:match_tool",
@@ -27,28 +27,8 @@
                             ]
                         },
                         {
-                            "type": "minecraft:item",
-                            "name": "tetra:metal_scrap",
-                            "functions": [
-                                {
-                                    "function": "minecraft:set_count",
-                                    "count": {
-                                        "min": 1,
-                                        "max": 4
-                                    }
-                                },
-                                {
-                                    "function": "minecraft:apply_bonus",
-                                    "enchantment":"minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 1
-                                    }
-                                },
-                                {
-                                    "function": "minecraft:explosion_decay"
-                                }
-                            ]
+                            "type": "minecraft:loot_table",
+                            "name": "tetra:blocks/forged_workbench_break"
                         }
                     ]
                 }

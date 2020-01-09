@@ -9,7 +9,7 @@
                     "children": [
                         {
                             "type": "minecraft:item",
-                            "name": "tetra:forged_platform",
+                            "name": "tetra:core_extractor",
                             "conditions": [
                                 {
                                     "condition": "minecraft:match_tool",

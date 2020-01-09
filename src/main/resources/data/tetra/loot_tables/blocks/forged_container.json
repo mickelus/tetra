@@ -3,13 +3,20 @@
     "pools": [
         {
             "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "minecraft:entity_properties",
+                    "predicate": {},
+                    "entity": "this"
+                }
+            ],
             "entries": [
                 {
                     "type": "minecraft:alternatives",
                     "children": [
                         {
                             "type": "minecraft:item",
-                            "name": "tetra:forged_platform",
+                            "name": "tetra:forged_container",
                             "conditions": [
                                 {
                                     "condition": "minecraft:match_tool",

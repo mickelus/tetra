@@ -28,6 +28,7 @@
                         },
                         {
                             "type": "minecraft:item",
+                            "name": "tetra:metal_scrap",
                             "functions": [
                                 {
                                     "function": "minecraft:set_count",
@@ -37,10 +38,17 @@
                                     }
                                 },
                                 {
+                                    "function": "minecraft:apply_bonus",
+                                    "enchantment":"minecraft:fortune",
+                                    "formula": "uniform_bonus_count",
+                                    "parameters": {
+                                        "bonusMultiplier": 1
+                                    }
+                                },
+                                {
                                     "function": "minecraft:explosion_decay"
                                 }
-                            ],
-                            "name": "tetra:metal_scrap"
+                            ]
                         }
                     ]
                 }
