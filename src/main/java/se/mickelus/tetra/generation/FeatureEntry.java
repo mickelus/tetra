@@ -122,7 +122,6 @@ public class FeatureEntry extends Feature<FeatureReference> {
 
             // todo: child mirroring needs to be in place for this to work properly
             // settings.setMirror(mirror);
-            settings.setRandom(random);
 
             if (depth == 0) {
                 pos = template.getZeroPositionWithTransform(pos, mirror, rotation);
