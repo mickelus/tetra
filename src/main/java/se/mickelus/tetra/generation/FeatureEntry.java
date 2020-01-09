@@ -83,7 +83,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
                                             FeatureEntry.instance,
                                             new FeatureReference(params.location),
                                             Placement.CHANCE_RANGE,
-                                            new ChanceRangeConfig(params.probability, params.minY, 0, params.maxY)
+                                            new ChanceRangeConfig(1, params.minY, params.minY, params.maxY)
                                     )
                             ));
         });
@@ -95,7 +95,8 @@ public class FeatureEntry extends Feature<FeatureReference> {
         FeatureParameters params = DataManager.featureData.getData(ref.location);
         ResourceLocation dimensionType = world.getDimension().getType().getRegistryName();
 
-        if (params != null && Arrays.asList(params.dimensions).contains(dimensionType)) {
+
+        if (params != null && Arrays.asList(params.dimensions).contains(dimensionType) && rand.nextFloat() < params.probability) {
             generateFeatureRoot(params, world, pos, rand);
             return true;
         }
