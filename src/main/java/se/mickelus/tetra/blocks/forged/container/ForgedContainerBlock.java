@@ -107,7 +107,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
         setDefaultState(getDefaultState()
                 .with(facingProp, Direction.EAST)
                 .with(flippedProp, false)
-                .with(openProp, false)
+                .with(openProp, true)
                 .with(locked1Prop, false)
                 .with(locked2Prop, false)
                 .with(anyLockedProp, false));

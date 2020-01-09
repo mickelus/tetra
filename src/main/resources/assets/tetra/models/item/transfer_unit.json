@@ -3,7 +3,7 @@
   "textures": {
     "config": "tetra:blocks/transfer_unit_config0",
     "indicator": "tetra:blocks/transfer_unit_indicator_idle",
-    "plate": "tetra:blocks/transfer_unit_plate"
+    "plate": "tetra:blocks/transparent"
   }
 }
 

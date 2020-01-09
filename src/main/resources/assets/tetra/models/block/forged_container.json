@@ -11,9 +11,7 @@
         "lid_side": "tetra:blocks/forged_container/forged_container_lid_side",
         "lid_back": "tetra:blocks/forged_container/forged_container_lid_back",
         "lid_bottom": "tetra:blocks/forged_container/forged_container_lid_bottom",
-        "lid_top": "tetra:blocks/forged_container/forged_container_lid_top",
-        "lock1": "tetra:blocks/forged_container/forged_container_lock",
-        "lock2": "tetra:blocks/forged_container/forged_container_lock"
+        "lid_top": "tetra:blocks/forged_container/forged_container_lid_top"
     },
     "elements": [
         {
@@ -40,22 +38,6 @@
                 "west":  { "texture": "#lid_side",   "uv": [ 14, 0, 0, 3 ] },
                 "up":    { "texture": "#lid_top",    "uv": [ 15, 0, 0, 14 ] },
                 "down":  { "texture": "#lid_bottom", "uv": [ 15, 0, 0, 14 ] }
-            }
-        },
-        {
-            "name": "lock1",
-            "from": [ 2, 7, 0.99 ],
-            "to": [ 4, 10, 2 ],
-            "faces": {
-                "north": { "texture": "#lock1", "uv": [ 0, 0, 2, 3 ] }
-            }
-        },
-        {
-            "name": "lock2",
-            "from": [ 8, 7, 0.99 ],
-            "to": [ 10, 10, 2 ],
-            "faces": {
-                "north": { "texture": "#lock2", "uv": [ 0, 0, 2, 3 ] }
             }
         }
     ]

@@ -43,7 +43,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     private int[] lockIntegrity;
 
     public static int lidIntegrityMax = 5;
-    private int lidIntegrity = 3;
+    private int lidIntegrity = 0;
 
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
 
@@ -58,7 +58,6 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         super(type);
 
         lockIntegrity = new int[lockCount];
-        Arrays.fill(lockIntegrity, 1);
     }
 
     public ForgedContainerTile getOrDelegate() {

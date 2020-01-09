@@ -3,8 +3,8 @@
   "textures": {
       "socket1": "tetra:blocks/hammer_base_socket",
       "socket2": "tetra:blocks/hammer_base_socket",
-      "plate_east": "tetra:blocks/hammer_base_plate",
-      "plate_west": "tetra:blocks/hammer_base_plate",
+      "plate_east": "tetra:blocks/transparent",
+      "plate_west": "tetra:blocks/transparent",
       "config_east": "tetra:blocks/hammer_config0",
       "config_west": "tetra:blocks/hammer_config0"
   }
