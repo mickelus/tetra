@@ -28,7 +28,7 @@ public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPis
         BlockPos pos = te.getPos();
 
         IEnviromentBlockReader world = MinecraftForgeClient.getRegionRenderCache(te.getWorld(), pos);
-        BlockState state = world.getBlockState(pos);
+        BlockState state = CoreExtractorPistonBlock.instance.getDefaultState();
 
         double offset = te.getProgress(partialTicks);
 
