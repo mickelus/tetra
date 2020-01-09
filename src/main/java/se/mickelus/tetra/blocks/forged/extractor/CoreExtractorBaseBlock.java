@@ -2,8 +2,10 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
@@ -99,10 +101,29 @@ public class CoreExtractorBaseBlock extends TetraBlock {
         return new CoreExtractorBaseTile();
     }
 
+    @Override
+    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (Direction.UP.equals(facing) && !CoreExtractorPistonBlock.instance.equals(facingState.getBlock())) {
+            return Blocks.AIR.getDefaultState();
+        }
+
+        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+    }
+
+    // based on same method implementation in BedBlock
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        world.setBlockState(pos.up(), CoreExtractorPistonBlock.instance.getDefaultState(), 3);
+    }
+
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getDefaultState().with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        if (context.getWorld().getBlockState(context.getPos().up()).isReplaceable(context)) {
+            return getDefaultState().with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
+        }
+
+        // returning null here stops the block from being placed
+        return null;
     }
 
     @Override
