@@ -1,7 +1,8 @@
-[{
-    "modules": ["duplex/basic_hammer", "duplex/basic_axe"],
-    "name": "duplex/axe_hammer"
-},
+[
+    {
+        "modules": ["duplex/basic_hammer", "duplex/basic_axe"],
+        "name": "duplex/axe_hammer"
+    },
     {
         "modules": ["duplex/basic_axe", "duplex/basic_axe"],
         "name": "duplex/axe_axe",
