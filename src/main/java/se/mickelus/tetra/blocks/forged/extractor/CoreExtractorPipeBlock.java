@@ -81,7 +81,7 @@ public class CoreExtractorPipeBlock extends TetraBlock {
     }
 
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+    public BlockState rotate(BlockState state, Rotation direction) {
         return state.with(facingProp, direction.rotate(state.get(facingProp)));
     }
 

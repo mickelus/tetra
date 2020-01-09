@@ -107,7 +107,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
         setDefaultState(getDefaultState()
                 .with(facingProp, Direction.EAST)
                 .with(flippedProp, false)
-                .with(openProp, true)
+                .with(openProp, false)
                 .with(locked1Prop, false)
                 .with(locked2Prop, false)
                 .with(anyLockedProp, false));
@@ -298,7 +298,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
             pairedFacing = pairedFacing.rotateY();
         }
 
-        if (pairedFacing == facing && !equals(world.getBlockState(facingPos).getBlock())) {
+        if (pairedFacing == facing && !equals(facingState.getBlock())) {
             return Blocks.AIR.getDefaultState();
         }
 
@@ -311,7 +311,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
     }
 
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation rot) {
+    public BlockState rotate(BlockState state, Rotation rot) {
         Direction facing = state.get(facingProp);
 
         if (Rotation.CLOCKWISE_180.equals(rot)

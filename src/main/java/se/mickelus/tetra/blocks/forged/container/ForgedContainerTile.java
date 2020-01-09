@@ -74,7 +74,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (ForgedContainerBlock.instance.equals(getBlockState().getBlock()) && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return getOrDelegate().handler.cast();
         }
         return super.getCapability(cap, side);
@@ -144,14 +144,14 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                     .with(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
                     .with(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
                     .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                    .with(ForgedContainerBlock.openProp, lidIntegrity > 0);
+                    .with(ForgedContainerBlock.openProp, lidIntegrity <= 0);
         }
 
         return blockState
                 .with(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
                 .with(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
                 .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                .with(ForgedContainerBlock.openProp, lidIntegrity > 0);
+                .with(ForgedContainerBlock.openProp, lidIntegrity <= 0);
     }
 
     public Direction getFacing() {

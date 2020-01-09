@@ -37,12 +37,16 @@ public class ForgedHammerProcessor extends StructureProcessor {
             ItemStack cell2 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance) : null;
 
             int charge1 = random.nextInt(ItemCellMagmatic.maxCharge);
-            ItemCellMagmatic.instance.recharge(cell1, charge1);
+            if (cell1 != null) {
+                ItemCellMagmatic.instance.recharge(cell1, charge1);
+            }
+
             int charge2 = ItemCellMagmatic.maxCharge - random.nextInt(Math.max(charge1, 1));
-            ItemCellMagmatic.instance.recharge(cell2, charge2);
+            if (cell2 != null) {
+                ItemCellMagmatic.instance.recharge(cell2, charge2);
+            }
 
             HammerBaseTile.writeCells(newCompound, cell1, cell2);
-
 
             EnumHammerConfig[] configs =  EnumHammerConfig.values();
             BlockState newState = blockInfo.state

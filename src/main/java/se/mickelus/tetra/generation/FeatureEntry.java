@@ -25,16 +25,18 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.generation.processing.ForgedContainerProcessor;
 import se.mickelus.tetra.generation.processing.ForgedCrateProcessor;
 import se.mickelus.tetra.generation.processing.ForgedHammerProcessor;
 import se.mickelus.tetra.generation.processing.TransferUnitProcessor;
-import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.util.ItemHandlerWrapper;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -212,6 +214,13 @@ public class FeatureEntry extends Feature<FeatureReference> {
             LootContext.Builder builder = new LootContext.Builder(world);
 
             lootTable.fillInventory((IInventory) tileEntity, builder.build(LootParameterSets.EMPTY));
+        } else {
+            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+                LootTable lootTable = world.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
+                LootContext.Builder builder = new LootContext.Builder(world);
+
+                lootTable.fillInventory(new ItemHandlerWrapper(handler), builder.build(LootParameterSets.EMPTY));
+            });
         }
     }
 }

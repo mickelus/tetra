@@ -1,0 +1,141 @@
+{
+    "pools": [
+        {
+            "name": "forged/container_content",
+            "rolls": {
+                "min": 4,
+                "max": 9
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:forged_mesh",
+                    "weight": 5
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_beam",
+                    "weight": 5
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate",
+                    "weight": 5
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:quick_latch",
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:magmatic_cell",
+                    "weight": 3,
+                    "functions": [
+                        {
+                            "function": "set_damage",
+                            "damage": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:metal_scrap",
+                    "weight": 20,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 9
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:emerald",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:redstone",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 15
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:piston",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 24
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:powered_rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:detector_rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
