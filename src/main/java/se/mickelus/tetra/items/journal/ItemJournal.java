@@ -37,11 +37,11 @@ public class ItemJournal extends TetraItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.journal.tooltip1"));
-
+        tooltip.add(new TranslationTextComponent("item.tetra.journal.tooltip1")
+                .setStyle(new Style().setColor(TextFormatting.GRAY)));
         tooltip.add(new StringTextComponent(""));
-
-        tooltip.add(new TranslationTextComponent("item.tetra.journal.tooltip2").setStyle(new Style().setItalic(true)));
+        tooltip.add(new TranslationTextComponent("item.tetra.journal.tooltip2")
+                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {

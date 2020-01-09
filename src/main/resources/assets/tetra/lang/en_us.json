@@ -213,6 +213,8 @@
   "block.tetra.extractor_pipe": "Extractor pipe",
   "block.tetra.seeping_bedrock": "Seeping bedrock",
 
+  "block.multiblock_hint.1x2x1": "[1x2x1 multiblock]",
+
   "item.tetra.forged_bolt": "Bolt",
   "salvage_bolt_action.label": "Salvage",
 
@@ -223,7 +225,7 @@
   "salvage_mesh_action.label": "Salvage",
 
   "item.tetra.quick_latch": "Quick latch",
-  "item.tetra.quick_latch.description": "Reveals related upgrade schemas while in the inventory.",
+  "item.tetra.quick_latch.description": "Reveals related upgrade schemas while in the inventory",
   "salvage_quick_latch_action_hammer.label": "Salvage",
   "salvage_quick_latch_action_pry.label": "Salvage",
 
@@ -232,7 +234,7 @@
   "salvage_metal_scrap_action.label": "Salvage",
 
   "item.tetra.vent_plate": "Vent plate",
-  "item.tetra.vent_plate.description": "Re-attach this to machinery to slightly increase its efficiency.",
+  "item.tetra.vent_plate.description": "Re-attach this to machinery to slightly increase its efficiency",
   "salvage_vent_plate_action.label": "Salvage",
 
   "forged_description": "Found in structures deep underground in snowy biomes",

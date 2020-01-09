@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -91,6 +91,9 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         tooltip.add(hintTooltip);
+        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
+                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 
     public boolean isFueled(World world, BlockPos pos) {

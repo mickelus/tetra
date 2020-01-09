@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.*;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,6 +31,8 @@ public class ItemQuickLatch extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+        tooltip.add(new TranslationTextComponent("item.tetra.quick_latch.description").setStyle(new Style().setColor(TextFormatting.GRAY)));
+        tooltip.add(new StringTextComponent(""));
         tooltip.add(ForgedBlockCommon.hintTooltip);
     }
 

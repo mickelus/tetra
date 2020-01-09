@@ -19,7 +19,7 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -70,6 +70,9 @@ public class CoreExtractorBaseBlock extends TetraBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
+                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 
     @Override
