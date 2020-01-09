@@ -6,7 +6,7 @@
             "facing": "SOUTH",
             "chance": 0.1,
             "features": [
-                "tetra:forged_crate_1a"
+                "tetra:forged_crate_1x1x1"
             ]
         },
         {
@@ -14,7 +14,7 @@
             "facing": "SOUTH",
             "chance": 0.1,
             "features": [
-                "tetra:forged_crate_1a"
+                "tetra:forged_crate_1x1x1"
             ]
         }
     ]

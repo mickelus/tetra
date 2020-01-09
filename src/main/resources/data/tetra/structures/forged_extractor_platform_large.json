@@ -30,14 +30,7 @@
             "facing": "NORTH",
             "chance": 0.3,
             "features": [
-                "tetra:forged_crate_3a",
-                "tetra:forged_crate_3b",
-                "tetra:forged_crate_3c",
-                "tetra:forged_crate_2a",
-                "tetra:forged_crate_2b",
-                "tetra:forged_crate_1a",
-                "tetra:forged_crate_1b",
-                "tetra:forged_crate_1b"
+                "tetra:forged_crate_3x2x2"
             ]
         },
         {
@@ -46,14 +39,7 @@
             "chance": 0.3,
             "features": [
 
-                "tetra:forged_crate_3a",
-                "tetra:forged_crate_3b",
-                "tetra:forged_crate_3c",
-                "tetra:forged_crate_2a",
-                "tetra:forged_crate_2b",
-                "tetra:forged_crate_1a",
-                "tetra:forged_crate_1b",
-                "tetra:forged_crate_1b"
+                "tetra:forged_crate_3x2x2"
             ]
         }
     ]

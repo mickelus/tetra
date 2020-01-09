@@ -7,13 +7,13 @@
             "facing": "SOUTH",
             "chance": 0.2,
             "features": [
-                "tetra:forged_crate_1a",
-                "tetra:forged_crate_1b",
-                "tetra:forged_crate_2a",
-                "tetra:forged_crate_2b",
-                "tetra:forged_crate_3a",
-                "tetra:forged_crate_3b",
-                "tetra:forged_crate_3c"
+                "tetra:forged_crate_1x1x1",
+                "tetra:forged_crate_1x1x1",
+                "tetra:forged_crate_2x1x2",
+                "tetra:forged_crate_2x1x1",
+                "tetra:forged_crate_3x1x1",
+                "tetra:forged_crate_3x1x2",
+                "tetra:forged_crate_3x2x2"
             ]
         }
     ]
