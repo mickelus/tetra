@@ -19,7 +19,7 @@ public class ForgedContainerModel extends Model {
         locks = new RendererModel[4];
         for (int i = 0; i < locks.length; i++) {
             locks[i] = new RendererModel(this, 0, 0).setTextureSize(128, 64);
-            locks[i].addBox(-2 + i * 6, -1, -14.0020000000949949026f, 2, 3, 1, 0);
+            locks[i].addBox(-2 + i * 6, -1, -14.03f, 2, 3, 1, 0);
             locks[i].rotationPointX = 8;
             locks[i].rotationPointY = 7;
             locks[i].rotationPointZ = 15;
