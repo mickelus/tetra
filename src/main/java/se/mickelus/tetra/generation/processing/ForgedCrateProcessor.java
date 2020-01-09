@@ -36,7 +36,7 @@ public class ForgedCrateProcessor extends StructureProcessor {
                     .with(BlockForgedCrate.propIntegrity, random.nextInt(4))
                     .with(BlockForgedCrate.propFacing, Direction.byHorizontalIndex(random.nextInt(4)));
 
-            return new Template.BlockInfo(pos, blockState, blockInfo.nbt);
+            return new Template.BlockInfo(blockInfo.pos, blockState, blockInfo.nbt);
         }
 
         return blockInfo;
