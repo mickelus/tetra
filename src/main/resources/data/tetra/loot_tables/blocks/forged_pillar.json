@@ -9,6 +9,7 @@
                     "children": [
                         {
                             "type": "minecraft:item",
+                            "name": "tetra:forged_pillar",
                             "conditions": [
                                 {
                                     "condition": "minecraft:match_tool",
@@ -23,8 +24,7 @@
                                         ]
                                     }
                                 }
-                            ],
-                            "name": "tetra:forged_pillar"
+                            ]
                         },
                         {
                             "type": "minecraft:item",
