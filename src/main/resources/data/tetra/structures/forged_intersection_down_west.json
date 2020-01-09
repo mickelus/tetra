@@ -4,7 +4,7 @@
         {
             "offset": [3, 1, 7],
             "facing": "EAST",
-            "chance": 0.3,
+            "chance": 0.5,
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_transfer_unit",
@@ -17,7 +17,7 @@
         {
             "offset": [6, 1, 6],
             "facing": "WEST",
-            "chance": 0.3,
+            "chance": 0.5,
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_crate_1x1x1",
@@ -29,7 +29,7 @@
         {
             "offset": [5, 1, 8],
             "facing": "NORTH",
-            "chance": 0.3,
+            "chance": 0.5,
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_transfer_unit",

@@ -1,4 +1,5 @@
 {
-    "origin": [1, 0, 0],
-    "integrityMin": 0
+    "origin": [1, 0, 1],
+    "integrityMin": 0,
+    "integrityMax": 0.8
 }
