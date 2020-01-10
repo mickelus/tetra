@@ -71,11 +71,11 @@ public class GuiKeybinding extends GuiElement {
         public GuiKey(int x, int y, String key) {
             super(x, y, 0, 11);
 
-            // todo 1.14: handle single character as string?
+            width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
+
+            // need to add some extra padding for single character strings
             if (key.length() == 1) {
-                width = (int) Minecraft.getInstance().fontRenderer.getCharWidth(key.charAt(0)) + 5;
-            } else {
-                width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
+                width += 5;
             }
 
             this.x = x - width;
