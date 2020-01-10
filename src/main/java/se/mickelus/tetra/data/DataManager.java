@@ -1,6 +1,7 @@
 package se.mickelus.tetra.data;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -8,7 +9,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -22,14 +22,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.blocks.geode.GeodeVariant;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.generation.FeatureParameters;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
@@ -68,7 +66,6 @@ public class DataManager {
             EnchantmentMapping[].class);
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
-    public static DataStore<GeodeVariant[]> geodeData = new DataStore<>(gson, "geode", GeodeVariant[].class);
     public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
             ReplacementDefinition[].class);
     public static DataStore<SchemaDefinition[]> schemaData = new DataStore<>(gson, "schemas", SchemaDefinition[].class);
@@ -78,7 +75,7 @@ public class DataManager {
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, enchantmentData, tweakData, synergyData, geodeData,
+    private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, enchantmentData, tweakData, synergyData,
             replacementData, schemaData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;

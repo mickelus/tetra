@@ -18,7 +18,7 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue development;
 
-    public static ForgeConfigSpec.BooleanValue generateGeodes;
+    public static ForgeConfigSpec.IntValue geodeDensity;
 
     public static ForgeConfigSpec.BooleanValue generateFeatures;
     public static ForgeConfigSpec.IntValue maxFeatureDepth;
@@ -51,10 +51,10 @@ public class ConfigHandler {
                 .comment("World generation settings")
                 .push("worldgen");
 
-        generateGeodes = builder
-                .comment("Generates geodes in the world, additional config available in \"tetra/data/geode/variants.json\"")
+        geodeDensity = builder
+                .comment("The number of geodes that should generate per chunk, set to 0 to disable")
                 .worldRestart()
-                .define("geodes", true);
+                .defineInRange("geode_density", 120, 0, 65536);
 
         generateFeatures = builder
                 .comment("Generates features in the world, further configuration available in \"tetra/data/geode/\"")

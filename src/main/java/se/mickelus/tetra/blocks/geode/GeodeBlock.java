@@ -47,7 +47,8 @@ public class GeodeBlock extends TetraBlock {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        if (ConfigHandler.generateGeodes.get()) {
+        int density = ConfigHandler.geodeDensity.get();
+        if (density > 0) {
             for (Biome biome : ForgeRegistries.BIOMES) {
                 biome.addFeature(
                         GenerationStage.Decoration.UNDERGROUND_ORES,
@@ -55,7 +56,7 @@ public class GeodeBlock extends TetraBlock {
                                 Feature.ORE,
                                 new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3),
                                 Placement.COUNT_RANGE,
-                                new CountRangeConfig(120, 0, 0, 32)
+                                new CountRangeConfig(density, 0, 0, 32)
                         )
                 );
             }
