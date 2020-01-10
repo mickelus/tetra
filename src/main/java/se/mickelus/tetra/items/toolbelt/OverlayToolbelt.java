@@ -81,7 +81,6 @@ public class OverlayToolbelt {
     private void showView() {
         boolean canOpen = updateGuiData();
         if (canOpen) {
-            // todo 1.14: this changed, check if overlay still works
             mc.mouseHelper.ungrabMouse();
             isActive = true;
             openTime = System.currentTimeMillis();
@@ -89,7 +88,6 @@ public class OverlayToolbelt {
     }
 
     private void hideView() {
-        // todo 1.14: this changed, check if overlay still works
         gui.setVisible(false);
         mc.mouseHelper.grabMouse();
         isActive = false;
@@ -117,7 +115,6 @@ public class OverlayToolbelt {
 
     private void quickEquip() {
         if (mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
-            // todo 1.14: this changed, check if quick equip still works
             BlockState blockState = mc.world.getBlockState(new BlockPos(mc.objectMouseOver.getHitVec()));
             int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
 

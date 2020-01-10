@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
@@ -160,7 +161,8 @@ public class BlockInteraction {
     public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace,
             double hitX, double hitY, double hitZ) {
         // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
-        AxisAlignedBB boundingBox = blockState.getRaytraceShape(player.world, pos).getBoundingBox();
+
+        AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 

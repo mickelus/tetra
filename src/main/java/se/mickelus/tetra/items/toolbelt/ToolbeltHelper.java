@@ -11,8 +11,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
+import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.List;
@@ -149,12 +153,12 @@ public class ToolbeltHelper {
             BlockPos blockPos = trace.getPos();
 
             // todo 1.14: renable when feature gen (and block interactions) is back
-//            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
-//                    .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
-//                            (float) hitVector.x - blockPos.getX(),
-//                            (float) hitVector.y - blockPos.getY(),
-//                            (float) hitVector.z - blockPos.getZ()))
-//                    .orElse(null);
+            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
+                    .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
+                            (float) hitVector.x - blockPos.getX(),
+                            (float) hitVector.y - blockPos.getY(),
+                            (float) hitVector.z - blockPos.getZ()))
+                    .orElse(null);
 
             for (int i = 0; i < inventory.getSizeInventory(); i++) {
                 ItemStack itemStack = inventory.getStackInSlot(i);
@@ -165,14 +169,14 @@ public class ToolbeltHelper {
                     }
 
                     // todo 1.14: renable when feature gen (and block interactions) is back
-//                    if (blockInteraction != null) {
-//                        if (itemStack.getItem() instanceof ICapabilityProvider) {
-//                            ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
-//                            if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
-//                                return i;
-//                            }
-//                        }
-//                    }
+                    if (blockInteraction != null) {
+                        if (itemStack.getItem() instanceof ICapabilityProvider) {
+                            ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
+                            if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
+                                return i;
+                            }
+                        }
+                    }
                 }
             }
         }
