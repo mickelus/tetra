@@ -2,21 +2,25 @@ package se.mickelus.tetra.module;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPlaySoundEventPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.server.management.PlayerInteractionManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
@@ -211,32 +215,6 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onBlockHarvest(BlockEvent.HarvestDropsEvent event) {
-        if (event.isCanceled()) {
-            return;
-        }
-
-        Optional.ofNullable(event.getHarvester())
-                .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
-                .ifPresent(itemStack -> {
-                    BlockState state = event.getState();
-                    if (!event.isSilkTouching()) {
-                        int fortuneLevel = getEffectLevel(itemStack, ItemEffect.fortune);
-                        if (fortuneLevel > 0) {
-                            // todo 1.14: passing fortune level to loot func appear to longer be possible, perhaps A loot entry processor is required intstead?
-                            // event.getDrops().clear();
-                            // calling the new getDrops method directly cause some mod compatibility issues
-                            // state.getBlock().getDrops(list, event.getWorld(), event.getPos(), state, fortuneLevel);
-                            //List<ItemStack> list = state.getBlock().getDrops(event.getWorld(), event.getPos(), state, fortuneLevel);
-                            // event.getDrops().addAll(list);
-                        }
-                    }
-                });
-    }
-
-    @SubscribeEvent
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Optional.of(event.getItemStack())
                 .filter(itemStack -> !itemStack.isEmpty())
@@ -268,8 +246,7 @@ public class ItemEffectHandler {
                                 int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
                                 if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
                                         || itemStack.canHarvestBlock(blockState)) {
-                                    world.playEvent(breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                                    breakBlock(world, breakingPlayer, itemStack, pos, blockState);
+                                    breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                                 }
                             }
 
@@ -292,15 +269,21 @@ public class ItemEffectHandler {
                 });
     }
 
-    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, ToolType tool, int critLevel) {
-        if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
+    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack,
+            ToolType tool, int critLevel) {
+        if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
+                && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
+
             if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
-                world.playEvent(null, 2001, pos, Block.getStateId(blockState));
-                breakBlock(world, breakingPlayer, itemStack, pos, blockState);
+                breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                 itemStack.damageItem(2, breakingPlayer, t -> {});
 
                 ((ItemModular) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
+
+                if (breakingPlayer instanceof ServerPlayerEntity) {
+                    sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
+                }
 
                 if (world instanceof ServerWorld) {
                     ((ServerWorld) world).spawnParticle(ParticleTypes.CRIT,
@@ -350,19 +333,43 @@ public class ItemEffectHandler {
      * @param toolStack the itemstack used to break the blocks
      * @param pos the position which to break blocks around
      * @param blockState the state of the block that is to broken
+     * @param harvest true if the player is ment to harvest the block, false if it should just magically disappear
      * @return True if the player was allowed to break the block, otherwise false
      */
-    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos,
-            BlockState blockState) {
-        boolean canRemove = blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, true,
-                world.getFluidState(pos));
-        if (canRemove && !world.isRemote) {
-            blockState.getBlock().onPlayerDestroy(world, pos, blockState);
-            blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos),
-                    toolStack);
-        }
+    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState, boolean harvest) {
+        if (!world.isRemote) {
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
+            GameType gameType = serverPlayer.interactionManager.getGameType();
 
-        return canRemove;
+            int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
+
+            if (exp != -1) {
+                boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
+                        && !breakingPlayer.func_223729_a(world, pos, gameType)
+                        && blockState.canHarvestBlock(world, pos, breakingPlayer)
+                        && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest,
+                        world.getFluidState(pos));
+
+                if (canRemove) {
+                    toolStack.onBlockDestroyed(world, blockState, pos, breakingPlayer);
+                    blockState.getBlock().onPlayerDestroy(world, pos, blockState);
+
+                    if (harvest) {
+                        blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
+
+                        if (exp > 0) {
+                            blockState.getBlock().dropXpOnBlockBreak(world, pos, exp);
+                        }
+                    }
+                }
+                return canRemove;
+            }
+
+            return false;
+        } else {
+            return blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest,
+                    world.getFluidState(pos));
+        }
     }
 
     /**
@@ -375,8 +382,8 @@ public class ItemEffectHandler {
      *             match this
      * @param sweepingLevel the level of the sweeping effect on the toolStack
      */
-    private void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos,
-            ToolType tool, int sweepingLevel) {
+    private void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
+            int sweepingLevel) {
         if (world.isRemote) {
             return;
         }
@@ -385,15 +392,10 @@ public class ItemEffectHandler {
         final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
         final boolean alternate = strikeCounter % 2 == 0;
 
-        ItemModularHandheld.spawnSweepParticles(world, originPos.getX(), originPos.getY() + 0.5, originPos.getZ(), 0, 0);
+        breakingPlayer.spawnSweepParticles();
 
         Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
-                .map(pos -> {
-                    if (alternate) {
-                        return new BlockPos(-pos.getX(), pos.getY(), pos.getZ());
-                    }
-                    return pos;
-                })
+                .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
                 .map(pos -> rotatePos(pos, facing))
                 .map(originPos::add)
                 .forEachOrdered(pos -> {
@@ -406,12 +408,27 @@ public class ItemEffectHandler {
                         int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
                         if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
                                 || toolStack.canHarvestBlock(blockState)) {
-                            world.playEvent(2001, pos, Block.getStateId(blockState));
-                            breakBlock(world, breakingPlayer, toolStack, pos, blockState);
+
+                            // the break event has to be sent the player separately as it's sent to the others inside Block.onBlockHarvested
+                            if (breakingPlayer instanceof ServerPlayerEntity) {
+                                sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
+                            }
+
+                            breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
                         }
                     }
-
                 });
+    }
+
+    /**
+     * Sends an event to a specific player.
+     * @param player the player the event will be sent to
+     * @param type an integer representation of the event
+     * @param pos the position in which the event takes place
+     * @param data an integer representation of event data (e.g. Block.getStateId)
+     */
+    private void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
+        player.connection.sendPacket(new SPlaySoundEventPacket(type, pos, data, false));
     }
 
     /**

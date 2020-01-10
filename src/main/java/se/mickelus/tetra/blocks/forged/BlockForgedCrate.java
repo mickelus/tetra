@@ -124,7 +124,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
             }
 
             world.playEvent(player, 2001, pos, Block.getStateId(blockState));
-            ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState);
+            ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState, false);
         }
 
         return true;

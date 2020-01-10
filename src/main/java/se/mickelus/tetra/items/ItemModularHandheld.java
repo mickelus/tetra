@@ -425,12 +425,11 @@ public class ItemModularHandheld extends ItemModular {
 
         BlockState blockState = world.getBlockState(pos);
         if (canDenail(blockState, world, pos)) {
-            boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState);
+            boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState, true);
             if (success) {
                 applyDamage(blockDestroyDamage, itemStack, player);
                 tickProgression(player, itemStack, blockDestroyDamage);
 
-                world.playEvent(player, 2001, pos, Block.getStateId(blockState));
                 player.resetCooldown();
                 return ActionResultType.SUCCESS;
             }
@@ -492,7 +491,8 @@ public class ItemModularHandheld extends ItemModular {
 
             attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ,
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
-            spawnSweepParticles(attacker);
+
+            CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::spawnSweepParticles);
         }
     }
 
