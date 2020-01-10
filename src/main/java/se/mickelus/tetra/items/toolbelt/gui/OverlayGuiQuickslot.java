@@ -82,8 +82,6 @@ public class OverlayGuiQuickslot extends GuiElement {
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
         if (opacity < 1) {
-            // todo 1.14: check that this works
-            // this.zLevel = 300;
             GlStateManager.disableDepthTest();
             drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }

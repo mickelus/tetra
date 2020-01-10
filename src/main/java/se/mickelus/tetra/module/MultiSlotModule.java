@@ -55,14 +55,6 @@ public class MultiSlotModule extends ItemModuleMajor {
         return unlocalizedName;
     }
 
-    public ResourceLocation[] getAllTextures() {
-        return Arrays.stream(data)
-                .map(moduleData -> moduleData.key)
-                .map(key -> "items/module/" + key + slotSuffix)
-                .map(key -> new ResourceLocation(TetraMod.MOD_ID, key))
-                .toArray(ResourceLocation[]::new);
-    }
-
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         String string = "items/module/" + getData(itemStack).key + slotSuffix;
         return new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, string)};

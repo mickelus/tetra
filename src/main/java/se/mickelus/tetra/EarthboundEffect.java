@@ -19,7 +19,7 @@ public class EarthboundEffect extends Effect {
     public static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/potions.png");
 
     protected EarthboundEffect() {
-        super(EffectType.HARMFUL, 0x008800);
+        super(EffectType.HARMFUL, 0x006600);
         setRegistryName("earthbound");
 
         addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "dc6d6b51-a5da-4735-9277-41fd355829f5", -0.3, AttributeModifier.Operation.MULTIPLY_TOTAL);

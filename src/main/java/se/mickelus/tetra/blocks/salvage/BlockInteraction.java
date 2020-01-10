@@ -160,8 +160,6 @@ public class BlockInteraction {
 
     public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace,
             double hitX, double hitY, double hitZ) {
-        // todo 1.14: do something cool with VoxelShapes instead of using old AABBs?
-
         AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);

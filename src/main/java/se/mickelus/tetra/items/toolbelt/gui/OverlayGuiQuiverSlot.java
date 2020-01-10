@@ -104,7 +104,6 @@ public class OverlayGuiQuiverSlot extends GuiElement {
         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableGUIStandardItemLighting();
 
-        // todo 1.14: replace with GuiItem?
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
         GlStateManager.disableDepthTest();

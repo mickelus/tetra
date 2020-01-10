@@ -30,7 +30,6 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
                 .build();
     }
 
-    // todo 1.14: validate that this still works
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (TickEvent.Phase.START == event.phase && event.player.ticksExisted % 20 == 0 && !event.player.world.isRemote) {

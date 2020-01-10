@@ -38,11 +38,6 @@ public interface ITetraBlock {
                 .setRegistryName(block.getRegistryName());
 
         registry.register(item);
-
-        // todo 1.14: previously used for block item models, appearently not needed anymore?
-//        if (FMLEnvironment.dist.isClient()) {
-//            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-//        }
     }
 
     default Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {

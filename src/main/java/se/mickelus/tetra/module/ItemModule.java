@@ -295,14 +295,6 @@ public abstract class ItemModule implements ICapabilityProvider {
         return renderLayer;
     }
 
-    // todo 1.14: remove this as all textures are loaded regardless of modules
-    @Deprecated
-    public ResourceLocation[] getAllTextures() {
-        return Arrays.stream(data)
-                .map(ModuleData::getTextureLocation)
-                .toArray(ResourceLocation[]::new);
-    }
-
     public void hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {}
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {

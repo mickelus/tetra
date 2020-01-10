@@ -365,11 +365,6 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .toArray(ResourceLocation[]::new);
     }
 
-    @Override
-    public ResourceLocation[] getAllTextures() {
-        return ArrayUtils.addAll(super.getAllTextures(), getAllImprovementTextures());
-    }
-
     protected ResourceLocation[] getImprovementTextures(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.textured)

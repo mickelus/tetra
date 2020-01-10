@@ -105,7 +105,7 @@ public final class ModularItemModel implements IUnbakedModel {
         int uMax = sprite.getWidth();
         int vMax = sprite.getHeight();
 
-        // todo 1.14: figure out why this doesn't work when considering fully transparent rows
+        // todo: figure out why this doesn't work when considering fully transparent rows
         for (int v = 0; v < vMax; v++) {
             builder.add(buildSideQuad(format, transform, Direction.UP, tintIndex, color, sprite, 0, v, uMax));
             builder.add(buildSideQuad(format, transform, Direction.DOWN, tintIndex, color, sprite, 0, v + 1, uMax));

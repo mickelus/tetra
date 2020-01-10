@@ -152,7 +152,6 @@ public class ToolbeltHelper {
             Vec3d hitVector = trace.getHitVec();
             BlockPos blockPos = trace.getPos();
 
-            // todo 1.14: renable when feature gen (and block interactions) is back
             BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
                     .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
                             (float) hitVector.x - blockPos.getX(),
@@ -168,7 +167,6 @@ public class ToolbeltHelper {
                         return i;
                     }
 
-                    // todo 1.14: renable when feature gen (and block interactions) is back
                     if (blockInteraction != null) {
                         if (itemStack.getItem() instanceof ICapabilityProvider) {
                             ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());

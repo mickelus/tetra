@@ -31,7 +31,6 @@ public class ClientProxy implements IProxy {
         Arrays.stream(items).forEach(ITetraItem::clientInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
-        // todo 1.14: readd when terrain gen is back
         ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
 

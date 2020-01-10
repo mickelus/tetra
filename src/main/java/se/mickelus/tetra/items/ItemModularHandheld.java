@@ -165,7 +165,6 @@ public class ItemModularHandheld extends ItemModular {
             if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
                 target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
 
-                // todo 1.14: check that this still renders
                 if (target.world instanceof ServerWorld) {
                     BlockState blockState = target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ));
                     ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),

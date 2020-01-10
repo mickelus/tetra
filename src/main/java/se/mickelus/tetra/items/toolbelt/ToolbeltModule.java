@@ -19,9 +19,4 @@ public class ToolbeltModule extends MultiSlotModule {
     public ResourceLocation[] getTextures(ItemStack itemStack) {
         return new ResourceLocation[0];
     }
-
-    @Override
-    public ResourceLocation[] getAllTextures() {
-        return new ResourceLocation[0];
-    }
 }
