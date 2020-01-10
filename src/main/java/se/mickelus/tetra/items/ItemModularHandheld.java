@@ -23,6 +23,8 @@ import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -85,32 +87,7 @@ public class ItemModularHandheld extends ItemModular {
     private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS,
             Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.WOOL, Material.CARPET);
 
-    // todo 1.14: test that this still works, possible cleanup. Possibly missing planks, stairs, slabs, doors
-    private static final String[] denailTags = new String[] {
-            "minecraft:banners",
-            "minecraft:beds",
-            "minecraft:planks",
-            "minecraft:rails",
-            "minecraft:signs",
-            "minecraft:wooden_buttons",
-            "minecraft:wooden_doors",
-            "minecraft:wooden_fences",
-            "minecraft:wooden_pressure_plates",
-            "minecraft:wooden_slabs",
-            "minecraft:wooden_stairs",
-            "minecraft:wooden_trapdoors",
-            "forge:fence_gates/wooden",
-            "forge:fences/wooden",
-            "forge:chests/wooden"};
-    private static final List<Predicate<BlockState>> denailBlocks = ImmutableList.of(
-            BlockMatcher.forBlock(BasicWorkbenchBlock.instance),
-            BlockMatcher.forBlock(Blocks.CRAFTING_TABLE),
-            BlockMatcher.forBlock(Blocks.BOOKSHELF),
-            BlockMatcher.forBlock(Blocks.TRAPPED_CHEST),
-            BlockMatcher.forBlock(Blocks.LADDER),
-            BlockMatcher.forBlock(Blocks.JUKEBOX),
-            BlockMatcher.forBlock(Blocks.NOTE_BLOCK),
-            BlockMatcher.forBlock(Blocks.DAYLIGHT_DETECTOR));
+    private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
     protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
             Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
@@ -439,19 +416,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     private boolean canDenail(BlockState blockState, World world, BlockPos pos) {
-        boolean matchOre = Optional.of(blockState.getBlock())
-                .map(Block::getTags)
-                .map(Collection::stream)
-                .orElseGet(Stream::empty)
-                .map(ResourceLocation::toString)
-                .anyMatch(tag -> Arrays.asList(denailTags).contains(tag));
-
-        if (matchOre) {
-            return true;
-        }
-
-        return denailBlocks.stream()
-                .anyMatch(predicate -> predicate.test(blockState));
+        return blockState.getBlock().getTags().contains(nailedTag);
     }
 
     /**
