@@ -1,9 +1,6 @@
 package se.mickelus.tetra.blocks.forged;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -11,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -30,6 +28,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
@@ -41,8 +40,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
+import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
-public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInteractive {
+public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
     static final String unlocalizedName = "forged_vent";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -100,6 +101,7 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
         builder.add(propRotation, propX, propBroken);
     }
 
@@ -205,11 +207,6 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
         tooltip.add(ForgedBlockCommon.hintTooltip);
     }
 
-    @Override
-    public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand) {
-        return null;
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
@@ -231,8 +228,9 @@ public class BlockForgedVent extends TetraBlock implements IBlockCapabilityInter
             rotation++;
         }
 
-        blockState = blockState.with(propRotation, rotation);
-        blockState = blockState.with(propBroken, false);
+        blockState = blockState
+                .with(propRotation, rotation)
+                .with(propBroken, false);
 
         return  blockState;
     }

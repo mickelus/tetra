@@ -1,9 +1,6 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -11,6 +8,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -27,6 +25,7 @@ import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -42,7 +41,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInteractive {
+public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
     public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
@@ -284,11 +283,8 @@ public class TransferUnitBlock extends TetraBlock implements IBlockCapabilityInt
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(facingProp)
-                .add(configProp)
-                .add(plateProp)
-                .add(cellProp)
-                .add(transferProp);
+        super.fillStateContainer(builder);
+        builder.add(facingProp, configProp, plateProp, cellProp, transferProp);
     }
 
     @Override

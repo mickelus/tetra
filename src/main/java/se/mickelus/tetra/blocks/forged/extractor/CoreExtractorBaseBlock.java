@@ -1,15 +1,13 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -26,13 +24,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CoreExtractorBaseBlock extends TetraBlock {
+import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+
+public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
 
     private static final VoxelShape capShape = makeCuboidShape(3, 14, 3, 13, 16, 13);
@@ -90,6 +92,7 @@ public class CoreExtractorBaseBlock extends TetraBlock {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
         builder.add(facingProp);
     }
 
@@ -107,7 +110,7 @@ public class CoreExtractorBaseBlock extends TetraBlock {
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.UP.equals(facing) && !CoreExtractorPistonBlock.instance.equals(facingState.getBlock())) {
-            return Blocks.AIR.getDefaultState();
+            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
         }
 
         return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
@@ -115,14 +118,17 @@ public class CoreExtractorBaseBlock extends TetraBlock {
 
     // based on same method implementation in BedBlock
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        world.setBlockState(pos.up(), CoreExtractorPistonBlock.instance.getDefaultState(), 3);
+        BlockState pistonState = CoreExtractorPistonBlock.instance.getDefaultState()
+                .with(WATERLOGGED, world.getFluidState(pos.up()).getFluid() == WATER);
+        world.setBlockState(pos.up(), pistonState, 3);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
         if (context.getWorld().getBlockState(context.getPos().up()).isReplaceable(context)) {
-            return getDefaultState().with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
+            return super.getStateForPlacement(context)
+                    .with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
         }
 
         // returning null here stops the block from being placed

@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -36,8 +38,11 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
+import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
-public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockCapabilityInteractive {
+
+public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockCapabilityInteractive, IWaterLoggable {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedCrate instance;
@@ -81,7 +86,8 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
         this.setDefaultState(getDefaultState()
                 .with(propFacing, Direction.EAST)
                 .with(propStacked, false)
-                .with(propIntegrity, 3));
+                .with(propIntegrity, 3)
+                .with(WATERLOGGED, false));
     }
 
     @Override
@@ -142,7 +148,13 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(propFacing, propStacked, propIntegrity);
+        super.fillStateContainer(builder);
+        builder.add(propFacing, propStacked, propIntegrity, WATERLOGGED);
+    }
+
+    @Override
+    public IFluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Nullable
@@ -150,16 +162,23 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return super.getStateForPlacement(context)
                 .with(propFacing, context.getPlacementHorizontalFacing())
-                .with(propStacked, equals(context.getWorld().getBlockState(context.getPos().down()).getBlock()));
+                .with(propStacked, equals(context.getWorld().getBlockState(context.getPos().down()).getBlock()))
+                .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-        super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
-        if (Direction.DOWN.equals(facing) && equals(facingState.getBlock())) {
-            return state.with(propStacked, true);
+    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
+            BlockPos facingPos) {
+        if (state.get(WATERLOGGED)) {
+            world.getPendingFluidTicks().scheduleTick(currentPos, WATER, WATER.getTickRate(world));
         }
-        return state;
+
+        if (Direction.DOWN.equals(facing) && equals(facingState.getBlock())) {
+            return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos)
+                    .with(propStacked, true);
+        }
+
+        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override

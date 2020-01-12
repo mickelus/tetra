@@ -113,14 +113,4 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock {
     public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return new WorkbenchTile();
     }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
 }

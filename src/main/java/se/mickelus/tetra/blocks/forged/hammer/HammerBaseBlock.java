@@ -41,6 +41,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
 public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
@@ -286,7 +288,9 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     // based on same method implementation in BedBlock
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        world.setBlockState(pos.down(), HammerHeadBlock.instance.getDefaultState(), 3);
+        BlockState headState = HammerHeadBlock.instance.getDefaultState()
+                .with(WATERLOGGED, world.getFluidState(pos.down()).getFluid() == WATER);
+        world.setBlockState(pos.down(), headState, 3);
     }
 
     @Nullable

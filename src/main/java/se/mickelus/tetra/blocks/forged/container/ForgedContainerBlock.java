@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -35,6 +36,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -49,7 +51,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class ForgedContainerBlock extends TetraBlock implements IBlockCapabilityInteractive {
+public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
@@ -257,6 +259,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
         builder.add(facingProp, flippedProp, locked1Prop, locked2Prop, anyLockedProp, openProp);
     }
 
@@ -299,7 +302,7 @@ public class ForgedContainerBlock extends TetraBlock implements IBlockCapability
         }
 
         if (pairedFacing == facing && !equals(facingState.getBlock())) {
-            return Blocks.AIR.getDefaultState();
+            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
         }
 
         return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);

@@ -4,14 +4,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+
+import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -29,13 +30,14 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
 
-public class HammerHeadBlock extends TetraBlock {
+public class HammerHeadBlock extends TetraWaterloggedBlock {
     public static final String unlocalizedName = "hammer_head";
 
     public static final VoxelShape shape = makeCuboidShape(2, 14, 2, 14, 16, 14);
@@ -122,7 +124,7 @@ public class HammerHeadBlock extends TetraBlock {
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.UP.equals(facing) && !HammerBaseBlock.instance.equals(facingState.getBlock())) {
-            return Blocks.AIR.getDefaultState();
+            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
         }
 
         return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
