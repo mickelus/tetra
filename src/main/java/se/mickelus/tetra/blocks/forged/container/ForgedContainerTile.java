@@ -93,7 +93,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                 }
 
                 if (!player.isPotionActive(Effects.STRENGTH)) {
-                    player.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 100));
+                    player.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 200, 5));
                 }
             } else if (lidIntegrity == 0) { // start lid open animation on the client
                 openTime = System.currentTimeMillis();
