@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
@@ -39,8 +38,6 @@ import se.mickelus.tetra.BleedingEffect;
 import se.mickelus.tetra.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
-import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
@@ -48,44 +45,42 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ItemModularHandheld extends ItemModular {
 
-    private static final Set<Block> axeBlocks = Sets.newHashSet(Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS,
-            Blocks.BIRCH_PLANKS, Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS, Blocks.OAK_LOG,
-            Blocks.SPRUCE_LOG, Blocks.BIRCH_LOG, Blocks.JUNGLE_LOG, Blocks.ACACIA_LOG, Blocks.DARK_OAK_LOG,
-            Blocks.STRIPPED_OAK_LOG, Blocks.STRIPPED_SPRUCE_LOG, Blocks.STRIPPED_BIRCH_LOG, Blocks.STRIPPED_JUNGLE_LOG,
-            Blocks.STRIPPED_ACACIA_LOG, Blocks.STRIPPED_DARK_OAK_LOG, Blocks.BOOKSHELF, Blocks.CHEST, Blocks.PUMPKIN,
-            Blocks.CARVED_PUMPKIN, Blocks.MELON, Blocks.LADDER, Blocks.OAK_BUTTON, Blocks.SPRUCE_BUTTON,
-            Blocks.BIRCH_BUTTON, Blocks.JUNGLE_BUTTON, Blocks.ACACIA_BUTTON, Blocks.DARK_OAK_BUTTON,
-            Blocks.OAK_PRESSURE_PLATE, Blocks.SPRUCE_PRESSURE_PLATE, Blocks.BIRCH_PRESSURE_PLATE,
-            Blocks.JUNGLE_PRESSURE_PLATE, Blocks.ACACIA_PRESSURE_PLATE, Blocks.DARK_OAK_PRESSURE_PLATE);
+    /**
+     * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
+     * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
+     * are not listed here as that's part of that block's implementation.
+     */
 
-    private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD);
+    // copy of AxeItem.EFFECTIVE_ON, blocks that the axe explicitly state it can efficiently DESTROY
+    private static final Set<Block> axeDestroyBlocks = Sets.newHashSet(Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.BIRCH_PLANKS, Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS, Blocks.BOOKSHELF, Blocks.OAK_WOOD, Blocks.SPRUCE_WOOD, Blocks.BIRCH_WOOD, Blocks.JUNGLE_WOOD, Blocks.ACACIA_WOOD, Blocks.DARK_OAK_WOOD, Blocks.OAK_LOG, Blocks.SPRUCE_LOG, Blocks.BIRCH_LOG, Blocks.JUNGLE_LOG, Blocks.ACACIA_LOG, Blocks.DARK_OAK_LOG, Blocks.CHEST, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, Blocks.MELON, Blocks.LADDER, Blocks.SCAFFOLDING, Blocks.OAK_BUTTON, Blocks.SPRUCE_BUTTON, Blocks.BIRCH_BUTTON, Blocks.JUNGLE_BUTTON, Blocks.DARK_OAK_BUTTON, Blocks.ACACIA_BUTTON, Blocks.OAK_PRESSURE_PLATE, Blocks.SPRUCE_PRESSURE_PLATE, Blocks.BIRCH_PRESSURE_PLATE, Blocks.JUNGLE_PRESSURE_PLATE, Blocks.DARK_OAK_PRESSURE_PLATE, Blocks.ACACIA_PRESSURE_PLATE);
 
-    private static final Set<Block> pickaxeBlocks = Sets.newHashSet(Blocks.COAL_ORE, Blocks.COBBLESTONE,
-            Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK,
-            Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK,
-            Blocks.PACKED_ICE, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE,
-            Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.RAIL, Blocks.ACTIVATOR_RAIL,
-            Blocks.DETECTOR_RAIL, Blocks.POWERED_RAIL);
+    // copy of hardcoded values in AxeItem, materials that the axe explicitly state it can efficiently HARVEST
+    private static final Set<Material> axeHarvestMaterials = Sets.newHashSet(Material.WOOD, Material.PLANTS, Material.TALL_PLANTS, Material.BAMBOO);
 
-    private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
+    // copy of PickaxeItem.EFFECTIVE_ON, blocks that the pickaxe explicitly state it can efficiently DESTROY
+    private static final Set<Block> pickaxeDestroyBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.POWERED_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.CHISELED_SANDSTONE, Blocks.CUT_SANDSTONE, Blocks.CHISELED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.GRANITE, Blocks.POLISHED_GRANITE, Blocks.DIORITE, Blocks.POLISHED_DIORITE, Blocks.ANDESITE, Blocks.POLISHED_ANDESITE, Blocks.STONE_SLAB, Blocks.SMOOTH_STONE_SLAB, Blocks.SANDSTONE_SLAB, Blocks.PETRIFIED_OAK_SLAB, Blocks.COBBLESTONE_SLAB, Blocks.BRICK_SLAB, Blocks.STONE_BRICK_SLAB, Blocks.NETHER_BRICK_SLAB, Blocks.QUARTZ_SLAB, Blocks.RED_SANDSTONE_SLAB, Blocks.PURPUR_SLAB, Blocks.SMOOTH_QUARTZ, Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_STONE, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.POLISHED_GRANITE_SLAB, Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.MOSSY_STONE_BRICK_SLAB, Blocks.POLISHED_DIORITE_SLAB, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.END_STONE_BRICK_SLAB, Blocks.SMOOTH_SANDSTONE_SLAB, Blocks.SMOOTH_QUARTZ_SLAB, Blocks.GRANITE_SLAB, Blocks.ANDESITE_SLAB, Blocks.RED_NETHER_BRICK_SLAB, Blocks.POLISHED_ANDESITE_SLAB, Blocks.DIORITE_SLAB, Blocks.SHULKER_BOX, Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
 
-    private static final Set<Block> shovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND,
-            Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND,
-            Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER,
-            Blocks.MAGENTA_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER,
-            Blocks.LIME_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER,
-            Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER,
-            Blocks.BLUE_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER,
-            Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
+    // copy of hardcoded values in PickaxeItem, materials that the pickaxe explicitly state it can efficiently HARVEST
+    private static final Set<Material> pickaxeHarvestMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
 
-    private static final Set<Material> cuttingMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS,
-            Material.CORAL, Material.LEAVES, Material.GOURD, Material.WEB, Material.WOOL, Material.CARPET);
+    // copy of ShovelItem.EFFECTIVE_ON, blocks that the shovel explicitly state it can efficiently DESTROY
+    private static final Set<Block> shovelDestroyBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER, Blocks.LIME_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER, Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER, Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
+
+    // copy of hardcoded values in ShovelItem, blocks that the shovel explicitly state it can efficiently HARVEST
+    private static final Set<Block> shovelHarvestBlocks = Sets.newHashSet(Blocks.SNOW, Blocks.SNOW_BLOCK);
+
+    // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
+    private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
+    private static final Set<Tag<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
+
+    // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
+    private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
+
 
     private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
@@ -109,6 +104,14 @@ public class ItemModularHandheld extends ItemModular {
 
     public ItemModularHandheld(Properties properties) {
         super(properties);
+    }
+
+    public int getBlockDestroyDamage() {
+        return blockDestroyDamage;
+    }
+
+    public int getEntityHitDamage() {
+        return entityHitDamage;
     }
 
     @Override
@@ -608,6 +611,7 @@ public class ItemModularHandheld extends ItemModular {
     @Override
     public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
         if (!isBroken(stack)) {
+            // todo: change tool capabilities to be zero indexed to align with vanilla
             int capabilityLevel = getCapabilityLevel(stack, tool);
             if (capabilityLevel > 0) {
                 return capabilityLevel - 1;
@@ -618,11 +622,20 @@ public class ItemModularHandheld extends ItemModular {
 
     @Override
     public boolean canHarvestBlock(ItemStack stack, BlockState state) {
-        if (pickaxeMaterials.contains(state.getMaterial())) {
-            return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
-        } else if (state.getBlock().equals(Blocks.COBWEB)) {
-            return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
+        if (getHarvestLevel(stack, state.getHarvestTool(), null, state) >= state.getHarvestLevel()) {
+            return true;
+        } else {
+            if (pickaxeHarvestMaterials.contains(state.getMaterial())) {
+                return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
+            } else if (axeHarvestMaterials.contains(state.getMaterial())) {
+                return getHarvestLevel(stack, ToolType.AXE, null, null) >= 0;
+            } else if (shovelHarvestBlocks.contains(state.getBlock())) {
+                return getHarvestLevel(stack, ToolType.SHOVEL, null, null) >= 0;
+            } else if (cuttingHarvestBlocks.contains(state.getBlock())) {
+                return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
+            }
         }
+
         return false;
     }
 
@@ -630,10 +643,19 @@ public class ItemModularHandheld extends ItemModular {
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             ToolType tool = getEffectiveTool(blockState);
+            float speed = (float) (4 + getSpeedModifier(itemStack));
 
-            float speed = (float) (4 + getSpeedModifier(itemStack)) * getCapabilityEfficiency(itemStack, tool);
+            if (tool != null) {
+                speed *= getCapabilityEfficiency(itemStack, tool);
+            } else {
+                speed *= getToolTypes(itemStack).stream()
+                        .filter(blockState::isToolEffective)
+                        .map(toolType -> getCapabilityEfficiency(itemStack, toolType))
+                        .max(Comparator.naturalOrder())
+                        .orElse(0f);
+            }
 
-            // todo: need a better way to handle this
+            // todo: need a better way to handle how swords break cobwebs faster
             if (ToolTypes.cut.equals(tool) && blockState.getBlock().equals(Blocks.COBWEB)) {
                 speed *= 10;
             }
@@ -646,24 +668,56 @@ public class ItemModularHandheld extends ItemModular {
         return 1;
     }
 
+    public static boolean isToolEffective(ToolType toolType, BlockState blockState) {
+        if (axeHarvestMaterials.contains(blockState.getMaterial()) && ToolType.AXE.equals(toolType)) {
+            return true;
+        } else if (pickaxeHarvestMaterials.contains(blockState.getMaterial()) && ToolType.PICKAXE.equals(toolType)) {
+            return true;
+        } else if (cuttingHarvestBlocks.contains(blockState.getBlock()) && ToolTypes.cut.equals(toolType)) {
+            return true;
+        } else if (shovelHarvestBlocks.contains(blockState.getBlock()) && ToolType.SHOVEL.equals(toolType)) {
+            return true;
+        }
+
+        if (axeDestroyBlocks.contains(blockState.getBlock()) && ToolType.AXE.equals(toolType)) {
+            return true;
+        } else if (pickaxeDestroyBlocks.contains(blockState.getBlock()) && ToolType.PICKAXE.equals(toolType)) {
+            return true;
+        } else if (cuttingDestroyMaterials.contains(blockState.getMaterial())
+                || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag)) && ToolTypes.cut.equals(toolType)) {
+            return true;
+        } else if (shovelDestroyBlocks.contains(blockState.getBlock()) && ToolType.SHOVEL.equals(toolType)) {
+            return true;
+        }
+
+        return toolType.equals(blockState.getHarvestTool());
+    }
+
     public static ToolType getEffectiveTool(BlockState blockState) {
-        ToolType tool = blockState.getBlock().getHarvestTool(blockState);
+        ToolType tool = blockState.getHarvestTool();
 
         if (tool != null) {
             return tool;
         }
 
-        if (axeMaterials.contains(blockState.getMaterial())) {
+        if (axeHarvestMaterials.contains(blockState.getMaterial())) {
             return ToolType.AXE;
-        } else if (pickaxeMaterials.contains(blockState.getMaterial())) {
+        } else if (pickaxeHarvestMaterials.contains(blockState.getMaterial())) {
             return ToolType.PICKAXE;
-        } else if (axeBlocks.contains(blockState.getBlock())) {
-            return ToolType.AXE;
-        } else if (pickaxeBlocks.contains(blockState.getBlock())) {
-            return ToolType.PICKAXE;
-        } else if (cuttingMaterials.contains(blockState.getMaterial())) {
+        } else if (cuttingHarvestBlocks.contains(blockState.getBlock())) {
             return ToolTypes.cut;
-        } else if (shovelBlocks.contains(blockState.getBlock())) {
+        } else if (shovelHarvestBlocks.contains(blockState.getBlock())) {
+            return ToolType.SHOVEL;
+        }
+
+        if (axeDestroyBlocks.contains(blockState.getBlock())) {
+            return ToolType.AXE;
+        } else if (pickaxeDestroyBlocks.contains(blockState.getBlock())) {
+            return ToolType.PICKAXE;
+        } else if (cuttingDestroyMaterials.contains(blockState.getMaterial())
+                || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag))) {
+            return ToolTypes.cut;
+        } else if (shovelDestroyBlocks.contains(blockState.getBlock())) {
             return ToolType.SHOVEL;
         }
         return null;

@@ -44,6 +44,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -300,6 +301,11 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public void setDamage(ItemStack itemStack, int damage) {
         super.setDamage(itemStack, Math.min(itemStack.getMaxDamage() - 1, damage));
+    }
+
+    @Override
+    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        return Math.min(stack.getMaxDamage() - stack.getDamage() - 1, amount);
     }
 
     public void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {

@@ -218,23 +218,43 @@ public class ItemEffectHandler {
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Optional.of(event.getItemStack())
                 .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                 .ifPresent(itemStack -> {
+                    ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                     int strikingLevel = 0;
                     BlockPos pos = event.getPos();
                     World world = event.getWorld();
                     BlockState blockState = world.getBlockState(pos);
-                    ToolType tool = ItemModularHandheld.getEffectiveTool(blockState);
                     PlayerEntity breakingPlayer = event.getPlayer();
+                    ToolType tool = null;
 
-                    if (ToolType.AXE.equals(tool)) {
+                    // essentially checks if the item is effective in for each tool type, and checks if it can strike for that type
+                    if (ItemModularHandheld.isToolEffective(ToolType.AXE, blockState)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingAxe);
-                    } else if (ToolType.PICKAXE.equals(tool)) {
+                        if (strikingLevel > 0) {
+                            tool = ToolType.AXE;
+                        }
+                    }
+
+                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.PICKAXE, blockState)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
-                    } else if (ToolTypes.cut.equals(tool)) {
+                        if (strikingLevel > 0) {
+                            tool = ToolType.PICKAXE;
+                        }
+                    }
+
+                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolTypes.cut, blockState)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingCut);
-                    } else if (ToolType.SHOVEL.equals(tool)) {
+                        if (strikingLevel > 0) {
+                            tool = ToolTypes.cut;
+                        }
+                    }
+
+                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.SHOVEL, blockState)) {
                         strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingShovel);
+                        if (strikingLevel > 0) {
+                            tool = ToolType.SHOVEL;
+                        }
                     }
 
                     if (strikingLevel > 0) {
@@ -250,9 +270,8 @@ public class ItemEffectHandler {
                                 }
                             }
 
-                            CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class)
-                                    .ifPresent(item -> item.applyUsageEffects(breakingPlayer, itemStack, 1));
-                            itemStack.damageItem(2, breakingPlayer, t -> {});
+                            item.applyUsageEffects(breakingPlayer, itemStack, 1);
+                            item.applyDamage(item.getBlockDestroyDamage(), itemStack, breakingPlayer);
                         }
                         event.setCanceled(true);
                         breakingPlayer.resetCooldown();
@@ -336,7 +355,8 @@ public class ItemEffectHandler {
      * @param harvest true if the player is ment to harvest the block, false if it should just magically disappear
      * @return True if the player was allowed to break the block, otherwise false
      */
-    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState, boolean harvest) {
+    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
+            boolean harvest) {
         if (!world.isRemote) {
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
             GameType gameType = serverPlayer.interactionManager.getGameType();
@@ -347,11 +367,9 @@ public class ItemEffectHandler {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
                         && !breakingPlayer.func_223729_a(world, pos, gameType)
                         && blockState.canHarvestBlock(world, pos, breakingPlayer)
-                        && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest,
-                        world.getFluidState(pos));
+                        && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
 
                 if (canRemove) {
-                    toolStack.onBlockDestroyed(world, blockState, pos, breakingPlayer);
                     blockState.getBlock().onPlayerDestroy(world, pos, blockState);
 
                     if (harvest) {
@@ -402,7 +420,7 @@ public class ItemEffectHandler {
                     BlockState blockState = world.getBlockState(pos);
 
                     // make sure that only blocks which require the same tool are broken
-                    if (tool.equals(ItemModularHandheld.getEffectiveTool(blockState))) {
+                    if (ItemModularHandheld.isToolEffective(tool, blockState)) {
 
                         // check that the tool level is high enough and break the block
                         int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
