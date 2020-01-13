@@ -37,6 +37,9 @@ public class BlockInteraction {
     public Capability requiredCapability;
     public int requiredLevel;
 
+    // if false the player needs to have a tool that provides requiredCapability in their inventory for the interaction to be visible
+    public boolean alwaysReveal = true;
+
     public Direction face;
     public float minX;
     public float minY;
@@ -96,7 +99,7 @@ public class BlockInteraction {
                                           Collection<Capability> availableCapabilities) {
         return applicableForState(blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
-                && availableCapabilities.contains(requiredCapability);
+                && (alwaysReveal || availableCapabilities.contains(requiredCapability));
     }
 
     public void applyOutcome(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
