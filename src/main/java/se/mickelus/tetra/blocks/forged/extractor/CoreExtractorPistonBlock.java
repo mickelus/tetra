@@ -47,12 +47,6 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
         setRegistryName(unlocalizedName);
     }
 
-    @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        TileEntityOptional.from(worldIn, pos, CoreExtractorPistonTile.class).ifPresent(CoreExtractorPistonTile::activate);
-        return true;
-    }
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
