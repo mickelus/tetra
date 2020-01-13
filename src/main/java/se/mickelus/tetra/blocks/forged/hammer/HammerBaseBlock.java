@@ -261,6 +261,12 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
+    public boolean isSolid(BlockState state) {
+        // we need to override this to render properly under water, as blocks rendering on BlockRenderLayer.CUTOUT returns false here
+        return true;
+    }
+
+    @Override
     public boolean hasTileEntity(final BlockState state) {
         return true;
     }
