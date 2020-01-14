@@ -53,7 +53,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
     public FeatureEntry() {
         super(FeatureReference::deserialize);
 
-        DataManager.featureData.onReload(this::addToBiomes);
+        if (ConfigHandler.generateFeatures.get()) {
+            DataManager.featureData.onReload(this::addToBiomes);
+        }
 
         setRegistryName(TetraMod.MOD_ID, key);
     }

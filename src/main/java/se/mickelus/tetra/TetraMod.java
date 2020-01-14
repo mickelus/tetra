@@ -114,30 +114,26 @@ public class TetraMod {
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
-        blocks = new Block[] {
+        blocks = new Block[]{
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
+                new HammerHeadBlock(),
+                new HammerBaseBlock(),
+                new BlockForgedWall(),
+                new BlockForgedPillar(),
+                new BlockForgedPlatform(),
+                new BlockForgedPlatformSlab(),
+                new BlockForgedVent(),
+                new ForgedWorkbenchBlock(),
+                new ForgedContainerBlock(),
+                new BlockForgedCrate(),
+                new TransferUnitBlock(),
+                new CoreExtractorBaseBlock(),
+                new CoreExtractorPistonBlock(),
+                new CoreExtractorPipeBlock(),
+                new SeepingBedrockBlock()
         };
 
-        if (ConfigHandler.generateFeatures.get()) {
-            blocks = ArrayUtils.addAll(blocks,
-                    new HammerHeadBlock(),
-                    new HammerBaseBlock(),
-                    new BlockForgedWall(),
-                    new BlockForgedPillar(),
-                    new BlockForgedPlatform(),
-                    new BlockForgedPlatformSlab(),
-                    new BlockForgedVent(),
-                    new ForgedWorkbenchBlock(),
-                    new ForgedContainerBlock(),
-                    new BlockForgedCrate(),
-                    new TransferUnitBlock(),
-                    new CoreExtractorBaseBlock(),
-                    new CoreExtractorPistonBlock(),
-                    new CoreExtractorPipeBlock(),
-                    new SeepingBedrockBlock()
-            );
-        }
 
         items = new Item[] {
                 new ItemSwordModular(),
@@ -201,9 +197,7 @@ public class TetraMod {
 
     @SubscribeEvent
     public void serverStarting(FMLServerAboutToStartEvent event) {
-        if (ConfigHandler.generateFeatures.get()) {
-            FeatureEntry.instance.setup(event.getServer());
-        }
+        FeatureEntry.instance.setup(event.getServer());
     }
 
     @SubscribeEvent
@@ -234,9 +228,7 @@ public class TetraMod {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-            if (ConfigHandler.generateFeatures.get()) {
-                event.getRegistry().register(new FeatureEntry());
-            }
+            event.getRegistry().register(new FeatureEntry());
         }
 
         @SubscribeEvent
