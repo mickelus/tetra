@@ -97,6 +97,11 @@ public enum ItemEffect {
     tilling,
 
     /**
+     * Stripping: Rightclicking a log converts it to a stripped log of the same sort of wood, the same behaviour as vanilla axes.
+     */
+    stripping,
+
+    /**
      * Armor: Provides armor when held in the mainhand or the offhand. Armor value provided equals the effect level.
      */
     armor,

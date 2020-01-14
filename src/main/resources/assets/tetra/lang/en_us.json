@@ -1306,12 +1306,12 @@
   "duplex_tweak/binding_bolt.right": "Tight",
 
   "basic_axe_schema.name": "Axe head",
-  "basic_axe_schema.description": "Forge an axe head from the given material. The axe can be used to chop things.\n\nDouble axe heads provide synergy bonuses.",
+  "basic_axe_schema.description": "Forge an axe head from the given material. The axe can primarily be used to chop things like planks and logs, but it's also useful for stripping bark from logs and for crafting item modules from wood.\n\nDouble axe heads provide synergy bonuses.",
   "basic_axe_schema.slot1": "Head material",
 
   "duplex/basic_axe.item_name": "Axe",
   "duplex/basic_axe.name": "Axe head",
-  "duplex/basic_axe.description": "A basic axe head that can be used for chopping things.\n\nDouble axe heads provide synergy bonuses.",
+  "duplex/basic_axe.description": "A basic axe head that can primarily be used to chop things like planks and logs, but it's also useful for stripping bark from logs and crafting item modules from wood.\n\nDouble axe heads provide synergy bonuses.",
 
   "basic_axe/severing.name": "Severing",
   "basic_axe/severing.description": "Deals bonus damage to unarmored targets",

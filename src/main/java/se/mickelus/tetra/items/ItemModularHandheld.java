@@ -4,6 +4,7 @@ import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -81,7 +82,6 @@ public class ItemModularHandheld extends ItemModular {
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
 
-
     private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
     protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
@@ -92,6 +92,22 @@ public class ItemModularHandheld extends ItemModular {
 
     protected static final Map<Block, BlockState> flattenLookup = Maps.newHashMap(ImmutableMap.of(
             Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
+
+    protected static final Map<Block, Block> stripLookup = (new ImmutableMap.Builder<Block, Block>())
+            .put(Blocks.OAK_WOOD, Blocks.STRIPPED_OAK_WOOD)
+            .put(Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG)
+            .put(Blocks.DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD)
+            .put(Blocks.DARK_OAK_LOG, Blocks.STRIPPED_DARK_OAK_LOG)
+            .put(Blocks.ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD)
+            .put(Blocks.ACACIA_LOG, Blocks.STRIPPED_ACACIA_LOG)
+            .put(Blocks.BIRCH_WOOD, Blocks.STRIPPED_BIRCH_WOOD)
+            .put(Blocks.BIRCH_LOG, Blocks.STRIPPED_BIRCH_LOG)
+            .put(Blocks.JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_WOOD)
+            .put(Blocks.JUNGLE_LOG, Blocks.STRIPPED_JUNGLE_LOG)
+            .put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD)
+            .put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG)
+            .build();
+
 
 
     protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
@@ -196,14 +212,19 @@ public class ItemModularHandheld extends ItemModular {
 
         ItemStack itemStack = player.getHeldItem(hand);
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
-        int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
+        int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
 
         causeFierySelfEffect(player, itemStack, 2);
         causeEnderReverbEffect(player, itemStack, 1.7);
 
-        if (flatteningLevel > 0 && (tillingLevel > 0 && player.isSneaking() || tillingLevel == 0)) {
+        if (flatteningLevel > 0 && (strippingLevel > 0 && player.isSneaking() || strippingLevel == 0)) {
             return flattenPath(player, world, pos, hand, facing);
-        } else if (tillingLevel > 0) {
+        } else if (strippingLevel > 0) {
+            return stripBlock(context);
+        }
+
+        int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
+        if (tillingLevel > 0) {
             return tillBlock(context);
         }
 
@@ -383,6 +404,26 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return ActionResultType.PASS;
+    }
+
+    public ActionResultType stripBlock(ItemUseContext context) {
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        BlockState blockState = world.getBlockState(pos);
+        Block block = stripLookup.get(blockState.getBlock());
+        if (block != null) {
+            PlayerEntity player = context.getPlayer();
+            world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
+
+            if (!world.isRemote) {
+                world.setBlockState(pos, block.getDefaultState().with(RotatedPillarBlock.AXIS, blockState.get(RotatedPillarBlock.AXIS)), 11);
+                applyDamage(blockDestroyDamage, context.getItem(), player);
+            }
+
+            return ActionResultType.SUCCESS;
+        } else {
+            return ActionResultType.PASS;
+        }
     }
 
     /**
