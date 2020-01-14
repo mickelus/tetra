@@ -8,9 +8,11 @@ import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.OutcomePreview;
@@ -34,14 +36,14 @@ public class ModuleDevCommand {
 
         ItemStack baseStack = new ItemStack(ItemSwordModular.instance);
 
-        OutcomePreview[] outcomes = Optional.ofNullable(ItemUpgradeRegistry.instance.getSchema("heavy_blade_schema"))
-                .map(schema -> Arrays.stream(schema.getPreviews(baseStack, "sword/blade")))
+        OutcomePreview[] outcomes = Optional.ofNullable(ItemUpgradeRegistry.instance.getSchema("basic_hilt_schema"))
+                .map(schema -> Arrays.stream(schema.getPreviews(baseStack, "sword/hilt")))
                 .orElseGet(Stream::empty)
                 .toArray(OutcomePreview[]::new);
 
         for (int i = 0; i < outcomes.length; i++) {
             ItemStack itemStack = outcomes[i].itemStack.copy();
-            itemStack.setDisplayName(itemStack.getDisplayName());
+            itemStack.setDisplayName(new StringTextComponent(ItemSwordModular.instance.getModuleFromSlot(itemStack, "sword/hilt").getName(itemStack)));
             ItemFrameEntity itemFrame = new ItemFrameEntity(world, pos.add(i / 5, i % 5, 0), Direction.SOUTH);
             itemFrame.setDisplayedItem(itemStack);
             world.addEntity(itemFrame);

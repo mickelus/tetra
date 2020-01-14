@@ -27,7 +27,11 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
             if (ItemColors.exists(tint)) {
                 data.tint = ItemColors.get(tint);
             } else {
-                data.tint = (int) Long.parseLong(tint, 16);
+                try {
+                    data.tint = (int) Long.parseLong(tint, 16);
+                } catch (NumberFormatException e) {
+                    throw new JsonParseException("Could not parse tint '" + tint + "' when deserializing module model, unknown color or malformed hexadecimal", e);
+                }
             }
         }
 
