@@ -337,21 +337,18 @@ public class ItemModularHandheld extends ItemModular {
     public ActionResultType flattenPath(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return ActionResultType.FAIL;
-        }
+        if (facing != Direction.DOWN && world.getBlockState(pos.up()).isAir(world, pos.up())) {
+            BlockState blockstate = flattenLookup.get(world.getBlockState(pos).getBlock());
+            if (blockstate != null) {
+                world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1, 1);
+                if (!world.isRemote) {
+                    world.setBlockState(pos, blockstate, 11);
+                    applyDamage(blockDestroyDamage, itemStack, player);
+                    tickProgression(player, itemStack, blockDestroyDamage);
+                }
 
-        if (facing != Direction.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR
-                && world.getBlockState(pos).getBlock() == Blocks.GRASS) {
-            world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1, 1);
-
-            if (!world.isRemote) {
-                world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
-                applyDamage(blockDestroyDamage, itemStack, player);
-                tickProgression(player, itemStack, blockDestroyDamage);
+                return ActionResultType.SUCCESS;
             }
-
-            return ActionResultType.SUCCESS;
         }
 
         return ActionResultType.PASS;
