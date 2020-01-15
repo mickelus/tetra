@@ -142,12 +142,12 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                         EnumHammerConfig newConfig = EnumHammerConfig.getNextConfiguration(blockState.get(EnumHammerConfig.eastProp));
                         world.setBlockState(pos, blockState.with(EnumHammerConfig.eastProp, newConfig), 3);
 
-                        te.applyReconfigurationEffect(EnumHammerEffect.fromConfig(newConfig, world.getSeed()));
+                        te.applyReconfigurationEffect();
                     } else if (Direction.WEST.equals(face)) {
                         EnumHammerConfig newConfig = EnumHammerConfig.getNextConfiguration(blockState.get(EnumHammerConfig.westProp));
                         world.setBlockState(pos, blockState.with(EnumHammerConfig.westProp, newConfig), 3);
 
-                        te.applyReconfigurationEffect(EnumHammerEffect.fromConfig(newConfig, world.getSeed()));
+                        te.applyReconfigurationEffect();
                     }
 
                     world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);

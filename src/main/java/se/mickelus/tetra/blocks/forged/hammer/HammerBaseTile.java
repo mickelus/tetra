@@ -82,42 +82,52 @@ public class HammerBaseTile extends TileEntity {
         Vec3d pos = new Vec3d(getPos());
         pos = pos.add(0.5, 0.5, 0.5);
 
-        if (!world.isRemote && hasEffect(EnumHammerEffect.LEAKY)) {
-            int countCell0 = world.rand.nextInt(Math.min(16, getCellFuel(0)));
-            int countCell1 = world.rand.nextInt(Math.min(16, getCellFuel(1)));
-            consumeFuel(0, countCell0);
-            consumeFuel(1, countCell1);
+        Vec3d oppositePos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
+        pos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
 
-            if (countCell0 > 0 || countCell1 > 0) {
+        if (!world.isRemote) {
+            if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
+                spawnParticle(ParticleTypes.ENCHANTED_HIT, new Vec3d(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            }
 
-                // particles cell 1
-                Vec3d posCell0 = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.LAVA, posCell0, countCell0 * 2, 0.06f);
-                spawnParticle(ParticleTypes.LARGE_SMOKE, posCell0, 2, 0f);
+            if (hasEffect(EnumHammerEffect.LEAKY)) {
+                int countCell0 = world.rand.nextInt(Math.min(16, getCellFuel(0)));
+                int countCell1 = world.rand.nextInt(Math.min(16, getCellFuel(1)));
+                consumeFuel(0, countCell0);
+                consumeFuel(1, countCell1);
 
-                // particles cell 2
-                Vec3d posCell1 = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.LAVA, posCell1, countCell1 * 2, 0.06f);
-                spawnParticle(ParticleTypes.LARGE_SMOKE, posCell1, 2, 0f);
+                if (countCell0 > 0 || countCell1 > 0) {
+                    // particles cell 1
+                    spawnParticle(ParticleTypes.LAVA, pos, countCell0 * 2, 0.06f);
+                    spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 2, 0f);
 
-                // gather flammable blocks
-                LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
-                for (int x = -3; x < 3; x++) {
-                    for (int y = -3; y < 2; y++) {
-                        for (int z = -3; z < 3; z++) {
-                            BlockPos firePos = getPos().add(x, y, z);
-                            if (world.isAirBlock(firePos)) {
-                                flammableBlocks.add(firePos);
+                    // particles cell 2
+                    spawnParticle(ParticleTypes.LAVA, oppositePos, countCell1 * 2, 0.06f);
+                    spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
+
+                    // gather flammable blocks
+                    LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
+                    for (int x = -3; x < 3; x++) {
+                        for (int y = -3; y < 2; y++) {
+                            for (int z = -3; z < 3; z++) {
+                                BlockPos firePos = getPos().add(x, y, z);
+                                if (world.isAirBlock(firePos)) {
+                                    flammableBlocks.add(firePos);
+                                }
                             }
                         }
                     }
-                }
 
-                // set blocks on fire
-                Collections.shuffle(flammableBlocks);
-                flammableBlocks.stream()
-                        .limit(countCell0 + countCell1)
-                        .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
+                    // set blocks on fire
+                    Collections.shuffle(flammableBlocks);
+                    flammableBlocks.stream()
+                            .limit(countCell0 + countCell1)
+                            .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
+                }
+            }
+
+            if (hasEffect(EnumHammerEffect.DAMAGING)) {
+                spawnParticle(ParticleTypes.POOF, new Vec3d(getPos()).add(0.5, -0.9, 0.5), 3, 0.1f);
             }
         }
     }
@@ -210,35 +220,44 @@ public class HammerBaseTile extends TileEntity {
         return false;
     }
 
-    public void applyReconfigurationEffect(EnumHammerEffect effect) {
+    public void applyReconfigurationEffect() {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
+        Direction oppositeFacing = facing.getOpposite();
         Vec3d pos = new Vec3d(getPos());
         pos = pos.add(0.5, 0.5, 0.5);
 
-        if (EnumHammerEffect.OVERCHARGED.equals(effect)) {
-            if (!hasCellInSlot(0)) {
-                Vec3d rotPos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.SMOKE, rotPos, 15, 0.02f);
-            }
+        Vec3d oppositePos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
+        pos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
 
-            if (!hasCellInSlot(1)) {
-                Vec3d rotPos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.SMOKE, rotPos, 15, 0.02f);
-            }
+
+        if (hasEffect(EnumHammerEffect.EFFICIENT)) {
+            System.out.println("EFFICIENT");
+            spawnParticle(ParticleTypes.SMOKE, pos, 5, 0.02f);
+
+            spawnParticle(ParticleTypes.SMOKE, oppositePos, 5, 0.02f);
         }
 
-        if (EnumHammerEffect.LEAKY.equals(effect)) {
-            if (getCellFuel(0) > 0) {
-                Vec3d rotPos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.LAVA, rotPos, 3, 0.06f);
-                spawnParticle(ParticleTypes.LARGE_SMOKE, rotPos, 3, 0f);
-            }
+        if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
+            System.out.println("OVERCHARGED");
+            spawnParticle(ParticleTypes.ENCHANTED_HIT, pos, 15, 0.1f);
 
-            if (getCellFuel(1) > 0) {
-                Vec3d rotPos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
-                spawnParticle(ParticleTypes.LAVA, rotPos, 3, 0.06f);
-                spawnParticle(ParticleTypes.LARGE_SMOKE, rotPos, 3, 0f);
-            }
+            spawnParticle(ParticleTypes.ENCHANTED_HIT, oppositePos, 15, 0.1f);
+        }
+
+        if (hasEffect(EnumHammerEffect.LEAKY)) {
+            System.out.println("LEAKY");
+            spawnParticle(ParticleTypes.LAVA, pos, 3, 0.03f);
+            spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 1, 0f);
+
+            spawnParticle(ParticleTypes.LAVA, oppositePos, 3, 0.03f);
+            spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 1, 0f);
+        }
+
+        if (hasEffect(EnumHammerEffect.DAMAGING)) {
+            System.out.println("DAMAGING");
+            spawnParticle(ParticleTypes.POOF, pos, 1, 0.05f);
+
+            spawnParticle(ParticleTypes.POOF, oppositePos, 1, 0.05f);
         }
     }
 
@@ -247,7 +266,7 @@ public class HammerBaseTile extends TileEntity {
      */
     private void spawnParticle(IParticleData particle, Vec3d pos, int count, float speed) {
         if (world instanceof ServerWorld) {
-            ((ServerWorld) world).spawnParticle(particle, pos.x, pos.y, pos.z, count,  0, 0, 0, speed);
+            ((ServerWorld) world).spawnParticle(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
         }
     }
 
