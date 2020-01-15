@@ -36,6 +36,10 @@ public class ItemColors {
     public static int gold_glyph         = define(0xeaee57, "gold_glyph");
     public static int diamond            = define(0x2bffee, "diamond");
     public static int diamond_glyph      = define(0x33ebcb, "diamond_glyph");
+    public static int lapis              = define(0x1b4aa1, "lapis");
+    public static int lapis_glyph        = define(0x1b4aa1, "lapis_glyph");
+    public static int emerald            = define(0x009e30, "emerald");
+    public static int emerald_glyph      = define(0x009e30, "emerald_glyph");
     public static int obsidian           = define(0x44395e, "obsidian");
     public static int obsidian_glyph     = define(0x3c3056, "obsidian_glyph");
     public static int copper             = define(0xdf7646, "copper");

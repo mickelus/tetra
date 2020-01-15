@@ -4,20 +4,28 @@
         "durability": 412,
         "integrity": -1,
         "glyph": {
-            "tint": "2ccdb1",
+            "tint": "diamond",
             "textureX": 80,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/default",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "sword_socket/emerald",
         "durability": 48,
         "integrity": -1,
         "glyph": {
-            "tint": "009e30",
+            "tint": "emerald",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/default",
+            "tint": "emerald"
+        }],
         "effects": {
             "criticalStrike": [15, 2]
         }
@@ -27,10 +35,14 @@
         "durability": 22,
         "integrity": -1,
         "glyph": {
-            "tint": "1b4aa1",
+            "tint": "lapis",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/default",
+            "tint": "lapis"
+        }],
         "effects": {
             "intuit": 1
         }
@@ -44,6 +56,10 @@
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/default",
+            "tint": "f29000"
+        }],
         "effects": {
             "earthbind": 1
         }
@@ -53,20 +69,28 @@
         "durability": 648,
         "integrity": -1,
         "glyph": {
-            "tint": "2ccdb1",
+            "tint": "diamond",
             "textureX": 80,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/pristine",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "sword_socket/pristine_emerald",
         "durability": 33,
         "integrity": -1,
         "glyph": {
-            "tint": "009e30",
+            "tint": "emerald",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/pristine",
+            "tint": "emerald"
+        }],
         "effects": {
             "criticalStrike": [30, 2]
         }
@@ -76,10 +100,14 @@
         "durability": 15,
         "integrity": -1,
         "glyph": {
-            "tint": "1b4aa1",
+            "tint": "lapis",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/socket/pristine",
+            "tint": "lapis"
+        }],
         "effects": {
             "intuit": 2
         }
