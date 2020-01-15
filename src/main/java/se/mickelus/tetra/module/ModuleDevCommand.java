@@ -1,4 +1,4 @@
-package se.mickelus.tetra;
+package se.mickelus.tetra.module;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -18,8 +18,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ModuleData;
 
 import java.util.concurrent.CompletableFuture;
