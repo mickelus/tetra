@@ -7,10 +7,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "9d804e",
+            "tint": "oak_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "oak"
+        }]
     },
     {
         "key": "grip_loop/spruce",
@@ -20,10 +24,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "grip_loop/birch",
@@ -33,10 +41,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "birch"
+        }]
     },
     {
         "key": "grip_loop/jungle",
@@ -46,10 +58,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "grip_loop/acacia",
@@ -59,10 +75,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "grip_loop/dark_oak",
@@ -72,10 +92,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "grip_loop/cobblestone",
@@ -85,10 +109,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "grip_loop/stone",
@@ -98,10 +126,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "stone_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "stone"
+        }]
     },
     {
         "key": "grip_loop/granite",
@@ -111,10 +143,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "8a6658",
+            "tint": "granite_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "granite"
+        }]
     },
     {
         "key": "grip_loop/diorite",
@@ -124,10 +160,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "b1b1b3",
+            "tint": "diorite_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "grip_loop/andesite",
@@ -137,10 +177,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "79797a",
+            "tint": "andesite_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "grip_loop/iron",
@@ -150,10 +194,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "iron"
+        }]
     },
     {
         "key": "grip_loop/flint",
@@ -163,10 +211,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "flint"
+        }]
     },
     {
         "key": "grip_loop/gold",
@@ -176,10 +228,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "gold"
+        }]
     },
     {
         "key": "grip_loop/diamond",
@@ -189,10 +245,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "grip_loop/obsidian",
@@ -202,10 +262,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "3c3056",
+            "tint": "obsidian_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "grip_loop/copper",
@@ -215,10 +279,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "copper"
+        }]
     },
     {
         "key": "grip_loop/tin",
@@ -228,10 +296,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "tin"
+        }]
     },
     {
         "key": "grip_loop/silver",
@@ -241,10 +313,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "silver"
+        }]
     },
     {
         "key": "grip_loop/nickel",
@@ -254,10 +330,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "grip_loop/lead",
@@ -267,10 +347,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "lead"
+        }]
     },
     {
         "key": "grip_loop/bronze",
@@ -280,10 +364,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "grip_loop/electrum",
@@ -293,10 +381,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "grip_loop/steel",
@@ -306,10 +398,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "steel"
+        }]
     },
     {
         "key": "grip_loop/thaumium",
@@ -319,10 +415,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "grip_loop/ironwood",
@@ -332,10 +432,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "ironwood"
+        }]
     },
     {
         "key": "grip_loop/steeleaf",
@@ -345,10 +449,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "grip_loop/fierymetal",
@@ -358,10 +466,14 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "fierymetal"
+        }]
     },
     {
         "key": "grip_loop/knightmetal",
@@ -371,9 +483,13 @@
             "sweeping": [0, 2]
         },
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 56,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/grip_loop/default",
+            "tint": "knightmetal"
+        }]
     }
 ]

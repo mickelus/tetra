@@ -7,10 +7,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "9d804e",
+            "tint": "oak_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "oak"
+        }]
     },
     {
         "key": "counterweight/spruce",
@@ -20,10 +24,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "counterweight/birch",
@@ -33,10 +41,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "birch"
+        }]
     },
     {
         "key": "counterweight/jungle",
@@ -46,10 +58,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "counterweight/acacia",
@@ -59,10 +75,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "counterweight/dark_oak",
@@ -72,10 +92,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "counterweight/cobblestone",
@@ -85,10 +109,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "counterweight/stone",
@@ -98,10 +126,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "stone_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "stone"
+        }]
     },
     {
         "key": "counterweight/granite",
@@ -111,10 +143,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "8a6658",
+            "tint": "granite_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "granite"
+        }]
     },
     {
         "key": "counterweight/diorite",
@@ -124,10 +160,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "b1b1b3",
+            "tint": "diorite_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "counterweight/andesite",
@@ -137,10 +177,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "79797a",
+            "tint": "andesite_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "counterweight/iron",
@@ -150,10 +194,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "iron"
+        }]
     },
     {
         "key": "counterweight/flint",
@@ -163,10 +211,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "flint"
+        }]
     },
     {
         "key": "counterweight/gold",
@@ -176,10 +228,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "gold"
+        }]
     },
     {
         "key": "counterweight/diamond",
@@ -189,10 +245,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "counterweight/obsidian",
@@ -202,10 +262,14 @@
             "counterweight": 6
         },
         "glyph": {
-            "tint": "3c3056",
+            "tint": "obsidian_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "counterweight/copper",
@@ -215,10 +279,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "copper"
+        }]
     },
     {
         "key": "counterweight/tin",
@@ -228,10 +296,14 @@
             "counterweight": 2
         },
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "tin"
+        }]
     },
     {
         "key": "counterweight/silver",
@@ -241,10 +313,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "silver"
+        }]
     },
     {
         "key": "counterweight/nickel",
@@ -254,10 +330,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "counterweight/lead",
@@ -267,10 +347,14 @@
             "counterweight": 6
         },
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "lead"
+        }]
     },
     {
         "key": "counterweight/bronze",
@@ -280,10 +364,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "counterweight/electrum",
@@ -293,10 +381,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "counterweight/steel",
@@ -306,10 +398,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "steel"
+        }]
     },
     {
         "key": "counterweight/thaumium",
@@ -319,10 +415,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "counterweight/ironwood",
@@ -332,10 +432,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "ironwood"
+        }]
     },
     {
         "key": "counterweight/steeleaf",
@@ -345,10 +449,14 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "counterweight/fierymetal",
@@ -358,10 +466,14 @@
             "counterweight": 6
         },
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "fierymetal"
+        }]
     },
     {
         "key": "counterweight/knightmetal",
@@ -371,9 +483,13 @@
             "counterweight": 4
         },
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 32,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/pommel/counterweight/default",
+            "tint": "knightmetal"
+        }]
     }
 ]
