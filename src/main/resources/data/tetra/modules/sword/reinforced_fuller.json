@@ -8,10 +8,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "9d804e",
+            "tint": "oak_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "oak"
+        }]
     },
     {
         "key": "reinforced_fuller/spruce",
@@ -22,10 +26,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "reinforced_fuller/birch",
@@ -36,10 +44,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "birch"
+        }]
     },
     {
         "key": "reinforced_fuller/jungle",
@@ -50,10 +62,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "reinforced_fuller/acacia",
@@ -64,10 +80,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "reinforced_fuller/dark_oak",
@@ -78,10 +98,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "reinforced_fuller/cobblestone",
@@ -92,10 +116,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "reinforced_fuller/stone",
@@ -106,10 +134,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "stone_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "stone"
+        }]
     },
     {
         "key": "reinforced_fuller/granite",
@@ -120,10 +152,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "8a6658",
+            "tint": "granite_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "granite"
+        }]
     },
     {
         "key": "reinforced_fuller/diorite",
@@ -134,10 +170,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "b1b1b3",
+            "tint": "diorite_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "reinforced_fuller/andesite",
@@ -148,10 +188,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "79797a",
+            "tint": "andesite_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "reinforced_fuller/iron",
@@ -162,10 +206,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "iron"
+        }]
     },
     {
         "key": "reinforced_fuller/flint",
@@ -176,10 +224,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "flint"
+        }]
     },
     {
         "key": "reinforced_fuller/gold",
@@ -190,10 +242,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "gold"
+        }]
     },
     {
         "key": "reinforced_fuller/diamond",
@@ -204,10 +260,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "reinforced_fuller/obsidian",
@@ -218,10 +278,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "3c3056",
+            "tint": "obsidian_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "reinforced_fuller/copper",
@@ -232,10 +296,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "copper"
+        }]
     },
     {
         "key": "reinforced_fuller/tin",
@@ -246,10 +314,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "tin"
+        }]
     },
     {
         "key": "reinforced_fuller/silver",
@@ -260,10 +332,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "silver"
+        }]
     },
     {
         "key": "reinforced_fuller/nickel",
@@ -274,10 +350,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "reinforced_fuller/lead",
@@ -288,10 +368,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "lead"
+        }]
     },
     {
         "key": "reinforced_fuller/bronze",
@@ -302,10 +386,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "reinforced_fuller/electrum",
@@ -316,10 +404,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "reinforced_fuller/steel",
@@ -330,10 +422,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "steel"
+        }]
     },
     {
         "key": "reinforced_fuller/thaumium",
@@ -344,10 +440,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "reinforced_fuller/ironwood",
@@ -358,10 +458,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "ironwood"
+        }]
     },
     {
         "key": "reinforced_fuller/steeleaf",
@@ -372,10 +476,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "reinforced_fuller/fierymetal",
@@ -386,10 +494,14 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "fierymetal"
+        }]
     },
     {
         "key": "reinforced_fuller/knightmetal",
@@ -400,9 +512,13 @@
             "unbreaking": 1
         },
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 72,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+            "tint": "knightmetal"
+        }]
     }
 ]

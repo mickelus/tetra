@@ -113,7 +113,8 @@ public class ItemSwordModular extends ItemModularHandheld {
         new BasicModule(pommelKey, "sword/counterweight");
         new BasicModule(pommelKey, "sword/grip_loop");
 
-        new BasicModule(fullerKey, "sword/reinforced_fuller");
+        new BasicModule(fullerKey, "sword/reinforced_fuller")
+                .withRenderLayer(Priority.HIGHER);
 
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
