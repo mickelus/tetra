@@ -8,10 +8,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "9d804e",
+            "tint": "oak_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "oak"
+        }]
     },
     {
         "key": "wide_guard/spruce",
@@ -22,10 +26,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "wide_guard/birch",
@@ -36,10 +44,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "birch"
+        }]
     },
     {
         "key": "wide_guard/jungle",
@@ -50,10 +62,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "wide_guard/acacia",
@@ -64,10 +80,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "wide_guard/dark_oak",
@@ -78,10 +98,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "wide_guard/cobblestone",
@@ -92,10 +116,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "cobblestone"
+        }]
     },
     {
         "key": "wide_guard/stone",
@@ -106,10 +134,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "stone_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "stone"
+        }]
     },
     {
         "key": "wide_guard/granite",
@@ -120,10 +152,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "8a6658",
+            "tint": "granite_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "granite"
+        }]
     },
     {
         "key": "wide_guard/diorite",
@@ -134,10 +170,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "b1b1b3",
+            "tint": "diorite_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "diorite"
+        }]
     },
     {
         "key": "wide_guard/andesite",
@@ -148,10 +188,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "79797a",
+            "tint": "andesite_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "andesite"
+        }]
     },
     {
         "key": "wide_guard/iron",
@@ -162,10 +206,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "iron"
+        }]
     },
     {
         "key": "wide_guard/flint",
@@ -176,10 +224,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "flint"
+        }]
     },
     {
         "key": "wide_guard/gold",
@@ -190,10 +242,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+            "tint": "gold"
+        }]
     },
     {
         "key": "wide_guard/diamond",
@@ -204,10 +260,14 @@
             "armor": 3
         },
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+            "tint": "diamond"
+        }]
     },
     {
         "key": "wide_guard/obsidian",
@@ -218,10 +278,14 @@
             "armor": 5
         },
         "glyph": {
-            "tint": "3c3056",
+            "tint": "obsidian_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/crude",
+            "tint": "obsidian"
+        }]
     },
     {
         "key": "wide_guard/copper",
@@ -232,10 +296,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "copper"
+        }]
     },
     {
         "key": "wide_guard/tin",
@@ -246,10 +314,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "tin"
+        }]
     },
     {
         "key": "wide_guard/silver",
@@ -260,10 +332,14 @@
             "armor": 1
         },
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+            "tint": "silver"
+        }]
     },
     {
         "key": "wide_guard/nickel",
@@ -274,10 +350,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "nickel"
+        }]
     },
     {
         "key": "wide_guard/lead",
@@ -288,10 +368,14 @@
             "armor": 3
         },
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "lead"
+        }]
     },
     {
         "key": "wide_guard/bronze",
@@ -302,10 +386,14 @@
             "armor": 4
         },
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "wide_guard/electrum",
@@ -316,10 +404,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+            "tint": "electrum"
+        }]
     },
     {
         "key": "wide_guard/steel",
@@ -330,10 +422,14 @@
             "armor": 5
         },
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "steel"
+        }]
     },
     {
         "key": "wide_guard/thaumium",
@@ -344,10 +440,14 @@
             "armor": 3
         },
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "thaumium"
+        }]
     },
     {
         "key": "wide_guard/ironwood",
@@ -358,10 +458,14 @@
             "armor": 4
         },
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "ironwood"
+        }]
     },
     {
         "key": "wide_guard/steeleaf",
@@ -372,10 +476,14 @@
             "armor": 2
         },
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "steeleaf"
+        }]
     },
     {
         "key": "wide_guard/fierymetal",
@@ -386,10 +494,13 @@
             "armor": 4
         },
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/fierymetal"
+        }]
     },
     {
         "key": "wide_guard/knightmetal",
@@ -400,9 +511,13 @@
             "armor": 5
         },
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 40,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/guard/wide_guard/metal",
+            "tint": "knightmetal"
+        }]
     }
 ]

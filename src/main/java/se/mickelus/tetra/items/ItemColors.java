@@ -86,14 +86,16 @@ public class ItemColors {
     public static int treated_wood_glyph = define(0x422114, "treated_wood_glyph");
     public static int forged_beam        = define(0x383838, "forged_beam");
     public static int forged_beam_glyph  = define(0x383838, "forged_beam_glyph");
-    public static int string             = define(0xbbbbbb, "string");
+    public static int string             = define(0xcccccc, "string");
     public static int string_glyph       = define(0xffffff, "string_glyph");
     public static int leather            = define(0xb35e30, "leather");
     public static int leather_glyph      = define(0x866526, "leather_glyph");
     public static int hide               = define(0x996d3d, "hide");
     public static int hide_glyph         = define(0xa88054, "hide_glyph");
-    public static int vine               = define(0x3a4f1f, "vine");
+    public static int vine               = define(0x445c24, "vine");
     public static int vine_glyph         = define(0x445d24, "vine_glyph");
+    public static int bolt               = define(0xffffff, "bolt");
+    public static int bolt_glyph         = define(0x383838, "bolt_glyph");
 
     public static int inherit            = define(0x000000, "inherit");
 
