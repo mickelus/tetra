@@ -71,8 +71,10 @@ public abstract class ItemModule implements ICapabilityProvider {
         return new ItemStack[0];
     }
 
-    public void postRemove(ItemStack targetStack, PlayerEntity player) {
+    public void postRemove(ItemStack targetStack, PlayerEntity player) { }
 
+    public ModuleData[] getData() {
+        return data;
     }
 
     public ModuleData getData(ItemStack itemStack) {
