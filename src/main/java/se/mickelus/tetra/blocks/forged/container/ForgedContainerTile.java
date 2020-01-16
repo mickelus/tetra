@@ -26,6 +26,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
+import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,11 +62,9 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     public ForgedContainerTile getOrDelegate() {
-        if (isFlipped()) {
-            ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos.offset(getFacing().rotateYCCW()));
-            if (te != null) {
-                return te;
-            }
+        if (world != null && isFlipped()) {
+            return TileEntityOptional.from(world, pos.offset(getFacing().rotateYCCW()), ForgedContainerTile.class)
+                    .orElse(null);
         }
         return this;
     }
@@ -73,7 +72,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
-        if (ForgedContainerBlock.instance.equals(getBlockState().getBlock()) && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return getOrDelegate().handler.cast();
         }
         return super.getCapability(cap, side);

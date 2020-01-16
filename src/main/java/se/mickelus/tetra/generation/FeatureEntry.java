@@ -1,5 +1,6 @@
 package se.mickelus.tetra.generation;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.LockableLootTileEntity;
@@ -13,6 +14,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.template.IntegrityProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -24,6 +26,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -97,7 +100,6 @@ public class FeatureEntry extends Feature<FeatureReference> {
         FeatureParameters params = DataManager.featureData.getData(ref.location);
         ResourceLocation dimensionType = world.getDimension().getType().getRegistryName();
 
-
         if (params != null && Arrays.asList(params.dimensions).contains(dimensionType) && rand.nextFloat() < params.probability) {
             generateFeatureRoot(params, world, pos, rand);
             return true;
@@ -147,12 +149,11 @@ public class FeatureEntry extends Feature<FeatureReference> {
             boolean blocksAdded = template.addBlocksToWorld(world, pos, settings, 2);
 
             if (blocksAdded) {
-                if (world instanceof ServerWorld)
-                generateLoot(feature, (ServerWorld) world, pos, settings, random);
+                generateLoot(feature, world, pos, settings, random);
+            }
 
-                if (depth < ConfigHandler.maxFeatureDepth.get()) {
-                    generateChildren(feature, world, pos, rotation, mirror, random, depth);
-                }
+            if (depth < ConfigHandler.maxFeatureDepth.get()) {
+                generateChildren(feature, world, pos, rotation, mirror, random, depth);
             }
         }
     }
@@ -202,25 +203,27 @@ public class FeatureEntry extends Feature<FeatureReference> {
      * @param settings
      * @param random
      */
-    private void generateLoot(FeatureParameters feature, ServerWorld world, BlockPos pos, PlacementSettings settings, Random random) {
+    private void generateLoot(FeatureParameters feature, IWorld world, BlockPos pos, PlacementSettings settings, Random random) {
         Arrays.stream(feature.loot).forEach(loot ->
                 addLoot(loot.table, world, Template.transformedBlockPos(settings, loot.position).add(pos), random));
     }
 
-    private void addLoot(ResourceLocation lootLocation, ServerWorld world, BlockPos pos, Random random) {
+    private void addLoot(ResourceLocation lootLocation, IWorld world, BlockPos pos, Random random) {
         TileEntity tileEntity = world.getTileEntity(pos);
+
+        ServerWorld serverWorld = world instanceof WorldGenRegion ? ((WorldGenRegion) world).getWorld() : ((ServerWorld) world);
 
         if (tileEntity instanceof LockableLootTileEntity) {
             ((LockableLootTileEntity) tileEntity).setLootTable(lootLocation, random.nextLong());
         } else if (tileEntity instanceof IInventory) {
-            LootTable lootTable = world.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
-            LootContext.Builder builder = new LootContext.Builder(world);
+            LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
+            LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
             lootTable.fillInventory((IInventory) tileEntity, builder.build(LootParameterSets.EMPTY));
-        } else {
+        } else if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-                LootTable lootTable = world.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
-                LootContext.Builder builder = new LootContext.Builder(world);
+                LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
+                LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
                 lootTable.fillInventory(new ItemHandlerWrapper(handler), builder.build(LootParameterSets.EMPTY));
             });
