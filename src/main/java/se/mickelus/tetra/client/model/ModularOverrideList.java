@@ -27,6 +27,8 @@ import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.SimpleModelState;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -57,6 +59,10 @@ public class ModularOverrideList extends ItemOverrideList {
 
         this.bakery = bakery;
         this.unbaked = unbaked;
+    }
+
+    public void clearCache() {
+        bakedModelCache.invalidateAll();
     }
 
     @Nullable

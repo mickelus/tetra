@@ -22,6 +22,7 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
 import se.mickelus.tetra.TetraLogger;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 
@@ -35,11 +36,18 @@ public class ModularModelLoader {
 
     private static List<ItemModular> items = new ArrayList<>();
 
+    private static List<ModularOverrideList> overrides = new ArrayList<>();
+    static {
+        // improvement data is the last data store that contains model information
+        DataManager.improvementData.onReload(ModularModelLoader::clearCaches);
+    }
+
     public static void registerItem(ItemModular item) {
         items.add(item);
     }
 
     public static void loadModels(ModelBakeEvent event) {
+        overrides.clear();
 
         //        TextureAtlasSprite particleSprite = ModelLoader.defaultTextureGetter().apply(new ResourceLocation(unbaked.resolveTextureName("particle")));
         items.forEach(item -> {
@@ -57,8 +65,16 @@ public class ModularModelLoader {
     private static IBakedModel loadModel(ModelLoader modelLoader, SimpleBakedModel originalModel, ModelResourceLocation location) throws Exception {
         BlockModel unbakedModel = (BlockModel) modelLoader.getUnbakedModel(location);
 
-        return new BakedWrapper(originalModel, new ModularOverrideList(modelLoader, unbakedModel));
+        ModularOverrideList override = new ModularOverrideList(modelLoader, unbakedModel);
+        overrides.add(override);
+
+        return new BakedWrapper(originalModel, override);
 //        return new BakedWrapper(event.getModelLoader(), ModelLoader.defaultTextureGetter(), ModelRotation.X0_Y0,
 //                net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
+    }
+
+    public static void clearCaches() {
+        logger.info("Clearing item model cache, let's get bakin'!");
+        overrides.forEach(ModularOverrideList::clearCache);
     }
 }
