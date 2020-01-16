@@ -5,9 +5,13 @@
         "integrity": 3,
         "magicCapacity": 15,
         "glyph": {
-            "tint": "866526",
+            "tint": "stick_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "stick"
+        }]
     },
     {
         "key": "basic_handle/oak",
@@ -16,9 +20,13 @@
         "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "9d804e",
+            "tint": "oak_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "oak"
+        }]
     },
     {
         "key": "basic_handle/spruce",
@@ -27,9 +35,13 @@
         "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "694f2f",
+            "tint": "spruce_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "spruce"
+        }]
     },
     {
         "key": "basic_handle/birch",
@@ -38,9 +50,13 @@
         "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "c8b77d",
+            "tint": "birch_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/bright",
+            "tint": "birch"
+        }]
     },
     {
         "key": "basic_handle/jungle",
@@ -49,9 +65,13 @@
         "magicCapacity": 17,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "996e4c",
+            "tint": "jungle_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "jungle"
+        }]
     },
     {
         "key": "basic_handle/acacia",
@@ -60,9 +80,13 @@
         "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "ac5d33",
+            "tint": "acacia_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "acacia"
+        }]
     },
     {
         "key": "basic_handle/dark_oak",
@@ -71,9 +95,13 @@
         "magicCapacity": 17,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "3c2712",
+            "tint": "dark_oak_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "dark_oak"
+        }]
     },
     {
         "key": "basic_handle/maple",
@@ -81,9 +109,13 @@
         "integrity": 5,
         "magicCapacity": 16,
         "glyph": {
-            "tint": "623913",
+            "tint": "maple_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "maple"
+        }]
     },
     {
         "key": "basic_handle/cherry",
@@ -92,9 +124,13 @@
         "magicCapacity": 13,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "684817",
+            "tint": "cherry_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "cherry"
+        }]
     },
     {
         "key": "basic_handle/baobab",
@@ -103,9 +139,13 @@
         "magicCapacity": 13,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "444b2c",
+            "tint": "baobab_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "baobab"
+        }]
     },
     {
         "key": "basic_handle/bone",
@@ -113,9 +153,12 @@
         "integrity": 4,
         "magicCapacity": 18,
         "glyph": {
-            "tint": "edebca",
+            "tint": "bone_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/bone"
+        }]
     },
     {
         "key": "basic_handle/iron",
@@ -124,9 +167,13 @@
         "magicCapacity": 14,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "iron_dark"
+        }]
     },
     {
         "key": "basic_handle/bronze",
@@ -135,9 +182,13 @@
         "magicCapacity": 13,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "bronze"
+        }]
     },
     {
         "key": "basic_handle/steel",
@@ -146,9 +197,13 @@
         "magicCapacity": 11,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "383838",
+            "tint": "steel_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "steel"
+        }]
     },
     {
         "key": "basic_handle/blaze_rod",
@@ -157,9 +212,13 @@
         "magicCapacity": 18,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "ffc100",
+            "tint": "blaze_rod_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/bright",
+            "tint": "blaze_rod"
+        }]
     },
     {
         "key": "basic_handle/end_rod",
@@ -168,9 +227,13 @@
         "magicCapacity": 17,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "bd9ab1",
+            "tint": "end_rod_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/bright",
+            "tint": "end_rod"
+        }]
     },
     {
         "key": "basic_handle/greatwood",
@@ -178,9 +241,13 @@
         "integrity": 6,
         "magicCapacity": 20,
         "glyph": {
-            "tint": "33231e",
+            "tint": "greatwood_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "greatwood"
+        }]
     },
     {
         "key": "basic_handle/treated_wood",
@@ -189,9 +256,13 @@
         "magicCapacity": 15,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "422114",
+            "tint": "treated_wood_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "treated_wood"
+        }]
     },
     {
         "key": "basic_handle/ironwood",
@@ -199,9 +270,13 @@
         "integrity": 5,
         "magicCapacity": 15,
         "glyph": {
-            "tint": "8c714d",
+            "tint": "ironwood_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "ironwood"
+        }]
     },
     {
         "key": "basic_handle/forged_beam",
@@ -211,8 +286,12 @@
         "attackSpeed": -0.3,
         "damageMultiplier": 0.9,
         "glyph": {
-            "tint": "383838",
+            "tint": "forged_beam_glyph",
             "textureX": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/default",
+            "tint": "forged_beam"
+        }]
     }
 ]

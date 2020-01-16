@@ -31,6 +31,7 @@ public class ItemColors {
     public static int flint              = define(0x676767, "flint");
     public static int flint_glyph        = define(0x343434, "flint_glyph");
     public static int iron               = define(0xffffff, "iron");
+    public static int iron_dark          = define(0xaaaaaa, "iron_dark");
     public static int iron_glyph         = define(0xd8d8d8, "iron_glyph");
     public static int gold               = define(0xfffb46, "gold");
     public static int gold_glyph         = define(0xeaee57, "gold_glyph");

@@ -5,10 +5,14 @@
         "integrity": 1,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "fefefe",
+            "tint": "string",
             "textureX": 88,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/binding/default",
+            "tint": "string"
+        }]
     },
     {
         "key": "duplex_binding/leather",
@@ -16,10 +20,14 @@
         "integrity": 2,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "753b26",
+            "tint": "leather",
             "textureX": 88,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/binding/default",
+            "tint": "leather"
+        }]
     },
     {
         "key": "duplex_binding/hide",
@@ -27,10 +35,14 @@
         "integrity": 2,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "a88054",
+            "tint": "hide",
             "textureX": 88,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/binding/default",
+            "tint": "hide"
+        }]
     },
     {
         "key": "duplex_binding/vine",
@@ -38,19 +50,27 @@
         "integrity": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "445d24",
+            "tint": "vine",
             "textureX": 88,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/binding/default",
+            "tint": "vine"
+        }]
     },
     {
         "key": "duplex_binding/bolt",
         "durability": 12,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "383838",
+            "tint": "bolt",
             "textureX": 80,
             "textureY": 16
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/binding/bolt",
+            "tint": "bolt"
+        }]
     }
 ]

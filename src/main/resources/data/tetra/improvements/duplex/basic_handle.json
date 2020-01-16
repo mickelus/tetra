@@ -110,7 +110,11 @@
         "effects": {
             "enderReverb": [-2, -0.1],
             "fierySelf": [-1, -0.033]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "tint": "string"
+        }]
     },
     {
         "key": "basic_handle/wrap_string",
@@ -124,7 +128,11 @@
         "effects": {
             "enderReverb": [-2, -0.11],
             "fierySelf": [-1, -0.035]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "tint": "string"
+        }]
     },
     {
         "key": "basic_handle/wrap_string",
@@ -138,7 +146,11 @@
         "effects": {
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.037]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "tint": "string"
+        }]
     },
     {
         "key": "basic_handle/wrap_leather",
@@ -151,7 +163,11 @@
         "effects": {
             "enderReverb": [-2, -0.15],
             "fierySelf": [-1, -0.05]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
     },
     {
         "key": "basic_handle/wrap_leather",
@@ -164,7 +180,11 @@
         "effects": {
             "enderReverb": [-2, -0.16],
             "fierySelf": [-1, -0.07]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
     },
     {
         "key": "basic_handle/wrap_leather",
@@ -177,7 +197,11 @@
         "effects": {
             "enderReverb": [-2, -0.18],
             "fierySelf": [-1, -0.09]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
     },
     {
         "key": "basic_handle/wrap_hide",
@@ -190,7 +214,11 @@
         "effects": {
             "enderReverb": [-3, -0.1],
             "fierySelf": [-2, -0.033]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
     },
     {
         "key": "basic_handle/wrap_hide",
@@ -203,7 +231,11 @@
         "effects": {
             "enderReverb": [-3, -0.17],
             "fierySelf": [-2, -0.046]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
     },
     {
         "key": "basic_handle/wrap_hide",
@@ -216,7 +248,11 @@
         "effects": {
             "enderReverb": [-3, -0.25],
             "fierySelf": [-2, -0.06]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
     },
     {
         "key": "basic_handle/wrap_vine",
@@ -230,7 +266,11 @@
         "effects": {
             "enderReverb": [-2, -0.1],
             "fierySelf": [-1, -0.033]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
     },
     {
         "key": "basic_handle/wrap_vine",
@@ -244,7 +284,11 @@
         "effects": {
             "enderReverb": [-2, -0.11],
             "fierySelf": [-1, -0.036]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
     },
     {
         "key": "basic_handle/wrap_vine",
@@ -258,7 +302,11 @@
         "effects": {
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.04]
-        }
+        },
+        "models": [{
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
     },
     {
         "key": "enchantment/apotheosis_depth_miner",

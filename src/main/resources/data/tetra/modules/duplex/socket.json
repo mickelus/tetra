@@ -5,10 +5,14 @@
         "durabilityMultiplier": 0.8,
         "integrity": -1,
         "glyph": {
-            "tint": "2ccdb1",
+            "tint": "diamond",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/default",
+            "tint": "diamond"
+        }],
         "capabilities": {
             "axe": [0, 1],
             "shovel": [0, 1],
@@ -21,10 +25,14 @@
         "durability": 48,
         "integrity": -1,
         "glyph": {
-            "tint": "009e30",
+            "tint": "emerald",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/default",
+            "tint": "emerald"
+        }],
         "effects": {
             "criticalStrike": [15, 2]
         }
@@ -34,10 +42,14 @@
         "durability": 22,
         "integrity": -1,
         "glyph": {
-            "tint": "1b4aa1",
+            "tint": "lapis",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/default",
+            "tint": "lapis"
+        }],
         "effects": {
             "intuit": 1
         }
@@ -51,6 +63,10 @@
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/default",
+            "tint": "f29000"
+        }],
         "effects": {
             "earthbind": 1
         }
@@ -61,10 +77,14 @@
         "durabilityMultiplier": 0.8,
         "integrity": -1,
         "glyph": {
-            "tint": "2ccdb1",
+            "tint": "diamond",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/pristine",
+            "tint": "diamond"
+        }],
         "capabilities": {
             "axe": [0, 2],
             "shovel": [0, 2],
@@ -77,10 +97,14 @@
         "durability": 25,
         "integrity": -1,
         "glyph": {
-            "tint": "009e30",
+            "tint": "emerald",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/pristine",
+            "tint": "emerald"
+        }],
         "effects": {
             "criticalStrike": [30, 2]
         }
@@ -90,10 +114,14 @@
         "durability": 18,
         "integrity": -1,
         "glyph": {
-            "tint": "1b4aa1",
+            "tint": "lapis",
             "textureX": 80,
             "textureY": 16
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/binding/socket/pristine",
+            "tint": "lapis"
+        }],
         "effects": {
             "intuit": 2
         }
