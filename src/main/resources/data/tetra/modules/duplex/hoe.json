@@ -7,10 +7,14 @@
         "damage": 2,
         "attackSpeed": -0.45,
         "glyph": {
-            "tint": "866526",
+            "tint": "oak_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/crude",
+            "tint": "oak"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -23,10 +27,14 @@
         "damage": 4,
         "attackSpeed": -0.45,
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/crude",
+            "tint": "cobblestone"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -39,10 +47,14 @@
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/crude",
+            "tint": "flint"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -55,10 +67,14 @@
         "damage": 4,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "iron"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -71,10 +87,14 @@
         "damage": 4,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/shiny",
+            "tint": "diamond"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -87,10 +107,14 @@
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/shiny",
+            "tint": "gold"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -103,10 +127,14 @@
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "copper"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -119,10 +147,14 @@
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "tin"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -135,10 +167,14 @@
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/shiny",
+            "tint": "silver"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -151,10 +187,14 @@
         "damage": 2,
         "attackSpeed": -0.45,
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "nickel"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -167,10 +207,14 @@
         "damage": 3,
         "attackSpeed": -0.49,
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "lead"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -183,10 +227,14 @@
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "bronze"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -199,10 +247,14 @@
         "damage": 2,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "electrum"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -215,10 +267,14 @@
         "damage": 5,
         "attackSpeed": -0.38,
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "steel"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -231,10 +287,14 @@
         "damage": 4,
         "attackSpeed": -0.46,
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "thaumium"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -247,10 +307,13 @@
         "damage": 2,
         "attackSpeed": -0.36,
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/ironwood_tf"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -263,10 +326,13 @@
         "damage": 4,
         "attackSpeed": -0.34,
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/steeleaf"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -279,10 +345,13 @@
         "damage": 4,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/fierymetal"
+        }],
         "effects": {
             "tilling": 1
         }
@@ -295,10 +364,14 @@
         "damage": 5,
         "attackSpeed": -0.32,
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 16,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/hoe/metal",
+            "tint": "knightmetal"
+        }],
         "effects": {
             "tilling": 1
         }

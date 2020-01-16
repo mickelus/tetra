@@ -7,10 +7,14 @@
         "damage": 0,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "866526",
+            "tint": "oak_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/crude",
+            "tint": "oak"
+        }],
         "capabilities": {
             "pry": [1, 1.5]
         },
@@ -26,10 +30,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/crude",
+            "tint": "cobblestone"
+        }],
         "capabilities": {
             "pry": [1, 2.7]
         },
@@ -45,10 +53,14 @@
         "damage": 1,
         "attackSpeed": 0,
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/crude",
+            "tint": "flint"
+        }],
         "capabilities": {
             "pry": [1, 2.9]
         },
@@ -64,10 +76,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "iron"
+        }],
         "capabilities": {
             "pry": [1, 3.4]
         },
@@ -83,10 +99,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/shiny",
+            "tint": "diamond"
+        }],
         "capabilities": {
             "pry": [1, 4.1]
         },
@@ -102,10 +122,14 @@
         "damage": 1,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/shiny",
+            "tint": "gold"
+        }],
         "capabilities": {
             "pry": [1, 6.2]
         },
@@ -121,10 +145,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "copper"
+        }],
         "capabilities": {
             "pry": [1, 2.6]
         },
@@ -140,10 +168,14 @@
         "damage": 1,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "tin"
+        }],
         "capabilities": {
             "pry": [1, 3.4]
         },
@@ -159,10 +191,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/shiny",
+            "tint": "silver"
+        }],
         "capabilities": {
             "pry": [1, 5.7]
         },
@@ -178,10 +214,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "nickel"
+        }],
         "capabilities": {
             "pry": [2, 3.7]
         },
@@ -197,10 +237,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "lead"
+        }],
         "capabilities": {
             "pry": [1, 2.7]
         },
@@ -216,10 +260,14 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "bronze"
+        }],
         "capabilities": {
             "pry": [2, 3.7]
         },
@@ -235,10 +283,14 @@
         "damage": 1,
         "attackSpeed": -0.1,
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "electrum"
+        }],
         "capabilities": {
             "pry": [1, 6.7]
         },
@@ -254,10 +306,14 @@
         "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "steel"
+        }],
         "capabilities": {
             "pry": [2, 4.2]
         },
@@ -273,10 +329,14 @@
         "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "thaumium"
+        }],
         "capabilities": {
             "pry": [1, 3.4]
         },
@@ -292,10 +352,14 @@
         "damage": 1,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "ironwood"
+        }],
         "capabilities": {
             "pry": [1, 3.8]
         },
@@ -311,10 +375,14 @@
         "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "steeleaf"
+        }],
         "capabilities": {
             "pry": [2, 4.6]
         },
@@ -330,10 +398,13 @@
         "damage": 1,
         "attackSpeed": -0.3,
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/fierymetal"
+        }],
         "capabilities": {
             "pry": [1, 5.2]
         },
@@ -349,10 +420,14 @@
         "damage": 1,
         "attackSpeed": -0.25,
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 64,
             "textureY": 32
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/claw/metal",
+            "tint": "knightmetal"
+        }],
         "capabilities": {
             "pry": [1, 4.7]
         },

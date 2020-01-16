@@ -21,6 +21,16 @@
             },
             {
                 "material": {
+                    "item": "minecraft:flint"
+                },
+                "requiredCapabilities": {
+                    "hammer": 1
+                },
+                "moduleKey": "duplex/butt",
+                "moduleVariant": "butt/flint"
+            },
+            {
+                "material": {
                     "item": "minecraft:diamond"
                 },
                 "requiredCapabilities": {

@@ -6,6 +6,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
@@ -56,7 +57,13 @@ public class MultiSlotModule extends ItemModuleMajor {
     }
 
     public ResourceLocation[] getTextures(ItemStack itemStack) {
-        String string = "items/module/" + getData(itemStack).key + slotSuffix;
-        return new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, string)};
+        return super.getTextures(itemStack);
+    }
+
+    @Override
+    public ModuleModel[] getModels(ItemStack itemStack) {
+        return Arrays.stream(super.getModels(itemStack))
+                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
+                .toArray(ModuleModel[]::new);
     }
 }

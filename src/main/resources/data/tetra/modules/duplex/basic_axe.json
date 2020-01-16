@@ -7,9 +7,13 @@
         "damage": 6,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "866526",
+            "tint": "oak_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/crude",
+            "tint": "oak"
+        }],
         "capabilities": {
             "axe": [1, 2.5]
         },
@@ -25,9 +29,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "9a9a9a",
+            "tint": "cobblestone_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/crude",
+            "tint": "cobblestone"
+        }],
         "capabilities": {
             "axe": [1, 5]
         },
@@ -43,9 +51,13 @@
         "damage": 8,
         "attackSpeed": -0.2,
         "glyph": {
-            "tint": "343434",
+            "tint": "flint_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/crude",
+            "tint": "flint"
+        }],
         "capabilities": {
             "axe": [2, 5]
         },
@@ -61,9 +73,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "d8d8d8",
+            "tint": "iron_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "iron"
+        }],
         "capabilities": {
             "axe": [3, 6.6666667]
         },
@@ -79,9 +95,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "33ebcb",
+            "tint": "diamond_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/shiny",
+            "tint": "diamond"
+        }],
         "capabilities": {
             "axe": [4, 8]
         },
@@ -97,9 +117,13 @@
         "damage": 6,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "eaee57",
+            "tint": "gold_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/shiny",
+            "tint": "gold"
+        }],
         "capabilities": {
             "axe": [1, 12]
         },
@@ -115,9 +139,13 @@
         "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "df7646",
+            "tint": "copper_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "copper"
+        }],
         "capabilities": {
             "axe": [2, 5]
         },
@@ -133,9 +161,13 @@
         "damage": 6.5,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "b3c9c1",
+            "tint": "tin_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "tin"
+        }],
         "capabilities": {
             "axe": [2, 6.6]
         },
@@ -151,9 +183,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "d6f6ff",
+            "tint": "silver_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/shiny",
+            "tint": "silver"
+        }],
         "capabilities": {
             "axe": [1, 11]
         },
@@ -169,9 +205,13 @@
         "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "c2d3a6",
+            "tint": "nickel_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "nickel"
+        }],
         "capabilities": {
             "axe": [3, 7]
         },
@@ -187,9 +227,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "897a9b",
+            "tint": "lead_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "lead"
+        }],
         "capabilities": {
             "axe": [3, 5]
         },
@@ -205,9 +249,13 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "b2712c",
+            "tint": "bronze_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "bronze"
+        }],
         "capabilities": {
             "axe": [3, 7.8]
         },
@@ -223,9 +271,13 @@
         "damage": 7,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "e4da4c",
+            "tint": "electrum_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "electrum"
+        }],
         "capabilities": {
             "axe": [2, 13]
         },
@@ -241,9 +293,13 @@
         "damage": 8,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "999999",
+            "tint": "steel_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "steel"
+        }],
         "capabilities": {
             "axe": [4, 8.2]
         },
@@ -259,9 +315,13 @@
         "damage": 8,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "4d3984",
+            "tint": "thaumium_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/metal",
+            "tint": "thaumium"
+        }],
         "capabilities": {
             "axe": [3, 6.7]
         },
@@ -277,9 +337,12 @@
         "damage": 6,
         "attackSpeed": -0.6,
         "glyph": {
-            "tint": "5ea917",
+            "tint": "ironwood_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/ironwood_tf"
+        }],
         "capabilities": {
             "axe": [2, 7.22]
         },
@@ -295,9 +358,12 @@
         "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "458430",
+            "tint": "steeleaf_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/steeleaf"
+        }],
         "capabilities": {
             "axe": [4, 8.88]
         },
@@ -313,9 +379,12 @@
         "damage": 8,
         "attackSpeed": -0.5,
         "glyph": {
-            "tint": "fa9f00",
+            "tint": "fierymetal_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/fierymetal"
+        }],
         "capabilities": {
             "axe": [5, 10]
         },
@@ -331,9 +400,12 @@
         "damage": 7,
         "attackSpeed": -0.4,
         "glyph": {
-            "tint": "b8cf9c",
+            "tint": "knightmetal_glyph",
             "textureX": 144
         },
+        "models": [{
+            "location": "tetra:items/module/duplex/head/basic_axe/knightmetal"
+        }],
         "capabilities": {
             "axe": [4, 8.88]
         },
