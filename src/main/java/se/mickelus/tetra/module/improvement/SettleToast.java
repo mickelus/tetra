@@ -36,7 +36,7 @@ public class SettleToast implements IToast {
                 .orElse(null);
 
         glyph = Optional.ofNullable(itemModule)
-                .map(module -> module.getData(itemStack))
+                .map(module -> module.getVariantData(itemStack))
                 .map(data -> data.glyph)
                 .map(glyphData -> new GuiModuleGlyph(0, 0, 16, 16, glyphData).setShift(false))
                 .orElse(null);

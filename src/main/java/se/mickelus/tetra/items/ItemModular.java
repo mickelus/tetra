@@ -216,6 +216,21 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             .anyMatch(module::equals);
     }
 
+    /**
+     * Helper for manually adding modules, to be used incases like creative tab items which are populated before modules exists. Use
+     * with caution as this may break things if the module/variant doesn't actually end up existing.
+     * @param itemStack
+     * @param slot
+     * @param module
+     * @param moduleVariantKey
+     * @param moduleVariant
+     */
+    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
+        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        tag.putString(slot, module);
+        tag.putString(moduleVariantKey, moduleVariant);
+    }
+
     public ItemModule getModuleFromSlot(ItemStack itemStack, String slot) {
         return ItemUpgradeRegistry.instance.getModule(NBTHelper.getTag(itemStack).getString(slot));
     }
@@ -878,7 +893,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .sorted()
                     .toArray(String[]::new);
             String[] variantKeys = getAllModules(itemStack).stream()
-                    .map(module -> module.getData(itemStack))
+                    .map(module -> module.getVariantData(itemStack))
                     .map(data -> data.key)
                     .sorted()
                     .toArray(String[]::new);

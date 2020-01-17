@@ -1,523 +1,529 @@
-[
-    {
-        "key": "wide_guard/oak",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+{
+    "replace": true,
+    "slots": ["sword/guard"],
+    "type": "tetra:basic_module",
+    "renderLayer": "higher",
+    "variants": [
+        {
+            "key": "wide_guard/oak",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "oak"
+            }]
         },
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/spruce",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "spruce"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "oak"
-        }]
-    },
-    {
-        "key": "wide_guard/spruce",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/birch",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "birch"
+            }]
         },
-        "glyph": {
-            "tint": "spruce_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/jungle",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "jungle"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "spruce"
-        }]
-    },
-    {
-        "key": "wide_guard/birch",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/acacia",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "acacia"
+            }]
         },
-        "glyph": {
-            "tint": "birch_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/dark_oak",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "dark_oak"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "birch"
-        }]
-    },
-    {
-        "key": "wide_guard/jungle",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/cobblestone",
+            "durability": 23,
+            "integrity": -1,
+            "attackSpeed": -0.4,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "cobblestone"
+            }]
         },
-        "glyph": {
-            "tint": "jungle_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/stone",
+            "durability": 25,
+            "integrity": -2,
+            "attackSpeed": 0,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "stone_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "stone"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "jungle"
-        }]
-    },
-    {
-        "key": "wide_guard/acacia",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/granite",
+            "durability": 25,
+            "integrity": -1,
+            "attackSpeed": -0.4,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "granite_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "granite"
+            }]
         },
-        "glyph": {
-            "tint": "acacia_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/diorite",
+            "durability": 24,
+            "integrity": -1,
+            "attackSpeed": -0.4,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "diorite_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "diorite"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "acacia"
-        }]
-    },
-    {
-        "key": "wide_guard/dark_oak",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/andesite",
+            "durability": 25,
+            "integrity": -2,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "andesite_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "andesite"
+            }]
         },
-        "glyph": {
-            "tint": "dark_oak_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/iron",
+            "durability": 45,
+            "integrity": -1,
+            "attackSpeed": -0.3,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "iron"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "dark_oak"
-        }]
-    },
-    {
-        "key": "wide_guard/cobblestone",
-        "durability": 23,
-        "integrity": -1,
-        "attackSpeed": -0.4,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/flint",
+            "durability": 28,
+            "integrity": -1,
+            "attackSpeed": 0,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "flint"
+            }]
         },
-        "glyph": {
-            "tint": "cobblestone_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/gold",
+            "durability": 9,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+                "tint": "gold"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "cobblestone"
-        }]
-    },
-    {
-        "key": "wide_guard/stone",
-        "durability": 25,
-        "integrity": -2,
-        "attackSpeed": 0,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/diamond",
+            "durability": 55,
+            "integrity": -3,
+            "attackSpeed": -0.2,
+            "effects": {
+                "armor": 3
+            },
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+                "tint": "diamond"
+            }]
         },
-        "glyph": {
-            "tint": "stone_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/obsidian",
+            "durability": 87,
+            "integrity": -3,
+            "attackSpeed": -0.5,
+            "effects": {
+                "armor": 5
+            },
+            "glyph": {
+                "tint": "obsidian_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/crude",
+                "tint": "obsidian"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "stone"
-        }]
-    },
-    {
-        "key": "wide_guard/granite",
-        "durability": 25,
-        "integrity": -1,
-        "attackSpeed": -0.4,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/copper",
+            "durability": 58,
+            "integrity": -1,
+            "attackSpeed": -0.05,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "copper"
+            }]
         },
-        "glyph": {
-            "tint": "granite_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/tin",
+            "durability": 43,
+            "integrity": -1,
+            "attackSpeed": 0,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "tin"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "granite"
-        }]
-    },
-    {
-        "key": "wide_guard/diorite",
-        "durability": 24,
-        "integrity": -1,
-        "attackSpeed": -0.4,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/silver",
+            "durability": 12,
+            "integrity": -1,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 1
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+                "tint": "silver"
+            }]
         },
-        "glyph": {
-            "tint": "diorite_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/nickel",
+            "durability": 41,
+            "integrity": -2,
+            "attackSpeed": -0.4,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "nickel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "diorite"
-        }]
-    },
-    {
-        "key": "wide_guard/andesite",
-        "durability": 25,
-        "integrity": -2,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/lead",
+            "durability": 77,
+            "integrity": -2,
+            "attackSpeed": -0.7,
+            "effects": {
+                "armor": 3
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "lead"
+            }]
         },
-        "glyph": {
-            "tint": "andesite_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/bronze",
+            "durability": 46,
+            "integrity": -2,
+            "attackSpeed": -0.3,
+            "effects": {
+                "armor": 4
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "bronze"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "andesite"
-        }]
-    },
-    {
-        "key": "wide_guard/iron",
-        "durability": 45,
-        "integrity": -1,
-        "attackSpeed": -0.3,
-        "effects": {
-            "armor": 2
+        {
+            "key": "wide_guard/electrum",
+            "durability": 9,
+            "integrity": -2,
+            "attackSpeed": -0.3,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/shiny",
+                "tint": "electrum"
+            }]
         },
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/steel",
+            "durability": 68,
+            "integrity": -3,
+            "attackSpeed": -0.2,
+            "effects": {
+                "armor": 5
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "steel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "iron"
-        }]
-    },
-    {
-        "key": "wide_guard/flint",
-        "durability": 28,
-        "integrity": -1,
-        "attackSpeed": 0,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/thaumium",
+            "durability": 42,
+            "integrity": -2,
+            "attackSpeed": -0.1,
+            "effects": {
+                "armor": 3
+            },
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "thaumium"
+            }]
         },
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/ironwood",
+            "durability": 51,
+            "integrity": -2,
+            "attackSpeed": -0.6,
+            "effects": {
+                "armor": 4
+            },
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "ironwood"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "flint"
-        }]
-    },
-    {
-        "key": "wide_guard/gold",
-        "durability": 9,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
+        {
+            "key": "wide_guard/steeleaf",
+            "durability": 17,
+            "integrity": -1,
+            "attackSpeed": 0,
+            "effects": {
+                "armor": 2
+            },
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "steeleaf"
+            }]
         },
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 40,
-            "textureY": 16
+        {
+            "key": "wide_guard/fierymetal",
+            "durability": 59,
+            "integrity": -2,
+            "attackSpeed": -0.5,
+            "effects": {
+                "armor": 4
+            },
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/fierymetal"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
-            "tint": "gold"
-        }]
-    },
-    {
-        "key": "wide_guard/diamond",
-        "durability": 55,
-        "integrity": -3,
-        "attackSpeed": -0.2,
-        "effects": {
-            "armor": 3
-        },
-        "glyph": {
-            "tint": "diamond_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
-            "tint": "diamond"
-        }]
-    },
-    {
-        "key": "wide_guard/obsidian",
-        "durability": 87,
-        "integrity": -3,
-        "attackSpeed": -0.5,
-        "effects": {
-            "armor": 5
-        },
-        "glyph": {
-            "tint": "obsidian_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/crude",
-            "tint": "obsidian"
-        }]
-    },
-    {
-        "key": "wide_guard/copper",
-        "durability": 58,
-        "integrity": -1,
-        "attackSpeed": -0.05,
-        "effects": {
-            "armor": 1
-        },
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "copper"
-        }]
-    },
-    {
-        "key": "wide_guard/tin",
-        "durability": 43,
-        "integrity": -1,
-        "attackSpeed": 0,
-        "effects": {
-            "armor": 1
-        },
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "tin"
-        }]
-    },
-    {
-        "key": "wide_guard/silver",
-        "durability": 12,
-        "integrity": -1,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 1
-        },
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
-            "tint": "silver"
-        }]
-    },
-    {
-        "key": "wide_guard/nickel",
-        "durability": 41,
-        "integrity": -2,
-        "attackSpeed": -0.4,
-        "effects": {
-            "armor": 2
-        },
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "nickel"
-        }]
-    },
-    {
-        "key": "wide_guard/lead",
-        "durability": 77,
-        "integrity": -2,
-        "attackSpeed": -0.7,
-        "effects": {
-            "armor": 3
-        },
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "lead"
-        }]
-    },
-    {
-        "key": "wide_guard/bronze",
-        "durability": 46,
-        "integrity": -2,
-        "attackSpeed": -0.3,
-        "effects": {
-            "armor": 4
-        },
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "bronze"
-        }]
-    },
-    {
-        "key": "wide_guard/electrum",
-        "durability": 9,
-        "integrity": -2,
-        "attackSpeed": -0.3,
-        "effects": {
-            "armor": 2
-        },
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/shiny",
-            "tint": "electrum"
-        }]
-    },
-    {
-        "key": "wide_guard/steel",
-        "durability": 68,
-        "integrity": -3,
-        "attackSpeed": -0.2,
-        "effects": {
-            "armor": 5
-        },
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "steel"
-        }]
-    },
-    {
-        "key": "wide_guard/thaumium",
-        "durability": 42,
-        "integrity": -2,
-        "attackSpeed": -0.1,
-        "effects": {
-            "armor": 3
-        },
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "thaumium"
-        }]
-    },
-    {
-        "key": "wide_guard/ironwood",
-        "durability": 51,
-        "integrity": -2,
-        "attackSpeed": -0.6,
-        "effects": {
-            "armor": 4
-        },
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "ironwood"
-        }]
-    },
-    {
-        "key": "wide_guard/steeleaf",
-        "durability": 17,
-        "integrity": -1,
-        "attackSpeed": 0,
-        "effects": {
-            "armor": 2
-        },
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "steeleaf"
-        }]
-    },
-    {
-        "key": "wide_guard/fierymetal",
-        "durability": 59,
-        "integrity": -2,
-        "attackSpeed": -0.5,
-        "effects": {
-            "armor": 4
-        },
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/fierymetal"
-        }]
-    },
-    {
-        "key": "wide_guard/knightmetal",
-        "durability": 41,
-        "integrity": -3,
-        "attackSpeed": -0.5,
-        "effects": {
-            "armor": 5
-        },
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 40,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/wide_guard/metal",
-            "tint": "knightmetal"
-        }]
-    }
-]
+        {
+            "key": "wide_guard/knightmetal",
+            "durability": 41,
+            "integrity": -3,
+            "attackSpeed": -0.5,
+            "effects": {
+                "armor": 5
+            },
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 40,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/wide_guard/metal",
+                "tint": "knightmetal"
+            }]
+        }
+    ]
+}

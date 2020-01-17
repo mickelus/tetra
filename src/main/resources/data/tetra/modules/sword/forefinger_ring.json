@@ -1,495 +1,501 @@
-[
-    {
-        "key": "forefinger_ring/oak",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+{
+    "replace": true,
+    "slots": ["sword/guard"],
+    "type": "tetra:basic_module",
+    "renderLayer": "higher",
+    "variants": [
+        {
+            "key": "forefinger_ring/oak",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "oak"
+            }]
         },
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/spruce",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "spruce"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "oak"
-        }]
-    },
-    {
-        "key": "forefinger_ring/spruce",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/birch",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "birch"
+            }]
         },
-        "glyph": {
-            "tint": "spruce_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/jungle",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "jungle"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "spruce"
-        }]
-    },
-    {
-        "key": "forefinger_ring/birch",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/acacia",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "acacia"
+            }]
         },
-        "glyph": {
-            "tint": "birch_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/dark_oak",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "dark_oak"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "birch"
-        }]
-    },
-    {
-        "key": "forefinger_ring/jungle",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/cobblestone",
+            "durability": 23,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "cobblestone"
+            }]
         },
-        "glyph": {
-            "tint": "jungle_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/stone",
+            "durability": 25,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "stone_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "stone"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "jungle"
-        }]
-    },
-    {
-        "key": "forefinger_ring/acacia",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/granite",
+            "durability": 25,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "granite_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "granite"
+            }]
         },
-        "glyph": {
-            "tint": "acacia_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/diorite",
+            "durability": 24,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "diorite_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "diorite"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "acacia"
-        }]
-    },
-    {
-        "key": "forefinger_ring/dark_oak",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/andesite",
+            "durability": 25,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "andesite_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "andesite"
+            }]
         },
-        "glyph": {
-            "tint": "dark_oak_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/iron",
+            "durability": 45,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "iron"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "dark_oak"
-        }]
-    },
-    {
-        "key": "forefinger_ring/cobblestone",
-        "durability": 23,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/flint",
+            "durability": 28,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "flint"
+            }]
         },
-        "glyph": {
-            "tint": "cobblestone_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/gold",
+            "durability": 9,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "gold"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "cobblestone"
-        }]
-    },
-    {
-        "key": "forefinger_ring/stone",
-        "durability": 25,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/diamond",
+            "durability": 55,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "diamond"
+            }]
         },
-        "glyph": {
-            "tint": "stone_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/obsidian",
+            "durability": 87,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "obsidian_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "obsidian"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "stone"
-        }]
-    },
-    {
-        "key": "forefinger_ring/granite",
-        "durability": 25,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/copper",
+            "durability": 58,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "copper"
+            }]
         },
-        "glyph": {
-            "tint": "granite_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/tin",
+            "durability": 43,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "tin"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "granite"
-        }]
-    },
-    {
-        "key": "forefinger_ring/diorite",
-        "durability": 24,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/silver",
+            "durability": 12,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "silver"
+            }]
         },
-        "glyph": {
-            "tint": "diorite_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/nickel",
+            "durability": 41,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "nickel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "diorite"
-        }]
-    },
-    {
-        "key": "forefinger_ring/andesite",
-        "durability": 25,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/lead",
+            "durability": 77,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "lead"
+            }]
         },
-        "glyph": {
-            "tint": "andesite_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/bronze",
+            "durability": 46,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "bronze"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "andesite"
-        }]
-    },
-    {
-        "key": "forefinger_ring/iron",
-        "durability": 45,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/electrum",
+            "durability": 9,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "electrum"
+            }]
         },
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/steel",
+            "durability": 68,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "steel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "iron"
-        }]
-    },
-    {
-        "key": "forefinger_ring/flint",
-        "durability": 28,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/thaumium",
+            "durability": 42,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "thaumium"
+            }]
         },
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/ironwood",
+            "durability": 51,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "ironwood"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "flint"
-        }]
-    },
-    {
-        "key": "forefinger_ring/gold",
-        "durability": 9,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
+        {
+            "key": "forefinger_ring/steeleaf",
+            "durability": 17,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "steeleaf"
+            }]
         },
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 48,
-            "textureY": 16
+        {
+            "key": "forefinger_ring/fierymetal",
+            "durability": 59,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "fierymetal"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "gold"
-        }]
-    },
-    {
-        "key": "forefinger_ring/diamond",
-        "durability": 55,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "diamond_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "diamond"
-        }]
-    },
-    {
-        "key": "forefinger_ring/obsidian",
-        "durability": 87,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "obsidian_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "obsidian"
-        }]
-    },
-    {
-        "key": "forefinger_ring/copper",
-        "durability": 58,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "copper"
-        }]
-    },
-    {
-        "key": "forefinger_ring/tin",
-        "durability": 43,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "tin"
-        }]
-    },
-    {
-        "key": "forefinger_ring/silver",
-        "durability": 12,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "silver"
-        }]
-    },
-    {
-        "key": "forefinger_ring/nickel",
-        "durability": 41,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "nickel"
-        }]
-    },
-    {
-        "key": "forefinger_ring/lead",
-        "durability": 77,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "lead"
-        }]
-    },
-    {
-        "key": "forefinger_ring/bronze",
-        "durability": 46,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "bronze"
-        }]
-    },
-    {
-        "key": "forefinger_ring/electrum",
-        "durability": 9,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "electrum"
-        }]
-    },
-    {
-        "key": "forefinger_ring/steel",
-        "durability": 68,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "steel"
-        }]
-    },
-    {
-        "key": "forefinger_ring/thaumium",
-        "durability": 42,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "thaumium"
-        }]
-    },
-    {
-        "key": "forefinger_ring/ironwood",
-        "durability": 51,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "ironwood"
-        }]
-    },
-    {
-        "key": "forefinger_ring/steeleaf",
-        "durability": 17,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "steeleaf"
-        }]
-    },
-    {
-        "key": "forefinger_ring/fierymetal",
-        "durability": 59,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "fierymetal"
-        }]
-    },
-    {
-        "key": "forefinger_ring/knightmetal",
-        "durability": 41,
-        "integrity": -1,
-        "effects": {
-            "quickStrike": 4
-        },
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 48,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/guard/forefinger_ring/default",
-            "tint": "knightmetal"
-        }]
-    }
-]
+        {
+            "key": "forefinger_ring/knightmetal",
+            "durability": 41,
+            "integrity": -1,
+            "effects": {
+                "quickStrike": 4
+            },
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 48,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/forefinger_ring/default",
+                "tint": "knightmetal"
+            }]
+        }
+    ]
+}

@@ -10,8 +10,8 @@ public class TweakData {
     public String key;
     public int steps;
 
-    private ModuleData baseStats = new ModuleData();
-    private ModuleData stepStats;
+    private ModuleVariantData baseStats = new ModuleVariantData();
+    private ModuleVariantData stepStats;
 
 
     public float getDamage(int step) {

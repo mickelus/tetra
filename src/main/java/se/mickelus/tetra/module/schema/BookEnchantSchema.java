@@ -15,11 +15,9 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
+import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 public class BookEnchantSchema implements UpgradeSchema {
     private static final String key = "book_enchant";
@@ -28,19 +26,16 @@ public class BookEnchantSchema implements UpgradeSchema {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
-    protected ItemModuleMajor module;
-
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
 
-    public BookEnchantSchema(ItemModuleMajor module) {
-        this.module = module;
+    public BookEnchantSchema() {
 
         ItemUpgradeRegistry.instance.registerSchema(this);
     }
 
     @Override
     public String getKey() {
-        return key + "/" + module.getKey();
+        return key;
     }
 
     @Override
@@ -70,13 +65,13 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
-        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem &&
-                EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
-                .anyMatch(entry -> {
-                    return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey()))
-                            .anyMatch(mapping ->
-                                    module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier)));
-                });
+        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem;
+//                && EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
+//                .anyMatch(entry -> {
+//                    return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey()))
+//                            .anyMatch(mapping ->
+//                                    module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier)));
+//                });
     }
 
     @Override
@@ -86,16 +81,15 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
-            return item.hasModule(itemStack, module);
-        }
-        return false;
+        return itemStack.getItem() instanceof ItemModular;
     }
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        return module.getSlot().equals(slot);
+        return CastOptional.cast(targetStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(targetStack, slot))
+                .map(module -> module.getMagicCapacityGain(targetStack) > 0)
+                .orElse(false);
     }
 
     @Override
@@ -112,22 +106,30 @@ public class BookEnchantSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
-                if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
-                    module.addImprovement(upgradedStack, mapping.improvement, entry.getValue());
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .filter(mod -> mod instanceof ItemModuleMajor)
+                .map(mod -> (ItemModuleMajor) mod)
+                .orElse(null);
 
-                    if (consumeMaterials && player instanceof ServerPlayerEntity) {
-                        ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot,
-                                mapping.improvement, (int) (entry.getValue() / mapping.multiplier), null, -1);
+        if (module != null) {
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
+            for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
+                    if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
+                        module.addImprovement(upgradedStack, mapping.improvement, entry.getValue());
+
+                        if (consumeMaterials && player instanceof ServerPlayerEntity) {
+                            ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot,
+                                    mapping.improvement, (int) (entry.getValue() / mapping.multiplier), null, -1);
+                        }
                     }
                 }
             }
-        }
 
-        if (consumeMaterials) {
-            materials[0].shrink(1);
+            if (consumeMaterials) {
+                materials[0].shrink(1);
+            }
         }
 
         return upgradedStack;
@@ -150,19 +152,26 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        int cost = 0;
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
-                if (module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier))) {
-                    cost += entry.getValue() / mapping.multiplier;
-                }
-            }
-        }
+        return CastOptional.cast(targetStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(targetStack, slot))
+                .filter(module -> module instanceof ItemModuleMajor)
+                .map(module -> (ItemModuleMajor) module)
+                .map(module -> {
+                    int cost = 0;
+                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
+                    for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                        for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
+                            if (module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier))) {
+                                cost += entry.getValue() / mapping.multiplier;
+                            }
+                        }
+                    }
 
-        int capacityPenalty = Math.max(0, -module.getMagicCapacity(targetStack));
+                    int capacityPenalty = Math.max(0, -module.getMagicCapacity(targetStack));
 
-        return cost + capacityPenalty;
+                    return cost + capacityPenalty;
+                })
+                .orElse(0);
     }
 
     @Override

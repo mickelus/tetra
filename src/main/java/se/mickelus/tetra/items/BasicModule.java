@@ -8,26 +8,20 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
 
-import java.util.Optional;
-
 public class BasicModule extends ItemModule {
-    public BasicModule(String slotKey, String moduleKey) {
-        super(slotKey, moduleKey);
 
-        DataManager.moduleData.onReload(() -> data = DataManager.moduleData.getData(new ResourceLocation(TetraMod.MOD_ID, moduleKey)));
-        ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
-    }
+    public BasicModule(ResourceLocation identifier, ModuleData data) {
+        super(data.slots[0], identifier.getPath());
 
-    public BasicModule(String slotKey, String moduleKey, String tweakKey) {
-        this(slotKey, moduleKey);
+        variantData = data.variants;
 
-        DataManager.tweakData.onReload(() -> {
-            TweakData[] tweaks = DataManager.tweakData.getData(new ResourceLocation(TetraMod.MOD_ID, tweakKey));
+        if (data.tweakKey != null) {
+            TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
             if (tweaks != null) {
                 this.tweaks = tweaks;
             } else {
                 this.tweaks = new TweakData[0];
             }
-        });
+        }
     }
 }

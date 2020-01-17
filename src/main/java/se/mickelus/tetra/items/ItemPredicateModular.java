@@ -108,7 +108,7 @@ public class ItemPredicateModular extends ItemPredicate {
             }
 
             ItemModule module = item.getModuleFromSlot(itemStack, currentSlot);
-            if (module != null && variant.getKey().equals(module.getData(itemStack).key)) {
+            if (module != null && variant.getKey().equals(module.getVariantData(itemStack).key)) {
                 return true;
             }
         }

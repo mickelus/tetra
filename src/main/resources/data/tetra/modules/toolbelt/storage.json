@@ -1,46 +1,53 @@
-[
-    {
-        "key": "storage/forged_mesh",
-        "integrity": -4,
-        "effects": {
-            "storageSlot": 7
+{
+    "replace": true,
+    "type": "tetra:toolbelt_module",
+    "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+    "slotSuffixes": ["_slot1", "_slot2", "_slot3"],
+    "improvements": ["tetra:toolbelt/storage"],
+    "variants": [
+        {
+            "key": "storage/forged_mesh",
+            "integrity": -4,
+            "effects": {
+                "storageSlot": 7
+            },
+            "glyph": {
+                "tint": "383838",
+                "textureX": 192
+            }
         },
-        "glyph": {
-            "tint": "383838",
-            "textureX": 192
-        }
-    },
-    {
-        "key": "storage/leather",
-        "integrity": -5,
-        "effects": {
-            "storageSlot": 8
+        {
+            "key": "storage/leather",
+            "integrity": -5,
+            "effects": {
+                "storageSlot": 8
+            },
+            "glyph": {
+                "tint": "866526",
+                "textureX": 192
+            }
         },
-        "glyph": {
-            "tint": "866526",
-            "textureX": 192
-        }
-    },
-    {
-        "key": "storage/wool",
-        "integrity": -3,
-        "effects": {
-            "storageSlot": 4
+        {
+            "key": "storage/wool",
+            "integrity": -3,
+            "effects": {
+                "storageSlot": 4
+            },
+            "glyph": {
+                "tint": "fefefe",
+                "textureX": 192
+            }
         },
-        "glyph": {
-            "tint": "fefefe",
-            "textureX": 192
+        {
+            "key": "storage/hide",
+            "integrity": 0,
+            "effects": {
+                "storageSlot": 2
+            },
+            "glyph": {
+                "tint": "a88054",
+                "textureX": 192
+            }
         }
-    },
-    {
-        "key": "storage/hide",
-        "integrity": 0,
-        "effects": {
-            "storageSlot": 2
-        },
-        "glyph": {
-            "tint": "a88054",
-            "textureX": 192
-        }
-    }
-]
+    ]
+}

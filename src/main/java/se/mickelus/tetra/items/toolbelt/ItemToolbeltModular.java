@@ -51,9 +51,6 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
-    private ItemModule defaultBelt;
-    private ItemModule defaultStrap;
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemToolbeltModular instance;
 
@@ -69,28 +66,6 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
         minorModuleKeys = new String[] { beltKey };
 
         requiredModules = new String[] { beltKey };
-
-        defaultBelt = new BasicModule(beltKey, beltKey);
-
-        defaultStrap = new ToolbeltModule(slot1Key, "toolbelt/strap", slot1Suffix, "toolbelt/strap");
-        new ToolbeltModule(slot2Key, "toolbelt/strap", slot2Suffix, "toolbelt/strap");
-        new ToolbeltModule(slot3Key, "toolbelt/strap", slot3Suffix, "toolbelt/strap");
-
-        new ToolbeltModule(slot1Key, "toolbelt/potion_storage", slot1Suffix, "toolbelt/potion_storage");
-        new ToolbeltModule(slot2Key, "toolbelt/potion_storage", slot2Suffix, "toolbelt/potion_storage");
-        new ToolbeltModule(slot3Key, "toolbelt/potion_storage", slot3Suffix, "toolbelt/potion_storage");
-
-        new ToolbeltModule(slot1Key, "toolbelt/storage", slot1Suffix, "toolbelt/storage");
-        new ToolbeltModule(slot2Key, "toolbelt/storage", slot2Suffix, "toolbelt/storage");
-        new ToolbeltModule(slot3Key, "toolbelt/storage", slot3Suffix, "toolbelt/storage");
-
-        new ToolbeltModule(slot1Key, "toolbelt/quiver", slot1Suffix, "toolbelt/quiver");
-        new ToolbeltModule(slot2Key, "toolbelt/quiver", slot2Suffix, "toolbelt/quiver");
-        new ToolbeltModule(slot3Key, "toolbelt/quiver", slot3Suffix, "toolbelt/quiver");
-
-        new ToolbeltModule(slot1Key, "toolbelt/booster", slot1Suffix, "toolbelt/booster");
-        new ToolbeltModule(slot2Key, "toolbelt/booster", slot2Suffix, "toolbelt/booster");
-        new ToolbeltModule(slot3Key, "toolbelt/booster", slot3Suffix, "toolbelt/booster");
     }
 
     @Override
@@ -124,8 +99,8 @@ public class ItemToolbeltModular extends ItemModular implements INamedContainerP
 
     private ItemStack createStack(String beltMaterial) {
         ItemStack itemStack = new ItemStack(this);
-        defaultBelt.addModule(itemStack, beltMaterial, null);
-        defaultStrap.addModule(itemStack, "strap1/leather", null);
+        putModuleInSlot(itemStack, beltKey, "toolbelt/belt", "toolbelt/belt_material", beltMaterial);
+        putModuleInSlot(itemStack, slot1Key, "toolbelt/strap_slot1", "toolbelt/strap_slot1_material", "strap1/leather");
         return itemStack;
     }
 

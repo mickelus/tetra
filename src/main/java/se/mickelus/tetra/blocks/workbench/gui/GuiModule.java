@@ -11,7 +11,7 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.ModuleVariantData;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -47,15 +47,15 @@ public class GuiModule extends GuiClickable {
             setupChildren(null, null, slotName, false);
         } else if (previewModule == null) {
             isRemoving = true;
-            ModuleData data = module.getData(itemStack);
+            ModuleVariantData data = module.getVariantData(itemStack);
             setupChildren(null, data.glyph, slotName, module.isTweakable(itemStack));
         } else if (module == null) {
             isAdding = true;
-            ModuleData previewData = previewModule.getData(previewStack);
+            ModuleVariantData previewData = previewModule.getVariantData(previewStack);
             setupChildren(previewModule.getName(previewStack), previewData.glyph, slotName, previewModule.isTweakable(itemStack));
         } else {
-            ModuleData data = module.getData(itemStack);
-            ModuleData previewData = previewModule.getData(previewStack);
+            ModuleVariantData data = module.getVariantData(itemStack);
+            ModuleVariantData previewData = previewModule.getVariantData(previewStack);
 
             if (data.equals(previewData)) {
                 setupChildren(module.getName(itemStack), data.glyph, slotName, module.isTweakable(itemStack));

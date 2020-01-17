@@ -1,359 +1,372 @@
-[
-    {
-        "key": "butt/oak",
-        "durability": 12,
-        "magicCapacity": 15,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.3,
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 160
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": ["duplex/head_right"],
+    "slotSuffixes": ["_right"],
+    "improvements": [
+        "tetra:duplex/butt",
+        "tetra:duplex/butt_hone",
+        "tetra:duplex/shared_head_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "butt/oak",
+            "durability": 12,
+            "magicCapacity": 15,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/crude",
+                "tint": "oak"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/crude",
-            "tint": "oak"
-        }]
-    },
-    {
-        "key": "butt/flint",
-        "durability": 15,
-        "magicCapacity": 5,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 160
+        {
+            "key": "butt/flint",
+            "durability": 15,
+            "magicCapacity": 5,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/crude",
+                "tint": "flint"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/crude",
-            "tint": "flint"
-        }]
-    },
-    {
-        "key": "butt/cobblestone",
-        "durability": 18,
-        "magicCapacity": 5,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.3,
-        "glyph": {
-            "tint": "cobblestone_glyph",
-            "textureX": 160
+        {
+            "key": "butt/cobblestone",
+            "durability": 18,
+            "magicCapacity": 5,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/crude",
+                "tint": "cobblestone"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/crude",
-            "tint": "cobblestone"
-        }]
-    },
-    {
-        "key": "butt/iron",
-        "durability": 26,
-        "magicCapacity": 14,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 160
+        {
+            "key": "butt/iron",
+            "durability": 26,
+            "magicCapacity": 14,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "iron"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "iron"
-        }],
-        "capabilities": {
-            "hammer": 1
+        {
+            "key": "butt/diamond",
+            "durability": 548,
+            "magicCapacity": 10,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/shiny",
+                "tint": "diamond"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/gold",
+            "durability": 11,
+            "magicCapacity": 22,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/shiny",
+                "tint": "gold"
+            }]
+        },
+        {
+            "key": "butt/copper",
+            "durability": 18,
+            "magicCapacity": 13,
+            "integrity": 0,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "copper"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/tin",
+            "durability": 15,
+            "magicCapacity": 12,
+            "integrity": 0,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "tin"
+            }]
+        },
+        {
+            "key": "butt/silver",
+            "durability": 17,
+            "magicCapacity": 21,
+            "integrity": 0,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/shiny",
+                "tint": "silver"
+            }]
+        },
+        {
+            "key": "butt/nickel",
+            "durability": 31,
+            "magicCapacity": 12,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "nickel"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/lead",
+            "durability": 16,
+            "magicCapacity": 11,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "lead"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/bronze",
+            "durability": 47,
+            "magicCapacity": 13,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "bronze"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/electrum",
+            "durability": 8,
+            "magicCapacity": 24,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "electrum"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/steel",
+            "durability": 53,
+            "magicCapacity": 11,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "steel"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/thaumium",
+            "durability": 61,
+            "magicCapacity": 25,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.23,
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "thaumium"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/ironwood",
+            "durability": 66,
+            "magicCapacity": 18,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/metal",
+                "tint": "ironwood"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/steeleaf",
+            "durability": 15,
+            "magicCapacity": 15,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.15,
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/steeleaf"
+            }]
+        },
+        {
+            "key": "butt/fierymetal",
+            "durability": 235,
+            "magicCapacity": 12,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.22,
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/fierymetal"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
+        },
+        {
+            "key": "butt/knightmetal",
+            "durability": 86,
+            "magicCapacity": 12,
+            "integrity": -1,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/knightmetal",
+                "tint": "knightmetal"
+            }],
+            "capabilities": {
+                "axe": [1, 2]
+            }
+        },
+        {
+            "key": "butt/knightmetal2",
+            "durability": 86,
+            "integrity": -1,
+            "magicCapacity": 12,
+            "damage": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 160
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/butt/knightmetal2",
+                "tint": "knightmetal"
+            }],
+            "capabilities": {
+                "hammer": 1
+            }
         }
-    },
-    {
-        "key": "butt/diamond",
-        "durability": 548,
-        "magicCapacity": 10,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.1,
-        "glyph": {
-            "tint": "diamond_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/shiny",
-            "tint": "diamond"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/gold",
-        "durability": 11,
-        "magicCapacity": 22,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.1,
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/shiny",
-            "tint": "gold"
-        }]
-    },
-    {
-        "key": "butt/copper",
-        "durability": 18,
-        "magicCapacity": 13,
-        "integrity": 0,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "copper"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/tin",
-        "durability": 15,
-        "magicCapacity": 12,
-        "integrity": 0,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "tin"
-        }]
-    },
-    {
-        "key": "butt/silver",
-        "durability": 17,
-        "magicCapacity": 21,
-        "integrity": 0,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/shiny",
-            "tint": "silver"
-        }]
-    },
-    {
-        "key": "butt/nickel",
-        "durability": 31,
-        "magicCapacity": 12,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "nickel"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/lead",
-        "durability": 16,
-        "magicCapacity": 11,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.3,
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "lead"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/bronze",
-        "durability": 47,
-        "magicCapacity": 13,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "bronze"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/electrum",
-        "durability": 8,
-        "magicCapacity": 24,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "electrum"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/steel",
-        "durability": 53,
-        "magicCapacity": 11,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.25,
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "steel"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/thaumium",
-        "durability": 61,
-        "magicCapacity": 25,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.23,
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "thaumium"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/ironwood",
-        "durability": 66,
-        "magicCapacity": 18,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.25,
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/metal",
-            "tint": "ironwood"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/steeleaf",
-        "durability": 15,
-        "magicCapacity": 15,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.15,
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/steeleaf"
-        }]
-    },
-    {
-        "key": "butt/fierymetal",
-        "durability": 235,
-        "magicCapacity": 12,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.22,
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/fierymetal"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
-        "key": "butt/knightmetal",
-        "durability": 86,
-        "magicCapacity": 12,
-        "integrity": -1,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/knightmetal",
-            "tint": "knightmetal"
-        }],
-        "capabilities": {
-            "axe": [1, 2]
-        }
-    },
-    {
-        "key": "butt/knightmetal2",
-        "durability": 86,
-        "integrity": -1,
-        "magicCapacity": 12,
-        "damage": 1,
-        "attackSpeed": -0.2,
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 160
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/butt/knightmetal2",
-            "tint": "knightmetal"
-        }],
-        "capabilities": {
-            "hammer": 1
-        }
-    }
-]
+    ]
+}

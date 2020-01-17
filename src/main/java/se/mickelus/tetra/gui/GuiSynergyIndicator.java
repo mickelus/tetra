@@ -39,7 +39,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
     public void update(ItemStack itemStack, ItemModule module) {
         String moduleKey = module.getUnlocalizedName();
-        String moduleVariant = module.getData(itemStack).key;
+        String moduleVariant = module.getVariantData(itemStack).key;
 
         boolean hasActive = alwaysShowStats;
 

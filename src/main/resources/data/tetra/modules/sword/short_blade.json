@@ -1,437 +1,452 @@
-[
-    {
-        "key": "short_blade/oak",
-        "durability": 40,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 1,
-        "attackSpeed": 2.2,
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 32
+{
+    "replace": true,
+    "slots": ["sword/blade"],
+    "type": "tetra:basic_major_module",
+    "improvements": [
+        "tetra:sword/blade/short_blade",
+        "tetra:sword/blade/serrated",
+        "tetra:sword/blade/hooked",
+        "tetra:sword/blade/tempered",
+        "tetra:sword/blade/shared",
+        "tetra:sword/blade/shared_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "short_blade/oak",
+            "durability": 40,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 1,
+            "attackSpeed": 2.2,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint":"oak"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/spruce",
+            "durability": 40,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 1,
+            "attackSpeed": 2.4,
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "spruce"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint":"oak"
-        }]
-    },
-    {
-        "key": "short_blade/spruce",
-        "durability": 40,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 1,
-        "attackSpeed": 2.4,
-        "glyph": {
-            "tint": "spruce_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/birch",
+            "durability": 50,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 1,
+            "attackSpeed": 2.2,
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "birch"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/jungle",
+            "durability": 40,
+            "integrity": -1,
+            "magicCapacity": 17,
+            "damage": 2,
+            "attackSpeed": 1.6,
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "jungle"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "spruce"
-        }]
-    },
-    {
-        "key": "short_blade/birch",
-        "durability": 50,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 1,
-        "attackSpeed": 2.2,
-        "glyph": {
-            "tint": "birch_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/acacia",
+            "durability": 50,
+            "integrity": -2,
+            "magicCapacity": 15,
+            "damage": 2,
+            "attackSpeed": 2.6,
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "acacia"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/dark_oak",
+            "durability": 40,
+            "integrity": -1,
+            "magicCapacity": 17,
+            "damage": 1,
+            "attackSpeed": 2.4,
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "dark_oak"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "birch"
-        }]
-    },
-    {
-        "key": "short_blade/jungle",
-        "durability": 40,
-        "integrity": -1,
-        "magicCapacity": 17,
-        "damage": 2,
-        "attackSpeed": 1.6,
-        "glyph": {
-            "tint": "jungle_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/flint",
+            "durability": 66,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 3,
+            "attackSpeed": 1.8,
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/crude",
+                "tint": "flint"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/iron",
+            "durability": 120,
+            "integrity": -1,
+            "magicCapacity": 14,
+            "damage": 4,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "iron"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "jungle"
-        }]
-    },
-    {
-        "key": "short_blade/acacia",
-        "durability": 50,
-        "integrity": -2,
-        "magicCapacity": 15,
-        "damage": 2,
-        "attackSpeed": 2.6,
-        "glyph": {
-            "tint": "acacia_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/gold",
+            "durability": 10,
+            "integrity": -1,
+            "magicCapacity": 22,
+            "damage": 4,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/shiny",
+                "tint": "gold"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/prismarine",
+            "durability": 140,
+            "integrity": -3,
+            "magicCapacity": 17,
+            "damage": 5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "prismarine_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/grainy",
+                "tint": "prismarine"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "acacia"
-        }]
-    },
-    {
-        "key": "short_blade/dark_oak",
-        "durability": 40,
-        "integrity": -1,
-        "magicCapacity": 17,
-        "damage": 1,
-        "attackSpeed": 2.4,
-        "glyph": {
-            "tint": "dark_oak_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/copper",
+            "durability": 85,
+            "integrity": 0,
+            "magicCapacity": 13,
+            "damage": 4,
+            "attackSpeed": 1.4,
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "copper"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/tin",
+            "durability": 77,
+            "integrity": 0,
+            "magicCapacity": 12,
+            "damage": 4,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "tin"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "dark_oak"
-        }]
-    },
-    {
-        "key": "short_blade/flint",
-        "durability": 66,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 3,
-        "attackSpeed": 1.8,
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/silver",
+            "durability": 36,
+            "integrity": -1,
+            "magicCapacity": 21,
+            "damage": 4,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/shiny",
+                "tint": "silver"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/nickel",
+            "durability": 133,
+            "integrity": -1,
+            "magicCapacity": 12,
+            "damage": 5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "nickel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/crude",
-            "tint": "flint"
-        }]
-    },
-    {
-        "key": "short_blade/iron",
-        "durability": 120,
-        "integrity": -1,
-        "magicCapacity": 14,
-        "damage": 4,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/lead",
+            "durability": 75,
+            "integrity": -1,
+            "magicCapacity": 11,
+            "damage": 5.5,
+            "attackSpeed": 1,
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "lead"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/bronze",
+            "durability": 201,
+            "integrity": 0,
+            "magicCapacity": 13,
+            "damage": 4.5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "bronze"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "iron"
-        }]
-    },
-    {
-        "key": "short_blade/gold",
-        "durability": 10,
-        "integrity": -1,
-        "magicCapacity": 22,
-        "damage": 4,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/electrum",
+            "durability": 41,
+            "integrity": -1,
+            "magicCapacity": 24,
+            "damage": 4,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/shiny",
+                "tint": "electrum"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/steel",
+            "durability": 311,
+            "integrity": -1,
+            "magicCapacity": 11,
+            "damage": 5.5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "steel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/shiny",
-            "tint": "gold"
-        }]
-    },
-    {
-        "key": "short_blade/prismarine",
-        "durability": 140,
-        "integrity": -3,
-        "magicCapacity": 17,
-        "damage": 5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "prismarine_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/thaumium",
+            "durability": 281,
+            "integrity": -1,
+            "magicCapacity": 25,
+            "damage": 5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "thaumium"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/ironwood",
+            "durability": 260,
+            "integrity": -1,
+            "magicCapacity": 18,
+            "damage": 4.5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/ironwood"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/grainy",
-            "tint": "prismarine"
-        }]
-    },
-    {
-        "key": "short_blade/copper",
-        "durability": 85,
-        "integrity": 0,
-        "magicCapacity": 13,
-        "damage": 4,
-        "attackSpeed": 1.4,
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 32
+        {
+            "key": "short_blade/steeleaf",
+            "durability": 61,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 5.5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "steeleaf"
+            }]
         },
-        "capabilities": {
-            "cut": [2, 0.7]
+        {
+            "key": "short_blade/fierymetal",
+            "durability": 450,
+            "integrity": -3,
+            "magicCapacity": 12,
+            "damage": 6.5,
+            "attackSpeed": 1.5,
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/fierymetal"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "copper"
-        }]
-    },
-    {
-        "key": "short_blade/tin",
-        "durability": 77,
-        "integrity": 0,
-        "magicCapacity": 12,
-        "damage": 4,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "tin"
-        }]
-    },
-    {
-        "key": "short_blade/silver",
-        "durability": 36,
-        "integrity": -1,
-        "magicCapacity": 21,
-        "damage": 4,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/shiny",
-            "tint": "silver"
-        }]
-    },
-    {
-        "key": "short_blade/nickel",
-        "durability": 133,
-        "integrity": -1,
-        "magicCapacity": 12,
-        "damage": 5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "nickel"
-        }]
-    },
-    {
-        "key": "short_blade/lead",
-        "durability": 75,
-        "integrity": -1,
-        "magicCapacity": 11,
-        "damage": 5.5,
-        "attackSpeed": 1,
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "lead"
-        }]
-    },
-    {
-        "key": "short_blade/bronze",
-        "durability": 201,
-        "integrity": 0,
-        "magicCapacity": 13,
-        "damage": 4.5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "bronze"
-        }]
-    },
-    {
-        "key": "short_blade/electrum",
-        "durability": 41,
-        "integrity": -1,
-        "magicCapacity": 24,
-        "damage": 4,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/shiny",
-            "tint": "electrum"
-        }]
-    },
-    {
-        "key": "short_blade/steel",
-        "durability": 311,
-        "integrity": -1,
-        "magicCapacity": 11,
-        "damage": 5.5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "steel"
-        }]
-    },
-    {
-        "key": "short_blade/thaumium",
-        "durability": 281,
-        "integrity": -1,
-        "magicCapacity": 25,
-        "damage": 5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "thaumium"
-        }]
-    },
-    {
-        "key": "short_blade/ironwood",
-        "durability": 260,
-        "integrity": -1,
-        "magicCapacity": 18,
-        "damage": 4.5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/ironwood"
-        }]
-    },
-    {
-        "key": "short_blade/steeleaf",
-        "durability": 61,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 5.5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "steeleaf"
-        }]
-    },
-    {
-        "key": "short_blade/fierymetal",
-        "durability": 450,
-        "integrity": -3,
-        "magicCapacity": 12,
-        "damage": 6.5,
-        "attackSpeed": 1.5,
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/fierymetal"
-        }]
-    },
-    {
-        "key": "short_blade/knightmetal",
-        "durability": 150,
-        "integrity": -1,
-        "magicCapacity": 12,
-        "damage": 5,
-        "attackSpeed": 2.2,
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 32
-        },
-        "capabilities": {
-            "cut": [2, 0.7]
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/short/metal",
-            "tint": "knightmetal"
-        }]
-    }
-]
+        {
+            "key": "short_blade/knightmetal",
+            "durability": 150,
+            "integrity": -1,
+            "magicCapacity": 12,
+            "damage": 5,
+            "attackSpeed": 2.2,
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 32
+            },
+            "capabilities": {
+                "cut": [2, 0.7]
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/short/metal",
+                "tint": "knightmetal"
+            }]
+        }
+    ]
+}

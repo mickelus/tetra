@@ -74,7 +74,7 @@ public class ModularModelLoader {
     }
 
     public static void clearCaches() {
-        logger.info("Clearing item model cache, let's get bakin'!");
+        logger.info("Clearing item model cache, let's get bakin'");
         overrides.forEach(ModularOverrideList::clearCache);
     }
 }

@@ -4,8 +4,10 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
@@ -16,7 +18,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ItemUpgradeRegistry {
-
     private static final Logger logger = LogManager.getLogger();
 
     public static ItemUpgradeRegistry instance;
@@ -28,8 +29,6 @@ public class ItemUpgradeRegistry {
     private Map<String, RepairDefinition> repairMap;
 
     private Map<String, ItemModule> moduleMap;
-
-    private List<EnchantmentMapping> enchantmentMappings;
 
     public ItemUpgradeRegistry() {
         instance = this;
@@ -190,10 +189,10 @@ public class ItemUpgradeRegistry {
     }
 
     public ItemModule getModule(String key) {
-        return moduleMap.get(key);
+        return ModuleRegistry.instance.getModule(new ResourceLocation(TetraMod.MOD_ID, key));
     }
 
     public Collection<ItemModule> getAllModules() {
-	    return moduleMap.values();
+       return ModuleRegistry.instance.getAllModules();
     }
 }

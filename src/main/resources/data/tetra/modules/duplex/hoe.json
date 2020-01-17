@@ -1,379 +1,392 @@
-[
-    {
-        "key": "hoe/oak",
-        "durability": 20,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 2,
-        "attackSpeed": -0.45,
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 16,
-            "textureY": 32
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": ["duplex/head_left", "duplex/head_right"],
+    "slotSuffixes": ["_left", "_right"],
+    "improvements": [
+        "tetra:duplex/hoe",
+        "tetra:duplex/hoe_hone",
+        "tetra:duplex/shared_head_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "hoe/oak",
+            "durability": 20,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 2,
+            "attackSpeed": -0.45,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/crude",
+                "tint": "oak"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/crude",
-            "tint": "oak"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/cobblestone",
-        "durability": 56,
-        "integrity": -1,
-        "magicCapacity": 5,
-        "damage": 4,
-        "attackSpeed": -0.45,
-        "glyph": {
-            "tint": "cobblestone_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/cobblestone",
+            "durability": 56,
+            "integrity": -1,
+            "magicCapacity": 5,
+            "damage": 4,
+            "attackSpeed": -0.45,
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/crude",
+                "tint": "cobblestone"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/crude",
-            "tint": "cobblestone"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/flint",
-        "durability": 78,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 4,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/flint",
+            "durability": 78,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 4,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/crude",
+                "tint": "flint"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/crude",
-            "tint": "flint"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/iron",
-        "durability": 115,
-        "integrity": -2,
-        "magicCapacity": 14,
-        "damage": 4,
-        "attackSpeed": -0.1,
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/iron",
+            "durability": 115,
+            "integrity": -2,
+            "magicCapacity": 14,
+            "damage": 4,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "iron"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "iron"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/diamond",
-        "durability": 771,
-        "integrity": -2,
-        "magicCapacity": 10,
-        "damage": 4,
-        "attackSpeed": -0.1,
-        "glyph": {
-            "tint": "diamond_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/diamond",
+            "durability": 771,
+            "integrity": -2,
+            "magicCapacity": 10,
+            "damage": 4,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/shiny",
+                "tint": "diamond"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/shiny",
-            "tint": "diamond"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/gold",
-        "durability": 6,
-        "integrity": -2,
-        "magicCapacity": 22,
-        "damage": 2,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/gold",
+            "durability": 6,
+            "integrity": -2,
+            "magicCapacity": 22,
+            "damage": 2,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/shiny",
+                "tint": "gold"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/shiny",
-            "tint": "gold"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/copper",
-        "durability": 122,
-        "integrity": 0,
-        "magicCapacity": 13,
-        "damage": 2,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/copper",
+            "durability": 122,
+            "integrity": 0,
+            "magicCapacity": 13,
+            "damage": 2,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "copper"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "copper"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/tin",
-        "durability": 92,
-        "integrity": 0,
-        "magicCapacity": 12,
-        "damage": 2,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/tin",
+            "durability": 92,
+            "integrity": 0,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "tin"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "tin"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/silver",
-        "durability": 46,
-        "integrity": -1,
-        "magicCapacity": 21,
-        "damage": 4,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/silver",
+            "durability": 46,
+            "integrity": -1,
+            "magicCapacity": 21,
+            "damage": 4,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/shiny",
+                "tint": "silver"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/shiny",
-            "tint": "silver"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/nickel",
-        "durability": 230,
-        "integrity": -2,
-        "magicCapacity": 12,
-        "damage": 2,
-        "attackSpeed": -0.45,
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/nickel",
+            "durability": 230,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.45,
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "nickel"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "nickel"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/lead",
-        "durability": 65,
-        "integrity": -1,
-        "magicCapacity": 11,
-        "damage": 3,
-        "attackSpeed": -0.49,
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/lead",
+            "durability": 65,
+            "integrity": -1,
+            "magicCapacity": 11,
+            "damage": 3,
+            "attackSpeed": -0.49,
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "lead"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "lead"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/bronze",
-        "durability": 360,
-        "integrity": -1,
-        "magicCapacity": 13,
-        "damage": 4,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/bronze",
+            "durability": 360,
+            "integrity": -1,
+            "magicCapacity": 13,
+            "damage": 4,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "bronze"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "bronze"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/electrum",
-        "durability": 121,
-        "integrity": -1,
-        "magicCapacity": 24,
-        "damage": 2,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/electrum",
+            "durability": 121,
+            "integrity": -1,
+            "magicCapacity": 24,
+            "damage": 2,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "electrum"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "electrum"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/steel",
-        "durability": 328,
-        "integrity": -2,
-        "magicCapacity": 11,
-        "damage": 5,
-        "attackSpeed": -0.38,
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/steel",
+            "durability": 328,
+            "integrity": -2,
+            "magicCapacity": 11,
+            "damage": 5,
+            "attackSpeed": -0.38,
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "steel"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "steel"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/thaumium",
-        "durability": 419,
-        "integrity": -2,
-        "magicCapacity": 25,
-        "damage": 4,
-        "attackSpeed": -0.46,
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/thaumium",
+            "durability": 419,
+            "integrity": -2,
+            "magicCapacity": 25,
+            "damage": 4,
+            "attackSpeed": -0.46,
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "thaumium"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "thaumium"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/ironwood_tf",
-        "durability": 426,
-        "integrity": -2,
-        "magicCapacity": 18,
-        "damage": 2,
-        "attackSpeed": -0.36,
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/ironwood_tf",
+            "durability": 426,
+            "integrity": -2,
+            "magicCapacity": 18,
+            "damage": 2,
+            "attackSpeed": -0.36,
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/ironwood_tf"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/ironwood_tf"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/steeleaf",
-        "durability": 96,
-        "integrity": -1,
-        "magicCapacity": 15,
-        "damage": 4,
-        "attackSpeed": -0.34,
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/steeleaf",
+            "durability": 96,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 4,
+            "attackSpeed": -0.34,
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/steeleaf"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/steeleaf"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    },
-    {
-        "key": "hoe/fierymetal",
-        "durability": 602,
-        "integrity": -2,
-        "magicCapacity": 12,
-        "damage": 4,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 16,
-            "textureY": 32
+        {
+            "key": "hoe/fierymetal",
+            "durability": 602,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 4,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/fierymetal"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/fierymetal"
-        }],
-        "effects": {
-            "tilling": 1
+        {
+            "key": "hoe/knightmetal",
+            "durability": 446,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 5,
+            "attackSpeed": -0.32,
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 16,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/duplex/head/hoe/metal",
+                "tint": "knightmetal"
+            }],
+            "effects": {
+                "tilling": 1
+            }
         }
-    },
-    {
-        "key": "hoe/knightmetal",
-        "durability": 446,
-        "integrity": -2,
-        "magicCapacity": 12,
-        "damage": 5,
-        "attackSpeed": -0.32,
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 16,
-            "textureY": 32
-        },
-        "models": [{
-            "location": "tetra:items/module/duplex/head/hoe/metal",
-            "tint": "knightmetal"
-        }],
-        "effects": {
-            "tilling": 1
-        }
-    }
-]
+    ]
+}

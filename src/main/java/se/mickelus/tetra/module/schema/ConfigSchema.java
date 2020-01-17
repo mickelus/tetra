@@ -369,7 +369,7 @@ public class ConfigSchema extends BaseSchema {
                         ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
 
                         key = outcome.moduleVariant;
-                        glyph = module.getData(outcome.moduleVariant).glyph;
+                        glyph = module.getVariantData(outcome.moduleVariant).glyph;
                     } else {
                         if (outcome.improvements.size() == 1) {
                             for (String improvementKey : outcome.improvements.keySet()) {

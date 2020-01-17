@@ -1,47 +1,52 @@
-[
-    {
-        "key": "belt/rope",
-        "integrity": 1,
-        "glyph": {
-            "tint": "7a6758",
-            "textureX": 0,
-            "textureY": 16
+{
+    "replace": true,
+    "type": "tetra:basic_module",
+    "slots": ["toolbelt/belt"],
+    "variants": [
+        {
+            "key": "belt/rope",
+            "integrity": 1,
+            "glyph": {
+                "tint": "7a6758",
+                "textureX": 0,
+                "textureY": 16
+            }
+        },
+        {
+            "key": "belt/sash",
+            "integrity": 2,
+            "glyph": {
+                "tint": "9f9895",
+                "textureX": 0,
+                "textureY": 16
+            }
+        },
+        {
+            "key": "belt/leather",
+            "integrity": 3,
+            "glyph": {
+                "tint": "866526",
+                "textureX": 0,
+                "textureY": 16
+            }
+        },
+        {
+            "key": "belt/buckled",
+            "integrity": 5,
+            "glyph": {
+                "tint": "6e6e6e",
+                "textureX": 0,
+                "textureY": 16
+            }
+        },
+        {
+            "key": "belt/inlaid",
+            "integrity": 8,
+            "glyph": {
+                "tint": "563d4a",
+                "textureX": 0,
+                "textureY": 16
+            }
         }
-    },
-    {
-        "key": "belt/sash",
-        "integrity": 2,
-        "glyph": {
-            "tint": "9f9895",
-            "textureX": 0,
-            "textureY": 16
-        }
-    },
-    {
-        "key": "belt/leather",
-        "integrity": 3,
-        "glyph": {
-            "tint": "866526",
-            "textureX": 0,
-            "textureY": 16
-        }
-    },
-    {
-        "key": "belt/buckled",
-        "integrity": 5,
-        "glyph": {
-            "tint": "6e6e6e",
-            "textureX": 0,
-            "textureY": 16
-        }
-    },
-    {
-        "key": "belt/inlaid",
-        "integrity": 8,
-        "glyph": {
-            "tint": "563d4a",
-            "textureX": 0,
-            "textureY": 16
-        }
-    }
-]
+    ]
+}

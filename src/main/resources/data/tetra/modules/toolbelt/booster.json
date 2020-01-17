@@ -1,13 +1,19 @@
-[
-    {
-        "key": "booster/iron",
-        "integrity": -4,
-        "glyph": {
-            "tint": "ffffff",
-            "textureX": 240
-        },
-        "effects": {
-            "booster": 1
+{
+    "replace": true,
+    "type": "tetra:toolbelt_module",
+    "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+    "slotSuffixes": ["_slot1", "_slot2", "_slot3"],
+    "variants": [
+        {
+            "key": "booster/iron",
+            "integrity": -4,
+            "glyph": {
+                "tint": "ffffff",
+                "textureX": 240
+            },
+            "effects": {
+                "booster": 1
+            }
         }
-    }
-]
+    ]
+}

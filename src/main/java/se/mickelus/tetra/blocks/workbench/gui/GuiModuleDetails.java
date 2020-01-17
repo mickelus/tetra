@@ -78,7 +78,7 @@ public class GuiModuleDetails extends GuiElement {
             title.setString(module.getName(itemStack));
             description.setString(module.getDescription(itemStack));
 
-            GlyphData glyphData = module.getData(itemStack).glyph;
+            GlyphData glyphData = module.getVariantData(itemStack).glyph;
 
             if (module instanceof ItemModuleMajor) {
                 glyph.addChild(new GuiTexture(0, 0, 15, 15, 52, 0, GuiTextures.workbench));
@@ -94,7 +94,7 @@ public class GuiModuleDetails extends GuiElement {
 
             synergyIndicator.update(itemStack, module);
 
-            RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getData(itemStack).key);
+            RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getVariantData(itemStack).key);
             boolean canRepair = repairDefinition != null && repairDefinition.material.getApplicableItemstacks().length > 0;
             if (canRepair) {
                 repairMaterial.setItem(repairDefinition.material.getApplicableItemstacks()[0]);

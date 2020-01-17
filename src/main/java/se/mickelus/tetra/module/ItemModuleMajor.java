@@ -100,7 +100,7 @@ public abstract class ItemModuleMajor extends ItemModule {
             return 0;
         }
 
-        int integrity = getData(itemStack).integrity;
+        int integrity = getVariantData(itemStack).integrity;
         if (integrity <= -4 || integrity >= 6) {
             return settleMax;
         } else if (integrity != 0) {
@@ -116,8 +116,8 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
-        if (tag.contains(slotKey + ":" + improvementKey)) {
-            return tag.getInt(slotKey + ":" + improvementKey);
+        if (tag.contains(slotTagKey + ":" + improvementKey)) {
+            return tag.getInt(slotTagKey + ":" + improvementKey);
         }
         return -1;
     }
@@ -126,8 +126,8 @@ public abstract class ItemModuleMajor extends ItemModule {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         return Arrays.stream(improvements)
                 .filter(improvement -> improvementKey.equals(improvement.key))
-                .filter(improvement -> tag.contains(slotKey + ":" + improvement.key))
-                .filter(improvement -> improvement.level == tag.getInt(slotKey + ":" + improvement.key))
+                .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
+                .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
                 .findAny()
                 .orElse(null);
     }
@@ -135,8 +135,8 @@ public abstract class ItemModuleMajor extends ItemModule {
     public ImprovementData[] getImprovements(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         return Arrays.stream(improvements)
-            .filter(improvement -> tag.contains(slotKey + ":" + improvement.key))
-            .filter(improvement -> improvement.level == tag.getInt(slotKey + ":" + improvement.key))
+            .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
+            .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
             .toArray(ImprovementData[]::new);
     }
 
@@ -154,7 +154,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public void addImprovement(ItemStack itemStack, String improvementKey, int level) {
         removeCollidingImprovements(itemStack, improvementKey, level);
-        NBTHelper.getTag(itemStack).putInt(slotKey + ":" + improvementKey, level);
+        NBTHelper.getTag(itemStack).putInt(slotTagKey + ":" + improvementKey, level);
     }
 
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
@@ -172,11 +172,11 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .findFirst()
                 .ifPresent(group -> Arrays.stream(getImprovements(itemStack))
                         .filter(improvement -> group.equals(improvement.group))
-                        .forEach(improvement -> removeImprovement(itemStack, slotKey, improvement.key)));
+                        .forEach(improvement -> removeImprovement(itemStack, slotTagKey, improvement.key)));
     }
 
     public void removeImprovement(ItemStack itemStack, String improvement) {
-        removeImprovement(itemStack, slotKey, improvement);
+        removeImprovement(itemStack, slotTagKey, improvement);
     }
 
     public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
@@ -186,7 +186,7 @@ public abstract class ItemModuleMajor extends ItemModule {
     @Override
     public TweakData[] getTweaks(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variant = tag.getString(this.dataKey);
+        String variant = tag.getString(this.variantTagKey);
         String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.key)
                 .toArray(String[]::new);
@@ -201,7 +201,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
         CompoundNBT tag = NBTHelper.getTag(targetStack);
         Arrays.stream(improvements)
-            .map(improvement -> slotKey + ":" + improvement.key)
+            .map(improvement -> slotTagKey + ":" + improvement.key)
             .forEach(tag::remove);
 
         clearProgression(targetStack);

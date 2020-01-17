@@ -50,9 +50,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
-import se.mickelus.tetra.items.ITetraItem;
-import se.mickelus.tetra.items.ItemPredicateModular;
-import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.*;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
 import se.mickelus.tetra.items.forged.*;
@@ -60,13 +58,13 @@ import se.mickelus.tetra.items.journal.ItemJournal;
 import se.mickelus.tetra.items.sword.ItemSwordModular;
 import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.toolbelt.ToolbeltContainer;
+import se.mickelus.tetra.items.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
-import se.mickelus.tetra.module.ItemEffectHandler;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.ModuleDevCommand;
+import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
+import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.CleanseSchema;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
@@ -104,7 +102,14 @@ public class TetraMod {
 
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
 
-        new ItemUpgradeRegistry();
+        ItemUpgradeRegistry itemUpgradeRegistry = new ItemUpgradeRegistry();
+        itemUpgradeRegistry.registerSchema(new BookEnchantSchema());
+
+        ModuleRegistry moduleRegistry = new ModuleRegistry();
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_major_module"), BasicMajorModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
 
         new TetraItemGroup();
 

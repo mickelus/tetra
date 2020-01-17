@@ -1,524 +1,529 @@
-[
-    {
-        "key": "reinforced_fuller/oak",
-        "durability": 21,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+{
+    "replace": true,
+    "slots": ["sword/fuller"],
+    "type": "tetra:basic_module",
+    "variants": [
+        {
+            "key": "reinforced_fuller/oak",
+            "durability": 21,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "oak"
+            }]
         },
-        "glyph": {
-            "tint": "oak_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/spruce",
+            "durability": 16,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "spruce"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "oak"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/spruce",
-        "durability": 16,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/birch",
+            "durability": 21,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "birch"
+            }]
         },
-        "glyph": {
-            "tint": "spruce_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/jungle",
+            "durability": 21,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "jungle"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "spruce"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/birch",
-        "durability": 21,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/acacia",
+            "durability": 78,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "acacia"
+            }]
         },
-        "glyph": {
-            "tint": "birch_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/dark_oak",
+            "durability": 21,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "dark_oak"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "birch"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/jungle",
-        "durability": 21,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/cobblestone",
+            "durability": 44,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "cobblestone"
+            }]
         },
-        "glyph": {
-            "tint": "jungle_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/stone",
+            "durability": 48,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "stone_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "stone"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "jungle"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/acacia",
-        "durability": 78,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/granite",
+            "durability": 80,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "granite_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "granite"
+            }]
         },
-        "glyph": {
-            "tint": "acacia_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/diorite",
+            "durability": 42,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "diorite_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "diorite"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "acacia"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/dark_oak",
-        "durability": 21,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/andesite",
+            "durability": 38,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "andesite_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "andesite"
+            }]
         },
-        "glyph": {
-            "tint": "dark_oak_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/iron",
+            "durability": 65,
+            "integrity": 2,
+            "attackSpeed": -0.9,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "iron"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "dark_oak"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/cobblestone",
-        "durability": 44,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/flint",
+            "durability": 55,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "flint"
+            }]
         },
-        "glyph": {
-            "tint": "cobblestone_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/gold",
+            "durability": 14,
+            "integrity": 1,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "gold"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "cobblestone"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/stone",
-        "durability": 48,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/diamond",
+            "durability": 98,
+            "integrity": 2,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "diamond"
+            }]
         },
-        "glyph": {
-            "tint": "stone_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/obsidian",
+            "durability": 154,
+            "integrity": 3,
+            "attackSpeed": -1,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "obsidian_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "obsidian"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "stone"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/granite",
-        "durability": 80,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/copper",
+            "durability": 96,
+            "integrity": 1,
+            "attackSpeed": -0.5,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "copper"
+            }]
         },
-        "glyph": {
-            "tint": "granite_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/tin",
+            "durability": 74,
+            "integrity": 1,
+            "attackSpeed": -0.5,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "tin"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "granite"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/diorite",
-        "durability": 42,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/silver",
+            "durability": 21,
+            "integrity": 1,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "silver"
+            }]
         },
-        "glyph": {
-            "tint": "diorite_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/nickel",
+            "durability": 74,
+            "integrity": 2,
+            "attackSpeed": -0.9,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "nickel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "diorite"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/andesite",
-        "durability": 38,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/lead",
+            "durability": 129,
+            "integrity": 2,
+            "attackSpeed": -0.9,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "lead"
+            }]
         },
-        "glyph": {
-            "tint": "andesite_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/bronze",
+            "durability": 101,
+            "integrity": 2,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "bronze"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "andesite"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/iron",
-        "durability": 65,
-        "integrity": 2,
-        "attackSpeed": -0.9,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/electrum",
+            "durability": 16,
+            "integrity": 2,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "electrum"
+            }]
         },
-        "glyph": {
-            "tint": "iron_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/steel",
+            "durability": 122,
+            "integrity": 3,
+            "attackSpeed": -0.7,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "steel"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "iron"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/flint",
-        "durability": 55,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/thaumium",
+            "durability": 78,
+            "integrity": 2,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "thaumium"
+            }]
         },
-        "glyph": {
-            "tint": "flint_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/ironwood",
+            "durability": 91,
+            "integrity": 2,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "ironwood"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "flint"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/gold",
-        "durability": 14,
-        "integrity": 1,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
+        {
+            "key": "reinforced_fuller/steeleaf",
+            "durability": 28,
+            "integrity": 1,
+            "attackSpeed": -0.4,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "steeleaf"
+            }]
         },
-        "glyph": {
-            "tint": "gold_glyph",
-            "textureX": 72,
-            "textureY": 16
+        {
+            "key": "reinforced_fuller/fierymetal",
+            "durability": 99,
+            "integrity": 3,
+            "attackSpeed": -0.9,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "fierymetal"
+            }]
         },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "gold"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/diamond",
-        "durability": 98,
-        "integrity": 2,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "diamond_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "diamond"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/obsidian",
-        "durability": 154,
-        "integrity": 3,
-        "attackSpeed": -1,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "obsidian_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "obsidian"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/copper",
-        "durability": 96,
-        "integrity": 1,
-        "attackSpeed": -0.5,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "copper_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "copper"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/tin",
-        "durability": 74,
-        "integrity": 1,
-        "attackSpeed": -0.5,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "tin_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "tin"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/silver",
-        "durability": 21,
-        "integrity": 1,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "silver_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "silver"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/nickel",
-        "durability": 74,
-        "integrity": 2,
-        "attackSpeed": -0.9,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "nickel_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "nickel"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/lead",
-        "durability": 129,
-        "integrity": 2,
-        "attackSpeed": -0.9,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "lead_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "lead"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/bronze",
-        "durability": 101,
-        "integrity": 2,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "bronze_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "bronze"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/electrum",
-        "durability": 16,
-        "integrity": 2,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "electrum_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "electrum"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/steel",
-        "durability": 122,
-        "integrity": 3,
-        "attackSpeed": -0.7,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "steel_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "steel"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/thaumium",
-        "durability": 78,
-        "integrity": 2,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "thaumium_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "thaumium"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/ironwood",
-        "durability": 91,
-        "integrity": 2,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "ironwood_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "ironwood"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/steeleaf",
-        "durability": 28,
-        "integrity": 1,
-        "attackSpeed": -0.4,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "steeleaf_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "steeleaf"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/fierymetal",
-        "durability": 99,
-        "integrity": 3,
-        "attackSpeed": -0.9,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "fierymetal_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "fierymetal"
-        }]
-    },
-    {
-        "key": "reinforced_fuller/knightmetal",
-        "durability": 77,
-        "integrity": 3,
-        "attackSpeed": -0.6,
-        "effects": {
-            "unbreaking": 1
-        },
-        "glyph": {
-            "tint": "knightmetal_glyph",
-            "textureX": 72,
-            "textureY": 16
-        },
-        "models": [{
-            "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
-            "tint": "knightmetal"
-        }]
-    }
-]
+        {
+            "key": "reinforced_fuller/knightmetal",
+            "durability": 77,
+            "integrity": 3,
+            "attackSpeed": -0.6,
+            "effects": {
+                "unbreaking": 1
+            },
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 72,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/fuller/reinforced_fuller/default",
+                "tint": "knightmetal"
+            }]
+        }
+    ]
+}

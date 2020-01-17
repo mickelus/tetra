@@ -1,18 +1,9 @@
 package se.mickelus.tetra.items.sword;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.client.model.ModularModelLoader;
-import se.mickelus.tetra.items.BasicMajorModule;
-import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.Priority;
-import se.mickelus.tetra.module.schema.BookEnchantSchema;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
@@ -25,7 +16,6 @@ public class ItemSwordModular extends ItemModularHandheld {
     public final static String guardKey = "sword/guard";
     public final static String pommelKey = "sword/pommel";
     public final static String fullerKey = "sword/fuller";
-
 
     public static final String unlocalizedName = "sword_modular";
 
@@ -48,74 +38,6 @@ public class ItemSwordModular extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        ItemModuleMajor basicBladeModule = new BasicMajorModule(bladeKey, "sword/basic_blade",
-                "sword/blade/basic_blade",
-                "sword/blade/serrated",
-                "sword/blade/hooked",
-                "sword/blade/tempered",
-                "sword/blade/shared",
-                "sword/blade/shared_hone",
-                "settling_improvements",
-                "destabilization_improvements"
-        );
-        new BookEnchantSchema(basicBladeModule);
-
-        ItemModuleMajor shortBladeModule = new BasicMajorModule(bladeKey, "sword/short_blade",
-                "sword/blade/short_blade",
-                "sword/blade/serrated",
-                "sword/blade/hooked",
-                "sword/blade/tempered",
-                "sword/blade/shared",
-                "sword/blade/shared_hone",
-                "settling_improvements",
-                "destabilization_improvements"
-        );
-        new BookEnchantSchema(shortBladeModule);
-
-        ItemModuleMajor heavyBladeModule = new BasicMajorModule(bladeKey, "sword/heavy_blade",
-                "sword/blade/heavy_blade",
-                "sword/blade/serrated",
-                "sword/blade/tempered",
-                "sword/blade/shared",
-                "sword/blade/shared_hone",
-                "settling_improvements",
-                "destabilization_improvements"
-        );
-        new BookEnchantSchema(heavyBladeModule);
-
-        ItemModuleMajor macheteModule = new BasicMajorModule(bladeKey, "sword/machete",
-                "sword/blade/machete",
-                "sword/blade/serrated",
-                "sword/blade/tempered",
-                "sword/blade/shared",
-                "sword/blade/shared_hone",
-                "settling_improvements",
-                "destabilization_improvements"
-        );
-        new BookEnchantSchema(macheteModule);
-
-        ItemModuleMajor hiltModule = new BasicMajorModule(hiltKey, "sword/basic_hilt",
-                "sword/hilt/shared",
-                "sword/hilt/shared_hone",
-                "settling_improvements",
-                "destabilization_improvements"
-        )
-                .withRenderLayer(Priority.LOWER);
-        new BookEnchantSchema(hiltModule);
-
-        new BasicModule(guardKey, "sword/makeshift_guard");
-        new BasicModule(guardKey, "sword/wide_guard");
-        new BasicModule(guardKey, "sword/forefinger_ring");
-        new BasicModule(guardKey, "sword/binding", "sword/binding");
-        new BasicModule(guardKey, "sword/socket");
-
-        new BasicModule(pommelKey, "sword/decorative_pommel");
-        new BasicModule(pommelKey, "sword/counterweight");
-        new BasicModule(pommelKey, "sword/grip_loop");
-
-        new BasicModule(fullerKey, "sword/reinforced_fuller")
-                .withRenderLayer(Priority.HIGHER);
-
         new RepairSchema(this);
         RemoveSchema.registerRemoveSchemas(this);
     }
@@ -123,10 +45,5 @@ public class ItemSwordModular extends ItemModularHandheld {
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
         this.honeBase = honeBase;
         this.honeIntegrityMultiplier = honeIntegrityMultiplier;
-    }
-
-    @Override
-    public boolean canHarvestBlock(BlockState blockState) {
-        return blockState.getBlock() == Blocks.COBWEB;
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.loot.LootContext;
@@ -52,6 +53,7 @@ public class DataManager {
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
+            .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
@@ -60,11 +62,11 @@ public class DataManager {
             .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
             .create();
 
-    public static DataStore<ModuleData[]> moduleData = new DataStore<>(gson, "modules", ModuleData[].class);
+    public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
+    public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
     public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",
             EnchantmentMapping[].class);
-    public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
     public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
             ReplacementDefinition[].class);
@@ -75,7 +77,7 @@ public class DataManager {
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private DataStore[] dataStores = new DataStore[] { moduleData, improvementData, enchantmentData, tweakData, synergyData,
+    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
             replacementData, schemaData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;

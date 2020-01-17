@@ -1,46 +1,53 @@
-[
-    {
-        "key": "quiver/forged_mesh",
-        "integrity": -2,
-        "effects": {
-            "quiverSlot": 8
+{
+    "replace": true,
+    "type": "tetra:toolbelt_module",
+    "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
+    "slotSuffixes": ["_slot1", "_slot2", "_slot3"],
+    "improvements": ["tetra:toolbelt/quiver"],
+    "variants": [
+        {
+            "key": "quiver/forged_mesh",
+            "integrity": -2,
+            "effects": {
+                "quiverSlot": 8
+            },
+            "glyph": {
+                "tint": "383838",
+                "textureX": 224
+            }
         },
-        "glyph": {
-            "tint": "383838",
-            "textureX": 224
-        }
-    },
-    {
-        "key": "quiver/leather",
-        "integrity": -3,
-        "effects": {
-            "quiverSlot": 9
+        {
+            "key": "quiver/leather",
+            "integrity": -3,
+            "effects": {
+                "quiverSlot": 9
+            },
+            "glyph": {
+                "tint": "fefefe",
+                "textureX": 224
+            }
         },
-        "glyph": {
-            "tint": "fefefe",
-            "textureX": 224
-        }
-    },
-    {
-        "key": "quiver/wool",
-        "integrity": -1,
-        "effects": {
-            "quiverSlot": 6
+        {
+            "key": "quiver/wool",
+            "integrity": -1,
+            "effects": {
+                "quiverSlot": 6
+            },
+            "glyph": {
+                "tint": "fefefe",
+                "textureX": 224
+            }
         },
-        "glyph": {
-            "tint": "fefefe",
-            "textureX": 224
+        {
+            "key": "quiver/hide",
+            "integrity": 0,
+            "effects": {
+                "quiverSlot": 4
+            },
+            "glyph": {
+                "tint": "fefefe",
+                "textureX": 224
+            }
         }
-    },
-    {
-        "key": "quiver/hide",
-        "integrity": 0,
-        "effects": {
-            "quiverSlot": 4
-        },
-        "glyph": {
-            "tint": "fefefe",
-            "textureX": 224
-        }
-    }
-]
+    ]
+}

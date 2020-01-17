@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
 
 public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonElement>> {
     private static final Logger logger = LogManager.getLogger();
-    private static final int jsonExtLength = ".json".length();
+    protected static final int jsonExtLength = ".json".length();
 
-    private Gson gson;
-    private String directory;
-    private Class<V> dataClass;
+    protected Gson gson;
+    protected String directory;
+    protected Class<V> dataClass;
 
-    private Map<ResourceLocation, JsonElement> rawData;
-    private Map<ResourceLocation, V> dataMap;
-    private List<Runnable> listeners;
+    protected Map<ResourceLocation, JsonElement> rawData;
+    protected Map<ResourceLocation, V> dataMap;
+    protected List<Runnable> listeners;
 
     public DataStore(Gson gson, String directory, Class<V> dataClass) {
         this.gson = gson;

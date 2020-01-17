@@ -8,40 +8,43 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class BasicMajorModule extends ItemModuleMajor {
-    public BasicMajorModule(String slotKey, String moduleKey, String ... improvementKeys) {
-        super(slotKey, moduleKey);
 
-        DataManager.moduleData.onReload(() -> data = DataManager.moduleData.getData(new ResourceLocation(TetraMod.MOD_ID, moduleKey)));
+    public BasicMajorModule(ResourceLocation identifier, ModuleData data) {
+        super(data.slots[0], identifier.getPath());
 
-        if (improvementKeys.length > 0) {
-            DataManager.improvementData.onReload(() -> {
-                improvements = Arrays.stream(improvementKeys)
-                        .map(key -> DataManager.improvementData.getData(new ResourceLocation(TetraMod.MOD_ID, key)))
-                        .filter(Objects::nonNull)
-                        .flatMap(Arrays::stream)
-                        .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
-                        .toArray(ImprovementData[]::new);
+        variantData = data.variants;
 
+        renderLayer = data.renderLayer;
 
-                settleMax = Arrays.stream(improvements)
-                        .filter(data -> data.key.equals(settleImprovement))
-                        .mapToInt(ImprovementData::getLevel)
-                        .max()
-                        .orElse(0);
-            });
+        if (data.improvements.length > 0) {
+            improvements = Arrays.stream(data.improvements)
+                    .map(key -> DataManager.improvementData.getData(key))
+                    .filter(Objects::nonNull)
+                    .flatMap(Arrays::stream)
+                    .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
+                    .toArray(ImprovementData[]::new);
+
+            settleMax = Arrays.stream(improvements)
+                    .filter(improvement -> improvement.key.equals(settleImprovement))
+                    .mapToInt(ImprovementData::getLevel)
+                    .max()
+                    .orElse(0);
         }
 
-        ItemUpgradeRegistry.instance.registerModule(moduleKey, this);
-    }
-
-    public BasicMajorModule withRenderLayer(Priority layer) {
-        this.renderLayer = layer;
-        return this;
+        if (data.tweakKey != null) {
+            TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
+            if (tweaks != null) {
+                this.tweaks = tweaks;
+            } else {
+                this.tweaks = new TweakData[0];
+            }
+        }
     }
 }

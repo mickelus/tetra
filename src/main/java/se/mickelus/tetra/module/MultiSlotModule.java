@@ -7,6 +7,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
@@ -18,37 +19,41 @@ public class MultiSlotModule extends ItemModuleMajor {
 
     protected String unlocalizedName;
 
-    public MultiSlotModule(String slotKey, String moduleKey, String slotSuffix, String ... improvementKeys) {
-        super(slotKey, moduleKey + slotSuffix);
+    public MultiSlotModule(ResourceLocation identifier, ModuleData data) {
+        super(data.slots[0], identifier.getPath());
 
-        this.slotSuffix = slotSuffix;
+        slotSuffix = data.slotSuffixes[0];
 
-        this.unlocalizedName = moduleKey;
+        // strip the suffix from the unlocalized name
+        unlocalizedName = identifier.getPath().substring(0, identifier.getPath().length() - data.slotSuffixes[0].length());
 
-        this.dataKey = moduleKey + slotSuffix + "_material";
+        renderLayer = data.renderLayer;
 
-        // this uses the unsuffixed module key, to use the same data for both sides
-        DataManager.moduleData.onReload(() -> data = DataManager.moduleData.getData(new ResourceLocation(TetraMod.MOD_ID, moduleKey)));
+        variantData = data.variants;
 
-        if (improvementKeys.length > 0) {
-            DataManager.improvementData.onReload(() -> {
-                improvements = Arrays.stream(improvementKeys)
-                        .map(key -> DataManager.improvementData.getData(new ResourceLocation(TetraMod.MOD_ID, key)))
-                        .filter(Objects::nonNull)
-                        .flatMap(Arrays::stream)
-                        .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
-                        .toArray(ImprovementData[]::new);
+        if (data.improvements.length > 0) {
+            improvements = Arrays.stream(data.improvements)
+                    .map(key -> DataManager.improvementData.getData(key))
+                    .filter(Objects::nonNull)
+                    .flatMap(Arrays::stream)
+                    .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
+                    .toArray(ImprovementData[]::new);
 
-                settleMax = Arrays.stream(improvements)
-                        .filter(data -> data.key.equals(settleImprovement))
-                        .mapToInt(ImprovementData::getLevel)
-                        .max()
-                        .orElse(0);
-            });
+            settleMax = Arrays.stream(improvements)
+                    .filter(improvement -> improvement.key.equals(settleImprovement))
+                    .mapToInt(ImprovementData::getLevel)
+                    .max()
+                    .orElse(0);
         }
 
-        // this uses the suffixed module key, to avoid passing the slot key to every method that makes use of data
-        ItemUpgradeRegistry.instance.registerModule(this.moduleKey, this);
+        if (data.tweakKey != null) {
+            TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
+            if (tweaks != null) {
+                this.tweaks = tweaks;
+            } else {
+                this.tweaks = new TweakData[0];
+            }
+        }
     }
 
     @Override
