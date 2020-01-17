@@ -15,9 +15,4 @@ public class ToolbeltModule extends MultiSlotModule {
     public void postRemove(ItemStack targetStack, PlayerEntity player) {
         ToolbeltHelper.emptyOverflowSlots(targetStack, player);
     }
-
-    @Override
-    public ResourceLocation[] getTextures(ItemStack itemStack) {
-        return new ResourceLocation[0];
-    }
 }

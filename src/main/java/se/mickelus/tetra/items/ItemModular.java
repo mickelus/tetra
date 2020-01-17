@@ -195,14 +195,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getTextures(itemStack)))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
-    }
-
-    @Override
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))

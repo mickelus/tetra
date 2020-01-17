@@ -10,7 +10,10 @@
                 "tint": "7a6758",
                 "textureX": 0,
                 "textureY": 16
-            }
+            },
+            "models": [{
+                "location":"tetra:items/module/toolbelt/belt/rope"
+            }]
         },
         {
             "key": "belt/sash",
@@ -19,7 +22,10 @@
                 "tint": "9f9895",
                 "textureX": 0,
                 "textureY": 16
-            }
+            },
+            "models": [{
+                "location": "tetra:items/module/toolbelt/belt/sash"
+            }]
         },
         {
             "key": "belt/leather",
@@ -28,7 +34,10 @@
                 "tint": "866526",
                 "textureX": 0,
                 "textureY": 16
-            }
+            },
+            "models": [{
+                "location": "tetra:items/module/toolbelt/belt/leather"
+            }]
         },
         {
             "key": "belt/buckled",
@@ -37,7 +46,10 @@
                 "tint": "6e6e6e",
                 "textureX": 0,
                 "textureY": 16
-            }
+            },
+            "models": [{
+                "location": "tetra:items/module/toolbelt/belt/buckled"
+            }]
         },
         {
             "key": "belt/inlaid",
@@ -46,7 +58,10 @@
                 "tint": "563d4a",
                 "textureX": 0,
                 "textureY": 16
-            }
+            },
+            "models": [{
+                "location": "tetra:items/module/toolbelt/belt/inlaid"
+            }]
         }
     ]
 }

@@ -61,8 +61,11 @@ public class MultiSlotModule extends ItemModuleMajor {
         return unlocalizedName;
     }
 
-    public ResourceLocation[] getTextures(ItemStack itemStack) {
-        return super.getTextures(itemStack);
+    @Override
+    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
+        return Arrays.stream(super.getImprovementModels(itemStack, tint))
+                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
+                .toArray(ModuleModel[]::new);
     }
 
     @Override

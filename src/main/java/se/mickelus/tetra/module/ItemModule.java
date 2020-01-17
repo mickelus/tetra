@@ -271,20 +271,8 @@ public abstract class ItemModule implements ICapabilityProvider {
                 .reduce(getVariantData(itemStack).attackSpeedMultiplier, (a, b) -> a * b);
     }
 
-    public ResourceLocation[] getTextures(ItemStack itemStack) {
-        return new ResourceLocation[] { getVariantData(itemStack).getTextureLocation() };
-    }
-
     public ModuleModel[] getModels(ItemStack itemStack) {
-        ModuleVariantData data = getVariantData(itemStack);
-
-        if (data.models == null || data.models.length == 0) {
-            return Arrays.stream(getTextures(itemStack))
-                    .map(ModuleModel::new)
-                    .toArray(ModuleModel[]::new);
-        }
-
-        return data.models;
+        return getVariantData(itemStack).models;
     }
 
     public Priority getRenderLayer() {

@@ -357,27 +357,6 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .reduce(1, (a, b) -> a * b);
     }
 
-    protected ResourceLocation[] getAllImprovementTextures() {
-        return Arrays.stream(improvements)
-                .filter(improvement -> improvement.textured)
-                .map(improvement -> "items/module/" + improvement.key)
-                .map(resourceString -> new ResourceLocation(TetraMod.MOD_ID, resourceString))
-                .toArray(ResourceLocation[]::new);
-    }
-
-    protected ResourceLocation[] getImprovementTextures(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .filter(improvement -> improvement.textured)
-                .map(improvement -> "items/module/" + improvement.key)
-                .map(resourceString -> new ResourceLocation(TetraMod.MOD_ID, resourceString))
-                .toArray(ResourceLocation[]::new);
-    }
-
-    @Override
-    public ResourceLocation[] getTextures(ItemStack itemStack) {
-        return ArrayUtils.addAll(super.getTextures(itemStack), getImprovementTextures(itemStack));
-    }
-
     protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.textured)

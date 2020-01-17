@@ -30,6 +30,5 @@ public interface IItemModular {
      */
     public void assemble(ItemStack itemStack, World world);
 
-    public ImmutableList<ResourceLocation> getTextures(ItemStack itemStack);
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack);
 }
