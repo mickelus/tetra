@@ -183,7 +183,7 @@
             },
             "models": [{
                 "location": "tetra:items/module/sword/hilt/basic/default",
-                "tint": "iron"
+                "tint": "iron_dark"
             }]
         },
         {
