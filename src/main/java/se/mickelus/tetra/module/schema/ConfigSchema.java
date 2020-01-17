@@ -108,12 +108,12 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
+    public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
         return getOutcomeFromMaterial(materialStack, index).isPresent();
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
         if (getNumMaterialSlots() == 0) {
             return true;
         }
@@ -123,7 +123,7 @@ public class ConfigSchema extends BaseSchema {
         }
 
         for (int i = 0; i < definition.materialSlotCount; i++) {
-            if (!acceptsMaterial(itemStack, i, materials[i])
+            if (!acceptsMaterial(itemStack, itemSlot, i, materials[i])
                     || materials[i].getCount() < getOutcomeFromMaterial(materials[i], i).map(outcome -> outcome.material.count).orElse(0)) {
                 return false;
             }
@@ -159,7 +159,7 @@ public class ConfigSchema extends BaseSchema {
         if (definition.materialRevealSlot > -1) {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 4; y++) {
-                    if (acceptsMaterial(targetStack, definition.materialRevealSlot, player.inventory.getStackInSlot(y * 9 + x))) {
+                    if (getOutcomeFromMaterial(player.inventory.getStackInSlot(y * 9 + x), definition.materialRevealSlot).isPresent()) {
                         return true;
                     }
                 }

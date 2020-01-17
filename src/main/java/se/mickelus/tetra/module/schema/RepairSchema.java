@@ -83,7 +83,7 @@ public class RepairSchema extends BaseSchema {
     }
 
     @Override
-    public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
+    public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
             return item.getRepairMaterial(itemStack).predicate.test(materialStack);
@@ -117,8 +117,8 @@ public class RepairSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return acceptsMaterial(itemStack, 0, materials[0])
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
+        return acceptsMaterial(itemStack, itemSlot, 0, materials[0])
                 && materials[0].getCount() >= getRequiredQuantity(itemStack, 0, materials[0]);
     }
 

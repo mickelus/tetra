@@ -22,20 +22,22 @@ public interface UpgradeSchema {
      * target.
      * A slot may accept a material without a craft actually being possible using the material.
      * @param itemStack the itemstack that is to be upgraded
+     * @param itemSlot
      * @param index the index of the slot
      * @param materialStack the upgrade material
      * @return
      */
-    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack);
+    public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack);
 
     /**
      * Returns true if all material slot contain valid material of enough quantity. Craft is possible using the provided
      * materials.
      * @param itemStack the itemstack that is to be upgraded
+     * @param itemSlot
      * @param materials the materials to be used for the upgrade
      * @return
      */
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials);
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials);
 
     /**
      * Returns true if this upgrade can be applied to the given item.

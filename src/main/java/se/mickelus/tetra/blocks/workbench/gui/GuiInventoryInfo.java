@@ -9,6 +9,7 @@ import se.mickelus.tetra.module.schema.UpgradeSchema;
 public class GuiInventoryInfo extends GuiElement {
     private PlayerInventory inventory;
     private ItemStack targetStack;
+    private String slot;
     private UpgradeSchema schema;
 
     private GuiInventoryHighlight[] highlights;
@@ -48,7 +49,7 @@ public class GuiInventoryInfo extends GuiElement {
                     boolean shouldHighlight = false;
 
                     for (int materialIndex = 0; materialIndex < schema.getNumMaterialSlots(); materialIndex++) {
-                        if (schema.acceptsMaterial(targetStack, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                        if (schema.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
                             shouldHighlight = true;
                             break;
                         }
@@ -63,7 +64,7 @@ public class GuiInventoryInfo extends GuiElement {
                 boolean shouldHighlight = false;
 
                 for (int materialIndex = 0; materialIndex < schema.getNumMaterialSlots(); materialIndex++) {
-                    if (schema.acceptsMaterial(targetStack, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                    if (schema.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
                         shouldHighlight = true;
                         break;
                     }
@@ -78,8 +79,9 @@ public class GuiInventoryInfo extends GuiElement {
         }
     }
 
-    public void update(UpgradeSchema schema, ItemStack targetStack) {
+    public void update(UpgradeSchema schema, String slot, ItemStack targetStack) {
         this.schema = schema;
+        this.slot = slot;
         this.targetStack = targetStack;
         update();
     }

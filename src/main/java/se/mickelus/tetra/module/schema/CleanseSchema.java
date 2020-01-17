@@ -61,13 +61,13 @@ public class CleanseSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
+    public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
         return materialStack.getItem().isIn(Tags.Items.GEMS_LAPIS);
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return acceptsMaterial(itemStack, 0, materials[0]);
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
+        return acceptsMaterial(itemStack, itemSlot, 0, materials[0]);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class CleanseSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
-        return isMaterialsValid(itemStack, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
+        return isMaterialsValid(itemStack, slot, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
     }
 
     @Override

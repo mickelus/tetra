@@ -7,7 +7,7 @@ import se.mickelus.tetra.items.ItemModular;
 public abstract class BaseSchema implements UpgradeSchema {
     @Override
     public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
-        return isMaterialsValid(itemStack, materials)
+        return isMaterialsValid(itemStack, slot, materials)
                 && !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkCapabilities(itemStack, materials, availableCapabilities)
                 && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);

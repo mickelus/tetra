@@ -117,7 +117,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotNames[i].setVisible(true);
             slotBorders[i].setVisible(true);
 
-            if (schema.acceptsMaterial(itemStack, i, materials[i])) {
+            if (schema.acceptsMaterial(itemStack, slot, i, materials[i])) {
                 int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
                 if (!materials[i].isEmpty() && requiredCount > 1) {
                     slotQuantities[i].setString("/" + requiredCount);
@@ -135,7 +135,7 @@ public class GuiSchemaDetail extends GuiElement {
             slotBorders[i].setVisible(false);
         }
 
-        capabilityIndicatorList.update(schema, itemStack, materials, availableCapabilities);
+        capabilityIndicatorList.update(schema, itemStack, slot, materials, availableCapabilities);
 
         int xpCost = schema.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);

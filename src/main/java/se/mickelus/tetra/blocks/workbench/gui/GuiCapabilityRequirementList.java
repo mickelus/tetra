@@ -27,8 +27,8 @@ public class GuiCapabilityRequirementList extends GuiElement {
         requiredLevels = new int[indicators.length];
     }
 
-    public void update(UpgradeSchema schema, ItemStack targetStack, ItemStack[] materials, int[] availableCapabilities) {
-        setVisible(schema.isMaterialsValid(targetStack, materials));
+    public void update(UpgradeSchema schema, ItemStack targetStack, String slot, ItemStack[] materials, int[] availableCapabilities) {
+        setVisible(schema.isMaterialsValid(targetStack, slot, materials));
 
         int visibleCount = 0;
         Capability[] capabilities = Capability.values();

@@ -72,7 +72,7 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public boolean acceptsMaterial(final ItemStack itemStack, final int index, final ItemStack materialStack) {
+    public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
         return false;
     }
 
@@ -93,7 +93,7 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
         return true;
     }
 

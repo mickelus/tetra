@@ -64,19 +64,24 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public boolean acceptsMaterial(ItemStack itemStack, int index, ItemStack materialStack) {
-        return !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem;
-//                && EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
-//                .anyMatch(entry -> {
-//                    return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey()))
-//                            .anyMatch(mapping ->
-//                                    module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier)));
-//                });
+    public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getModuleFromSlot(itemStack, itemSlot))
+                .flatMap (mod -> CastOptional.cast(mod, ItemModuleMajor.class))
+                .orElse(null);
+
+        return module != null && !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem
+                && EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
+                .anyMatch(entry -> {
+                    return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey()))
+                            .anyMatch(mapping ->
+                                    module.acceptsImprovementLevel(mapping.improvement, (int) (entry.getValue() / mapping.multiplier)));
+                });
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, ItemStack[] materials) {
-        return acceptsMaterial(itemStack, 0, materials[0]);
+    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
+        return acceptsMaterial(itemStack, itemSlot, 0, materials[0]);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
-        return isMaterialsValid(itemStack, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
+        return isMaterialsValid(itemStack, slot, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
     }
 
     @Override
