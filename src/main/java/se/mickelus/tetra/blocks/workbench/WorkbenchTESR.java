@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -8,6 +9,8 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,11 +29,17 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
         if (itemStack != null && !itemStack.isEmpty()) {
             GlStateManager.pushMatrix();
 
-            // Translate to the location of our tile entity
+            // Translate to the location of the te position relative the player
             GlStateManager.translated(x, y, z);
 
             // Render our item
+            int i = Minecraft.getInstance().world.getCombinedLight(te.getPos().up(), 0);
+            int skyLight = i % 65536;
+            int blockLight = i / 65536;
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, skyLight, blockLight);
+            GlStateManager.enableLighting();
             renderItem(itemStack);
+            GlStateManager.disableLighting();
 
             GlStateManager.popMatrix();
         }
@@ -41,7 +50,7 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
 
         applyCorrections(itemStack);
 
-        Minecraft.getInstance().getItemRenderer().renderItem(itemStack, TransformType.GROUND);
+        itemRenderer.renderItem(itemStack, TransformType.GROUND);
     }
 
 
