@@ -39,7 +39,7 @@ public class ModularModelLoader {
     private static List<ModularOverrideList> overrides = new ArrayList<>();
     static {
         // improvement data is the last data store that contains model information
-        DataManager.improvementData.onReload(ModularModelLoader::clearCaches);
+        DataManager.moduleData.onReload(ModularModelLoader::clearCaches);
     }
 
     public static void registerItem(ItemModular item) {
