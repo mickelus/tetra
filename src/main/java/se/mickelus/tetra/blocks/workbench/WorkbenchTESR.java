@@ -29,15 +29,14 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
         if (itemStack != null && !itemStack.isEmpty()) {
             GlStateManager.pushMatrix();
 
-            // Translate to the location of our tile entity
+            // Translate to the location of the te position relative the player
             GlStateManager.translated(x, y, z);
 
             // Render our item
-            int i = Minecraft.getInstance().world.getCombinedLight(new BlockPos(x, y, z), 0);
-            int j = i % 65536;
-            int k = i / 65536;
-            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)j, (float)k);
-            GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+            int i = Minecraft.getInstance().world.getCombinedLight(te.getPos().up(), 0);
+            int skyLight = i % 65536;
+            int blockLight = i / 65536;
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, skyLight, blockLight);
             GlStateManager.enableLighting();
             renderItem(itemStack);
             GlStateManager.disableLighting();
