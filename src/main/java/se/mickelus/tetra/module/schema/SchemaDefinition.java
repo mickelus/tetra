@@ -1,7 +1,13 @@
 package se.mickelus.tetra.module.schema;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.util.Filter;
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Schemas define how players craft new modules, and which materials yield which module variant.
@@ -45,9 +51,12 @@ import se.mickelus.tetra.module.data.GlyphData;
 public class SchemaDefinition {
 
     /**
-     * The id for the schema, should be unique.
+     * Marks if this should replace or merge with existing entries (if any) for this schema definition. The default behaviour for upgrade
+     * schemas added by other mods and datapacks is to merge values set by those into the existing entry (if any).
+     * By setting replace to true it's possible to completely replace schemas registered by tetra, which can be useful when one wants to
+     * remove something.
      */
-    public String key;
+    public boolean replace = false;
 
     /**
      * The key used for localized human readable strings such as name and description. If this is not available the
@@ -119,4 +128,74 @@ public class SchemaDefinition {
      * An array of all potential outcomes of this schema.
      */
     public OutcomeDefinition[] outcomes = new OutcomeDefinition[0];
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GENERATED FIELDS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * The id for the schema, should be unique. This is automatically set based on the schema definition's location within the resource
+     * directory structure.
+     */
+    public String key;
+
+    private static final SchemaDefinition defaultValues = new SchemaDefinition();
+
+    public static void copyFields(SchemaDefinition from, SchemaDefinition to) {
+        to.slots = Stream.concat(Arrays.stream(to.slots), Arrays.stream(from.slots))
+                .distinct()
+                .toArray(String[]::new);
+
+        to.keySuffixes = Stream.concat(Arrays.stream(to.keySuffixes), Arrays.stream(from.keySuffixes))
+                .distinct()
+                .toArray(String[]::new);
+
+        if (!Objects.equals(from.localizationKey, defaultValues.localizationKey)) {
+            to.localizationKey = from.localizationKey;
+        }
+
+
+        if (from.materialSlotCount != defaultValues.materialSlotCount) {
+            to.materialSlotCount = from.materialSlotCount;
+        }
+
+
+        if (from.repair != defaultValues.repair) {
+            to.repair = from.repair;
+        }
+
+
+        if (from.hone != defaultValues.hone) {
+            to.hone = from.hone;
+        }
+
+
+        if (from.requirement != defaultValues.requirement) {
+            to.requirement = from.requirement;
+        }
+
+
+        if (from.materialRevealSlot != defaultValues.materialRevealSlot) {
+            to.materialRevealSlot = from.materialRevealSlot;
+        }
+
+
+        if (from.displayType != defaultValues.displayType) {
+            to.displayType = from.displayType;
+        }
+
+
+        if (from.rarity != defaultValues.rarity) {
+            to.rarity = from.rarity;
+        }
+
+
+        if (from.glyph != defaultValues.glyph) {
+            to.glyph = from.glyph;
+        }
+
+        to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes))
+                .filter(Filter.distinct(outcome -> outcome.material))
+                .toArray(OutcomeDefinition[]::new);
+    }
 }

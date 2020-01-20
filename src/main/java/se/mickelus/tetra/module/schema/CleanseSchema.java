@@ -3,12 +3,15 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.util.CastOptional;
@@ -25,10 +28,7 @@ public class CleanseSchema implements UpgradeSchema {
 
     private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
 
-    public CleanseSchema() {
-
-        ItemUpgradeRegistry.instance.registerSchema(this);
-    }
+    public CleanseSchema() { }
 
     @Override
     public String getKey() {

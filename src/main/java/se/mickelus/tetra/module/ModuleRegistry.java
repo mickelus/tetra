@@ -26,10 +26,7 @@ public class ModuleRegistry {
         moduleConstructors = new HashMap<>();
         moduleMap = Collections.emptyMap();
 
-        DataManager.moduleData.onReload(() -> {
-            setupModules(DataManager.moduleData.getData());
-            logger.debug(moduleMap);
-        });
+        DataManager.moduleData.onReload(() -> setupModules(DataManager.moduleData.getData()));
     }
 
     private void setupModules(Map<ResourceLocation, ModuleData> data) {

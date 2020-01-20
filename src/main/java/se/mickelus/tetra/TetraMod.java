@@ -102,8 +102,10 @@ public class TetraMod {
 
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
 
-        ItemUpgradeRegistry itemUpgradeRegistry = new ItemUpgradeRegistry();
-        itemUpgradeRegistry.registerSchema(new BookEnchantSchema());
+        SchemaRegistry schemaRegistry = new SchemaRegistry();
+        schemaRegistry.registerSchema(new BookEnchantSchema());
+
+        new ItemUpgradeRegistry();
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
@@ -197,7 +199,7 @@ public class TetraMod {
         proxy.postInit();
 
         DestabilizationEffect.init();
-        new CleanseSchema();
+        SchemaRegistry.instance.registerSchema(new CleanseSchema());
     }
 
     @SubscribeEvent

@@ -14,16 +14,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.BasicMajorModule;
-import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModularHandheld;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.module.MultiSlotModule;
-import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
@@ -64,7 +60,8 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
 
         updateConfig(ConfigHandler.honeDuplexBase.get(), ConfigHandler.honeDuplexIntegrityMultiplier.get());
 
-        new RepairSchema(this);
+
+        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
         RemoveSchema.registerRemoveSchemas(this);
     }
 

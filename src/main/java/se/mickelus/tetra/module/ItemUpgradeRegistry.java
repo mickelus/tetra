@@ -11,11 +11,14 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.schema.*;
+import se.mickelus.tetra.module.schema.RepairDefinition;
+import se.mickelus.tetra.module.schema.SchemaDefinition;
+import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemUpgradeRegistry {
     private static final Logger logger = LogManager.getLogger();
@@ -25,17 +28,12 @@ public class ItemUpgradeRegistry {
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
     private List<ReplacementDefinition> replacementDefinitions;
 
-    private Map<String, UpgradeSchema> schemaMap;
-    private Map<String, RepairDefinition> repairMap;
-
-    private Map<String, ItemModule> moduleMap;
+    private Map<String, List<RepairDefinition>> repairMap;
 
     public ItemUpgradeRegistry() {
         instance = this;
         replacementFunctions = new ArrayList<> ();
-        schemaMap = new HashMap<>();
         repairMap = new HashMap<>();
-        moduleMap = new HashMap<>();
 
         replacementDefinitions = Collections.emptyList();
         DataManager.replacementData.onReload(() -> {
@@ -44,74 +42,51 @@ public class ItemUpgradeRegistry {
                     .filter(replacementDefinition -> replacementDefinition.predicate != null)
                     .collect(Collectors.toList());
         });
-
-        DataManager.schemaData.onReload(() -> {
-            DataManager.schemaData.getData().values().stream()
-                    .flatMap(Arrays::stream)
-                    .forEach(definition -> {
-                        if (definition.slots.length == definition.keySuffixes.length) {
-                            for (int i = 0; i < definition.slots.length; i++) {
-                                try {
-                                    registerConfigSchema(definition,
-                                            new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i]));
-                                } catch (InvalidSchemaException e) {
-                                    e.printMessage();
-                                }
-                            }
-                        } else {
-                            try {
-                                registerConfigSchema(definition, new ConfigSchema(definition));
-                            } catch (InvalidSchemaException e) {
-                                e.printMessage();
-                            }
-                        }
-                    });
-        });
     }
 
     public UpgradeSchema[] getAvailableSchemas(PlayerEntity player, ItemStack itemStack) {
-        return schemaMap.values().stream()
+        return SchemaRegistry.instance.getAllSchemas().stream()
                 .filter(upgradeSchema -> playerHasSchema(player, itemStack, upgradeSchema))
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
                 .toArray(UpgradeSchema[]::new);
     }
 
     public UpgradeSchema[] getSchemas(String slot) {
-        return schemaMap.values().stream()
+        return SchemaRegistry.instance.getAllSchemas().stream()
                 .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(slot, ItemStack.EMPTY))
                 .toArray(UpgradeSchema[]::new);
     }
 
     public UpgradeSchema getSchema(String key) {
-        return schemaMap.get(key);
+        return SchemaRegistry.instance.getSchema(new ResourceLocation(TetraMod.MOD_ID, key));
     }
 
     public boolean playerHasSchema(PlayerEntity player, ItemStack targetStack, UpgradeSchema schema) {
         return schema.isVisibleForPlayer(player, targetStack);
     }
 
-    public void registerSchema(UpgradeSchema upgradeSchema) {
-        schemaMap.put(upgradeSchema.getKey(), upgradeSchema);
+    public void setupRepairDefinitions(SchemaDefinition schemaDefinition) {
+        repairMap = Arrays.stream(schemaDefinition.outcomes)
+                .filter(RepairDefinition::validateOutcome)
+                .map(RepairDefinition::new)
+                .collect(Collectors.toMap(
+                        definition -> definition.moduleVariant,
+                        Collections::singletonList,
+                        (current, newValue) -> Stream.concat(current.stream(), newValue.stream()).collect(Collectors.toList())));
     }
 
-    private void registerConfigSchema(SchemaDefinition definition, ConfigSchema schema) {
-        registerSchema(schema);
-
-        if (definition.repair) {
-            for (OutcomeDefinition outcomeDefinition: definition.outcomes) {
-                if (RepairDefinition.validateOutcome(outcomeDefinition)) {
-                    registerRepairDefinition(new RepairDefinition(outcomeDefinition));
-                }
-            }
-        }
-    }
-
-    public void registerRepairDefinition(RepairDefinition definition) {
-        repairMap.put(definition.moduleVariant, definition);
-    }
+//    public void registerRepairDefinition(RepairDefinition definition) {
+//        repairMap.put(definition.moduleVariant, definition);
+//    }
 
     public RepairDefinition getRepairDefinition(String moduleVariant) {
-        return repairMap.get(moduleVariant);
+        if (repairMap.containsKey(moduleVariant)) {
+            return repairMap.get(moduleVariant).stream()
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return null;
     }
 
     public void registerReplacementFunction(Function<ItemStack, ItemStack> replacementFunction) {
@@ -182,10 +157,6 @@ public class ItemUpgradeRegistry {
                 .filter(mapping -> enchantment.equals(mapping.enchantment))
                 .filter(mapping -> mapping.extract)
                 .toArray(EnchantmentMapping[]::new);
-    }
-
-    public void registerModule(String key, ItemModule module) {
-        moduleMap.put(key, module);
     }
 
     public ItemModule getModule(String key) {

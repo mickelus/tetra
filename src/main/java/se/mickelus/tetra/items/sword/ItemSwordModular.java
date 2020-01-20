@@ -4,9 +4,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.ItemModularHandheld;
+import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
-import se.mickelus.tetra.network.PacketHandler;
 
 public class ItemSwordModular extends ItemModularHandheld {
 
@@ -34,11 +34,8 @@ public class ItemSwordModular extends ItemModularHandheld {
         requiredModules = new String[] { bladeKey, hiltKey };
 
         updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
-    }
 
-    @Override
-    public void init(PacketHandler packetHandler) {
-        new RepairSchema(this);
+        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
         RemoveSchema.registerRemoveSchemas(this);
     }
 

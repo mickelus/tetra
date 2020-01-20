@@ -24,8 +24,6 @@ public abstract class BasicSchema extends BaseSchema {
         this.key = key;
         this.module = module;
         this.item = item;
-
-        ItemUpgradeRegistry.instance.registerSchema(this);
     }
 
     @Override

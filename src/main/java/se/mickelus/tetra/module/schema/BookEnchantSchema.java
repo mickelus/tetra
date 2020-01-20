@@ -28,10 +28,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
 
-    public BookEnchantSchema() {
-
-        ItemUpgradeRegistry.instance.registerSchema(this);
-    }
+    public BookEnchantSchema() {}
 
     @Override
     public String getKey() {

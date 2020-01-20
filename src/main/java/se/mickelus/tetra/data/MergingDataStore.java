@@ -108,8 +108,5 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         listeners.forEach(Runnable::run);
     }
 
-    protected void processData() {
-    }
-
     protected abstract V mergeData(U collection);
 }

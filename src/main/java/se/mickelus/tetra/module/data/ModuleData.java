@@ -34,11 +34,14 @@ public class ModuleData {
     // Non-configurable stuff below
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     private static final ModuleData defaultValues = new ModuleData();
 
     public static void copyFields(ModuleData from, ModuleData to) {
         to.slots = Stream.concat(Arrays.stream(to.slots), Arrays.stream(from.slots))
+                .distinct()
+                .toArray(String[]::new);
+
+        to.slotSuffixes = Stream.concat(Arrays.stream(to.slotSuffixes), Arrays.stream(from.slotSuffixes))
                 .distinct()
                 .toArray(String[]::new);
 
