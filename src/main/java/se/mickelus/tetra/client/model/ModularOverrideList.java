@@ -90,7 +90,7 @@ public class ModularOverrideList extends ItemOverrideList {
     protected IBakedModel getOverrideModel(ItemStack itemStack) {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
-        // todo 1.14: look at ItemModelGenerator
+        // todo: look at ItemModelGenerator
         ItemCameraTransforms transforms = unbaked.getAllTransforms();
         Map<ItemCameraTransforms.TransformType, TRSRTransformation> tMap = Maps.newHashMap();
         tMap.putAll(PerspectiveMapWrapper.getTransforms(transforms));

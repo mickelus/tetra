@@ -62,7 +62,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     public ForgedContainerTile getOrDelegate() {
-        if (world != null && isFlipped()) {
+        if (world != null && getBlockState().getBlock() instanceof ForgedContainerBlock && isFlipped()) {
             return TileEntityOptional.from(world, pos.offset(getFacing().rotateYCCW()), ForgedContainerTile.class)
                     .orElse(null);
         }

@@ -181,7 +181,8 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
-            if (state.get(openProp)) {
+            // only drop loot from open, master/unflipped chests
+            if (state.get(openProp) && !state.get(flippedProp)) {
                 TileEntityOptional.from(world, pos, ForgedContainerTile.class)
                         .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                         .orElse(LazyOptional.empty())
