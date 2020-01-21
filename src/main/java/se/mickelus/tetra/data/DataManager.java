@@ -97,11 +97,9 @@ public class DataManager {
 
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
-        if (Environment.get().getDist().isDedicatedServer()) {
-            logger.info("Sending data to client: {}", event.getPlayer().getName());
-            for (DataStore dataStore : dataStores) {
-                dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());
-            }
+        logger.info("Sending data to client: {}", event.getPlayer().getName().getFormattedText());
+        for (DataStore dataStore : dataStores) {
+            dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());
         }
     }
 
