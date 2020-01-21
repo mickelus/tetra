@@ -5,7 +5,7 @@
             "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Cutting a New One",
-        "description": "Place a vanilla sword in a workbench and then upgrade it!"
+        "description": "Place a vanilla sword in a workbench and upgrade it"
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
