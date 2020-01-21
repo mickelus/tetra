@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "localizationKey": "wrap_hilt_hone_2",
+    "slots": [
+        "sword/hilt"
+    ],
+    "materialSlotCount": 1,
+    "hone": true,
+    "rarity": "hone",
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "basic_hilt/wrap_leather": 2
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "cut": 2
+            },
+            "improvements": {
+                "basic_hilt/wrap_leather": 3
+            }
+        }
+    ]
+}

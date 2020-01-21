@@ -20,7 +20,8 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class CleanseSchema implements UpgradeSchema {
-    private static final String key = "cleanse_schema";
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+    private static final String key = "cleanse";
 
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
@@ -37,12 +38,12 @@ public class CleanseSchema implements UpgradeSchema {
 
     @Override
     public String getName() {
-        return I18n.format(key + nameSuffix);
+        return I18n.format(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(key + descriptionSuffix);
+        return I18n.format(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override

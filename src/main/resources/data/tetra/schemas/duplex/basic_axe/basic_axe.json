@@ -1,0 +1,241 @@
+{
+    "replace": true,
+    "slots": [
+        "duplex/head_left",
+        "duplex/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 144
+    },
+    "displayType": "major",
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:flint",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/flint"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:diamond",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/diamond",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:gold_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/electrum"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/steel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/ironwood"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/ironwood",
+            "improvements": {
+                "enchantment/fortune": 1
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steeleaf",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/steeleaf",
+            "improvements": {
+                "enchantment/efficiency": 1
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/fiery",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/fierymetal",
+            "improvements": {
+                "enchantment/fire_aspect": 1
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/knightmetal",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/knightmetal",
+            "improvements": {
+                "basic_axe/severing": 1
+            }
+        },
+        {
+            "material": {
+                "tag": "minecraft:planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/oak"
+        },
+        {
+            "material": {
+                "tag": "forge:cobblestone",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/cobblestone"
+        },
+        {
+            "material": {
+                "tag": "forge:stone",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_axe",
+            "moduleVariant": "basic_axe/cobblestone"
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "replace": true,
+    "slots": [
+        "duplex/handle"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:string",
+                "count": 4
+            },
+            "improvements": {
+                "basic_handle/wrap_string": 1
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 1
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "improvements": {
+                "basic_handle/wrap_leather": 1
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "improvements": {
+                "basic_handle/wrap_hide": 1
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:vine",
+                "count": 4
+            },
+            "improvements": {
+                "basic_handle/wrap_vine": 1
+            }
+        }
+    ]
+}

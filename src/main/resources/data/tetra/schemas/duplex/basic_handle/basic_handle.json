@@ -1,0 +1,213 @@
+{
+    "replace": true,
+    "slots": [
+        "duplex/handle"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick"
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/stick"
+        },
+        {
+            "material": {
+                "item": "minecraft:bone"
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/bone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:blaze_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/blaze_rod",
+            "improvements": {
+                "basic_handle/blazing": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:end_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/end_rod",
+            "improvements": {
+                "basic_handle/ender_reverb": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/steel"
+        },
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/greatwood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/greatwood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:rods/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/ironwood"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/ironwood"
+        },
+        {
+            "material": {
+                "item": "tetra:forged_beam"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/forged_beam"
+        }
+    ]
+}

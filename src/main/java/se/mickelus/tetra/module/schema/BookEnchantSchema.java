@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -20,6 +21,7 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.*;
 
 public class BookEnchantSchema implements UpgradeSchema {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
     private static final String key = "book_enchant";
 
     private static final String nameSuffix = ".name";
@@ -37,12 +39,12 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public String getName() {
-        return I18n.format(key + nameSuffix);
+        return I18n.format(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(key + descriptionSuffix);
+        return I18n.format(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(key + slotSuffix);
+        return I18n.format(localizationPrefix + key + slotSuffix);
     }
 
     @Override

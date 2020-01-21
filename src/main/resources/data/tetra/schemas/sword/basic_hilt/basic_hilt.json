@@ -1,0 +1,219 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/hilt"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/stick"
+        },
+        {
+            "material": {
+                "item": "minecraft:bone"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/bone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:blaze_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/blaze_rod",
+            "improvements": {
+                "basic_hilt/blazing": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:end_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/end_rod",
+            "improvements": {
+                "basic_hilt/ender_reverb": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/steel"
+        },
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/greatwood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/greatwood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:rods/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/ironwood"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/ironwood"
+        },
+        {
+            "material": {
+                "item": "tetra:forged_beam"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/forged_beam"
+        }
+    ]
+}

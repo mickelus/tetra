@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ConfigSchema extends BaseSchema {
-
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot";
@@ -74,17 +75,17 @@ public class ConfigSchema extends BaseSchema {
     @Override
     public String getName() {
         if (definition.localizationKey != null) {
-            return I18n.format(definition.localizationKey + nameSuffix);
+            return I18n.format(localizationPrefix + definition.localizationKey + nameSuffix);
         }
-        return I18n.format(definition.key + nameSuffix);
+        return I18n.format(localizationPrefix + definition.key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
         if (definition.localizationKey != null) {
-            return I18n.format(definition.localizationKey + descriptionSuffix);
+            return I18n.format(localizationPrefix + definition.localizationKey + descriptionSuffix);
         }
-        return I18n.format(definition.key + descriptionSuffix);
+        return I18n.format(localizationPrefix + definition.key + descriptionSuffix);
     }
 
     @Override
@@ -95,9 +96,9 @@ public class ConfigSchema extends BaseSchema {
     @Override
     public String getSlotName(ItemStack itemStack, int index) {
         if (definition.localizationKey != null) {
-            return I18n.format(definition.localizationKey + slotSuffix + (index + 1));
+            return I18n.format(localizationPrefix + definition.localizationKey + slotSuffix + (index + 1));
         }
-        return I18n.format(definition.key + slotSuffix + (index + 1));
+        return I18n.format(localizationPrefix + definition.key + slotSuffix + (index + 1));
     }
 
     @Override

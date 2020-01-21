@@ -21,10 +21,11 @@ import java.util.stream.Stream;
 
 
 public class RemoveSchema extends BaseSchema {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
-    private String key = "remove_schema";
+    private String key = "remove";
 
     private ItemModular item;
     private String slot;
@@ -52,12 +53,12 @@ public class RemoveSchema extends BaseSchema {
 
     @Override
     public String getName() {
-        return I18n.format(key + nameSuffix);
+        return I18n.format(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(key + descriptionSuffix);
+        return I18n.format(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override

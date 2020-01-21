@@ -1,237 +1,239 @@
-[
-    {
-        "key": "short_blade_schema",
-        "slots": ["sword/blade"],
-        "materialSlotCount": 1,
-        "displayType": "major",
-        "glyph": { "textureX": 32 },
-        "outcomes": [
-            {
-                "material": {
-                    "item": "minecraft:oak_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/oak"
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
             },
-            {
-                "material": {
-                    "item": "minecraft:spruce_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/spruce"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:birch_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/birch"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
             },
-            {
-                "material": {
-                    "item": "minecraft:jungle_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/jungle"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:acacia_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/acacia"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
             },
-            {
-                "material": {
-                    "item": "minecraft:dark_oak_planks"
-                },
-                "requiredCapabilities": {
-                    "axe": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/dark_oak"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:flint"
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/flint"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
             },
-            {
-                "material": {
-                    "item": "minecraft:iron_ingot"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/iron"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:gold_ingot"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/gold"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
             },
-            {
-                "material": {
-                    "item": "minecraft:prismarine_shard"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/prismarine"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/copper"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/copper"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/tin"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/tin"
+            "requiredCapabilities": {
+                "axe": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/silver"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/silver"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/dark_oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:flint"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/nickel"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/nickel"
+            "requiredCapabilities": {
+                "hammer": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/lead"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/lead"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/flint"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/bronze"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/bronze"
+            "requiredCapabilities": {
+                "hammer": 3
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/electrum"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/electrum"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:gold_ingot"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/steel"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/steel"
+            "requiredCapabilities": {
+                "hammer": 3
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/ironwood"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/ironwood"
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/gold"
+        },
+        {
+            "material": {
+                "item": "minecraft:prismarine_shard"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/steeleaf"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/steeleaf",
-                "improvements": {
-                    "enchantment/looting": 2
-                }
+            "requiredCapabilities": {
+                "hammer": 3
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/fiery"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/fierymetal",
-                "improvements": {
-                    "enchantment/fire_aspect": 2
-                }
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/prismarine"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper"
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/knightmetal"
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/short_blade",
-                "moduleVariant": "short_blade/knightmetal"
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/electrum"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/steel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/ironwood"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/ironwood"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steeleaf"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/steeleaf",
+            "improvements": {
+                "enchantment/looting": 2
             }
-        ]
-    }
-]
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/fiery"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/fierymetal",
+            "improvements": {
+                "enchantment/fire_aspect": 2
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/knightmetal"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/knightmetal"
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "localizationKey": "wrap_hilt_hone_1",
+    "slots": [
+        "sword/hilt"
+    ],
+    "materialSlotCount": 1,
+    "hone": true,
+    "rarity": "hone",
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "basic_hilt/wrap_hide": 1
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 1
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "improvements": {
+                "basic_hilt/wrap_hide": 2
+            }
+        }
+    ]
+}

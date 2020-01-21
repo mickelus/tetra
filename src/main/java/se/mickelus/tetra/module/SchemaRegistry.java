@@ -44,6 +44,7 @@ public class SchemaRegistry {
         schemaMap = data.entrySet().stream()
                 .filter(entry -> validateSchemaDefinition(entry.getKey(), entry.getValue()))
                 .flatMap(entry -> createSchemas(entry.getKey(), entry.getValue()).stream())
+                .filter(entry -> entry.getRight() != null)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         dynamicSchemas.forEach((identifier, schema) -> schemaMap.put(identifier, schema));
@@ -76,8 +77,6 @@ public class SchemaRegistry {
                 try {
                     ResourceLocation suffixedIdentifier = new ResourceLocation(
                             identifier.getNamespace(), identifier.getPath() + definition.keySuffixes[i]);
-
-                    System.out.println(suffixedIdentifier);
 
                     result.add(new ImmutablePair<>(suffixedIdentifier,
                             new ConfigSchema(definition, definition.keySuffixes[i], definition.slots[i])));

@@ -1,0 +1,46 @@
+{
+    "replace": true,
+    "slots": [
+        "toolbelt/slot1",
+        "toolbelt/slot2",
+        "toolbelt/slot3"
+    ],
+    "keySuffixes": [
+        "_slot1",
+        "_slot2",
+        "_slot3"
+    ],
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "repair": false,
+    "glyph": {
+        "textureX": 80,
+        "textureY": 32
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [
+            [
+                "toolbelt/quiver_slot1"
+            ],
+            [
+                "toolbelt/quiver_slot2"
+            ],
+            [
+                "toolbelt/quiver_slot3"
+            ]
+        ]
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:quick_latch"
+            },
+            "improvements": {
+                "quiver/quick_latch": 0
+            }
+        }
+    ]
+}

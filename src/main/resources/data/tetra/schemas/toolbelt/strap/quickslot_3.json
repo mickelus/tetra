@@ -1,0 +1,41 @@
+{
+    "replace": true,
+    "localizationKey": "toolbelt/strap/quickslot",
+    "slots": [
+        "toolbelt/slot1",
+        "toolbelt/slot2",
+        "toolbelt/slot3"
+    ],
+    "keySuffixes": [
+        "_slot1",
+        "_slot2",
+        "_slot3"
+    ],
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "repair": false,
+    "glyph": {
+        "textureX": 80,
+        "textureY": 32
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "variants": {
+            "strap3/leather": "#slot",
+            "strap3/iron": "#slot"
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:quick_latch",
+                "count": 3
+            },
+            "improvements": {
+                "strap/quick_latch": 3
+            }
+        }
+    ]
+}

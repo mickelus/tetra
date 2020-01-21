@@ -1,333 +1,333 @@
-[
-    {
-        "key": "basic_blade_schema",
-        "slots": ["sword/blade"],
-        "materialSlotCount": 1,
-        "displayType": "major",
-        "outcomes": [
-            {
-                "material": {
-                    "item": "minecraft:oak_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/oak"
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:oak_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:spruce_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/spruce"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "item": "minecraft:birch_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/birch"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:jungle_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/jungle"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "item": "minecraft:acacia_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/acacia"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:dark_oak_planks",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "axe": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/dark_oak"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "tag": "forge:cobblestone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/cobblestone"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:stone",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/stone"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "item": "minecraft:granite",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/granite"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:diorite",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/diorite"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "item": "minecraft:andesite",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/andesite",
-                "improvements": {
-                    "arrested": 0
-                }
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:iron_ingot",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/iron"
+            "requiredCapabilities": {
+                "axe": 1
             },
-            {
-                "material": {
-                    "item": "minecraft:flint",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/flint"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:cobblestone",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:gold_ingot",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/gold"
+            "requiredCapabilities": {
+                "hammer": 1
             },
-            {
-                "material": {
-                    "tag": "forge:gems/diamond",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 1
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/diamond",
-                "improvements": {
-                    "arrested": 0
-                }
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/cobblestone"
+        },
+        {
+            "material": {
+                "item": "minecraft:stone",
+                "count": 2
             },
-            {
-                "material": {
-                    "item": "minecraft:obsidian",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 3
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/obsidian",
-                "improvements": {
-                    "arrested": 0
-                }
+            "requiredCapabilities": {
+                "hammer": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/copper",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/copper"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/stone"
+        },
+        {
+            "material": {
+                "item": "minecraft:granite",
+                "count": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/tin",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/tin"
+            "requiredCapabilities": {
+                "hammer": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/silver",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/silver"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/granite"
+        },
+        {
+            "material": {
+                "item": "minecraft:diorite",
+                "count": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/nickel",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/nickel"
+            "requiredCapabilities": {
+                "hammer": 1
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/lead",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/lead"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/diorite"
+        },
+        {
+            "material": {
+                "item": "minecraft:andesite",
+                "count": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/bronze",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/bronze"
+            "requiredCapabilities": {
+                "hammer": 2
             },
-            {
-                "material": {
-                    "tag": "forge:ingots/electrum",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/electrum"
-            },
-            {
-                "material": {
-                    "tag": "forge:ingots/steel",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/steel"
-            },
-            {
-                "material": {
-                    "tag": "forge:ingots/ironwood",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/ironwood"
-            },
-            {
-                "material": {
-                    "tag": "forge:ingots/steeleaf",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/steeleaf",
-                "improvements": {
-                    "enchantment/looting": 2
-                }
-            },
-            {
-                "material": {
-                    "tag": "forge:ingots/fiery",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/fierymetal",
-                "improvements": {
-                    "enchantment/fire_aspect": 2
-                }
-            },
-            {
-                "material": {
-                    "tag": "forge:ingots/knightmetal",
-                    "count": 2
-                },
-                "requiredCapabilities": {
-                    "hammer": 2
-                },
-                "moduleKey": "sword/basic_blade",
-                "moduleVariant": "basic_blade/knightmetal"
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/andesite",
+            "improvements": {
+                "arrested": 0
             }
-        ]
-    }
-]
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:flint",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/flint"
+        },
+        {
+            "material": {
+                "item": "minecraft:gold_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:gems/diamond",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/diamond",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:obsidian",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/obsidian",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/electrum"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/steel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/ironwood",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/ironwood"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steeleaf",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/steeleaf",
+            "improvements": {
+                "enchantment/looting": 2
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/fiery",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/fierymetal",
+            "improvements": {
+                "enchantment/fire_aspect": 2
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/knightmetal",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "sword/basic_blade",
+            "moduleVariant": "basic_blade/knightmetal"
+        }
+    ]
+}

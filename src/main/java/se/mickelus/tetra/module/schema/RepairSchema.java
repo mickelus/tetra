@@ -18,11 +18,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class RepairSchema extends BaseSchema {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
     private static final String extendedDescriptionSuffix = ".description_details";
 
-    private String key = "repair_schema";
+    private String key = "repair";
 
     private ItemModular item;
 
@@ -45,20 +46,20 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public String getName() {
-        return I18n.format(key + nameSuffix);
+        return I18n.format(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
         if (itemStack != null) {
             return CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                    .map(item -> I18n.format(key + extendedDescriptionSuffix,
+                    .map(item -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix,
                             item.getRepairModuleName(itemStack),
                             item.getRepairAmount(itemStack)))
-                    .orElse(I18n.format(key + descriptionSuffix));
+                    .orElse(I18n.format(localizationPrefix + key + descriptionSuffix));
         }
 
-        return I18n.format(key + descriptionSuffix);
+        return I18n.format(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
