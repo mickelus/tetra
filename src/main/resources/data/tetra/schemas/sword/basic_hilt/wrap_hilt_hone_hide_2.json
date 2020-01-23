@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "wrap_hilt_hone_2",
+    "localizationKey": "sword/basic_hilt/wrap_hilt_hone_2",
     "slots": [
         "sword/hilt"
     ],
