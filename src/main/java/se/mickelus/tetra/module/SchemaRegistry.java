@@ -49,9 +49,7 @@ public class SchemaRegistry {
 
         dynamicSchemas.forEach((identifier, schema) -> schemaMap.put(identifier, schema));
 
-        data.values().stream()
-                .filter(definition -> definition.repair)
-                .forEach(ItemUpgradeRegistry.instance::setupRepairDefinitions);
+        ItemUpgradeRegistry.instance.setupRepairDefinitions(data.values().toArray(new SchemaDefinition[0]));
     }
 
     private boolean validateSchemaDefinition(ResourceLocation identifier, SchemaDefinition definition) {

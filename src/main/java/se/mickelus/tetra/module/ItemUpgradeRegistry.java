@@ -65,8 +65,9 @@ public class ItemUpgradeRegistry {
         return schema.isVisibleForPlayer(player, targetStack);
     }
 
-    public void setupRepairDefinitions(SchemaDefinition schemaDefinition) {
-        repairMap = Arrays.stream(schemaDefinition.outcomes)
+    public void setupRepairDefinitions(SchemaDefinition[] schemaDefinitions) {
+        repairMap = Arrays.stream(schemaDefinitions)
+                .flatMap(schemaDefinition -> Arrays.stream(schemaDefinition.outcomes))
                 .filter(RepairDefinition::validateOutcome)
                 .map(RepairDefinition::new)
                 .collect(Collectors.toMap(

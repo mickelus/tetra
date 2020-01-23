@@ -69,11 +69,10 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        if (itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
-            return item.getRepairMaterial(itemStack).getDisplayName().getUnformattedComponentText();
-        }
-        return "?";
+        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                .map(item -> item.getRepairMaterial(itemStack))
+                .map(material -> material.getDisplayName().getUnformattedComponentText())
+                .orElse("?");
     }
 
     @Override
@@ -88,8 +87,11 @@ public class RepairSchema extends BaseSchema {
     @Override
     public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
-            return item.getRepairMaterial(itemStack).predicate.test(materialStack);
+            return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                    .map(item -> item.getRepairMaterial(itemStack))
+                    .map(material -> material.predicate)
+                    .map(predicate -> predicate.test(materialStack))
+                    .orElse(false);
         }
         return false;
     }

@@ -41,7 +41,6 @@ public class GuiActionList extends GuiElement {
             }
             addChild(actionButtons[i]);
         }
-
     }
 
     public void updateCapabilities(int[] availableCapabilities) {

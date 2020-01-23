@@ -9,7 +9,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
-import se.mickelus.tetra.TetraLogger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import java.util.function.Supplier;
  * of sirgingalot
  */
 public class PacketHandler {
+    private static final Logger logger = LogManager.getLogger();
+
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel channel = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(TetraMod.MOD_ID, "main"),
@@ -45,12 +48,12 @@ public class PacketHandler {
      */
     public <T extends AbstractPacket> boolean registerPacket(Class<T> packetClass, Supplier<T> supplier) {
         if (packets.size() > 256) {
-            TetraLogger.log("Attempted to register packet but packet list is full: " + packetClass.toString());
+            logger.warn("Attempted to register packet but packet list is full: " + packetClass.toString());
             return false;
         }
 
         if (packets.contains(packetClass)) {
-            TetraLogger.log("Attempted to register packet but packet is already in list: " + packetClass.toString());
+            logger.warn("Attempted to register packet but packet is already in list: " + packetClass.toString());
             return false;
         }
 

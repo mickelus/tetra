@@ -1,34 +1,18 @@
 package se.mickelus.tetra.client.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.IUnbakedModel;
-import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.client.renderer.model.SimpleBakedModel;
-import net.minecraft.item.Item;
-import net.minecraft.resources.IResource;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.model.ICustomModelLoader;
-import org.apache.commons.io.IOUtils;
+import net.minecraftforge.client.model.ModelLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ModelLoader;
-import se.mickelus.tetra.TetraLogger;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.sword.ItemSwordModular;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModularModelLoader {
 
