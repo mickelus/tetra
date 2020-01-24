@@ -5,7 +5,9 @@
     "slotSuffixes": ["_left", "_right"],
     "improvements": [
         "tetra:duplex/basic_pickaxe",
+        "tetra:duplex/basic_pickaxe_compat",
         "tetra:duplex/basic_pickaxe_hone",
+        "tetra:duplex/shared_head_compat",
         "tetra:duplex/shared_head_hone",
         "tetra:settling_improvements",
         "tetra:destabilization_improvements"

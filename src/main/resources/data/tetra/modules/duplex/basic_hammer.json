@@ -6,6 +6,7 @@
     "improvements": [
         "tetra:duplex/basic_hammer",
         "tetra:duplex/basic_hammer_hone",
+        "tetra:duplex/shared_head_compat",
         "tetra:duplex/shared_head_hone",
         "tetra:settling_improvements",
         "tetra:destabilization_improvements"

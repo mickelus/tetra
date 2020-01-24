@@ -1,0 +1,156 @@
+[
+    {
+        "enchantment": "ensorcellation:vorpal",
+        "improvement": "enchantment/ensorcellation_vorpal"
+    },
+    {
+        "enchantment": "ensorcellation:vorpal",
+        "improvement": "destabilized/ensorcellation_vorpal",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:reach",
+        "improvement": "enchantment/ensorcellation_reach"
+    },
+    {
+        "enchantment": "ensorcellation:reach",
+        "improvement": "destabilized/ensorcellation_reach",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:soulbound",
+        "improvement": "enchantment/ensorcellation_soulbound"
+    },
+    {
+        "enchantment": "ensorcellation:tilling",
+        "improvement": "enchantment/ensorcellation_tilling"
+    },
+    {
+        "enchantment": "ensorcellation:tilling",
+        "improvement": "destabilized/ensorcellation_tilling",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:weeding",
+        "improvement": "enchantment/ensorcellation_weeding"
+    },
+    {
+        "enchantment": "ensorcellation:furrowing",
+        "improvement": "enchantment/ensorcellation_furrowing"
+    },
+    {
+        "enchantment": "ensorcellation:furrowing",
+        "improvement": "destabilized/ensorcellation_furrowing",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:smelting",
+        "improvement": "enchantment/ensorcellation_smelting"
+    },
+    {
+        "enchantment": "ensorcellation:smashing",
+        "improvement": "enchantment/ensorcellation_smashing"
+    },
+    {
+        "enchantment": "ensorcellation:frost_aspect",
+        "improvement": "enchantment/ensorcellation_frost_aspect"
+    },
+    {
+        "enchantment": "ensorcellation:frost_aspect",
+        "improvement": "destabilized/ensorcellation_frost_aspect",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:magic_edge",
+        "improvement": "enchantment/ensorcellation_magic_edge"
+    },
+    {
+        "enchantment": "ensorcellation:magic_edge",
+        "improvement": "destabilized/ensorcellation_magic_edge",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:leech",
+        "improvement": "enchantment/ensorcellation_leech"
+    },
+    {
+        "enchantment": "ensorcellation:leech",
+        "improvement": "destabilized/ensorcellation_leech",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:ensorcellation_curse_fool",
+        "improvement": "enchantment/ensorcellation_ensorcellation_curse_fool"
+    },
+    {
+        "enchantment": "ensorcellation:ensorcellation_curse_mercy",
+        "improvement": "enchantment/ensorcellation_ensorcellation_curse_mercy"
+    },
+    {
+        "enchantment": "ensorcellation:damage_ender",
+        "improvement": "enchantment/ensorcellation_damage_ender"
+    },
+    {
+        "enchantment": "ensorcellation:damage_ender",
+        "improvement": "destabilized/ensorcellation_damage_ender",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:damage_illager",
+        "improvement": "enchantment/ensorcellation_damage_illager"
+    },
+    {
+        "enchantment": "ensorcellation:damage_illager",
+        "improvement": "destabilized/ensorcellation_damage_illager",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:damage_villager",
+        "improvement": "enchantment/ensorcellation_damage_villager"
+    },
+    {
+        "enchantment": "ensorcellation:damage_villager",
+        "improvement": "destabilized/ensorcellation_damage_villager",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:excavating",
+        "improvement": "enchantment/ensorcellation_excavating"
+    },
+    {
+        "enchantment": "ensorcellation:excavating",
+        "improvement": "destabilized/ensorcellation_excavating",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:exp_boost",
+        "improvement": "enchantment/ensorcellation_exp_boost"
+    },
+    {
+        "enchantment": "ensorcellation:exp_boost",
+        "improvement": "destabilized/ensorcellation_exp_boost",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "ensorcellation:cavalier",
+        "improvement": "enchantment/ensorcellation_cavalier"
+    },
+    {
+        "enchantment": "ensorcellation:cavalier",
+        "improvement": "destabilized/ensorcellation_cavalier",
+        "extract": false,
+        "multiplier": -1
+    }
+]

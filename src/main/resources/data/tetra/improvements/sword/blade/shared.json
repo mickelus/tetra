@@ -193,67 +193,67 @@
         "key": "enchantment/fire_aspect",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -1
+        "magicCapacity": -4
     },
     {
         "key": "enchantment/fire_aspect",
         "level": 2,
         "enchantment": true,
-        "magicCapacity": -2
+        "magicCapacity": -5
     },
     {
         "key": "enchantment/fire_aspect",
         "level": 3,
         "enchantment": true,
-        "magicCapacity": -3
+        "magicCapacity": -6
     },
     {
         "key": "enchantment/fire_aspect",
         "level": 4,
         "enchantment": true,
-        "magicCapacity": -4
+        "magicCapacity": -7
     },
     {
         "key": "enchantment/fire_aspect",
         "level": 5,
         "enchantment": true,
-        "magicCapacity": -5
+        "magicCapacity": -8
     },
     {
         "key": "enchantment/looting",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -3
+        "magicCapacity": -6
     },
     {
         "key": "enchantment/looting",
         "level": 2,
         "enchantment": true,
-        "magicCapacity": -5
+        "magicCapacity": -8
     },
     {
         "key": "enchantment/looting",
         "level": 3,
         "enchantment": true,
-        "magicCapacity": -7
+        "magicCapacity": -10
     },
     {
         "key": "enchantment/looting",
         "level": 4,
         "enchantment": true,
-        "magicCapacity": -9
+        "magicCapacity": -12
     },
     {
         "key": "enchantment/looting",
         "level": 5,
         "enchantment": true,
-        "magicCapacity": -11
+        "magicCapacity": -14
     },
     {
         "key": "enchantment/sweeping",
         "level": 1,
         "enchantment": true,
-        "magicCapacity": -2,
+        "magicCapacity": -6,
         "effects": {
             "sweeping": 3
         }
@@ -262,7 +262,7 @@
         "key": "enchantment/sweeping",
         "level": 2,
         "enchantment": true,
-        "magicCapacity": -3,
+        "magicCapacity": -8,
         "effects": {
             "sweeping": 4
         }
@@ -271,7 +271,7 @@
         "key": "enchantment/sweeping",
         "level": 3,
         "enchantment": true,
-        "magicCapacity": -4,
+        "magicCapacity": -10,
         "effects": {
             "sweeping": 5
         }
@@ -280,7 +280,7 @@
         "key": "enchantment/sweeping",
         "level": 4,
         "enchantment": true,
-        "magicCapacity": -5,
+        "magicCapacity": -12,
         "effects": {
             "sweeping": 6
         }
@@ -289,299 +289,9 @@
         "key": "enchantment/sweeping",
         "level": 5,
         "enchantment": true,
-        "magicCapacity": -6,
+        "magicCapacity": -14,
         "effects": {
             "sweeping": 7
         }
-    },
-    {
-        "key": "enchantment/bluepower_vorpal",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -4
-    },
-    {
-        "key": "enchantment/bluepower_vorpal",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -6
-    },
-    {
-        "key": "destabilized/bluepower_vorpal",
-        "glyph": {
-            "tint": "ee5599"
-        }
-    },
-    {
-        "key": "enchantment/bluepower_disjunction",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -2
-    },
-    {
-        "key": "enchantment/bluepower_disjunction",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -3
-    },
-    {
-        "key": "enchantment/bluepower_disjunction",
-        "level": 3,
-        "enchantment": true,
-        "magicCapacity": -4
-    },
-    {
-        "key": "enchantment/bluepower_disjunction",
-        "level": 4,
-        "enchantment": true,
-        "magicCapacity": -5
-    },
-    {
-        "key": "enchantment/bluepower_disjunction",
-        "level": 5,
-        "enchantment": true,
-        "magicCapacity": -6
-    },
-    {
-        "key": "destabilized/bluepower_disjunction",
-        "level": 1,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/bluepower_disjunction",
-        "level": 2,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/bluepower_disjunction",
-        "level": 3,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/bluepower_disjunction",
-        "level": 4,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -12
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -13
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 3,
-        "enchantment": true,
-        "magicCapacity": -14
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 4,
-        "enchantment": true,
-        "magicCapacity": -15
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 5,
-        "enchantment": true,
-        "magicCapacity": -16
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 6,
-        "enchantment": true,
-        "magicCapacity": -17
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 7,
-        "enchantment": true,
-        "magicCapacity": -18
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 8,
-        "enchantment": true,
-        "magicCapacity": -19
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 9,
-        "enchantment": true,
-        "magicCapacity": -20
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 10,
-        "enchantment": true,
-        "magicCapacity": -21
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 1,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 2,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 3,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 4,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 5,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 6,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 7,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 8,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_hell_infusion",
-        "level": 9,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -2
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -3
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 3,
-        "enchantment": true,
-        "magicCapacity": -4
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 4,
-        "enchantment": true,
-        "magicCapacity": -5
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 5,
-        "enchantment": true,
-        "magicCapacity": -6
-    },
-    {
-        "key": "enchantment/apotheosis_mounted_strike",
-        "level": 6,
-        "enchantment": true,
-        "magicCapacity": -7
-    },
-    {
-        "key": "destabilized/apotheosis_mounted_strike",
-        "level": 1,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_mounted_strike",
-        "level": 2,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_mounted_strike",
-        "level": 3,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_mounted_strike",
-        "level": 4,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_mounted_strike",
-        "level": 5,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_scavenger",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -10
-    },
-    {
-        "key": "enchantment/apotheosis_scavenger",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -12
-    },
-    {
-        "key": "enchantment/apotheosis_scavenger",
-        "level": 3,
-        "enchantment": true,
-        "magicCapacity": -14
-    },
-    {
-        "key": "destabilized/apotheosis_scavenger",
-        "level": 1,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_scavenger",
-        "level": 2,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "enchantment/apotheosis_knowledge",
-        "level": 1,
-        "enchantment": true,
-        "magicCapacity": -9
-    },
-    {
-        "key": "enchantment/apotheosis_knowledge",
-        "level": 2,
-        "enchantment": true,
-        "magicCapacity": -12
-    },
-    {
-        "key": "enchantment/apotheosis_knowledge",
-        "level": 3,
-        "enchantment": true,
-        "magicCapacity": -15
-    },
-    {
-        "key": "destabilized/apotheosis_knowledge",
-        "level": 1,
-        "glyph": { "tint": "ee5599" }
-    },
-    {
-        "key": "destabilized/apotheosis_knowledge",
-        "level": 2,
-        "glyph": { "tint": "ee5599" }
     }
 ]

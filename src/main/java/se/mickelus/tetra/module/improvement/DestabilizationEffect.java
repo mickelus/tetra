@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module.improvement;
 
+import net.minecraftforge.fml.ModList;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 
@@ -13,6 +14,8 @@ public class DestabilizationEffect {
     public int minLevel = 0;
     public int maxLevel = 0;
 
+    public String requiredMod;
+
     public float probability = 0;
 
     public int instabilityLimit = 1;
@@ -23,6 +26,7 @@ public class DestabilizationEffect {
         DataManager.destabilizationData.onReload(() -> {
             effects = DataManager.destabilizationData.getData().values().stream()
                     .flatMap(Arrays::stream)
+                    .filter(effect -> effect.requiredMod == null || ModList.get().isLoaded(effect.requiredMod))
                     .toArray(DestabilizationEffect[]::new);
         });
     }

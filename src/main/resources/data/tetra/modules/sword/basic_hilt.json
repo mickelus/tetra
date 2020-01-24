@@ -5,6 +5,7 @@
     "renderLayer": "lower",
     "improvements": [
         "tetra:sword/hilt/shared",
+        "tetra:sword/hilt/shared_compat",
         "tetra:sword/hilt/shared_hone",
         "tetra:settling_improvements",
         "tetra:destabilization_improvements"
