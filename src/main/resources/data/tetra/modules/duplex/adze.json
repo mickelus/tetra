@@ -88,8 +88,8 @@
                 "tint": "iron"
             }],
             "capabilities": {
-                "axe": [1, 3.4],
-                "shovel": [1, 3.4]
+                "axe": [2, 3.4],
+                "shovel": [2, 3.4]
             }
         },
         {
@@ -108,8 +108,8 @@
                 "tint": "diamond"
             }],
             "capabilities": {
-                "axe": [1, 4.1],
-                "shovel": [1, 4.1]
+                "axe": [3, 4.1],
+                "shovel": [3, 4.1]
             }
         },
         {
@@ -228,8 +228,8 @@
                 "tint": "lead"
             }],
             "capabilities": {
-                "axe": [1, 2.7],
-                "shovel": [1, 2.7]
+                "axe": [2, 2.7],
+                "shovel": [2, 2.7]
             }
         },
         {
@@ -288,8 +288,8 @@
                 "tint": "steel"
             }],
             "capabilities": {
-                "axe": [2, 4.2],
-                "shovel": [2, 4.2]
+                "axe": [3, 4.2],
+                "shovel": [3, 4.2]
             }
         },
         {
@@ -308,8 +308,8 @@
                 "tint": "thaumium"
             }],
             "capabilities": {
-                "axe": [1, 3.4],
-                "shovel": [1, 3.4]
+                "axe": [2, 3.4],
+                "shovel": [2, 3.4]
             }
         },
         {
@@ -347,8 +347,8 @@
                 "tint": "steeleaf"
             }],
             "capabilities": {
-                "axe": [2, 4.6],
-                "shovel": [2, 4.6]
+                "axe": [3, 4.6],
+                "shovel": [3, 4.6]
             }
         },
         {
@@ -366,8 +366,8 @@
                 "location": "tetra:items/module/duplex/head/adze/fierymetal"
             }],
             "capabilities": {
-                "axe": [1, 5.2],
-                "shovel": [1, 5.2]
+                "axe": [4, 5.2],
+                "shovel": [4, 5.2]
             }
         },
         {
@@ -386,8 +386,8 @@
                 "tint": "knightmetal"
             }],
             "capabilities": {
-                "axe": [1, 4.7],
-                "shovel": [1, 4.7]
+                "axe": [3, 4.7],
+                "shovel": [3, 4.7]
             }
         }
     ]
