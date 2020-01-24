@@ -1335,9 +1335,9 @@
   "handle_hone/speed.name": "Hone: Speed",
   "handle_hone/speed.description": "Increases swing speed",
 
-  "tetra/schema/duplex/duplex_socket/duplex_socket.name": "Socket",
-  "tetra/schema/duplex/duplex_socket/duplex_socket.description": "Socket a gem into the tool, providing different effects depending on the gem.",
-  "tetra/schema/duplex/duplex_socket/duplex_socket.slot1": "Gem",
+  "tetra/schema/duplex/socket.name": "Socket",
+  "tetra/schema/duplex/socket.description": "Socket a gem into the tool, providing different effects depending on the gem.",
+  "tetra/schema/duplex/socket.slot1": "Gem",
 
   "duplex/socket.name": "Socket",
   "duplex/socket.description": "A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the wielder.",
@@ -1355,9 +1355,9 @@
   "duplex_socket/pristine_lapis": "Socket [§9Lapis+§r]",
   "duplex_socket/pristine_lapis.description": "A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.",
 
-  "tetra/schema/duplex/duplex_binding/duplex_binding.name": "Binding",
-  "tetra/schema/duplex/duplex_binding/duplex_binding.description": "Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.",
-  "tetra/schema/duplex/duplex_binding/duplex_binding.slot1": "Material",
+  "tetra/schema/duplex/binding.name": "Binding",
+  "tetra/schema/duplex/binding.description": "Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.",
+  "tetra/schema/duplex/binding.slot1": "Material",
 
   "duplex/binding.name": "Binding",
 
