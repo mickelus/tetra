@@ -39,9 +39,9 @@
   "capability.shovel": "Shovel",
   "capability.shovel.requirement": "This action requires a tier %d shovel",
   "capability.cut": "Cut",
-  "capability.cut.requirement": "This action requires a tier %d cutting implement",
+  "capability.cut.requirement": "This action requires a tier %d cutting implement.\n§7Most swords can be used for cutting.",
   "capability.pry": "Pry",
-  "capability.pry.requirement": "This action requires a tier %d prying implement",
+  "capability.pry.requirement": "This action requires a tier %d prying implement.\n§7Claws can be used for prying.",
 
   "capability.available": "You have tier %d available",
 
