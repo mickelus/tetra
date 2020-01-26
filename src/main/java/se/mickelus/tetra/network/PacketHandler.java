@@ -1,5 +1,6 @@
 package se.mickelus.tetra.network;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -97,6 +98,9 @@ public class PacketHandler {
     }
 
     public static void sendToServer(AbstractPacket message) {
-        channel.sendToServer(message);
+        // crashes sometimes happen due to the connection being null
+        if (Minecraft.getInstance().getConnection() != null) {
+            channel.sendToServer(message);
+        }
     }
 }
