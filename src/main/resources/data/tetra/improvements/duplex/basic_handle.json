@@ -112,7 +112,7 @@
             "fierySelf": [-1, -0.033]
         },
         "models": [{
-            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap_alt",
             "tint": "string"
         }]
     },
@@ -130,7 +130,7 @@
             "fierySelf": [-1, -0.035]
         },
         "models": [{
-            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap_alt",
             "tint": "string"
         }]
     },
@@ -148,7 +148,7 @@
             "fierySelf": [-1, -0.037]
         },
         "models": [{
-            "location": "tetra:items/module/sworduplex/handleic/improvements/wrap_alt",
+            "location": "tetra:items/module/duplex/handle/basic/improvements/wrap_alt",
             "tint": "string"
         }]
     },
