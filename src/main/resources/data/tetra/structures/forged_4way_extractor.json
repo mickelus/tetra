@@ -1,7 +1,7 @@
 {
     "biomes": ["cold", "snowy"],
     "origin": [3, 0, 3],
-    "probability": 0.013,
+    "probability": 0.005,
     "minY": 14,
     "maxY": 15,
     "children": [
