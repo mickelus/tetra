@@ -16,6 +16,7 @@
             "durability": 10,
             "integrity": 3,
             "magicCapacity": 15,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "stick_glyph",
                 "textureX": 16
@@ -30,7 +31,7 @@
             "durability": 17,
             "integrity": 4,
             "magicCapacity": 15,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "oak_glyph",
                 "textureX": 16
@@ -45,7 +46,7 @@
             "durability": 23,
             "integrity": 4,
             "magicCapacity": 15,
-            "attackSpeed": -0.15,
+            "attackSpeed": 0.3,
             "glyph": {
                 "tint": "spruce_glyph",
                 "textureX": 16
@@ -60,7 +61,7 @@
             "durability": 33,
             "integrity": 4,
             "magicCapacity": 15,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.3,
             "glyph": {
                 "tint": "birch_glyph",
                 "textureX": 16
@@ -75,7 +76,7 @@
             "durability": 17,
             "integrity": 4,
             "magicCapacity": 17,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "jungle_glyph",
                 "textureX": 16
@@ -90,6 +91,7 @@
             "durability": 17,
             "integrity": 4,
             "magicCapacity": 15,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "acacia_glyph",
                 "textureX": 16
@@ -104,7 +106,7 @@
             "durability": 17,
             "integrity": 4,
             "magicCapacity": 17,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "dark_oak_glyph",
                 "textureX": 16
@@ -119,6 +121,7 @@
             "durability": 23,
             "integrity": 5,
             "magicCapacity": 16,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "maple_glyph",
                 "textureX": 16
@@ -133,7 +136,7 @@
             "durability": 27,
             "integrity": 6,
             "magicCapacity": 13,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "cherry_glyph",
                 "textureX": 16
@@ -148,7 +151,7 @@
             "durability": 33,
             "integrity": 8,
             "magicCapacity": 13,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "baobab_glyph",
                 "textureX": 16
@@ -163,6 +166,7 @@
             "durability": 12,
             "integrity": 4,
             "magicCapacity": 18,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "bone_glyph",
                 "textureX": 16
@@ -177,7 +181,7 @@
             "durability": 32,
             "integrity": 5,
             "magicCapacity": 14,
-            "attackSpeed": -0.2,
+            "attackSpeed": 0.25,
             "glyph": {
                 "tint": "iron_glyph",
                 "textureX": 16
@@ -192,7 +196,7 @@
             "durability": 12,
             "integrity": 6,
             "magicCapacity": 13,
-            "attackSpeed": -0.3,
+            "attackSpeed": 0.15,
             "glyph": {
                 "tint": "bronze_glyph",
                 "textureX": 16
@@ -207,7 +211,7 @@
             "durability": 64,
             "integrity": 5,
             "magicCapacity": 11,
-            "attackSpeed": -0.2,
+            "attackSpeed": 0.2,
             "glyph": {
                 "tint": "steel_glyph",
                 "textureX": 16
@@ -222,7 +226,7 @@
             "durability": 63,
             "integrity": 7,
             "magicCapacity": 18,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "blaze_rod_glyph",
                 "textureX": 16
@@ -237,7 +241,7 @@
             "durability": 88,
             "integrity": 8,
             "magicCapacity": 17,
-            "attackSpeed": -0.2,
+            "attackSpeed": 0.25,
             "glyph": {
                 "tint": "end_rod_glyph",
                 "textureX": 16
@@ -252,6 +256,7 @@
             "durability": 14,
             "integrity": 6,
             "magicCapacity": 20,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "greatwood_glyph",
                 "textureX": 16
@@ -266,7 +271,7 @@
             "durability": 81,
             "integrity": 6,
             "magicCapacity": 15,
-            "attackSpeed": -0.1,
+            "attackSpeed": 0.35,
             "glyph": {
                 "tint": "treated_wood_glyph",
                 "textureX": 16
@@ -281,6 +286,7 @@
             "durability": 44,
             "integrity": 5,
             "magicCapacity": 15,
+            "attackSpeed": 0.45,
             "glyph": {
                 "tint": "ironwood_glyph",
                 "textureX": 16
@@ -295,7 +301,7 @@
             "durability": 150,
             "integrity": 8,
             "magicCapacity": 6,
-            "attackSpeed": -0.3,
+            "attackSpeed": 0.1,
             "damageMultiplier": 0.9,
             "glyph": {
                 "tint": "forged_beam_glyph",
