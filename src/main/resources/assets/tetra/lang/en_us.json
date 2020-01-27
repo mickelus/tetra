@@ -441,8 +441,8 @@
   "enchantment/ensorcellation_weeding.name": "Weeding",
   "enchantment/ensorcellation_weeding.description": "Clears plants while tilling blocks.",
 
-  "tetra/schema/cleanse_schema.name": "Cleanse",
-  "tetra/schema/cleanse_schema.description": "Cleanse negative effects caused by magic instability.\n\nExperience cost is increased based on exceeded magic capacity and the amount of instability effects.",
+  "tetra/schema/cleanse.name": "Cleanse",
+  "tetra/schema/cleanse.description": "Cleanse negative effects caused by magic instability.\n\nExperience cost is increased based on exceeded magic capacity and the amount of instability effects.",
 
   "tetra/schema/sword/shared_blade/hone_damage_1.name": "Hone: Damage I",
   "tetra/schema/sword/shared_blade/hone_damage_1.description": "Hone the module to increase the damage dealt by 0.5.",
