@@ -186,6 +186,22 @@
             }]
         },
         {
+            "key": "basic_blade/diamond",
+            "durability": 480,
+            "integrity": -2,
+            "magicCapacity": 10,
+            "damage": 6,
+            "attackSpeed": 1.5,
+            "capabilities": {
+                "cut": [1, 0.9375]
+            },
+            "glyph": { "tint": "diamond_glyph" },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/basic/metal",
+                "tint": "diamond"
+            }]
+        },
+        {
             "key": "short_blade/prismarine",
             "durability": 140,
             "integrity": -3,

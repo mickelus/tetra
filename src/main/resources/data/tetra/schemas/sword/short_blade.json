@@ -101,6 +101,16 @@
         },
         {
             "material": {
+                "item": "minecraft:diamond"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "sword/short_blade",
+            "moduleVariant": "short_blade/diamond"
+        },
+        {
+            "material": {
                 "item": "minecraft:prismarine_shard"
             },
             "requiredCapabilities": {
