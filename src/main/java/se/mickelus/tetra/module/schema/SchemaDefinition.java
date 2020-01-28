@@ -170,7 +170,7 @@ public class SchemaDefinition {
         }
 
 
-        if (from.requirement != defaultValues.requirement) {
+        if (!from.requirement.equals(defaultValues.requirement)) {
             to.requirement = from.requirement;
         }
 
@@ -190,7 +190,7 @@ public class SchemaDefinition {
         }
 
 
-        if (from.glyph != defaultValues.glyph) {
+        if (!from.glyph.equals(defaultValues.glyph)) {
             to.glyph = from.glyph;
         }
 

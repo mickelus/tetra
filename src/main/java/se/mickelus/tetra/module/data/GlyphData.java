@@ -56,4 +56,13 @@ public class GlyphData {
         this.textureX = textureX;
         this.textureY = textureY;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof GlyphData
+                && textureX == ((GlyphData) obj).textureX
+                && textureY == ((GlyphData) obj).textureY
+                && tint == ((GlyphData) obj).tint
+                && textureLocation.equals(((GlyphData) obj).textureLocation);
+    }
 }
