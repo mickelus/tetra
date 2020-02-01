@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
@@ -55,6 +56,11 @@ public class BookEnchantSchema implements UpgradeSchema {
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
         return I18n.format(localizationPrefix + key + slotSuffix);
+    }
+
+    @Override
+    public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
+        return new ItemStack[] {Items.ENCHANTED_BOOK.getDefaultInstance()};
     }
 
     @Override

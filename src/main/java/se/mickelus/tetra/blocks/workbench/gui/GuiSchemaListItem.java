@@ -55,12 +55,12 @@ public class GuiSchemaListItem extends GuiClickable {
             addChild(border);
         }
 
+        glyph.setColor(rarity.tint);
+        addChild(glyph);
+
         if (schema.getType() == SchemaType.improvement) {
             addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
         }
-
-        glyph.setColor(rarity.tint);
-        addChild(glyph);
     }
 
     @Override

@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
@@ -51,6 +52,11 @@ public class CleanseSchema implements UpgradeSchema {
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
         return I18n.format(slotLabel);
+    }
+
+    @Override
+    public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
+        return new ItemStack[] {Items.LAPIS_LAZULI.getDefaultInstance()};
     }
 
     @Override

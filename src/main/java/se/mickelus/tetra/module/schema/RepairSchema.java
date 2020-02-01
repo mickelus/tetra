@@ -11,12 +11,15 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 public class RepairSchema extends BaseSchema {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
     private static final String nameSuffix = ".name";
+    private static final String slotSuffix = ".slot1";
     private static final String descriptionSuffix = ".description";
     private static final String extendedDescriptionSuffix = ".description_details";
 
@@ -65,10 +68,17 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
+        return I18n.format(localizationPrefix + key + slotSuffix);
+    }
+
+    @Override
+    public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                 .map(item -> item.getRepairMaterial(itemStack))
-                .map(material -> material.getDisplayName().getUnformattedComponentText())
-                .orElse("?");
+                .map(Material::getApplicableItemstacks)
+                .map(Arrays::stream)
+                .orElse(Stream.empty())
+                .toArray(ItemStack[]::new);
     }
 
     @Override

@@ -4,10 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.*;
-import se.mickelus.tetra.gui.GuiMagicUsage;
-import se.mickelus.tetra.gui.GuiSettleProgress;
-import se.mickelus.tetra.gui.GuiSynergyIndicator;
-import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -28,7 +25,7 @@ public class GuiModuleDetails extends GuiElement {
 
     private GuiElement repairGroup;
     private GuiStringSmall repairTitle;
-    private GuiItem repairMaterial;
+    private GuiItemRolling repairMaterial;
     private GuiStringSmall noRepairLabel;
 
     public GuiModuleDetails(int x, int y) {
@@ -61,7 +58,7 @@ public class GuiModuleDetails extends GuiElement {
         noRepairLabel.setVisible(false);
         repairGroup.addChild(noRepairLabel);
 
-        repairMaterial = new GuiItem(-2, 0);
+        repairMaterial = new GuiItemRolling(-2, 0);
         repairMaterial.setAttachment(GuiAttachment.topRight);
         repairGroup.addChild(repairMaterial);
 
@@ -97,7 +94,7 @@ public class GuiModuleDetails extends GuiElement {
             RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getVariantData(itemStack).key);
             boolean canRepair = repairDefinition != null && repairDefinition.material.getApplicableItemstacks().length > 0;
             if (canRepair) {
-                repairMaterial.setItem(repairDefinition.material.getApplicableItemstacks()[0]);
+                repairMaterial.setItems(repairDefinition.material.getApplicableItemstacks());
             }
 
             repairTitle.setVisible(canRepair);

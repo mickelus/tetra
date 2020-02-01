@@ -14,7 +14,13 @@ public interface UpgradeSchema {
     public String getName();
     public String getDescription(@Nullable ItemStack itemStack);
     public int getNumMaterialSlots();
+
     public String getSlotName(final ItemStack itemStack, int index);
+
+    public default ItemStack[] getSlotPlaceholders(final ItemStack itemStack, int index) {
+        return new ItemStack[0];
+    }
+
     public int getRequiredQuantity(final ItemStack itemStack, int index, ItemStack materialStack);
 
     /**

@@ -8,9 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -74,20 +72,19 @@ public class Material {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ITextComponent getDisplayName() {
+    public ITextComponent[] getDisplayNames() {
         if (itemStack != null) {
-            return itemStack.getDisplayName();
+            return new ITextComponent[] {itemStack.getDisplayName()};
         } else if (tagLocation != null) {
             return ItemTags.getCollection()
                     .getOrCreate(tagLocation)
                     .getAllElements()
                     .stream()
-                    .findFirst()
                     .map(item -> item.getDisplayName(item.getDefaultInstance()))
-                    .orElse(new StringTextComponent("Unknown material"));
+                    .toArray(ITextComponent[]::new);
         }
 
-        return new StringTextComponent("Unknown material");
+        return new ITextComponent[] {new StringTextComponent("Unknown material")};
     }
 
     @OnlyIn(Dist.CLIENT)

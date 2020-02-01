@@ -276,6 +276,7 @@
   "tetra/schema/repair.name": "Repair",
   "tetra/schema/repair.description": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.",
   "tetra/schema/repair.description_details": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n\n§7Module: §f%s",
+  "tetra/schema/repair.slot1": "Material",
 
   "tetra/schema/remove.name": "Remove module",
   "tetra/schema/remove.description": "Remove the module in the selected slot.",

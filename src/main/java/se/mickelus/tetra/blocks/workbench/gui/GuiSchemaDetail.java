@@ -3,9 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.*;
-import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiMagicUsage;
-import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -24,6 +22,7 @@ public class GuiSchemaDetail extends GuiElement {
 
     private GuiString[] slotNames;
     private GuiString[] slotQuantities;
+    private GuiItemRolling[] slotPlaceholders;
     private GuiTexture[] slotBorders;
 
     private GuiMagicUsage magicCapacity;
@@ -47,6 +46,7 @@ public class GuiSchemaDetail extends GuiElement {
 
         slotNames = new GuiString[MAX_NUM_SLOTS];
         slotQuantities = new GuiString[MAX_NUM_SLOTS];
+        slotPlaceholders = new GuiItemRolling[MAX_NUM_SLOTS];
         slotBorders = new GuiTexture[MAX_NUM_SLOTS];
         for (int i = 0; i < MAX_NUM_SLOTS; i++) {
             slotNames[i] = new GuiString(140, 9 + i * 17, "");
@@ -57,7 +57,12 @@ public class GuiSchemaDetail extends GuiElement {
             slotQuantities[i].setVisible(false);
             addChild(slotQuantities[i]);
 
+            slotPlaceholders[i] = new GuiItemRolling(121, 5 + i * 18);
+            slotPlaceholders[i].setVisible(false);
+            addChild(slotPlaceholders[i]);
+
             slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, GuiTextures.workbench);
+            slotBorders[i].setOpacity(0.8f);
             slotBorders[i].setVisible(false);
             addChild(slotBorders[i]);
         }
@@ -115,6 +120,10 @@ public class GuiSchemaDetail extends GuiElement {
         for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schema.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
+
+            slotPlaceholders[i].setVisible(i < materials.length && materials[i].isEmpty());
+            slotPlaceholders[i].setItems(schema.getSlotPlaceholders(itemStack, i));
+
             slotBorders[i].setVisible(true);
 
             if (schema.acceptsMaterial(itemStack, slot, i, materials[i])) {
@@ -132,6 +141,7 @@ public class GuiSchemaDetail extends GuiElement {
         for (int i = schema.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
             slotNames[i].setVisible(false);
             slotQuantities[i].setVisible(false);
+            slotPlaceholders[i].setVisible(false);
             slotBorders[i].setVisible(false);
         }
 
