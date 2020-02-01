@@ -1,12 +1,9 @@
 package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
 
 public class StatGetterEnchantmentLevel implements IStatGetter {

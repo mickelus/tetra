@@ -1,8 +1,6 @@
 package se.mickelus.tetra.items.toolbelt.gui;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;

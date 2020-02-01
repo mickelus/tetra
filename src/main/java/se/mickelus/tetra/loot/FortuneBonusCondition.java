@@ -5,18 +5,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.util.CastOptional;
 
 public class FortuneBonusCondition implements ILootCondition {
     private float chance;

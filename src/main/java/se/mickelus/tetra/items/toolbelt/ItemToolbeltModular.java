@@ -21,7 +21,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.BasicModule;
 import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.toolbelt.booster.JumpHandlerBooster;
@@ -31,7 +30,6 @@ import se.mickelus.tetra.items.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.toolbelt.inventory.InventoryToolbelt;
 import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.network.PacketHandler;
 

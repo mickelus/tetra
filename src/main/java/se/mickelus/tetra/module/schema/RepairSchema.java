@@ -3,14 +3,11 @@ package se.mickelus.tetra.module.schema;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;

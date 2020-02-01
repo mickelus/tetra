@@ -68,7 +68,7 @@ public class GuiModuleOffsets {
     public static GuiModuleOffsets getMinorOffsets(ItemModular item) {
         if (item instanceof ItemToolbeltModular) {
             return toolbeltMinorOffsets;
-        } else if (item instanceof ItemDuplexToolModular ) {
+        } else if (item instanceof ItemDuplexToolModular) {
             return duplexMinorOffsets;
         } else {
             return defaultMinorOffsets[item.getNumMinorModules() - 1];

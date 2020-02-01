@@ -7,7 +7,6 @@ import se.mickelus.tetra.items.ItemModular;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 
 public abstract class BasicSchema extends BaseSchema {
