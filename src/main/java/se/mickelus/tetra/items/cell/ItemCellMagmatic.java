@@ -42,15 +42,15 @@ public class ItemCellMagmatic extends TetraItem {
     public void addInformation(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         int charge = getCharge(stack);
 
-        tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge"));
+        tooltip.add(new TranslationTextComponent("item.tetra.magmatic_cell.charge"));
         if (charge == maxCharge) {
-            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_full"));
+            tooltip.add(new TranslationTextComponent("item.tetra.magmatic_cell.charge_full"));
         } else if (charge > maxCharge * 0.4) {
-            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_good"));
+            tooltip.add(new TranslationTextComponent("item.tetra.magmatic_cell.charge_good"));
         } else if (charge > 0) {
-            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_low"));
+            tooltip.add(new TranslationTextComponent("item.tetra.magmatic_cell.charge_low"));
         } else {
-            tooltip.add(new TranslationTextComponent("item.magmatic_cell.charge_empty"));
+            tooltip.add(new TranslationTextComponent("item.tetra.magmatic_cell.charge_empty"));
         }
 
         tooltip.add(hintTooltip);
