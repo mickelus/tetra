@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.module.schema.UpgradeSchema;

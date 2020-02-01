@@ -9,7 +9,7 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 import java.util.Collections;
 import java.util.List;

@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import se.mickelus.tetra.items.ItemColors;
+import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.GlyphData;
 
 public class GlyphDeserializer implements JsonDeserializer<GlyphData> {

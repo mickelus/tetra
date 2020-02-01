@@ -32,10 +32,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.EarthboundEffect;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.ItemModularHandheld;
-import se.mickelus.tetra.items.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;

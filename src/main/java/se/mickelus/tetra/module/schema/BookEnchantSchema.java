@@ -12,7 +12,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;

@@ -29,7 +29,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 

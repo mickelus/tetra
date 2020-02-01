@@ -7,8 +7,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
-import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.sword.ItemSwordModular;
+import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
+import se.mickelus.tetra.items.modular.impl.ItemSwordModular;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigHandler {
@@ -33,6 +33,18 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.IntValue honeDuplexBase;
     public static ForgeConfigSpec.IntValue honeDuplexIntegrityMultiplier;
+
+    public static ForgeConfigSpec.IntValue honeSingleBase;
+    public static ForgeConfigSpec.IntValue honeSingleIntegrityMultiplier;
+
+    public static ForgeConfigSpec.IntValue honeBowBase;
+    public static ForgeConfigSpec.IntValue honeBowIntegrityMultiplier;
+
+    public static ForgeConfigSpec.IntValue honeCrossbowBase;
+    public static ForgeConfigSpec.IntValue honeCrossbowIntegrityMultiplier;
+
+    public static ForgeConfigSpec.IntValue honeShieldBase;
+    public static ForgeConfigSpec.IntValue honeShieldIntegrityMultiplier;
 
 
     static {
@@ -102,6 +114,14 @@ public class ConfigHandler {
         honeDuplexIntegrityMultiplier = builder
                 .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_duplex_integrity_multiplier", 90, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        builder.pop();
+
+
+        // experimental config
+        builder
+                .comment("Toggles & config for experimental features")
+                .push("experimental");
 
         builder.pop();
 

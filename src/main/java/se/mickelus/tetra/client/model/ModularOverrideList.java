@@ -19,7 +19,7 @@ import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.SimpleModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;

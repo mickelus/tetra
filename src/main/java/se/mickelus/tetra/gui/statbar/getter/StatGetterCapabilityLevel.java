@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;

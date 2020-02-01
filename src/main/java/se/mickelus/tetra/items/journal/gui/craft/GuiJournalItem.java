@@ -6,7 +6,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 import java.util.ArrayList;
 import java.util.List;

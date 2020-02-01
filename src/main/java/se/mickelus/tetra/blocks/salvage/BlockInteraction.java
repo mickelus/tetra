@@ -23,7 +23,7 @@ import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 import java.util.Arrays;
 import java.util.Collection;

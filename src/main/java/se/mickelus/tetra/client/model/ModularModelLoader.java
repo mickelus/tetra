@@ -9,7 +9,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 import java.util.ArrayList;
 import java.util.List;

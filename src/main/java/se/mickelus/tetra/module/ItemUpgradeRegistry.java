@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 import se.mickelus.tetra.module.schema.SchemaDefinition;

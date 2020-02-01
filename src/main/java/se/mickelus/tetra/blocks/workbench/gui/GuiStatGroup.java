@@ -11,7 +11,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
 import se.mickelus.tetra.gui.statbar.GuiStatBase;
 import se.mickelus.tetra.gui.statbar.GuiStats;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 import java.util.Arrays;
 import java.util.LinkedList;

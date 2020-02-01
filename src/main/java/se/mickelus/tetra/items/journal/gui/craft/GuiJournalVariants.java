@@ -8,7 +8,7 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.schema.OutcomePreview;
 import se.mickelus.tetra.module.schema.SchemaType;
 import se.mickelus.tetra.module.schema.UpgradeSchema;

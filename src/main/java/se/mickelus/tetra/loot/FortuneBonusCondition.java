@@ -12,7 +12,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 public class FortuneBonusCondition implements ILootCondition {
     private float chance;

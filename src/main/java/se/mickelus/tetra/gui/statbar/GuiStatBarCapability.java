@@ -7,7 +7,7 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiCapability;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.util.CastOptional;
 
 public class GuiStatBarCapability extends GuiStatBar {

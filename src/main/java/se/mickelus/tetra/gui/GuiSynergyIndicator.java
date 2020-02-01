@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.util.CastOptional;

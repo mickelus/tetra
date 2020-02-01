@@ -4,7 +4,7 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiSchemaListItem;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.SchemaRarity;
 import se.mickelus.tetra.module.schema.SchemaType;

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collections;

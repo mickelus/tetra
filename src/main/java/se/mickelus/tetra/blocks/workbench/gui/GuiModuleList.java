@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 

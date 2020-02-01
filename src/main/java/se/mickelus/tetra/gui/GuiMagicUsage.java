@@ -8,7 +8,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.gui.statbar.GuiBar;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collections;

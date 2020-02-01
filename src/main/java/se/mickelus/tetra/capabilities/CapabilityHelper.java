@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.util.CastOptional;

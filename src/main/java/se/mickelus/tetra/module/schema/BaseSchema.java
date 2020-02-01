@@ -2,7 +2,7 @@ package se.mickelus.tetra.module.schema;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModular;
 
 public abstract class BaseSchema implements UpgradeSchema {
     @Override

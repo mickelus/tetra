@@ -3,10 +3,10 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.toolbelt.inventory.InventoryPotions;
-import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuickslot;
-import se.mickelus.tetra.items.toolbelt.inventory.InventoryQuiver;
-import se.mickelus.tetra.items.toolbelt.inventory.InventoryStorage;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryPotions;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryStorage;
 import se.mickelus.tetra.module.ItemEffect;
 
 public class GuiStats {

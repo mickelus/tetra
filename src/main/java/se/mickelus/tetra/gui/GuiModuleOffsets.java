@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui;
 
-import se.mickelus.tetra.items.ItemModular;
-import se.mickelus.tetra.items.duplex_tool.ItemDuplexToolModular;
-import se.mickelus.tetra.items.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 
 public class GuiModuleOffsets {
     static GuiModuleOffsets[] defaultMajorOffsets = {
