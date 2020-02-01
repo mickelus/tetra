@@ -51,8 +51,7 @@ public class RepairSchema extends BaseSchema {
         if (itemStack != null) {
             return CastOptional.cast(itemStack.getItem(), ItemModular.class)
                     .map(item -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix,
-                            item.getRepairModuleName(itemStack),
-                            item.getRepairAmount(itemStack)))
+                            item.getRepairModuleName(itemStack)))
                     .orElse(I18n.format(localizationPrefix + key + descriptionSuffix));
         }
 

@@ -483,9 +483,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      * @return
      */
     public int getRepairAmount(ItemStack itemStack) {
-        return getRepairModule(itemStack)
-                .map(module -> (int) (module.getRepairAmount(itemStack) * getDurabilityMultiplier(itemStack)))
-                .orElse(0);
+        return getMaxDamage(itemStack);
     }
 
     public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
