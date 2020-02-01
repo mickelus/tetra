@@ -25,7 +25,12 @@
             [
                 "duplex/basic_hammer_left"
             ]
-        ]
+        ],
+        "improvements": {
+            "!head_hone/hammer_tier": -1,
+            "head_hone/durability": 5,
+            "head_hone/speed": 5
+        }
     },
     "outcomes": [
         {
