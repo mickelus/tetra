@@ -303,6 +303,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             handler.setStackInSlot(0, tempStack);
         });
 
+        clearSchema();
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
