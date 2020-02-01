@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
+import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 
 public class GuiModuleOffsets {
@@ -58,7 +58,7 @@ public class GuiModuleOffsets {
     public static GuiModuleOffsets getMajorOffsets(ItemModular item) {
         if (item instanceof ItemToolbeltModular) {
             return toolbeltMajorOffsets;
-        } else if (item instanceof ItemDuplexToolModular) {
+        } else if (item instanceof ModularTwinHeadItem) {
             return duplexMajorOffsets;
         } else {
             return defaultMajorOffsets[item.getNumMajorModules() - 1];
@@ -68,7 +68,7 @@ public class GuiModuleOffsets {
     public static GuiModuleOffsets getMinorOffsets(ItemModular item) {
         if (item instanceof ItemToolbeltModular) {
             return toolbeltMinorOffsets;
-        } else if (item instanceof ItemDuplexToolModular) {
+        } else if (item instanceof ModularTwinHeadItem) {
             return duplexMinorOffsets;
         } else {
             return defaultMinorOffsets[item.getNumMinorModules() - 1];

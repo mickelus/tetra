@@ -9,7 +9,7 @@ import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 
-public class ItemSwordModular extends ItemModularHandheld {
+public class ModularSwordItem extends ItemModularHandheld {
 
     public final static String bladeKey = "sword/blade";
     public final static String hiltKey = "sword/hilt";
@@ -21,9 +21,9 @@ public class ItemSwordModular extends ItemModularHandheld {
     public static final String unlocalizedName = "sword_modular";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemSwordModular instance;
+    public static ModularSwordItem instance;
 
-    public ItemSwordModular() {
+    public ModularSwordItem() {
         super(new Item.Properties().maxStackSize(1));
         setRegistryName(unlocalizedName);
 

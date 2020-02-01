@@ -55,8 +55,8 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
-import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
-import se.mickelus.tetra.items.modular.impl.ItemSwordModular;
+import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
@@ -144,13 +144,13 @@ public class TetraMod {
 
 
         items = new Item[] {
-                new ItemSwordModular(),
+                new ModularSwordItem(),
                 new GeodeItem(),
                 new PristineLapisItem(),
                 new PristineEmeraldItem(),
                 new PristineDiamondItem(),
                 new ItemToolbeltModular(),
-                new ItemDuplexToolModular(),
+                new ModularTwinHeadItem(),
                 new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),

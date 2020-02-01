@@ -2,9 +2,9 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
+import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
-import se.mickelus.tetra.items.modular.impl.ItemSwordModular;
+import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
@@ -125,11 +125,11 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
 
             result.add(I18n.format("journal.craft.breadcrumb.root"));
 
-            if (item instanceof ItemSwordModular) {
+            if (item instanceof ModularSwordItem) {
                 result.add(I18n.format("journal.craft.sword"));
             } else if (item instanceof ItemToolbeltModular) {
                 result.add(I18n.format("journal.craft.toolbelt"));
-            } else if (item instanceof ItemDuplexToolModular) {
+            } else if (item instanceof ModularTwinHeadItem) {
                 result.add(I18n.format("journal.craft.tool"));
             }
 

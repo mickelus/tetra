@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 
-public class ItemDuplexToolModular extends ItemModularHandheld {
+public class ModularTwinHeadItem extends ItemModularHandheld {
 
     public final static String headLeftKey = "duplex/head_left";
     public final static String headRightKey = "duplex/head_right";
@@ -46,9 +46,9 @@ public class ItemDuplexToolModular extends ItemModularHandheld {
     private static final String unlocalizedName = "duplex_tool_modular";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemDuplexToolModular instance;
+    public static ModularTwinHeadItem instance;
 
-    public ItemDuplexToolModular() {
+    public ModularTwinHeadItem() {
         super(new Item.Properties().maxStackSize(1).group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
 

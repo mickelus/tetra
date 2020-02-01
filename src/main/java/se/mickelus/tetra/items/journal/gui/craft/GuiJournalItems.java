@@ -7,8 +7,8 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
-import se.mickelus.tetra.items.modular.impl.ItemSwordModular;
+import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 
 import java.util.function.Consumer;
@@ -23,8 +23,8 @@ public class GuiJournalItems extends GuiElement {
         super(x, y, width, height);
 
 
-        sword = new GuiJournalItem(-39, 0, ItemSwordModular.instance, I18n.format("journal.craft.sword"),
-                () -> onItemSelect.accept(ItemSwordModular.instance), onSlotSelect);
+        sword = new GuiJournalItem(-39, 0, ModularSwordItem.instance, I18n.format("journal.craft.sword"),
+                () -> onItemSelect.accept(ModularSwordItem.instance), onSlotSelect);
         sword.setAttachment(GuiAttachment.topCenter);
         addChild(sword);
 
@@ -33,8 +33,8 @@ public class GuiJournalItems extends GuiElement {
         toolbelt.setAttachment(GuiAttachment.topCenter);
         addChild(toolbelt);
 
-        tools = new GuiJournalItem(41, 0, ItemDuplexToolModular.instance, I18n.format("journal.craft.tool"),
-                () -> onItemSelect.accept(ItemDuplexToolModular.instance), onSlotSelect);
+        tools = new GuiJournalItem(41, 0, ModularTwinHeadItem.instance, I18n.format("journal.craft.tool"),
+                () -> onItemSelect.accept(ModularTwinHeadItem.instance), onSlotSelect);
         tools.setAttachment(GuiAttachment.topCenter);
         addChild(tools);
     }
@@ -53,7 +53,7 @@ public class GuiJournalItems extends GuiElement {
     }
 
     public void changeItem(Item item) {
-        if (item instanceof ItemSwordModular) {
+        if (item instanceof ModularSwordItem) {
             toolbelt.setVisible(false);
             tools.setVisible(false);
 
@@ -65,7 +65,7 @@ public class GuiJournalItems extends GuiElement {
 
             toolbelt.setVisible(true);
             toolbelt.setSelected(true);
-        } else if (item instanceof ItemDuplexToolModular) {
+        } else if (item instanceof ModularTwinHeadItem) {
             sword.setVisible(false);
             toolbelt.setVisible(false);
 

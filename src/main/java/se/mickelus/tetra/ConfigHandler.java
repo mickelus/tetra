@@ -7,8 +7,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
-import se.mickelus.tetra.items.modular.impl.ItemDuplexToolModular;
-import se.mickelus.tetra.items.modular.impl.ItemSwordModular;
+import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigHandler {
@@ -149,8 +149,8 @@ public class ConfigHandler {
      */
     @SubscribeEvent
     public static void onLoad(final ModConfig.Loading configEvent) {
-        ItemSwordModular.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
-        ItemDuplexToolModular.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
+        ModularSwordItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
+        ModularTwinHeadItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
     }
 
     /**
@@ -159,7 +159,7 @@ public class ConfigHandler {
      */
     @SubscribeEvent
     public static void onReload(final ModConfig.ConfigReloading configEvent) {
-        ItemSwordModular.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
-        ItemDuplexToolModular.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
+        ModularSwordItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
+        ModularTwinHeadItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
     }
 }
