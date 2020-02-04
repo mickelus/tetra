@@ -1,5 +1,113 @@
 [
     {
+        "key": "enchantment/power",
+        "level": 1,
+        "damage": 1,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "enchantment/power",
+        "level": 2,
+        "damage": 1.5,
+        "enchantment": true,
+        "magicCapacity": -7
+    },
+    {
+        "key": "enchantment/power",
+        "level": 3,
+        "damage": 2,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "enchantment/power",
+        "level": 4,
+        "damage": 2.5,
+        "enchantment": true,
+        "magicCapacity": -9
+    },
+    {
+        "key": "enchantment/power",
+        "level": 5,
+        "damage": 3,
+        "enchantment": true,
+        "magicCapacity": -10
+    },
+    {
+        "key": "enchantment/power",
+        "level": 6,
+        "damage": 3.5,
+        "enchantment": true,
+        "magicCapacity": -11
+    },
+    {
+        "key": "enchantment/power",
+        "level": 7,
+        "damage": 4,
+        "enchantment": true,
+        "magicCapacity": -12
+    },
+    {
+        "key": "enchantment/power",
+        "level": 8,
+        "damage": 4.5,
+        "enchantment": true,
+        "magicCapacity": -13
+    },
+    {
+        "key": "enchantment/power",
+        "level": 9,
+        "damage": 5,
+        "enchantment": true,
+        "magicCapacity": -14
+    },
+    {
+        "key": "enchantment/power",
+        "level": 10,
+        "damage": 5.5,
+        "enchantment": true,
+        "magicCapacity": -15
+    },
+
+    {
+        "key": "enchantment/flame",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/flame",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+
+    {
+        "key": "enchantment/punch",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/punch",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "enchantment/punch",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "enchantment/punch",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -10
+    },
+    {
         "key": "stave_grip/wrap_string",
         "level": 1,
         "durability": 3,

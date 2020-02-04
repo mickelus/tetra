@@ -53,6 +53,9 @@ public class GuiJournalStats extends GuiElement {
         bars.add(GuiStats.mending);
         bars.add(GuiStats.silkTouch);
         bars.add(GuiStats.fortune);
+        bars.add(GuiStats.infinity);
+        bars.add(GuiStats.flame);
+        bars.add(GuiStats.punch);
         bars.add(GuiStats.quickStrike);
         bars.add(GuiStats.softStrike);
         bars.add(GuiStats.fierySelf);

@@ -143,6 +143,21 @@ public class GuiStats {
                 0, 20, false, fortuneGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("stats.fortune.tooltip", fortuneGetter));
 
+    public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY, 1);
+    public static final GuiStatBar infinity = new GuiStatBar(0, 0, barLength, I18n.format("stats.infinity"),
+            0, 1, false, infinityGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.infinity.tooltip", infinityGetter));
+
+    public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAME, 4);
+    public static final GuiStatBar flame = new GuiStatBar(0, 0, barLength, I18n.format("stats.flame"),
+            0, 2, false, flameGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.flame.tooltip", flameGetter));
+
+    public static final IStatGetter punchGetter = new StatGetterEnchantmentLevel(Enchantments.PUNCH, 1);
+    public static final GuiStatBar punch = new GuiStatBar(0, 0, barLength, I18n.format("stats.punch"),
+            0, 4, false, punchGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.punch.tooltip", punchGetter));
+
     public static final IStatGetter quickStrikeGetter = new StatGetterEffectLevel(ItemEffect.quickStrike, 5, 20);
     public static final GuiStatBar quickStrike = new GuiStatBar(0, 0, barLength, I18n.format("stats.quickStrike"),
                 0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabelDecimal,

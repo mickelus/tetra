@@ -113,6 +113,15 @@
   "stats.fortune": "Fortune",
   "stats.fortune.tooltip": "Increases drop chance when harvesting or salvaging blocks",
 
+  "stats.flame": "Flame",
+  "stats.flame.tooltip": "Hitting an entity sets it on fire for §e%s§r seconds, projectiles ignite blocks like tnt and campfires",
+
+  "stats.punch": "Punch",
+  "stats.punch.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
+
+  "stats.infinity": "Infinity",
+  "stats.infinity.tooltip": "Firing this item no longer consumes regular ammunition, special ammunition is still consumed",
+
   "stats.quickStrike": "Quick",
   "stats.quickStrike.tooltip": "Reduces the minimum damage dealt to §e%s§r while the attack cooldown is active",
 
@@ -315,6 +324,14 @@
   "enchantment/fortune.description": "Increases drops when breaking things",
   "enchantment/silk_touch.name": "Silk Touch",
   "enchantment/silk_touch.description": "Harvested blocks will not break",
+  "enchantment/power.name": "Power",
+  "enchantment/power.description": "Increases damage dealt",
+  "enchantment/flame.name": "Flame",
+  "enchantment/flame.description": "Hitting entities sets them on fire",
+  "enchantment/punch.name": "Punch",
+  "enchantment/punch.description": "Knock back targets further",
+  "enchantment/infinity.name": "Infinity",
+  "enchantment/infinity.description": "firing no longer consumes ammunition",
 
   "destabilized/haunted.name": "§5Destabilized: Haunted",
   "destabilized/haunted.description": "This module has been haunted and will sometimes turn against the item's wielder! Will disappear over time.",

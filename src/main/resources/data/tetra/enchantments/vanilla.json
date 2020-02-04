@@ -88,6 +88,35 @@
         "apply": false
     },
     {
+        "enchantment": "minecraft:punch",
+        "improvement": "enchantment/punch"
+    },
+    {
+        "enchantment": "minecraft:punch",
+        "improvement": "destabilized/punch",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:power",
+        "improvement": "enchantment/power",
+        "apply": false
+    },
+    {
+        "enchantment": "minecraft:flame",
+        "improvement": "enchantment/flame"
+    },
+    {
+        "enchantment": "minecraft:flame",
+        "improvement": "destabilized/flame",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:infinity",
+        "improvement": "enchantment/infinity"
+    },
+    {
         "enchantment": "minecraft:vanishing_curse",
         "improvement": "destabilized/vanishing"
     },

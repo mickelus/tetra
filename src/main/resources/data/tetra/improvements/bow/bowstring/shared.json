@@ -1,0 +1,65 @@
+[
+    {
+        "key": "enchantment/infinity",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -10
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -3,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -6,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -9,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -12,
+        "effects": {
+            "unbreaking": 4
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -15,
+        "effects": {
+            "unbreaking": 5
+        }
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -15
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -20
+    }
+]

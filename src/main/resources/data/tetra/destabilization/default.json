@@ -75,6 +75,18 @@
         "probability": 0.02
     },
     {
+        "improvementKey": "enchantment/punch",
+        "destabilizationKey":  "destabilized/punch",
+        "probability": 0.02
+    },
+    {
+        "improvementKey": "enchantment/power",
+        "destabilizationKey":  "destabilized/power",
+        "minLevel": 1,
+        "maxLevel": 5,
+        "probability": 0.06
+    },
+    {
         "destabilizationKey":  "destabilized/vanishing",
         "probability": 0.01,
         "instabilityLimit": 7

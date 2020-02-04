@@ -299,6 +299,52 @@
         }
     },
     {
+        "key": "destabilized/power",
+        "level": 1,
+        "damageMultiplier": 0.95,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/power",
+        "level": 2,
+        "damageMultiplier": 0.9,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/power",
+        "level": 3,
+        "damageMultiplier": 0.85,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/power",
+        "level": 4,
+        "damageMultiplier": 0.8,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/power",
+        "level": 5,
+        "damageMultiplier": 0.75,
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/punch",
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
         "key": "destabilized/vanishing",
         "enchantment": true,
         "glyph": {

@@ -2,13 +2,16 @@
     "replace": true,
     "slots": ["bow/string"],
     "type": "tetra:basic_major_module",
-    "improvements": [],
+    "improvements": [
+        "tetra:bow/bowstring/shared",
+        "tetra:destabilization_improvements"
+    ],
     "variants": [
         {
             "key": "basic_string/string",
             "durability": 150,
             "integrity": 2,
-            "magicCapacity": 8,
+            "magicCapacity": 15,
             "glyph": {
                 "tint": "string_glyph",
                 "textureX": 112,
@@ -40,7 +43,7 @@
             "key": "basic_string/vine",
             "durability": 162,
             "integrity": 4,
-            "magicCapacity": 7,
+            "magicCapacity": 11,
             "glyph": {
                 "tint": "vine_glyph",
                 "textureX": 112,
@@ -72,7 +75,7 @@
             "key": "basic_string/hide",
             "durability": -30,
             "integrity": 5,
-            "magicCapacity": 9,
+            "magicCapacity": 11,
             "glyph": {
                 "tint": "hide_glyph",
                 "textureX": 112,
@@ -136,7 +139,7 @@
             "key": "basic_string/phantom",
             "durability": 120,
             "integrity": 6,
-            "magicCapacity": 9,
+            "magicCapacity": 11,
             "glyph": {
                 "tint": "phantom_glyph",
                 "textureX": 112,
