@@ -30,7 +30,7 @@ public class GuiStats {
 
     public static final IStatGetter rangedSpeedGetter = new StatGetterSpeedRanged();
     public static final GuiStatBar rangedSpeed = new GuiStatBar(0, 0, barLength, I18n.format("stats.ranged_speed"),
-            0, 10, false, false, true, rangedSpeedGetter, LabelGetterBasic.decimalLabel,
+            0, 10, false, false, true, rangedSpeedGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("stats.ranged_speed.tooltip", rangedSpeedGetter));
 
     public static final IStatGetter speedGetterNormalized = new StatGetterSpeedNormalized();
