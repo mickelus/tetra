@@ -11,9 +11,9 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
 
-public class StatGetterSpeed implements IStatGetter {
+public class StatGetterSpeedMelee implements IStatGetter {
 
-    public StatGetterSpeed() { }
+    public StatGetterSpeedMelee() { }
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {

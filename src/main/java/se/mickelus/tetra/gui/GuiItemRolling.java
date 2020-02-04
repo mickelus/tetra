@@ -9,12 +9,12 @@ import java.util.List;
 
 public class GuiItemRolling extends GuiElement {
     private boolean showTooltip = true;
+    private boolean showCount = true;
 
     private GuiItem[] items = new GuiItem[0];
 
     public GuiItemRolling(int x, int y) {
         super(x, y, 16, 16);
-        this.setVisible(false);
     }
 
     public GuiItemRolling setTooltip(boolean showTooltip) {
@@ -22,9 +22,14 @@ public class GuiItemRolling extends GuiElement {
         return this;
     }
 
+    public GuiItemRolling setCount(boolean showCount) {
+        this.showCount = showCount;
+        return this;
+    }
+
     public GuiItemRolling setItems(ItemStack[] itemStacks) {
         items = Arrays.stream(itemStacks)
-                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).setCount(false))
+                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).setCount(showCount))
                 .toArray(GuiItem[]::new);
 
         return this;

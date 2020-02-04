@@ -14,6 +14,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.OutcomePreview;
@@ -33,7 +34,7 @@ public class GuiJournalVariantDetail extends GuiElement {
     private GuiElement improvements;
 
     private GuiElement requiredCapabilities;
-    private GuiItem material;
+    private GuiItemRolling material;
 
     private GuiJournalStats stats;
 
@@ -60,7 +61,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         requiredCapabilities = new GuiElement(0, 20, width, height);
         addChild(requiredCapabilities);
 
-        material = new GuiItem(0, 20);
+        material = new GuiItemRolling(0, 20);
         addChild(material);
 
         PlayerEntity player = Minecraft.getInstance().player;
@@ -136,9 +137,9 @@ public class GuiJournalVariantDetail extends GuiElement {
                 i++;
             }
             if (baseOutcome.materials.length > 0) {
-                material.setItem(baseOutcome.materials[0]);
+                material.setItems(baseOutcome.materials);
             } else {
-                material.setItem(null);
+                material.setItems(new ItemStack[0]);
             }
 
             stats.update(selectedOutcome != null ? selectedOutcome.itemStack : hoveredOutcome.itemStack,
