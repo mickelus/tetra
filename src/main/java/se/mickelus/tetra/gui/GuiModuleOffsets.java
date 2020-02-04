@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 
@@ -23,6 +24,9 @@ public class GuiModuleOffsets {
 
     static GuiModuleOffsets duplexMajorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
     static GuiModuleOffsets duplexMinorOffsets = new GuiModuleOffsets(6, 1);
+
+    static GuiModuleOffsets bowMajorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
+    static GuiModuleOffsets bowMinorOffsets = new GuiModuleOffsets(6, 1);
 
     private int[] offsetX;
     private int[] offsetY;
@@ -60,6 +64,8 @@ public class GuiModuleOffsets {
             return toolbeltMajorOffsets;
         } else if (item instanceof ModularTwinHeadItem) {
             return duplexMajorOffsets;
+        } else if (item instanceof ModularBowItem) {
+            return new GuiModuleOffsets(1, 21, -11, -3);
         } else {
             return defaultMajorOffsets[item.getNumMajorModules() - 1];
         }
@@ -70,6 +76,8 @@ public class GuiModuleOffsets {
             return toolbeltMinorOffsets;
         } else if (item instanceof ModularTwinHeadItem) {
             return duplexMinorOffsets;
+        } else if (item instanceof ModularBowItem) {
+            return new GuiModuleOffsets(-14, 23);
         } else {
             return defaultMinorOffsets[item.getNumMinorModules() - 1];
         }

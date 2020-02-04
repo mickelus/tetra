@@ -1,12 +1,14 @@
 package se.mickelus.tetra.items.modular;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ModuleModel;
+
+import javax.annotation.Nullable;
 
 public interface IItemModular {
 
@@ -30,5 +32,5 @@ public interface IItemModular {
      */
     public void assemble(ItemStack itemStack, World world);
 
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack);
+    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity);
 }

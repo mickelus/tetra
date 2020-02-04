@@ -97,6 +97,8 @@ public class ItemColors {
     public static int leather_glyph      = define(0x866526, "leather_glyph");
     public static int hide               = define(0x996d3d, "hide");
     public static int hide_glyph         = define(0xa88054, "hide_glyph");
+    public static int phantom            = define(0xdbc4bd, "phantom");
+    public static int phantom_glyph      = define(0xc2b29b, "phantom_glyph");
     public static int vine               = define(0x445c24, "vine");
     public static int vine_glyph         = define(0x445d24, "vine_glyph");
     public static int bolt               = define(0xffffff, "bolt");

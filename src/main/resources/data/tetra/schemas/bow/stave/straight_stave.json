@@ -1,0 +1,112 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 128,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick",
+                "count": 3
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/stick"
+        },
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 4
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 4
+            },
+            "moduleKey": "bow/straight_stave",
+            "moduleVariant": "straight_stave/baobab"
+        }
+    ]
+}

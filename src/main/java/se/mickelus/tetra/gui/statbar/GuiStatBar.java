@@ -26,17 +26,19 @@ public class GuiStatBar extends GuiStatBase {
 
     protected GuiAlignment alignment = GuiAlignment.left;
 
+    protected boolean inverted = false;
+
     protected IStatGetter statGetter;
     protected ILabelGetter labelGetter;
     protected ITooltipGetter tooltipGetter;
 
     public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented,
             IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
-        this(x, y, barLength, label, min, max, segmented, false, statGetter, labelGetter, tooltipGetter);
+        this(x, y, barLength, label, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
     }
 
     public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented, boolean split,
-            IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         super(x, y, barLength, 12);
 
         this.min = min;
@@ -46,12 +48,12 @@ public class GuiStatBar extends GuiStatBase {
         valueString = new GuiStringSmall(0, 0, label);
 
         if (segmented) {
-            bar = new GuiBarSegmented(0, 0, barLength + 1, min, max);
+            bar = new GuiBarSegmented(0, 0, barLength + 1, min, max, inverted);
         } else {
             if (split) {
                 bar = new GuiBarSplit(0, 0, barLength, max);
             } else {
-                bar = new GuiBar(0, 0, barLength, min, max);
+                bar = new GuiBar(0, 0, barLength, min, max, inverted);
             }
         }
 
@@ -62,6 +64,8 @@ public class GuiStatBar extends GuiStatBase {
         this.statGetter = statGetter;
         this.labelGetter = labelGetter;
         this.tooltipGetter = tooltipGetter;
+
+        inverted = true;
     }
 
     public void setAlignment(GuiAlignment alignment) {

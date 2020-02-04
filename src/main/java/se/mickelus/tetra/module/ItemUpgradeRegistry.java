@@ -94,6 +94,12 @@ public class ItemUpgradeRegistry {
         replacementFunctions.add(replacementFunction);
     }
 
+    /**
+     * Attempts to get a modular itemstack to replace the given non-modular itemstack.
+     * Make sure to call {@link ItemModular#updateIdentifier} on the new item afterwards to make rendering cheaper.
+     * @param itemStack A non-modular itemstack
+     * @return The modular counterpart to the given item, or an empty itemstack if there is none
+     */
     public ItemStack getReplacement(ItemStack itemStack) {
         for (ReplacementDefinition replacementDefinition: replacementDefinitions) {
             if (replacementDefinition.predicate.test(itemStack)) {

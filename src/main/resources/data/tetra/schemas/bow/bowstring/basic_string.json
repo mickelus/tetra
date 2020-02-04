@@ -1,0 +1,52 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/string"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 112,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:string",
+                "count": 2
+            },
+            "moduleKey": "bow/basic_string",
+            "moduleVariant": "basic_string/string"
+        },
+        {
+            "material": {
+                "item": "minecraft:vine",
+                "count": 2
+            },
+            "moduleKey": "bow/basic_string",
+            "moduleVariant": "basic_string/vine"
+        },
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 2
+            },
+            "moduleKey": "bow/basic_string",
+            "moduleVariant": "basic_string/hide"
+        },
+        {
+            "material": {
+                "item": "minecraft:leather"
+            },
+            "moduleKey": "bow/basic_string",
+            "moduleVariant": "basic_string/leather"
+        },
+        {
+            "material": {
+                "item": "minecraft:phantom_membrane"
+            },
+            "moduleKey": "bow/basic_string",
+            "moduleVariant": "basic_string/phantom"
+        }
+    ]
+}

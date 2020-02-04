@@ -26,6 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
@@ -55,6 +56,7 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
@@ -145,12 +147,12 @@ public class TetraMod {
 
         items = new Item[] {
                 new ModularSwordItem(),
+                new ModularTwinHeadItem(),
                 new GeodeItem(),
                 new PristineLapisItem(),
                 new PristineEmeraldItem(),
                 new PristineDiamondItem(),
                 new ItemToolbeltModular(),
-                new ModularTwinHeadItem(),
                 new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),
@@ -160,6 +162,10 @@ public class TetraMod {
                 new ItemVentPlate(),
                 new ItemJournal()
         };
+
+        if (ConfigHandler.enableBow.get()) {
+            items = ArrayUtils.addAll(items, new ModularBowItem());
+        }
 
         proxy.preInit(
                 Arrays.stream(items)

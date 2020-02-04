@@ -49,6 +49,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class ItemModular extends TetraItem implements IItemModular, ICapabilityProvider {
+    protected static final String identifierKey = "id";
 
     protected static final String repairCountKey = "repairCount";
 
@@ -77,6 +78,12 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public void clientInit() {
         ModularModelLoader.registerItem(this);
+    }
+
+    public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
+        return Optional.of(getIdentifier(itemStack))
+                .filter(id -> !id.isEmpty())
+                .orElseGet(() -> NBTHelper.getTag(itemStack).toString());
     }
 
     @Override
@@ -195,7 +202,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack) {
+    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
@@ -533,6 +540,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return new ItemStack(this);
     }
 
+    public static void updateIdentifier(ItemStack itemStack) {
+        NBTHelper.getTag(itemStack).putString(identifierKey, UUID.randomUUID().toString());
+    }
+
+    public String getIdentifier(ItemStack itemStack) {
+        return NBTHelper.getTag(itemStack).getString(identifierKey);
+    }
+
     @Override
     public void assemble(ItemStack itemStack, World world) {
         if (itemStack.getDamage() > itemStack.getMaxDamage()) {
@@ -547,6 +562,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         nbt.putInt("HideFlags", 1);
 
         EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
+
+        updateIdentifier(itemStack);
+    }
+
+    @Override
+    public void onCreated(ItemStack itemStack, World world, PlayerEntity player) {
+        updateIdentifier(itemStack);
     }
 
     public Map<Enchantment, Integer> getEnchantmentsFromImprovements(ItemStack itemStack) {

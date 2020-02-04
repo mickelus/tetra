@@ -167,6 +167,16 @@
         },
         {
             "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "sword/basic_hilt",
+            "moduleVariant": "basic_hilt/baobab"
+        },
+        {
+            "material": {
                 "tag": "forge:planks/greatwood"
             },
             "requiredCapabilities": {

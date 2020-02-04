@@ -46,6 +46,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec.IntValue honeShieldBase;
     public static ForgeConfigSpec.IntValue honeShieldIntegrityMultiplier;
 
+    public static ForgeConfigSpec.BooleanValue enableBow;
 
     static {
         // misc config
@@ -122,6 +123,20 @@ public class ConfigHandler {
         builder
                 .comment("Toggles & config for experimental features")
                 .push("experimental");
+
+
+        enableBow = builder
+                .comment("Enable modular bows")
+                .worldRestart()
+                .define("bow", true);
+
+        honeBowBase = builder
+                .comment("The base value for number of uses required before a bow can be honed")
+                .defineInRange("hone_bow_base", 120, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeBowIntegrityMultiplier = builder
+                .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .defineInRange("hone_bow_integrity_multiplier", 75, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
 

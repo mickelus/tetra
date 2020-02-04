@@ -13,6 +13,11 @@ public class ModuleModel {
         this.location = location;
     }
 
+    public ModuleModel(String type, ResourceLocation location) {
+        this.type = type;
+        this.location = location;
+    }
+
     public ModuleModel(String type, ResourceLocation location, int tint) {
         this.type = type;
         this.location = location;

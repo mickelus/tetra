@@ -57,10 +57,10 @@ public class ModularOverrideList extends ItemOverrideList {
         CompoundNBT baseTag = NBTHelper.getTag(stack);
         IBakedModel result = originalModel;
         if(!baseTag.isEmpty()) {
-            CacheKey key = getCacheKey(stack, originalModel);
+            CacheKey key = getCacheKey(stack, entity, originalModel);
 
             try {
-                result = bakedModelCache.get(key, () -> getOverrideModel(stack));
+                result = bakedModelCache.get(key, () -> getOverrideModel(stack, entity));
             } catch(ExecutionException e) {
                 // do nothing, return original model
                 e.printStackTrace();
@@ -69,11 +69,11 @@ public class ModularOverrideList extends ItemOverrideList {
         return result;
     }
 
-    protected CacheKey getCacheKey(ItemStack stack, IBakedModel original) {
-        return new CacheKey(original, stack);
+    protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, IBakedModel original) {
+        return new CacheKey(original, ((ItemModular) itemStack.getItem()).getModelCacheKey(itemStack, entity));
     }
 
-    protected IBakedModel getOverrideModel(ItemStack itemStack) {
+    protected IBakedModel getOverrideModel(ItemStack itemStack, @Nullable LivingEntity entity) {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
         // todo: look at ItemModelGenerator
@@ -90,7 +90,7 @@ public class ModularOverrideList extends ItemOverrideList {
 //        return unbaked.bake(bakery, ModelLoader.defaultTextureGetter(), new BasicState(unbaked.getDefaultState(), false),
 //                DefaultVertexFormats.ITEM);
 
-        List<ModuleModel> models = item.getModels(itemStack);
+        List<ModuleModel> models = item.getModels(itemStack, entity);
 
          return new ModularItemModel(models).bake(bakery, ModelLoader.defaultTextureGetter(),
                  perState, DefaultVertexFormats.ITEM);
@@ -101,13 +101,9 @@ public class ModularOverrideList extends ItemOverrideList {
         final IBakedModel parent;
         final String data;
 
-        protected CacheKey(IBakedModel parent, ItemStack stack) {
+        protected CacheKey(IBakedModel parent, String hash) {
             this.parent = parent;
-            this.data = getDataFromStack(stack);
-        }
-
-        protected String getDataFromStack(ItemStack stack) {
-            return NBTHelper.getTag(stack).toString();
+            this.data = hash;
         }
 
         @Override

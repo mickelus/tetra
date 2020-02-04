@@ -161,6 +161,16 @@
         },
         {
             "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "duplex/basic_handle",
+            "moduleVariant": "basic_handle/baobab"
+        },
+        {
+            "material": {
                 "tag": "forge:planks/greatwood"
             },
             "requiredCapabilities": {

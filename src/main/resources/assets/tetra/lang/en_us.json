@@ -56,11 +56,17 @@
   "stats.speed": "Speed",
   "stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier",
 
+  "stats.ranged_speed": "Draw speed",
+  "stats.ranged_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
+
   "stats.speed_normalized": "Speed",
   "stats.speed_normalized.tooltip": "Changes attack speed by §e%s",
 
   "stats.damage": "Damage",
   "stats.damage.tooltip": "Deals §e%s §rdamage",
+
+  "stats.ranged_damage": "Base Damage",
+  "stats.ranged_damage.tooltip": "Fired projectiles deal §e%s §rdamage to the target",
 
   "stats.bleeding": "Bleeding",
   "stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds",
@@ -1902,5 +1908,128 @@
   "tetra/schema/toolbelt/storage/quickslot.slot1": "Latch",
 
   "storage/quick_latch.name": "Quick latch",
-  "storage/quick_latch.description": "Held items can be stashed into the pouch using the restock hotkey."
+  "storage/quick_latch.description": "Held items can be stashed into the pouch using the restock hotkey.",
+
+  "bow/stave": "Stave",
+  "bow/string": "Bowstring",
+  "bow/riser": "Riser",
+
+  "tetra/schema/bow/bowstring/basic_string.name": "Basic String",
+  "tetra/schema/bow/bowstring/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.",
+  "tetra/schema/bow/bowstring/basic_string.slot1": "Material",
+
+  "bow/basic_string.name": "Basic string",
+  "bow/basic_string.description": "A basic bowstring. The bowstring is the primary source of integrity for bows.",
+
+  "basic_string/string": "Basic string",
+  "basic_string/vine": "Vine bowstring",
+  "basic_string/hide": "Hide cord",
+  "basic_string/leather": "Leather cord",
+  "basic_string/phantom": "Phantom sinew",
+
+  "tetra/schema/bow/stave/straight_stave.name": "Straight stave",
+  "tetra/schema/bow/stave/straight_stave.description": "Replaces the stave with a new straight stave crafted from the given materials.",
+  "tetra/schema/bow/stave/straight_stave.slot1": "Material",
+
+  "bow/straight_stave.item_name": "Bow",
+  "bow/straight_stave.name": "Straight stave",
+  "bow/straight_stave.description": "A long bow stave.",
+
+  "straight_stave/stick": "Makeshift straight stave",
+  "straight_stave/oak": "Oak straight stave",
+  "straight_stave/oak.prefix": "Oak",
+  "straight_stave/spruce":"Spruce straight stave",
+  "straight_stave/spruce.prefix":"Spruce",
+  "straight_stave/birch": "Birch straight stave",
+  "straight_stave/birch.prefix": "Birch",
+  "straight_stave/jungle":"Jungle straight stave",
+  "straight_stave/jungle.prefix":"Jungle",
+  "straight_stave/acacia": "Acacia straight stave",
+  "straight_stave/acacia.prefix": "Acacia",
+  "straight_stave/dark_oak":"Dark oak straight stave",
+  "straight_stave/dark_oak.prefix":"Dark oak",
+  "straight_stave/maple": "Maple straight stave",
+  "straight_stave/maple.prefix": "Maple",
+  "straight_stave/cherry":"Cherry straight stave",
+  "straight_stave/cherry.prefix":"Cherry",
+  "straight_stave/baobab": "Baobab straight stave",
+  "straight_stave/baobab.prefix": "Baobab",
+
+  "tetra/schema/bow/stave/long_stave.name": "Long stave",
+  "tetra/schema/bow/stave/long_stave.description": "Replaces the stave with a new long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage than other bows.",
+  "tetra/schema/bow/stave/long_stave.slot1": "Material",
+
+  "bow/long_stave.item_name": "Longbow",
+  "bow/long_stave.name": "Long stave",
+  "bow/long_stave.description": "A long bow stave. Longbows typically have a slower draw speed but deal more damage than other bows.",
+
+  "long_stave/stick": "Makeshift long stave",
+  "long_stave/oak": "Oak long stave",
+  "long_stave/oak.prefix": "Oak",
+  "long_stave/spruce":"Spruce long stave",
+  "long_stave/spruce.prefix":"Spruce",
+  "long_stave/birch": "Birch long stave",
+  "long_stave/birch.prefix": "Birch",
+  "long_stave/jungle":"Jungle long stave",
+  "long_stave/jungle.prefix":"Jungle",
+  "long_stave/acacia": "Acacia long stave",
+  "long_stave/acacia.prefix": "Acacia",
+  "long_stave/dark_oak":"Dark oak long stave",
+  "long_stave/dark_oak.prefix":"Dark oak",
+  "long_stave/maple": "Maple long stave",
+  "long_stave/maple.prefix": "Maple",
+  "long_stave/cherry":"Cherry long stave",
+  "long_stave/cherry.prefix":"Cherry",
+  "long_stave/baobab": "Baobab long stave",
+  "long_stave/baobab.prefix": "Baobab",
+
+  "tetra/schema/bow/stave/recurve_stave.name": "Recurve stave",
+  "tetra/schema/bow/stave/recurve_stave.description": "Replaces the stave with a new recurve stave crafted from the given materials. Recurve bows typically have a faster draw speed than other types of bows.",
+  "tetra/schema/bow/stave/recurve_stave.slot1": "Material",
+
+  "bow/recurve_stave.item_name": "Recurve bow",
+  "bow/recurve_stave.name": "Recurve stave",
+  "bow/recurve_stave.description": "A recurve bow stave. Recurve bows typically have a faster draw speed than other types of bows.",
+
+  "recurve_stave/stick": "Makeshift recurve stave",
+  "recurve_stave/oak": "Oak recurve stave",
+  "recurve_stave/oak.prefix": "Oak",
+  "recurve_stave/spruce":"Spruce recurve stave",
+  "recurve_stave/spruce.prefix":"Spruce",
+  "recurve_stave/birch": "Birch recurve stave",
+  "recurve_stave/birch.prefix": "Birch",
+  "recurve_stave/jungle":"Jungle recurve stave",
+  "recurve_stave/jungle.prefix":"Jungle",
+  "recurve_stave/acacia": "Acacia recurve stave",
+  "recurve_stave/acacia.prefix": "Acacia",
+  "recurve_stave/dark_oak":"Dark oak recurve stave",
+  "recurve_stave/dark_oak.prefix":"Dark oak",
+  "recurve_stave/maple": "Maple recurve stave",
+  "recurve_stave/maple.prefix": "Maple",
+  "recurve_stave/cherry":"Cherry recurve stave",
+  "recurve_stave/cherry.prefix":"Cherry",
+  "recurve_stave/baobab": "Baobab recurve stave",
+  "recurve_stave/baobab.prefix": "Baobab",
+
+
+  "stave_grip/wrap_string.name": "String wrap",
+  "stave_grip/wrap_string.description": "Slightly increases drawspeed, reduces negative hilt effects.",
+  "stave_grip/wrap_leather.name": "Leather wrap",
+  "stave_grip/wrap_leather.description": "Slightly increases drawspeed, reduces negative hilt effects.",
+  "stave_grip/wrap_hide.name": "Hide wrap",
+  "stave_grip/wrap_hide.description": "Slightly increases drawspeed, reduces negative hilt effects.",
+  "stave_grip/wrap_vine.name": "Vine wrap",
+  "stave_grip/wrap_vine.description": "Slightly increases drawspeed, reduces negative hilt effects.",
+
+  "tetra/schema/bow/stave/wrap_grip.name": "Wrap grip",
+  "tetra/schema/bow/stave/wrap_grip.slot1": "Material",
+  "tetra/schema/bow/stave/wrap_grip.description": "Wrap the grip using the provided materials. Slighly increases drawspeed, and reduces negative effects potentially caused by the stave material.",
+
+  "tetra/schema/bow/stave/wrap_grip_hone_1.name": "Hone: Wrap grip II",
+  "tetra/schema/bow/stave/wrap_grip_hone_1.slot1": "Material",
+  "tetra/schema/bow/stave/wrap_grip_hone_1.description": "Improve the grip wrap, further increasing drawspeed, and reducing negative effects.",
+
+  "tetra/schema/bow/stave/wrap_grip_hone_2.name": "Hone: Wrap grip III",
+  "tetra/schema/bow/stave/wrap_grip_hone_2.slot1": "Material",
+  "tetra/schema/bow/stave/wrap_grip_hone_2.description": "Further improve the hilt wrap, increasing drawspeed, and reducing negative effects."
 }

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class TooltipGetterSpeed implements ITooltipGetter {
 
-    private static final IStatGetter statGetter = new StatGetterSpeed();
+    private static final IStatGetter statGetter = new StatGetterSpeedMelee();
     private static final String localizationKey = "stats.speed.tooltip";
 
     public TooltipGetterSpeed() { }

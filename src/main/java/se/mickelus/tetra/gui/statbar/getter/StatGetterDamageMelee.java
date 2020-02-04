@@ -11,8 +11,8 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
 
-public class StatGetterDamage implements IStatGetter {
-    public StatGetterDamage() { }
+public class StatGetterDamageMelee implements IStatGetter {
+    public StatGetterDamageMelee() { }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {

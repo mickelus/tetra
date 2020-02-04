@@ -1,0 +1,352 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "type": "tetra:basic_major_module",
+    "improvements": [
+        "tetra:bow/stave/shared"
+    ],
+    "variants": [
+        {
+            "key": "recurve_stave/stick",
+            "integrity": -2,
+            "durability": 199,
+            "magicCapacity": 15,
+            "damage": 1.9,
+            "attackSpeed": 0.63,
+            "glyph": {
+                "tint": "stick_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "stick"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "stick"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "stick"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "stick"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/oak",
+            "integrity": -3,
+            "magicCapacity": 15,
+            "durability": 294,
+            "damage": 3,
+            "attackSpeed": 0.6,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "oak"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "oak"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "oak"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "oak"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/spruce",
+            "integrity": -3,
+            "magicCapacity": 15,
+            "durability": 269,
+            "damage": 3,
+            "attackSpeed": 0.48,
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "spruce"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "spruce"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "spruce"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "spruce"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/birch",
+            "integrity": -3,
+            "magicCapacity": 15,
+            "durability": 330,
+            "damage": 3,
+            "attackSpeed": 0.6,
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "birch"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "birch"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "birch"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "birch"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/jungle",
+            "integrity": -3,
+            "magicCapacity": 17,
+            "durability": 294,
+            "damage": 3,
+            "attackSpeed": 0.6,
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "jungle"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "jungle"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "jungle"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "jungle"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/acacia",
+            "integrity": -3,
+            "magicCapacity": 15,
+            "durability": 309,
+            "damage": 4,
+            "attackSpeed": 0.75,
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "acacia"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "acacia"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "acacia"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "acacia"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/dark_oak",
+            "integrity": -3,
+            "magicCapacity": 17,
+            "durability": 268,
+            "damage": 3,
+            "attackSpeed": 0.6,
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "dark_oak"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "dark_oak"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "dark_oak"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "dark_oak"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/maple",
+            "integrity": -4,
+            "magicCapacity": 16,
+            "durability": 341,
+            "damage": 4.5,
+            "attackSpeed": 0.6,
+            "glyph": {
+                "tint": "maple_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "maple"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "maple"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "maple"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "maple"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/cherry",
+            "integrity": -4,
+            "magicCapacity": 13,
+            "durability": 352,
+            "damage": 5.5,
+            "attackSpeed": 0.66,
+            "glyph": {
+                "tint": "cherry_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "cherry"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "cherry"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "cherry"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "cherry"
+                }
+            ]
+        },
+        {
+            "key": "recurve_stave/baobab",
+            "integrity": -6,
+            "magicCapacity": 13,
+            "durability": 539,
+            "damage": 5,
+            "attackSpeed": 0.66,
+            "glyph": {
+                "tint": "baobab_glyph",
+                "textureX": 160,
+                "textureY": 32
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "baobab"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:items/module/bow/stave/recurve/crude",
+                    "tint": "baobab"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "baobab"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:items/module/bow/stave/recurve/crude_1",
+                    "tint": "baobab"
+                }
+            ]
+        }
+    ]
+}

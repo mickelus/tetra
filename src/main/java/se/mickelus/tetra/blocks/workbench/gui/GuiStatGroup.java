@@ -33,6 +33,8 @@ public class GuiStatGroup extends GuiElement {
 
         bars.add(GuiStats.damage);
         bars.add(GuiStats.speed);
+        bars.add(GuiStats.rangedDamage);
+        bars.add(GuiStats.rangedSpeed);
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
         bars.add(GuiStats.quickslot);

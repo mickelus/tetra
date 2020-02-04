@@ -18,6 +18,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.data.ModuleVariantData;
 
 import java.util.concurrent.CompletableFuture;
@@ -48,6 +49,7 @@ public class ModuleDevCommand {
         for (int i = 0; i < data.length; i++) {
             ItemStack itemStack = baseStack.copy();
             module.addModule(itemStack, data[i].key, context.getSource().asPlayer());
+            ItemModular.updateIdentifier(itemStack);
             plopFrame(world, pos.add(i / 5, i % 5, 0), itemStack, module.getName(itemStack));
         }
 
