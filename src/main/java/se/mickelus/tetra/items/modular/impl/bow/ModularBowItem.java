@@ -20,6 +20,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -79,6 +80,17 @@ public class ModularBowItem extends ItemModular {
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
     public void onPlayerStoppedUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
+        fireArrow(itemStack, world, entity, timeLeft);
+    }
+
+    @Override
+    public void onUsingTick(ItemStack itemStack, LivingEntity player, int count) {
+        if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, player) >= 1) {
+            player.stopActiveHand();
+        }
+    }
+
+    protected void fireArrow(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
             boolean playerInfinite = player.abilities.isCreativeMode

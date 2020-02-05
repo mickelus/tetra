@@ -149,6 +149,9 @@
   "stats.toolbelt.booster": "Boost strength",
   "stats.toolbelt.booster.tooltip": "Provides jump boost and limited flight with strength §e%s",
 
+  "stats.bow.releaseLatch": "Release latch",
+  "stats.bow.releaseLatch.tooltip": "Automatically fire arrows when the bow is fully drawn",
+
   "stats.criticalStrike": "Crit",
   "stats.criticalStrike.tooltip": "Has a chance to critically hit when hitting entities or breaking blocks.\n\n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n\n§7This effect cannot occur for blocks that are exceptionally hard",
 
@@ -2027,6 +2030,13 @@
   "recurve_stave/cherry.prefix":"Cherry",
   "recurve_stave/baobab": "Baobab recurve stave",
   "recurve_stave/baobab.prefix": "Baobab",
+
+  "tetra/schema/bow/string/release_latch.name": "Release latch",
+  "tetra/schema/bow/string/release_latch.slot1": "Latch",
+  "tetra/schema/bow/string/release_latch.description": "Repurpose a quick latch into a release mechanism for the bow, which makes it easier to consecutively loose arrows.\n Automatically fire arrows when the bow is fully drawn.",
+
+  "bowstring/release_latch.name": "Release latch",
+  "bowstring/release_latch.description": "Slightly increases drawspeed & automatically loose arrows.",
 
 
   "stave_grip/wrap_string.name": "String wrap",

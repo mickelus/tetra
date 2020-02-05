@@ -235,7 +235,27 @@ public enum ItemEffect {
      * Cell socket: Cells (e.g. a magmatic cell) placed in slots with this effect can provide power to other
      * modules attached to the toolbelt. The effect level decides the number of slots affected at a 1:1 ratio.
      */
-    cellSocket;
+    cellSocket,
+
+    //////////////////////////////////////////////////////////////
+    // bow
+    //////////////////////////////////////////////////////////////
+
+    /**
+     * Release latch: Causes the bow to automatically fire when fully drawn.
+     */
+    releaseLatch,
+
+    /**
+     *  Flow: Firing an arrow within short succession of another increases damage by 1.
+     *  The effect level decides the damage cap and the effect efficiency decides the timeframe before the bonus is lost.
+     */
+    flow;
+
+
+
+
+
 
     public static final String hauntedKey = "destabilized/haunted";
 }

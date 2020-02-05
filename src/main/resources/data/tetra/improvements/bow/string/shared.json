@@ -61,5 +61,31 @@
         "level": 2,
         "enchantment": true,
         "magicCapacity": -20
+    },
+
+    {
+        "key": "bowstring/release_latch",
+        "integrity": -1,
+        "attackSpeedMultiplier": 0.9,
+        "effects": {
+            "releaseLatch": 1
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/bow/string/improvements/latch"
+            },
+            {
+                "type": "draw_0",
+                "location": "tetra:items/module/bow/string/improvements/latch_0"
+            },
+            {
+                "type": "draw_1",
+                "location": "tetra:items/module/bow/string/improvements/latch_1"
+            },
+            {
+                "type": "draw_2",
+                "location": "tetra:items/module/bow/string/improvements/latch_2"
+            }
+        ]
     }
 ]

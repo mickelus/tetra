@@ -193,6 +193,11 @@ public class GuiStats {
             0, 100, false, earthbindGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("stats.earthbind.tooltip", earthbindGetter));
 
+    public static final IStatGetter releaseLatchGetter = new StatGetterEffectLevel(ItemEffect.releaseLatch, 1);
+    public static final GuiStatBar releaseLatch = new GuiStatBar(0, 0, barLength, I18n.format("stats.bow.releaseLatch"),
+            0, 1, false, releaseLatchGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("stats.bow.releaseLatch.tooltip", releaseLatchGetter));
+
     public static final IStatGetter magicCapacityGetter = new StatGetterMagicCapacity();
     public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, I18n.format("stats.magicCapacity"),
             0, 50, false, magicCapacityGetter, LabelGetterBasic.integerLabel,

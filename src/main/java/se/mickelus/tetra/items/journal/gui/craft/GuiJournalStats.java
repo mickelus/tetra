@@ -62,6 +62,7 @@ public class GuiJournalStats extends GuiElement {
         bars.add(GuiStats.enderReverb);
         bars.add(GuiStats.criticalStrike);
         bars.add(GuiStats.earthbind);
+        bars.add(GuiStats.releaseLatch);
         bars.add(GuiStats.intuit);
         bars.add(GuiStats.magicCapacity);
 

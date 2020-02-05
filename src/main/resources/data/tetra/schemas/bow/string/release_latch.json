@@ -1,0 +1,24 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/string"
+    ],
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "glyph": {
+        "textureX": 80,
+        "textureY": 32
+    },
+    "displayType": "improvement",
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:quick_latch"
+            },
+            "improvements": {
+                "bowstring/release_latch": 0
+            }
+        }
+    ]
+}
