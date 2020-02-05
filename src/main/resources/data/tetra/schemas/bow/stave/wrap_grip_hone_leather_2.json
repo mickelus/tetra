@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "localizationKey": "bow/stave/wrap_grip_hone_2",
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 1,
+    "hone": true,
+    "rarity": "hone",
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "stave_grip/wrap_leather": 2
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "cut": 2
+            },
+            "improvements": {
+                "stave_grip/wrap_leather": 3
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "replace": true,
+    "localizationKey": "bow/stave/wrap_grip_hone_1",
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 1,
+    "hone": true,
+    "rarity": "hone",
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "stave_grip/wrap_vine": 1
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:vine",
+                "count": 2
+            },
+            "improvements": {
+                "stave_grip/wrap_vine": 2
+            }
+        }
+    ]
+}

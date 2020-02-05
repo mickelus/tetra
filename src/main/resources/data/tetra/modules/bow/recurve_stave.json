@@ -6,6 +6,7 @@
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:bow/stave/shared",
+        "tetra:bow/stave/shared_hone",
         "tetra:settling_improvements",
         "tetra:destabilization_improvements"
     ],

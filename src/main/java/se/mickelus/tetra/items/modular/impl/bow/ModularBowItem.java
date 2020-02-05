@@ -78,15 +78,15 @@ public class ModularBowItem extends ItemModular {
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
-    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
+    public void onPlayerStoppedUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
             boolean playerInfinite = player.abilities.isCreativeMode
-                    || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+                    || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, itemStack) > 0;
             ItemStack ammoStack = player.findAmmo(Items.BOW.getDefaultInstance());
 
-            int drawProgress = getUseDuration(stack) - timeLeft;
-            drawProgress = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, world, player, drawProgress,
+            int drawProgress = getUseDuration(itemStack) - timeLeft;
+            drawProgress = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(itemStack, world, player, drawProgress,
                     !ammoStack.isEmpty() || playerInfinite);
 
             if (drawProgress < 0) {
@@ -103,7 +103,7 @@ public class ModularBowItem extends ItemModular {
                     ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                             .orElse((ArrowItem) Items.ARROW);
 
-                    boolean infiniteAmmo = player.abilities.isCreativeMode || ammoItem.isInfinite(ammoStack, stack, player);
+                    boolean infiniteAmmo = player.abilities.isCreativeMode || ammoItem.isInfinite(ammoStack, itemStack, player);
 
                     if (!world.isRemote) {
                         AbstractArrowEntity projectile = ammoItem.createArrow(world, ammoStack, player);
@@ -114,19 +114,19 @@ public class ModularBowItem extends ItemModular {
                             projectile.setIsCritical(true);
                         }
 
-                        projectile.setDamage(projectile.getDamage() + getDamageModifier(stack));
+                        projectile.setDamage(projectile.getDamage() + getDamageModifier(itemStack));
 
 
-                        int punchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+                        int punchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, itemStack);
                         if (punchLevel > 0) {
                             projectile.setKnockbackStrength(punchLevel);
                         }
 
-                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
+                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, itemStack) > 0) {
                             projectile.setFire(100);
                         }
 
-                        stack.damageItem(1, player, (p_220009_1_) -> {
+                        itemStack.damageItem(1, player, (p_220009_1_) -> {
                             p_220009_1_.sendBreakAnimation(player.getActiveHand());
                         });
                         if (infiniteAmmo || player.abilities.isCreativeMode
@@ -135,6 +135,8 @@ public class ModularBowItem extends ItemModular {
                         }
 
                         world.addEntity(projectile);
+
+                        applyUsageEffects(entity, itemStack, 1);
                     }
 
                     world.playSound(null, player.posX, player.posY, player.posZ,

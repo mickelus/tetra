@@ -3,7 +3,8 @@
     "slots": ["bow/string"],
     "type": "tetra:basic_major_module",
     "improvements": [
-        "tetra:bow/bowstring/shared",
+        "tetra:bow/string/shared",
+        "tetra:bow/string/shared_hone",
         "tetra:destabilization_improvements"
     ],
     "variants": [

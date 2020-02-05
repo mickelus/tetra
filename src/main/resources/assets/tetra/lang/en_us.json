@@ -1931,9 +1931,9 @@
   "bow/string": "Bowstring",
   "bow/riser": "Riser",
 
-  "tetra/schema/bow/bowstring/basic_string.name": "Basic String",
-  "tetra/schema/bow/bowstring/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.",
-  "tetra/schema/bow/bowstring/basic_string.slot1": "Material",
+  "tetra/schema/bow/string/basic_string.name": "Basic String",
+  "tetra/schema/bow/string/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.",
+  "tetra/schema/bow/string/basic_string.slot1": "Material",
 
   "bow/basic_string.name": "Basic string",
   "bow/basic_string.description": "A basic bowstring. The bowstring is the primary source of integrity for bows.",
@@ -2048,5 +2048,33 @@
 
   "tetra/schema/bow/stave/wrap_grip_hone_2.name": "Hone: Wrap grip III",
   "tetra/schema/bow/stave/wrap_grip_hone_2.slot1": "Material",
-  "tetra/schema/bow/stave/wrap_grip_hone_2.description": "Further improve the hilt wrap, increasing drawspeed, and reducing negative effects."
+  "tetra/schema/bow/stave/wrap_grip_hone_2.description": "Further improve the hilt wrap, increasing drawspeed, and reducing negative effects.",
+
+
+  "tetra/schema/bow/stave/hone_speed_1.name": "Hone: Speed I",
+  "tetra/schema/bow/stave/hone_speed_1.description": "Hone the module to increase the overall draw speed.",
+  "tetra/schema/bow/stave/hone_speed_2.name": "Hone: Speed II",
+  "tetra/schema/bow/stave/hone_speed_2.description": "Further hone the draw speed improvement for this module.",
+  "tetra/schema/bow/stave/hone_speed_3.name": "Hone: Speed III",
+  "tetra/schema/bow/stave/hone_speed_3.description": "Further hone the draw speed improvement for this module.",
+  "tetra/schema/bow/stave/hone_speed_4.name": "Hone: Speed IV",
+  "tetra/schema/bow/stave/hone_speed_4.description": "Further hone the draw speed improvement for this module.",
+  "tetra/schema/bow/stave/hone_speed_5.name": "Hone: Speed V",
+  "tetra/schema/bow/stave/hone_speed_5.description": "Further hone the draw speed improvement for this module.",
+  "stave_hone/speed.name": "Hone: Speed",
+  "stave_hone/speed.description": "Increases draw speed",
+
+
+  "tetra/schema/bow/string/hone_damage_1.name": "Hone: Damage I",
+  "tetra/schema/bow/string/hone_damage_1.description": "Hone the module to increase the overall damage.",
+  "tetra/schema/bow/string/hone_damage_2.name": "Hone: Damage II",
+  "tetra/schema/bow/string/hone_damage_2.description": "Further hone the damage improvement for this module.",
+  "tetra/schema/bow/string/hone_damage_3.name": "Hone: Damage III",
+  "tetra/schema/bow/string/hone_damage_3.description": "Further hone the damage improvement for this module.",
+  "tetra/schema/bow/string/hone_damage_4.name": "Hone: Damage IV",
+  "tetra/schema/bow/string/hone_damage_4.description": "Further hone the damage improvement for this module.",
+  "tetra/schema/bow/string/hone_damage_5.name": "Hone: Damage V",
+  "tetra/schema/bow/string/hone_damage_5.description": "Further hone the damage improvement for this module.",
+  "bowstring_hone/damage.name": "Hone: Damage",
+  "bowstring_hone/damage.description": "Increases damage dealt"
 }

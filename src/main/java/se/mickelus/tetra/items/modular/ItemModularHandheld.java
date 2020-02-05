@@ -1,6 +1,9 @@
 package se.mickelus.tetra.items.modular;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -8,13 +11,11 @@ import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.*;
+import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.EndermiteEntity;
-import net.minecraft.entity.monster.ShulkerEntity;
-import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -22,11 +23,9 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -47,7 +46,6 @@ import se.mickelus.tetra.util.CastOptional;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ItemModularHandheld extends ItemModular {
 
@@ -152,9 +150,7 @@ public class ItemModularHandheld extends ItemModular {
             }
         }
 
-        causeFierySelfEffect(entity, itemStack, 1);
-        causeEnderReverbEffect(entity, itemStack, 1);
-        causeHauntEffect(entity, itemStack, 1);
+        applyUsageEffects(entity, itemStack, 1);
 
         return true;
     }
@@ -192,11 +188,7 @@ public class ItemModularHandheld extends ItemModular {
                 }
             }
 
-            causeFierySelfEffect(attacker, itemStack, 1.4);
-            causeEnderReverbEffect(attacker, itemStack, 1.5);
-            causeHauntEffect(attacker, itemStack, 1.5);
-
-            tickProgression(attacker, itemStack, 1);
+            applyUsageEffects(attacker, itemStack, 1);
         }
 
         return true;
@@ -214,8 +206,7 @@ public class ItemModularHandheld extends ItemModular {
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
 
-        causeFierySelfEffect(player, itemStack, 2);
-        causeEnderReverbEffect(player, itemStack, 1.7);
+        applyUsageEffects(player, itemStack, 2);
 
         if (flatteningLevel > 0 && (strippingLevel > 0 && player.isSneaking() || strippingLevel == 0)) {
             return flattenPath(player, world, pos, hand, facing);
@@ -241,87 +232,6 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return super.onItemUse(context);
-    }
-
-    protected void causeFierySelfEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
-            double fierySelfEfficiency = getEffectEfficiency(itemStack, ItemEffect.fierySelf);
-            if (fierySelfEfficiency > 0) {
-                BlockPos pos = entity.getPosition();
-                float temperature = entity.world.getBiome(pos).getTemperature(pos);
-                if (entity.getRNG().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
-                    entity.setFire(getEffectLevel(itemStack, ItemEffect.fierySelf));
-                }
-            }
-        }
-    }
-
-    protected void causeEnderReverbEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
-            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
-            if (effectProbability > 0) {
-                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
-                    AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
-                    List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
-                            target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
-                                    || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
-                    if (nearbyTargets.size() > 0) {
-                        nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
-                    }
-                }
-            }
-        }
-    }
-
-    protected void causeHauntEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
-            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.haunted);
-            if (effectProbability > 0) {
-                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
-                    int effectLevel = getEffectLevel(itemStack, ItemEffect.haunted);
-
-                    VexEntity vex = EntityType.VEX.create(entity.world);
-                    vex.setLimitedLife(effectLevel * 20);
-                    vex.setLocationAndAngles(entity.posX, entity.posY + 1, entity.posZ, entity.rotationYaw, 0.0F);
-                    vex.setHeldItem(Hand.MAIN_HAND, itemStack.copy());
-                    vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
-                    vex.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
-                    entity.world.addEntity(vex);
-
-                    // todo: use temporary modules for this instead once implemented
-                    CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                            .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
-                            .orElse(Stream.empty())
-                            .filter(Objects::nonNull)
-                            .filter(module -> module.getImprovement(itemStack, ItemEffect.hauntedKey) != null)
-                            .findAny()
-                            .ifPresent(module -> {
-                                int level = module.getImprovementLevel(itemStack, ItemEffect.hauntedKey);
-                                if (level > 0) {
-                                    module.addImprovement(itemStack, ItemEffect.hauntedKey, level - 1);
-                                } else {
-                                    module.removeImprovement(itemStack, ItemEffect.hauntedKey);
-                                }
-                            });
-
-                    entity.world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
-                }
-            }
-        }
-    }
-
-    /**
-     * Applies usage effects and ticks progression based on the given multiplier, should typically be called when the item is used
-     * for something.
-     *
-     * @param entity The using entity
-     * @param itemStack The used itemstack
-     * @param multiplier A multiplier representing the effort and effect yielded from the use
-     */
-    public void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        tickProgression(entity, itemStack, (int) multiplier);
-        causeFierySelfEffect(entity, itemStack, multiplier);
-        causeEnderReverbEffect(entity, itemStack, multiplier);
     }
 
     /**
@@ -777,11 +687,7 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
 
-            causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
-            causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
-            causeHauntEffect(player, providerStack, capabilityLevel * 2);
-
-            tickProgression(player, providerStack, capabilityLevel * 2);
+            applyUsageEffects(player, providerStack, capabilityLevel * 2);
         }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
@@ -793,11 +699,7 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
 
-            causeFierySelfEffect(player, providerStack, capabilityLevel * 2);
-            causeEnderReverbEffect(player, providerStack, capabilityLevel * 2);
-            causeHauntEffect(player, providerStack, capabilityLevel * 2);
-
-            tickProgression(player, providerStack, capabilityLevel * 2);
+            applyUsageEffects(player, providerStack, capabilityLevel * 2);
         }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);

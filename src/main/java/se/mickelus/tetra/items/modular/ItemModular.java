@@ -7,12 +7,25 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.UnbreakingEnchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.EndermiteEntity;
+import net.minecraft.entity.monster.ShulkerEntity;
+import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -310,6 +323,89 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         tag.remove(honeAvailableKey);
         tag.remove(honeProgressKey);
         tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
+    }
+
+    protected void causeFierySelfEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
+            double fierySelfEfficiency = getEffectEfficiency(itemStack, ItemEffect.fierySelf);
+            if (fierySelfEfficiency > 0) {
+                BlockPos pos = entity.getPosition();
+                float temperature = entity.world.getBiome(pos).getTemperature(pos);
+                if (entity.getRNG().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
+                    entity.setFire(getEffectLevel(itemStack, ItemEffect.fierySelf));
+                }
+            }
+        }
+    }
+
+    protected void causeEnderReverbEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
+            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
+            if (effectProbability > 0) {
+                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                    AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
+                    List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
+                            target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
+                                    || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
+                    if (nearbyTargets.size() > 0) {
+                        nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
+                    }
+                }
+            }
+        }
+    }
+
+    protected void causeHauntEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        if (!entity.world.isRemote) {
+            double effectProbability = getEffectEfficiency(itemStack, ItemEffect.haunted);
+            if (effectProbability > 0) {
+                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                    int effectLevel = getEffectLevel(itemStack, ItemEffect.haunted);
+
+                    VexEntity vex = EntityType.VEX.create(entity.world);
+                    vex.setLimitedLife(effectLevel * 20);
+                    vex.setLocationAndAngles(entity.posX, entity.posY + 1, entity.posZ, entity.rotationYaw, 0.0F);
+                    vex.setHeldItem(Hand.MAIN_HAND, itemStack.copy());
+                    vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
+                    vex.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
+                    entity.world.addEntity(vex);
+
+                    // todo: use temporary modules for this instead once implemented
+                    CastOptional.cast(itemStack.getItem(), ItemModular.class)
+                            .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
+                            .orElse(Stream.empty())
+                            .filter(Objects::nonNull)
+                            .filter(module -> module.getImprovement(itemStack, ItemEffect.hauntedKey) != null)
+                            .findAny()
+                            .ifPresent(module -> {
+                                int level = module.getImprovementLevel(itemStack, ItemEffect.hauntedKey);
+                                if (level > 0) {
+                                    module.addImprovement(itemStack, ItemEffect.hauntedKey, level - 1);
+                                } else {
+                                    module.removeImprovement(itemStack, ItemEffect.hauntedKey);
+                                }
+                            });
+
+                    entity.world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
+                }
+            }
+        }
+    }
+
+    /**
+     * Applies usage effects and ticks progression based on the given multiplier, should typically be called when the item is used
+     * for something.
+     *
+     * @param entity The using entity
+     * @param itemStack The used itemstack
+     * @param multiplier A multiplier representing the effort and effect yielded from the use
+     */
+    public void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        tickProgression(entity, itemStack, (int) multiplier);
+
+        causeHauntEffect(entity, itemStack, multiplier);
+        causeFierySelfEffect(entity, itemStack, multiplier);
+        causeEnderReverbEffect(entity, itemStack, multiplier);
     }
 
     @Override
