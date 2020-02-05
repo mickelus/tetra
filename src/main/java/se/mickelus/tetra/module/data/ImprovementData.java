@@ -24,11 +24,6 @@ public class ImprovementData extends ModuleVariantData {
     public int level = 0;
 
     /**
-     * Used to tell the modular model renderer to render a texture layer for the improvement.
-     */
-    public boolean textured = false;
-
-    /**
      * If set to true the item will render with the enchantment glint.
      */
     public boolean enchantment = false;

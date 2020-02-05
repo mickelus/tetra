@@ -357,7 +357,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
         return Arrays.stream(getImprovements(itemStack))
-                .filter(improvement -> improvement.textured)
+                .filter(improvement -> improvement.models.length > 0)
                 .flatMap(improvement -> Arrays.stream(improvement.models))
                 .map(model -> ItemColors.inherit == model.tint ? new ModuleModel(model.type, model.location, tint) : model)
                 .toArray(ModuleModel[]::new);

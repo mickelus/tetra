@@ -1,7 +1,6 @@
 [
     {
         "key": "blade/tempered",
-        "textured": true,
         "level": 1,
         "integrity": -1,
         "effects": {
@@ -13,7 +12,6 @@
     },
     {
         "key": "blade/tempered",
-        "textured": true,
         "level": 2,
         "integrity": -1,
         "effects": {
@@ -25,7 +23,6 @@
     },
     {
         "key": "blade/tempered",
-        "textured": true,
         "level": 3,
         "integrity": -2,
         "effects": {
