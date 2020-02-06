@@ -2090,5 +2090,19 @@
   "tetra/schema/bow/string/hone_damage_5.name": "Hone: Damage V",
   "tetra/schema/bow/string/hone_damage_5.description": "Further hone the damage improvement for this module.",
   "bowstring_hone/damage.name": "Hone: Damage",
-  "bowstring_hone/damage.description": "Increases damage dealt"
+  "bowstring_hone/damage.description": "Increases damage dealt",
+
+
+  "tetra/schema/bow/riser/adjustable_strength.name": "Limb adjuster",
+  "tetra/schema/bow/riser/adjustable_strength.description": "Attach two bolts to the riser. By fastening or unfastening the bolts it's possible to §ltweak§r the strength of the bow.",
+  "tetra/schema/bow/riser/adjustable_strength.slot1": "Bolts",
+
+  "bow/adjustable_strength.name": "Limb adjuster",
+  "adjustable_strength/bolt": "Limb adjuster",
+  "adjustable_strength/bolt.description": "Attach two bolts to the riser. By fastening or unfastening the bolts it's possible to §ltweak§r the strength of the bow.",
+
+  "bow/adjustable_strength.label": "Bow strength",
+  "bow/adjustable_strength.tooltip": "§eTighten§r the bolts to increase the bow strength, increasing damage.\n§eLoosen§r the bolts to make the bow easier to draw, increasing draw speed.",
+  "bow/adjustable_strength.left": "Loose",
+  "bow/adjustable_strength.right": "Tight"
 }

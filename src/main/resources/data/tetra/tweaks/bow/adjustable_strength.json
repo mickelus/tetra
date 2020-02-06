@@ -1,0 +1,11 @@
+[
+    {
+        "variant": "adjustable_strength/bolt",
+        "key": "bow/adjustable_strength",
+        "steps": 5,
+        "stepStats": {
+            "attackSpeed": 0.1,
+            "damage": 0.2
+        }
+    }
+]
