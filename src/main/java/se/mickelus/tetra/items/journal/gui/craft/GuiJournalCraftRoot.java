@@ -5,6 +5,7 @@ import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
@@ -131,6 +132,10 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
                 result.add(I18n.format("journal.craft.toolbelt"));
             } else if (item instanceof ModularTwinHeadItem) {
                 result.add(I18n.format("journal.craft.tool"));
+            } else if (item instanceof ModularBowItem) {
+                result.add(I18n.format("journal.craft.bow"));
+            } else {
+                result.add("?");
             }
 
             if (slot != null) {

@@ -51,7 +51,7 @@ public class GuiStatBar extends GuiStatBase {
             bar = new GuiBarSegmented(0, 0, barLength + 1, min, max, inverted);
         } else {
             if (split) {
-                bar = new GuiBarSplit(0, 0, barLength, max);
+                bar = new GuiBarSplit(0, 0, barLength, max, inverted);
             } else {
                 bar = new GuiBar(0, 0, barLength, min, max, inverted);
             }

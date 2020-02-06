@@ -8,6 +8,7 @@
   "journal.craft.sword": "Blades",
   "journal.craft.toolbelt": "Toolbelts",
   "journal.craft.tool": "Tools",
+  "journal.craft.bow": "Bows",
   "journal.craft.slot": "Slot",
   "journal.craft.requirements": "Requirements",
   "journal.craft.improvements": "Improvements",
@@ -58,6 +59,9 @@
 
   "stats.ranged_speed": "Draw speed",
   "stats.ranged_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
+
+  "stats.ranged_speed_normalized": "Speed",
+  "stats.ranged_speed_normalized.tooltip": "Changes attack speed by §e%s",
 
   "stats.speed_normalized": "Speed",
   "stats.speed_normalized.tooltip": "Changes attack speed by §e%s",
@@ -2033,7 +2037,7 @@
 
   "tetra/schema/bow/string/release_latch.name": "Release latch",
   "tetra/schema/bow/string/release_latch.slot1": "Latch",
-  "tetra/schema/bow/string/release_latch.description": "Repurpose a quick latch into a release mechanism for the bow, which makes it easier to consecutively loose arrows.\n Automatically fire arrows when the bow is fully drawn.",
+  "tetra/schema/bow/string/release_latch.description": "Repurpose a quick latch into a release mechanism for the bow, which makes it easier to consecutively loose arrows.\nAutomatically fire arrows when the bow is fully drawn.",
 
   "bowstring/release_latch.name": "Release latch",
   "bowstring/release_latch.description": "Slightly increases drawspeed & automatically loose arrows.",

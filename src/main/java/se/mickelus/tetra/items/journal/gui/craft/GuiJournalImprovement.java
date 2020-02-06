@@ -11,6 +11,7 @@ import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GuiJournalImprovement extends GuiElement {
 
@@ -57,7 +58,9 @@ public class GuiJournalImprovement extends GuiElement {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Arrays.asList(schema.getName(), TextFormatting.GRAY + schema.getDescription(null));
+            return Arrays.asList(schema.getName(), TextFormatting.GRAY + schema.getDescription(null)
+                    .replace("\\n", "\n")
+                    .replace("\n", "\n" + TextFormatting.GRAY));
         }
         return null;
     }

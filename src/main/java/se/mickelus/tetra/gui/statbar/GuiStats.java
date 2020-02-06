@@ -18,25 +18,31 @@ public class GuiStats {
                 0, 40, false, damageGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("stats.damage.tooltip", damageGetter));
 
+    public static final IStatGetter rangedDamageGetter = new StatGetterDamageRanged();
+    public static final GuiStatBar rangedDamage = new GuiStatBar(0, 0,barLength, I18n.format("stats.ranged_damage"),
+            0, 40, false, rangedDamageGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("stats.ranged_damage.tooltip", rangedDamageGetter));
+
     public static final IStatGetter speedGetter = new StatGetterSpeedMelee();
     public static final GuiStatBar speed = new GuiStatBar(0, 0, barLength, I18n.format("stats.speed"),
                 0, 4, false, speedGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterSpeed());
 
-    public static final IStatGetter rangedDamageGetter = new StatGetterDamageRanged();
-    public static final GuiStatBar rangedDamage = new GuiStatBar(0, 0,barLength, I18n.format("stats.ranged_damage"),
-            0, 40, false, rangedDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("stats.ranged_damage.tooltip", rangedDamageGetter));
+    public static final IStatGetter speedGetterNormalized = new StatGetterSpeedNormalized();
+    public static final GuiStatBar speedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("stats.speed_normalized"),
+            -3, 3, false, true, false, speedGetterNormalized, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("stats.speed_normalized.tooltip", speedGetterNormalized));
 
     public static final IStatGetter rangedSpeedGetter = new StatGetterSpeedRanged();
     public static final GuiStatBar rangedSpeed = new GuiStatBar(0, 0, barLength, I18n.format("stats.ranged_speed"),
             0, 10, false, false, true, rangedSpeedGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("stats.ranged_speed.tooltip", rangedSpeedGetter));
 
-    public static final IStatGetter speedGetterNormalized = new StatGetterSpeedNormalized();
-    public static final GuiStatBar speedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("stats.speed_normalized"),
-            -3, 3, false, true, false, speedGetterNormalized, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("stats.speed_normalized.tooltip", speedGetterNormalized));
+    public static final IStatGetter rangedSpeedGetterNormalized = new StatGetterSpeedRanged();
+    public static final GuiStatBar rangedSpeedNormalized = new GuiStatBar(0, 0, barLength,
+            I18n.format("stats.ranged_speed_normalized"), -4, 4, false, true, true,
+            rangedSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("stats.ranged_speed_normalized.tooltip", rangedSpeedGetterNormalized));
 
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, I18n.format("stats.durability"),

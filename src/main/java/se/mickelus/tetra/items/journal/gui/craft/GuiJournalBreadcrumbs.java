@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
@@ -103,7 +104,7 @@ public class GuiJournalBreadcrumbs extends GuiElement {
             xOffset = last.getX() + last.getWidth() + 12;
         }
 
-        GuiButton button = new GuiButton(xOffset, 4, label, () -> onClick.accept(index));
+        GuiButton button = new GuiButton(xOffset, 4, TextFormatting.getTextWithoutFormattingCodes(label), () -> onClick.accept(index));
         new KeyframeAnimation(80, button)
                 .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(xOffset - 2, xOffset))
                 .withDelay(40)

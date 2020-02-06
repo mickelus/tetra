@@ -11,14 +11,14 @@ public class GuiBarSplit extends GuiBar {
     private GuiBar negativeBar;
     private GuiBar positiveBar;
 
-    public GuiBarSplit(int x, int y, int barLength, double range) {
-        super(x, y, barLength, -range, range);
+    public GuiBarSplit(int x, int y, int barLength, double range, boolean inverted) {
+        super(x, y, barLength, -range, range, inverted);
 
-        negativeBar = new GuiBar(0, 0, (barLength - 5) / 2, 0, range, true);
+        negativeBar = new GuiBar(0, 0, (barLength - 5) / 2, 0, range, !inverted);
         negativeBar.setAlignment(GuiAlignment.right);
         addChild(negativeBar);
 
-        positiveBar = new GuiBar(0, 0, (barLength - 5) / 2, 0, range);
+        positiveBar = new GuiBar(0, 0, (barLength - 5) / 2, 0, range, inverted);
         positiveBar.setAttachment(GuiAttachment.topRight);
         addChild(positiveBar);
 

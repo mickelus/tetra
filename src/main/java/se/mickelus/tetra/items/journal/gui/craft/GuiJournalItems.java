@@ -9,6 +9,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 
 import java.util.function.Consumer;
@@ -18,6 +19,7 @@ public class GuiJournalItems extends GuiElement {
     private final GuiJournalItem sword;
     private final GuiJournalItem toolbelt;
     private final GuiJournalItem tools;
+    private final GuiJournalItem bows;
 
     public GuiJournalItems(int x, int y, int width, int height, Consumer<ItemModular> onItemSelect, Consumer<String> onSlotSelect) {
         super(x, y, width, height);
@@ -37,6 +39,11 @@ public class GuiJournalItems extends GuiElement {
                 () -> onItemSelect.accept(ModularTwinHeadItem.instance), onSlotSelect);
         tools.setAttachment(GuiAttachment.topCenter);
         addChild(tools);
+
+        bows = new GuiJournalItem(1, 40, ModularBowItem.instance, I18n.format("journal.craft.bow"),
+                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect);
+        bows.setAttachment(GuiAttachment.topCenter);
+        addChild(bows);
     }
 
     public void animateOpen() {
@@ -56,29 +63,41 @@ public class GuiJournalItems extends GuiElement {
         if (item instanceof ModularSwordItem) {
             toolbelt.setVisible(false);
             tools.setVisible(false);
+            bows.setVisible(false);
 
             sword.setVisible(true);
             sword.setSelected(true);
         } else if (item instanceof ItemToolbeltModular) {
             sword.setVisible(false);
             tools.setVisible(false);
+            bows.setVisible(false);
 
             toolbelt.setVisible(true);
             toolbelt.setSelected(true);
         } else if (item instanceof ModularTwinHeadItem) {
             sword.setVisible(false);
             toolbelt.setVisible(false);
+            bows.setVisible(false);
 
             tools.setVisible(true);
             tools.setSelected(true);
-        }else {
+        } else if (item instanceof ModularBowItem) {
+            sword.setVisible(false);
+            toolbelt.setVisible(false);
+            tools.setVisible(false);
+
+            bows.setVisible(true);
+            bows.setSelected(true);
+        } else {
             sword.setSelected(false);
             toolbelt.setSelected(false);
             tools.setSelected(false);
+            bows.setSelected(false);
 
             sword.setVisible(true);
             toolbelt.setVisible(true);
             tools.setVisible(true);
+            bows.setVisible(true);
         }
     }
 }
