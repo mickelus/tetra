@@ -19,7 +19,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchemaRegistry;
@@ -47,6 +46,8 @@ public class ModularBowItem extends ItemModular {
     protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_1"));
     protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_2"));
 
+    protected ItemStack vanillaBow;
+
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ModularBowItem instance;
 
@@ -58,6 +59,8 @@ public class ModularBowItem extends ItemModular {
         minorModuleKeys = new String[] { riserKey };
 
         requiredModules = new String[] { stringKey, staveKey };
+
+        vanillaBow = new ItemStack(Items.BOW);
 
         updateConfig(ConfigHandler.honeBowBase.get(), ConfigHandler.honeBowIntegrityMultiplier.get());
 
@@ -95,7 +98,7 @@ public class ModularBowItem extends ItemModular {
             PlayerEntity player = (PlayerEntity)entity;
             boolean playerInfinite = player.abilities.isCreativeMode
                     || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, itemStack) > 0;
-            ItemStack ammoStack = player.findAmmo(Items.BOW.getDefaultInstance());
+            ItemStack ammoStack = player.findAmmo(vanillaBow);
 
             int drawProgress = getUseDuration(itemStack) - timeLeft;
             drawProgress = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(itemStack, world, player, drawProgress,
@@ -256,7 +259,7 @@ public class ModularBowItem extends ItemModular {
      */
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack bowStack = player.getHeldItem(hand);
-        boolean hasAmmo = !player.findAmmo(Items.BOW.getDefaultInstance()).isEmpty();
+        boolean hasAmmo = !player.findAmmo(vanillaBow).isEmpty();
 
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
