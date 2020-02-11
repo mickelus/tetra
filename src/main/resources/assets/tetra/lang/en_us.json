@@ -224,10 +224,10 @@
   "block.tetra.forged_container": "Forged container",
   "forged_container.compartment": "Compartment %s",
 
-  "block.tetra.hammer_base": "Hammer base",
-  "block.tetra.hammer_head": "Hammer head",
+  "block.tetra.hammer_base": "Forge hammer",
+  "block.tetra.hammer_head.name": "Hammer head",
 
-  "block.tetra.forged_workbench": "Forged Workbench",
+  "block.tetra.forged_workbench": "Forged workbench",
 
   "block.tetra.transfer_unit": "Transfer unit",
   "block.tetra.core_extractor": "Core extractor",
