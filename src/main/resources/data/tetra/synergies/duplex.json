@@ -64,12 +64,6 @@
         }
     },
     {
-        "moduleVariants": ["basic_hammer/obsidian", "basic_hammer/obsidian"],
-        "capabilities": {
-            "hammer": 1
-        }
-    },
-    {
         "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
         "capabilities": {
             "hammer": 1
