@@ -176,4 +176,9 @@ public class CleanseSchema implements UpgradeSchema {
     public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
         return new OutcomePreview[0];
     }
+
+    @Override
+    public float getSeverity(ItemStack itemStack, ItemStack[] materials, String slot) {
+        return 0;
+    }
 }

@@ -29,8 +29,9 @@ public interface IItemModular {
      * Resets and applies effects for the current setup of modules & improvements. Applies enchantments and other things which cannot be emulated
      * through other means. Call this after each time the module setup changes.
      * @param itemStack The modular item itemstack
+     * @param severity
      */
-    public void assemble(ItemStack itemStack, World world);
+    public void assemble(ItemStack itemStack, World world, float severity);
 
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity);
 }

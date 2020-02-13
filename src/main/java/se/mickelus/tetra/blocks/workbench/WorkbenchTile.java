@@ -265,10 +265,11 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
 
         if (currentSchema != null && currentSchema.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableCapabilities)) {
+            float severity = currentSchema.getSeverity(targetStack, materialsAltered, currentSlot);
             upgradedStack = currentSchema.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             if (upgradedStack.getItem() instanceof ItemModular) {
-                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world);
+                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
             for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materials)) {

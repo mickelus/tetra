@@ -109,4 +109,16 @@ public interface UpgradeSchema {
     public GlyphData getGlyph();
 
     public OutcomePreview[] getPreviews(ItemStack targetStack, String slot);
+
+    /**
+     * @param itemStack
+     * @param materials
+     * @param slot
+     * @return The severity of the upgrade, e.g. replacing a major module with lots of improvements using a high tier tool would be more
+     * severe than applying simple binding improvement to a handle. Used by things like destabilization as multiplier for the probability
+     * of a destabilization to occur.
+     */
+    public default float getSeverity(ItemStack itemStack, ItemStack[] materials, String slot) {
+        return 1;
+    }
 }

@@ -644,13 +644,20 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return NBTHelper.getTag(itemStack).getString(identifierKey);
     }
 
+    /**
+     *
+     * @param itemStack The modular item itemstack
+     * @param world
+     * @param severity Used by things like destabilization as multiplier for the probability of a destabilization to occur, a value of 0
+     *                 would make it impossible for destabilization to occur.
+     */
     @Override
-    public void assemble(ItemStack itemStack, World world) {
+    public void assemble(ItemStack itemStack, World world, float severity) {
         if (itemStack.getDamage() > itemStack.getMaxDamage()) {
             itemStack.setDamage(itemStack.getMaxDamage());
         }
 
-        applyDestabilizationEffects(itemStack, world);
+        applyDestabilizationEffects(itemStack, world, severity);
 
         CompoundNBT nbt = NBTHelper.getTag(itemStack);
 
@@ -723,7 +730,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .sum();
     }
 
-    private void applyDestabilizationEffects(ItemStack itemStack, World world) {
+    private void applyDestabilizationEffects(ItemStack itemStack, World world, float probabilityMultiplier) {
         if (!world.isRemote) {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
@@ -744,7 +751,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                             }
 
                             if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)
-                                    && effect.probability * instability > world.rand.nextFloat()) {
+                                    && effect.probability * instability * probabilityMultiplier > world.rand.nextFloat()) {
                                 module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
                             }
                         }
