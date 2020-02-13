@@ -924,11 +924,11 @@
   "forefinger_ring/knightmetal": "Knightmetal ring",
 
   "tetra/schema/sword/grip_loop.name": "Grip loop",
-  "tetra/schema/sword/grip_loop.description": "Attach a loop at the end of the hilt. Increases the range of sweeping attacks by 2 blocks.",
+  "tetra/schema/sword/grip_loop.description": "Attach a loop at the end of the hilt, which increases the reach of the sword. Also increases the range of sweeping attacks by 2 blocks.",
   "tetra/schema/sword/grip_loop.slot1": "Material",
 
   "sword/grip_loop.name": "Grip loop",
-  "sword/grip_loop.description": "A ring attached at the top of the hilt. The ring allows for a better grip, increasing the minimum damage dealt when swinging too fast.",
+  "sword/grip_loop.description": "A loop attached at the end of the hilt that increases the reach of the sword. Also increases the range of sweeping attacks by 2 blocks.",
 
   "grip_loop/oak": "Wooden loop",
   "grip_loop/spruce": "Spruce loop",

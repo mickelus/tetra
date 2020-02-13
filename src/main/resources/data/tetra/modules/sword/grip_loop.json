@@ -7,6 +7,7 @@
             "key": "grip_loop/oak",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -24,6 +25,7 @@
             "key": "grip_loop/spruce",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -41,6 +43,7 @@
             "key": "grip_loop/birch",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -58,6 +61,7 @@
             "key": "grip_loop/jungle",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -75,6 +79,7 @@
             "key": "grip_loop/acacia",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -92,6 +97,7 @@
             "key": "grip_loop/dark_oak",
             "durability": 12,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -109,6 +115,7 @@
             "key": "grip_loop/cobblestone",
             "durability": 23,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -126,6 +133,7 @@
             "key": "grip_loop/stone",
             "durability": 25,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -143,6 +151,7 @@
             "key": "grip_loop/granite",
             "durability": 25,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -160,6 +169,7 @@
             "key": "grip_loop/diorite",
             "durability": 24,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -177,6 +187,7 @@
             "key": "grip_loop/andesite",
             "durability": 25,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -193,7 +204,8 @@
         {
             "key": "grip_loop/iron",
             "durability": 45,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -210,7 +222,8 @@
         {
             "key": "grip_loop/flint",
             "durability": 28,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -228,6 +241,7 @@
             "key": "grip_loop/gold",
             "durability": 9,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -245,6 +259,7 @@
             "key": "grip_loop/diamond",
             "durability": 55,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -262,6 +277,7 @@
             "key": "grip_loop/obsidian",
             "durability": 87,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -278,7 +294,8 @@
         {
             "key": "grip_loop/copper",
             "durability": 58,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -295,7 +312,8 @@
         {
             "key": "grip_loop/tin",
             "durability": 43,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -312,7 +330,8 @@
         {
             "key": "grip_loop/silver",
             "durability": 12,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -329,7 +348,8 @@
         {
             "key": "grip_loop/nickel",
             "durability": 41,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -346,7 +366,8 @@
         {
             "key": "grip_loop/lead",
             "durability": 77,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -363,7 +384,8 @@
         {
             "key": "grip_loop/bronze",
             "durability": 46,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -380,7 +402,8 @@
         {
             "key": "grip_loop/electrum",
             "durability": 9,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -397,7 +420,8 @@
         {
             "key": "grip_loop/steel",
             "durability": 68,
-            "integrity": -1,
+            "integrity": -2,
+            "range": 1.5,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -415,6 +439,7 @@
             "key": "grip_loop/thaumium",
             "durability": 42,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -432,6 +457,7 @@
             "key": "grip_loop/ironwood",
             "durability": 51,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -449,6 +475,7 @@
             "key": "grip_loop/steeleaf",
             "durability": 17,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -466,6 +493,7 @@
             "key": "grip_loop/fierymetal",
             "durability": 59,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
@@ -483,6 +511,7 @@
             "key": "grip_loop/knightmetal",
             "durability": 41,
             "integrity": -1,
+            "range": 1,
             "effects": {
                 "sweeping": [0, 2]
             },
