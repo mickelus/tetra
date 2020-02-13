@@ -135,7 +135,7 @@ public class ItemModularHandheld extends ItemModular {
             applyDamage(blockDestroyDamage, itemStack, entity);
 
             if (!isBroken(itemStack)) {
-                tickProgression(entity, itemStack, 1);
+                applyUsageEffects(entity, itemStack, 1);
             }
         }
 
@@ -149,8 +149,6 @@ public class ItemModularHandheld extends ItemModular {
                 }
             }
         }
-
-        applyUsageEffects(entity, itemStack, 1);
 
         return true;
     }
