@@ -7,7 +7,6 @@
         "tetra:duplex/basic_handle",
         "tetra:duplex/basic_handle_compat",
         "tetra:duplex/basic_handle_hone",
-        "tetra:duplex/shared_head_hone",
         "tetra:settling_improvements",
         "tetra:destabilization_improvements"
     ],
