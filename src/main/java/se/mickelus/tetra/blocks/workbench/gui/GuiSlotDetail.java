@@ -119,7 +119,8 @@ public class GuiSlotDetail extends GuiElement {
             ItemStack[] materials = tileEntity.getMaterials();
 
 
-            schemaDetail.update(currentSchema, itemStack, selectedSlot, materials, availableCapabilities, player.experienceLevel);
+            schemaDetail.update(currentSchema, itemStack, selectedSlot, materials, availableCapabilities,
+                    player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
             schemaDetail.updateMagicCapacity(currentSchema, selectedSlot, itemStack,
                     currentSchema.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
             schemaDetail.toggleButton(currentSchema.canApplyUpgrade(player, itemStack, materials,

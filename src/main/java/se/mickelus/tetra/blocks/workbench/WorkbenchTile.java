@@ -288,7 +288,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             }
 
             int xpCost = currentSchema.getExperienceCost(targetStack, materials, currentSlot);
-            if (xpCost > 0) {
+            if (!player.isCreative() && xpCost > 0) {
                 player.addExperienceLevel(-xpCost);
             }
         }

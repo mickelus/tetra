@@ -94,7 +94,8 @@ public class CleanseSchema implements UpgradeSchema {
 
     @Override
     public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
-        return isMaterialsValid(itemStack, slot, materials) && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
+        return isMaterialsValid(itemStack, slot, materials)
+                && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
 
     @Override

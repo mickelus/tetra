@@ -10,7 +10,7 @@ public abstract class BaseSchema implements UpgradeSchema {
         return isMaterialsValid(itemStack, slot, materials)
                 && !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkCapabilities(itemStack, materials, availableCapabilities)
-                && player.experienceLevel >= getExperienceCost(itemStack, materials, slot);
+                && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
 
     @Override
