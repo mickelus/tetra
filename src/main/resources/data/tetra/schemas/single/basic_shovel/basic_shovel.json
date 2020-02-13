@@ -1,0 +1,224 @@
+{
+    "replace": true,
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick"
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/stick"
+        },
+        {
+            "material": {
+                "item": "minecraft:bone"
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/bone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:blaze_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/blaze_rod",
+            "improvements": {
+                "basic_shovel/blazing": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:end_rod"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/end_rod",
+            "improvements": {
+                "basic_shovel/ender_reverb": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/steel"
+        },
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/baobab"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/greatwood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/greatwood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:rods/treated_wood"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/treated_wood"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/ironwood"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/ironwood"
+        },
+        {
+            "material": {
+                "item": "tetra:forged_beam"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/forged_beam"
+        }
+    ]
+}

@@ -1,0 +1,183 @@
+[
+    {
+        "key": "enchantment/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -2,
+        "capabilities": {
+            "axe": [0, 1.111111],
+            "shovel": [0, 1.111111]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -3,
+        "capabilities": {
+            "axe": [0, 2.75],
+            "shovel": [0, 2.75]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -4,
+        "capabilities": {
+            "axe": [0, 5.5],
+            "shovel": [0, 5.5]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -5,
+        "capabilities": {
+            "axe": [0, 9.2],
+            "shovel": [0, 9.2]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -6,
+        "capabilities": {
+            "axe": [0, 14.2],
+            "shovel": [0, 14.2]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 6,
+        "enchantment": true,
+        "magicCapacity": -7,
+        "capabilities": {
+            "axe": [0, 20.5],
+            "shovel": [0, 20.5]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 7,
+        "enchantment": true,
+        "magicCapacity": -8,
+        "capabilities": {
+            "axe": [0, 27.75],
+            "shovel": [0, 27.75]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 8,
+        "enchantment": true,
+        "magicCapacity": -9,
+        "capabilities": {
+            "axe": [0, 36],
+            "shovel": [0, 36]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 9,
+        "enchantment": true,
+        "magicCapacity": -10,
+        "capabilities": {
+            "axe": [0, 45.5],
+            "shovel": [0, 45.5]
+        }
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 10,
+        "enchantment": true,
+        "magicCapacity": -11,
+        "capabilities": {
+            "axe": [0, 56.1],
+            "shovel": [0, 56.1]
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -3,
+        "effects": {
+            "fortune": 1
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -5,
+        "effects": {
+            "fortune": 2
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -7,
+        "effects": {
+            "fortune": 3
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -9,
+        "effects": {
+            "fortune": 4
+        }
+    },
+    {
+        "key": "enchantment/fortune",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -11,
+        "effects": {
+            "fortune": 5
+        }
+    },
+    {
+        "key": "enchantment/silk_touch",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -15
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -1
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -2
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -3
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/fire_aspect",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -5
+    }
+]

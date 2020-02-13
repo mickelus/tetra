@@ -184,6 +184,11 @@ public enum ItemEffect {
      */
     earthbind,
 
+    /**
+     * Throwable: Allows the item to be thrown by holding down right click.
+     */
+    throwable,
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

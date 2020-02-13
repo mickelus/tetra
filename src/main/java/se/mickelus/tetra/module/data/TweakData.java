@@ -30,6 +30,10 @@ public class TweakData {
         return baseStats.attackSpeedMultiplier + step * (stepStats.attackSpeedMultiplier -1);
     }
 
+    public float getRange(int step) {
+        return baseStats.range + step * stepStats.range;
+    }
+
     public int getDurability(int step) {
         return baseStats.durability + step * stepStats.durability;
     }

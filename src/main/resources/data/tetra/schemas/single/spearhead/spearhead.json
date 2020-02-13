@@ -1,0 +1,287 @@
+{
+    "replace": true,
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 208,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:oak_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/oak"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:cobblestone",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/cobblestone"
+        },
+        {
+            "material": {
+                "item": "minecraft:stone",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/stone"
+        },
+        {
+            "material": {
+                "item": "minecraft:granite",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/granite"
+        },
+        {
+            "material": {
+                "item": "minecraft:diorite",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/diorite"
+        },
+        {
+            "material": {
+                "item": "minecraft:andesite",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/andesite",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:flint",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/flint"
+        },
+        {
+            "material": {
+                "item": "minecraft:gold_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:gems/diamond",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/diamond",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:obsidian",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/obsidian",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/electrum"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/steel"
+        }
+    ]
+}

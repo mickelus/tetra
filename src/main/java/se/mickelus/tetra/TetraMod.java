@@ -4,6 +4,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
@@ -56,6 +58,7 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
@@ -165,6 +168,10 @@ public class TetraMod {
 
         if (ConfigHandler.enableBow.get()) {
             items = ArrayUtils.addAll(items, new ModularBowItem());
+        }
+
+        if (ConfigHandler.enableSingle.get()) {
+            items = ArrayUtils.addAll(items, new ModularSingleHeadItem());
         }
 
         proxy.preInit(
@@ -320,6 +327,17 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
+        }
+
+        @SubscribeEvent
+        public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+            event.getRegistry().registerAll(
+                    EntityType.Builder.<ThrownModularItemEntity>create(ThrownModularItemEntity::new, EntityClassification.MISC)
+                            .setCustomClientFactory(ThrownModularItemEntity::new)
+                            .size(0.5F, 0.5F)
+                            .build(ThrownModularItemEntity.unlocalizedName)
+                            .setRegistryName(MOD_ID, ThrownModularItemEntity.unlocalizedName)
+            );
         }
     }
 }

@@ -1,0 +1,31 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["single/head"],
+    "improvements": [
+        "tetra:single/shovel",
+        "tetra:single/shovel_compat",
+        "tetra:single/shovel_hone",
+        "tetra:single/shared_head_compat",
+        "tetra:single/shared_head_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "trident/trident",
+            "durability": 64,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 8,
+            "attackSpeed": 0.2,
+            "glyph": {
+                "textureX": 192,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/single/head/trident/default"
+            }]
+        }
+    ]
+}

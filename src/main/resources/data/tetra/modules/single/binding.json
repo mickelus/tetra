@@ -1,0 +1,96 @@
+{
+    "replace": true,
+    "type": "tetra:basic_module",
+    "slots": ["single/binding"],
+    "renderLayer": "higher",
+    "tweakKey": "tetra:single/binding",
+    "variants": [
+        {
+            "key": "single_binding/string",
+            "durability": 12,
+            "integrity": 1,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "string",
+                "textureX": 88,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/default",
+                "tint": "string"
+            }]
+        },
+        {
+            "key": "single_binding/leather",
+            "durability": 23,
+            "integrity": 2,
+            "attackSpeed": -0.4,
+            "glyph": {
+                "tint": "leather",
+                "textureX": 88,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/default",
+                "tint": "leather"
+            }]
+        },
+        {
+            "key": "single_binding/hide",
+            "durability": 18,
+            "integrity": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "hide",
+                "textureX": 88,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/default",
+                "tint": "hide"
+            }]
+        },
+        {
+            "key": "single_binding/vine",
+            "durability": 12,
+            "integrity": 1,
+            "attackSpeed": -0.2,
+            "glyph": {
+                "tint": "vine",
+                "textureX": 88,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/default",
+                "tint": "vine"
+            }]
+        },
+        {
+            "key": "single_binding/bolt",
+            "durability": 12,
+            "attackSpeed": -0.1,
+            "glyph": {
+                "tint": "bolt",
+                "textureX": 80,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/bolt",
+                "tint": "bolt"
+            }]
+        },
+        {
+            "key": "single_binding/prismarine",
+            "durability": 26,
+            "integrity": 1,
+            "glyph": {
+                "tint": "prismarine_glyph",
+                "textureX": 7,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/binding/prismarine"
+            }]
+        }
+    ]
+}

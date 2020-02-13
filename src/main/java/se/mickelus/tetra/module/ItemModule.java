@@ -271,6 +271,12 @@ public abstract class ItemModule implements ICapabilityProvider {
                 .reduce(getVariantData(itemStack).attackSpeedMultiplier, (a, b) -> a * b);
     }
 
+    public double getRangeModifier(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToDouble(tweak -> tweak.getRange(getTweakStep(itemStack, tweak)))
+                .sum() + getVariantData(itemStack).range;
+    }
+
     public ModuleModel[] getModels(ItemStack itemStack) {
         return getVariantData(itemStack).models;
     }

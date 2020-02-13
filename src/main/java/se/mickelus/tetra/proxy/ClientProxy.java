@@ -2,12 +2,12 @@ package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.entity.TridentRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.StructureBlockTileEntity;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
@@ -17,6 +17,8 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
+import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
+import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 
 import java.util.Arrays;
 
@@ -30,6 +32,8 @@ public class ClientProxy implements IProxy {
     public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
         Arrays.stream(items).forEach(ITetraItem::clientInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
+
+        RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.class, ThrownModularItemRenderer::new);
 
         ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);

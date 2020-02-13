@@ -78,6 +78,11 @@ public class ModuleVariantData {
     public float attackSpeedMultiplier = 1;
 
     /**
+     * For handheld items this represent the item's reach. The base reach for items is 5 blocks and this value added to that.
+     */
+    public float range = 0;
+
+    /**
      * The durability that the module provides, this is what vanilla calls item damage. A higher value makes the item
      * last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points
      * when destroying blocks, for tools it's the opposite.

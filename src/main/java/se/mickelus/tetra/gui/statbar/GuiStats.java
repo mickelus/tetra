@@ -44,6 +44,11 @@ public class GuiStats {
             rangedSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("stats.ranged_speed_normalized.tooltip", rangedSpeedGetterNormalized));
 
+    public static final IStatGetter reachGetter = new StatGetterReach();
+    public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, I18n.format("stats.reach"),
+            0, 20, false, reachGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("stats.reach.tooltip", reachGetter));
+
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, I18n.format("stats.durability"),
                 0, 2400, false, durabilityGetter, LabelGetterBasic.integerLabel,

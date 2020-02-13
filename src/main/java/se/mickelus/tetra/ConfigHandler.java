@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
@@ -48,6 +49,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec.IntValue honeShieldIntegrityMultiplier;
 
     public static ForgeConfigSpec.BooleanValue enableBow;
+    public static ForgeConfigSpec.BooleanValue enableSingle;
 
     static {
         // misc config
@@ -125,7 +127,6 @@ public class ConfigHandler {
                 .comment("Toggles & config for experimental features")
                 .push("experimental");
 
-
         enableBow = builder
                 .comment("Enable modular bows")
                 .worldRestart()
@@ -138,6 +139,19 @@ public class ConfigHandler {
         honeBowIntegrityMultiplier = builder
                 .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_bow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        enableSingle = builder
+                .comment("Enable modular single headed implements")
+                .worldRestart()
+                .define("single_headed", false);
+
+        honeSingleBase = builder
+                .comment("The base value for number of uses required before a single headed implement can be honed")
+                .defineInRange("hone_single_headed_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeSingleIntegrityMultiplier = builder
+                .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
 
@@ -167,7 +181,14 @@ public class ConfigHandler {
     public static void onLoad(final ModConfig.Loading configEvent) {
         ModularSwordItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
         ModularTwinHeadItem.instance.updateConfig(honeDuplexBase.get(), honeDuplexIntegrityMultiplier.get());
-        ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
+
+        if (ModularBowItem.instance != null) {
+            ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
+        }
+
+        if (ModularSingleHeadItem.instance != null) {
+            ModularSingleHeadItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
+        }
     }
 
     /**
@@ -178,6 +199,13 @@ public class ConfigHandler {
     public static void onReload(final ModConfig.ConfigReloading configEvent) {
         ModularSwordItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
         ModularTwinHeadItem.instance.updateConfig(honeDuplexBase.get(), honeDuplexIntegrityMultiplier.get());
-        ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
+
+        if (ModularBowItem.instance != null) {
+            ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
+        }
+
+        if (ModularSingleHeadItem.instance != null) {
+            ModularSingleHeadItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
+        }
     }
 }

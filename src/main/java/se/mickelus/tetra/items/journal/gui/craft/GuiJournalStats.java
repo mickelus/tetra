@@ -33,6 +33,7 @@ public class GuiJournalStats extends GuiElement {
         bars.add(GuiStats.damage);
         bars.add(GuiStats.speedNormalized);
         bars.add(GuiStats.rangedSpeedNormalized);
+        bars.add(GuiStats.reach);
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
         bars.add(GuiStats.quickslot);
