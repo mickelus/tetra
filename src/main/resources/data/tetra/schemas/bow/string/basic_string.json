@@ -24,7 +24,10 @@
                 "count": 2
             },
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/vine"
+            "moduleVariant": "basic_string/vine",
+            "requiredCapabilities": {
+                "cut": 1
+            }
         },
         {
             "material": {
@@ -32,21 +35,30 @@
                 "count": 2
             },
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/hide"
+            "moduleVariant": "basic_string/hide",
+            "requiredCapabilities": {
+                "cut": 1
+            }
         },
         {
             "material": {
                 "item": "minecraft:leather"
             },
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/leather"
+            "moduleVariant": "basic_string/leather",
+            "requiredCapabilities": {
+                "cut": 2
+            }
         },
         {
             "material": {
                 "item": "minecraft:phantom_membrane"
             },
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/phantom"
+            "moduleVariant": "basic_string/phantom",
+            "requiredCapabilities": {
+                "cut": 2
+            }
         }
     ]
 }
