@@ -77,7 +77,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     public BlockForgedCrate() {
-        super(Properties.create(Material.IRON)
+        super(Properties.create(ForgedBlockCommon.forgedMaterial)
                 .sound(SoundType.METAL)
                 .hardnessAndResistance(7));
 

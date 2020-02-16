@@ -12,7 +12,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import se.mickelus.tetra.ToolTypes;
 
 public class ForgedBlockCommon {
-    public static final Block.Properties properties = Block.Properties.create(Material.IRON)
+
+    public static final Material forgedMaterial = new Material(MaterialColor.IRON, false, true, true, true, false, false, false, PushReaction.BLOCK);
+
+    public static final Block.Properties properties = Block.Properties.create(forgedMaterial)
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(3)
