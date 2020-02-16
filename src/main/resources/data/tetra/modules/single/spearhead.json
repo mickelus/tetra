@@ -161,7 +161,7 @@
                 "tint": "granite_glyph"
             },
             "models": [{
-                "location": "tetra:items/module/single/head/spearhead/grainy",
+                "location": "tetra:items/module/single/head/spearhead/crude",
                 "tint": "granite"
             }]
         },
@@ -178,7 +178,7 @@
                 "tint": "diorite_glyph"
             },
             "models": [{
-                "location": "tetra:items/module/single/head/spearhead/grainy",
+                "location": "tetra:items/module/single/head/spearhead/crude",
                 "tint": "diorite"
             }]
         },
@@ -195,7 +195,7 @@
                 "tint": "andesite_glyph"
             },
             "models": [{
-                "location": "tetra:items/module/single/head/spearhead/grainy",
+                "location": "tetra:items/module/single/head/spearhead/crude",
                 "tint": "andesite"
             }]
         },
@@ -212,7 +212,7 @@
                 "tint": "flint_glyph"
             },
             "models": [{
-                "location": "tetra:items/module/single/head/spearhead/grainy",
+                "location": "tetra:items/module/single/head/spearhead/crude",
                 "tint": "flint"
             }]
         },
@@ -280,7 +280,7 @@
                 "tint": "obsidian_glyph"
             },
             "models": [{
-                "location": "tetra:items/module/single/head/spearhead/grainy",
+                "location": "tetra:items/module/single/head/spearhead/crude",
                 "tint": "obsidian"
             }]
         },
