@@ -202,39 +202,41 @@ public class ItemModularHandheld extends ItemModular {
         Direction facing = context.getFace();
         ItemStack itemStack = player.getHeldItem(hand);
 
+        ActionResultType result = super.onItemUse(context);
+
         if (getEffectLevel(itemStack, ItemEffect.throwable) > 0) {
-            return super.onItemUse(context);
+            return result;
         }
 
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
 
-        applyUsageEffects(player, itemStack, 2);
-
         if (flatteningLevel > 0 && (strippingLevel > 0 && player.isSneaking() || strippingLevel == 0)) {
-            return flattenPath(player, world, pos, hand, facing);
+            result = flattenPath(player, world, pos, hand, facing);
         } else if (strippingLevel > 0) {
-            return stripBlock(context);
+            result = stripBlock(context);
         }
 
         int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
         if (tillingLevel > 0) {
-            return tillBlock(context);
+            result = tillBlock(context);
         }
 
 
         int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
         if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
-            ActionResultType result = denailBlock(player, world, pos, hand, facing);
+            result = denailBlock(player, world, pos, hand, facing);
 
             if (result.equals(ActionResultType.SUCCESS)) {
                 player.resetCooldown();
             }
-
-            return result;
         }
 
-        return super.onItemUse(context);
+        if (result.equals(ActionResultType.SUCCESS)) {
+            applyUsageEffects(player, itemStack, 2);
+        }
+
+        return result;
     }
 
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
