@@ -16,7 +16,7 @@
             "integrity": -2,
             "durability": 181,
             "magicCapacity": 15,
-            "damage": 4.5,
+            "damage": 15,
             "attackSpeed": 2.4,
             "glyph": {
                 "tint": "stick_glyph",
@@ -50,7 +50,7 @@
             "integrity": -3,
             "magicCapacity": 15,
             "durability": 268,
-            "damage": 6,
+            "damage": 19,
             "attackSpeed": 2.5,
             "glyph": {
                 "tint": "oak_glyph",
@@ -84,7 +84,7 @@
             "integrity": -3,
             "magicCapacity": 15,
             "durability": 245,
-            "damage": 6,
+            "damage": 19,
             "attackSpeed": 2.2,
             "glyph": {
                 "tint": "spruce_glyph",
@@ -118,7 +118,7 @@
             "integrity": -3,
             "magicCapacity": 15,
             "durability": 300,
-            "damage": 6,
+            "damage": 19,
             "attackSpeed": 2.5,
             "glyph": {
                 "tint": "birch_glyph",
@@ -152,7 +152,7 @@
             "integrity": -3,
             "magicCapacity": 17,
             "durability": 268,
-            "damage": 6,
+            "damage": 19,
             "attackSpeed": 2.5,
             "glyph": {
                 "tint": "jungle_glyph",
@@ -186,7 +186,7 @@
             "integrity": -3,
             "magicCapacity": 15,
             "durability": 281,
-            "damage": 7,
+            "damage": 22,
             "attackSpeed": 2.875,
             "glyph": {
                 "tint": "acacia_glyph",
@@ -220,7 +220,7 @@
             "integrity": -3,
             "magicCapacity": 17,
             "durability": 244,
-            "damage": 6,
+            "damage": 21,
             "attackSpeed": 2.5,
             "glyph": {
                 "tint": "dark_oak_glyph",
@@ -254,7 +254,7 @@
             "integrity": -4,
             "magicCapacity": 16,
             "durability": 310,
-            "damage": 8,
+            "damage": 24,
             "attackSpeed": 2.5,
             "glyph": {
                 "tint": "maple_glyph",
@@ -288,7 +288,7 @@
             "integrity": -4,
             "magicCapacity": 13,
             "durability": 320,
-            "damage": 9,
+            "damage": 25,
             "attackSpeed": 2.65,
             "glyph": {
                 "tint": "cherry_glyph",
@@ -322,7 +322,7 @@
             "integrity": -6,
             "magicCapacity": 13,
             "durability": 490,
-            "damage": 9.5,
+            "damage": 28,
             "attackSpeed": 2.65,
             "glyph": {
                 "tint": "baobab_glyph",

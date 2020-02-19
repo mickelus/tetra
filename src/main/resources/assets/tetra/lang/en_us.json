@@ -73,7 +73,7 @@
   "stats.damage.tooltip": "Deals §e%s §rdamage",
 
   "stats.ranged_damage": "Base Damage",
-  "stats.ranged_damage.tooltip": "Fired projectiles deal §e%s §rdamage to the target",
+  "stats.ranged_damage.tooltip": "Basic projectiles deal §e%s §rdamage when fired from a fully drawn bow",
 
   "stats.bleeding": "Bleeding",
   "stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds",
