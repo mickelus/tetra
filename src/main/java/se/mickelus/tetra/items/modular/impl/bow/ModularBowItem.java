@@ -100,7 +100,8 @@ public class ModularBowItem extends ItemModular {
                     || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, itemStack) > 0;
             ItemStack ammoStack = player.findAmmo(vanillaBow);
 
-            int drawProgress = getUseDuration(itemStack) - timeLeft;
+            // multiply by 20 to align progress with vanilla bow (fully drawn at 1sec/20ticks)
+            int drawProgress = Math.round(getProgress(itemStack, entity) * 20);
             drawProgress = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(itemStack, world, player, drawProgress,
                     !ammoStack.isEmpty() || playerInfinite);
 
