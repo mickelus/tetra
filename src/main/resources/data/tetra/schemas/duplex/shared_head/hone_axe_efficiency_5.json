@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "duplex/head_hone/duplex_hone_axe_efficiency_5",
+    "localizationKey": "duplex/shared_head/duplex_hone_axe_efficiency_5",
     "slots": [
         "duplex/head_left",
         "duplex/head_right"

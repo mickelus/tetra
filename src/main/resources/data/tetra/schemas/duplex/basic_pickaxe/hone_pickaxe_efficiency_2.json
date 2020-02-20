@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "duplex/head_hone/hone_pickaxe_efficiency_2",
+    "localizationKey": "duplex/shared_head/hone_pickaxe_efficiency_2",
     "slots": [
         "duplex/head_left",
         "duplex/head_right"

@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "duplex/head_hone/hone_shovel_efficiency_2",
+    "localizationKey": "duplex/shared_head/hone_axe_efficiency_3",
     "slots": [
         "duplex/head_left",
         "duplex/head_right"
@@ -14,26 +14,27 @@
     "rarity": "hone",
     "displayType": "major",
     "glyph": {
-        "textureX": 0,
-        "textureY": 32
+        "textureX": 144
     },
     "requirement": {
         "type": "tetra:modular_item",
         "modules": [
             ["duplex/adze_right"],
-            ["duplex/adze_left"]
+            ["duplex/adze_left"],
+            ["duplex/basic_axe_right"],
+            ["duplex/basic_axe_left"]
         ],
         "improvements": {
-            "head_hone/shovel_efficiency": 1
+            "head_hone/axe_efficiency": 2
         }
     },
     "outcomes": [
         {
             "requiredCapabilities": {
-                "hammer": 2
+                "hammer": 3
             },
             "improvements": {
-                "head_hone/shovel_efficiency": 2
+                "head_hone/axe_efficiency": 3
             }
         }
     ]
