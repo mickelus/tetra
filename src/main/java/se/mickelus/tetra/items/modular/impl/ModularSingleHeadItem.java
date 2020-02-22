@@ -42,6 +42,11 @@ public class ModularSingleHeadItem extends ItemModularHandheld {
         RemoveSchema.registerRemoveSchemas(this);
     }
 
+    @Override
+    public void init(PacketHandler packetHandler) {
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("single"));
+    }
+
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
         this.honeBase = honeBase;
         this.honeIntegrityMultiplier = honeIntegrityMultiplier;

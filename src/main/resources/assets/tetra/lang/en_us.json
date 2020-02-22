@@ -1778,6 +1778,8 @@
   "single/handle": "Handle",
   "single/binding": "Binding",
 
+  "single/javelin": "Javelin",
+
   "tetra/schema/single/handle/basic_handle.name": "Basic handle",
   "tetra/schema/single/handle/basic_handle.description": "Replace the handle a basic handle crafted from the given materials. A sturdier handle supports heavier and more advanced tool heads.",
   "tetra/schema/single/handle/basic_handle.slot1": "Handle material",
