@@ -1,0 +1,20 @@
+[
+    {
+        "key": "enchantment/loyalty",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "enchantment/loyalty",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -11
+    },
+    {
+        "key": "enchantment/loyalty",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -15
+    }
+]

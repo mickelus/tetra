@@ -204,7 +204,9 @@ public class ItemModularHandheld extends ItemModular {
 
         ActionResultType result = super.onItemUse(context);
 
-        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0) {
+        // channeled effects
+        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
+                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
             return result;
         }
 
@@ -241,7 +243,10 @@ public class ItemModularHandheld extends ItemModular {
 
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getHeldItem(hand);
-        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0) {
+
+        // pass success for channeled abilities
+        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
+                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
             player.setActiveHand(hand);
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
         }
@@ -455,7 +460,8 @@ public class ItemModularHandheld extends ItemModular {
      * returns the action that specifies what animation to play when the items is being used
      */
     public UseAction getUseAction(ItemStack stack) {
-        if (getEffectLevel(stack, ItemEffect.throwable) > 0) {
+        if (getEffectLevel(stack, ItemEffect.throwable) > 0
+                || EnchantmentHelper.getRiptideModifier(stack) > 0) {
             return UseAction.SPEAR;
         }
 
@@ -463,70 +469,77 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     /**
-     * How long it takes to use or consume an item
+     * How long it takes to use this item (or how long it can be held at max)
      */
     public int getUseDuration(ItemStack stack) {
-        return getEffectLevel(stack, ItemEffect.throwable) > 0 ? 72000 : 0;
+        if (getEffectLevel(stack, ItemEffect.throwable) > 0
+                || EnchantmentHelper.getRiptideModifier(stack) > 0) {
+            return 72000;
+        }
+
+        return 0;
     }
 
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entityLiving, int timeLeft) {
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;
-            int i = this.getUseDuration(stack) - timeLeft;
-            if (i >= 10) {
+            int ticksUsed = this.getUseDuration(stack) - timeLeft;
+
+            // throwing / riptide, based on vanilla implementation in TridentItem
+            if (ticksUsed >= 10) {
                 applyUsageEffects(player, stack, 2);
 
                 int riptideLevel = EnchantmentHelper.getRiptideModifier(stack);
                 if (riptideLevel <= 0 || player.isWet()) {
-                    if (!worldIn.isRemote) {
-                        stack.damageItem(1, player, (p_220047_1_) -> {
-                            p_220047_1_.sendBreakAnimation(entityLiving.getActiveHand());
-                        });
+                    if (!world.isRemote) {
+                        applyDamage(1, stack, player);
+
                         if (riptideLevel == 0) {
-                            ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(worldIn, player, stack);
+                            ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
                             projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
                             if (player.abilities.isCreativeMode) {
                                 projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                             }
 
-                            worldIn.addEntity(projectileEntity);
-                            worldIn.playMovingSound((PlayerEntity)null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                            world.addEntity(projectileEntity);
+                            world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
                             if (!player.abilities.isCreativeMode) {
                                 player.inventory.deleteStack(stack);
                             }
                         }
                     }
 
-                    player.addStat(Stats.ITEM_USED.get(this));
                     if (riptideLevel > 0) {
-                        float f7 = player.rotationYaw;
-                        float f = player.rotationPitch;
-                        float f1 = -MathHelper.sin(f7 * ((float)Math.PI / 180F)) * MathHelper.cos(f * ((float)Math.PI / 180F));
-                        float f2 = -MathHelper.sin(f * ((float)Math.PI / 180F));
-                        float f3 = MathHelper.cos(f7 * ((float)Math.PI / 180F)) * MathHelper.cos(f * ((float)Math.PI / 180F));
-                        float f4 = MathHelper.sqrt(f1 * f1 + f2 * f2 + f3 * f3);
-                        float f5 = 3.0F * ((1.0F + (float)riptideLevel) / 4.0F);
-                        f1 = f1 * (f5 / f4);
-                        f2 = f2 * (f5 / f4);
-                        f3 = f3 * (f5 / f4);
-                        player.addVelocity((double)f1, (double)f2, (double)f3);
+                        float yaw = player.rotationYaw;
+                        float pitch = player.rotationPitch;
+                        float x = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+                        float y = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
+                        float z = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+
+                        float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
+
+                        // vanilla divides this by the length of the directional vector, but that should always be 1
+                        x = x * velocityMultiplier;
+                        y = y * velocityMultiplier;
+                        z = z * velocityMultiplier;
+                        player.addVelocity(x, y, z);
                         player.startSpinAttack(20);
                         if (player.onGround) {
-                            float f6 = 1.1999999F;
-                            player.move(MoverType.SELF, new Vec3d(0.0D, (double)1.1999999F, 0.0D));
+                            player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
                         }
 
-                        SoundEvent soundevent;
+                        SoundEvent soundEvent;
                         if (riptideLevel >= 3) {
-                            soundevent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
                         } else if (riptideLevel == 2) {
-                            soundevent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
                         } else {
-                            soundevent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
                         }
-
-                        worldIn.playMovingSound((PlayerEntity)null, player, soundevent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        world.playMovingSound(null, player, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     }
+
+                    player.addStat(Stats.ITEM_USED.get(this));
                 }
             }
         }

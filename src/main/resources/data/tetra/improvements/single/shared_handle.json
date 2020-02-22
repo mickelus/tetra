@@ -87,6 +87,24 @@
         "magicCapacity": -5
     },
     {
+        "key": "enchantment/riptide",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "enchantment/riptide",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -11
+    },
+    {
+        "key": "enchantment/riptide",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -15
+    },
+    {
         "key": "basic_handle/blazing",
         "effects": {
             "fierySelf": [3, 0.1]

@@ -441,7 +441,7 @@ public class ItemEffectHandler {
      * @param pos the position in which the event takes place
      * @param data an integer representation of event data (e.g. Block.getStateId)
      */
-    private void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
+    public static void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
         player.connection.sendPacket(new SPlaySoundEventPacket(type, pos, data, false));
     }
 

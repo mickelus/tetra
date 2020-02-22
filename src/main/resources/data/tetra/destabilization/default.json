@@ -90,5 +90,26 @@
         "destabilizationKey":  "destabilized/vanishing",
         "probability": 0.01,
         "instabilityLimit": 7
+    },
+    {
+        "improvementKey": "enchantment/loyalty",
+        "destabilizationKey":  "destabilized/loyalty",
+        "minLevel": 1,
+        "maxLevel": 2,
+        "probability": 0.04
+    },
+    {
+        "improvementKey": "enchantment/riptide",
+        "destabilizationKey":  "destabilized/riptide",
+        "minLevel": 1,
+        "maxLevel": 2,
+        "probability": 0.04
+    },
+    {
+        "improvementKey": "enchantment/impaling",
+        "destabilizationKey":  "destabilized/impaling",
+        "minLevel": 1,
+        "maxLevel": 4,
+        "probability": 0.06
     }
 ]

@@ -123,5 +123,39 @@
     {
         "enchantment": "minecraft:binding_curse",
         "improvement": "destabilized/binding"
+    },
+    {
+        "enchantment": "minecraft:loyalty",
+        "improvement": "enchantment/loyalty"
+    },
+    {
+        "enchantment": "minecraft:loyalty",
+        "improvement": "destabilized/loyalty",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:channeling",
+        "improvement": "enchantment/channeling"
+    },
+    {
+        "enchantment": "minecraft:riptide",
+        "improvement": "enchantment/riptide"
+    },
+    {
+        "enchantment": "minecraft:riptide",
+        "improvement": "destabilized/riptide",
+        "extract": false,
+        "multiplier": -1
+    },
+    {
+        "enchantment": "minecraft:impaling",
+        "improvement": "enchantment/impaling"
+    },
+    {
+        "enchantment": "minecraft:impaling",
+        "improvement": "destabilized/impaling",
+        "extract": false,
+        "multiplier": -1
     }
 ]

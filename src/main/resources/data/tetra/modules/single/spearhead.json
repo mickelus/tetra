@@ -3,9 +3,8 @@
     "type": "tetra:basic_major_module",
     "slots": ["single/head"],
     "improvements": [
-        "tetra:single/shovel",
-        "tetra:single/shovel_compat",
-        "tetra:single/shovel_hone",
+        "tetra:single/spearhead",
+        "tetra:single/spearhead_hone",
         "tetra:single/shared_head_compat",
         "tetra:single/shared_head_hone",
         "tetra:settling_improvements",

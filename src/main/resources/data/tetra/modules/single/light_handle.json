@@ -4,6 +4,7 @@
     "slots": ["single/handle"],
     "renderLayer": "lower",
     "improvements": [
+        "tetra:single/light_handle",
         "tetra:single/shared_handle",
         "tetra:single/shared_handle_compat",
         "tetra:single/shared_handle_hone",
