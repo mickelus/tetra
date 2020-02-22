@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -108,6 +109,7 @@ public class UtilBooster {
                 lookVector.z * boostBase);
         player.velocityChanged = true;
 
+        player.move(MoverType.SELF, new Vec3d(0, 0.4, 0));
 
         if (player.world instanceof ServerWorld) {
             ((ServerWorld)player.world).spawnParticle(ParticleTypes.LARGE_SMOKE, player.posX,
