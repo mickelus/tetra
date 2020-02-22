@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "duplex/hone_damage_flat_1",
+    "localizationKey": "duplex/shared_head/hone_damage_flat_1",
     "slots": [
         "duplex/head_left",
         "duplex/head_right"
