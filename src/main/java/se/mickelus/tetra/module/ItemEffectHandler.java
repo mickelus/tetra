@@ -29,7 +29,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.EarthboundEffect;
+import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.modular.ItemModular;
