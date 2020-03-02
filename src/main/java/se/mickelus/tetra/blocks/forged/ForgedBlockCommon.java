@@ -21,6 +21,9 @@ public class ForgedBlockCommon {
             .harvestLevel(3)
             .hardnessAndResistance(12F, 25);
 
-    public static final ITextComponent hintTooltip = new TranslationTextComponent("forged_description")
+    public static final ITextComponent locationTooltip = new TranslationTextComponent("item.tetra.forged_description")
             .setStyle(new Style().setColor(TextFormatting.GRAY));
+
+    public static final ITextComponent unsettlingTooltip = new TranslationTextComponent("item.tetra.forged_unsettling")
+            .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true));
 }

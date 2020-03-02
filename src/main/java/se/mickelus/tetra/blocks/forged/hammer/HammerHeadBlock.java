@@ -7,11 +7,8 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -29,13 +26,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
+import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 public class HammerHeadBlock extends TetraWaterloggedBlock {
     public static final String unlocalizedName = "hammer_head";
@@ -62,7 +58,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
             final ITooltipFlag advanced) {
-        tooltip.add(hintTooltip);
+        tooltip.add(locationTooltip);
     }
 
     @Override

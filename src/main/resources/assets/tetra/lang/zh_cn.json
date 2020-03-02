@@ -170,7 +170,7 @@
     "item.tetra.vent_plate": "排气板",
     "item.tetra.vent_plate.description": "把这个连接到机器上能稍微提高它的效率.",
     "salvage_vent_plate_action.label": "回收",
-    "forged_description": "能在下雪群系的地下深处找到",
+    "item.tetra.forged_description": "能在下雪群系的地下深处找到",
     "sword/blade": "剑刃",
     "sword/hilt": "剑柄",
     "sword/guard": "护手",

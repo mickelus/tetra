@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -31,9 +32,9 @@ public class ItemQuickLatch extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(new TranslationTextComponent("item.tetra.quick_latch.description").setStyle(new Style().setColor(TextFormatting.GRAY)));
+        tooltip.add(Tooltips.reveal);
         tooltip.add(new StringTextComponent(""));
-        tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     @Override

@@ -3,7 +3,7 @@
 
   "item.tetra.journal": "Holosphere",
   "item.tetra.journal.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
-  "item.tetra.journal.tooltip2": "[Right click to use]",
+  "item.tetra.journal.tooltip2": "§8[§7right click§8] §7use",
   "journal.craft.breadcrumb.root": "Items",
   "journal.craft.sword": "Blades",
   "journal.craft.toolbelt": "Toolbelts",
@@ -238,7 +238,7 @@
   "block.tetra.extractor_pipe": "Extractor pipe",
   "block.tetra.seeping_bedrock": "Seeping bedrock",
 
-  "block.multiblock_hint.1x2x1": "[1x2x1 multiblock]",
+  "block.multiblock_hint.1x2x1": "§8[§71x2x1 multiblock§8]",
 
   "item.tetra.forged_bolt": "Bolt",
   "salvage_bolt_action.label": "Salvage",
@@ -250,7 +250,6 @@
   "salvage_mesh_action.label": "Salvage",
 
   "item.tetra.quick_latch": "Quick latch",
-  "item.tetra.quick_latch.description": "Reveals related upgrade schemas while in the inventory",
   "salvage_quick_latch_action_hammer.label": "Salvage",
   "salvage_quick_latch_action_pry.label": "Salvage",
 
@@ -262,7 +261,11 @@
   "item.tetra.vent_plate.description": "Re-attach this to machinery to slightly increase its efficiency",
   "salvage_vent_plate_action.label": "Salvage",
 
-  "forged_description": "Found in structures deep underground in snowy biomes",
+  "item.tetra.forged_description": "Found in structures deep underground in snowy biomes",
+
+  "item.tetra.tooltip_reveal": "Reveals related upgrade schemas while in the inventory",
+  "item.tetra.tooltip_expand": "§7[§8shift§7] §8+",
+  "item.tetra.tooltip_expanded": "§8[§fshift§8] §f+",
 
   "sword/blade": "Blade",
   "sword/hilt": "Hilt",
@@ -1825,7 +1828,7 @@
   "light_handle/prismarine": "Prismarine handle",
 
   "tetra/schema/single/handle/long_handle.name": "Long handle",
-  "tetra/schema/single/handle/long_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.",
+  "tetra/schema/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.",
   "tetra/schema/single/handle/long_handle.slot1": "Handle material",
 
   "single/long_handle.name": "Long handle",

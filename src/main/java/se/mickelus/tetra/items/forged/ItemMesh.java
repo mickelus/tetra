@@ -28,6 +28,6 @@ public class ItemMesh extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 }

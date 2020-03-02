@@ -35,7 +35,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -129,7 +128,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     private static boolean breakLock(World world, BlockPos pos, PlayerEntity player, int index, Hand hand) {

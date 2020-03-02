@@ -23,7 +23,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -71,7 +70,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(ForgedBlockCommon.locationTooltip);
         tooltip.add(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
                 .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));

@@ -37,6 +37,7 @@ import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.client.model.ModularModelLoader;
@@ -469,6 +470,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         }
 
         if (Screen.hasShiftDown()) {
+            tooltip.add(Tooltips.expanded);
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
@@ -513,6 +515,8 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                     .map(StringTextComponent::new)
                     .map(text -> text.setStyle(basicStyle))
                     .forEach(tooltip::add);
+
+            tooltip.add(Tooltips.expand);
         }
     }
 

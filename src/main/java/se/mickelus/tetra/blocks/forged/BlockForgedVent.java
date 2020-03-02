@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -16,7 +15,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
@@ -25,9 +23,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -40,8 +36,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
-import static net.minecraft.fluid.Fluids.WATER;
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
     static final String unlocalizedName = "forged_vent";
@@ -204,7 +198,7 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(ForgedBlockCommon.hintTooltip);
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     @Nullable

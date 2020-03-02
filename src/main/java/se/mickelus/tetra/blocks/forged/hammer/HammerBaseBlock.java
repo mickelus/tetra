@@ -43,7 +43,7 @@ import java.util.List;
 
 import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
-import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.hintTooltip;
+import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
     public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
@@ -92,7 +92,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
-        tooltip.add(hintTooltip);
+        tooltip.add(locationTooltip);
         tooltip.add(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
                 .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));

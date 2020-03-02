@@ -1,14 +1,14 @@
 package se.mickelus.tetra.blocks.geode;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
@@ -28,7 +28,12 @@ public class PristineDiamondItem extends TetraItem {
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("item.tetra.pristine_gem.description").setStyle(new Style()
-                .setColor(TextFormatting.GRAY)));
+        if (Screen.hasShiftDown()) {
+            tooltip.add(Tooltips.expanded);
+            tooltip.add(new TranslationTextComponent("item.tetra.pristine_gem.description").setStyle(new Style()
+                    .setColor(TextFormatting.GRAY)));
+        } else {
+            tooltip.add(Tooltips.expand);
+        }
     }
 }
