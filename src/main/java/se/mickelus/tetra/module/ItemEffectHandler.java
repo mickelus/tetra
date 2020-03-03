@@ -19,6 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
@@ -37,6 +38,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -339,6 +341,29 @@ public class ItemEffectHandler {
                 }
             });
         }
+    }
+
+    public static boolean canHarvestBlock(@Nonnull BlockState state, @Nonnull PlayerEntity player, @Nonnull IBlockReader world,
+            @Nonnull BlockPos pos) {
+        if (state.getMaterial().isToolNotRequired())
+        {
+            return true;
+        }
+
+        ItemStack stack = player.getHeldItemMainhand();
+        ToolType tool = state.getHarvestTool();
+        if (stack.isEmpty() || tool == null)
+        {
+            return player.canHarvestBlock(state);
+        }
+
+        int toolLevel = stack.getItem().getHarvestLevel(stack, tool, player, state);
+        if (toolLevel < 0)
+        {
+            return player.canHarvestBlock(state);
+        }
+
+        return toolLevel >= state.getHarvestLevel();
     }
 
     /**

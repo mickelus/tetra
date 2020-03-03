@@ -129,8 +129,7 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos,
-            LivingEntity entity) {
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
 
@@ -139,6 +138,12 @@ public class ItemModularHandheld extends ItemModular {
             }
         }
 
+        applyBreakEffects(itemStack, world, state, pos, entity);
+
+        return true;
+    }
+
+    public void applyBreakEffects(ItemStack itemStack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isRemote) {
             int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
             if (intuitLevel > 0) {
@@ -149,8 +154,6 @@ public class ItemModularHandheld extends ItemModular {
                 }
             }
         }
-
-        return true;
     }
 
     @Override
@@ -158,38 +161,41 @@ public class ItemModularHandheld extends ItemModular {
         applyDamage(entityHitDamage, itemStack, attacker);
 
         if (!isBroken(itemStack)) {
-            getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
-
-            int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
-            if (sweepingLevel > 0) {
-                sweepAttack(itemStack, target, attacker, sweepingLevel);
-            }
-
-            int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
-            if (bleedingLevel > 0) {
-                if (!CreatureAttribute.UNDEAD.equals(target.getCreatureAttribute())
-                        && attacker.getRNG().nextFloat() < 0.3f) {
-                    target.addPotionEffect(new EffectInstance(BleedingEffect.instance, 40, bleedingLevel));
-                }
-            }
-
-            // todo: only trigger if target is standing on stone/earth/sand/gravel
-            int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
-            if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
-                target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
-
-                if (target.world instanceof ServerWorld) {
-                    BlockState blockState = target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ));
-                    ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
-                            target.posX, target.posY + 0.1, target.posZ,
-                            16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
-                }
-            }
-
+            applyHitEffects(itemStack, target, attacker);
             applyUsageEffects(attacker, itemStack, 1);
         }
 
         return true;
+    }
+
+    public void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+        getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
+
+        int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
+        if (sweepingLevel > 0) {
+            sweepAttack(itemStack, target, attacker, sweepingLevel);
+        }
+
+        int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
+        if (bleedingLevel > 0) {
+            if (!CreatureAttribute.UNDEAD.equals(target.getCreatureAttribute())
+                    && attacker.getRNG().nextFloat() < 0.3f) {
+                target.addPotionEffect(new EffectInstance(BleedingEffect.instance, 40, bleedingLevel));
+            }
+        }
+
+        // todo: only trigger if target is standing on stone/earth/sand/gravel
+        int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
+        if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
+            target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
+
+            if (target.world instanceof ServerWorld) {
+                BlockState blockState = target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ));
+                ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
+                        target.posX, target.posY + 0.1, target.posZ,
+                        16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
+            }
+        }
     }
 
     @Override
@@ -479,6 +485,13 @@ public class ItemModularHandheld extends ItemModular {
         return 0;
     }
 
+    /**
+     * Called when the player stops using/channeling an item, e.g. when throwing a trident.
+     * @param stack
+     * @param world
+     * @param entityLiving
+     * @param timeLeft
+     */
     public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entityLiving, int timeLeft) {
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;

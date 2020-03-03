@@ -18,10 +18,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
@@ -35,6 +32,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 
@@ -146,40 +144,61 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             BlockState blockState = world.getBlockState(pos);
 
             if (ForgeHooks.canToolHarvestBlock(world, pos, thrownStack) && shooter instanceof PlayerEntity) {
-                if (shooter instanceof ServerPlayerEntity) {
-                    ItemEffectHandler.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
+                float destroySpeed = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                        .map(item -> item.getDestroySpeed(thrownStack, blockState))
+                        .orElse(1f);
+
+                if (destroySpeed > blockState.getBlockHardness(world, pos)) {
+                    if (shooter instanceof ServerPlayerEntity) {
+                        ItemEffectHandler.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
+                    }
+
+                    CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                            .ifPresent(item -> item.applyBreakEffects(thrownStack, world, blockState, pos, (PlayerEntity) shooter));
+
+                    breakBlock((PlayerEntity) shooter, pos, blockState);
+
+                    Vec3i faceVec = ((BlockRayTraceResult) rayTraceResult).getFace().getDirectionVec();
+                    setMotion(new Vec3d(faceVec).scale(0.1));
+
+                    dealtDamage = true;
                 }
-
-                ItemEffectHandler.breakBlock(world, (PlayerEntity) shooter, thrownStack, pos, blockState, true);
-
-                Vec3i faceVec = ((BlockRayTraceResult) rayTraceResult).getFace().getDirectionVec();
-                setMotion(new Vec3d(faceVec).scale(0.1));
-
-                dealtDamage = true;
             }
         }
+    }
+
+    /**
+     * Hacky way to break blocks in such a way that it seems as if the player is holding the thrown item
+     */
+    private void breakBlock(PlayerEntity shooter, BlockPos pos, BlockState blockState) {
+        ItemStack currentItem = shooter.getHeldItemMainhand();
+
+        shooter.setHeldItem(Hand.MAIN_HAND, thrownStack);
+        ItemEffectHandler.breakBlock(world, shooter, thrownStack, pos, blockState, true);
+        shooter.setHeldItem(Hand.MAIN_HAND, currentItem);
     }
 
     /**
      * Called when the arrow hits an entity
      */
     protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-        Entity entity = p_213868_1_.getEntity();
-        float f = 8.0F;
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingentity = (LivingEntity)entity;
-            f += EnchantmentHelper.getModifierForCreature(thrownStack, livingentity.getCreatureAttribute());
-        }
-
-        Entity entity1 = getShooter();
-        DamageSource damagesource = DamageSource.causeTridentDamage(this, (Entity)(entity1 == null ? this : entity1));
+        Entity target = p_213868_1_.getEntity();
+        Entity shooter = getShooter();
+        DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
         dealtDamage = true;
         SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
-        if (entity.attackEntityFrom(damagesource, f) && entity instanceof LivingEntity) {
-            LivingEntity livingentity1 = (LivingEntity)entity;
-            if (entity1 instanceof LivingEntity) {
-                EnchantmentHelper.applyThornEnchantments(livingentity1, entity1);
-                EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity1);
+        float damage = 8.0F;
+
+        if (target instanceof LivingEntity) {
+            LivingEntity livingentity = (LivingEntity)target;
+            damage += EnchantmentHelper.getModifierForCreature(thrownStack, livingentity.getCreatureAttribute());
+        }
+
+        if (target.attackEntityFrom(damagesource, damage) && target instanceof LivingEntity) {
+            LivingEntity livingentity1 = (LivingEntity)target;
+            if (shooter instanceof LivingEntity) {
+                EnchantmentHelper.applyThornEnchantments(livingentity1, shooter);
+                EnchantmentHelper.applyArthropodEnchantments((LivingEntity)shooter, livingentity1);
             }
 
             arrowHit(livingentity1);
@@ -188,14 +207,20 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         setMotion(getMotion().mul(-0.01D, -0.1D, -0.01D));
         float f1 = 1.0F;
         if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
-            BlockPos blockpos = entity.getPosition();
+            BlockPos blockpos = target.getPosition();
             if (world.isSkyLightMax(blockpos)) {
                 LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, (double)blockpos.getX() + 0.5D, (double)blockpos.getY(), (double)blockpos.getZ() + 0.5D, false);
-                lightningboltentity.setCaster(entity1 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity1 : null);
+                lightningboltentity.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null);
                 ((ServerWorld)world).addLightningBolt(lightningboltentity);
                 soundevent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 f1 = 5.0F;
             }
+        }
+
+
+        if (target instanceof LivingEntity && shooter instanceof LivingEntity) {
+            CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                    .ifPresent(item -> item.applyHitEffects(thrownStack, (LivingEntity) target, (LivingEntity) shooter));
         }
 
         playSound(soundevent, f1, 1.0F);
