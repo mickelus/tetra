@@ -2047,6 +2047,40 @@
   "single/trident.description": "A trident head. The knowledge of how one is made has been lost to time",
   "trident/trident": "Trident",
 
+  "tetra/schema/single/spearhead/serrated_1.name": "Serrate",
+  "tetra/schema/single/spearhead/serrated_1.description": "Serrate the head. Attacks have a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.",
+  "tetra/schema/single/spearhead/serrated_2.name": "Hone: Serrated II",
+  "tetra/schema/single/spearhead/serrated_2.description": "Hone the serrated improvement, increases the damage dealt to 8.",
+  "tetra/schema/single/spearhead/serrated_3.name": "Hone: Serrated III",
+  "tetra/schema/single/spearhead/serrated_3.description": "Further hone the serrated improvement, increases the damage dealt to 16.",
+
+  "spearhead/serrated.name": "Serrated",
+  "spearhead/serrated.prefix": "Serrated",
+  "spearhead/serrated.description": "Attacks may inflict bleed",
+
+  "tetra/schema/single/spearhead/tempered_1.name": "Temper",
+  "tetra/schema/single/spearhead/tempered_1.description": "Temper the the blade, greatly increasing its hardness. Causes some of the damage dealt to ignore armor.",
+  "tetra/schema/single/spearhead/tempered_2.name": "Hone: Tempered II",
+  "tetra/schema/single/spearhead/tempered_2.description": "Hone the tempered improvement, increases the amount of damage that penetrates armor to 3.",
+  "tetra/schema/single/spearhead/tempered_3.name": "Hone: Tempered III",
+  "tetra/schema/single/spearhead/tempered_3.description": "Further hone the serrated improvement, increases the amount of damage that penetrates armor to 5.",
+
+  "spearhead/tempered.name": "Tempered",
+  "spearhead/tempered.prefix": "Tempered",
+  "spearhead/tempered.description": "Attacks partially ignore armor",
+
+  "spearhead_hone/damage.name": "Hone: Damage",
+  "spearhead_hone/damage.description": "Increases damage dealt",
+
+  "tetra/schema/single/earthpiercer/earthpiercer.name": "Earthpiercer",
+  "tetra/schema/single/earthpiercer/earthpiercer.description": "Replace the current head with the earthpiercer, a heavy tool head that resembles a spearhead. It's unwieldy but it easily cuts through stone.",
+  "tetra/schema/single/earthpiercer/earthpiercer.slot1": "Earthpiercer",
+
+  "single/earthpiercer.item_name": "Earthpiercer",
+  "single/earthpiercer.name": "Earthpiercer",
+  "single/earthpiercer.description": "A heavy tool head that resembles a spearhead. It's unwieldy but it easily cuts through stone.",
+  "earthpiercer/earthpiercer": "Earthpiercer",
+
   "toolbelt/slot1": "",
   "toolbelt/slot2": "",
   "toolbelt/slot3": "",

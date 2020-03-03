@@ -1,0 +1,26 @@
+[
+    {
+        "key": "spearhead/serrated",
+        "level": 1,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 1
+        }
+    },
+    {
+        "key": "spearhead/serrated",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "bleeding": 2
+        }
+    },
+    {
+        "key": "spearhead/serrated",
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "bleeding": 4
+        }
+    }
+]
