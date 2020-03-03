@@ -25,7 +25,7 @@ public class ModularSingleHeadItem extends ItemModularHandheld {
     public static ModularSingleHeadItem instance;
 
     public ModularSingleHeadItem() {
-        super(new Properties().maxStackSize(1).group(TetraItemGroup.instance));
+        super(new Properties().maxStackSize(1));
         setRegistryName(unlocalizedName);
 
         entityHitDamage = 1;
