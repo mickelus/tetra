@@ -389,7 +389,7 @@ public class ConfigSchema extends BaseSchema {
                     applyOutcome(outcome, itemStack, false, slot, null);
 
                     return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredCapabilities,
-                            outcome.material.getApplicableItemstacks());
+                            outcome.material.getApplicableItemStacks());
                 })
                 .filter(Filter.distinct(preview -> preview.key))
                 .toArray(OutcomePreview[]::new);

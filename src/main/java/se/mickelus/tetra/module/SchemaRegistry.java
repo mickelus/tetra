@@ -7,10 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.schema.ConfigSchema;
-import se.mickelus.tetra.module.schema.InvalidSchemaException;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schema.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,7 +46,7 @@ public class SchemaRegistry {
 
         dynamicSchemas.forEach((identifier, schema) -> schemaMap.put(identifier, schema));
 
-        ItemUpgradeRegistry.instance.setupRepairDefinitions(data.values().toArray(new SchemaDefinition[0]));
+        RepairRegistry.instance.injectFromSchemas(data.values());
     }
 
     private boolean validateSchemaDefinition(ResourceLocation identifier, SchemaDefinition definition) {

@@ -51,6 +51,8 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.effects.BleedingEffect;
+import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.*;
@@ -107,6 +109,8 @@ public class TetraMod {
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
 
         LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
+
+        new RepairRegistry();
 
         SchemaRegistry schemaRegistry = new SchemaRegistry();
         schemaRegistry.registerSchema(new BookEnchantSchema());

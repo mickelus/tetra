@@ -136,24 +136,12 @@ public class RemoveSchema extends BaseSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        if (targetStack.getItem() instanceof ItemModular) {
-            ItemModule module = item.getModuleFromSlot(targetStack, slot);
-            if (module != null) {
-                return module.getRepairRequiredCapabilities(targetStack);
-            }
-        }
-        return Collections.emptyList();
+        return Collections.singletonList(Capability.hammer);
     }
 
     @Override
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        if (targetStack.getItem() instanceof ItemModular) {
-            ItemModule module = item.getModuleFromSlot(targetStack, slot);
-            if (module != null) {
-                return module.getRepairRequiredCapabilityLevel(targetStack, capability);
-            }
-        }
-        return 0;
+        return 1;
     }
 
     @Override

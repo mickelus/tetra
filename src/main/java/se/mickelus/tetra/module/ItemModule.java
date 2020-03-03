@@ -3,6 +3,7 @@ package se.mickelus.tetra.module;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
@@ -18,6 +19,8 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
+
+import javax.annotation.Nullable;
 
 public abstract class ItemModule implements ICapabilityProvider {
 
@@ -191,32 +194,27 @@ public abstract class ItemModule implements ICapabilityProvider {
                 .reduce(getVariantData(itemStack).durabilityMultiplier, (a, b) -> a * b);
     }
 
-    public Material getRepairMaterial(ItemStack itemStack) {
-        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getVariantData(itemStack).key);
-        if (definition != null) {
-            return definition.material;
-        }
-        return null;
+    public Collection<RepairDefinition> getRepairDefinitions(ItemStack itemStack) {
+        return RepairRegistry.instance.getDefinitions(getVariantData(itemStack).key);
     }
 
-    public int getRepairAmount(ItemStack itemStack) {
-        return getVariantData(itemStack).durability;
+    public RepairDefinition getRepairDefinition(ItemStack itemStack, ItemStack materialStack) {
+        return RepairRegistry.instance.getDefinitions(getVariantData(itemStack).key).stream()
+                .filter(definition -> definition.material.predicate.test(materialStack))
+                .findFirst()
+                .orElse(null);
     }
 
-    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
-        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getVariantData(itemStack).key);
-        if (definition != null) {
-            return definition.requiredCapabilities.getValues();
-        }
-        return Collections.emptyList();
+    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack, ItemStack materialStack) {
+        return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
+                .map(definition -> definition.requiredCapabilities.getValues())
+                .orElse(Collections.emptySet());
     }
 
-    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
-        RepairDefinition definition = ItemUpgradeRegistry.instance.getRepairDefinition(getVariantData(itemStack).key);
-        if (definition != null) {
-            return definition.requiredCapabilities.getLevel(capability);
-        }
-        return 0;
+    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, Capability capability) {
+        return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
+                .map(definition -> definition.requiredCapabilities.getLevel(capability))
+                .orElse(0);
     }
 
     public boolean isTweakable(ItemStack itemStack) {

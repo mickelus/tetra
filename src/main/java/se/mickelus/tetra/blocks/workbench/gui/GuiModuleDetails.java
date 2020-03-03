@@ -8,8 +8,11 @@ import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.RepairRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.RepairDefinition;
+
+import java.util.Arrays;
 
 public class GuiModuleDetails extends GuiElement {
 
@@ -91,12 +94,13 @@ public class GuiModuleDetails extends GuiElement {
 
             synergyIndicator.update(itemStack, module);
 
-            RepairDefinition repairDefinition = ItemUpgradeRegistry.instance.getRepairDefinition(module.getVariantData(itemStack).key);
-            boolean canRepair = repairDefinition != null && repairDefinition.material.getApplicableItemstacks().length > 0;
-            if (canRepair) {
-                repairMaterial.setItems(repairDefinition.material.getApplicableItemstacks());
-            }
+            ItemStack[] repairItemStacks = RepairRegistry.instance.getDefinitions(module.getVariantData(itemStack).key).stream()
+                    .map(definition -> definition.material.getApplicableItemStacks())
+                    .flatMap(Arrays::stream)
+                    .toArray(ItemStack[]::new);
+            repairMaterial.setItems(repairItemStacks);
 
+            boolean canRepair = repairItemStacks.length > 0;
             repairTitle.setVisible(canRepair);
             repairMaterial.setVisible(canRepair);
             noRepairLabel.setVisible(!canRepair);

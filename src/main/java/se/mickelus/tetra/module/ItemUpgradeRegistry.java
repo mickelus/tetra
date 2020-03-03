@@ -11,14 +11,11 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.schema.RepairDefinition;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ItemUpgradeRegistry {
     private static final Logger logger = LogManager.getLogger();
@@ -28,12 +25,9 @@ public class ItemUpgradeRegistry {
     private List<Function<ItemStack, ItemStack>> replacementFunctions;
     private List<ReplacementDefinition> replacementDefinitions;
 
-    private Map<String, List<RepairDefinition>> repairMap;
-
     public ItemUpgradeRegistry() {
         instance = this;
         replacementFunctions = new ArrayList<> ();
-        repairMap = new HashMap<>();
 
         replacementDefinitions = Collections.emptyList();
         DataManager.replacementData.onReload(() -> {
@@ -63,31 +57,6 @@ public class ItemUpgradeRegistry {
 
     public boolean playerHasSchema(PlayerEntity player, ItemStack targetStack, UpgradeSchema schema) {
         return schema.isVisibleForPlayer(player, targetStack);
-    }
-
-    public void setupRepairDefinitions(SchemaDefinition[] schemaDefinitions) {
-        repairMap = Arrays.stream(schemaDefinitions)
-                .flatMap(schemaDefinition -> Arrays.stream(schemaDefinition.outcomes))
-                .filter(RepairDefinition::validateOutcome)
-                .map(RepairDefinition::new)
-                .collect(Collectors.toMap(
-                        definition -> definition.moduleVariant,
-                        Collections::singletonList,
-                        (current, newValue) -> Stream.concat(current.stream(), newValue.stream()).collect(Collectors.toList())));
-    }
-
-//    public void registerRepairDefinition(RepairDefinition definition) {
-//        repairMap.put(definition.moduleVariant, definition);
-//    }
-
-    public RepairDefinition getRepairDefinition(String moduleVariant) {
-        if (repairMap.containsKey(moduleVariant)) {
-            return repairMap.get(moduleVariant).stream()
-                    .findFirst()
-                    .orElse(null);
-        }
-
-        return null;
     }
 
     public void registerReplacementFunction(Function<ItemStack, ItemStack> replacementFunction) {

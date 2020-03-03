@@ -53,6 +53,7 @@ import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.Material;
+import se.mickelus.tetra.module.schema.RepairDefinition;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -540,7 +541,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
      */
     private Optional<ItemModule> getRepairModule(ItemStack itemStack) {
         List<ItemModule> modules = getAllModules(itemStack).stream()
-                .filter(itemModule -> itemModule.getRepairMaterial(itemStack) != null)
+                .filter(itemModule -> !itemModule.getRepairDefinitions(itemStack).isEmpty())
                 .collect(Collectors.toList());
 
         if (modules.size() > 0) {
@@ -563,25 +564,27 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     /**
-     * Returns an itemstack with the material required for the next repair attempt. Rotates between materials required
+     * Returns a collection of definitions for all possible ways to perform the next repair attempt. Rotates between materials required
      * for different modules
      * @param itemStack The itemstack for the modular item
-     * @return The material definition for the material required for the next repair attempt
+     * @return a collection of definitions, empty if none are available
      */
-    public Material getRepairMaterial(ItemStack itemStack) {
+    public Collection<RepairDefinition> getRepairDefinitions(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairMaterial(itemStack))
+                .map(module -> module.getRepairDefinitions(itemStack))
                 .orElse(null);
     }
 
     /**
      * Returns the required size of the repair material itemstack for the next repair attempt.
      * @param itemStack The itemstack for the modular item
+     * @param materialStack The material stack that is to be used to repair the item
      * @return
      */
-    public int getRepairMaterialCount(ItemStack itemStack) {
+    public int getRepairMaterialCount(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairMaterial(itemStack).count)
+                .map(module -> module.getRepairDefinition(itemStack, materialStack))
+                .map(definition -> definition.material.count)
                 .orElse(0);
     }
 
@@ -594,16 +597,16 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         return getMaxDamage(itemStack);
     }
 
-    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack) {
+    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairRequiredCapabilities(itemStack))
+                .map(module -> module.getRepairRequiredCapabilities(itemStack, materialStack))
                 .orElse(Collections.emptyList());
     }
 
-    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, Capability capability) {
+    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, Capability capability) {
         return getRepairModule(itemStack)
-                .filter(module -> module.getRepairRequiredCapabilities(itemStack).contains(capability))
-                .map(module -> module.getRepairRequiredCapabilityLevel(itemStack, capability))
+                .filter(module -> module.getRepairRequiredCapabilities(itemStack, materialStack).contains(capability))
+                .map(module -> module.getRepairRequiredCapabilityLevel(itemStack, materialStack, capability))
                 .map(level -> Math.max(1, level))
                 .orElse(0);
     }

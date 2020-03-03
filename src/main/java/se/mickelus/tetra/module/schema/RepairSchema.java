@@ -74,10 +74,12 @@ public class RepairSchema extends BaseSchema {
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
         return CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                .map(item -> item.getRepairMaterial(itemStack))
-                .map(Material::getApplicableItemstacks)
-                .map(Arrays::stream)
+                .map(item -> item.getRepairDefinitions(itemStack))
+                .map(Collection::stream)
                 .orElse(Stream.empty())
+                .map(definition -> definition.material)
+                .map(Material::getApplicableItemStacks)
+                .flatMap(Arrays::stream)
                 .toArray(ItemStack[]::new);
     }
 
@@ -85,7 +87,7 @@ public class RepairSchema extends BaseSchema {
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) itemStack.getItem();
-            return item.getRepairMaterialCount(itemStack);
+            return item.getRepairMaterialCount(itemStack, materialStack);
         }
         return 0;
     }
@@ -94,10 +96,11 @@ public class RepairSchema extends BaseSchema {
     public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
         if (index == 0 && itemStack.getItem() instanceof ItemModular) {
             return CastOptional.cast(itemStack.getItem(), ItemModular.class)
-                    .map(item -> item.getRepairMaterial(itemStack))
-                    .map(material -> material.predicate)
-                    .map(predicate -> predicate.test(materialStack))
-                    .orElse(false);
+                    .map(item -> item.getRepairDefinitions(itemStack))
+                    .map(Collection::stream)
+                    .orElse(Stream.empty())
+                    .map(definition -> definition.material.predicate)
+                    .anyMatch(predicate -> predicate.test(materialStack));
         }
         return false;
     }
@@ -142,7 +145,7 @@ public class RepairSchema extends BaseSchema {
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();
-            return item.getRepairRequiredCapabilities(targetStack);
+            return item.getRepairRequiredCapabilities(targetStack, materials[0]);
         }
         return Collections.emptyList();
     }
@@ -151,7 +154,7 @@ public class RepairSchema extends BaseSchema {
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
         if (targetStack.getItem() instanceof ItemModular) {
             ItemModular item = (ItemModular) targetStack.getItem();
-            return item.getRepairRequiredCapabilityLevel(targetStack, capability);
+            return item.getRepairRequiredCapabilityLevel(targetStack, materials[0], capability);
         }
         return 0;
     }

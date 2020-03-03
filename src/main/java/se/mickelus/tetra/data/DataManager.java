@@ -31,6 +31,7 @@ import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schema.Material;
+import se.mickelus.tetra.module.schema.RepairDefinition;
 import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 import java.util.Arrays;
@@ -65,6 +66,7 @@ public class DataManager {
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
     public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
+    public static DataStore<RepairDefinition> repairData = new DataStore<>(gson, "repairs", RepairDefinition.class);
     public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",
             EnchantmentMapping[].class);
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
@@ -77,7 +79,7 @@ public class DataManager {
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
+    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, repairData, enchantmentData, synergyData,
             replacementData, schemaData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;

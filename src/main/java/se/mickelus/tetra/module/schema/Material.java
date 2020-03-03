@@ -88,7 +88,7 @@ public class Material {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ItemStack[] getApplicableItemstacks() {
+    public ItemStack[] getApplicableItemStacks() {
         if (itemStack != null && !itemStack.isEmpty()) {
             return new ItemStack[] { itemStack };
         } else if (tagLocation != null) {
