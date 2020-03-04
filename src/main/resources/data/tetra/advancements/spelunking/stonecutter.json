@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:sword_modular",
+            "nbt": "{\"sword/blade\": \"sword/stonecutter\",\"sword/stonecutter_material\": \"stonecutter/stonecutter\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+        },
+        "title": "Like Butter",
+        "description": "Find a stonecutter and attach it to a hilt"
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "earthpiercer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:sword_modular",
+                        "nbt": "{\"sword/blade\": \"sword/stonecutter\"}"
+                    }
+                ]
+            }
+        }
+    }
+}
