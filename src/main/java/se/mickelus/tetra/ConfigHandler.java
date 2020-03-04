@@ -51,6 +51,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableBow;
     public static ForgeConfigSpec.BooleanValue enableSingle;
 
+    public static ForgeConfigSpec.BooleanValue enableStonecutter;
+
     static {
         // misc config
         builder.push("misc");
@@ -152,6 +154,12 @@ public class ConfigHandler {
         honeSingleIntegrityMultiplier = builder
                 .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+
+        enableStonecutter = builder
+                .comment("Enable the stonecutter module for swords, the stonecutter has to be removed from loot tables if this is disabled")
+                .worldRestart()
+                .define("stonecutter", true);
 
         builder.pop();
 

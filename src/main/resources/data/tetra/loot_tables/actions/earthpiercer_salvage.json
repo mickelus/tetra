@@ -1,0 +1,32 @@
+{
+    "pools": [
+        {
+            "name": "forged/stonecutter_salvage",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "tetra:metal_scrap",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 4,
+                                "max": 8
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment":"minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+
+}

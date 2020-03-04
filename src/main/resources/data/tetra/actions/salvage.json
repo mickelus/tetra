@@ -68,5 +68,25 @@
             "pry": 1
         },
         "lootTable": "tetra:actions/quick_latch_salvage_pry"
+    },
+    {
+        "key": "salvage_stonecutter_action",
+        "requirement": {
+            "item": "tetra:stonecutter"
+        },
+        "requiredCapabilities": {
+            "hammer": 5
+        },
+        "lootTable": "tetra:actions/stonecutter_salvage"
+    },
+    {
+        "key": "salvage_earthpiercer_action",
+        "requirement": {
+            "item": "tetra:earthpiercer"
+        },
+        "requiredCapabilities": {
+            "hammer": 5
+        },
+        "lootTable": "tetra:actions/earthpiercer_salvage"
     }
 ]

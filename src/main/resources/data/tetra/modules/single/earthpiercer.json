@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["single/head"],
+    "improvements": [
+        "tetra:single/earthpiercer",
+        "tetra:single/earthpiercer_compat",
+        "tetra:single/earthpiercer_hone",
+        "tetra:single/shared_head_compat",
+        "tetra:single/shared_head_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "earthpiercer/earthpiercer",
+            "durability": 771,
+            "integrity": -3,
+            "magicCapacity": 8,
+            "damage": 2,
+            "attackSpeed": -0.4,
+            "capabilities": {
+                "pickaxe": [3, 1]
+            },
+            "glyph": {
+                "textureX": 224,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/single/head/earthpiercer/default"
+            }]
+        }
+    ]
+}

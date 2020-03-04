@@ -37,11 +37,13 @@ import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class ItemEffectHandler {
 
@@ -431,32 +433,48 @@ public class ItemEffectHandler {
         final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
         final boolean alternate = strikeCounter % 2 == 0;
 
+        float efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
+                .map(item -> item.getCapabilityEfficiency(toolStack, tool))
+                .orElse(0f);
+
         breakingPlayer.spawnSweepParticles();
 
-        Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
+        List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
                 .map(pos -> rotatePos(pos, facing))
                 .map(originPos::add)
-                .forEachOrdered(pos -> {
-                    BlockState blockState = world.getBlockState(pos);
+                .collect(Collectors.toList());
 
-                    // make sure that only blocks which require the same tool are broken
-                    if (ItemModularHandheld.isToolEffective(tool, blockState)) {
+        for (BlockPos pos : positions) {
+            BlockState blockState = world.getBlockState(pos);
 
-                        // check that the tool level is high enough and break the block
-                        int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
-                        if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                                || toolStack.canHarvestBlock(blockState)) {
+            // make sure that only blocks which require the same tool are broken
+            if (ItemModularHandheld.isToolEffective(tool, blockState)) {
 
-                            // the break event has to be sent the player separately as it's sent to the others inside Block.onBlockHarvested
-                            if (breakingPlayer instanceof ServerPlayerEntity) {
-                                sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                            }
+                // check that the tool level is high enough and break the block
+                int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
+                if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
+                        || toolStack.canHarvestBlock(blockState)) {
 
-                            breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
-                        }
+                    // the break event has to be sent the player separately as it's sent to the others inside Block.onBlockHarvested
+                    if (breakingPlayer instanceof ServerPlayerEntity) {
+                        sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
                     }
-                });
+
+                    efficiency -= blockState.getBlockHardness(world, pos);
+
+                    breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
+                } else {
+                    break;
+                }
+            } else if (blockState.isSolid()) {
+                efficiency -= blockState.getBlockHardness(world, pos);
+            }
+
+            if (efficiency <= 0) {
+                break;
+            }
+        }
     }
 
     /**

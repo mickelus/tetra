@@ -703,13 +703,13 @@ public class ItemModularHandheld extends ItemModular {
         if (getHarvestLevel(stack, state.getHarvestTool(), null, state) >= state.getHarvestLevel()) {
             return true;
         } else {
-            if (pickaxeHarvestMaterials.contains(state.getMaterial())) {
+            if (state.getHarvestTool() != ToolType.PICKAXE && pickaxeHarvestMaterials.contains(state.getMaterial())) {
                 return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
-            } else if (axeHarvestMaterials.contains(state.getMaterial())) {
+            } else if (state.getHarvestTool() != ToolType.AXE && axeHarvestMaterials.contains(state.getMaterial())) {
                 return getHarvestLevel(stack, ToolType.AXE, null, null) >= 0;
-            } else if (shovelHarvestBlocks.contains(state.getBlock())) {
+            } else if (state.getHarvestTool() != ToolType.SHOVEL && shovelHarvestBlocks.contains(state.getBlock())) {
                 return getHarvestLevel(stack, ToolType.SHOVEL, null, null) >= 0;
-            } else if (cuttingHarvestBlocks.contains(state.getBlock())) {
+            } else if (state.getHarvestTool() != ToolTypes.cut && cuttingHarvestBlocks.contains(state.getBlock())) {
                 return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
             }
         }

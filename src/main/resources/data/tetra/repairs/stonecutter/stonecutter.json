@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 12
+    },
+    "requiredCapabilities": {
+        "hammer": 5
+    },
+    "moduleKey": "blade/stonecutter",
+    "moduleVariant": "stonecutter/stonecutter"
+}

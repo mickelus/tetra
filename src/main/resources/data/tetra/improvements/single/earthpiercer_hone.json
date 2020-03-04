@@ -1,0 +1,48 @@
+[
+    {
+        "key": "head_hone/pickaxe_efficiency",
+        "level": 1,
+        "capabilities": {
+            "pickaxe": [0, 1]
+        }
+    },
+    {
+        "key": "head_hone/pickaxe_efficiency",
+        "level": 2,
+        "integrity": -1,
+        "capabilities": {
+            "pickaxe": [0, 2]
+        }
+    },
+    {
+        "key": "head_hone/pickaxe_efficiency",
+        "level": 3,
+        "integrity": -1,
+        "capabilities": {
+            "pickaxe": [0, 4]
+        }
+    },
+    {
+        "key": "head_hone/pickaxe_efficiency",
+        "level": 4,
+        "integrity": -2,
+        "capabilities": {
+            "pickaxe": [0, 8]
+        }
+    },
+    {
+        "key": "head_hone/pickaxe_efficiency",
+        "level": 5,
+        "integrity": -2,
+        "capabilities": {
+            "pickaxe": [0, 13]
+        }
+    },
+    {
+        "key": "head_hone/pickaxe_tier",
+        "integrity": -1,
+        "capabilities": {
+            "pickaxe": 1
+        }
+    }
+]

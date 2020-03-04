@@ -9,6 +9,16 @@
             "entries": [
                 {
                     "type": "item",
+                    "name": "tetra:stonecutter",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:earthpiercer",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
                     "name": "tetra:forged_mesh",
                     "weight": 5
                 },

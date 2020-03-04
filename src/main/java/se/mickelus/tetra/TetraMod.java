@@ -151,7 +151,6 @@ public class TetraMod {
                 new SeepingBedrockBlock()
         };
 
-
         items = new Item[] {
                 new ModularSwordItem(),
                 new ModularTwinHeadItem(),
@@ -167,7 +166,8 @@ public class TetraMod {
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
                 new ItemVentPlate(),
-                new ItemJournal()
+                new ItemJournal(),
+                new EarthpiercerItem()
         };
 
         if (ConfigHandler.enableBow.get()) {
@@ -176,6 +176,10 @@ public class TetraMod {
 
         if (ConfigHandler.enableSingle.get()) {
             items = ArrayUtils.addAll(items, new ModularSingleHeadItem());
+        }
+
+        if (ConfigHandler.enableStonecutter.get()) {
+            items = ArrayUtils.addAll(items, new StonecutterItem());
         }
 
         proxy.preInit(

@@ -1,0 +1,38 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["sword/blade"],
+    "improvements": [
+        "tetra:sword/blade/stonecutter",
+        "tetra:sword/blade/shared",
+        "tetra:sword/blade/shared_compat",
+        "tetra:sword/blade/shared_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "stonecutter/stonecutter",
+            "durability": 771,
+            "integrity": -3,
+            "magicCapacity": 8,
+            "damage": 3,
+            "attackSpeed": -1.6,
+            "capabilities": {
+                "pickaxe": [3, 5.5]
+            },
+            "effects": {
+                "strikingPickaxe": 1,
+                "sweepingStrike": 1,
+                "sweeping": 2
+            },
+            "glyph": {
+                "textureX": 240,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/blade/stonecutter/default"
+            }]
+        }
+    ]
+}
