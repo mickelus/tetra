@@ -105,6 +105,7 @@ public class WorkbenchContainer extends Container {
             }
         }
 
+        workbench.markDirty();
         return resultStack;
     }
 
