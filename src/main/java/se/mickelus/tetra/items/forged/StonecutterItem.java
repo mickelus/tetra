@@ -3,16 +3,11 @@ package se.mickelus.tetra.items.forged;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
@@ -31,8 +26,6 @@ public class StonecutterItem extends TetraItem {
     public StonecutterItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
-
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -48,14 +41,6 @@ public class StonecutterItem extends TetraItem {
             tooltip.add(ForgedBlockCommon.locationTooltip);
         } else {
             tooltip.add(Tooltips.expand);
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (!event.player.world.isRemote && event.player.world.getGameTime() % 20 == 0
-                && (equals(event.player.getHeldItemMainhand().getItem()) || equals(event.player.getHeldItemOffhand().getItem()))) {
-            event.player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 80, 1));
         }
     }
 }
