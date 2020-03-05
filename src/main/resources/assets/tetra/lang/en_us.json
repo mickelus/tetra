@@ -168,13 +168,15 @@
   "stats.magicCapacity": "Magic capacity",
   "stats.magicCapacity.tooltip": "The amount of magic that the module may hold, this capacity is utilized by improvement such as enchantments.\n\n§7Magic capacity: §e%s",
 
-  "stats.hammer.tooltip": "This item can be used for hammering, usable when crafting and salvaging\n\n§7Hammer tier: §e%s\n§7Hammer efficiency: §e%s",
-  "stats.axe.tooltip": "This item can be used for chopping wood\n\n§7Axe tier: §e%s\n§7Axe efficiency: §e%s",
-  "stats.pickaxe.tooltip": "This item can be used for mining\n\n§7Pickaxe tier: §e%s\n§7Pickaxe efficiency: §e%s",
-  "stats.shovel.tooltip": "This item can be used for digging\n\n§7Shovel tier: §e%s\n§7Shovel efficiency: §e%s",
-  "stats.cut.tooltip": "This item can be used for cutting, usable for crafting and for breaking webs and plants\n\n§7Cut tier: §e%s\n§7Cut efficiency: §e%s",
-  "stats.pry.tooltip": "This item can be used for prying things open, usable for salvaging\n\n§7Pry tier: §e%s\n§7Pry efficiency: §e%s",
+  "stats.hammer.tooltip": "This item can be used for hammering, usable when crafting and salvaging\n%s\n§7Hammer tier: §e%s\n§7Hammer efficiency: §e%s",
+  "stats.axe.tooltip": "This item can be used for chopping wood\n%s\n§7Axe tier: §e%s\n§7Axe efficiency: §e%s",
+  "stats.pickaxe.tooltip": "This item can be used for mining\n%s\n§7Pickaxe tier: §e%s\n§7Pickaxe efficiency: §e%s",
+  "stats.shovel.tooltip": "This item can be used for digging\n%s\n§7Shovel tier: §e%s\n§7Shovel efficiency: §e%s",
+  "stats.cut.tooltip": "This item can be used for cutting, usable for crafting and for breaking webs and plants\n%s\n§7Cut tier: §e%s\n§7Cut efficiency: §e%s",
+  "stats.pry.tooltip": "This item can be used for prying things open, usable for salvaging\n%s\n§7Pry tier: §e%s\n§7Pry efficiency: §e%s",
 
+  "stats.capability.striking": "\n§eStriking\n§7Instantly harvests hit blocks, limited by swing speed\n",
+  "stats.capability.sweeping": "\n§eSweeping\n§7Instantly harvests several blocks on hit, limited by swing speed\n",
 
   "stats.integrity": "Integrity",
   "stats.integrity.tooltip_positive": "This module provides §e%s§r integrity",
