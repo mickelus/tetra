@@ -463,7 +463,8 @@ public class ItemEffectHandler {
                         sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
                     }
 
-                    efficiency -= blockState.getBlockHardness(world, pos);
+                    // adds a fixed amount to make blocks like grass still "consume" some efficiency
+                    efficiency -= blockState.getBlockHardness(world, pos) + 0.5;
 
                     breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
                 } else {

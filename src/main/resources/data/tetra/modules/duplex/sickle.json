@@ -29,7 +29,7 @@
                 "tint": "oak"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 1.6667]
             },
             "effects": {
                 "strikingCut": 1,
@@ -54,7 +54,7 @@
                 "tint": "cobblestone"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 3.33333]
             },
             "effects": {
                 "strikingCut": 1,
@@ -79,7 +79,7 @@
                 "tint": "flint"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 3.5]
             },
             "effects": {
                 "strikingCut": 1,
@@ -104,7 +104,7 @@
                 "tint": "iron"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 5]
             },
             "effects": {
                 "strikingCut": 1,
@@ -129,7 +129,7 @@
                 "tint": "diamond"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 6.6667]
             },
             "effects": {
                 "strikingCut": 1,
@@ -154,7 +154,7 @@
                 "tint": "gold"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 10]
             },
             "effects": {
                 "strikingCut": 1,
@@ -179,7 +179,7 @@
                 "tint": "copper"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 4.5]
             },
             "effects": {
                 "strikingCut": 1,
@@ -204,7 +204,7 @@
                 "tint": "tin"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 5.4]
             },
             "effects": {
                 "strikingCut": 1,
@@ -229,7 +229,7 @@
                 "tint": "silver"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 10]
             },
             "effects": {
                 "strikingCut": 1,
@@ -254,7 +254,7 @@
                 "tint": "nickel"
             }],
             "capabilities": {
-                "cut": 2
+                "cut": [2, 5.2]
             },
             "effects": {
                 "strikingCut": 1,
@@ -279,7 +279,7 @@
                 "tint": "lead"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 4.6]
             },
             "effects": {
                 "strikingCut": 1,
@@ -304,7 +304,7 @@
                 "tint": "bronze"
             }],
             "capabilities": {
-                "cut": 2
+                "cut": [2, 6.2]
             },
             "effects": {
                 "strikingCut": 1,
@@ -329,7 +329,7 @@
                 "tint": "electrum"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 9]
             },
             "effects": {
                 "strikingCut": 1,
@@ -354,7 +354,7 @@
                 "tint": "steel"
             }],
             "capabilities": {
-                "cut": 2
+                "cut": [2, 6.5]
             },
             "effects": {
                 "strikingCut": 1,
@@ -379,7 +379,7 @@
                 "tint": "thaumium"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 6.67]
             },
             "effects": {
                 "strikingCut": 1,
@@ -403,7 +403,7 @@
                 "location": "tetra:items/module/duplex/head/sickle/ironwood_tf"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 5.42]
             },
             "effects": {
                 "strikingCut": 1,
@@ -428,7 +428,7 @@
                 "tint": "steeleaf"
             }],
             "capabilities": {
-                "cut": 2
+                "cut": [2, 6.67]
             },
             "effects": {
                 "strikingCut": 1,
@@ -452,7 +452,7 @@
                 "location": "tetra:items/module/duplex/head/sickle/fierymetal"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 7.5]
             },
             "effects": {
                 "strikingCut": 1,
@@ -477,7 +477,7 @@
                 "tint": "knightmetal"
             }],
             "capabilities": {
-                "cut": 1
+                "cut": [1, 6.67]
             },
             "effects": {
                 "strikingCut": 1,
