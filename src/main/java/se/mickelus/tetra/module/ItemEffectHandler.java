@@ -30,6 +30,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
@@ -441,7 +442,8 @@ public class ItemEffectHandler {
 
         List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
-                .map(pos -> rotatePos(pos, facing))
+                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.rotationPitch))
+                .map(pos -> RotationHelper.rotateCardinal(pos, facing))
                 .map(originPos::add)
                 .collect(Collectors.toList());
 
@@ -503,20 +505,6 @@ public class ItemEffectHandler {
         strikeCache.put(entityId, counter + 1);
 
         return counter;
-    }
-
-    private BlockPos rotatePos(BlockPos pos, Direction facing) {
-        switch (facing) {
-            default:
-            case SOUTH:
-                return pos;
-            case WEST:
-                return new BlockPos(-pos.getZ(), pos.getY(), pos.getX());
-            case NORTH:
-                return new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
-            case EAST:
-                return new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
