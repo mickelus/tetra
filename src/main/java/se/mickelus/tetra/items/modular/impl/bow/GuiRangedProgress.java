@@ -18,6 +18,7 @@ public class GuiRangedProgress extends GuiRoot {
     private GuiElement container;
 
     private GuiRect bar;
+    private GuiRect overbowBar;
 
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
@@ -37,6 +38,10 @@ public class GuiRangedProgress extends GuiRoot {
         bar.setOpacity(0.6f);
         container.addChild(bar);
 
+        overbowBar = new GuiRect(0, 0, 0, 2, GuiColors.negative);
+        overbowBar.setAttachment(GuiAttachment.bottomRight);
+        container.addChild(overbowBar);
+
         showAnimation = new KeyframeAnimation(60, container)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateX(0));
 
@@ -45,9 +50,15 @@ public class GuiRangedProgress extends GuiRoot {
                 .withDelay(1000);
     }
 
-    public void setProgress(float progress) {
+    public void setProgress(float progress, float overbowCap, double overbowRate) {
         if (progress > 0) {
-            bar.setWidth(MathHelper.clamp((int)(progress * width), 0, width));
+            bar.setWidth(MathHelper.clamp((int) (progress * width), 0, width));
+
+            if (progress > 1 && overbowCap > 0) {
+                overbowBar.setWidth((int) (width * (1 - ModularBowItem.getProgressOverbowed(progress, overbowCap, (float) overbowRate))));
+            } else {
+                overbowBar.setWidth(0);
+            }
 
             if (!showAnimation.isActive() && container.getOpacity() < 1) {
                 showAnimation.start();

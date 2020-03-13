@@ -136,7 +136,7 @@
   "stats.softStrike.tooltip": "Items crafted using this tool gains increased durability",
 
   "stats.fierySelf": "Blazing",
-  "stats.fierySelf.tooltip": "Using the item has a chance to set the wielder on fire, occurs less frequent in cold biomes\n\n§7Base chance: §e%s§7\nFire duration: §e%s",
+  "stats.fierySelf.tooltip": "Using the item has a chance to set the wielder on fire, occurs less frequent in cold biomes\n\n§7Base chance: §e%s\n§7Fire duration: §e%s",
 
   "stats.enderReverb": "Reverb",
   "stats.enderReverb.tooltip": "Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder\n\n§7Base chance: §e%s§7",
@@ -158,6 +158,9 @@
 
   "stats.bow.releaseLatch": "Release latch",
   "stats.bow.releaseLatch.tooltip": "Automatically fire arrows when the bow is fully drawn",
+
+  "stats.bow.overbowed": "Overbowed",
+  "stats.bow.overbowed.tooltip": "This bow is too heavy to draw, maintaining a full draw will reduce damage & velocity over time. \n\n§7Max reduction:  §e%s\n§7Reduction rate: §e%s",
 
   "stats.criticalStrike": "Crit",
   "stats.criticalStrike.tooltip": "Has a chance to critically hit when hitting entities or breaking blocks.\n\n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n\n§7This effect cannot occur for blocks that are exceptionally hard",

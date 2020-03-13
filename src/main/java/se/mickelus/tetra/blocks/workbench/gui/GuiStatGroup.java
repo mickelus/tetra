@@ -67,6 +67,7 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.criticalStrike);
         bars.add(GuiStats.earthbind);
         bars.add(GuiStats.releaseLatch);
+        bars.add(GuiStats.overbowed);
         bars.add(GuiStats.intuit);
 
         Arrays.stream(Capability.values())

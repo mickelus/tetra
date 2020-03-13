@@ -13,6 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
@@ -114,7 +115,7 @@ public class ModularBowItem extends ItemModular {
                     ammoStack = new ItemStack(Items.ARROW);
                 }
 
-                float projectileVelocity = getArrowVelocity(drawProgress);
+                float projectileVelocity = getArrowVelocity(drawProgress, getOverbowCap(itemStack), (float) getOverbowRate(itemStack));
                 if (projectileVelocity > 0.1f) {
                     ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                             .orElse((ArrowItem) Items.ARROW);
@@ -218,10 +219,15 @@ public class ModularBowItem extends ItemModular {
     /**
      * Gets the velocity of the arrow entity from the bow's charge
      */
-    public static float getArrowVelocity(int charge) {
+    public static float getArrowVelocity(int charge, float overbowCap, float overbowRate) {
         float f = (float)charge / 20.0F;
+
         f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
+
+
+        if (overbowCap > 0 && f > 1) {
+            f = getProgressOverbowed(f, overbowCap, overbowRate);
+        } else if (f > 1.0F) {
             f = 1.0F;
         }
 
@@ -238,6 +244,18 @@ public class ModularBowItem extends ItemModular {
                 .filter(e -> itemStack.equals(e.getActiveItemStack()))
                 .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(itemStack))
                 .orElse(0f);
+    }
+
+    public float getOverbowCap(ItemStack itemStack) {
+        return 1 / 100f * getEffectLevel(itemStack, ItemEffect.overbowed);
+    }
+
+    public double getOverbowRate(ItemStack itemStack) {
+        return getEffectEfficiency(itemStack, ItemEffect.overbowed);
+    }
+
+    public static float getProgressOverbowed(float drawProgress, float overbowCap, float overbowRate) {
+        return drawProgress > 1 ? 1 - MathHelper.clamp((drawProgress - 1) * overbowRate, 0, overbowCap) : drawProgress;
     }
 
     /**
@@ -275,7 +293,7 @@ public class ModularBowItem extends ItemModular {
     }
 
     private String getDrawVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
-        float progress = getProgress(itemStack, entity);
+        float progress = getProgressOverbowed(getProgress(itemStack, entity), getOverbowCap(itemStack), (float) getOverbowRate(itemStack));
 
         if (progress == 0) {
             return "item";

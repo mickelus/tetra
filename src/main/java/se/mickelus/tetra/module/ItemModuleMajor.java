@@ -248,7 +248,7 @@ public abstract class ItemModuleMajor extends ItemModule {
         return (float) Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.effects)
                 .mapToDouble(effects -> effects.getEfficiency(effect))
-                .sum() + super.getEffectLevel(itemStack, effect);
+                .sum() + super.getEffectEfficiency(itemStack, effect);
     }
 
     @Override

@@ -18,6 +18,9 @@
             "magicCapacity": 15,
             "damage": 15,
             "attackSpeed": 2.4,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "stick_glyph",
                 "textureX": 144,
@@ -52,6 +55,9 @@
             "durability": 268,
             "damage": 19,
             "attackSpeed": 2.5,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "oak_glyph",
                 "textureX": 144,
@@ -86,6 +92,9 @@
             "durability": 245,
             "damage": 19,
             "attackSpeed": 2.2,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "spruce_glyph",
                 "textureX": 144,
@@ -120,6 +129,9 @@
             "durability": 300,
             "damage": 19,
             "attackSpeed": 2.5,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "birch_glyph",
                 "textureX": 144,
@@ -154,6 +166,9 @@
             "durability": 268,
             "damage": 19,
             "attackSpeed": 2.5,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "jungle_glyph",
                 "textureX": 144,
@@ -188,6 +203,9 @@
             "durability": 281,
             "damage": 22,
             "attackSpeed": 2.875,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "acacia_glyph",
                 "textureX": 144,
@@ -222,6 +240,9 @@
             "durability": 244,
             "damage": 21,
             "attackSpeed": 2.5,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "dark_oak_glyph",
                 "textureX": 144,
@@ -256,6 +277,9 @@
             "durability": 310,
             "damage": 24,
             "attackSpeed": 2.5,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "maple_glyph",
                 "textureX": 144,
@@ -290,6 +314,9 @@
             "durability": 320,
             "damage": 25,
             "attackSpeed": 2.65,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "cherry_glyph",
                 "textureX": 144,
@@ -324,6 +351,9 @@
             "durability": 490,
             "damage": 28,
             "attackSpeed": 2.65,
+            "effects": {
+                "overbowed": [40, 0.5]
+            },
             "glyph": {
                 "tint": "baobab_glyph",
                 "textureX": 144,

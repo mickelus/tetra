@@ -5,7 +5,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
+
+import java.util.Optional;
 
 public class RangedProgressOverlay {
     public static RangedProgressOverlay instance;
@@ -29,10 +32,16 @@ public class RangedProgressOverlay {
         }
 
         ItemStack activeStack = mc.player.getActiveItemStack();
-        gui.setProgress(CastOptional.cast(activeStack.getItem(), ModularBowItem.class)
-            .map(item -> mc.player.getItemInUseCount() > 0
-                    ? (item.getUseDuration(activeStack) - mc.player.getItemInUseCount()) * 1f / item.getDrawDuration(activeStack) : 0)
-                .orElse(0f));
+
+        if (activeStack.getItem() instanceof ModularBowItem) {
+            ModularBowItem item = (ModularBowItem) activeStack.getItem();
+            gui.setProgress(
+                    item.getProgress(activeStack, mc.player),
+                    item.getOverbowCap(activeStack),
+                    item.getOverbowRate(activeStack));
+        } else {
+            gui.setProgress(0, 0, 0);
+        }
 
         gui.draw();
     }

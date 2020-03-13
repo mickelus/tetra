@@ -255,12 +255,9 @@ public enum ItemEffect {
      *  Flow: Firing an arrow within short succession of another increases damage by 1.
      *  The effect level decides the damage cap and the effect efficiency decides the timeframe before the bonus is lost.
      */
-    flow;
+    flow,
 
-
-
-
-
+    overbowed;
 
     public static final String hauntedKey = "destabilized/haunted";
 }
