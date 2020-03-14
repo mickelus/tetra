@@ -79,8 +79,8 @@ public class DataManager {
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, repairData, enchantmentData, synergyData,
-            replacementData, schemaData, predicateData, actionData, destabilizationData, featureData };
+    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
+            replacementData, schemaData, repairData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;
 
@@ -99,6 +99,7 @@ public class DataManager {
 
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
+        // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
         logger.info("Sending data to client: {}", event.getPlayer().getName().getFormattedText());
         for (DataStore dataStore : dataStores) {
             dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());

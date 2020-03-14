@@ -8,6 +8,7 @@ import se.mickelus.tetra.module.schema.SchemaDefinition;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RepairRegistry {
     private static final Logger logger = LogManager.getLogger();
@@ -26,21 +27,13 @@ public class RepairRegistry {
         DataManager.repairData.onReload(() -> setupDefinitions(DataManager.repairData.getData()));
     }
 
-    /**
-     * Programmatically inject a repair definition, this will be overridden by a config definition if one exists
-     * @param definition
-     */
-    public void injectDefinition(RepairDefinition definition) {
-        injectedRepairs.add(definition);
-    }
-
     public void injectFromSchemas(Collection<SchemaDefinition> schemaDefinitions) {
-        schemaDefinitions.stream()
+        injectedRepairs = schemaDefinitions.stream()
                 .filter(schemaDefinition -> schemaDefinition.repair)
                 .flatMap(schemaDefinition -> Arrays.stream(schemaDefinition.outcomes))
                 .filter(RepairDefinition::validateOutcome)
                 .map(RepairDefinition::new)
-                .forEach(this::injectDefinition);
+                .collect(Collectors.toList());
     }
 
     private void setupDefinitions(Map<ResourceLocation, RepairDefinition> data) {
