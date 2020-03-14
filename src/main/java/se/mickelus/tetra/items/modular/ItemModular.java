@@ -843,6 +843,10 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             return 0;
         }
 
+        if (getCapabilityLevel(itemStack, capability) <= 0) {
+            return 0;
+        }
+
         int highestLevel = getAllModules(itemStack).stream()
                 .map(module -> module.getCapabilityLevel(itemStack, capability))
                 .max(Integer::compare)
