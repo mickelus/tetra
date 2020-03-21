@@ -1,5 +1,5 @@
 [
-    { "item": "minecraft:arrow" },
+    { "tag": "minecraft:arrows" },
     { "item": "minecraft:tipped_arrow" },
     { "item": "minecraft:spectral_arrow" }
 ]
