@@ -324,10 +324,11 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     private int getImprovementMagicCapacityGain(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToInt(improvement -> improvement.magicCapacity)
-                .filter(magicCapacity -> magicCapacity > 0)
-                .sum();
+        return Math.round(ConfigHandler.magicCapacityMultiplier.get().floatValue() *
+                Arrays.stream(getImprovements(itemStack))
+                        .mapToInt(improvement -> improvement.magicCapacity)
+                        .filter(magicCapacity -> magicCapacity > 0)
+                        .sum());
     }
 
     private int getImprovementMagicCapacityCost(ItemStack itemStack) {

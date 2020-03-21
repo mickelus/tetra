@@ -30,6 +30,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.DoubleValue settleLimitLevelMultiplier;
     public static ForgeConfigSpec.DoubleValue settleLimitDurabilityMultiplier;
 
+    public static ForgeConfigSpec.DoubleValue magicCapacityMultiplier;
+
     public static ForgeConfigSpec.IntValue honeSwordBase;
     public static ForgeConfigSpec.IntValue honeSwordIntegrityMultiplier;
 
@@ -61,6 +63,10 @@ public class ConfigHandler {
                 .comment("Enables commands & data reloading functionality useful for development, has a negative impact on performance")
                 .worldRestart()
                 .define("development", false);
+
+        magicCapacityMultiplier = builder
+                .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
+                .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
 
         builder.pop();
 

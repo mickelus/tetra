@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -169,7 +170,7 @@ public abstract class ItemModule implements ICapabilityProvider {
     public int getMagicCapacityGain(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
         if (magicCapacity > 0 ) {
-            return magicCapacity;
+            return Math.round(magicCapacity * ConfigHandler.magicCapacityMultiplier.get().floatValue());
         }
         return 0;
     }

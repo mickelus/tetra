@@ -22,6 +22,7 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
         super(renderManagerIn);
     }
 
+    @Override
     public void doRender(ThrownModularItemEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
         this.bindEntityTexture(entity);
         GlStateManager.pushMatrix();
@@ -40,6 +41,7 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
         GlStateManager.enableLighting();
     }
 
+    @Override
     protected ResourceLocation getEntityTexture(ThrownModularItemEntity entity) {
         return null;
     }
