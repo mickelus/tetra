@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effects;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.DisplayEffectsScreen;
@@ -33,7 +34,7 @@ public class EarthboundEffect extends Effect {
     @OnlyIn(Dist.CLIENT)
     public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, int x, int y, float z) {
         gui.getMinecraft().getTextureManager().bindTexture(texture);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableBlend();
         gui.blit(x + 8, y + 8, 0, 0, 16, 16);
     }
@@ -42,7 +43,7 @@ public class EarthboundEffect extends Effect {
     @OnlyIn(Dist.CLIENT)
     public void renderHUDEffect(EffectInstance effect, AbstractGui gui, int x, int y, float z, float alpha) {
         Minecraft.getInstance().getTextureManager().bindTexture(texture);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, alpha);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
         GlStateManager.enableBlend();
         gui.blit(x + 4, y + 4, 0, 0, 16, 16);
     }

@@ -7,7 +7,7 @@ import se.mickelus.tetra.TetraMod;
 
 public class HammerHeadTile extends TileEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerHeadBlock.unlocalizedName)
-    public static TileEntityType<HammerBaseTile> type;
+    public static TileEntityType<HammerHeadTile> type;
 
     private long activationTime = -1;
 

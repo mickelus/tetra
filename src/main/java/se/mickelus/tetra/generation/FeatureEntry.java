@@ -1,6 +1,5 @@
 package se.mickelus.tetra.generation;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.LockableLootTileEntity;
@@ -26,7 +25,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -84,11 +82,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
                             })
                             .forEach(biome -> biome.addFeature(
                                     GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
-                                    Biome.createDecoratedFeature(
-                                            FeatureEntry.instance,
-                                            new FeatureReference(params.location),
-                                            Placement.CHANCE_RANGE,
-                                            new ChanceRangeConfig(1, params.minY, params.minY, params.maxY)
+                                    FeatureEntry.instance.withConfiguration(new FeatureReference(params.location)).withPlacement(
+                                            Placement.CHANCE_RANGE.configure(
+                                                    new ChanceRangeConfig(1, params.minY, params.minY, params.maxY))
                                     )
                             ));
         });

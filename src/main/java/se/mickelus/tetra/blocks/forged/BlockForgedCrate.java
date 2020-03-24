@@ -141,7 +141,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 

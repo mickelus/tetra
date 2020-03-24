@@ -204,7 +204,7 @@ public class ConfigHandler {
      * @param configEvent
      */
     @SubscribeEvent
-    public static void onReload(final ModConfig.ConfigReloading configEvent) {
+    public static void onReload(final ModConfig.Reloading configEvent) {
         ModularSwordItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
         ModularTwinHeadItem.instance.updateConfig(honeDuplexBase.get(), honeDuplexIntegrityMultiplier.get());
 

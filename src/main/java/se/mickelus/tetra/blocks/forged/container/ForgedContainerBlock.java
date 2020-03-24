@@ -14,10 +14,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -117,7 +114,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(ForgedContainerTile.class, new ForgedContainerTESR());
+        ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerTESR::new);
         ScreenManager.registerFactory(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 
@@ -157,10 +154,10 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        boolean didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ActionResultType didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
 
-        if (!didInteract) {
+        if (didInteract != ActionResultType.SUCCESS) {
             if (!world.isRemote) {
                 TileEntityOptional.from(world, pos, ForgedContainerTile.class)
                         .ifPresent(te -> {
@@ -174,7 +171,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
             world.notifyBlockUpdate(pos, state, state, 3);
         }
 
-        return true;
+        return ActionResultType.SUCCESS;
     }
 
     @Override

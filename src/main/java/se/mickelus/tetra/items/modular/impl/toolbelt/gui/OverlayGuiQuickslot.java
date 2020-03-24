@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -74,10 +75,10 @@ public class OverlayGuiQuickslot extends GuiElement {
     }
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
-        GlStateManager.pushMatrix();
+        RenderSystem.pushMatrix();
         GlStateManager.enableDepthTest();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        RenderHelper.enableStandardItemLighting();
 
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
@@ -85,7 +86,7 @@ public class OverlayGuiQuickslot extends GuiElement {
             GlStateManager.disableDepthTest();
             drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         RenderHelper.disableStandardItemLighting();
     }
 

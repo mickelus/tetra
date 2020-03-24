@@ -157,7 +157,7 @@ public class ModularBowItem extends ItemModular {
                         applyUsageEffects(entity, itemStack, 1);
                     }
 
-                    world.playSound(null, player.posX, player.posY, player.posZ,
+                    world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
                             SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS,
                             1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + projectileVelocity * 0.5F);
 

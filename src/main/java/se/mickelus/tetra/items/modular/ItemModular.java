@@ -366,7 +366,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
                     VexEntity vex = EntityType.VEX.create(entity.world);
                     vex.setLimitedLife(effectLevel * 20);
-                    vex.setLocationAndAngles(entity.posX, entity.posY + 1, entity.posZ, entity.rotationYaw, 0.0F);
+                    vex.setLocationAndAngles(entity.getPosX(), entity.getPosY() + 1, entity.getPosZ(), entity.rotationYaw, 0.0F);
                     vex.setHeldItem(Hand.MAIN_HAND, itemStack.copy());
                     vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
                     vex.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));

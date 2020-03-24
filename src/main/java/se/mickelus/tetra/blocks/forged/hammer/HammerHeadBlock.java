@@ -1,11 +1,8 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import javax.annotation.Nullable;
-
-import net.minecraft.block.*;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -31,6 +28,11 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 public class HammerHeadBlock extends TetraWaterloggedBlock {
@@ -52,7 +54,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(HammerHeadTile.class, new HammerHeadTESR());
+        ClientRegistry.bindTileEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
     }
 
     @Override

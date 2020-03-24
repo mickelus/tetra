@@ -50,7 +50,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(CoreExtractorPistonTile.class, new CoreExtractorPistonTESR());
+        ClientRegistry.bindTileEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonTESR::new);
     }
 
     @Override

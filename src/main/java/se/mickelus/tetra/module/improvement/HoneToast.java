@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.improvement;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
@@ -26,7 +27,7 @@ public class HoneToast implements IToast {
     public Visibility draw(ToastGui toastGui, long delta) {
         if (itemStack != null) {
             toastGui.getMinecraft().getTextureManager().bindTexture(texture);
-            GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(0, 0, 0, 0, 160, 32);
 
             String itemName = toastGui.getMinecraft().fontRenderer.trimStringToWidth(itemStack.getDisplayName().getFormattedText(), 125);
@@ -39,7 +40,7 @@ public class HoneToast implements IToast {
                         .play(SimpleSound.master(SoundEvents.ENTITY_PLAYER_LEVELUP, 0.6F, 0.7F));
             }
 
-            RenderHelper.enableGUIStandardItemLighting();
+            RenderHelper.enableStandardItemLighting();
             toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(null, itemStack, 8, 8);
 
             return delta > 5000 ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;

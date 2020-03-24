@@ -245,13 +245,14 @@ public class TetraMod {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
-        if ("textures".equals(event.getMap().getBasePath())) {
-            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
-                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
-                    // 9 is the length of "textures/" & 4 is the length of ".png"
-                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
-                    .forEach(event::addSprite);
-        }
+        // todo 1.15: Item textures doesn't seem to fire this event anymore
+//        if ("textures".equals(event.getMap().getTextureLocation().getPath())) {
+//            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
+//                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
+//                    // 9 is the length of "textures/" & 4 is the length of ".png"
+//                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
+//                    .forEach(event::addSprite);
+//        }
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

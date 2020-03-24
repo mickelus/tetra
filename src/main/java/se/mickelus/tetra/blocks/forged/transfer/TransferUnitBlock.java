@@ -177,13 +177,13 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         Direction blockFacing = state.get(facingProp);
         TransferUnitTile tile = TileEntityOptional.from(world, pos, TransferUnitTile.class).orElse(null);
         ItemStack heldStack = player.getHeldItem(hand);
 
         if (tile == null) {
-            return false;
+            return ActionResultType.FAIL;
         }
 
         if (hit.getFace().equals(Direction.UP)) {
@@ -203,7 +203,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
                 }
 
-                return true;
+                return ActionResultType.SUCCESS;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) { // put cell
                 tile.putCell(heldStack);
                 player.setHeldItem(hand, ItemStack.EMPTY);
@@ -214,7 +214,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
                 }
 
-                return true;
+                return ActionResultType.SUCCESS;
             }
         } else if (blockFacing.equals(hit.getFace().getOpposite()) // attach plate
                 && heldStack.getItem() instanceof ItemVentPlate
@@ -227,7 +227,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
                 BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
             }
 
-            return true;
+            return ActionResultType.SUCCESS;
         }
 
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
@@ -307,10 +307,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
 
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {

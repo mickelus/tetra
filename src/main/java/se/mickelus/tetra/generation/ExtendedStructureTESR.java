@@ -1,11 +1,12 @@
 package se.mickelus.tetra.generation;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.client.renderer.tileentity.StructureTileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -22,23 +23,23 @@ import java.util.Optional;
 @OnlyIn(Dist.CLIENT)
 public class ExtendedStructureTESR extends StructureTileEntityRenderer {
 
+    public ExtendedStructureTESR(TileEntityRendererDispatcher dispatcher) {
+        super(dispatcher);
+    }
+
     @Override
-    public void render(StructureBlockTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
-        super.render(te, x, y, z, partialTicks, destroyStage);
+    public void render(StructureBlockTileEntity te, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        super.render(te, partialTicks, matrixStack, buffer, combinedLight, combinedOverlay);
 
         BlockPos rel = te.getPosition();
 
+        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getLines());
+
         Optional.ofNullable(DataManager.featureData.getData(new ResourceLocation(te.getName())))
-                .ifPresent(feature -> renderFeatureInfo(feature, x + rel.getX(), y + rel.getY(), z + rel.getZ()));
+                .ifPresent(feature -> renderFeatureInfo(feature, matrixStack, vertexBuilder, rel.getX(), rel.getY(), rel.getZ()));
     }
 
-    private void renderFeatureInfo(FeatureParameters feature, double x, double y, double z) {
-        GlStateManager.disableFog();
-        GlStateManager.disableLighting();
-        GlStateManager.disableTexture();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        setLightmapDisabled(true);
+    private void renderFeatureInfo(FeatureParameters feature, MatrixStack matrixStack, IVertexBuilder vertexBuilder, double x, double y, double z) {
         GlStateManager.lineWidth(3);
 
         BlockPos origin = feature.origin;
@@ -47,26 +48,20 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
                 x + origin.getX() + 0.5, y + origin.getY() + 0.5, z + origin.getZ() + 0.5);
 
         // draw center box
-        WorldRenderer.drawSelectionBoundingBox(aabb.grow(0.1), 0, 0, 0, 1);
-        DebugRenderer.func_217730_a(aabb.grow(0.1), 1, 1, 1, 0.6f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.grow(0.5030000000949949026D), 1, 0, 1, 1);
+        DebugRenderer.renderBox(aabb.grow(0.1), 1, 1, 1, 0.6f);
 
         // draw outline
-        WorldRenderer.drawSelectionBoundingBox(aabb.grow(0.5030000000949949026D), 1, 0, 1, 1);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.grow(0.5030000000949949026D), 1, 0, 1, 1);
 
-        Arrays.stream(feature.children).forEach(featureChild -> renderChild(featureChild, x, y, z));
+        Arrays.stream(feature.children).forEach(featureChild -> renderChild(featureChild, matrixStack, vertexBuilder, x, y, z));
 
-        Arrays.stream(feature.loot).forEach(featureLoot -> renderLoot(featureLoot, x, y, z));
+        Arrays.stream(feature.loot).forEach(featureLoot -> renderLoot(featureLoot, matrixStack, vertexBuilder, x, y, z));
 
         GlStateManager.lineWidth(1.0F);
-        setLightmapDisabled(false);
-        GlStateManager.enableLighting();
-        GlStateManager.enableTexture();
-//        GlStateManager.enableDepthTest();
-//        GlStateManager.depthMask(true);
-        GlStateManager.enableFog();
     }
 
-    private void renderChild(FeatureChild featureChild, double x, double y, double z) {
+    private void renderChild(FeatureChild featureChild, MatrixStack matrixStack, IVertexBuilder vertexBuilder, double x, double y, double z) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         BlockPos offset = featureChild.offset;
@@ -75,7 +70,7 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
                 x + offset.getX() + 0.5, y + offset.getY() + 0.5, z + offset.getZ() + 0.5);
 
         // build outline box
-        WorldRenderer.drawSelectionBoundingBox(aabb.grow(0.5020000000949949026D), 1, 1, 0, 1);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.grow(0.5020000000949949026D), 1, 1, 0, 1);
 
         // build arrow
         bufferBuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
@@ -90,33 +85,33 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
         tessellator.draw();
 
         // draw middle block
-        DebugRenderer.func_217730_a(aabb.grow(0.1), 0, 0, 0, 0.8f);
+        DebugRenderer.renderBox(aabb.grow(0.1), 0, 0, 0, 0.8f);
     }
 
-    private void renderLoot(FeatureLoot featureLoot, double x, double y, double z) {
+    private void renderLoot(FeatureLoot featureLoot, MatrixStack matrixStack, IVertexBuilder vertexBuilder, double x, double y, double z) {
         BlockPos offset = featureLoot.position;
 
         AxisAlignedBB aabb = new AxisAlignedBB(x + offset.getX(), y + offset.getY(), z + offset.getZ(),
                 x + offset.getX() + 0.2, y + offset.getY() + 0.2, z + offset.getZ() + 0.2).offset(-0.1, -0.1, -0.1);
 
         // draw bottom blocks
-        DebugRenderer.func_217730_a(aabb, 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb, 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(1, 0, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(1, 0, 0), 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(0, 0, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(0, 0, 1), 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(1, 0, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(1, 0, 1), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb, 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb, 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(1, 0, 0), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(1, 0, 0), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(0, 0, 1), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(0, 0, 1), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(1, 0, 1), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(1, 0, 1), 0, 1, 0, 1);
 
         // draw top blocks
-        DebugRenderer.func_217730_a(aabb.offset(0, 1, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(0, 1, 0), 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(0, 1, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(0, 1, 1), 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(1, 1, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(1, 1, 0), 0, 1, 0, 1);
-        DebugRenderer.func_217730_a(aabb.offset(1, 1, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.drawSelectionBoundingBox(aabb.offset(1, 1, 1), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(0, 1, 0), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(0, 1, 0), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(0, 1, 1), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(0, 1, 1), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(1, 1, 0), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(1, 1, 0), 0, 1, 0, 1);
+        DebugRenderer.renderBox(aabb.offset(1, 1, 1), 0, 1, 0, 0.2f);
+        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.offset(1, 1, 1), 0, 1, 0, 1);
     }
 }

@@ -52,11 +52,9 @@ public class GeodeBlock extends TetraBlock {
             for (Biome biome : ForgeRegistries.BIOMES) {
                 biome.addFeature(
                         GenerationStage.Decoration.UNDERGROUND_ORES,
-                        Biome.createDecoratedFeature(
-                                Feature.ORE,
-                                new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3),
-                                Placement.COUNT_RANGE,
-                                new CountRangeConfig(density, 0, 0, 32)
+                        Feature.ORE.withConfiguration(new OreFeatureConfig(
+                                OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3))
+                                .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(density, 0, 0, 32))
                         )
                 );
             }

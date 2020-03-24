@@ -5,6 +5,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.entity.TridentRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.StructureBlockTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -33,13 +34,13 @@ public class ClientProxy implements IProxy {
         Arrays.stream(items).forEach(ITetraItem::clientInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
-        RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.class, ThrownModularItemRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
-        ClientRegistry.bindTileEntitySpecialRenderer(WorkbenchTile.class, new WorkbenchTESR());
+        ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
 
         if (ConfigHandler.development.get()) {
-            ClientRegistry.bindTileEntitySpecialRenderer(StructureBlockTileEntity.class, new ExtendedStructureTESR());
+            ClientRegistry.bindTileEntityRenderer(TileEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
         }
     }
 

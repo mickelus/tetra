@@ -186,13 +186,13 @@ public class ItemModularHandheld extends ItemModular {
 
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
-        if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.posY  / 128 ))) {
+        if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getPosY()  / 128 ))) {
             target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
 
             if (target.world instanceof ServerWorld) {
-                BlockState blockState = target.world.getBlockState(new BlockPos(target.posX, target.posY - 1, target.posZ));
+                BlockState blockState = target.world.getBlockState(new BlockPos(target.getPosX(), target.getPosY() - 1, target.getPosZ()));
                 ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
-                        target.posX, target.posY + 0.1, target.posZ,
+                        target.getPosX(), target.getPosY() + 0.1, target.getPosZ(),
                         16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
             }
         }
@@ -218,7 +218,7 @@ public class ItemModularHandheld extends ItemModular {
         int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
         int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
 
-        if (flatteningLevel > 0 && (strippingLevel > 0 && player.isSneaking() || strippingLevel == 0)) {
+        if (flatteningLevel > 0 && (strippingLevel > 0 && player.isCrouching() || strippingLevel == 0)) {
             result = flattenPath(player, world, pos, hand, facing);
         } else if (strippingLevel > 0) {
             result = stripBlock(context);
@@ -429,7 +429,7 @@ public class ItemModularHandheld extends ItemModular {
                         }
                     });
 
-            attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ,
+            attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
 
             CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::spawnSweepParticles);
@@ -457,8 +457,8 @@ public class ItemModularHandheld extends ItemModular {
         double xOffset = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
         double zOffset = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
 
-        spawnSweepParticles(attacker.world, attacker.posX + xOffset, attacker.posY + attacker.getHeight() * 0.5D,
-                attacker.posZ + zOffset, xOffset, zOffset);
+        spawnSweepParticles(attacker.world, attacker.getPosX() + xOffset, attacker.getPosY() + attacker.getHeight() * 0.5D,
+                attacker.getPosZ() + zOffset, xOffset, zOffset);
     }
 
     /**

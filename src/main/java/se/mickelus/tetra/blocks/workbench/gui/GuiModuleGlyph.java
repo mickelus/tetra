@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -51,18 +52,18 @@ public class GuiModuleGlyph extends GuiElement {
         float green = (float)(tint & 255) / 255.0F;
 
         if (shift) {
-            GlStateManager.translatef(0.5F, 0.5F, 0);
+            RenderSystem.translatef(0.5F, 0.5F, 0);
         }
 
-        GlStateManager.color4f(red, blue, green, opacity * this.opacity);
+        RenderSystem.color4f(red, blue, green, opacity * this.opacity);
         blit(
                 refX + x,
                 refY + y,
                 textureX, textureY, width - 1, height - 1);
-        GlStateManager.color4f(1, 1, 1, 1);
+        RenderSystem.color4f(1, 1, 1, 1);
 
         if (shift) {
-            GlStateManager.translatef(-0.5F, -0.5F, 0);
+            RenderSystem.translatef(-0.5F, -0.5F, 0);
         }
     }
 }
