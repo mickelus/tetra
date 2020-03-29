@@ -145,7 +145,7 @@ public class ConfigHandler {
         enableSingle = builder
                 .comment("Enable modular single headed implements")
                 .worldRestart()
-                .define("single_headed", false);
+                .define("single_headed", true);
 
         honeSingleBase = builder
                 .comment("The base value for number of uses required before a single headed implement can be honed")
