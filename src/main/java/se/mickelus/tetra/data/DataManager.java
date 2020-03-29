@@ -73,7 +73,7 @@ public class DataManager {
     public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
             ReplacementDefinition[].class);
     public static SchemaStore schemaData = new SchemaStore(gson, "schemas");
-    public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicates", ItemPredicate[].class);
+    public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicatus", ItemPredicate[].class);
     public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
     public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
             DestabilizationEffect[].class);
