@@ -5,9 +5,10 @@
         "down": "tetra:blocks/transfer_unit",
         "up": "tetra:blocks/transfer_unit_top",
         "north": "tetra:blocks/transfer_unit",
-        "south": "#config",
-        "east": "#indicator",
-        "west": "#indicator"
+        "south": "tetra:blocks/transfer_unit_config0",
+        "east": "tetra:blocks/transfer_unit_indicator_idle",
+        "west": "tetra:blocks/transfer_unit_indicator_idle",
+        "plate": "tetra:blocks/transfer_unit_plate"
     },
     "elements": [
         {

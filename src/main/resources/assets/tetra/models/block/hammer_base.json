@@ -4,10 +4,14 @@
         "particle": "tetra:blocks/hammer_base",
         "down": "tetra:blocks/hammer_base",
         "up": "tetra:blocks/hammer_base",
-        "north": "#socket1",
-        "south": "#socket2",
+        "north": "tetra:blocks/hammer_base_socket",
+        "south": "tetra:blocks/hammer_base_socket",
         "east": "tetra:blocks/hammer_base_side",
-        "west": "tetra:blocks/hammer_base_side"
+        "west": "tetra:blocks/hammer_base_side",
+        "plate_east": "tetra:blocks/hammer_base_plate",
+        "plate_west": "tetra:blocks/hammer_base_plate",
+        "config_east": "tetra:blocks/hammer_config0",
+        "config_west": "tetra:blocks/hammer_config0"
     },
     "elements": [
         {

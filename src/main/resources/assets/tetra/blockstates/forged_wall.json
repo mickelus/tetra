@@ -1,16 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:block/forged_wall"
-  },
-  "variants": {
-    "": [
-      { "textures": { "texture": "tetra:blocks/forged_wall" } },
-      { "textures": { "texture": "tetra:blocks/forged_wall_2" } },
-      { "textures": { "texture": "tetra:blocks/forged_wall_3" } },
-      { "textures": { "texture": "tetra:blocks/forged_wall" }, "x": 90, "y": 90 },
-      { "textures": { "texture": "tetra:blocks/forged_wall_2" }, "x": 90, "y": 90 },
-      { "textures": { "texture": "tetra:blocks/forged_wall_3" }, "x": 90, "y": 90 }
-    ]
-  }
+    "variants": {
+        "": [
+            { "model": "tetra:block/forged_wall1" },
+            { "model": "tetra:block/forged_wall2" },
+            { "model": "tetra:block/forged_wall3" },
+            { "model": "tetra:block/forged_wall1", "x": 90, "y": 90 },
+            { "model": "tetra:block/forged_wall2", "x": 90, "y": 90 },
+            { "model": "tetra:block/forged_wall3", "x": 90, "y": 90 }
+        ]
+    }
 }

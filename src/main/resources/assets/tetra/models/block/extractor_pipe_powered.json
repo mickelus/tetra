@@ -2,7 +2,7 @@
     "parent": "block/cube_column",
     "textures": {
         "end": "tetra:blocks/forged_wall_2",
-        "side": "tetra:blocks/extractor_pipe"
+        "side": "tetra:blocks/extractor_pipe_powered"
     }
 }
 

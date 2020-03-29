@@ -1,31 +1,60 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:forged_vent0",
-    "textures": {
-      "face1": "tetra:blocks/forged_vent1",
-      "face2": "tetra:blocks/forged_vent2"
-    }
-  },
-  "variants": {
-    "rotation": {
-      "0": { "model": "tetra:block/forged_vent0" },
-      "1": { "model": "tetra:block/forged_vent1" },
-      "2": { "model": "tetra:block/forged_vent2" },
-      "3": { "model": "tetra:block/forged_vent3" }
-    },
-    "x": {
-      "true": { "y":  270 },
-      "false": {}
-    },
-    "broken": {
-      "true": {
-        "textures": {
-          "face1": "tetra:blocks/forged_vent1_broken",
-          "face2": "tetra:blocks/forged_vent2_broken"
+    "variants": {
+        "broken=false,rotation=0,x=false": {
+            "model": "tetra:block/forged_vent0"
+        },
+        "broken=true,rotation=0,x=false": {
+            "model": "tetra:block/forged_vent0_broken"
+        },
+        "broken=false,rotation=1,x=false": {
+            "model": "tetra:block/forged_vent1"
+        },
+        "broken=true,rotation=1,x=false": {
+            "model": "tetra:block/forged_vent1_broken"
+        },
+        "broken=false,rotation=2,x=false": {
+            "model": "tetra:block/forged_vent2"
+        },
+        "broken=true,rotation=2,x=false": {
+            "model": "tetra:block/forged_vent2_broken"
+        },
+        "broken=false,rotation=3,x=false": {
+            "model": "tetra:block/forged_vent3"
+        },
+        "broken=true,rotation=3,x=false": {
+            "model": "tetra:block/forged_vent3_broken"
+        },
+        "broken=false,rotation=0,x=true": {
+            "model": "tetra:block/forged_vent0",
+            "y": 270
+        },
+        "broken=true,rotation=0,x=true": {
+            "model": "tetra:block/forged_vent0_broken",
+            "y": 270
+        },
+        "broken=false,rotation=1,x=true": {
+            "model": "tetra:block/forged_vent1",
+            "y": 270
+        },
+        "broken=true,rotation=1,x=true": {
+            "model": "tetra:block/forged_vent1_broken",
+            "y": 270
+        },
+        "broken=false,rotation=2,x=true": {
+            "model": "tetra:block/forged_vent2",
+            "y": 270
+        },
+        "broken=true,rotation=2,x=true": {
+            "model": "tetra:block/forged_vent2_broken",
+            "y": 270
+        },
+        "broken=false,rotation=3,x=true": {
+            "model": "tetra:block/forged_vent3",
+            "y": 270
+        },
+        "broken=true,rotation=3,x=true": {
+            "model": "tetra:block/forged_vent3_broken",
+            "y": 270
         }
-      },
-      "false": {}
     }
-  }
 }

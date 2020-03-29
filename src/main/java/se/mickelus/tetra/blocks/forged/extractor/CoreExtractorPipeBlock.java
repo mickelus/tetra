@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -26,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CoreExtractorPipeBlock extends TetraBlock {
-    public static final DirectionProperty facingProp = DirectionalBlock.FACING;
+    public static final DirectionProperty facingProp = BlockStateProperties.FACING;
     public static final BooleanProperty poweredProp = BooleanProperty.create("powered");
 
     public static final String unlocalizedName = "extractor_pipe";
