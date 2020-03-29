@@ -90,11 +90,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         super(properties);
     }
 
-    @Override
-    public void clientInit() {
-        ModularModelLoader.registerItem(this);
-    }
-
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
         return Optional.of(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())

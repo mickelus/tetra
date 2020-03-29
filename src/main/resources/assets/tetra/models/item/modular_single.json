@@ -1,4 +1,6 @@
 {
+    "parent": "item/generated",
+    "loader": "tetra:modular_loader",
     "display": {
         "ground": {
             "rotation": [ 0, 0, 0 ],

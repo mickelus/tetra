@@ -25,17 +25,13 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
         super(manager);
     }
 
-    // todo 1.15: this changed quite alot, check that it still works
     @Override
     public void render(ThrownModularItemEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLightIn) {
         matrixStack.push();
         matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 90.0F));
-//        GlStateManager.translatef((float)x, (float)y, (float)z);
-//        GlStateManager.rotatef(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F, 0.0F, 1.0F, 0.0F);
-//        GlStateManager.rotatef(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 135, 0.0F, 0.0F, 1.0F);
-//        GlStateManager.rotatef(180.0F, 1, 0, 0);
-//        GlStateManager.translatef(.3f, -.3f, 0);
+        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 135.0F));
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(180.0F));
+        matrixStack.translate(.3f, -.3f, 0);
         Minecraft.getInstance().getItemRenderer().renderItem(entity.getArrowStack(), ItemCameraTransforms.TransformType.FIXED, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
 
         matrixStack.pop();

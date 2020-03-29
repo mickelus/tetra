@@ -4,6 +4,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -17,6 +18,7 @@ import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -238,21 +240,15 @@ public class TetraMod {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void loadModels(final ModelBakeEvent event) {
-        ModularModelLoader.loadModels(event);
-    }
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
-        // todo 1.15: Item textures doesn't seem to fire this event anymore
-//        if ("textures".equals(event.getMap().getTextureLocation().getPath())) {
-//            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
-//                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
-//                    // 9 is the length of "textures/" & 4 is the length of ".png"
-//                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
-//                    .forEach(event::addSprite);
-//        }
+        // todo 1.15: Move this to ModularItemModel.getTextures?
+        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getTextureLocation())) {
+            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
+                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
+                    // 9 is the length of "textures/" & 4 is the length of ".png"
+                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
+                    .forEach(event::addSprite);
+        }
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

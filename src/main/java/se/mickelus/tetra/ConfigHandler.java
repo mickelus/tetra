@@ -77,7 +77,7 @@ public class ConfigHandler {
         generateFeatures = builder
                 .comment("Generates features in the world, further configuration available in \"tetra/data/geode/\"")
                 .worldRestart()
-                .define("features", true);
+                .define("features_temp", false);
 
         maxFeatureDepth = builder
                 .comment("Used to limit how deep the feature generator will recurse into feature children, helps to avoid recursive loops and cascading worldgen in 3d-party generation features")
