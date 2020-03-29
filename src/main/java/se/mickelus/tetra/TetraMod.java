@@ -5,6 +5,7 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -27,6 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -53,6 +55,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.data.provider.BlockstateProvider;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
@@ -248,6 +251,14 @@ public class TetraMod {
                     // 9 is the length of "textures/" & 4 is the length of ".png"
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onGatherData(final GatherDataEvent event) {
+        DataGenerator dataGenerator = event.getGenerator();
+        if(event.includeServer()) {
+            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
         }
     }
 
