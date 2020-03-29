@@ -40,6 +40,7 @@ public class ClientProxy implements IProxy {
 
         RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
+        // these are registered here as there are multiple instances of workbench blocks
         ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
 

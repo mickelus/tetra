@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.registries.ObjectHolder;
@@ -20,12 +22,9 @@ import se.mickelus.tetra.TetraMod;
 
 import java.util.Random;
 
-
+@OnlyIn(Dist.CLIENT)
 public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPistonTile> {
     private static BlockRendererDispatcher blockRenderer;
-
-    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
-    public static TileEntityType<CoreExtractorPistonTile> type;
     
     private Random random = new Random();
 

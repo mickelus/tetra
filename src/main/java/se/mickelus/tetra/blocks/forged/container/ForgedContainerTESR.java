@@ -7,9 +7,12 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
 // todo 1.15: ripped out
+@OnlyIn(Dist.CLIENT)
 public class ForgedContainerTESR extends TileEntityRenderer<ForgedContainerTile> {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/blocks/forged_container/forged_container.png");
 //    private ForgedContainerModel model = new ForgedContainerModel();
