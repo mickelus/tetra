@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiElement;
@@ -109,7 +110,7 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (isDragging) {
             int newSegment = calculateSegment(refX, mouseX);
             if (newSegment != value) {
@@ -122,6 +123,6 @@ public class GuiSliderSegmented extends GuiClickable {
             hoverIndicator.setX(calculateSegment(refX, mouseX) * width / (valueSteps - 1));
         }
 
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

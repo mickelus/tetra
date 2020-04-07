@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module.improvement;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.toasts.IToast;
@@ -63,7 +64,7 @@ public class SettleToast implements IToast {
 
             if (glyph != null) {
                 toastGui.blit(20, 14, 160, 0, 15, 15);
-                glyph.draw(19, 14, 260, 43, -1, -1, 1);
+                glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
             toastGui.getMinecraft().fontRenderer.drawString(I18n.format("settled.toast"), 30, 7, SchemaRarity.hone.tint);

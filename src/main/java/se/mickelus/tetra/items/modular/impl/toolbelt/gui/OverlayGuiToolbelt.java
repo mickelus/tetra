@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -57,7 +58,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
             int mouseX = (int)(mc.mouseHelper.getMouseX() * window.getScaledWidth() / window.getWidth());
             int mouseY = (int)(mc.mouseHelper.getMouseY() * window.getScaledHeight() / window.getHeight());
 
-            this.drawChildren(width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(new MatrixStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 

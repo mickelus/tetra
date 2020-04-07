@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -122,6 +123,6 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        guiRoot.draw(x, y, width, height, mouseX, mouseY, 1);
+        guiRoot.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 }

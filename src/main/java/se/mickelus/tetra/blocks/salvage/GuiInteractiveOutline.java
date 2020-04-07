@@ -151,9 +151,4 @@ public class GuiInteractiveOutline extends GuiElement {
                 .onStop(finished -> onStop.run())
                 .start();
     }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-    }
 }

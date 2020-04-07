@@ -82,9 +82,4 @@ public class GuiSchemaList extends GuiElement {
     private int getNumPages() {
         return (int) Math.ceil(1f * schemas.length / pageLength );
     }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-    }
 }

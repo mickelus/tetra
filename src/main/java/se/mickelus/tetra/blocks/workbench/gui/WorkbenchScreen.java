@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
@@ -127,7 +128,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override

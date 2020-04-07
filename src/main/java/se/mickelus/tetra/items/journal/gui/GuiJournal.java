@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.journal.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -82,7 +83,7 @@ public class GuiJournal extends Screen {
         renderBackground();
         super.render(mouseX, mouseY, partialTicks);
 
-        defaultGui.draw((width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
+        defaultGui.draw(new MatrixStack(), (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
         renderHoveredToolTip(mouseX, mouseY);

@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui.statbar;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import se.mickelus.mgui.gui.GuiAlignment;
 
 public class GuiBarSegmented extends GuiBar {
@@ -33,32 +34,32 @@ public class GuiBarSegmented extends GuiBar {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (alignment == GuiAlignment.right) {
             for (int i = 0; i < segmentCount; i++) {
-                drawSegmentReverse(refX, refY, i, 0xffffffff, opacity);
+                drawSegmentReverse(matrixStack, refX, refY, i, 0xffffffff, opacity);
             }
             for (int i = segmentCount; i < segmentCount + diffCount; i++) {
-                drawSegmentReverse(refX, refY, i, diffColor, 1);
+                drawSegmentReverse(matrixStack, refX, refY, i, diffColor, 1);
             }
             for (int i = segmentCount + diffCount; i < maxSegments; i++) {
-                drawSegmentReverse(refX, refY, i, 0xffffff, 0.14f * opacity);
+                drawSegmentReverse(matrixStack, refX, refY, i, 0xffffff, 0.14f * opacity);
             }
         } else {
             for (int i = 0; i < segmentCount; i++) {
-                drawSegment(refX, refY, i, 0xffffffff, opacity);
+                drawSegment(matrixStack, refX, refY, i, 0xffffffff, opacity);
             }
             for (int i = segmentCount; i < segmentCount + diffCount; i++) {
-                drawSegment(refX, refY, i, diffColor, 1);
+                drawSegment(matrixStack, refX, refY, i, diffColor, 1);
             }
             for (int i = segmentCount + diffCount; i < maxSegments; i++) {
-                drawSegment(refX, refY, i, 0xffffff, 0.14f * opacity);
+                drawSegment(matrixStack, refX, refY, i, 0xffffff, 0.14f * opacity);
             }
         }
     }
 
-    private void drawSegment(int refX, int refY, int index, int color, float opacity) {
-        drawRect(
+    private void drawSegment(MatrixStack matrixStack, int refX, int refY, int index, int color, float opacity) {
+        drawRect(matrixStack,
             refX + x + (index * (segmentLength)),
             refY + y + 6,
             refX + x + ((index + 1) * segmentLength) - 1,
@@ -66,7 +67,7 @@ public class GuiBarSegmented extends GuiBar {
             color, opacity);
     }
 
-    private void drawSegmentReverse(int refX, int refY, int index, int color, float opacity) {
-        drawSegment(refX + width, refY, -index - 1, color, opacity);
+    private void drawSegmentReverse(MatrixStack matrixStack, int refX, int refY, int index, int color, float opacity) {
+        drawSegment(matrixStack,refX + width, refY, -index - 1, color, opacity);
     }
 }

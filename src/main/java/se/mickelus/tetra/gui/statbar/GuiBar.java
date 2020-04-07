@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui.statbar;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import se.mickelus.mgui.gui.*;
 
 public class GuiBar extends GuiElement {
@@ -65,15 +66,16 @@ public class GuiBar extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawRect(refX + x, refY + y + 6,refX + x + width, refY + y + 6 + height, 0xffffff, 0.14f * opacity);
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        drawRect(matrixStack, refX + x, refY + y + 6,refX + x + width, refY + y + 6 + height, 0xffffff, 0.14f * opacity);
+
         if (alignment == GuiAlignment.right) {
-            drawRect(refX + x + width - barLength, refY + y + 6,refX + x + width, refY + y + 6 + height,0xffffffff, opacity);
-            drawRect(refX + x + width - barLength - diffLength, refY + y + 6,refX + x + width - barLength, refY + y + 6 + height,
+            drawRect(matrixStack, refX + x + width - barLength, refY + y + 6,refX + x + width, refY + y + 6 + height,0xffffffff, opacity);
+            drawRect(matrixStack, refX + x + width - barLength - diffLength, refY + y + 6,refX + x + width - barLength, refY + y + 6 + height,
                     diffColor, 1);
         } else {
-            drawRect(refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + height,0xffffffff, opacity);
-            drawRect(refX + x + barLength, refY + y + 6,refX + x + barLength + diffLength, refY + y + 6 + height,
+            drawRect(matrixStack, refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + height,0xffffffff, opacity);
+            drawRect(matrixStack, refX + x + barLength, refY + y + 6,refX + x + barLength + diffLength, refY + y + 6 + height,
                     diffColor, 1);
         }
     }
