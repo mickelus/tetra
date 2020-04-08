@@ -78,6 +78,7 @@ public class ModularBowItem extends ItemModular {
     public void clientInit() {
         super.clientInit();
         MinecraftForge.EVENT_BUS.register(new RangedProgressOverlay(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new RangedFOVTransformer());
     }
 
     /**
@@ -238,6 +239,12 @@ public class ModularBowItem extends ItemModular {
         return (int)(20 * getSpeedModifier(itemStack));
     }
 
+    /**
+     * Returns a value between 0 - 1 representing how far the bow has been drawn, a value of 1 means that the bow is fully drawn
+     * @param itemStack
+     * @param entity
+     * @return
+     */
     public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getItemInUseCount() > 0)
@@ -285,10 +292,10 @@ public class ModularBowItem extends ItemModular {
         if (ret != null) return ret;
 
         if (!player.abilities.isCreativeMode && !hasAmmo) {
-            return hasAmmo ? new ActionResult<>(ActionResultType.PASS, bowStack) : new ActionResult<>(ActionResultType.FAIL, bowStack);
+            return ActionResult.resultFail(bowStack);
         } else {
             player.setActiveHand(hand);
-            return new ActionResult<>(ActionResultType.SUCCESS, bowStack);
+            return ActionResult.resultConsume(bowStack);
         }
     }
 
