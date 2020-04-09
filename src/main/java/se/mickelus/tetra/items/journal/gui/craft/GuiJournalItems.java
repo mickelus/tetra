@@ -39,26 +39,26 @@ public class GuiJournalItems extends GuiElement {
             .setAttachment(GuiAttachment.topCenter));
 
         if (ConfigHandler.enableSingle.get()) {
-            addChild(new GuiJournalItem(81, 40, ModularSingleHeadedItem.instance, 2,
+            addChild(new GuiJournalItem(81, -40, ModularSingleHeadedItem.instance, 2,
                     () -> onItemSelect.accept(ModularSingleHeadedItem.instance), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
-//        addChild(new GuiJournalItem(81, -40, ModularDoubleHeadedItem.instance, 3, //I18n.format("journal.craft.sphere"),
+//        addChild(new GuiJournalItem(81, 40, ModularDoubleHeadedItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 
         if (ConfigHandler.enableBow.get()) {
-            addChild(new GuiJournalItem(1, 40, ModularBowItem.instance, 5, //I18n.format("journal.craft.bow"),
+            addChild(new GuiJournalItem(1, 40, ModularBowItem.instance, 5,
                     () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
-//        addChild(new GuiJournalItem(-79, 40, ModularBowItem.instance, 5,
+//        addChild(new GuiJournalItem(-79, -40, ModularBowItem.instance, 5,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 //
-//        addChild(new GuiJournalItem(-79, -40, ModularBowItem.instance, 3,
+//        addChild(new GuiJournalItem(-79, 40, ModularBowItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 //
@@ -89,7 +89,7 @@ public class GuiJournalItems extends GuiElement {
         getChildren(GuiJournalItem.class).forEach(child -> child.onItemSelected(item));
 
         if (item == null) {
-            separators.animateOpen();
+            separators.animateReopen();
         } else {
             separators.setVisible(false);
         }

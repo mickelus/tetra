@@ -10,7 +10,8 @@ import se.mickelus.tetra.gui.GuiColors;
 
 public class GuiJournalCross extends GuiElement {
 
-    protected AnimationChain animation;
+    protected AnimationChain openAnimation;
+    protected AnimationChain reopenAnimation;
     private static final float targetOpacity = 0.2f;
 
     public GuiJournalCross(int x, int y, int delay) {
@@ -25,14 +26,26 @@ public class GuiJournalCross extends GuiElement {
         addChild(new GuiRect(0, 0, 1, 2, GuiColors.normal).setAttachment(GuiAttachment.bottomCenter));
 
         setOpacity(0);
-        animation = new AnimationChain(
-                new KeyframeAnimation(300, this).withDelay(delay).applyTo(new Applier.Opacity(targetOpacity * + 0.3f)),
+        openAnimation = new AnimationChain(
+                new KeyframeAnimation(300, this).withDelay(delay).applyTo(new Applier.Opacity(targetOpacity + 0.3f)),
+                new KeyframeAnimation(200, this).applyTo(new Applier.Opacity(targetOpacity)));
+
+        reopenAnimation = new AnimationChain(
+                new KeyframeAnimation(300, this).withDelay(delay / 10).applyTo(new Applier.Opacity(targetOpacity + 0.6f)),
                 new KeyframeAnimation(200, this).applyTo(new Applier.Opacity(targetOpacity)));
     }
 
     public void animateOpen() {
-        animation.stop();
+        openAnimation.stop();
+        reopenAnimation.stop();
         setOpacity(0);
-        animation.start();
+        openAnimation.start();
+    }
+
+    public void animateReopen() {
+        openAnimation.stop();
+        reopenAnimation.stop();
+        setOpacity(0);
+        reopenAnimation.start();
     }
 }

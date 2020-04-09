@@ -10,7 +10,8 @@ import se.mickelus.tetra.gui.GuiColors;
 
 public class GuiJournalDiagonal extends GuiElement {
 
-    protected AnimationChain animation;
+    protected AnimationChain openAnimation;
+    protected AnimationChain reopenAnimation;
     private static final float targetOpacity = 0.2f;
 
     protected boolean upRight = false;
@@ -26,15 +27,27 @@ public class GuiJournalDiagonal extends GuiElement {
         }
 
         setOpacity(0);
-        animation = new AnimationChain(
+        openAnimation = new AnimationChain(
                 new KeyframeAnimation(300, this).withDelay(delay).applyTo(new Applier.Opacity(targetOpacity + 0.1f)),
+                new KeyframeAnimation(150, this).applyTo(new Applier.Opacity(targetOpacity)));
+
+        reopenAnimation = new AnimationChain(
+                new KeyframeAnimation(300, this).withDelay(delay / 10).applyTo(new Applier.Opacity(targetOpacity + 0.6f)),
                 new KeyframeAnimation(150, this).applyTo(new Applier.Opacity(targetOpacity)));
     }
 
     public void animateOpen() {
-        animation.stop();
+        openAnimation.stop();
+        reopenAnimation.stop();
         setOpacity(0);
-        animation.start();
+        openAnimation.start();
+    }
+
+    public void animateReopen() {
+        openAnimation.stop();
+        reopenAnimation.stop();
+        setOpacity(0);
+        reopenAnimation.start();
     }
 
     @Override

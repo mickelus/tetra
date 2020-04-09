@@ -12,7 +12,7 @@ public class GuiJournalSeparators extends GuiElement {
         int diagonalOffset = 16;
         int diagonalSize = 9;
 
-        int delay = 1000;
+        int delay = 800;
 
         // center
         addChild(new GuiJournalDiagonal(-diagonalOffset, -diagonalOffset + 1, diagonalSize, GuiAttachment.bottomRight, delay * 1 + (int) (Math.random() * delay)));
@@ -66,5 +66,11 @@ public class GuiJournalSeparators extends GuiElement {
         setVisible(true);
         getChildren(GuiJournalCross.class).forEach(GuiJournalCross::animateOpen);
         getChildren(GuiJournalDiagonal.class).forEach(GuiJournalDiagonal::animateOpen);
+    }
+
+    public void animateReopen() {
+        setVisible(true);
+        getChildren(GuiJournalCross.class).forEach(GuiJournalCross::animateReopen);
+        getChildren(GuiJournalDiagonal.class).forEach(GuiJournalDiagonal::animateReopen);
     }
 }
