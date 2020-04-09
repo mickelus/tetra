@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:sword_modular",
+            "item": "tetra:modular_sword",
             "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/iron\", \"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\", \"sword/blade:blade/hooked\": 1, \"sword/blade:blade/serrated\": 1}"
         },
         "title": "Double Up!",

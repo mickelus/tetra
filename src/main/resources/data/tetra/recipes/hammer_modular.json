@@ -14,14 +14,14 @@
         }
     },
     "result": {
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "nbt": {
-            "duplex/head_left": "duplex/basic_hammer_left",
-            "duplex/basic_hammer_left_material": "basic_hammer/log",
-            "duplex/head_right": "duplex/basic_hammer_right",
-            "duplex/basic_hammer_right_material": "basic_hammer/log",
-            "duplex/handle": "duplex/basic_handle",
-            "duplex/basic_handle_material": "basic_handle/stick"
+            "double/head_left": "double/basic_hammer_left",
+            "double/basic_hammer_left_material": "basic_hammer/log",
+            "double/head_right": "double/basic_hammer_right",
+            "double/basic_hammer_right_material": "basic_hammer/log",
+            "double/handle": "double/basic_handle",
+            "double/basic_handle_material": "basic_handle/stick"
         }
     }
 }

@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:sword_modular",
+            "item": "tetra:modular_sword",
             "nbt": "{\"sword/blade\": \"sword/stonecutter\",\"sword/stonecutter_material\": \"stonecutter/stonecutter\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Like Butter",
@@ -14,7 +14,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:sword_modular",
+                        "item": "tetra:modular_sword",
                         "nbt": "{\"sword/blade\": \"sword/stonecutter\"}"
                     }
                 ]

@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui;
 
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 public class GuiModuleOffsets {
     static GuiModuleOffsets[] defaultMajorOffsets = {
@@ -23,8 +23,8 @@ public class GuiModuleOffsets {
     static GuiModuleOffsets toolbeltMajorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
     static GuiModuleOffsets toolbeltMinorOffsets = new GuiModuleOffsets(-13, 0);
 
-    static GuiModuleOffsets duplexMajorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
-    static GuiModuleOffsets duplexMinorOffsets = new GuiModuleOffsets(6, 1);
+    static GuiModuleOffsets doubleMajorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
+    static GuiModuleOffsets doubleMinorOffsets = new GuiModuleOffsets(6, 1);
 
     static GuiModuleOffsets bowMajorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
     static GuiModuleOffsets bowMinorOffsets = new GuiModuleOffsets(6, 1);
@@ -61,13 +61,13 @@ public class GuiModuleOffsets {
     }
 
     public static GuiModuleOffsets getMajorOffsets(ItemModular item) {
-        if (item instanceof ItemToolbeltModular) {
+        if (item instanceof ModularToolbeltItem) {
             return toolbeltMajorOffsets;
-        } else if (item instanceof ModularTwinHeadItem) {
-            return duplexMajorOffsets;
+        } else if (item instanceof ModularDoubleHeadedItem) {
+            return doubleMajorOffsets;
         } else if (item instanceof ModularBowItem) {
             return new GuiModuleOffsets(1, 21, -11, -3);
-        } else if (item instanceof ModularSingleHeadItem) {
+        } else if (item instanceof ModularSingleHeadedItem) {
             return new GuiModuleOffsets(1, -3, -11, 21);
         } else {
             return defaultMajorOffsets[item.getNumMajorModules() - 1];
@@ -75,13 +75,13 @@ public class GuiModuleOffsets {
     }
 
     public static GuiModuleOffsets getMinorOffsets(ItemModular item) {
-        if (item instanceof ItemToolbeltModular) {
+        if (item instanceof ModularToolbeltItem) {
             return toolbeltMinorOffsets;
-        } else if (item instanceof ModularTwinHeadItem) {
-            return duplexMinorOffsets;
+        } else if (item instanceof ModularDoubleHeadedItem) {
+            return doubleMinorOffsets;
         } else if (item instanceof ModularBowItem) {
             return new GuiModuleOffsets(-14, 23);
-        } else if (item instanceof ModularSingleHeadItem) {
+        } else if (item instanceof ModularSingleHeadedItem) {
             return new GuiModuleOffsets(-14, 0);
         } else {
             return defaultMinorOffsets[item.getNumMinorModules() - 1];

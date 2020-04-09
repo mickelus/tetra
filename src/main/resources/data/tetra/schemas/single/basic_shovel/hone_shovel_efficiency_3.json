@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "duplex/shared_head/hone_shovel_efficiency_3",
+    "localizationKey": "double/shared_head/hone_shovel_efficiency_3",
     "slots": [
         "single/head"
     ],

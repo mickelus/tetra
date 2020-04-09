@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 public class InventoryPotions extends InventoryToolbelt {
@@ -13,7 +13,7 @@ public class InventoryPotions extends InventoryToolbelt {
 
     public InventoryPotions(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.potion);
-        ItemToolbeltModular item = (ItemToolbeltModular) stack.getItem();
+        ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 
         predicate = InventoryToolbelt.potionPredicate;

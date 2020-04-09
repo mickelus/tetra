@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "localizationKey": "double/basic_handle/wrap_handle_hone_1",
+    "slots": [
+        "double/handle"
+    ],
+    "materialSlotCount": 1,
+    "hone": true,
+    "rarity": "hone",
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "basic_handle/wrap_leather": 1
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 1
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "improvements": {
+                "basic_handle/wrap_leather": 2
+            }
+        }
+    ]
+}

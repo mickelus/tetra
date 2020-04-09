@@ -18,8 +18,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -52,7 +50,6 @@ import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.BlockstateProvider;
@@ -65,11 +62,11 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
-import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
-import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
@@ -158,13 +155,13 @@ public class TetraMod {
         };
 
         items = new Item[] {
-                new ModularSwordItem(),
-                new ModularTwinHeadItem(),
+                new ModularBladedItem(),
+                new ModularDoubleHeadedItem(),
                 new GeodeItem(),
                 new PristineLapisItem(),
                 new PristineEmeraldItem(),
                 new PristineDiamondItem(),
-                new ItemToolbeltModular(),
+                new ModularToolbeltItem(),
                 new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),
@@ -181,7 +178,7 @@ public class TetraMod {
         }
 
         if (ConfigHandler.enableSingle.get()) {
-            items = ArrayUtils.addAll(items, new ModularSingleHeadItem());
+            items = ArrayUtils.addAll(items, new ModularSingleHeadedItem());
         }
 
         if (ConfigHandler.enableStonecutter.get()) {
@@ -280,7 +277,7 @@ public class TetraMod {
             // toolbelt
             ContainerType toolbeltContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 return ToolbeltContainer.create(windowId, inv);
-            })).setRegistryName(MOD_ID, ItemToolbeltModular.unlocalizedName);
+            })).setRegistryName(MOD_ID, ModularToolbeltItem.unlocalizedName);
             event.getRegistry().register(toolbeltContainerType);
 
             // workbench

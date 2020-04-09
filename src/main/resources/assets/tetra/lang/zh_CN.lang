@@ -43,13 +43,13 @@ sword/pommel=剑柄圆头
 sword/fuller=附层
 
 ###############################
-# DUPLEX
+# double
 ###############################
-duplex/head_left=头部§7（左）
-duplex/head_right=头部§7（右）
-duplex/handle=镶边
-duplex/binding=镶边
-duplex/accessory=附件
+double/head_left=头部§7（左）
+double/head_right=头部§7（右）
+double/handle=镶边
+double/binding=镶边
+double/accessory=附件
 
 ###############################
 # TOOLBELT
@@ -717,14 +717,14 @@ machete/knightmetal=骑士金属弯刀
 machete/knightmetal.prefix=骑士金属
 
 ###############################
-# DUPLEX SYNERGY NAMES
+# double SYNERGY NAMES
 ###############################
-duplex/axe_hammer=木工锤
-duplex/axe_axe=巨斧
-duplex/axe_pickaxe=錾斧
-duplex/hammer_pickaxe=地质锤
-duplex/adze_pickaxe=鹤嘴锄
-duplex/adze_axe=切割型鹤嘴锄
+double/axe_hammer=木工锤
+double/axe_axe=巨斧
+double/axe_pickaxe=錾斧
+double/hammer_pickaxe=地质锤
+double/adze_pickaxe=鹤嘴锄
+double/adze_axe=切割型鹤嘴锄
 
 ###############################
 # HAMMER HANDLE

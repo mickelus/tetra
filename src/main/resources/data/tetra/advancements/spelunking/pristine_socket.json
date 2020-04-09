@@ -8,22 +8,22 @@
     },
     "parent": "tetra:spelunking/geode_open",
     "criteria": {
-        "duplex_emerald": {
+        "double_emerald": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "variant": "duplex_socket/pristine_emerald"
+                "variant": "double_socket/pristine_emerald"
             }
         },
-        "duplex_diamond": {
+        "double_diamond": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "variant": "duplex_socket/pristine_diamond"
+                "variant": "double_socket/pristine_diamond"
             }
         },
-        "duplex_lapis": {
+        "double_lapis": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "variant": "duplex_socket/pristine_lapis"
+                "variant": "double_socket/pristine_lapis"
             }
         },
         "sword_emerald": {
@@ -45,5 +45,5 @@
             }
         }
     },
-    "requirements": [["duplex_emerald", "duplex_diamond", "duplex_lapis", "sword_emerald", "sword_diamond", "sword_lapis"]]
+    "requirements": [["double_emerald", "double_diamond", "double_lapis", "sword_emerald", "sword_diamond", "sword_lapis"]]
 }

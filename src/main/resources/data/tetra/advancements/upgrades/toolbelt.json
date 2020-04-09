@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:toolbelt_modular",
+            "item": "tetra:modular_toolbelt",
             "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
         },
         "title": "Stay Hip",
@@ -14,7 +14,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:toolbelt_modular"
+                        "item": "tetra:modular_toolbelt"
                     }
                 ]
             }

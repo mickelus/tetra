@@ -1,0 +1,371 @@
+[
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -3,
+        "effects": {
+            "unbreaking": 1
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -6,
+        "effects": {
+            "unbreaking": 2
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -9,
+        "effects": {
+            "unbreaking": 3
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -12,
+        "effects": {
+            "unbreaking": 4
+        }
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -15,
+        "effects": {
+            "unbreaking": 5
+        }
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -15
+    },
+    {
+        "key": "enchantment/mending",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -25
+    },
+    {
+        "key": "enchantment/knockback",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -1
+    },
+    {
+        "key": "enchantment/knockback",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -2
+    },
+    {
+        "key": "enchantment/knockback",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -3
+    },
+    {
+        "key": "enchantment/knockback",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/knockback",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -5
+    },
+    {
+        "key": "basic_handle/blazing",
+        "effects": {
+            "fierySelf": [3, 0.1]
+        }
+    },
+    {
+        "key": "basic_handle/ender_reverb",
+        "effects": {
+            "enderReverb": [4, 0.3]
+        }
+    },
+    {
+        "key": "basic_handle/wrap_string",
+        "level": 1,
+        "durability": 3,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.05,
+        "damageMultiplier": 1.1,
+        "effects": {
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap_alt",
+            "tint": "string"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_string",
+        "level": 2,
+        "durability": 6,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.06,
+        "damageMultiplier": 1.15,
+        "effects": {
+            "enderReverb": [-2, -0.11],
+            "fierySelf": [-1, -0.035]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap_alt",
+            "tint": "string"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_string",
+        "level": 3,
+        "durability": 9,
+        "group": "wrap",
+        "integrity": -2,
+        "attackSpeed": 0.07,
+        "damageMultiplier": 1.2,
+        "effects": {
+            "enderReverb": [-2, -0.12],
+            "fierySelf": [-1, -0.037]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap_alt",
+            "tint": "string"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_leather",
+        "level": 1,
+        "durability": 8,
+        "group": "wrap",
+        "integrity": -1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.15],
+            "fierySelf": [-1, -0.05]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_leather",
+        "level": 2,
+        "durability": 16,
+        "group": "wrap",
+        "integrity": -1,
+        "damageMultiplier": 1.06,
+        "effects": {
+            "enderReverb": [-2, -0.16],
+            "fierySelf": [-1, -0.07]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_leather",
+        "level": 3,
+        "durability": 24,
+        "group": "wrap",
+        "integrity": -2,
+        "damageMultiplier": 1.07,
+        "effects": {
+            "enderReverb": [-2, -0.18],
+            "fierySelf": [-1, -0.09]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "leather"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_hide",
+        "level": 1,
+        "durability": 5,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "effects": {
+            "enderReverb": [-3, -0.1],
+            "fierySelf": [-2, -0.033]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_hide",
+        "level": 2,
+        "durability": 5,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.12,
+        "effects": {
+            "enderReverb": [-3, -0.17],
+            "fierySelf": [-2, -0.046]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_hide",
+        "level": 3,
+        "durability": 5,
+        "group": "wrap",
+        "integrity": -2,
+        "attackSpeed": 0.14,
+        "effects": {
+            "enderReverb": [-3, -0.25],
+            "fierySelf": [-2, -0.06]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "hide"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_vine",
+        "level": 1,
+        "durability": 5,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.1,
+        "damageMultiplier": 1.05,
+        "effects": {
+            "enderReverb": [-2, -0.1],
+            "fierySelf": [-1, -0.033]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_vine",
+        "level": 2,
+        "durability": 10,
+        "group": "wrap",
+        "integrity": -1,
+        "attackSpeed": 0.15,
+        "damageMultiplier": 1.06,
+        "effects": {
+            "enderReverb": [-2, -0.11],
+            "fierySelf": [-1, -0.036]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
+    },
+    {
+        "key": "basic_handle/wrap_vine",
+        "level": 3,
+        "durability": 15,
+        "group": "wrap",
+        "integrity": -2,
+        "attackSpeed": 0.2,
+        "damageMultiplier": 1.07,
+        "effects": {
+            "enderReverb": [-2, -0.12],
+            "fierySelf": [-1, -0.04]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/wrap",
+            "tint": "vine"
+        }]
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -2
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -3
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -4
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -5
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -6
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 6,
+        "enchantment": true,
+        "magicCapacity": -7
+    },
+    {
+        "key": "enchantment/apotheosis_depth_miner",
+        "level": 7,
+        "enchantment": true,
+        "magicCapacity": -8
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 1,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 2,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 3,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 4,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 5,
+        "glyph": { "tint": "ee5599" }
+    },
+    {
+        "key": "destabilized/apotheosis_depth_miner",
+        "level": 6,
+        "glyph": { "tint": "ee5599" }
+    }
+]

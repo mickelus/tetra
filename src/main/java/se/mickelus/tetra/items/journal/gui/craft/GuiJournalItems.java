@@ -7,11 +7,11 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
-import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 import java.util.function.Consumer;
 
@@ -26,25 +26,25 @@ public class GuiJournalItems extends GuiElement {
         separators = new GuiJournalSeparators(1, -71, width, height);
         addChild(separators);
 
-        addChild(new GuiJournalItem(-39, 0, ModularSwordItem.instance, 0,
-                () -> onItemSelect.accept(ModularSwordItem.instance), onSlotSelect)
+        addChild(new GuiJournalItem(-39, 0, ModularBladedItem.instance, 0,
+                () -> onItemSelect.accept(ModularBladedItem.instance), onSlotSelect)
             .setAttachment(GuiAttachment.topCenter));
 
-        addChild(new GuiJournalItem(1, -40, ItemToolbeltModular.instance, 4,
-                () -> onItemSelect.accept(ItemToolbeltModular.instance), onSlotSelect)
+        addChild(new GuiJournalItem(1, -40, ModularToolbeltItem.instance, 4,
+                () -> onItemSelect.accept(ModularToolbeltItem.instance), onSlotSelect)
             .setAttachment(GuiAttachment.topCenter));
 
-        addChild(new GuiJournalItem(41, 0, ModularTwinHeadItem.instance, 1,
-                () -> onItemSelect.accept(ModularTwinHeadItem.instance), onSlotSelect)
+        addChild(new GuiJournalItem(41, 0, ModularDoubleHeadedItem.instance, 1,
+                () -> onItemSelect.accept(ModularDoubleHeadedItem.instance), onSlotSelect)
             .setAttachment(GuiAttachment.topCenter));
 
         if (ConfigHandler.enableSingle.get()) {
-            addChild(new GuiJournalItem(81, 40, ModularSingleHeadItem.instance, 2,
-                    () -> onItemSelect.accept(ModularSingleHeadItem.instance), onSlotSelect)
+            addChild(new GuiJournalItem(81, 40, ModularSingleHeadedItem.instance, 2,
+                    () -> onItemSelect.accept(ModularSingleHeadedItem.instance), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
-//        addChild(new GuiJournalItem(81, -40, ModularTwinHeadItem.instance, 3, //I18n.format("journal.craft.sphere"),
+//        addChild(new GuiJournalItem(81, -40, ModularDoubleHeadedItem.instance, 3, //I18n.format("journal.craft.sphere"),
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 
@@ -62,11 +62,11 @@ public class GuiJournalItems extends GuiElement {
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 //
-//        addChild(new GuiJournalItem(121, 0, ModularTwinHeadItem.instance, 3,
+//        addChild(new GuiJournalItem(121, 0, ModularDoubleHeadedItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 //
-//        addChild(new GuiJournalItem(-119, 0, ModularTwinHeadItem.instance, 3,
+//        addChild(new GuiJournalItem(-119, 0, ModularDoubleHeadedItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
     }

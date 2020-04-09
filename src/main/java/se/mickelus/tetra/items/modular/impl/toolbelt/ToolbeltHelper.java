@@ -27,7 +27,7 @@ public class ToolbeltHelper {
         ItemStack toolbeltStack = findToolbelt(player);
 
         // stops things from crashing if the player has dropped the toolbelt stack after opening the overlay
-        if (!(toolbeltStack.getItem() instanceof ItemToolbeltModular)) {
+        if (!(toolbeltStack.getItem() instanceof ModularToolbeltItem)) {
             return;
         }
 
@@ -81,7 +81,7 @@ public class ToolbeltHelper {
             sourceHand = Hand.MAIN_HAND;
         }
 
-        if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ItemToolbeltModular.instance) {
+        if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ModularToolbeltItem.instance) {
             return true;
         }
 
@@ -121,7 +121,7 @@ public class ToolbeltHelper {
         PlayerInventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
-            if (ItemToolbeltModular.instance.equals(itemStack.getItem())) {
+            if (ModularToolbeltItem.instance.equals(itemStack.getItem())) {
                 return itemStack;
             }
         }

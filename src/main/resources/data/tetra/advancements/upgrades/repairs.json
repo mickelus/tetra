@@ -1,8 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:duplex_tool_modular",
-            "nbt": "{\"duplex/head_left\": \"duplex/basic_hammer_left\",\"duplex/basic_hammer_left_material\": \"basic_hammer/log\",\"duplex/head_right\": \"duplex/basic_hammer_right\",\"duplex/basic_hammer_right_material\": \"basic_hammer/log\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\"}"
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": "[?] Repairing modular items",
         "description": "Modular items can be repaired in a workbench.\n * Repairing an item will require materials (and appropriate tools) for one of its modules\n * Repairing will cycle over all of the item's modules\n * Repairing magically unstable modules will cost experience\n * Each repair fully restores the durability of the item",
@@ -16,7 +16,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:duplex_tool_modular"
+                        "item": "tetra:modular_double"
                     }
                 ]
             }

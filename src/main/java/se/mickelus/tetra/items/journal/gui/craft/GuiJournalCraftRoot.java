@@ -2,12 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
-import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
-import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.LinkedList;
