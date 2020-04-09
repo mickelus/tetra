@@ -32,7 +32,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     public GuiStatBarIntegrity(int x, int y) {
         super(x, y, GuiStats.barLength, 12);
 
-        labelString = new GuiStringSmall(0, 0, I18n.format("stats.integrity"));
+        labelString = new GuiStringSmall(0, 0, I18n.format("tetra.stats.integrity"));
 
         valueString = new GuiStringSmall(0, 0, "");
         valueString.setAttachment(GuiAttachment.topRight);
@@ -52,8 +52,8 @@ public class GuiStatBarIntegrity extends GuiStatBase {
 
         statGetter = new StatGetterIntegrity();
         labelGetter = LabelGetterBasic.integerLabel;
-        tooltipGetterPositive = new TooltipGetterInteger("stats.integrity.tooltip_positive", statGetter);
-        tooltipGetterNegative = new TooltipGetterInteger("stats.integrity.tooltip_negative", statGetter, true);
+        tooltipGetterPositive = new TooltipGetterInteger("tetra.stats.integrity.tooltip_positive", statGetter);
+        tooltipGetterNegative = new TooltipGetterInteger("tetra.stats.integrity.tooltip_negative", statGetter, true);
     }
 
     @Override

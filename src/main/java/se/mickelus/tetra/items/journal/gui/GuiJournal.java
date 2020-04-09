@@ -110,6 +110,7 @@ public class GuiJournal extends Screen {
 
     @Override
     public boolean charTyped(char typecChar, int keyCode) {
+
         currentPage.charTyped(typecChar);
         return false;
     }

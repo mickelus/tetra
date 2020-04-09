@@ -34,9 +34,9 @@ public class GuiCapabilityRequirement extends GuiCapability {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Collections.singletonList(I18n.format("capability." + capability + ".requirement", requiredLevel) + "\n\n"
+            return Collections.singletonList(I18n.format("tetra.capability." + capability + ".requirement", requiredLevel) + "\n\n"
                     + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
-                    + I18n.format( "capability.available", availableLevel));
+                    + I18n.format( "tetra.capability.available", availableLevel));
         }
         return super.getTooltipLines();
     }

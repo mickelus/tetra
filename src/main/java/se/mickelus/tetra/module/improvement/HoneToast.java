@@ -31,7 +31,7 @@ public class HoneToast implements IToast {
             toastGui.blit(0, 0, 0, 0, 160, 32);
 
             String itemName = toastGui.getMinecraft().fontRenderer.trimStringToWidth(itemStack.getDisplayName().getFormattedText(), 125);
-            toastGui.getMinecraft().fontRenderer.drawString(I18n.format("hone.available"), 30, 7, SchemaRarity.hone.tint);
+            toastGui.getMinecraft().fontRenderer.drawString(I18n.format("tetra.hone.available"), 30, 7, SchemaRarity.hone.tint);
             toastGui.getMinecraft().fontRenderer.drawString(itemName, 30, 18, GuiColors.muted);
 
             if (!this.hasPlayedSound && delta > 0L) {

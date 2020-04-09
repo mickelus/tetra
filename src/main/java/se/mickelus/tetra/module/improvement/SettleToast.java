@@ -67,7 +67,7 @@ public class SettleToast implements IToast {
                 glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().fontRenderer.drawString(I18n.format("settled.toast"), 30, 7, SchemaRarity.hone.tint);
+            toastGui.getMinecraft().fontRenderer.drawString(I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchemaRarity.hone.tint);
             toastGui.getMinecraft().fontRenderer.drawString(toastGui.getMinecraft().fontRenderer.trimStringToWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
 

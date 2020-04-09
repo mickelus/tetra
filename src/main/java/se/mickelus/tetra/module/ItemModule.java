@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleVariantData;
@@ -92,24 +93,28 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public String getName(ItemStack itemStack) {
-        return I18n.format(getVariantData(itemStack).key);
+        return I18n.format("tetra.variant." + getVariantData(itemStack).key);
     }
 
     public String getDescription(ItemStack itemStack) {
-        String dataKey = getVariantData(itemStack).key;
-        if (I18n.hasKey(dataKey + ".description")) {
-            return I18n.format(dataKey + ".description");
+        String descriptionKey = "tetra.variant." + getVariantData(itemStack).key + ".description";
+        if (I18n.hasKey(descriptionKey)) {
+            return I18n.format(descriptionKey);
         }
-        return I18n.format(getUnlocalizedName() + ".description");
+        return I18n.format("tetra.module." + getUnlocalizedName() + ".description");
     }
 
     public String getItemName(ItemStack itemStack) {
-        String name = getVariantData(itemStack).key + ".name";
-        if (I18n.hasKey(name)) {
-            return I18n.format(name);
-        } else if (I18n.hasKey(getUnlocalizedName() + ".item_name")) {
-            return I18n.format(getUnlocalizedName() + ".item_name");
+        String variantItemNameKey = "tetra.variant." + getVariantData(itemStack).key + ".item_name";
+        if (I18n.hasKey(variantItemNameKey)) {
+            return I18n.format(variantItemNameKey);
         }
+
+        String moduleItemNameKey = "tetra.module." + getUnlocalizedName() + ".item_name";
+        if (I18n.hasKey(moduleItemNameKey)) {
+            return I18n.format(moduleItemNameKey);
+        }
+
         return null;
     }
 
@@ -118,11 +123,14 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public String getItemPrefix(ItemStack itemStack) {
-        String prefix = getVariantData(itemStack).key + ".prefix";
-        if (I18n.hasKey(prefix)) {
-            return I18n.format(prefix);
-        } else if (I18n.hasKey(getUnlocalizedName() + ".prefix")) {
-            return I18n.format(getUnlocalizedName() + ".prefix");
+        String variantPrefixKey = "tetra.module_variant." + getVariantData(itemStack).key + ".prefix";
+        if (I18n.hasKey(variantPrefixKey)) {
+            return I18n.format(variantPrefixKey);
+        }
+
+        String modulePrefixKey = "tetra.module." + getUnlocalizedName() + ".prefix";
+        if (I18n.hasKey(modulePrefixKey)) {
+            return I18n.format(modulePrefixKey);
         }
         return null;
     }

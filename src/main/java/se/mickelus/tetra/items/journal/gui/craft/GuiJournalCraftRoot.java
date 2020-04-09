@@ -120,9 +120,9 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
         if (item != null) {
             LinkedList<String> result = new LinkedList<>();
 
-            result.add(I18n.format("journal.craft.breadcrumb.root"));
+            result.add(I18n.format("tetra.journal.craft.breadcrumb.root"));
 
-            result.add(I18n.format("journal.craft." + item.getRegistryName().getPath()));
+            result.add(I18n.format("tetra.journal.craft." + item.getRegistryName().getPath()));
 
             if (slot != null) {
                 result.add(getSlotName());

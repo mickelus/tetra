@@ -33,7 +33,7 @@ public class GuiJournalSlotMajor extends GuiClickable {
         addChild(slotString);
 
         if ("".equals(label)) {
-            slotString.setString(I18n.format("journal.craft.slot"));
+            slotString.setString(I18n.format("tetra.journal.craft.slot"));
         }
 
         width = slotString.getWidth() + 18;

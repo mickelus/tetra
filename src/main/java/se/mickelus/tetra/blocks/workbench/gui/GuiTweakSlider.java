@@ -24,12 +24,12 @@ public class GuiTweakSlider extends GuiElement {
     public GuiTweakSlider(int x, int y, int width, TweakData tweak, Consumer<Integer> onChange) {
         super(x, y, width, 16);
 
-        labelString = new GuiStringSmall(0, 0, I18n.format(tweak.key + ".label"));
+        labelString = new GuiStringSmall(0, 0, I18n.format("tetra.tweak." + tweak.key + ".label"));
         labelString.setAttachment(GuiAttachment.topCenter);
         addChild(labelString);
 
-        addChild(new GuiStringSmall(-2, 1, I18n.format(tweak.key + ".left")).setAttachment(GuiAttachment.bottomLeft));
-        addChild(new GuiStringSmall(-1, 1, I18n.format(tweak.key + ".right")).setAttachment(GuiAttachment.bottomRight));
+        addChild(new GuiStringSmall(-2, 1, I18n.format("tetra.tweak." + tweak.key + ".left")).setAttachment(GuiAttachment.bottomLeft));
+        addChild(new GuiStringSmall(-1, 1, I18n.format("tetra.tweak." + tweak.key + ".right")).setAttachment(GuiAttachment.bottomRight));
 
         slider = new GuiSliderSegmented(-2, 3, width, tweak.steps * 2 + 1, step -> onChange.accept(step - tweak.steps));
         slider.setAttachment(GuiAttachment.topCenter);
@@ -37,7 +37,7 @@ public class GuiTweakSlider extends GuiElement {
 
         steps = tweak.steps;
 
-        tooltip = Collections.singletonList(I18n.format(tweak.key + ".tooltip"));
+        tooltip = Collections.singletonList("tetra.tweak." + I18n.format(tweak.key + ".tooltip"));
     }
 
     public void setValue(int value) {

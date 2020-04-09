@@ -49,7 +49,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
         compartmentButtons = new GuiTabVerticalGroup(10, 26, this::changeCompartment,
                 IntStream.range(1, ForgedContainerTile.compartmentCount + 1)
-                        .mapToObj(i -> I18n.format("forged_container.compartment", i))
+                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment", i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
 

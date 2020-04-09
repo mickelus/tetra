@@ -82,7 +82,7 @@ public class GuiSchemaListItem extends GuiClickable {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus() && rarity.equals(SchemaRarity.temporary)) {
-            return Collections.singletonList(I18n.format("workbench.schema_list.temporary"));
+            return Collections.singletonList(I18n.format("tetra.workbench.schema_list.temporary"));
         }
 
         return null;

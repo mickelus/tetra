@@ -126,47 +126,47 @@ public class GuiSynergyIndicator extends GuiElement {
         List<String> result = new ArrayList<>();
 
         if (data.damage != 0) {
-            result.add(getValueDouble(data.damage, 0) + I18n.format("stats.damage"));
+            result.add(getValueDouble(data.damage, 0) + I18n.format("tetra.stats.damage"));
         }
         if (data.damageMultiplier != 1) {
-            result.add(getValueMultiplier(data.damageMultiplier) + I18n.format("stats.damage"));
+            result.add(getValueMultiplier(data.damageMultiplier) + I18n.format("tetra.stats.damage"));
         }
 
         if (data.attackSpeed != 0) {
-            result.add(getValueDouble(data.attackSpeed, 0) + I18n.format("stats.speed"));
+            result.add(getValueDouble(data.attackSpeed, 0) + I18n.format("tetra.stats.speed"));
         }
         if (data.attackSpeedMultiplier != 1) {
-            result.add(getValueMultiplier(data.attackSpeedMultiplier) + I18n.format("stats.speed"));
+            result.add(getValueMultiplier(data.attackSpeedMultiplier) + I18n.format("tetra.stats.speed"));
         }
 
         if (data.durability != 0) {
-            result.add(getValueInteger(data.durability, 0) + I18n.format("stats.durability"));
+            result.add(getValueInteger(data.durability, 0) + I18n.format("tetra.stats.durability"));
         }
         if (data.durabilityMultiplier != 1) {
-            result.add(getValueMultiplier(data.durabilityMultiplier) + I18n.format("stats.durability"));
+            result.add(getValueMultiplier(data.durabilityMultiplier) + I18n.format("tetra.stats.durability"));
         }
 
         if (data.integrity != 0) {
-            result.add(getValueInteger(data.integrity, 0) + I18n.format("stats.integrity"));
+            result.add(getValueInteger(data.integrity, 0) + I18n.format("tetra.stats.integrity"));
         }
         if (data.integrityMultiplier != 1) {
-            result.add(getValueMultiplier(data.integrityMultiplier) + I18n.format("stats.integrity"));
+            result.add(getValueMultiplier(data.integrityMultiplier) + I18n.format("tetra.stats.integrity"));
         }
 
         data.effects.valueMap.forEach((itemEffect, level) ->
-                result.add(getValueInteger(level, 0) + I18n.format("stats." + itemEffect) + " " + I18n.format("stats.level_suffix")));
+                result.add(getValueInteger(level, 0) + I18n.format("tetra.stats." + itemEffect) + " " + I18n.format("tetra.stats.level_suffix")));
 
         data.effects.efficiencyMap.forEach((itemEffect, efficiency) ->
-                result.add(getValueDouble(efficiency, 0) + I18n.format("stats." + itemEffect) + " " + I18n.format("stats.strength_suffix")));
+                result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.stats." + itemEffect) + " " + I18n.format("tetra.stats.strength_suffix")));
 
         data.capabilities.valueMap.forEach((capability, level) ->
-                result.add(getValueInteger(level, 0) + I18n.format("capability." + capability) + " " + I18n.format("stats.tier_suffix")));
+                result.add(getValueInteger(level, 0) + I18n.format("tetra.capability." + capability) + " " + I18n.format("tetra.stats.tier_suffix")));
 
         data.capabilities.efficiencyMap.forEach((capability, efficiency) ->
-                result.add(getValueDouble(efficiency, 0) + I18n.format("capability." + capability) + " " + I18n.format("stats.efficiency_suffix")));
+                result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.capability." + capability) + " " + I18n.format("tetra.stats.efficiency_suffix")));
 
         if (data.magicCapacity != 0) {
-            result.add(getValueDouble(data.integrity, 0) + I18n.format("stats.magicCapacity"));
+            result.add(getValueDouble(data.integrity, 0) + I18n.format("tetra.stats.magicCapacity"));
         }
 
         for (int i = 0; i < result.size(); i++) {

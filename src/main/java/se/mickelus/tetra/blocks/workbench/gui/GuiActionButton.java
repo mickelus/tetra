@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiColors;
@@ -37,7 +38,7 @@ public class GuiActionButton extends GuiElement {
         this.action = action;
         this.targetStack = targetStack;
 
-        String label = I18n.format(action.getKey() + ".label");
+        String label = I18n.format(String.format("%s.%s.label", TetraMod.MOD_ID, action.getKey()));
         width = Minecraft.getInstance().fontRenderer.getStringWidth(label) + 42;
 
         labelClickable = new GuiClickable(0, 0, width, height, () -> clickHandler.accept(action)) {
