@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.journal.gui.craft;
 
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
 import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
 import se.mickelus.tetra.items.journal.GuiJournalRootBase;
 import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
@@ -34,7 +35,7 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
         breadcrumbs.setVisible(false);
         addChild(breadcrumbs);
 
-        itemsView = new GuiJournalItems(0, 71, width, height, this::onItemSelect, this::onSlotSelect);
+        itemsView = new GuiJournalItems(0, 70, width, height, this::onItemSelect, this::onSlotSelect);
         addChild(itemsView);
 
         schemasView = new GuiJournalSchemas(0, 20, width, height, this::onSchemaSelect);
@@ -126,17 +127,7 @@ public class GuiJournalCraftRoot extends GuiJournalRootBase {
 
             result.add(I18n.format("journal.craft.breadcrumb.root"));
 
-            if (item instanceof ModularSwordItem) {
-                result.add(I18n.format("journal.craft.sword"));
-            } else if (item instanceof ItemToolbeltModular) {
-                result.add(I18n.format("journal.craft.toolbelt"));
-            } else if (item instanceof ModularTwinHeadItem) {
-                result.add(I18n.format("journal.craft.tool"));
-            } else if (item instanceof ModularBowItem) {
-                result.add(I18n.format("journal.craft.bow"));
-            } else {
-                result.add("?");
-            }
+            result.add(I18n.format("journal.craft." + item.getRegistryName().getPath()));
 
             if (slot != null) {
                 result.add(getSlotName());
