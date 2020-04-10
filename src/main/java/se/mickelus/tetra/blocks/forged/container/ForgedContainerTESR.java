@@ -63,15 +63,6 @@ public class ForgedContainerTESR extends TileEntityRenderer<ForgedContainerTile>
         }
 
         if (tile.hasWorld()) {
-
-//            RenderSystem.enableDepthTest();
-//            RenderSystem.depthFunc(515);
-//            RenderSystem.depthMask(true);
-//
-//            RenderSystem.pushMatrix();
-//            RenderSystem.enableRescaleNormal();
-
-
             matrixStack.push();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
             // todo: why does the model render upside down by default?
