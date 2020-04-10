@@ -45,8 +45,7 @@ public class CapabililtyInteractiveOverlay {
                     previousState = blockState;
                 }
 
-                // todo 1.15: ripped out
-//                gui.draw(Minecraft.getInstance().player, rayTrace, shape, event.getPartialTicks());
+                gui.draw(event.getMatrix(), event.getInfo().getProjectedView(), rayTrace, shape);
             }
         }
     }
