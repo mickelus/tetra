@@ -172,9 +172,9 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
             world.getPendingFluidTicks().scheduleTick(currentPos, WATER, WATER.getTickRate(world));
         }
 
-        if (Direction.DOWN.equals(facing) && equals(facingState.getBlock())) {
+        if (Direction.DOWN.equals(facing)) {
             return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos)
-                    .with(propStacked, true);
+                    .with(propStacked, equals(facingState.getBlock()));
         }
 
         return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
