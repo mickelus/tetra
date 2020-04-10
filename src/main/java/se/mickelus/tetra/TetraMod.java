@@ -38,6 +38,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerTESR;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.forged.extractor.*;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
@@ -248,6 +249,8 @@ public class TetraMod {
                     // 9 is the length of "textures/" & 4 is the length of ".png"
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
+
+            event.addSprite(ForgedContainerTESR.material.getTextureLocation());
         }
     }
 
