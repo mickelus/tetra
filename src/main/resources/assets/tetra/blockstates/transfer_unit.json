@@ -1,5 +1,97 @@
 {
-    "variants": {
-        "": { "model": "tetra:block/transfer_unit" }
-    }
+    "multipart": [
+        {   "when": { "facing": "north", "transfer": "none" },
+            "apply": { "model": "tetra:block/transfer_unit", "y": 0 }
+        },
+        {   "when": { "facing": "south", "transfer": "none" },
+            "apply": { "model": "tetra:block/transfer_unit", "y": 180 }
+        },
+        {   "when": { "facing": "west", "transfer": "none" },
+            "apply": { "model": "tetra:block/transfer_unit", "y": -90 }
+        },
+        {   "when": { "facing": "east", "transfer": "none" },
+            "apply": { "model": "tetra:block/transfer_unit", "y": 90 }
+        },
+        {   "when": { "facing": "north", "transfer": "sending" },
+            "apply": { "model": "tetra:block/transfer_unit_sending", "y": 0 }
+        },
+        {   "when": { "facing": "south", "transfer": "sending" },
+            "apply": { "model": "tetra:block/transfer_unit_sending", "y": 180 }
+        },
+        {   "when": { "facing": "west", "transfer": "sending" },
+            "apply": { "model": "tetra:block/transfer_unit_sending", "y": -90 }
+        },
+        {   "when": { "facing": "east", "transfer": "sending" },
+            "apply": { "model": "tetra:block/transfer_unit_sending", "y": 90 }
+        },
+        {   "when": { "facing": "north", "transfer": "receiving" },
+            "apply": { "model": "tetra:block/transfer_unit_receiving", "y": 0 }
+        },
+        {   "when": { "facing": "south", "transfer": "receiving" },
+            "apply": { "model": "tetra:block/transfer_unit_receiving", "y": 180 }
+        },
+        {   "when": { "facing": "west", "transfer": "receiving" },
+            "apply": { "model": "tetra:block/transfer_unit_receiving", "y": -90 }
+        },
+        {   "when": { "facing": "east", "transfer": "receiving" },
+            "apply": { "model": "tetra:block/transfer_unit_receiving", "y": 90 }
+        },
+
+        {   "when": { "cell": "1" },
+            "apply": { "model": "tetra:block/cell_protude_top" }
+        },
+        {   "when": { "cell": "2" },
+            "apply": { "model": "tetra:block/cell_protude_top_charged" }
+        },
+
+        {   "when": { "config": "a", "facing": "north" },
+            "apply": { "model": "tetra:block/transfer_unit_config0", "y": 0 }
+        },
+        {   "when": { "config": "a", "facing": "south" },
+            "apply": { "model": "tetra:block/transfer_unit_config0", "y": 180 }
+        },
+        {   "when": { "config": "a", "facing": "west" },
+            "apply": { "model": "tetra:block/transfer_unit_config0", "y": -90 }
+        },
+        {   "when": { "config": "a", "facing": "east" },
+            "apply": { "model": "tetra:block/transfer_unit_config0", "y": 90 }
+        },
+        {   "when": { "config": "b", "facing": "north" },
+            "apply": { "model": "tetra:block/transfer_unit_config1", "y": 0 }
+        },
+        {   "when": { "config": "b", "facing": "south" },
+            "apply": { "model": "tetra:block/transfer_unit_config1", "y": 180 }
+        },
+        {   "when": { "config": "b", "facing": "west" },
+            "apply": { "model": "tetra:block/transfer_unit_config1", "y": -90 }
+        },
+        {   "when": { "config": "b", "facing": "east" },
+            "apply": { "model": "tetra:block/transfer_unit_config1", "y": 90 }
+        },
+        {   "when": { "config": "c", "facing": "north" },
+            "apply": { "model": "tetra:block/transfer_unit_config2", "y": 0 }
+        },
+        {   "when": { "config": "c", "facing": "south" },
+            "apply": { "model": "tetra:block/transfer_unit_config2", "y": 180 }
+        },
+        {   "when": { "config": "c", "facing": "west" },
+            "apply": { "model": "tetra:block/transfer_unit_config2", "y": -90 }
+        },
+        {   "when": { "config": "c", "facing": "east" },
+            "apply": { "model": "tetra:block/transfer_unit_config2", "y": 90 }
+        },
+
+        {   "when": { "plate": "true", "facing": "north" },
+            "apply": { "model": "tetra:block/transfer_unit_plate", "y": 0 }
+        },
+        {   "when": { "plate": "true", "facing": "south" },
+            "apply": { "model": "tetra:block/transfer_unit_plate", "y": 180 }
+        },
+        {   "when": { "plate": "true", "facing": "west" },
+            "apply": { "model": "tetra:block/transfer_unit_plate", "y": -90 }
+        },
+        {   "when": { "plate": "true", "facing": "east" },
+            "apply": { "model": "tetra:block/transfer_unit_plate", "y": 90 }
+        }
+    ]
 }

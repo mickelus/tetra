@@ -1,0 +1,6 @@
+{
+    "parent": "tetra:block/transfer_unit_config",
+    "textures": {
+        "config": "tetra:blocks/transfer_unit_config1"
+    }
+}

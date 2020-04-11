@@ -2,9 +2,7 @@ package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.entity.TridentRenderer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;

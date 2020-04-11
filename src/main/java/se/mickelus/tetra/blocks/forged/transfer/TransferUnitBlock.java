@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
 import net.minecraft.block.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -78,6 +80,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
                 .with(cellProp, 0)
                 .with(configProp, EnumTransferConfig.a)
                 .with(transferProp, EnumTransferState.none));
+    }
+
+    @Override
+    public void clientInit() {
+        RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
     }
 
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {

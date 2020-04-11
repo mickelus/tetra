@@ -1,0 +1,9 @@
+{
+    "parent": "tetra:block/cell_protude_top",
+    "textures": {
+        "cell_side_solid": "tetra:blocks/cell_side_solid",
+        "cell_side": "tetra:blocks/cell_side_charged",
+        "cell_top": "tetra:blocks/transfer_unit_top_charged",
+        "particle": "tetra:blocks/cell_side"
+    }
+}
