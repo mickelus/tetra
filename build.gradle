@@ -28,6 +28,7 @@ archivesBaseName = "tetra"
 
 repositories {
     mavenLocal()
+    maven { url = "https://maven.theillusivec4.top/" }
 }
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -108,6 +109,9 @@ dependencies {
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
     compile fg.deobf("se.mickelus.mgui:mgui-1.14:${mgui_version}")
+    
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

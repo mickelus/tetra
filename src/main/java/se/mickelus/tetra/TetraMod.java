@@ -78,6 +78,7 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
+import se.mickelus.tetra.IntegrationHelper;
 
 import java.util.Arrays;
 
@@ -97,6 +98,7 @@ public class TetraMod {
 
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(IntegrationHelper::enqueueIMC);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
