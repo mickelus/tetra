@@ -25,9 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
         InventoryToolbelt inventory = null;
