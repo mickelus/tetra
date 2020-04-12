@@ -11,15 +11,15 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
-import se.mickelus.tetra.IntegrationHelper;
-import top.theillusivec4.curios.api.CuriosAPI;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
+import top.theillusivec4.curios.api.CuriosAPI;
 
 import java.util.Collection;
 import java.util.List;
@@ -122,13 +122,10 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
-        if (IntegrationHelper.isCuriosLoaded)
-        {
+        if (IntegrationHelper.isCuriosLoaded) {
             Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosAPI.getCurioEquipped(ModularToolbeltItem.instance, player);
-            if (maybeToolbelt.isPresent())
-            {
-                ItemStack itemStack = maybeToolbelt.get().right;
-                return itemStack;
+            if (maybeToolbelt.isPresent()) {
+                return maybeToolbelt.get().right;
             }
         }
         PlayerInventory inventoryPlayer = player.inventory;
