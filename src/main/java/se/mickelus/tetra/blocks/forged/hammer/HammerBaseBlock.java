@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -88,6 +90,11 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                 .with(propCell1Charged, false)
                 .with(propCell2, false)
                 .with(propCell2Charged, false));
+    }
+
+    @Override
+    public void clientInit() {
+        RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
     }
 
     @Override
