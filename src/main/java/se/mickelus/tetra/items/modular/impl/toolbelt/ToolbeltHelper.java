@@ -11,6 +11,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.IntegrationHelper;
+import top.theillusivec4.curios.api.CuriosAPI;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -20,6 +23,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
@@ -118,6 +122,15 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
+        if (IntegrationHelper.isCuriosLoaded)
+        {
+            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosAPI.getCurioEquipped(ModularToolbeltItem.instance, player);
+            if (maybeToolbelt.isPresent())
+            {
+                ItemStack itemStack = maybeToolbelt.get().right;
+                return itemStack;
+            }
+        }
         PlayerInventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getStackInSlot(i);

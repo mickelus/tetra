@@ -36,6 +36,7 @@ repositories {
                 password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
             }
         }
+        maven { url = "https://maven.theillusivec4.top/" }
     }
 }
 
@@ -123,6 +124,8 @@ dependencies {
 //            transitive = false
 //        })
     }
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
