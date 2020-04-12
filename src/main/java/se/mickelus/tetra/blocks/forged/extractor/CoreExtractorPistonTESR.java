@@ -19,18 +19,17 @@ public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPis
 
     public CoreExtractorPistonTESR(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
+
+        blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
     }
 
     @Override
-    public void render(CoreExtractorPistonTile te, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight,
+    public void render(CoreExtractorPistonTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight,
             int combinedOverlay) {
-        if(blockRenderer == null) {
-            blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
-        }
 
         BlockState state = CoreExtractorPistonBlock.instance.getDefaultState();
 
-        double offset = te.getProgress(partialTicks);
+        double offset = tile.getProgress(partialTicks);
 
         if (offset > 0.98) {
             // 49 = 0.98 / ( 1 - 0.98)
