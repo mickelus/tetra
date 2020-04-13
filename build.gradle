@@ -27,17 +27,8 @@ group = 'se.mickelus.tetra' // http://maven.apache.org/guides/mini/guide-naming-
 archivesBaseName = "tetra"
 
 repositories {
-    repositories {
-        maven {
-            name = "github-mgui"
-            url = uri("https://maven.pkg.github.com/mickelus/mgui")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
-            }
-        }
-        maven { url = "https://maven.theillusivec4.top/" }
-    }
+    mavenLocal()
+    maven { url = "https://maven.theillusivec4.top/" }
 }
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
