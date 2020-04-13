@@ -1,8 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:duplex_tool_modular",
-            "nbt": "{\"duplex/head_left\": \"duplex/basic_hammer_left\",\"duplex/basic_hammer_left_material\": \"basic_hammer/log\",\"duplex/head_right\": \"duplex/basic_hammer_right\",\"duplex/basic_hammer_right_material\": \"basic_hammer/log\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\"}"
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": "Basic Tinkering",
         "description": "Craft a mallet from sticks and logs\n\nItem Reward: Holosphere",
@@ -14,7 +14,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:duplex_tool_modular"
+                        "item": "tetra:modular_double"
                     }
                 ]
             }
@@ -22,7 +22,7 @@
     },
     "rewards": {
         "recipes": [
-            "tetra:toolbelt_modular"
+            "tetra:modular_toolbelt"
         ],
         "loot": ["tetra:journal_reward"]
     }

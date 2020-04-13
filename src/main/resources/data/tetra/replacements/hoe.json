@@ -3,367 +3,367 @@
         "predicate": {
             "item": "minecraft:wooden_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/oak"],
-            "duplex/head_right": ["duplex/butt_right", "butt/oak"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/oak"],
+            "double/head_right": ["double/butt_right", "butt/oak"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "minecraft:stone_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/cobblestone"],
-            "duplex/head_right": ["duplex/butt_right", "butt/cobblestone"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/cobblestone"],
+            "double/head_right": ["double/butt_right", "butt/cobblestone"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "minecraft:iron_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/iron"],
-            "duplex/head_right": ["duplex/butt_right", "butt/iron"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/iron"],
+            "double/head_right": ["double/butt_right", "butt/iron"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "minecraft:golden_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/gold"],
-            "duplex/head_right": ["duplex/butt_right", "butt/gold"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/gold"],
+            "double/head_right": ["double/butt_right", "butt/gold"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "minecraft:diamond_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/diamond"],
-            "duplex/head_right": ["duplex/butt_right", "butt/diamond"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/diamond"],
+            "double/head_right": ["double/butt_right", "butt/diamond"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         },
         "improvements": {
-            "duplex/head_left:arrested": 0,
-            "duplex/head_right:arrested": 0
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
         }
     },
     {
         "predicate": {
             "item": "basemetals:copper_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/copper"],
-            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/copper"],
+            "double/head_right": ["double/butt_right", "butt/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:tin_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/tin"],
-            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/tin"],
+            "double/head_right": ["double/butt_right", "butt/tin"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:silver_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/silver"],
-            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/silver"],
+            "double/head_right": ["double/butt_right", "butt/silver"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:nickel_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/nickel"],
-            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/nickel"],
+            "double/head_right": ["double/butt_right", "butt/nickel"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:lead_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/lead"],
-            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/lead"],
+            "double/head_right": ["double/butt_right", "butt/lead"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:bronze_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/bronze"],
-            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:electrum_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/electrum"],
-            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/electrum"],
+            "double/head_right": ["double/butt_right", "butt/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "basemetals:steel_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/steel"],
-            "duplex/head_right": ["duplex/butt_right", "butt/steel"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/steel"],
+            "double/head_right": ["double/butt_right", "butt/steel"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_copper"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/copper"],
-            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/copper"],
+            "double/head_right": ["double/butt_right", "butt/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_tin"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/tin"],
-            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/tin"],
+            "double/head_right": ["double/butt_right", "butt/tin"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_silver"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/silver"],
-            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/silver"],
+            "double/head_right": ["double/butt_right", "butt/silver"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_nickel"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/nickel"],
-            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/nickel"],
+            "double/head_right": ["double/butt_right", "butt/nickel"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_lead"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/lead"],
-            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/lead"],
+            "double/head_right": ["double/butt_right", "butt/lead"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_bronze"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/bronze"],
-            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "embers:hoe_electrum"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/electrum"],
-            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/electrum"],
+            "double/head_right": ["double/butt_right", "butt/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:copper_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/copper"],
-            "duplex/head_right": ["duplex/butt_right", "butt/copper"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/copper"],
+            "double/head_right": ["double/butt_right", "butt/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:tin_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/tin"],
-            "duplex/head_right": ["duplex/butt_right", "butt/tin"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/tin"],
+            "double/head_right": ["double/butt_right", "butt/tin"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:silver_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/silver"],
-            "duplex/head_right": ["duplex/butt_right", "butt/silver"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/silver"],
+            "double/head_right": ["double/butt_right", "butt/silver"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:nickel_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/nickel"],
-            "duplex/head_right": ["duplex/butt_right", "butt/nickel"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/nickel"],
+            "double/head_right": ["double/butt_right", "butt/nickel"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:lead_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/lead"],
-            "duplex/head_right": ["duplex/butt_right", "butt/lead"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/lead"],
+            "double/head_right": ["double/butt_right", "butt/lead"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:bronze_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/bronze"],
-            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:electrum_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/electrum"],
-            "duplex/head_right": ["duplex/butt_right", "butt/electrum"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/electrum"],
+            "double/head_right": ["double/butt_right", "butt/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thermalfoundation:steel_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/steel"],
-            "duplex/head_right": ["duplex/butt_right", "butt/steel"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/steel"],
+            "double/head_right": ["double/butt_right", "butt/steel"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "ic2:bronze_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/bronze"],
-            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "forestry:bronze_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/bronze"],
-            "duplex/head_right": ["duplex/butt_right", "butt/bronze"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "thaumcraft:thaumium_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/thaumium"],
-            "duplex/head_right": ["duplex/butt_right", "butt/thaumium"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/thaumium"],
+            "double/head_right": ["double/butt_right", "butt/thaumium"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "twilightforest:ironwood_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/ironwood"],
-            "duplex/head_right": ["duplex/butt_right", "butt/ironwood"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/ironwood"],
+            "double/head_right": ["double/butt_right", "butt/ironwood"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
     {
         "predicate": {
             "item": "twilightforest:steeleaf_hoe"
         },
-        "item": "tetra:duplex_tool_modular",
+        "item": "tetra:modular_double",
         "modules": {
-            "duplex/head_left": ["duplex/hoe_left", "hoe/steeleaf"],
-            "duplex/head_right": ["duplex/butt_right", "butt/steeleaf"],
-            "duplex/handle": ["duplex/basic_handle", "basic_handle/stick"]
+            "double/head_left": ["double/hoe_left", "hoe/steeleaf"],
+            "double/head_right": ["double/butt_right", "butt/steeleaf"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     }
 ]

@@ -1,55 +1,81 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
-import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
+import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 import java.util.function.Consumer;
 
 public class GuiJournalItems extends GuiElement {
 
-    private final GuiJournalItem sword;
-    private final GuiJournalItem toolbelt;
-    private final GuiJournalItem tools;
-    private final GuiJournalItem bows;
+    private final GuiJournalSeparators separators;
 
     public GuiJournalItems(int x, int y, int width, int height, Consumer<ItemModular> onItemSelect, Consumer<String> onSlotSelect) {
         super(x, y, width, height);
 
 
-        sword = new GuiJournalItem(-39, 0, ModularSwordItem.instance, I18n.format("journal.craft.sword"),
-                () -> onItemSelect.accept(ModularSwordItem.instance), onSlotSelect);
-        sword.setAttachment(GuiAttachment.topCenter);
-        addChild(sword);
+        separators = new GuiJournalSeparators(1, -71, width, height);
+        addChild(separators);
 
-        toolbelt = new GuiJournalItem(1, -40, ItemToolbeltModular.instance, I18n.format("journal.craft.toolbelt"),
-                () -> onItemSelect.accept(ItemToolbeltModular.instance), onSlotSelect);
-        toolbelt.setAttachment(GuiAttachment.topCenter);
-        addChild(toolbelt);
+        addChild(new GuiJournalItem(-39, 0, ModularBladedItem.instance, 0,
+                () -> onItemSelect.accept(ModularBladedItem.instance), onSlotSelect)
+            .setAttachment(GuiAttachment.topCenter));
 
-        tools = new GuiJournalItem(41, 0, ModularTwinHeadItem.instance, I18n.format("journal.craft.tool"),
-                () -> onItemSelect.accept(ModularTwinHeadItem.instance), onSlotSelect);
-        tools.setAttachment(GuiAttachment.topCenter);
-        addChild(tools);
+        addChild(new GuiJournalItem(1, -40, ModularToolbeltItem.instance, 4,
+                () -> onItemSelect.accept(ModularToolbeltItem.instance), onSlotSelect)
+            .setAttachment(GuiAttachment.topCenter));
 
-        bows = new GuiJournalItem(1, 40, ModularBowItem.instance, I18n.format("journal.craft.bow"),
-                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect);
-        bows.setAttachment(GuiAttachment.topCenter);
-        addChild(bows);
+        addChild(new GuiJournalItem(41, 0, ModularDoubleHeadedItem.instance, 1,
+                () -> onItemSelect.accept(ModularDoubleHeadedItem.instance), onSlotSelect)
+            .setAttachment(GuiAttachment.topCenter));
+
+        if (ConfigHandler.enableSingle.get()) {
+            addChild(new GuiJournalItem(81, -40, ModularSingleHeadedItem.instance, 2,
+                    () -> onItemSelect.accept(ModularSingleHeadedItem.instance), onSlotSelect)
+                    .setAttachment(GuiAttachment.topCenter));
+        }
+
+//        addChild(new GuiJournalItem(81, 40, ModularDoubleHeadedItem.instance, 3,
+//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                .setAttachment(GuiAttachment.topCenter));
+
+        if (ConfigHandler.enableBow.get()) {
+            addChild(new GuiJournalItem(1, 40, ModularBowItem.instance, 5,
+                    () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+                    .setAttachment(GuiAttachment.topCenter));
+        }
+
+//        addChild(new GuiJournalItem(-79, -40, ModularBowItem.instance, 5,
+//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                .setAttachment(GuiAttachment.topCenter));
+//
+//        addChild(new GuiJournalItem(-79, 40, ModularBowItem.instance, 3,
+//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                .setAttachment(GuiAttachment.topCenter));
+//
+//        addChild(new GuiJournalItem(121, 0, ModularDoubleHeadedItem.instance, 3,
+//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                .setAttachment(GuiAttachment.topCenter));
+//
+//        addChild(new GuiJournalItem(-119, 0, ModularDoubleHeadedItem.instance, 3,
+//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                .setAttachment(GuiAttachment.topCenter));
     }
 
     public void animateOpen() {
         new KeyframeAnimation(200, this)
                 .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
                 .withDelay(800)
+                .onStop(complete -> separators.animateOpen())
                 .start();
     }
 
@@ -60,44 +86,12 @@ public class GuiJournalItems extends GuiElement {
     }
 
     public void changeItem(Item item) {
-        if (item instanceof ModularSwordItem) {
-            toolbelt.setVisible(false);
-            tools.setVisible(false);
-            bows.setVisible(false);
+        getChildren(GuiJournalItem.class).forEach(child -> child.onItemSelected(item));
 
-            sword.setVisible(true);
-            sword.setSelected(true);
-        } else if (item instanceof ItemToolbeltModular) {
-            sword.setVisible(false);
-            tools.setVisible(false);
-            bows.setVisible(false);
-
-            toolbelt.setVisible(true);
-            toolbelt.setSelected(true);
-        } else if (item instanceof ModularTwinHeadItem) {
-            sword.setVisible(false);
-            toolbelt.setVisible(false);
-            bows.setVisible(false);
-
-            tools.setVisible(true);
-            tools.setSelected(true);
-        } else if (item instanceof ModularBowItem) {
-            sword.setVisible(false);
-            toolbelt.setVisible(false);
-            tools.setVisible(false);
-
-            bows.setVisible(true);
-            bows.setSelected(true);
+        if (item == null) {
+            separators.animateReopen();
         } else {
-            sword.setSelected(false);
-            toolbelt.setSelected(false);
-            tools.setSelected(false);
-            bows.setSelected(false);
-
-            sword.setVisible(true);
-            toolbelt.setVisible(true);
-            tools.setVisible(true);
-            bows.setVisible(true);
+            separators.setVisible(false);
         }
     }
 }

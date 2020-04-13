@@ -3,7 +3,7 @@
         "predicate": {
             "item": "minecraft:wooden_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/oak"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -15,7 +15,7 @@
         "predicate": {
             "item": "minecraft:stone_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/cobblestone"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -27,7 +27,7 @@
         "predicate": {
             "item": "minecraft:iron_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/iron"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -39,7 +39,7 @@
         "predicate": {
             "item": "minecraft:golden_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/gold"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -51,7 +51,7 @@
         "predicate": {
             "item": "minecraft:diamond_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/diamond"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -66,7 +66,7 @@
         "predicate": {
             "item": "twilightforest:ironwood_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/ironwood"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -78,7 +78,7 @@
         "predicate": {
             "item": "twilightforest:steeleaf_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/steeleaf"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -90,7 +90,7 @@
         "predicate": {
             "item": "twilightforest:fiery_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/fierymetal"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/blaze_rod"],
@@ -102,7 +102,7 @@
         "predicate": {
             "item": "twilightforest:knightmetal_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/heavy_blade", "heavy_blade/knightmetal"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -117,7 +117,7 @@
         "predicate": {
             "item": "thaumcraft:thaumium_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/thaumium"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -129,7 +129,7 @@
         "predicate": {
             "item": "embers:sword_copper"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/copper"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -141,7 +141,7 @@
         "predicate": {
             "item": "embers:sword_tin"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/tin"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -153,7 +153,7 @@
         "predicate": {
             "item": "embers:sword_bronze"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/bronze"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -165,7 +165,7 @@
         "predicate": {
             "item": "embers:sword_lead"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/lead"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -177,7 +177,7 @@
         "predicate": {
             "item": "embers:sword_nickel"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/nickel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -189,7 +189,7 @@
         "predicate": {
             "item": "embers:sword_silver"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/silver"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -201,7 +201,7 @@
         "predicate": {
             "item": "embers:sword_electrum"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/electrum"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -213,7 +213,7 @@
         "predicate": {
             "item": "ic2:bronze_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/bronze"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -225,7 +225,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_copper"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/copper"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -237,7 +237,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_tin"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/tin"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -249,7 +249,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_bronze"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/bronze"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -261,7 +261,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_lead"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/lead"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -273,7 +273,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_nickel"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/nickel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -285,7 +285,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_silver"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/silver"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -297,7 +297,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_electrum"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/electrum"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -309,7 +309,7 @@
         "predicate": {
             "item": "thermalfoundation:tool.sword_steel"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/steel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -324,7 +324,7 @@
         "predicate": {
             "item": "basemetals:copper_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/copper"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -336,7 +336,7 @@
         "predicate": {
             "item": "basemetals:tin_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/tin"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -348,7 +348,7 @@
         "predicate": {
             "item": "basemetals:bronze_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/bronze"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -360,7 +360,7 @@
         "predicate": {
             "item": "basemetals:lead_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/lead"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -372,7 +372,7 @@
         "predicate": {
             "item": "basemetals:nickel_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/nickel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -384,7 +384,7 @@
         "predicate": {
             "item": "basemetals:silver_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/silver"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -396,7 +396,7 @@
         "predicate": {
             "item": "basemetals:electrum_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/electrum"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -408,7 +408,7 @@
         "predicate": {
             "item": "basemetals:steel_sword"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/steel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
@@ -420,7 +420,7 @@
         "predicate": {
             "item": "immersiveengineering:sword_steel"
         },
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "modules": {
             "sword/blade": ["sword/basic_blade", "basic_blade/steel"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/treated_wood"],

@@ -65,7 +65,7 @@ public class GuiJournalBreadcrumbs extends GuiElement {
         int xOffset = 0;
         int overlapCount = Math.min(buttons.size(), items.length);
         for (int i = 0; i < overlapCount; i++) {
-            String label = !"".equals(items[i]) ? items[i] : I18n.format("journal.craft.slot");
+            String label = !"".equals(items[i]) ? items[i] : I18n.format("tetra.journal.craft.slot");
             GuiButton button = buttons.get(i);
             button.setText(label);
             button.setX(xOffset);
@@ -84,7 +84,7 @@ public class GuiJournalBreadcrumbs extends GuiElement {
 
         // add new items
         for (int i = buttons.size(); i < items.length; i++) {
-            String label = !"".equals(items[i]) ? items[i] : I18n.format("journal.craft.slot");
+            String label = !"".equals(items[i]) ? items[i] : I18n.format("tetra.journal.craft.slot");
 
             addbutton(i, label);
         }

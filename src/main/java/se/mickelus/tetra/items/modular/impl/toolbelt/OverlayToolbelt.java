@@ -27,7 +27,7 @@ public class OverlayToolbelt {
 
     private final Minecraft mc;
 
-    public static final String bindingGroup = "toolbelt.binding.group";
+    public static final String bindingGroup = "tetra.toolbelt.binding.group";
 
     public KeyBinding accessBinding;
     public KeyBinding restockBinding;
@@ -44,9 +44,9 @@ public class OverlayToolbelt {
 
         gui = new OverlayGuiToolbelt(mc);
 
-        accessBinding = new KeyBinding("toolbelt.binding.access", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
+        accessBinding = new KeyBinding("tetra.toolbelt.binding.access", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
                 GLFW.GLFW_KEY_V, bindingGroup);
-        restockBinding = new KeyBinding("toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
+        restockBinding = new KeyBinding("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
                 InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_V, bindingGroup);
 
         ClientRegistry.registerKeyBinding(accessBinding);
@@ -108,7 +108,7 @@ public class OverlayToolbelt {
         } else {
             boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
-                mc.player.sendStatusMessage(new TranslationTextComponent("toolbelt.full"), true);
+                mc.player.sendStatusMessage(new TranslationTextComponent("tetra.toolbelt.full"), true);
             }
         }
     }

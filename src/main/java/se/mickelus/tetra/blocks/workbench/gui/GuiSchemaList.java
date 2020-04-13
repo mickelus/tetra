@@ -36,7 +36,7 @@ public class GuiSchemaList extends GuiElement {
         buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
         addChild(buttonForward);
 
-        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("workbench.schema_list.empty"));
+        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("tetra.workbench.schema_list.empty"));
         addChild(emptyStateText);
 
         this.schemaSelectionConsumer = schemaSelectionConsumer;
@@ -81,10 +81,5 @@ public class GuiSchemaList extends GuiElement {
 
     private int getNumPages() {
         return (int) Math.ceil(1f * schemas.length / pageLength );
-    }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

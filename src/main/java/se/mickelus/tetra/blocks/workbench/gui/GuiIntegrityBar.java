@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -42,7 +43,7 @@ public class GuiIntegrityBar extends GuiElement {
 
         setAttachmentPoint(GuiAttachment.topCenter);
 
-        tooltip = Collections.singletonList(I18n.format("stats.integrity_usage.tooltip"));
+        tooltip = Collections.singletonList(I18n.format("tetra.stats.integrity_usage.tooltip"));
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
@@ -58,9 +59,9 @@ public class GuiIntegrityBar extends GuiElement {
             }
 
             if (integrityGain + integrityCost < 0) {
-                label.setString(TextFormatting.RED + I18n.format("stats.integrity_usage", -integrityCost, integrityGain));
+                label.setString(TextFormatting.RED + I18n.format("tetra.stats.integrity_usage", -integrityCost, integrityGain));
             } else {
-                label.setString(I18n.format("stats.integrity_usage", -integrityCost, integrityGain));
+                label.setString(I18n.format("tetra.stats.integrity_usage", -integrityCost, integrityGain));
             }
 
             width = integrityGain * ( segmentWidth + 1);
@@ -85,25 +86,27 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         for (int i = 0; i < -integrityCost; i++) {
             if (i < integrityGain) {
-                drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,  costColor, opacity * getOpacity());
+                drawSegment(matrixStack, refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,  costColor,
+                        opacity * getOpacity());
             } else {
-                drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, overuseColor,
-                        opacity * getOpacity() * overuseOpacity);
+                drawSegment(matrixStack, refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, overuseColor,
+                        opacity * getOpacity());
             }
         }
 
         for (int i = -integrityCost; i < integrityGain; i++) {
-            drawSegment(refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor, opacity * getOpacity() * gainOpacity);
+            drawSegment(matrixStack, refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor,
+                    opacity * getOpacity());
         }
     }
 
-    private void drawSegment(int x, int y, int color, float opacity) {
-        drawRect(x, y,x + segmentWidth, y + segmentHeight, color, opacity);
+    private void drawSegment(MatrixStack matrixStack, int x, int y, int color, float opacity) {
+        drawRect(matrixStack, x, y,x + segmentWidth, y + segmentHeight, color, opacity);
     }
 
 }

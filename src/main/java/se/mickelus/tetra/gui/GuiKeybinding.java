@@ -53,14 +53,14 @@ public class GuiKeybinding extends GuiElement {
 
         switch(keyCode.getType()) {
             case KEYSYM:
-                s1 = InputMappings.func_216507_a(i);
+                s1 = InputMappings.getKeynameFromKeycode(i);
                 break;
             case SCANCODE:
-                s1 = InputMappings.func_216502_b(i);
+                s1 = InputMappings.getKeyNameFromScanCode(i);
                 break;
             case MOUSE:
                 String s2 = I18n.format(s);
-                s1 = Objects.equals(s2, s) ? I18n.format(InputMappings.Type.MOUSE.func_216500_a(), i + 1) : s2;
+                s1 = Objects.equals(s2, s) ? I18n.format(InputMappings.Type.MOUSE.name(), i + 1) : s2;
         }
 
         return s1 == null ? I18n.format(s) : s1;

@@ -1,86 +1,108 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.tileentity.BellTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
-
+// todo 1.15: ripped out
+@OnlyIn(Dist.CLIENT)
 public class ForgedContainerTESR extends TileEntityRenderer<ForgedContainerTile> {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/blocks/forged_container/forged_container.png");
-    private ForgedContainerModel model = new ForgedContainerModel();
+    public static final Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
+
+    public ModelRenderer lid;
+    public ModelRenderer base;
+
+    public ModelRenderer locks[];
 
     private static final float openDuration = 300;
 
-    public ForgedContainerTESR() { }
+    public ForgedContainerTESR(TileEntityRendererDispatcher dispatcher) {
+        super(dispatcher);
+
+        lid = new ModelRenderer(128, 64, 0, 0);
+        lid.addBox(0, -3, -14, 30, 3, 14, 0);
+        lid.rotationPointX = 1;
+        lid.rotationPointY = 7;
+        lid.rotationPointZ = 15;
+
+        locks = new ModelRenderer[4];
+        for (int i = 0; i < locks.length; i++) {
+            locks[i] = new ModelRenderer(128, 64, 0, 0);
+            locks[i].addBox(-2 + i * 6, -1, -14.03f, 2, 3, 1, 0);
+            locks[i].rotationPointX = 8;
+            locks[i].rotationPointY = 7;
+            locks[i].rotationPointZ = 15;
+        }
+
+        base = new ModelRenderer(128, 64, 0, 17);
+        base.addBox(0, 1, 0, 30, 9, 14, 0);
+        base.rotationPointX = 1;
+        base.rotationPointY = 6;
+        base.rotationPointZ = 1;
+    }
 
     @Override
-    public void render(ForgedContainerTile te, double x, double y, double z, float partialTicks, int destroyStage) {
-        if (te.isFlipped()) {
+    public void render(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer,
+            int combinedLight, int combinedOverlay) {
+        if (tile.isFlipped()) {
             return;
         }
 
-        if (destroyStage >= 0) {
-            bindTexture(DESTROY_STAGES[destroyStage]);
-            GlStateManager.matrixMode(5890);
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(4.0F, 4.0F, 1.0F);
-            GlStateManager.translatef(0.0625F, 0.0625F, 0.0625F);
-            GlStateManager.matrixMode(5888);
+        if (tile.hasWorld()) {
+            matrixStack.push();
+            matrixStack.translate(0.5F, 0.5F, 0.5F);
+            // todo: why does the model render upside down by default?
+            matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(tile.getFacing().getHorizontalAngle()));
+            matrixStack.translate(-0.5F, -0.5F, -0.5F);
+
+            IVertexBuilder vertexBuilder = material.getBuffer(renderTypeBuffer, RenderType::getEntitySolid);
+
+            renderLid(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+            renderLocks(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+            base.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+
+            matrixStack.pop();
+        }
+    }
+
+    private void renderLid(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IVertexBuilder vertexBuilder,
+            int combinedLight, int combinedOverlay) {
+        if (tile.isOpen()) {
+            float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
+            lid.rotateAngleY = (progress * 0.1f * ((float) Math.PI / 2F));
+
+            matrixStack.translate(0,0, 0.3f * progress);
+            lid.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+            matrixStack.translate(0,0, -0.3f * progress);
+
         } else {
-            bindTexture(texture);
+            lid.rotateAngleY = 0;
+            lid.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
         }
+    }
 
-        if (te.hasWorld()) {
-            GlStateManager.enableDepthTest();
-            GlStateManager.depthFunc(515);
-            GlStateManager.depthMask(true);
-
-            this.bindTexture(texture);
-
-            GlStateManager.pushMatrix();
-            GlStateManager.enableRescaleNormal();
-
-            GlStateManager.translated(x, y + 1, z + 1);
-            GlStateManager.scalef(1.0F, -1.0F, -1.0F);
-            GlStateManager.translatef(0.5F, 0.5F, 0.5F);
-            int j = 270;
-
-            // todo: rotate 90 deg based on facing
-            switch (te.getFacing()) {
-                case NORTH:
-                    break;
-                case WEST:
-                    GlStateManager.rotatef(270, 0.0F, 1.0F, 0.0F);
-                    break;
-                case SOUTH:
-                    GlStateManager.rotatef(180, 0.0F, 1.0F, 0.0F);
-                    break;
-                case EAST:
-                    GlStateManager.rotatef(90, 0.0F, 1.0F, 0.0F);
-                    break;
+    private void renderLocks(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IVertexBuilder vertexBuilder,
+            int combinedLight, int combinedOverlay) {
+        Boolean[] locked = tile.isLocked();
+        for (int i = 0; i < locks.length; i++) {
+            if (locked[i]) {
+                locks[i].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             }
-            GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-
-            if (te.isOpen()) {
-                float progress = Math.min(1, (System.currentTimeMillis() - te.openTime) / openDuration);
-                model.lid.rotateAngleY = (progress * 0.1f * ((float) Math.PI / 2F));
-                //model.lid.offsetY = 0.5625f;
-                model.lid.offsetZ = 0.3f * progress;
-            } else {
-                model.lid.rotateAngleY = 0;
-                model.lid.offsetZ = 0;
-            }
-            model.render(te.isLocked());
-//        GlStateManager.disableRescaleNormal();
-            GlStateManager.popMatrix();
-//            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        }
-
-        if (destroyStage >= 0) {
-            GlStateManager.matrixMode(5890);
-            GlStateManager.popMatrix();
-            GlStateManager.matrixMode(5888);
         }
     }
 }

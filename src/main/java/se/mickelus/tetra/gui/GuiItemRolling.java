@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
@@ -36,10 +37,10 @@ public class GuiItemRolling extends GuiElement {
     }
 
     @Override
-    protected void drawChildren(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    protected void drawChildren(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (items.length > 0) {
             int offset = (int) (System.currentTimeMillis() / 1000) % items.length;
-            items[offset].draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+            items[offset].draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         }
     }
 

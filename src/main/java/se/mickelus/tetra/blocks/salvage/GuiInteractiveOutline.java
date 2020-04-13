@@ -22,9 +22,9 @@ public class GuiInteractiveOutline extends GuiElement {
     private GuiInteractiveCapability capability;
 
     public GuiInteractiveOutline(BlockInteraction blockInteraction, PlayerEntity player) {
-        super((int) blockInteraction.minX * 2, (int) blockInteraction.minY * 2,
-                (int) (blockInteraction.maxX - blockInteraction.minX) * 2,
-                (int) (blockInteraction.maxY - blockInteraction.minY) * 2);
+        super((int) blockInteraction.minX * 4, (int) blockInteraction.minY * 4,
+                (int) (blockInteraction.maxX - blockInteraction.minX) * 4,
+                (int) (blockInteraction.maxY - blockInteraction.minY) * 4);
 
         this.blockInteraction = blockInteraction;
 
@@ -150,10 +150,5 @@ public class GuiInteractiveOutline extends GuiElement {
                         new Applier.TranslateY(5))
                 .onStop(finished -> onStop.run())
                 .start();
-    }
-
-    @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

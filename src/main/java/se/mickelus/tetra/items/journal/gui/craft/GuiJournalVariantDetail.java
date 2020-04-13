@@ -54,7 +54,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         addChild(synergyIndicator);
 
         // variant requirements
-        GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, I18n.format("journal.craft.requirements"));
+        GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, I18n.format("tetra.journal.craft.requirements"));
         requirementsLabel.setColor(GuiColors.muted);
         addChild(requirementsLabel);
 
@@ -71,7 +71,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         }
 
         // variant improvements
-        improvementsLabel = new GuiStringSmall(57, 13, I18n.format("journal.craft.improvements"));
+        improvementsLabel = new GuiStringSmall(57, 13, I18n.format("tetra.journal.craft.improvements"));
         improvementsLabel.setColor(GuiColors.muted);
         addChild(improvementsLabel);
 
@@ -79,7 +79,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         addChild(improvements);
 
         // variant stats
-        GuiStringSmall statsLabel = new GuiStringSmall(120, 13, I18n.format("journal.craft.stats"));
+        GuiStringSmall statsLabel = new GuiStringSmall(120, 13, I18n.format("tetra.journal.craft.stats"));
         statsLabel.setColor(GuiColors.muted);
         addChild(statsLabel);
 
@@ -107,7 +107,7 @@ public class GuiJournalVariantDetail extends GuiElement {
         if (selectedOutcome != null || hoveredOutcome != null) {
             OutcomePreview baseOutcome = hoveredOutcome != null ? hoveredOutcome : selectedOutcome;
 
-            variantLabel.setString(I18n.format(baseOutcome.key));
+            variantLabel.setString(I18n.format("tetra.variant." + baseOutcome.key));
 
             synergyIndicator.setX(variantLabel.getWidth() + 4);
             synergyIndicator.update(baseOutcome.itemStack, slot);

@@ -37,6 +37,7 @@ import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
@@ -88,11 +89,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public ItemModular(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public void clientInit() {
-        ModularModelLoader.registerItem(this);
     }
 
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
@@ -195,7 +191,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public String[] getMajorModuleNames() {
         return Arrays.stream(majorModuleKeys)
-                .map(key -> I18n.format(key))
+                .map(key -> I18n.format("tetra.slot." + key))
                 .toArray(String[]::new);
     }
 
@@ -212,7 +208,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     @Override
     public String[] getMinorModuleNames() {
         return Arrays.stream(minorModuleKeys)
-                .map(key -> I18n.format(key))
+                .map(key -> I18n.format("tetra.slot." + key))
                 .toArray(String[]::new);
     }
 
@@ -366,7 +362,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
                     VexEntity vex = EntityType.VEX.create(entity.world);
                     vex.setLimitedLife(effectLevel * 20);
-                    vex.setLocationAndAngles(entity.posX, entity.posY + 1, entity.posZ, entity.rotationYaw, 0.0F);
+                    vex.setLocationAndAngles(entity.getPosX(), entity.getPosY() + 1, entity.getPosZ(), entity.rotationYaw, 0.0F);
                     vex.setHeldItem(Hand.MAIN_HAND, itemStack.copy());
                     vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
                     vex.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
@@ -493,14 +489,14 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             if (ConfigHandler.moduleProgression.get()) {
                 if (isHoneable(itemStack)) {
                     tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.AQUA))
-                            .appendSibling(new TranslationTextComponent("hone.available")
+                            .appendSibling(new TranslationTextComponent("tetra.hone.available")
                                     .setStyle(basicStyle)));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningBase(itemStack);
                     String result = String.format("%.1f", 100f * (base - progress) / base);
                     tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.DARK_AQUA))
-                            .appendSibling(new TranslationTextComponent("hone.progress", result)
+                            .appendSibling(new TranslationTextComponent("tetra.hone.progress", result)
                                     .setStyle(basicStyle)));
                 }
             }
@@ -990,6 +986,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
         String name = Arrays.stream(getSynergyData(itemStack))
                 .map(synergyData -> synergyData.name)
                 .filter(Objects::nonNull)
+                .map(key -> "tetra.synergy." + key)
                 .filter(I18n::hasKey)
                 .map(I18n::format)
                 .findFirst()

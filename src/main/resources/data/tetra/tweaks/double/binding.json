@@ -1,0 +1,18 @@
+[
+    {
+        "variant": "double_binding/bolt",
+        "key": "double_tweak/binding_bolt",
+        "steps": 10,
+        "stepStats": {
+            "durabilityMultiplier": 0.952,
+            "capabilities": {
+                "hammer": [0, 0.93],
+                "axe": [0, 0.93],
+                "pickaxe": [0, 0.93],
+                "shovel": [0, 0.93],
+                "cut": [0, 0.93],
+                "pry": [0, 0.93]
+            }
+        }
+    }
+]

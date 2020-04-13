@@ -192,7 +192,7 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, rayTrace);
     }
 

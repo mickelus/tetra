@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
@@ -75,14 +76,14 @@ public class GuiRangedProgress extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible()) {
-            MainWindow window = mc.mainWindow;
+            MainWindow window = mc.getMainWindow();
             int width = window.getScaledWidth();
             int height = window.getScaledHeight();
 
             int mouseX = (int)(mc.mouseHelper.getMouseX() * window.getScaledWidth() / window.getWidth());
             int mouseY = (int)(mc.mouseHelper.getMouseY() * window.getScaledHeight() / window.getHeight());
 
-            this.drawChildren(width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(new MatrixStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 }

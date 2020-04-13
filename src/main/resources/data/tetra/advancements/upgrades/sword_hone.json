@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:sword_modular",
+            "item": "tetra:modular_sword",
             "nbt": "{\"sword/blade\": \"sword/machete\", \"sword/machete_material\": \"machete/diorite\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": "Honed Blade",

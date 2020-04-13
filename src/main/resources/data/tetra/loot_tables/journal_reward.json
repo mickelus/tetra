@@ -1,14 +1,14 @@
 {
-  "pools": [
-    {
-      "name": "geode_extended",
-      "rolls": 1,
-      "entries": [
+    "pools": [
         {
-          "type": "item",
-          "name": "tetra:journal"
+            "name": "geode_extended",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:journal"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

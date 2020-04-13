@@ -21,7 +21,7 @@ public class ToolbeltContainer extends Container {
     private InventoryQuiver quiverInventory;
 
     public ToolbeltContainer(int windowId, IInventory playerInventory, ItemStack itemStackToolbelt, PlayerEntity player) {
-        super(ItemToolbeltModular.containerType, windowId);
+        super(ModularToolbeltItem.containerType, windowId);
         this.quickslotInventory = new InventoryQuickslot(itemStackToolbelt);
         this.storageInventory = new InventoryStorage(itemStackToolbelt);
         this.potionsInventory = new InventoryPotions(itemStackToolbelt);
@@ -88,7 +88,7 @@ public class ToolbeltContainer extends Container {
     @OnlyIn(Dist.CLIENT)
     public static ToolbeltContainer create(int windowId, PlayerInventory inv) {
         ItemStack itemStack = inv.player.getHeldItemMainhand();
-        if (!ItemToolbeltModular.instance.equals(itemStack.getItem())) {
+        if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
             itemStack = inv.player.getHeldItemOffhand();
         }
 

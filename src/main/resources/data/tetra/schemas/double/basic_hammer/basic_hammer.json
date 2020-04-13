@@ -1,0 +1,177 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 64
+    },
+    "displayType": "major",
+    "outcomes": [
+        {
+            "material": {
+                "tag": "minecraft:logs"
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/log"
+        },
+        {
+            "material": {
+                "item": "minecraft:stone"
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/stone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/iron"
+        },
+        {
+            "material": {
+                "item": "minecraft:obsidian"
+            },
+            "requiredCapabilities": {
+                "hammer": 5
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/obsidian",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/electrum"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 5
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/steel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/ironwood",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/ironwood"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steeleaf",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/steeleaf"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/fiery",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/fierymetal"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/knightmetal",
+                "count": 3
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/knightmetal"
+        }
+    ]
+}

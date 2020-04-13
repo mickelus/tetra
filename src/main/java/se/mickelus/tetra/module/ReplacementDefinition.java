@@ -10,15 +10,15 @@ import net.minecraft.item.ItemStack;
  * Example json:
  * {
  *     "predicate": { "item": "minecraft:wooden_axe" },
- *     "item": "tetra:duplex_tool_modular",
+ *     "item": "tetra:modular_double",
  *     "modules": {
- *         "duplex/head_left": [ "duplex/basic_axe_left", "basic_axe/oak" ],
- *         "duplex/head_right": [ "duplex/butt_right", "butt/oak" ],
- *         "duplex/handle": [ "duplex/basic_handle", "basic_handle/stick" ]
+ *         "double/head_left": [ "double/basic_axe_left", "basic_axe/oak" ],
+ *         "double/head_right": [ "double/butt_right", "butt/oak" ],
+ *         "double/handle": [ "double/basic_handle", "basic_handle/stick" ]
  *     },
  *     "improvements": {
- *         "duplex/head_left:enchantment/efficiency": 1,
- *         "duplex/head_right:enchantment/fire_aspect": 1
+ *         "double/head_left:enchantment/efficiency": 1,
+ *         "double/head_right:enchantment/fire_aspect": 1
  *     }
  * }
  */

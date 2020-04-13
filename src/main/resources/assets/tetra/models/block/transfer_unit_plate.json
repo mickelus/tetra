@@ -1,0 +1,15 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "plate": "tetra:blocks/transfer_unit_plate"
+    },
+    "elements": [
+        {
+            "from": [ 1, 0, 0 ],
+            "to": [ 15, 12, 13 ],
+            "faces": {
+                "south":  { "texture": "#plate", "uv": [  0, 0, 14, 12 ] }
+            }
+        }
+    ]
+}

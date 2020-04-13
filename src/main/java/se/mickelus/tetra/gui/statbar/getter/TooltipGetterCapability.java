@@ -14,14 +14,14 @@ public class TooltipGetterCapability implements ITooltipGetter {
     private final IStatGetter efficiencyGetter;
     private final String localizationKey;
 
-    private static final String strikingKey = "stats.capability.striking";
+    private static final String strikingKey = "tetra.stats.capability.striking";
     private IStatGetter strikingGetter;
 
-    private static final String sweepingKey = "stats.capability.sweeping";
+    private static final String sweepingKey = "tetra.stats.capability.sweeping";
     private IStatGetter sweepingGetter;
 
     public TooltipGetterCapability(Capability capability) {
-        localizationKey = "stats." + capability + ".tooltip";
+        localizationKey = "tetra.stats." + capability + ".tooltip";
 
         levelGetter = new StatGetterCapabilityLevel(capability);
         efficiencyGetter = new StatGetterCapabilityEfficiency(capability);

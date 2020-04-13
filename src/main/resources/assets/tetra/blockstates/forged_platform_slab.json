@@ -1,16 +1,8 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "bottom": "tetra:blocks/forged_platform_bottom",
-      "top": "tetra:blocks/forged_platform_alternate",
-      "side": "tetra:blocks/forged_platform_side"
+    "variants": {
+        "type=bottom": { "model": "tetra:block/forged_platform_slab_bottom" },
+        "type=top": { "model": "tetra:block/forged_platform_slab_top" },
+        "type=double": { "model": "tetra:block/forged_platform" }
     }
-  },
-  "variants": {
-    "type=bottom": { "model": "tetra:block/half_slab" },
-    "type=top": { "model": "block/slab_top" },
-    "type=double": { "model": "tetra:block/forged_platform" }
-  }
 }
 

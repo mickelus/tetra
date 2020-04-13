@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
@@ -51,7 +52,7 @@ public class SettleToast implements IToast {
 
         if (itemStack != null) {
             toastGui.getMinecraft().getTextureManager().bindTexture(texture);
-            GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(0, 0, 0, 0, 160, 32);
 
             if (!this.hasPlayedSound && delta > 0L) {
@@ -63,14 +64,14 @@ public class SettleToast implements IToast {
 
             if (glyph != null) {
                 toastGui.blit(20, 14, 160, 0, 15, 15);
-                glyph.draw(19, 14, 260, 43, -1, -1, 1);
+                glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().fontRenderer.drawString(I18n.format("settled.toast"), 30, 7, SchemaRarity.hone.tint);
+            toastGui.getMinecraft().fontRenderer.drawString(I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchemaRarity.hone.tint);
             toastGui.getMinecraft().fontRenderer.drawString(toastGui.getMinecraft().fontRenderer.trimStringToWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
 
-            RenderHelper.enableGUIStandardItemLighting();
+            RenderHelper.enableStandardItemLighting();
             toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(null, itemStack, 8, 8);
 
             return delta > 5000 ? Visibility.HIDE : Visibility.SHOW;

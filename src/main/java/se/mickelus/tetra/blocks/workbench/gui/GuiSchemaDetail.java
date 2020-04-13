@@ -33,7 +33,7 @@ public class GuiSchemaDetail extends GuiElement {
 
     public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
-        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("workbench.schema_detail.back"), backListener));
+        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("tetra.workbench.schema_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);
@@ -74,10 +74,10 @@ public class GuiSchemaDetail extends GuiElement {
         capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
 
-        experienceIndicator = new GuiExperience(170, 42, "workbench.schema_detail.experience");
+        experienceIndicator = new GuiExperience(170, 42, "tetra.workbench.schema_detail.experience");
         addChild(experienceIndicator);
 
-        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("workbench.schema_detail.craft"), craftListener);
+        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("tetra.workbench.schema_detail.craft"), craftListener);
         addChild(craftButton);
     }
 

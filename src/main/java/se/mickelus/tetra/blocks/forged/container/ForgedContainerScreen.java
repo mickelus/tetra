@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -48,7 +49,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
         compartmentButtons = new GuiTabVerticalGroup(10, 26, this::changeCompartment,
                 IntStream.range(1, ForgedContainerTile.compartmentCount + 1)
-                        .mapToObj(i -> I18n.format("forged_container.compartment", i))
+                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment", i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
 
@@ -122,6 +123,6 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        guiRoot.draw(x, y, width, height, mouseX, mouseY, 1);
+        guiRoot.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 }

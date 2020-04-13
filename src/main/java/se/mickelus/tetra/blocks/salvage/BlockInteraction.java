@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.Property;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -105,14 +106,14 @@ public class BlockInteraction {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
-    public static boolean attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand,
+    public static ActionResultType attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand,
             BlockRayTraceResult rayTrace) {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
         if (player.getCooledAttackStrength(0) < 0.8) {
             player.resetCooldown();
-            return false;
+            return ActionResultType.FAIL;
         }
 
         AxisAlignedBB boundingBox = blockState.getShape(world, pos).getBoundingBox();
@@ -155,9 +156,9 @@ public class BlockInteraction {
             }
 
             player.resetCooldown();
-            return true;
+            return ActionResultType.SUCCESS;
         }
-        return false;
+        return ActionResultType.PASS;
     }
 
     public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace,

@@ -1,8 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:duplex_tool_modular",
-            "nbt": "{\"duplex/head_left\": \"duplex/basic_hammer_left\",\"duplex/basic_hammer_left_material\": \"basic_hammer/iron\",\"duplex/head_right\": \"duplex/basic_hammer_right\",\"duplex/basic_hammer_right_material\": \"basic_hammer/iron\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\"}"
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/iron\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "goal",
         "title": "Hammer III",
@@ -13,14 +13,14 @@
         "head_left": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "slot": "duplex/head_left",
+                "slot": "double/head_left",
                 "variant": "basic_hammer/iron"
             }
         },
         "head_right": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "slot": "duplex/head_right",
+                "slot": "double/head_right",
                 "variant": "basic_hammer/iron"
             }
         }

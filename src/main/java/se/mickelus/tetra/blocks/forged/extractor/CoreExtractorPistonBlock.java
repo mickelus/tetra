@@ -10,6 +10,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +35,7 @@ import java.util.Random;
 
 public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     public static final String unlocalizedName = "extractor_piston";
+
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static CoreExtractorPistonBlock instance;
 
@@ -47,10 +49,10 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
         setRegistryName(unlocalizedName);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(CoreExtractorPistonTile.class, new CoreExtractorPistonTESR());
+        ClientRegistry.bindTileEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonTESR::new);
     }
 
     @Override

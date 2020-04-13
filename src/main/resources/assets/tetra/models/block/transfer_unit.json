@@ -5,9 +5,10 @@
         "down": "tetra:blocks/transfer_unit",
         "up": "tetra:blocks/transfer_unit_top",
         "north": "tetra:blocks/transfer_unit",
-        "south": "#config",
-        "east": "#indicator",
-        "west": "#indicator"
+        "south": "tetra:blocks/transfer_unit_config0",
+        "east": "tetra:blocks/transfer_unit_indicator_idle",
+        "west": "tetra:blocks/transfer_unit_indicator_idle",
+        "plate": "tetra:blocks/transfer_unit_plate"
     },
     "elements": [
         {
@@ -20,13 +21,6 @@
                 "south": { "texture": "#south", "uv": [  0, 0,  14, 12 ] },
                 "west":  { "texture": "#west",  "uv": [  13, 0,  0, 12 ] },
                 "east":  { "texture": "#east",  "uv": [  0, 0,  13, 12 ] }
-            }
-        },
-        {
-            "from": [ 1, 0, 0 ],
-            "to": [ 15, 12, 13 ],
-            "faces": {
-                "south":  { "texture": "#plate", "uv": [  0, 0,  14, 12 ] }
             }
         }
     ]

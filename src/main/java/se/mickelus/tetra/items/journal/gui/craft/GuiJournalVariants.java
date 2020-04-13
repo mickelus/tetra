@@ -34,7 +34,7 @@ public class GuiJournalVariants extends GuiElement {
             Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, width, 50);
 
-        GuiString variantsLabel = new GuiStringSmall(0, 0, I18n.format("journal.craft.variants"));
+        GuiString variantsLabel = new GuiStringSmall(0, 0, I18n.format("tetra.journal.craft.variants"));
         variantsLabel.setColor(GuiColors.muted);
         addChild(variantsLabel);
 

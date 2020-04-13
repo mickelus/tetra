@@ -15,7 +15,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemPredicateComposite;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 
@@ -262,6 +262,6 @@ public class InventoryToolbelt implements IInventory {
     }
 
     public List<Collection<ItemEffect>> getSlotEffects() {
-        return ItemToolbeltModular.instance.getSlotEffects(toolbeltItemStack, inventoryType);
+        return ModularToolbeltItem.instance.getSlotEffects(toolbeltItemStack, inventoryType);
     }
 }

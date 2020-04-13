@@ -70,6 +70,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         super(type, worldIn);
     }
 
+    @Override
     protected void registerData() {
         super.registerData();
         dataManager.register(LOYALTY_LEVEL, (byte)0);
@@ -78,6 +79,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     /**
      * Called to update the entity's position/logic.
      */
+    @Override
     public void tick() {
         if (timeInGround > 4) {
             dealtDamage = true;
@@ -94,10 +96,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                 remove();
             } else if (loyaltyLevel > 0) {
                 setNoClip(true);
-                Vec3d vec3d = new Vec3d(shooter.posX - posX, shooter.posY + (double)shooter.getEyeHeight() - posY, shooter.posZ - posZ);
-                posY += vec3d.y * 0.015D * (double)loyaltyLevel;
+                Vec3d vec3d = new Vec3d(shooter.getPosX() - getPosX(), shooter.getPosYEye() - getPosY(), shooter.getPosZ() - getPosZ());
+                setRawPosition(getPosX(), getPosY() + vec3d.y * 0.015D * (double)loyaltyLevel, getPosZ());
                 if (world.isRemote) {
-                    lastTickPosY = posY;
+                    lastTickPosY = getPosY();
                 }
 
                 double speed = 0.05D * (double)loyaltyLevel;
@@ -122,6 +124,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         }
     }
 
+    @Override
     protected ItemStack getArrowStack() {
         return thrownStack.copy();
     }
@@ -130,6 +133,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
      * Gets the EntityRayTraceResult representing the entity hit
      */
     @Nullable
+    @Override
     protected EntityRayTraceResult rayTraceEntities(Vec3d startVec, Vec3d endVec) {
         return dealtDamage ? null : super.rayTraceEntities(startVec, endVec);
     }
@@ -181,6 +185,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     /**
      * Called when the arrow hits an entity
      */
+    @Override
     protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
         Entity target = p_213868_1_.getEntity();
         Entity shooter = getShooter();
@@ -208,7 +213,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         float f1 = 1.0F;
         if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.getPosition();
-            if (world.isSkyLightMax(blockpos)) {
+            if (world.canSeeSky(blockpos)) {
                 LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, (double)blockpos.getX() + 0.5D, (double)blockpos.getY(), (double)blockpos.getZ() + 0.5D, false);
                 lightningboltentity.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null);
                 ((ServerWorld)world).addLightningBolt(lightningboltentity);
@@ -229,6 +234,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     /**
      * The sound made when an entity is hit by this projectile
      */
+    @Override
     protected SoundEvent getHitEntitySound() {
         return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
     }
@@ -236,6 +242,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     /**
      * Called by a player entity when they collide with an entity
      */
+    @Override
     public void onCollideWithPlayer(PlayerEntity entityIn) {
         Entity entity = getShooter();
         if (entity == null || entity.getUniqueID() == entityIn.getUniqueID()) {
@@ -246,6 +253,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         if (compound.contains(stackKey, 10)) {
@@ -256,16 +264,17 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         dataManager.set(LOYALTY_LEVEL, (byte)EnchantmentHelper.getLoyaltyModifier(thrownStack));
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.put(stackKey, thrownStack.write(new CompoundNBT()));
         compound.putBoolean(dealtDamageKey, dealtDamage);
     }
 
-    protected void tryDespawn() {
-        int i = dataManager.get(LOYALTY_LEVEL);
-        if (pickupStatus != AbstractArrowEntity.PickupStatus.ALLOWED || i <= 0) {
-            super.tryDespawn();
+    public void func_225516_i_() {
+        int level = this.dataManager.get(LOYALTY_LEVEL);
+        if (this.pickupStatus != PickupStatus.ALLOWED || level <= 0) {
+            super.func_225516_i_();
         }
 
     }

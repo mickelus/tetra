@@ -9,7 +9,7 @@
         }
     ],
     "result": {
-        "item": "tetra:sword_modular",
+        "item": "tetra:modular_sword",
         "nbt": {
             "sword/blade": "sword/stonecutter",
             "sword/stonecutter_material": "stonecutter/stonecutter",

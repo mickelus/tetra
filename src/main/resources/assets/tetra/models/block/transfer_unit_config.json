@@ -1,0 +1,15 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "config": "tetra:blocks/transfer_unit_config0"
+    },
+    "elements": [
+        {
+            "from": [ 1, 0, 0 ],
+            "to": [ 15, 12, 13 ],
+            "faces": {
+                "south":  { "texture": "#config", "uv": [  0, 0, 14, 12 ] }
+            }
+        }
+    ]
+}

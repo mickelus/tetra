@@ -8,9 +8,9 @@ import java.util.function.Consumer;
 public class GuiSlotTabGroup extends GuiElement {
     private static final char[] keybindings = new char[] { 'a', 's', 'd'};
     private static final String[] labels = new String[] {
-            I18n.format("workbench.slot_detail.details_tab"),
-            I18n.format("workbench.slot_detail.craft_tab"),
-            I18n.format("workbench.slot_detail.tweak_tab")
+            I18n.format("tetra.workbench.slot_detail.details_tab"),
+            I18n.format("tetra.workbench.slot_detail.craft_tab"),
+            I18n.format("tetra.workbench.slot_detail.tweak_tab")
     };
 
     private GuiSlotTabButton[] buttons;

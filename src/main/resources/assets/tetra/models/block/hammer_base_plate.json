@@ -1,0 +1,23 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "particle": "tetra:blocks/hammer_base",
+        "down": "tetra:blocks/hammer_base",
+        "up": "tetra:blocks/hammer_base",
+        "north": "tetra:blocks/hammer_base_socket",
+        "south": "tetra:blocks/hammer_base_socket",
+        "east": "tetra:blocks/hammer_base_side",
+        "west": "tetra:blocks/hammer_base_side",
+        "config_east": "tetra:blocks/hammer_config0",
+        "plate": "tetra:blocks/hammer_base_plate"
+    },
+    "elements": [
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "plate", "cullface": "west" }
+            }
+        }
+    ]
+}

@@ -4,6 +4,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -16,7 +18,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -25,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,6 +38,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerTESR;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.forged.extractor.*;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
@@ -48,9 +51,9 @@ import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.data.provider.BlockstateProvider;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
@@ -60,11 +63,11 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.journal.ItemJournal;
-import se.mickelus.tetra.items.modular.impl.ModularSingleHeadItem;
+import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.ModularTwinHeadItem;
-import se.mickelus.tetra.items.modular.impl.ModularSwordItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ItemToolbeltModular;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
@@ -78,6 +81,7 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
+import se.mickelus.tetra.IntegrationHelper;
 
 import java.util.Arrays;
 
@@ -97,6 +101,7 @@ public class TetraMod {
 
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(IntegrationHelper::enqueueIMC);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
@@ -153,13 +158,13 @@ public class TetraMod {
         };
 
         items = new Item[] {
-                new ModularSwordItem(),
-                new ModularTwinHeadItem(),
+                new ModularBladedItem(),
+                new ModularDoubleHeadedItem(),
                 new GeodeItem(),
                 new PristineLapisItem(),
                 new PristineEmeraldItem(),
                 new PristineDiamondItem(),
-                new ItemToolbeltModular(),
+                new ModularToolbeltItem(),
                 new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),
@@ -176,7 +181,7 @@ public class TetraMod {
         }
 
         if (ConfigHandler.enableSingle.get()) {
-            items = ArrayUtils.addAll(items, new ModularSingleHeadItem());
+            items = ArrayUtils.addAll(items, new ModularSingleHeadedItem());
         }
 
         if (ConfigHandler.enableStonecutter.get()) {
@@ -238,19 +243,24 @@ public class TetraMod {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void loadModels(final ModelBakeEvent event) {
-        ModularModelLoader.loadModels(event);
-    }
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
-        if ("textures".equals(event.getMap().getBasePath())) {
+        // todo 1.15: Move this to ModularItemModel.getTextures?
+        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getTextureLocation())) {
             Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
                     .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
                     // 9 is the length of "textures/" & 4 is the length of ".png"
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
+
+            event.addSprite(ForgedContainerTESR.material.getTextureLocation());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onGatherData(final GatherDataEvent event) {
+        DataGenerator dataGenerator = event.getGenerator();
+        if(event.includeServer()) {
+            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
         }
     }
 
@@ -272,7 +282,7 @@ public class TetraMod {
             // toolbelt
             ContainerType toolbeltContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
                 return ToolbeltContainer.create(windowId, inv);
-            })).setRegistryName(MOD_ID, ItemToolbeltModular.unlocalizedName);
+            })).setRegistryName(MOD_ID, ModularToolbeltItem.unlocalizedName);
             event.getRegistry().register(toolbeltContainerType);
 
             // workbench

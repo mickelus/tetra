@@ -1,14 +1,8 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "tetra:block/core_extractor"
-  },
-  "variants": {
-    "facing": {
-      "north":  {},
-      "south":  { "y": 180 },
-      "west":  { "y": -90 },
-      "east":  { "y": 90 }
+    "variants": {
+        "facing=north":  { "model": "tetra:block/core_extractor" },
+        "facing=south":  { "model": "tetra:block/core_extractor", "y": 180 },
+        "facing=west":  { "model": "tetra:block/core_extractor", "y": -90 },
+        "facing=east":  { "model": "tetra:block/core_extractor", "y": 90 }
     }
-  }
 }

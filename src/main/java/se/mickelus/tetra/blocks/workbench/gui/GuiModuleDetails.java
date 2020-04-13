@@ -43,7 +43,7 @@ public class GuiModuleDetails extends GuiElement {
         description = new GuiTextSmall(5, 19, 105, "");
         addChild(description);
 
-        emptyLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.format("workbench.module_detail.empty"));
+        emptyLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.format("tetra.workbench.module_detail.empty"));
         emptyLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(emptyLabel);
 

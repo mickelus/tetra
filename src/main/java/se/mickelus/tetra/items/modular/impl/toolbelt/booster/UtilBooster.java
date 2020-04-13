@@ -79,7 +79,7 @@ public class UtilBooster {
                     vec3d.y * 0.01f + (vec3d.y * 1.5f - player.getMotion().y) * 0.05f,
                     vec3d.z * 0.01f + (vec3d.z * 1.5f - player.getMotion().z) * 0.05f);
         } else if (player.getMotion().y > -0.1) {
-            if (player.isSneaking()) {
+            if (player.isCrouching()) {
                 player.addVelocity(0, boostBase / 1.5, 0);
             } else {
                 player.addVelocity(0, boostBase, 0);
@@ -90,8 +90,8 @@ public class UtilBooster {
         }
 
         if (player.world instanceof ServerWorld) {
-            ((ServerWorld) player.world).spawnParticle(ParticleTypes.SMOKE, player.posX - 0.2 + Math.random() * 0.4,
-                    player.posY + Math.random() * 0.2, player.posZ - 0.2 + Math.random() * 0.4, 10, 0,
+            ((ServerWorld) player.world).spawnParticle(ParticleTypes.SMOKE, player.getPosX() - 0.2 + Math.random() * 0.4,
+                    player.getPosY() + Math.random() * 0.2, player.getPosZ() - 0.2 + Math.random() * 0.4, 10, 0,
                     0, 0, 0.1D);
         }
     }
@@ -112,11 +112,11 @@ public class UtilBooster {
         player.move(MoverType.SELF, new Vec3d(0, 0.4, 0));
 
         if (player.world instanceof ServerWorld) {
-            ((ServerWorld)player.world).spawnParticle(ParticleTypes.LARGE_SMOKE, player.posX,
-                    player.posY, player.posZ, 10, 0,
+            ((ServerWorld)player.world).spawnParticle(ParticleTypes.LARGE_SMOKE, player.getPosX(),
+                    player.getPosY(), player.getPosZ(), 10, 0,
                     0, 0, 0.1D);
-            ((ServerWorld)player.world).spawnParticle(ParticleTypes.FLAME, player.posX,
-                    player.posY, player.posZ, 3, 0,
+            ((ServerWorld)player.world).spawnParticle(ParticleTypes.FLAME, player.getPosX(),
+                    player.getPosY(), player.getPosZ(), 3, 0,
                     0, 0, 0.1D);
         }
     }

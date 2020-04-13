@@ -13,7 +13,7 @@ public class TooltipGetterOverbowed implements ITooltipGetter {
 
     @Override
     public String getTooltip(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("stats.bow.overbowed.tooltip",
+        return I18n.format("tetra.stats.bow.overbowed.tooltip",
                 String.format("%.0f%%", levelGetter.getValue(player, itemStack)),
                 String.format("%.0f%%", efficiencyGetter.getValue(player, itemStack)));
     }

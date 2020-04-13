@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -90,8 +92,8 @@ public class OverlayGuiQuiverSlot extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (this.opacity == 1) {
             drawItemStack(itemStack, x + refX + 3, y + refY + 3);
@@ -99,17 +101,16 @@ public class OverlayGuiQuiverSlot extends GuiElement {
     }
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
-        GlStateManager.pushMatrix();
-        GlStateManager.enableDepthTest();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderSystem.pushMatrix();
+        RenderSystem.enableDepthTest();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        RenderHelper.enableStandardItemLighting();
 
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
-        GlStateManager.disableDepthTest();
-
-        GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
+        RenderSystem.disableDepthTest();
+        RenderSystem.popMatrix();
     }
 
 

@@ -15,7 +15,7 @@ public class TooltipGetterUnbreaking implements ITooltipGetter {
 
     @Override
     public String getTooltip(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("stats.unbreaking.tooltip",
+        return I18n.format("tetra.stats.unbreaking.tooltip",
                 String.format("%d", (int) levelGetter.getValue(player, itemStack)),
                 String.format("%.2f", chanceGetter.getValue(player, itemStack)));
     }

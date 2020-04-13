@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,14 +13,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.GuiTextureOffset;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ItemModular;
@@ -127,7 +128,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override

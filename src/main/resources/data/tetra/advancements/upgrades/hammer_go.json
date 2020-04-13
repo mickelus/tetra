@@ -1,8 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:duplex_tool_modular",
-            "nbt": "{\"duplex/head_left\": \"duplex/basic_hammer_left\",\"duplex/basic_hammer_left_material\": \"basic_hammer/obsidian\",\"duplex/head_right\": \"duplex/basic_hammer_right\",\"duplex/basic_hammer_right_material\": \"basic_hammer/obsidian\",\"duplex/handle\": \"duplex/basic_handle\",\"duplex/basic_handle_material\": \"basic_handle/stick\"}"
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/obsidian\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/obsidian\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "challenge",
         "title": "Four to go",

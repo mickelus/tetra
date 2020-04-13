@@ -1,7 +1,12 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
-import se.mickelus.mgui.gui.*;
+import net.minecraft.item.Item;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiClickable;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
+import se.mickelus.mgui.gui.animation.GuiAnimation;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
@@ -16,8 +21,8 @@ public class GuiJournalItem extends GuiClickable {
 
     GuiElement slotGroup;
 
-    private List<KeyframeAnimation> selectAnimations;
-    private List<KeyframeAnimation> deselectAnimations;
+    private List<GuiAnimation> selectAnimations;
+    private List<GuiAnimation> deselectAnimations;
 
     private KeyframeAnimation itemShow;
     private KeyframeAnimation itemHide;
@@ -25,7 +30,9 @@ public class GuiJournalItem extends GuiClickable {
     private boolean isSelected = false;
     private final GuiTexture backdrop;
 
-    public GuiJournalItem(int x, int y, ItemModular item, String label, Runnable onSelect, Consumer<String> onSlotSelect) {
+    private ItemModular item;
+
+    public GuiJournalItem(int x, int y, ItemModular item, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
         super(x, y, 64, 64, onSelect);
 
         selectAnimations = new ArrayList<>();
@@ -35,15 +42,9 @@ public class GuiJournalItem extends GuiClickable {
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        GuiString labelString = new GuiStringOutline(0, -1, label);
-        labelString.setAttachment(GuiAttachment.middleCenter);
-        addChild(labelString);
-
-        // label animations
-        selectAnimations.add(new KeyframeAnimation(80, labelString)
-                .applyTo(new Applier.Opacity(0)));
-        deselectAnimations.add(new KeyframeAnimation(80, labelString)
-                .applyTo(new Applier.Opacity(1)));
+        GuiTexture icon = new GuiTexture(0, 0, 38, 38, 38 * textureIndex, 218, GuiTextures.workbench);
+        icon.setAttachment(GuiAttachment.middleCenter);
+        addChild(icon);
 
         slotGroup = new GuiElement(37, 15, 0, 0);
         setupSlots(item, onSlotSelect);
@@ -71,6 +72,8 @@ public class GuiJournalItem extends GuiClickable {
         itemHide = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(0))
                 .onStop(complete -> this.isVisible = false);
+
+        this.item = item;
     }
 
     @Override
@@ -86,15 +89,28 @@ public class GuiJournalItem extends GuiClickable {
         return super.onClick(x, y);
     }
 
+    public void onItemSelected(Item item) {
+        if (this.item.equals(item)) {
+            setVisible(true);
+            setSelected(true);
+        } else if (item == null) {
+            setVisible(true);
+            setSelected(false);
+        } else {
+            setVisible(false);
+            setSelected(false);
+        }
+    }
+
     public void setSelected(boolean selected) {
         if (selected) {
-            deselectAnimations.forEach(KeyframeAnimation::stop);
+            deselectAnimations.forEach(GuiAnimation::stop);
 
             slotGroup.setVisible(true);
-            selectAnimations.forEach(KeyframeAnimation::start);
+            selectAnimations.forEach(GuiAnimation::start);
         } else {
-            selectAnimations.forEach(KeyframeAnimation::stop);
-            deselectAnimations.forEach(KeyframeAnimation::start);
+            selectAnimations.forEach(GuiAnimation::stop);
+            deselectAnimations.forEach(GuiAnimation::start);
         }
 
         backdrop.setColor(GuiColors.normal);

@@ -141,7 +141,10 @@ public class RemoveSchema extends BaseSchema {
 
     @Override
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        return 1;
+        if (capability == Capability.hammer) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override

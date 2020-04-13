@@ -1,0 +1,64 @@
+{
+    "replace": true,
+    "slots": [
+        "double/binding"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 88,
+        "textureY": 16
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:string",
+                "count": 4
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "moduleKey": "double/binding",
+            "moduleVariant": "double_binding/string"
+        },
+        {
+            "material": {
+                "item": "minecraft:leather"
+            },
+            "requiredCapabilities": {
+                "cut": 2
+            },
+            "moduleKey": "double/binding",
+            "moduleVariant": "double_binding/leather"
+        },
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "cut": 2
+            },
+            "moduleKey": "double/binding",
+            "moduleVariant": "double_binding/hide"
+        },
+        {
+            "material": {
+                "item": "minecraft:vine",
+                "count": 4
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "moduleKey": "double/binding",
+            "moduleVariant": "double_binding/vine"
+        },
+        {
+            "material": {
+                "item": "tetra:forged_bolt"
+            },
+            "moduleKey": "double/binding",
+            "moduleVariant": "double_binding/bolt"
+        }
+    ]
+}

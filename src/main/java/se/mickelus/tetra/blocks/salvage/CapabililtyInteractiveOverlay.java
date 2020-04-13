@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CapabililtyInteractiveOverlay {
@@ -24,7 +24,7 @@ public class CapabililtyInteractiveOverlay {
     }
 
     @SubscribeEvent
-    public void renderOverlay(DrawBlockHighlightEvent event) {
+    public void renderOverlay(DrawHighlightEvent event) {
         if (event.getTarget().getType().equals(RayTraceResult.Type.BLOCK)) {
             BlockRayTraceResult rayTrace = (BlockRayTraceResult) event.getTarget();
 
@@ -45,7 +45,7 @@ public class CapabililtyInteractiveOverlay {
                     previousState = blockState;
                 }
 
-                gui.draw(Minecraft.getInstance().player, rayTrace, shape, event.getPartialTicks());
+                gui.draw(event.getMatrix(), event.getInfo().getProjectedView(), rayTrace, shape);
             }
         }
     }

@@ -1,0 +1,489 @@
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": ["double/head_left", "double/head_right"],
+    "slotSuffixes": ["_left", "_right"],
+    "improvements": [
+        "tetra:double/sickle",
+        "tetra:double/sickle_hone",
+        "tetra:double/shared_head_compat",
+        "tetra:double/shared_head_hone",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "sickle/oak",
+            "durability": 20,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 1,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/crude",
+                "tint": "oak"
+            }],
+            "capabilities": {
+                "cut": [1, 1.6667]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/cobblestone",
+            "durability": 56,
+            "integrity": -1,
+            "magicCapacity": 5,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "cobblestone_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/crude",
+                "tint": "cobblestone"
+            }],
+            "capabilities": {
+                "cut": [1, 3.33333]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/flint",
+            "durability": 78,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 2,
+            "attackSpeed": 0,
+            "glyph": {
+                "tint": "flint_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/crude",
+                "tint": "flint"
+            }],
+            "capabilities": {
+                "cut": [1, 3.5]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/iron",
+            "durability": 115,
+            "integrity": -2,
+            "magicCapacity": 14,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "iron"
+            }],
+            "capabilities": {
+                "cut": [1, 5]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/diamond",
+            "durability": 771,
+            "integrity": -2,
+            "magicCapacity": 10,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "diamond_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/shiny",
+                "tint": "diamond"
+            }],
+            "capabilities": {
+                "cut": [1, 6.6667]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/gold",
+            "durability": 6,
+            "integrity": -2,
+            "magicCapacity": 22,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/shiny",
+                "tint": "gold"
+            }],
+            "capabilities": {
+                "cut": [1, 10]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/copper",
+            "durability": 122,
+            "integrity": 0,
+            "magicCapacity": 13,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "copper"
+            }],
+            "capabilities": {
+                "cut": [1, 4.5]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/tin",
+            "durability": 92,
+            "integrity": 0,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "tin"
+            }],
+            "capabilities": {
+                "cut": [1, 5.4]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/silver",
+            "durability": 46,
+            "integrity": -1,
+            "magicCapacity": 21,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/shiny",
+                "tint": "silver"
+            }],
+            "capabilities": {
+                "cut": [1, 10]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/nickel",
+            "durability": 230,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "nickel"
+            }],
+            "capabilities": {
+                "cut": [2, 5.2]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/lead",
+            "durability": 65,
+            "integrity": -1,
+            "magicCapacity": 11,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "lead"
+            }],
+            "capabilities": {
+                "cut": [1, 4.6]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/bronze",
+            "durability": 360,
+            "integrity": -1,
+            "magicCapacity": 13,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "bronze"
+            }],
+            "capabilities": {
+                "cut": [2, 6.2]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/electrum",
+            "durability": 121,
+            "integrity": -1,
+            "magicCapacity": 24,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "electrum"
+            }],
+            "capabilities": {
+                "cut": [1, 9]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/steel",
+            "durability": 328,
+            "integrity": -2,
+            "magicCapacity": 11,
+            "damage": 2,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "steel"
+            }],
+            "capabilities": {
+                "cut": [2, 6.5]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/thaumium",
+            "durability": 419,
+            "integrity": -2,
+            "magicCapacity": 25,
+            "damage": 2,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "thaumium_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "thaumium"
+            }],
+            "capabilities": {
+                "cut": [1, 6.67]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/ironwood_tf",
+            "durability": 426,
+            "integrity": -2,
+            "magicCapacity": 18,
+            "damage": 2,
+            "attackSpeed": -0.4,
+            "glyph": {
+                "tint": "ironwood_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/ironwood_tf"
+            }],
+            "capabilities": {
+                "cut": [1, 5.42]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/steeleaf",
+            "durability": 96,
+            "integrity": -1,
+            "magicCapacity": 15,
+            "damage": 2,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "steeleaf_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "steeleaf"
+            }],
+            "capabilities": {
+                "cut": [2, 6.67]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/fierymetal",
+            "durability": 602,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.3,
+            "glyph": {
+                "tint": "fierymetal_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/fierymetal"
+            }],
+            "capabilities": {
+                "cut": [1, 7.5]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        },
+        {
+            "key": "sickle/knightmetal",
+            "durability": 446,
+            "integrity": -2,
+            "magicCapacity": 12,
+            "damage": 2,
+            "attackSpeed": -0.25,
+            "glyph": {
+                "tint": "knightmetal_glyph",
+                "textureX": 32,
+                "textureY": 32
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/sickle/metal",
+                "tint": "knightmetal"
+            }],
+            "capabilities": {
+                "cut": [1, 6.67]
+            },
+            "effects": {
+                "strikingCut": 1,
+                "sweepingStrike": 1,
+                "sweeping": 1
+            }
+        }
+    ]
+}

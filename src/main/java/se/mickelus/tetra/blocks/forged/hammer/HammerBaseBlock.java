@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -91,6 +93,11 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
+    public void clientInit() {
+        RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
+    }
+
+    @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         tooltip.add(locationTooltip);
         tooltip.add(new StringTextComponent(""));
@@ -166,7 +173,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
-    public boolean onBlockActivated(final BlockState blockState, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand,
+    public ActionResultType onBlockActivated(final BlockState blockState, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand,
             final BlockRayTraceResult rayTraceResult) {
         Direction blockFacing = blockState.get(propFacing);
         HammerBaseTile te = TileEntityOptional.from(world, pos, HammerBaseTile.class).orElse(null);
@@ -174,7 +181,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         Direction facing = rayTraceResult.getFace();
 
         if (te == null) {
-            return false;
+            return ActionResultType.FAIL;
         }
 
         if (blockFacing.getAxis().equals(facing.getAxis())) {
@@ -193,7 +200,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), ItemStack.EMPTY);
                 }
 
-                return true;
+                return ActionResultType.SUCCESS;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setHeldItem(hand, ItemStack.EMPTY);
@@ -203,7 +210,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack);
                 }
 
-                return true;
+                return ActionResultType.SUCCESS;
             }
         } else if (heldStack.getItem() instanceof ItemVentPlate) {
             if (Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.east.prop)) {
@@ -215,7 +222,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
                 heldStack.shrink(1);
 
-                return true;
+                return ActionResultType.SUCCESS;
             } else if (Rotation.COUNTERCLOCKWISE_90.rotate(blockFacing).equals(facing) && !blockState.get(EnumHammerPlate.west.prop)) {
                 world.setBlockState(pos, blockState.with(EnumHammerPlate.west.prop, true), 3);
 
@@ -225,7 +232,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
                 heldStack.shrink(1);
 
-                return true;
+                return ActionResultType.SUCCESS;
             }
         }
 
@@ -253,17 +260,6 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.get(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
-    public boolean isSolid(BlockState state) {
-        // we need to override this to render properly under water, as blocks rendering on BlockRenderLayer.CUTOUT returns false here
-        return true;
     }
 
     @Override

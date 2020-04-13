@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:sword_modular",
+            "item": "tetra:modular_sword",
             "nbt": "{\"sword/blade\": \"sword/heavy_blade\", \"sword/heavy_blade_material\": \"heavy_blade/obsidian\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/blaze_rod\",\"sword/pommel\": \"sword/decorative_pommel\",\"sword/decorative_pommel_material\": \"decorative_pommel/obsidian\"}"
         },
         "title": "Tall Build",

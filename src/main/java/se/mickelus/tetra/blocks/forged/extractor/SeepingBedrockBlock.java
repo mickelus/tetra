@@ -55,6 +55,6 @@ public class SeepingBedrockBlock extends TetraBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getDefaultState().with(activeProp, context.getPlayer().isSneaking() ? 0 : 1);
+        return getDefaultState().with(activeProp, context.getPlayer().isCrouching() ? 0 : 1);
     }
 }

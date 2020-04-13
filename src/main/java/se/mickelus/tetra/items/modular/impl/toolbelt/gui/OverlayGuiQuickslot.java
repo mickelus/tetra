@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -63,29 +65,29 @@ public class OverlayGuiQuickslot extends GuiElement {
     }
 
     @Override
-    public void draw(int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
             fontRenderer.drawStringWithShadow(itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
         }
 
-        drawItemStack(itemStack, x + refX + 38, y + refY + 1);
+        drawItemStack(matrixStack, itemStack, x + refX + 38, y + refY + 1);
     }
 
-    private void drawItemStack(ItemStack itemStack, int x, int y) {
-        GlStateManager.pushMatrix();
+    private void drawItemStack(MatrixStack matrixStack, ItemStack itemStack, int x, int y) {
         GlStateManager.enableDepthTest();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        RenderHelper.enableStandardItemLighting();
 
+        RenderSystem.color4f(1, 1, 1, opacity);
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
         if (opacity < 1) {
             GlStateManager.disableDepthTest();
-            drawRect(x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
+//            drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }
-        GlStateManager.popMatrix();
+        RenderSystem.color4f(1, 1, 1, 1);
         RenderHelper.disableStandardItemLighting();
     }
 

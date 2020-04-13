@@ -21,7 +21,7 @@ public class GuiSlotEffect extends GuiElement {
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = I18n.format(String.format("toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.toString()));
+        tooltip = I18n.format(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.toString()));
 
         switch (effect) {
             case quickAccess:

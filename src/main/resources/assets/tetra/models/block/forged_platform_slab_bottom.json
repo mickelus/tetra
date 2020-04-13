@@ -1,0 +1,8 @@
+{
+    "parent": "tetra:block/half_slab",
+    "textures": {
+        "bottom": "tetra:blocks/forged_platform_bottom",
+        "top": "tetra:blocks/forged_platform_alternate",
+        "side": "tetra:blocks/forged_platform_side"
+    }
+}

@@ -1,12 +1,13 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.TetraMod;
@@ -84,7 +85,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        defaultGui.draw(x, y, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override

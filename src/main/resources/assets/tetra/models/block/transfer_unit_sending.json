@@ -1,0 +1,7 @@
+{
+    "parent": "tetra:block/transfer_unit",
+    "textures": {
+        "east": "tetra:blocks/transfer_unit_indicator_send",
+        "west": "tetra:blocks/transfer_unit_indicator_send"
+    }
+}
