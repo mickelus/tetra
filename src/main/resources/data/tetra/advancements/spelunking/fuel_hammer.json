@@ -1,31 +1,31 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:hammer_base"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.fuel_hammer.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.fuel_hammer.description"
-    }
-  },
-  "parent": "tetra:spelunking/find_cell",
-  "criteria": {
-    "fuel": {
-      "trigger": "tetra:block_use",
-      "conditions": {
-        "after": {
-          "block": "tetra:hammer_base",
-          "state": {
-            "cell1charged": true,
-            "cell2charged": true
-          }
+    "display": {
+        "icon": {
+            "item": "tetra:hammer_base"
         },
-        "item": {
-          "item": "tetra:magmatic_cell"
+        "title": {
+            "translate": "tetra.advancements.spelunking.fuel_hammer.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.fuel_hammer.description"
         }
-      }
+    },
+    "parent": "tetra:spelunking/find_cell",
+    "criteria": {
+        "fuel": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "after": {
+                    "block": "tetra:hammer_base",
+                    "state": {
+                        "cell1charged": true,
+                        "cell2charged": true
+                    }
+                },
+                "item": {
+                    "item": "tetra:magmatic_cell"
+                }
+            }
+        }
     }
-  }
 }

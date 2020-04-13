@@ -1,27 +1,27 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:geode"
+    "display": {
+        "icon": {
+            "item": "tetra:geode"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.root.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.root.description"
+        },
+        "background": "minecraft:textures/block/black_concrete_powder.png"
     },
-    "title": {
-      "translate": "tetra.advancements.spelunking.root.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.root.description"
-    },
-    "background": "minecraft:textures/block/black_concrete_powder.png"
-  },
-  "criteria": {
-    "spelunking": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "dimension": "overworld",
-        "position": {
-          "y": {
-            "max": 30
-          }
+    "criteria": {
+        "spelunking": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "dimension": "overworld",
+                "position": {
+                    "y": {
+                        "max": 30
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

@@ -1,26 +1,26 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:forged_bolt"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.find_bolt.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.find_bolt.description"
-    }
-  },
-  "parent": "tetra:spelunking/containers",
-  "criteria": {
-    "forged_bolt": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
+    "display": {
+        "icon": {
             "item": "tetra:forged_bolt"
-          }
-        ]
-      }
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_bolt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_bolt.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "forged_bolt": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:forged_bolt"
+                    }
+                ]
+            }
+        }
     }
-  }
 }

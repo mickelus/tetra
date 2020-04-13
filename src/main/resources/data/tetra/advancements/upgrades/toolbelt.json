@@ -1,27 +1,27 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_toolbelt",
-      "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
+    "display": {
+        "icon": {
+            "item": "tetra:modular_toolbelt",
+            "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.toolbelt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.toolbelt.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.upgrades.toolbelt.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.upgrades.toolbelt.description"
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "toolbelt": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:modular_toolbelt"
+                    }
+                ]
+            }
+        }
     }
-  },
-  "parent": "tetra:upgrades/root",
-  "criteria": {
-    "toolbelt": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "tetra:modular_toolbelt"
-          }
-        ]
-      }
-    }
-  }
 }

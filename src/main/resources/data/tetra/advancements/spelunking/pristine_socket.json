@@ -1,62 +1,62 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:pristine_lapis"
+    "display": {
+        "icon": {
+            "item": "tetra:pristine_lapis"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.pristine_socket.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.pristine_socket.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.spelunking.pristine_socket.title"
+    "parent": "tetra:spelunking/geode_open",
+    "criteria": {
+        "double_emerald": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "double_socket/pristine_emerald"
+            }
+        },
+        "double_diamond": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "double_socket/pristine_diamond"
+            }
+        },
+        "double_lapis": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "double_socket/pristine_lapis"
+            }
+        },
+        "sword_emerald": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_emerald"
+            }
+        },
+        "sword_diamond": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_diamond"
+            }
+        },
+        "sword_lapis": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_socket/pristine_lapis"
+            }
+        }
     },
-    "description": {
-      "translate": "tetra.advancements.spelunking.pristine_socket.description"
-    }
-  },
-  "parent": "tetra:spelunking/geode_open",
-  "criteria": {
-    "double_emerald": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "double_socket/pristine_emerald"
-      }
-    },
-    "double_diamond": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "double_socket/pristine_diamond"
-      }
-    },
-    "double_lapis": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "double_socket/pristine_lapis"
-      }
-    },
-    "sword_emerald": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "sword_socket/pristine_emerald"
-      }
-    },
-    "sword_diamond": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "sword_socket/pristine_diamond"
-      }
-    },
-    "sword_lapis": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "sword_socket/pristine_lapis"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "double_emerald",
-      "double_diamond",
-      "double_lapis",
-      "sword_emerald",
-      "sword_diamond",
-      "sword_lapis"
+    "requirements": [
+        [
+            "double_emerald",
+            "double_diamond",
+            "double_lapis",
+            "sword_emerald",
+            "sword_diamond",
+            "sword_lapis"
+        ]
     ]
-  ]
 }

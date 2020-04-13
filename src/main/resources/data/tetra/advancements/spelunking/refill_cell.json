@@ -1,27 +1,27 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:magmatic_cell"
+    "display": {
+        "icon": {
+            "item": "tetra:magmatic_cell"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.refill_cell.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.refill_cell.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.spelunking.refill_cell.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.refill_cell.description"
+    "parent": "tetra:spelunking/find_cell",
+    "criteria": {
+        "get_geode": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:magmatic_cell",
+                        "durability": 128
+                    }
+                ]
+            }
+        }
     }
-  },
-  "parent": "tetra:spelunking/find_cell",
-  "criteria": {
-    "get_geode": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "tetra:magmatic_cell",
-            "durability": 128
-          }
-        ]
-      }
-    }
-  }
 }

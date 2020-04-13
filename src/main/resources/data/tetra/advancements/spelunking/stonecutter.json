@@ -1,28 +1,28 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_sword",
-      "nbt": "{\"sword/blade\": \"sword/stonecutter\",\"sword/stonecutter_material\": \"stonecutter/stonecutter\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.stonecutter.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.stonecutter.description"
-    }
-  },
-  "parent": "tetra:spelunking/containers",
-  "criteria": {
-    "earthpiercer": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
+    "display": {
+        "icon": {
             "item": "tetra:modular_sword",
-            "nbt": "{\"sword/blade\": \"sword/stonecutter\"}"
-          }
-        ]
-      }
+            "nbt": "{\"sword/blade\": \"sword/stonecutter\",\"sword/stonecutter_material\": \"stonecutter/stonecutter\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.stonecutter.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.stonecutter.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "earthpiercer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:modular_sword",
+                        "nbt": "{\"sword/blade\": \"sword/stonecutter\"}"
+                    }
+                ]
+            }
+        }
     }
-  }
 }

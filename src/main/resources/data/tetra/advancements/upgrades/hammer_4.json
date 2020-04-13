@@ -1,37 +1,37 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:forged_workbench"
+    "display": {
+        "icon": {
+            "item": "tetra:forged_workbench"
+        },
+        "frame": "goal",
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_4.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_4.description"
+        }
     },
-    "frame": "goal",
-    "title": {
-      "translate": "tetra.advancements.upgrades.hammer_4.title"
+    "parent": "tetra:upgrades/hammer_3",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "capability": "hammer",
+                "capabilityLevel": 4
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "capability": "hammer",
+                "capabilityLevel": 4
+            }
+        }
     },
-    "description": {
-      "translate": "tetra.advancements.upgrades.hammer_4.description"
-    }
-  },
-  "parent": "tetra:upgrades/hammer_3",
-  "criteria": {
-    "craft": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "capability": "hammer",
-        "capabilityLevel": 4
-      }
-    },
-    "improvement": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "capability": "hammer",
-        "capabilityLevel": 4
-      }
-    }
-  },
-  "requirements": [
-    [
-      "craft",
-      "improvement"
+    "requirements": [
+        [
+            "craft",
+            "improvement"
+        ]
     ]
-  ]
 }

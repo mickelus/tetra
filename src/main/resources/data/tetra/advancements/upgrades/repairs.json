@@ -1,29 +1,29 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_double",
-      "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.repairs.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.repairs.description"
+        },
+        "show_toast": false,
+        "announce_to_chat": false
     },
-    "title": {
-      "translate": "tetra.advancements.upgrades.repairs.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.upgrades.repairs.description"
-    },
-    "show_toast": false,
-    "announce_to_chat": false
-  },
-  "parent": "tetra:upgrades/root",
-  "criteria": {
-    "hammer": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "tetra:modular_double"
-          }
-        ]
-      }
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "hammer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:modular_double"
+                    }
+                ]
+            }
+        }
     }
-  }
 }

@@ -1,54 +1,54 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:quick_latch"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.find_latch.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.find_latch.description"
-    }
-  },
-  "parent": "tetra:spelunking/containers",
-  "criteria": {
-    "find_latch": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
+    "display": {
+        "icon": {
             "item": "tetra:quick_latch"
-          }
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_latch.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_latch.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "find_latch": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:quick_latch"
+                    }
+                ]
+            }
+        },
+        "quiver": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "quiver/quick_latch"
+            }
+        },
+        "strap": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "strap/quick_latch"
+            }
+        },
+        "storage": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "storage/quick_latch"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "find_latch"
+        ],
+        [
+            "quiver",
+            "strap",
+            "storage"
         ]
-      }
-    },
-    "quiver": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "quiver/quick_latch"
-      }
-    },
-    "strap": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "strap/quick_latch"
-      }
-    },
-    "storage": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "storage/quick_latch"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "find_latch"
-    ],
-    [
-      "quiver",
-      "strap",
-      "storage"
     ]
-  ]
 }

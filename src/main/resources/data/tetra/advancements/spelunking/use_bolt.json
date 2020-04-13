@@ -1,36 +1,36 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_double",
-      "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/iron\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\", \"double/binding\": \"double/binding\",\"double/binding_material\": \"double_binding/bolt\"}"
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/iron\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\", \"double/binding\": \"double/binding\",\"double/binding_material\": \"double_binding/bolt\"}"
+        },
+        "frame": "goal",
+        "title": {
+            "translate": "tetra.advancements.spelunking.use_bolt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.use_bolt.description"
+        }
     },
-    "frame": "goal",
-    "title": {
-      "translate": "tetra.advancements.spelunking.use_bolt.title"
+    "parent": "tetra:spelunking/find_bolt",
+    "criteria": {
+        "sword": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "sword_binding/bolt"
+            }
+        },
+        "tool": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "double_binding/bolt"
+            }
+        }
     },
-    "description": {
-      "translate": "tetra.advancements.spelunking.use_bolt.description"
-    }
-  },
-  "parent": "tetra:spelunking/find_bolt",
-  "criteria": {
-    "sword": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "sword_binding/bolt"
-      }
-    },
-    "tool": {
-      "trigger": "tetra:craft_module",
-      "conditions": {
-        "variant": "double_binding/bolt"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "sword",
-      "tool"
+    "requirements": [
+        [
+            "sword",
+            "tool"
+        ]
     ]
-  ]
 }

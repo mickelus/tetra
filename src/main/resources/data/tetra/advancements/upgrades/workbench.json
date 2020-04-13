@@ -1,22 +1,22 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:basic_workbench"
+    "display": {
+        "icon": {
+            "item": "tetra:basic_workbench"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.workbench.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.workbench.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.upgrades.workbench.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.upgrades.workbench.description"
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "hammer": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "after": "tetra:workbench"
+            }
+        }
     }
-  },
-  "parent": "tetra:upgrades/root",
-  "criteria": {
-    "hammer": {
-      "trigger": "tetra:block_use",
-      "conditions": {
-        "after": "tetra:workbench"
-      }
-    }
-  }
 }

@@ -1,53 +1,53 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_sword",
-      "nbt": "{\"sword/blade\": \"sword/heavy_blade\", \"sword/heavy_blade_material\": \"heavy_blade/obsidian\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/blaze_rod\",\"sword/pommel\": \"sword/decorative_pommel\",\"sword/decorative_pommel_material\": \"decorative_pommel/obsidian\"}"
+    "display": {
+        "icon": {
+            "item": "tetra:modular_sword",
+            "nbt": "{\"sword/blade\": \"sword/heavy_blade\", \"sword/heavy_blade_material\": \"heavy_blade/obsidian\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/blaze_rod\",\"sword/pommel\": \"sword/decorative_pommel\",\"sword/decorative_pommel_material\": \"decorative_pommel/obsidian\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.sword_hone_peak.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.sword_hone_peak.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.upgrades.sword_hone_peak.title"
+    "parent": "tetra:upgrades/sword_hone",
+    "criteria": {
+        "blade_hone/damage": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/damage",
+                "improvementLevel": 5
+            }
+        },
+        "blade_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/speed",
+                "improvementLevel": 5
+            }
+        },
+        "hilt_hone/damage": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/damage",
+                "improvementLevel": 5
+            }
+        },
+        "hilt_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/speed",
+                "improvementLevel": 5
+            }
+        }
     },
-    "description": {
-      "translate": "tetra.advancements.upgrades.sword_hone_peak.description"
-    }
-  },
-  "parent": "tetra:upgrades/sword_hone",
-  "criteria": {
-    "blade_hone/damage": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade_hone/damage",
-        "improvementLevel": 5
-      }
-    },
-    "blade_hone/speed": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade_hone/speed",
-        "improvementLevel": 5
-      }
-    },
-    "hilt_hone/damage": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "hilt_hone/damage",
-        "improvementLevel": 5
-      }
-    },
-    "hilt_hone/speed": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "hilt_hone/speed",
-        "improvementLevel": 5
-      }
-    }
-  },
-  "requirements": [
-    [
-      "blade_hone/damage",
-      "blade_hone/speed",
-      "hilt_hone/damage",
-      "hilt_hone/speed"
+    "requirements": [
+        [
+            "blade_hone/damage",
+            "blade_hone/speed",
+            "hilt_hone/damage",
+            "hilt_hone/speed"
+        ]
     ]
-  ]
 }

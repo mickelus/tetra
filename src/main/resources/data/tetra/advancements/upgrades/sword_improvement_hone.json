@@ -1,68 +1,68 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_sword",
-      "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/iron\", \"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\", \"sword/blade:blade/hooked\": 1, \"sword/blade:blade/serrated\": 1}"
+    "display": {
+        "icon": {
+            "item": "tetra:modular_sword",
+            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/iron\", \"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\", \"sword/blade:blade/hooked\": 1, \"sword/blade:blade/serrated\": 1}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.sword_improvement_hone.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.sword_improvement_hone.description"
+        }
     },
-    "title": {
-      "translate": "tetra.advancements.upgrades.sword_improvement_hone.title"
+    "parent": "tetra:upgrades/sword_hone",
+    "criteria": {
+        "hooked": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/hooked"
+            }
+        },
+        "tempered": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/tempered"
+            }
+        },
+        "serrated": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/serrated"
+            }
+        },
+        "hooked+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/hooked",
+                "improvementLevel": 2
+            }
+        },
+        "tempered+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/tempered",
+                "improvementLevel": 2
+            }
+        },
+        "serrated+": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade/serrated",
+                "improvementLevel": 2
+            }
+        }
     },
-    "description": {
-      "translate": "tetra.advancements.upgrades.sword_improvement_hone.description"
-    }
-  },
-  "parent": "tetra:upgrades/sword_hone",
-  "criteria": {
-    "hooked": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/hooked"
-      }
-    },
-    "tempered": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/tempered"
-      }
-    },
-    "serrated": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/serrated"
-      }
-    },
-    "hooked+": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/hooked",
-        "improvementLevel": 2
-      }
-    },
-    "tempered+": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/tempered",
-        "improvementLevel": 2
-      }
-    },
-    "serrated+": {
-      "trigger": "tetra:craft_improvement",
-      "conditions": {
-        "improvement": "blade/serrated",
-        "improvementLevel": 2
-      }
-    }
-  },
-  "requirements": [
-    [
-      "hooked",
-      "tempered",
-      "serrated"
-    ],
-    [
-      "hooked+",
-      "tempered+",
-      "serrated+"
+    "requirements": [
+        [
+            "hooked",
+            "tempered",
+            "serrated"
+        ],
+        [
+            "hooked+",
+            "tempered+",
+            "serrated+"
+        ]
     ]
-  ]
 }

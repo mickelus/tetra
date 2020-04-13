@@ -1,26 +1,26 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:geode"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.geode.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.geode.description"
-    }
-  },
-  "parent": "tetra:spelunking/root",
-  "criteria": {
-    "get_geode": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
+    "display": {
+        "icon": {
             "item": "tetra:geode"
-          }
-        ]
-      }
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.geode.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.geode.description"
+        }
+    },
+    "parent": "tetra:spelunking/root",
+    "criteria": {
+        "get_geode": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:geode"
+                    }
+                ]
+            }
+        }
     }
-  }
 }

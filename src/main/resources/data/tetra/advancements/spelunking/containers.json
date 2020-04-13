@@ -1,40 +1,40 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:forged_crate"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.containers.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.containers.description"
-    }
-  },
-  "parent": "tetra:spelunking/ancient_ruins",
-  "criteria": {
-    "crate1": {
-      "trigger": "tetra:block_interaction",
-      "conditions": {
-        "capability": "pry",
-        "after": {
-          "block": "minecraft:air"
+    "display": {
+        "icon": {
+            "item": "tetra:forged_crate"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.containers.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.containers.description"
         }
-      }
     },
-    "crate2": {
-      "trigger": "tetra:block_interaction",
-      "conditions": {
-        "capability": "hammer",
-        "after": {
-          "block": "minecraft:air"
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "crate1": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "capability": "pry",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
+        },
+        "crate2": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "capability": "hammer",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
         }
-      }
-    }
-  },
-  "requirements": [
-    [
-      "crate1",
-      "crate2"
+    },
+    "requirements": [
+        [
+            "crate1",
+            "crate2"
+        ]
     ]
-  ]
 }

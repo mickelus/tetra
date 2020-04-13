@@ -1,28 +1,28 @@
 {
-  "display": {
-    "icon": {
-      "item": "tetra:modular_single",
-      "nbt": "{\"single/head\": \"single/earthpiercer\",\"single/earthpiercer_material\": \"earthpiercer/earthpiercer\",\"single/handle\": \"single/basic_handle\",\"single/basic_handle_material\": \"basic_handle/stick\"}"
-    },
-    "title": {
-      "translate": "tetra.advancements.spelunking.earthpiercer.title"
-    },
-    "description": {
-      "translate": "tetra.advancements.spelunking.earthpiercer.description"
-    }
-  },
-  "parent": "tetra:spelunking/containers",
-  "criteria": {
-    "earthpiercer": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
+    "display": {
+        "icon": {
             "item": "tetra:modular_single",
-            "nbt": "{\"single/head\": \"single/earthpiercer\"}"
-          }
-        ]
-      }
+            "nbt": "{\"single/head\": \"single/earthpiercer\",\"single/earthpiercer_material\": \"earthpiercer/earthpiercer\",\"single/handle\": \"single/basic_handle\",\"single/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.earthpiercer.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.earthpiercer.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "earthpiercer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:modular_single",
+                        "nbt": "{\"single/head\": \"single/earthpiercer\"}"
+                    }
+                ]
+            }
+        }
     }
-  }
 }
