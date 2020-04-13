@@ -98,7 +98,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
     private List<String> getVariantLines(boolean isActive, SynergyData data) {
         String header = Arrays.stream(data.moduleVariants)
-                .map(key -> I18n.format(key))
+                .map(key -> I18n.format("tetra.variant." + key))
                 .collect(Collectors.joining(" + "));
 
         if (isActive || alwaysShowStats) {
@@ -111,7 +111,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
     private List<String> getModuleLines(boolean isActive, SynergyData data) {
         String header = Arrays.stream(data.modules)
-                .map(key -> I18n.format(key + ".name"))
+                .map(key -> I18n.format("tetra.module." + key + ".name"))
                 .collect(Collectors.joining(" + "));
 
         if (isActive || alwaysShowStats) {
