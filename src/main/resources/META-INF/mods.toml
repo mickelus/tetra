@@ -28,7 +28,7 @@ displayName="Tetra" #mandatory
 # A text field displayed in the mod UI
 authors="Mickelus" #optional
 # The description text for the mod (multi line!) (#mandatory)
-description="Tetra revolves around modular items and attemps to blend it together with other concepts such as adventure and technology."
+description="Tetra revolves around modular items and attempts to blend it together with other concepts such as adventure and technology."
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.tetra]] #optional
     # the modid of the dependency
@@ -53,4 +53,10 @@ description="Tetra revolves around modular items and attemps to blend it togethe
     mandatory=true
     versionRange="[2.1.0,]"
     ordering="NONE"
+    side="BOTH"
+[[dependencies.tetra]]
+    modId="curios"
+    mandatory=false
+    versionRange="[2.0,)"
+    ordering="AFTER"
     side="BOTH"
