@@ -20,6 +20,7 @@ import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.ConfigHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -130,6 +131,8 @@ public class ToolbeltHelper {
                 ItemStack itemStack = maybeToolbelt.get().right;
                 return itemStack;
             }
+            if (ConfigHandler.toolbeltCurioOnly.get())
+                return ItemStack.EMPTY;
         }
         PlayerInventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {

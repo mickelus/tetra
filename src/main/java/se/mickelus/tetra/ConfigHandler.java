@@ -19,6 +19,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec spec;
 
     public static ForgeConfigSpec.BooleanValue development;
+    public static ForgeConfigSpec.BooleanValue toolbeltCurioOnly;
 
     public static ForgeConfigSpec.IntValue geodeDensity;
 
@@ -61,6 +62,10 @@ public class ConfigHandler {
                 .comment("Enables commands & data reloading functionality useful for development, has a negative impact on performance")
                 .worldRestart()
                 .define("development", false);
+
+        toolbeltCurioOnly = builder
+                .comment("If enabled and Curios is installed, Toolbelts will only work in the Curio belt slot")
+                .define("toolbelt_curio_only", false);
 
         builder.pop();
 
