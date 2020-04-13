@@ -1,25 +1,29 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/iron\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
-        },
-        "title": "[?] Double headed tools",
-        "description": "When using double headed tools (e.g. pickaxes, axes, hammers) it's only the head with the highest value that will be considered when determining damage or harvest efficiency.",
-        "show_toast": false,
-        "announce_to_chat": false
+  "display": {
+    "icon": {
+      "item": "tetra:modular_double",
+      "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/iron\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
     },
-    "parent": "tetra:upgrades/repairs",
-    "criteria": {
-        "hammer": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:modular_double"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.upgrades.double_headed.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.double_headed.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "parent": "tetra:upgrades/repairs",
+  "criteria": {
+    "hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "tetra:modular_double"
+          }
+        ]
+      }
     }
+  }
 }

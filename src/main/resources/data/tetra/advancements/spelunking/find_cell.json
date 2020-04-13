@@ -1,23 +1,27 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:magmatic_cell",
-            "nbt": "{\"Damage\": 128}"
-        },
-        "title": "Thermal Theft",
-        "description": "Find a thermal cell in the ancient ruins"
+  "display": {
+    "icon": {
+      "item": "tetra:magmatic_cell",
+      "nbt": "{\"Damage\": 128}"
     },
-    "parent": "tetra:spelunking/ancient_ruins",
-    "criteria": {
-        "get_cell": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:magmatic_cell"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.spelunking.find_cell.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.spelunking.find_cell.description"
     }
+  },
+  "parent": "tetra:spelunking/ancient_ruins",
+  "criteria": {
+    "get_cell": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "tetra:magmatic_cell"
+          }
+        ]
+      }
+    }
+  }
 }

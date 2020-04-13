@@ -1,23 +1,27 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_toolbelt",
-            "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
-        },
-        "title": "Stay Hip",
-        "description": "Find a way to easily access your tools"
+  "display": {
+    "icon": {
+      "item": "tetra:modular_toolbelt",
+      "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
     },
-    "parent": "tetra:upgrades/root",
-    "criteria": {
-        "toolbelt": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:modular_toolbelt"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.upgrades.toolbelt.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.toolbelt.description"
     }
+  },
+  "parent": "tetra:upgrades/root",
+  "criteria": {
+    "toolbelt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "tetra:modular_toolbelt"
+          }
+        ]
+      }
+    }
+  }
 }

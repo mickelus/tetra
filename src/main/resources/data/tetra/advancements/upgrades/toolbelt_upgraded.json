@@ -1,19 +1,23 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_toolbelt",
-            "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/inlaid\"}"
-        },
-        "title": "Wrapped Up",
-        "description": "Fully upgrade a toolbelt"
+  "display": {
+    "icon": {
+      "item": "tetra:modular_toolbelt",
+      "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/inlaid\"}"
     },
-    "parent": "tetra:upgrades/toolbelt",
-    "criteria": {
-        "inlaid": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "belt/inlaid"
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.upgrades.toolbelt_upgraded.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.toolbelt_upgraded.description"
     }
+  },
+  "parent": "tetra:upgrades/toolbelt",
+  "criteria": {
+    "inlaid": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "belt/inlaid"
+      }
+    }
+  }
 }

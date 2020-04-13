@@ -1,30 +1,39 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_sword",
-            "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
-        },
-        "title": "Cutting a New One",
-        "description": "Place a vanilla sword in a workbench and upgrade it"
+  "display": {
+    "icon": {
+      "item": "tetra:modular_sword",
+      "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
     },
-    "parent": "tetra:upgrades/workbench",
-    "criteria": {
-        "module": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
-            }
-        },
-        "improvement": {
-            "trigger": "tetra:craft_improvement",
-            "conditions": {
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
-            }
+    "title": {
+      "translate": "tetra.advancements.upgrades.sword_upgrade.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.sword_upgrade.description"
+    }
+  },
+  "parent": "tetra:upgrades/workbench",
+  "criteria": {
+    "module": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "after": {
+          "item": "tetra:modular_sword"
         }
+      }
     },
-    "requirements": [["module", "improvement"]]
+    "improvement": {
+      "trigger": "tetra:craft_improvement",
+      "conditions": {
+        "after": {
+          "item": "tetra:modular_sword"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "module",
+      "improvement"
+    ]
+  ]
 }

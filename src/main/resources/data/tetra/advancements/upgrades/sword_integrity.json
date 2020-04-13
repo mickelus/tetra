@@ -1,32 +1,41 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_sword",
-            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/gold\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\", \"sword/guard\": \"sword/binding\",\"sword/binding_material\": \"sword_binding/leather\", \"sword/pommel\": \"sword/counterweight\",\"sword/counterweight_material\": \"counterweight/iron\", \"sword/blade:blade/tempered\": 1}"
-        },
-        "title": "Tightly Wrought",
-        "description": "Upgrade a sword's hilt or strengthen the sword with a binding to increase its integrity"
+  "display": {
+    "icon": {
+      "item": "tetra:modular_sword",
+      "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/gold\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\", \"sword/guard\": \"sword/binding\",\"sword/binding_material\": \"sword_binding/leather\", \"sword/pommel\": \"sword/counterweight\",\"sword/counterweight_material\": \"counterweight/iron\", \"sword/blade:blade/tempered\": 1}"
     },
-    "parent": "tetra:upgrades/sword_upgrade",
-    "criteria": {
-        "module": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "module": "sword/basic_hilt",
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
-            }
-        },
-        "improvement": {
-            "trigger": "tetra:craft_improvement",
-            "conditions": {
-                "improvement": "sword/binding",
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
-            }
+    "title": {
+      "translate": "tetra.advancements.upgrades.sword_integrity.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.sword_integrity.description"
+    }
+  },
+  "parent": "tetra:upgrades/sword_upgrade",
+  "criteria": {
+    "module": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "module": "sword/basic_hilt",
+        "after": {
+          "item": "tetra:modular_sword"
         }
+      }
     },
-    "requirements": [["module", "improvement"]]
+    "improvement": {
+      "trigger": "tetra:craft_improvement",
+      "conditions": {
+        "improvement": "sword/binding",
+        "after": {
+          "item": "tetra:modular_sword"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "module",
+      "improvement"
+    ]
+  ]
 }

@@ -1,23 +1,27 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:magmatic_cell"
-        },
-        "title": "Excitement",
-        "description": "Use a transfer unit or a core extractor to fully charge a thermal cell"
+  "display": {
+    "icon": {
+      "item": "tetra:magmatic_cell"
     },
-    "parent": "tetra:spelunking/find_cell",
-    "criteria": {
-        "get_geode": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:magmatic_cell",
-                        "durability": 128
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.spelunking.refill_cell.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.spelunking.refill_cell.description"
     }
+  },
+  "parent": "tetra:spelunking/find_cell",
+  "criteria": {
+    "get_geode": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "tetra:magmatic_cell",
+            "durability": 128
+          }
+        ]
+      }
+    }
+  }
 }

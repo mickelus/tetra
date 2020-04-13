@@ -1,28 +1,32 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/iron\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
-        },
-        "frame": "goal",
-        "title": "Hammer III",
-        "description": "Gain access to the third hammer tier by crafting a double sided iron hammer"
+  "display": {
+    "icon": {
+      "item": "tetra:modular_double",
+      "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/iron\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
     },
-    "parent": "tetra:upgrades/hammer_2",
-    "criteria": {
-        "head_left": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "slot": "double/head_left",
-                "variant": "basic_hammer/iron"
-            }
-        },
-        "head_right": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "slot": "double/head_right",
-                "variant": "basic_hammer/iron"
-            }
-        }
+    "frame": "goal",
+    "title": {
+      "translate": "tetra.advancements.upgrades.hammer_3.title"
+    },
+    "description": {
+      "translate": "tetra.advancements.upgrades.hammer_3.description"
     }
+  },
+  "parent": "tetra:upgrades/hammer_2",
+  "criteria": {
+    "head_left": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "slot": "double/head_left",
+        "variant": "basic_hammer/iron"
+      }
+    },
+    "head_right": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "slot": "double/head_right",
+        "variant": "basic_hammer/iron"
+      }
+    }
+  }
 }

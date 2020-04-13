@@ -1,28 +1,37 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:forged_workbench"
-        },
-        "frame": "goal",
-        "title": "Hammer IV",
-        "description": "Use a forge hammer to craft a module requiring tier 4 hammering"
+  "display": {
+    "icon": {
+      "item": "tetra:forged_workbench"
     },
-    "parent": "tetra:upgrades/hammer_3",
-    "criteria": {
-        "craft": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
-            }
-        },
-        "improvement": {
-            "trigger": "tetra:craft_improvement",
-            "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
-            }
-        }
+    "frame": "goal",
+    "title": {
+      "translate": "tetra.advancements.upgrades.hammer_4.title"
     },
-    "requirements": [["craft", "improvement"]]
+    "description": {
+      "translate": "tetra.advancements.upgrades.hammer_4.description"
+    }
+  },
+  "parent": "tetra:upgrades/hammer_3",
+  "criteria": {
+    "craft": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "capability": "hammer",
+        "capabilityLevel": 4
+      }
+    },
+    "improvement": {
+      "trigger": "tetra:craft_improvement",
+      "conditions": {
+        "capability": "hammer",
+        "capabilityLevel": 4
+      }
+    }
+  },
+  "requirements": [
+    [
+      "craft",
+      "improvement"
+    ]
+  ]
 }

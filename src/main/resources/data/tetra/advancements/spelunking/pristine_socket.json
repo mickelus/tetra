@@ -1,49 +1,62 @@
 {
-    "display": {
-        "icon": {
-            "item": "tetra:pristine_lapis"
-        },
-        "title": "Immaculate Insert",
-        "description": "Find a pristine gem in a geode and use it to socket a sword or a tool"
+  "display": {
+    "icon": {
+      "item": "tetra:pristine_lapis"
     },
-    "parent": "tetra:spelunking/geode_open",
-    "criteria": {
-        "double_emerald": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "double_socket/pristine_emerald"
-            }
-        },
-        "double_diamond": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "double_socket/pristine_diamond"
-            }
-        },
-        "double_lapis": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "double_socket/pristine_lapis"
-            }
-        },
-        "sword_emerald": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "sword_socket/pristine_emerald"
-            }
-        },
-        "sword_diamond": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "sword_socket/pristine_diamond"
-            }
-        },
-        "sword_lapis": {
-            "trigger": "tetra:craft_module",
-            "conditions": {
-                "variant": "sword_socket/pristine_lapis"
-            }
-        }
+    "title": {
+      "translate": "tetra.advancements.spelunking.pristine_socket.title"
     },
-    "requirements": [["double_emerald", "double_diamond", "double_lapis", "sword_emerald", "sword_diamond", "sword_lapis"]]
+    "description": {
+      "translate": "tetra.advancements.spelunking.pristine_socket.description"
+    }
+  },
+  "parent": "tetra:spelunking/geode_open",
+  "criteria": {
+    "double_emerald": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "double_socket/pristine_emerald"
+      }
+    },
+    "double_diamond": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "double_socket/pristine_diamond"
+      }
+    },
+    "double_lapis": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "double_socket/pristine_lapis"
+      }
+    },
+    "sword_emerald": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "sword_socket/pristine_emerald"
+      }
+    },
+    "sword_diamond": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "sword_socket/pristine_diamond"
+      }
+    },
+    "sword_lapis": {
+      "trigger": "tetra:craft_module",
+      "conditions": {
+        "variant": "sword_socket/pristine_lapis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "double_emerald",
+      "double_diamond",
+      "double_lapis",
+      "sword_emerald",
+      "sword_diamond",
+      "sword_lapis"
+    ]
+  ]
 }
