@@ -18,7 +18,7 @@
             "integrity": -1,
             "magicCapacity": 15,
             "damage": 4,
-            "attackSpeed": -0.2,
+            "attackSpeed": -0.35,
             "glyph": {
                 "tint": "oak_glyph",
                 "textureX": 64
@@ -36,7 +36,7 @@
             "integrity": -1,
             "magicCapacity": 5,
             "damage": 5,
-            "attackSpeed": -0.4,
+            "attackSpeed": -0.5,
             "glyph": {
                 "tint": "stone_glyph",
                 "textureX": 64
@@ -55,7 +55,7 @@
             "integrity": -2,
             "magicCapacity": 14,
             "damage": 7,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "iron_glyph",
                 "textureX": 64
@@ -74,7 +74,7 @@
             "integrity": -3,
             "magicCapacity": 6,
             "damage": 9,
-            "attackSpeed": -0.6,
+            "attackSpeed": -0.65,
             "glyph": {
                 "tint": "obsidian_glyph",
                 "textureX": 64
@@ -92,7 +92,7 @@
             "integrity": -2,
             "magicCapacity": 13,
             "damage": 6,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "copper_glyph",
                 "textureX": 64
@@ -111,7 +111,7 @@
             "integrity": -1,
             "magicCapacity": 12,
             "damage": 6,
-            "attackSpeed": -0.2,
+            "attackSpeed": -0.35,
             "glyph": {
                 "tint": "tin_glyph",
                 "textureX": 64
@@ -130,7 +130,7 @@
             "integrity": -4,
             "magicCapacity": 12,
             "damage": 7,
-            "attackSpeed": -0.4,
+            "attackSpeed": -0.55,
             "glyph": {
                 "tint": "nickel_glyph",
                 "textureX": 64
@@ -149,7 +149,7 @@
             "integrity": -2,
             "magicCapacity": 11,
             "damage": 7,
-            "attackSpeed": -0.4,
+            "attackSpeed": -0.55,
             "glyph": {
                 "tint": "lead_glyph",
                 "textureX": 64
@@ -168,7 +168,7 @@
             "integrity": -2,
             "magicCapacity": 13,
             "damage": 7,
-            "attackSpeed": -0.4,
+            "attackSpeed": -0.55,
             "glyph": {
                 "tint": "bronze_glyph",
                 "textureX": 64
@@ -187,7 +187,7 @@
             "integrity": -2,
             "magicCapacity": 24,
             "damage": 7,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "electrum_glyph",
                 "textureX": 64
@@ -206,7 +206,7 @@
             "integrity": -5,
             "magicCapacity": 11,
             "damage": 8,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "steel_glyph",
                 "textureX": 64
@@ -225,7 +225,7 @@
             "integrity": -3,
             "magicCapacity": 25,
             "damage": 7,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "thaumium_glyph",
                 "textureX": 64
@@ -244,7 +244,7 @@
             "integrity": -2,
             "magicCapacity": 18,
             "damage": 6,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "ironwood_glyph",
                 "textureX": 64
@@ -262,7 +262,7 @@
             "integrity": -3,
             "magicCapacity": 15,
             "damage": 7,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "steeleaf_glyph",
                 "textureX": 64
@@ -281,7 +281,7 @@
             "integrity": -3,
             "magicCapacity": 12,
             "damage": 8,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "fierymetal_glyph",
                 "textureX": 64
@@ -300,7 +300,7 @@
             "integrity": -2,
             "magicCapacity": 12,
             "damage": 8,
-            "attackSpeed": -0.3,
+            "attackSpeed": -0.45,
             "glyph": {
                 "tint": "knightmetal_glyph",
                 "textureX": 64
