@@ -40,6 +40,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
