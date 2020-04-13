@@ -31,6 +31,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.DoubleValue settleLimitLevelMultiplier;
     public static ForgeConfigSpec.DoubleValue settleLimitDurabilityMultiplier;
 
+    public static ForgeConfigSpec.DoubleValue magicCapacityMultiplier;
+
     public static ForgeConfigSpec.IntValue honeSwordBase;
     public static ForgeConfigSpec.IntValue honeSwordIntegrityMultiplier;
 
@@ -66,6 +68,10 @@ public class ConfigHandler {
         toolbeltCurioOnly = builder
                 .comment("If enabled and Curios is installed, Toolbelts will only work in the Curio belt slot")
                 .define("toolbelt_curio_only", false);
+
+        magicCapacityMultiplier = builder
+                .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
+                .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
 
         builder.pop();
 
