@@ -301,12 +301,12 @@
   "item.tetra.modular.settle_full_null.label": "Fully settled",
   "item.tetra.modular.settle_full_null.description": "The simplicity of this module makes it easy to fit into place and it does not need to settle any further",
 
-  "tetra.module_improvement.settled.name": "Settled",
-  "tetra.module_improvement.settled.description": "Due to extended use this module has settled into place, it provides additional integrity",
+  "tetra.improvement.settled.name": "Settled",
+  "tetra.improvement.settled.description": "Due to extended use this module has settled into place, it provides additional integrity",
   "tetra.settled.toast": "A module has settled!",
 
-  "tetra.module_improvement.arrested.name": "Arrested",
-  "tetra.module_improvement.arrested.description": "This module is crafted from materials that will not settle over time",
+  "tetra.improvement.arrested.name": "Arrested",
+  "tetra.improvement.arrested.description": "This module is crafted from materials that will not settle over time",
 
   "tetra.hone.progress": "Honing progress: %s%%",
   "tetra.hone.available": "Honing available",

@@ -518,7 +518,7 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     private String getImprovementTooltip(String key, int level, boolean clearFormatting) {
-        String tooltip = I18n.format(key + ".name");
+        String tooltip = I18n.format("tetra.improvement." + key + ".name");
         if (level > 0) {
             tooltip += " " + I18n.format("enchantment.level." + level);
         }
