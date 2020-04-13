@@ -131,8 +131,9 @@ public class ToolbeltHelper {
                 ItemStack itemStack = maybeToolbelt.get().right;
                 return itemStack;
             }
-            if (ConfigHandler.toolbeltCurioOnly.get())
+            if (ConfigHandler.toolbeltCurioOnly.get()) {
                 return ItemStack.EMPTY;
+            }
         }
         PlayerInventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
