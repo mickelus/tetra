@@ -29,7 +29,7 @@
                 "tint": "oak"
             }],
             "capabilities": {
-                "pickaxe": [1, 1.6667]
+                "pickaxe": [0, 1.6667]
             }
         },
         {
@@ -57,7 +57,7 @@
             "integrity": -1,
             "magicCapacity": 15,
             "damage": 2,
-            "attackSpeed": 0.1,
+            "attackSpeed": 0,
             "glyph": {
                 "tint": "flint_glyph",
                 "textureX": 176
@@ -67,7 +67,7 @@
                 "tint": "flint"
             }],
             "capabilities": {
-                "pickaxe": [2, 3.5]
+                "pickaxe": [1, 3.5]
             }
         },
         {
@@ -86,7 +86,7 @@
                 "tint": "iron"
             }],
             "capabilities": {
-                "pickaxe": [3, 5]
+                "pickaxe": [2, 5]
             }
         },
         {
@@ -105,7 +105,7 @@
                 "tint": "diamond"
             }],
             "capabilities": {
-                "pickaxe": [4, 6.6667]
+                "pickaxe": [3, 6.6667]
             }
         },
         {
@@ -124,7 +124,7 @@
                 "tint": "gold"
             }],
             "capabilities": {
-                "pickaxe": [1, 10]
+                "pickaxe": [0, 10]
             }
         },
         {
@@ -143,7 +143,7 @@
                 "tint": "copper"
             }],
             "capabilities": {
-                "pickaxe": [3, 4.5]
+                "pickaxe": [2, 4.5]
             }
         },
         {
@@ -162,7 +162,7 @@
                 "tint": "tin"
             }],
             "capabilities": {
-                "pickaxe": [2, 5.4]
+                "pickaxe": [1, 5.4]
             }
         },
         {
@@ -181,7 +181,7 @@
                 "tint": "silver"
             }],
             "capabilities": {
-                "pickaxe": [3, 10]
+                "pickaxe": [2, 10]
             }
         },
         {
@@ -200,7 +200,7 @@
                 "tint": "nickel"
             }],
             "capabilities": {
-                "pickaxe": [3, 5.2]
+                "pickaxe": [2, 5.2]
             }
         },
         {
@@ -219,7 +219,7 @@
                 "tint": "lead"
             }],
             "capabilities": {
-                "pickaxe": [3, 4.6]
+                "pickaxe": [2, 4.6]
             }
         },
         {
@@ -238,7 +238,7 @@
                 "tint": "bronze"
             }],
             "capabilities": {
-                "pickaxe": [3, 6.2]
+                "pickaxe": [2, 6.2]
             }
         },
         {
@@ -295,7 +295,7 @@
                 "tint": "thaumium"
             }],
             "capabilities": {
-                "pickaxe": [3, 6.67]
+                "pickaxe": [2, 6.67]
             }
         },
         {
@@ -313,7 +313,7 @@
                 "location": "tetra:items/module/duplex/head/basic_pickaxe/ironwood_tf"
             }],
             "capabilities": {
-                "pickaxe": [3, 5.42]
+                "pickaxe": [2, 5.42]
             }
         },
         {
@@ -367,7 +367,7 @@
                 "location": "tetra:items/module/duplex/head/basic_pickaxe/knightmetal"
             }],
             "capabilities": {
-                "pickaxe": [4, 6.67]
+                "pickaxe": [3, 6.67]
             }
         }
     ]

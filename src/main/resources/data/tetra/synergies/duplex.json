@@ -34,6 +34,13 @@
         "name": "duplex/claw_axe"
     },
     {
+        "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
+        "sameVariant": true,
+        "capabilities": {
+            "pickaxe": 1
+        }
+    },
+    {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
         "capabilities": {
             "hammer": 1
@@ -85,30 +92,6 @@
         "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
         "capabilities": {
             "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/cobblestone", "basic_pickaxe/cobblestone"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/steel", "basic_pickaxe/steel"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/steeleaf", "basic_pickaxe/steeleaf"],
-        "capabilities": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_pickaxe/fierymetal", "basic_pickaxe/fierymetal"],
-        "capabilities": {
-            "pickaxe": 1
         }
     }
 ]
