@@ -107,7 +107,7 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-    compile fg.deobf("se.mickelus.mgui:mgui:${mgui_version}")
+    compile fg.deobf("se.mickelus.mgui:mgui-1.14:${mgui_version}")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
