@@ -114,6 +114,10 @@ public class GuiSynergyIndicator extends GuiElement {
                 .map(key -> I18n.format("tetra.module." + key + ".name"))
                 .collect(Collectors.joining(" + "));
 
+        if (data.sameVariant) {
+            header += " " + TextFormatting.DARK_GRAY + I18n.format("item.tetra.modular.synergy_indicator.variant_same");
+        }
+
         if (isActive || alwaysShowStats) {
             List<String> result = getDataLines(data);
             result.add(0, TextFormatting.GREEN + "\u00BB " + TextFormatting.WHITE + header);

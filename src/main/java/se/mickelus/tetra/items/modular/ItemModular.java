@@ -37,11 +37,9 @@ import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
@@ -53,7 +51,6 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
-import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -1010,47 +1007,83 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
 
     public SynergyData[] getSynergyData(ItemStack itemStack) {
         if (synergies.length > 0) {
-            ArrayList<SynergyData> result = new ArrayList<>();
-            String[] moduleKeys = getAllModules(itemStack).stream()
-                    .map(ItemModule::getUnlocalizedName)
-                    .sorted()
-                    .toArray(String[]::new);
+            ItemModule[] modules = getAllModules(itemStack).stream()
+                    .sorted(Comparator.comparing(ItemModule::getUnlocalizedName))
+                    .toArray(ItemModule[]::new);
             String[] variantKeys = getAllModules(itemStack).stream()
                     .map(module -> module.getVariantData(itemStack))
                     .map(data -> data.key)
                     .sorted()
                     .toArray(String[]::new);
 
-            for (SynergyData synergy : synergies) {
-                int variantMatches = 0;
-                int moduleMatches = 0;
-                for (String variantKey : variantKeys) {
-                    if (variantMatches == synergy.moduleVariants.length) {
-                        break;
-                    }
+            return Arrays.stream(synergies)
+                    .filter(synergy -> hasVariantSynergy(synergy, variantKeys) || hasModuleSynergy(itemStack, synergy, modules))
+                    .toArray(SynergyData[]::new);
+        }
+        return new SynergyData[0];
+    }
 
-                    if (variantKey.equals(synergy.moduleVariants[variantMatches])) {
-                        variantMatches++;
-                    }
+    protected boolean hasVariantSynergy(SynergyData synergy, String[] variantKeys) {
+        int variantMatches = 0;
+        for (String variantKey : variantKeys) {
+            if (variantMatches == synergy.moduleVariants.length) {
+                break;
+            }
+
+            if (variantKey.equals(synergy.moduleVariants[variantMatches])) {
+                variantMatches++;
+            }
+        }
+
+        return synergy.moduleVariants.length > 0 && variantMatches == synergy.moduleVariants.length;
+    }
+
+    protected boolean hasModuleSynergy(ItemStack itemStack, SynergyData synergy, ItemModule[] modules) {
+        int moduleMatches = 0;
+        String variant = null;
+
+        if (synergy.sameVariant) {
+            for (ItemModule module : modules) {
+                if (moduleMatches == synergy.modules.length) {
+                    break;
                 }
 
-                for (String moduleKey : moduleKeys) {
-                    if (moduleMatches == synergy.modules.length) {
-                        break;
-                    }
+                if (module.getUnlocalizedName().equals(synergy.modules[moduleMatches])) {
+                    if (synergy.sameVariant) {
+                        if (variant == null) {
+                            variant = module.getVariantData(itemStack).key;
+                        }
 
-                    if (moduleKey.equals(synergy.modules[moduleMatches])) {
+                        if (variant.equals(module.getVariantData(itemStack).key)) {
+                            moduleMatches++;
+                        }
+                    } else {
                         moduleMatches++;
                     }
                 }
+            }
+        } else {
+            for (ItemModule module : modules) {
+                if (moduleMatches == synergy.modules.length) {
+                    break;
+                }
 
-                if (synergy.moduleVariants.length > 0 && variantMatches == synergy.moduleVariants.length
-                        || synergy.modules.length > 0 && moduleMatches == synergy.modules.length) {
-                    result.add(synergy);
+                if (module.getUnlocalizedName().equals(synergy.modules[moduleMatches])) {
+                    if (synergy.sameVariant) {
+                        if (variant == null) {
+                            variant = module.getVariantData(itemStack).key;
+                        }
+
+                        if (variant.equals(module.getVariantData(itemStack).key)) {
+                            moduleMatches++;
+                        }
+                    } else {
+                        moduleMatches++;
+                    }
                 }
             }
-            return result.toArray(new SynergyData[result.size()]);
         }
-        return new SynergyData[0];
+
+        return synergy.modules.length > 0 && moduleMatches == synergy.modules.length;
     }
 }

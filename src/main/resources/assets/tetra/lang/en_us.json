@@ -313,6 +313,7 @@
 
   "item.tetra.modular.synergy_indicator.empty": "This module has no potential synergy bonuses",
   "item.tetra.modular.synergy_indicator.header": "Synergy bonuses:",
+  "item.tetra.modular.synergy_indicator.variant_same": "(same variant)",
 
   "tetra/schema/repair.name": "Repair",
   "tetra/schema/repair.description": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.",
