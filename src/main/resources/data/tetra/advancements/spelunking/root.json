@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:geode"
         },
-        "title": "Spelunking",
-        "description": "Delve deep underground",
+        "title": {
+            "translate": "tetra.advancements.spelunking.root.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.root.description"
+        },
         "background": "minecraft:textures/block/black_concrete_powder.png"
     },
     "criteria": {

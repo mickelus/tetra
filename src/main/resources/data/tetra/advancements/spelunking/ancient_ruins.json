@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:forged_pillar"
         },
-        "title": "Long Gone",
-        "description": "Find ancient ruins deep down in a cold biome"
+        "title": {
+            "translate": "tetra.advancements.spelunking.ancient_ruins.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.ancient_ruins.description"
+        }
     },
     "parent": "tetra:spelunking/root",
     "criteria": {
@@ -39,11 +43,13 @@
             }
         }
     },
-    "requirements": [[
-        "wall",
-        "pillar",
-        "platform",
-        "platform_slab",
-        "vent"
-    ]]
+    "requirements": [
+        [
+            "wall",
+            "pillar",
+            "platform",
+            "platform_slab",
+            "vent"
+        ]
+    ]
 }

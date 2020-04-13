@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:forged_platform_slab"
         },
-        "title": "Silk Touched Tiles",
-        "description": "Successfully harvest flooring from the ancient ruins"
+        "title": {
+            "translate": "tetra.advancements.spelunking.loot_ruins.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.loot_ruins.description"
+        }
     },
     "parent": "tetra:spelunking/hammer_config",
     "criteria": {
@@ -29,8 +33,10 @@
             }
         }
     },
-    "requirements": [[
-        "platform",
-        "platform_slab"
-    ]]
+    "requirements": [
+        [
+            "platform",
+            "platform_slab"
+        ]
+    ]
 }

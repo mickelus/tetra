@@ -4,8 +4,12 @@
             "item": "tetra:modular_toolbelt",
             "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/inlaid\"}"
         },
-        "title": "Wrapped Up",
-        "description": "Fully upgrade a toolbelt"
+        "title": {
+            "translate": "tetra.advancements.upgrades.toolbelt_upgraded.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.toolbelt_upgraded.description"
+        }
     },
     "parent": "tetra:upgrades/toolbelt",
     "criteria": {

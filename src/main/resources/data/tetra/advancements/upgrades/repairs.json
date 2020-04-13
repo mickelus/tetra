@@ -4,8 +4,12 @@
             "item": "tetra:modular_double",
             "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
-        "title": "[?] Repairing modular items",
-        "description": "Modular items can be repaired in a workbench.\n * Repairing an item will require materials (and appropriate tools) for one of its modules\n * Repairing will cycle over all of the item's modules\n * Repairing magically unstable modules will cost experience\n * Each repair fully restores the durability of the item",
+        "title": {
+            "translate": "tetra.advancements.upgrades.repairs.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.repairs.description"
+        },
         "show_toast": false,
         "announce_to_chat": false
     },

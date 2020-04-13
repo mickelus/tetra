@@ -5,8 +5,12 @@
             "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/iron\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "goal",
-        "title": "Hammer III",
-        "description": "Gain access to the third hammer tier by crafting a double sided iron hammer"
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_3.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_3.description"
+        }
     },
     "parent": "tetra:upgrades/hammer_2",
     "criteria": {

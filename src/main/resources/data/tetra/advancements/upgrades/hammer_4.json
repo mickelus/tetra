@@ -4,8 +4,12 @@
             "item": "tetra:forged_workbench"
         },
         "frame": "goal",
-        "title": "Hammer IV",
-        "description": "Use a forge hammer to craft a module requiring tier 4 hammering"
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_4.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_4.description"
+        }
     },
     "parent": "tetra:upgrades/hammer_3",
     "criteria": {
@@ -24,5 +28,10 @@
             }
         }
     },
-    "requirements": [["craft", "improvement"]]
+    "requirements": [
+        [
+            "craft",
+            "improvement"
+        ]
+    ]
 }

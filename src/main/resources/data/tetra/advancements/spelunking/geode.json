@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:geode"
         },
-        "title": "Hollow Solids",
-        "description": "Find a geode in the depths"
+        "title": {
+            "translate": "tetra.advancements.spelunking.geode.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.geode.description"
+        }
     },
     "parent": "tetra:spelunking/root",
     "criteria": {

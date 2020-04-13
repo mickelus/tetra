@@ -3,9 +3,13 @@
         "icon": {
             "item": "tetra:forged_workbench"
         },
-        "title": "Magmatic Press Channel",
-        "description": "Use a forge hammer to craft a module requiring tier 4 hammering",
-        "show_toast":  false,
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_craft.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_craft.description"
+        },
+        "show_toast": false,
         "announce_to_chat": false
     },
     "parent": "tetra:spelunking/fuel_hammer",
@@ -25,5 +29,10 @@
             }
         }
     },
-    "requirements": [["craft", "improvement"]]
+    "requirements": [
+        [
+            "craft",
+            "improvement"
+        ]
+    ]
 }

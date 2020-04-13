@@ -4,8 +4,12 @@
             "item": "tetra:modular_double",
             "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/log\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/log\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
-        "title": "Basic Tinkering",
-        "description": "Craft a mallet from sticks and logs\n\nItem Reward: Holosphere",
+        "title": {
+            "translate": "tetra.advancements.upgrades.root.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.root.description"
+        },
         "background": "tetra:textures/blocks/forged_platform.png"
     },
     "criteria": {
@@ -24,6 +28,8 @@
         "recipes": [
             "tetra:modular_toolbelt"
         ],
-        "loot": ["tetra:journal_reward"]
+        "loot": [
+            "tetra:journal_reward"
+        ]
     }
 }

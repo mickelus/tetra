@@ -5,8 +5,12 @@
             "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/stone\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/stone\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "goal",
-        "title": "Hammer II",
-        "description": "Smelt stone and use it to craft a double-sided hammer head"
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_2.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_2.description"
+        }
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {

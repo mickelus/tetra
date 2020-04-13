@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:hammer_base"
         },
-        "title": "Dust Off",
-        "description": "Fuel up a forge hammer using charged thermal cells"
+        "title": {
+            "translate": "tetra.advancements.spelunking.fuel_hammer.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.fuel_hammer.description"
+        }
     },
     "parent": "tetra:spelunking/find_cell",
     "criteria": {

@@ -4,8 +4,12 @@
             "item": "tetra:modular_sword",
             "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/iron\", \"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/stick\", \"sword/blade:blade/hooked\": 1, \"sword/blade:blade/serrated\": 1}"
         },
-        "title": "Double Up!",
-        "description": "Apply an improvement to a sword module, and then hone that improvement to increase its effect"
+        "title": {
+            "translate": "tetra.advancements.upgrades.sword_improvement_hone.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.sword_improvement_hone.description"
+        }
     },
     "parent": "tetra:upgrades/sword_hone",
     "criteria": {
@@ -50,7 +54,15 @@
         }
     },
     "requirements": [
-        ["hooked", "tempered", "serrated"],
-        ["hooked+", "tempered+", "serrated+"]
+        [
+            "hooked",
+            "tempered",
+            "serrated"
+        ],
+        [
+            "hooked+",
+            "tempered+",
+            "serrated+"
+        ]
     ]
 }

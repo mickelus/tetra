@@ -5,8 +5,12 @@
             "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/iron\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\", \"double/binding\": \"double/binding\",\"double/binding_material\": \"double_binding/bolt\"}"
         },
         "frame": "goal",
-        "title": "Tweaked to Perfection",
-        "description": "Use a bolt to bind a tool or a sword, then use the tweak tab in a workbench to change the stats of the item"
+        "title": {
+            "translate": "tetra.advancements.spelunking.use_bolt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.use_bolt.description"
+        }
     },
     "parent": "tetra:spelunking/find_bolt",
     "criteria": {
@@ -23,5 +27,10 @@
             }
         }
     },
-    "requirements": [["sword", "tool"]]
+    "requirements": [
+        [
+            "sword",
+            "tool"
+        ]
+    ]
 }

@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:forged_bolt"
         },
-        "title": "Thunderbolt 4",
-        "description": "Salvage some bolts from the ancient ruins"
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_bolt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_bolt.description"
+        }
     },
     "parent": "tetra:spelunking/containers",
     "criteria": {

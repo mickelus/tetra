@@ -4,8 +4,12 @@
             "item": "tetra:modular_double",
             "nbt": "{\"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/flint\",\"double/head_right\": \"double/basic_pickaxe_right\",\"double/basic_pickaxe_right_material\": \"basic_pickaxe/flint\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\", \"double/handle:basic_handle/wrap_leather\": 1}"
         },
-        "title": "Getting Another Upgrade",
-        "description": "Place a vanilla tool such as a pickaxe, axe or a hoe in a workbench and upgrade it"
+        "title": {
+            "translate": "tetra.advancements.upgrades.tool_upgrade.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.tool_upgrade.description"
+        }
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
@@ -28,9 +32,11 @@
             }
         }
     },
-    "requirements": [[
-        "pickaxe",
-        "axe",
-        "hoe"
-    ]]
+    "requirements": [
+        [
+            "pickaxe",
+            "axe",
+            "hoe"
+        ]
+    ]
 }

@@ -4,8 +4,12 @@
             "item": "tetra:modular_bow",
             "nbt": "{\"bow/stave\": \"bow/straight_stave\",\"bow/straight_stave_material\": \"straight_stave/stick\",\"bow/string\": \"bow/basic_string\",\"bow/basic_string_material\": \"basic_string/string\"}"
         },
-        "title": "Bowow",
-        "description": "Upgrade a bow in a workbench"
+        "title": {
+            "translate": "tetra.advancements.upgrades.bow_upgrade.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.bow_upgrade.description"
+        }
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
@@ -26,5 +30,10 @@
             }
         }
     },
-    "requirements": [["module", "improvement"]]
+    "requirements": [
+        [
+            "module",
+            "improvement"
+        ]
+    ]
 }

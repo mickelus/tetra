@@ -4,8 +4,12 @@
             "item": "tetra:magmatic_cell",
             "nbt": "{\"Damage\": 128}"
         },
-        "title": "Thermal Theft",
-        "description": "Find a thermal cell in the ancient ruins"
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_cell.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_cell.description"
+        }
     },
     "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {

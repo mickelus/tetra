@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:basic_workbench"
         },
-        "title": "Bench mk II",
-        "description": "Upgrade a crafting table by right-clicking it with a mallet"
+        "title": {
+            "translate": "tetra.advancements.upgrades.workbench.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.workbench.description"
+        }
     },
     "parent": "tetra:upgrades/root",
     "criteria": {

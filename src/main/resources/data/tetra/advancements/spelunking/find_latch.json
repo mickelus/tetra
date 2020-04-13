@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:quick_latch"
         },
-        "title": "§oClick Click Click Click",
-        "description": "Salvage a quick latch from the ancient ruins and use it to improve a toolbelt attachment"
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_latch.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_latch.description"
+        }
     },
     "parent": "tetra:spelunking/containers",
     "criteria": {
@@ -37,5 +41,14 @@
             }
         }
     },
-    "requirements": [["find_latch"], ["quiver", "strap", "storage"]]
+    "requirements": [
+        [
+            "find_latch"
+        ],
+        [
+            "quiver",
+            "strap",
+            "storage"
+        ]
+    ]
 }

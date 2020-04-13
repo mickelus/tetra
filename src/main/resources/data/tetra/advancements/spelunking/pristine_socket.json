@@ -3,8 +3,12 @@
         "icon": {
             "item": "tetra:pristine_lapis"
         },
-        "title": "Immaculate Insert",
-        "description": "Find a pristine gem in a geode and use it to socket a sword or a tool"
+        "title": {
+            "translate": "tetra.advancements.spelunking.pristine_socket.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.pristine_socket.description"
+        }
     },
     "parent": "tetra:spelunking/geode_open",
     "criteria": {
@@ -45,5 +49,14 @@
             }
         }
     },
-    "requirements": [["double_emerald", "double_diamond", "double_lapis", "sword_emerald", "sword_diamond", "sword_lapis"]]
+    "requirements": [
+        [
+            "double_emerald",
+            "double_diamond",
+            "double_lapis",
+            "sword_emerald",
+            "sword_diamond",
+            "sword_lapis"
+        ]
+    ]
 }
