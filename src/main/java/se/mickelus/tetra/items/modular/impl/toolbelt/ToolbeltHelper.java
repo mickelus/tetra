@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -122,13 +123,14 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
-        if (IntegrationHelper.isCuriosLoaded)
-        {
+        if (IntegrationHelper.isCuriosLoaded) {
             Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosAPI.getCurioEquipped(ItemToolbeltModular.instance, player);
-            if (maybeToolbelt.isPresent())
-            {
+            if (maybeToolbelt.isPresent()) {
                 ItemStack itemStack = maybeToolbelt.get().right;
                 return itemStack;
+            }
+            if (ConfigHandler.toolbeltCurioOnly.get()) {
+                return ItemStack.EMPTY;
             }
         }
         PlayerInventory inventoryPlayer = player.inventory;

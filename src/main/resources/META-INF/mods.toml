@@ -54,3 +54,9 @@ description="Tetra revolves around modular items and attemps to blend it togethe
     versionRange="[1.2.0,]"
     ordering="NONE"
     side="BOTH"
+[[dependencies.tetra]]
+    modId="curios"
+    mandatory=false
+    versionRange="[1.0.6,)"
+    ordering="AFTER"
+    side="BOTH"
