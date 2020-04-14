@@ -34,7 +34,7 @@
         "name": "duplex/claw_axe"
     },
     {
-        "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
+        "modules": ["duplex/basic_pickaxe", "duplex/basic_pickaxe"],
         "sameVariant": true,
         "capabilities": {
             "pickaxe": 1
