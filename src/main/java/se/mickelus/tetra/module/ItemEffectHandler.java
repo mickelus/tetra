@@ -292,12 +292,14 @@ public class ItemEffectHandler {
     private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack,
             ToolType tool, int critLevel) {
         if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
+                && blockState.getBlockHardness(world, pos) > -1
                 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
 
             if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
                 breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                 itemStack.damageItem(2, breakingPlayer, t -> {});
+                breakingPlayer.resetCooldown();
 
                 ((ItemModular) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
 
