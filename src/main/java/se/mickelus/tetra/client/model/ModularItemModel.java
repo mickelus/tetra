@@ -3,7 +3,6 @@ package se.mickelus.tetra.client.model;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.TransformationMatrix;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -11,9 +10,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.BakedItemModel;
 import net.minecraftforge.client.model.IModelConfiguration;
-import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
 import net.minecraftforge.client.model.pipeline.BakedQuadBuilder;
@@ -21,10 +18,8 @@ import net.minecraftforge.client.model.pipeline.IVertexConsumer;
 import net.minecraftforge.client.model.pipeline.TRSRTransformer;
 import se.mickelus.tetra.module.data.ModuleModel;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Forge reimplementation of vanilla {@link ItemModelGenerator}, i.e. builtin/generated models,
@@ -38,7 +33,14 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
 
     private ItemCameraTransforms cameraTransforms;
 
+    private Map<String, ItemCameraTransforms> transformVariants = Collections.emptyMap();
+
     ModularOverrideList overrideList;
+
+    public ModularItemModel(ItemCameraTransforms cameraTransforms, Map<String, ItemCameraTransforms> transformVariants) {
+        this(cameraTransforms);
+        this.transformVariants = transformVariants != null ? transformVariants : Collections.emptyMap();
+    }
 
     public ModularItemModel(ItemCameraTransforms cameraTransforms) {
         this.cameraTransforms = cameraTransforms;
@@ -73,7 +75,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         return new BakedWrapper(this, owner, bakery, spriteGetter, modelTransform, modelLocation, overrideList);
     }
 
-    public IBakedModel realBake(List<ModuleModel> moduleModels, IModelConfiguration owner, ModelBakery bakery,
+    public IBakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
             Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides,
             ResourceLocation modelLocation) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
@@ -88,7 +90,34 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         TextureAtlasSprite particle = spriteGetter.apply(owner.resolveTexture("particle"));
 
         return new BakedPerspectiveModel(builder.build(), particle, transforms, overrides, rotationTransform.isIdentity(), owner.isSideLit(),
-                cameraTransforms);
+                getCameraTransforms(transformVariant));
+    }
+
+    protected ItemCameraTransforms getCameraTransforms(String transformVariant) {
+        if (transformVariant != null && transformVariants.containsKey(transformVariant)) {
+            ItemCameraTransforms variant = transformVariants.get(transformVariant);
+
+            return new ItemCameraTransforms(
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
+                variant.thirdperson_left : cameraTransforms.thirdperson_left,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
+                variant.thirdperson_right : cameraTransforms.thirdperson_right,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
+                variant.firstperson_left : cameraTransforms.firstperson_left,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
+                variant.firstperson_right : cameraTransforms.firstperson_right,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.HEAD) ?
+                variant.head : cameraTransforms.head,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.GUI) ?
+                variant.gui : cameraTransforms.gui,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.GROUND) ?
+                variant.ground : cameraTransforms.ground,
+            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIXED) ?
+                variant.fixed : cameraTransforms.fixed
+            );
+        }
+
+        return cameraTransforms;
     }
 
     public static List<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, TransformationMatrix transform, int color) {

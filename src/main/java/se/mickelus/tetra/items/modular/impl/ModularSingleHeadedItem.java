@@ -1,14 +1,28 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchemaRegistry;
+import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.network.PacketHandler;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class ModularSingleHeadedItem extends ItemModularHandheld {
@@ -49,6 +63,24 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
         this.honeBase = honeBase;
         this.honeIntegrityMultiplier = honeIntegrityMultiplier;
+    }
+
+    @Override
+    public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
+        if (isThrowing(itemStack, entity)) {
+            return super.getModelCacheKey(itemStack, entity) + ":throwing";
+
+        }
+
+        return super.getModelCacheKey(itemStack, entity);
+    }
+
+    @Override
+    public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
+        if (isThrowing(itemStack, entity)) {
+            return "throwing";
+        }
+        return null;
     }
 }
 

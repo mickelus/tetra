@@ -34,4 +34,8 @@ public interface IItemModular {
     public void assemble(ItemStack itemStack, World world, float severity);
 
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity);
+
+    default public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return null;
+    }
 }

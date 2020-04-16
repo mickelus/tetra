@@ -464,6 +464,7 @@ public class ItemModularHandheld extends ItemModular {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
                 || EnchantmentHelper.getRiptideModifier(stack) > 0) {
@@ -473,9 +474,16 @@ public class ItemModularHandheld extends ItemModular {
         return super.getUseAction(stack);
     }
 
+    public boolean isThrowing(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return UseAction.SPEAR.equals(getUseAction(itemStack)) && Optional.ofNullable(entity)
+                .map(e -> e.getItemInUseCount() > 0)
+                .orElse(false);
+    }
+
     /**
      * How long it takes to use this item (or how long it can be held at max)
      */
+    @Override
     public int getUseDuration(ItemStack stack) {
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
                 || EnchantmentHelper.getRiptideModifier(stack) > 0) {
@@ -492,6 +500,7 @@ public class ItemModularHandheld extends ItemModular {
      * @param entityLiving
      * @param timeLeft
      */
+    @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entityLiving, int timeLeft) {
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;

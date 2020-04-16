@@ -4,19 +4,15 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.IModelConfiguration;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelTransformComposition;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.module.data.ModuleModel;
 
@@ -82,8 +78,9 @@ public class ModularOverrideList extends ItemOverrideList {
         ItemModular item  = (ItemModular) itemStack.getItem();
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
+        String transformVariant = item.getTransformVariant(itemStack, entity);
 
-        return model.realBake(models, owner, bakery, spriteGetter, modelTransform, ItemOverrideList.EMPTY, modelLocation);
+        return model.realBake(models, transformVariant, owner, bakery, spriteGetter, modelTransform, ItemOverrideList.EMPTY, modelLocation);
     }
 
     protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, IBakedModel original) {
