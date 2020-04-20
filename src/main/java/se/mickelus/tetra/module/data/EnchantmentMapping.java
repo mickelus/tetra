@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module.data;
 
+import com.google.gson.JsonObject;
 import net.minecraft.enchantment.Enchantment;
 
 public class EnchantmentMapping {
@@ -26,4 +27,25 @@ public class EnchantmentMapping {
     public boolean apply = true;
 
     public float multiplier = 1;
+
+
+    public JsonObject toJson() {
+        JsonObject result = new JsonObject();
+        result.addProperty("enchantment", enchantment.delegate.name().toString());
+        result.addProperty("improvement", improvement);
+
+        if (extract) {
+            result.addProperty("extract", extract);
+        }
+
+        if (apply) {
+            result.addProperty("apply", apply);
+        }
+
+        if (multiplier != 1) {
+            result.addProperty("multiplier", multiplier);
+        }
+
+        return result;
+    }
 }
