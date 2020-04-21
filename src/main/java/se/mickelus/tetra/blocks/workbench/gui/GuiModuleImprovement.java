@@ -24,14 +24,14 @@ public class GuiModuleImprovement extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(TextFormatting.DARK_RED + "-" + I18n.format(improvement + ".name", ""));
+            tooltipLines.add(TextFormatting.DARK_RED + "-" + I18n.format("tetra.improvement." + improvement + ".name", ""));
         } else if (level == 0) {
-            tooltipLines.add(I18n.format(improvement + ".name"));
+            tooltipLines.add(I18n.format("tetra.improvement." + improvement + ".name"));
         } else {
-            tooltipLines.add(I18n.format(improvement + ".name") + " " + I18n.format("enchantment.level." + level));
+            tooltipLines.add(I18n.format("tetra.improvement." + improvement + ".name") + " " + I18n.format("enchantment.level." + level));
         }
 
-        Arrays.stream(I18n.format(improvement + ".description").split("\\\\n"))
+        Arrays.stream(I18n.format("tetra.improvement." + improvement + ".description").split("\\\\n"))
                 .map(line -> line.replace(TextFormatting.RESET.toString(), TextFormatting.DARK_GRAY.toString()))
                 .map(line -> TextFormatting.DARK_GRAY + line)
                 .forEachOrdered(tooltipLines::add);
