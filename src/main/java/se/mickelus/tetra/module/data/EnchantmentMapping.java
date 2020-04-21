@@ -34,11 +34,11 @@ public class EnchantmentMapping {
         result.addProperty("enchantment", enchantment.delegate.name().toString());
         result.addProperty("improvement", improvement);
 
-        if (extract) {
+        if (!extract) {
             result.addProperty("extract", extract);
         }
 
-        if (apply) {
+        if (!apply) {
             result.addProperty("apply", apply);
         }
 

@@ -62,13 +62,18 @@ public class EnchantmentProvider implements IDataProvider {
 
         // swords
         setupEnchantment(Enchantments.SHARPNESS)
-                .setApply(false);
+                .setApply(false)
+                .setBonusLevels(5)
+                .setCreateImprovements(false);
         setupEnchantment(Enchantments.SMITE);
         setupEnchantment(Enchantments.BANE_OF_ARTHROPODS);
         setupEnchantment(Enchantments.KNOCKBACK);
         setupEnchantment(Enchantments.FIRE_ASPECT);
         setupEnchantment(Enchantments.LOOTING);
-        setupEnchantment(Enchantments.SWEEPING);
+        setupEnchantment(Enchantments.SWEEPING)
+                .setApply(false)
+                .setBonusLevels(1)
+                .setCreateImprovements(false);
 
         // tridents
         setupEnchantment(Enchantments.LOYALTY);
@@ -77,7 +82,10 @@ public class EnchantmentProvider implements IDataProvider {
         setupEnchantment(Enchantments.CHANNELING);
 
         // tools
-        setupEnchantment(Enchantments.EFFICIENCY);
+        setupEnchantment(Enchantments.EFFICIENCY)
+                .setApply(false)
+                .setBonusLevels(5)
+                .setCreateImprovements(false);
         setupEnchantment(Enchantments.SILK_TOUCH);
         setupEnchantment(Enchantments.UNBREAKING);
         setupEnchantment(Enchantments.FORTUNE);
@@ -210,6 +218,7 @@ public class EnchantmentProvider implements IDataProvider {
                     JsonArray enchantments = new JsonArray();
                     builders.stream()
                             .map(EnchantmentBuilder::getKey)
+                            .map(key -> "tetra:" + key)
                             .forEach(enchantments::add);
 
                     typeMappings.add(enchantmentType.toString(), enchantments);
@@ -258,7 +267,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
-        Path outputPath = generator.getOutputFolder().resolve("assets/tetra/lang/" + lang + ".json");
+        Path outputPath = generator.getOutputFolder().resolve("TEMP/" + lang + ".json");
         try {
             IDataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
@@ -267,7 +276,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveMissingLocalization(DirectoryCache cache, JsonObject localizationEntries) {
-        Path outputPath = generator.getOutputFolder().resolve("TEMP/missing_localization.json");
+        Path outputPath = generator.getOutputFolder().resolve("temp/missing_localization.json");
         try {
             IDataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
@@ -276,7 +285,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveImprovementTypeMappings(DirectoryCache cache, JsonObject mappings) {
-        Path outputPath = generator.getOutputFolder().resolve("TEMP/enchantment_mappings.json");
+        Path outputPath = generator.getOutputFolder().resolve("temp/enchantment_mappings.json");
         try {
             IDataProvider.save(gson, cache, mappings, outputPath);
         } catch (IOException e) {
