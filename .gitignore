@@ -22,3 +22,6 @@ classes
 eclipse
 run
 logs/
+
+src/generated/resources/.cache
+src/generated/resources/temp

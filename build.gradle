@@ -6,17 +6,22 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: "com.wynprice.cursemaven"
 
 if (System.getenv('VERSION') != null) {
     tetra_version = System.getenv('VERSION')
@@ -29,6 +34,10 @@ archivesBaseName = "tetra"
 repositories {
     mavenLocal()
     maven { url = "https://maven.theillusivec4.top/" }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
 }
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -99,6 +108,11 @@ minecraft {
     }
 }
 
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '.cache', 'temp'
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
@@ -117,6 +131,17 @@ dependencies {
     }
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
+
+    compile fg.deobf("curse.maven:apotheosis:2906078")
+    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")
+
+    compile fg.deobf("curse.maven:cyclic:2934819")
+
+    compile fg.deobf("curse.maven:naturesaura:2920340")
+    compile fg.deobf("curse.maven:naturesaura-patchouli:2925865")
+
+//    compile fg.deobf("curse.maven:corail_tombstone:2925380")
+
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
