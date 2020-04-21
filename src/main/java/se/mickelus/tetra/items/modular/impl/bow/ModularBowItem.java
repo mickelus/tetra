@@ -135,6 +135,10 @@ public class ModularBowItem extends ItemModular {
                         // the damage modifier is based on fully drawn damage, vanilla bows deal 5 times the base damage when fully drawn
                         projectile.setDamage(projectile.getDamage() + getDamageModifier(itemStack) / 5 - 2);
 
+                        int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, itemStack);
+                        if (powerLevel > 0) {
+                            projectile.setDamage(projectile.getDamage() + powerLevel * 0.5D + 0.5D);
+                        }
 
                         int punchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, itemStack);
                         if (punchLevel > 0) {
