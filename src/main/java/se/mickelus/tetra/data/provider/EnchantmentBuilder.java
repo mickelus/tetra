@@ -2,21 +2,23 @@ package se.mickelus.tetra.data.provider;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class EnchantmentBuilder {
     private Enchantment enchantment;
     private float destabilizationProbability = 0.04f;
     private int destabilizationInstabilityLimit = 1;
     private boolean apply = true;
+    private boolean isCurse = false;
 
     public EnchantmentBuilder(Enchantment enchantment) {
         this.enchantment = enchantment;
@@ -37,6 +39,11 @@ public class EnchantmentBuilder {
         return this;
     }
 
+    public EnchantmentBuilder setCurse(boolean isCurse) {
+        this.isCurse = isCurse;
+        return this;
+    }
+
     public String getModId() {
         return enchantment.delegate.name().getNamespace();
     }
@@ -45,12 +52,20 @@ public class EnchantmentBuilder {
         return getImprovementKey();
     }
 
+    public EnchantmentType getEnchantmentType() {
+        return enchantment.type;
+    }
+
     public boolean shouldApply() {
         return apply;
     }
 
     public boolean canDestabilize() {
-        return destabilizationProbability > 0 && enchantment.getMaxLevel() > 1;
+        return destabilizationProbability > 0 && enchantment.getMaxLevel() > 1 && !isCurse;
+    }
+
+    public boolean isDestabilizingCurse() {
+        return destabilizationProbability > 0 && isCurse;
     }
 
     private String getImprovementKey() {
@@ -76,7 +91,7 @@ public class EnchantmentBuilder {
         result.enchantment = enchantment;
         result.apply = apply;
 
-        if (destabilization && apply) {
+        if (destabilization) {
             result.improvement = getDestabilizationKey();
             result.extract = false;
             result.multiplier = -1;
@@ -88,7 +103,22 @@ public class EnchantmentBuilder {
     }
 
     private DestabilizationEffect getDestabilizationEffect() {
-        if (canDestabilize()) {
+        if (isCurse) {
+            DestabilizationEffect result = new DestabilizationEffect();
+            result.minLevel = enchantment.getMinLevel();
+            result.maxLevel = enchantment.getMaxLevel();
+            result.probability = destabilizationProbability;
+            result.instabilityLimit = destabilizationInstabilityLimit;
+
+            result.destabilizationKey = getImprovementKey();
+
+            ResourceLocation location = enchantment.delegate.name();
+            if (!location.getNamespace().equals("minecraft")) {
+                result.requiredMod = location.getNamespace();
+            }
+
+            return result;
+        } if (canDestabilize()) {
             DestabilizationEffect result = new DestabilizationEffect();
             result.minLevel = enchantment.getMinLevel();
             result.maxLevel = enchantment.getMaxLevel() - 1;
@@ -118,6 +148,13 @@ public class EnchantmentBuilder {
             data.addProperty("level", i);
             data.addProperty("enchantment", true);
             data.addProperty("magicCapacity", -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2);
+
+            if (isCurse) {
+                JsonObject glyph = new JsonObject();
+                glyph.addProperty("tint", "ee5599");
+                data.add("glyph", glyph);
+            }
+
             result.add(data);
         }
 
@@ -127,6 +164,11 @@ public class EnchantmentBuilder {
                 data.addProperty("key", getDestabilizationKey());
                 data.addProperty("level", i);
                 data.addProperty("enchantment", true);
+
+                JsonObject glyph = new JsonObject();
+                glyph.addProperty("tint", "ee5599");
+                data.add("glyph", glyph);
+
                 result.add(data);
             }
         }
@@ -142,7 +184,11 @@ public class EnchantmentBuilder {
         String name = null;
         if (existingLocalizations.has(key)) {
             name = existingLocalizations.get(key).getAsString();
-            result.put("tetra.improvement." + getImprovementKey() + ".name", name);
+            if (isCurse) {
+                result.put("tetra.improvement." + getImprovementKey() + ".name", TextFormatting.DARK_PURPLE + name);
+            } else {
+                result.put("tetra.improvement." + getImprovementKey() + ".name", name);
+            }
         }
 
         if (existingLocalizations.has(key + ".desc")) {
@@ -155,13 +201,12 @@ public class EnchantmentBuilder {
 
         if (canDestabilize()) {
             if (name != null) {
-                result.put("tetra.improvement." + getDestabilizationKey() + ".name", "Destabilized: " + name);
+                result.put("tetra.improvement." + getDestabilizationKey() + ".name", TextFormatting.DARK_PURPLE + "Destabilized: " + name);
                 result.put("tetra.improvement." + getDestabilizationKey() + ".description", "Reduces the effect of the " + name + " enchantment");
             } else {
                 result.put("tetra.improvement." + getDestabilizationKey() + ".name", "");
                 result.put("tetra.improvement." + getDestabilizationKey() + ".description", "");
             }
-            result.put("tetra.improvement." + getImprovementKey() + ".name", existingLocalizations.get(key).getAsString());
         }
 
         return result;

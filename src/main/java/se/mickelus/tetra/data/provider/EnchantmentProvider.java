@@ -18,6 +18,10 @@ import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.ench.enchantments.*;
+import shadows.apotheosis.potion.EnchantmentTrueInfinity;
+import shadows.apotheosis.spawn.EnchantmentCapturing;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class EnchantmentProvider implements IDataProvider {
@@ -51,7 +56,9 @@ public class EnchantmentProvider implements IDataProvider {
     private void setup() {
         // generic
         setupEnchantment(Enchantments.MENDING);
-        setupEnchantment(Enchantments.VANISHING_CURSE);
+        setupEnchantment(Enchantments.VANISHING_CURSE)
+                .setDestabilizationInstabilityLimit(20)
+                .setCurse(true);
 
         // swords
         setupEnchantment(Enchantments.SHARPNESS)
@@ -76,8 +83,7 @@ public class EnchantmentProvider implements IDataProvider {
         setupEnchantment(Enchantments.FORTUNE);
 
         // bows
-        setupEnchantment(Enchantments.POWER)
-                .setApply(false);
+        setupEnchantment(Enchantments.POWER);
         setupEnchantment(Enchantments.PUNCH);
         setupEnchantment(Enchantments.FLAME);
         setupEnchantment(Enchantments.INFINITY);
@@ -150,22 +156,27 @@ public class EnchantmentProvider implements IDataProvider {
         JsonObject localization = new JsonObject();
         JsonObject missingLocalization = new JsonObject();
 
+        // group builders by mod
         builders.stream()
                 .collect(Collectors.groupingBy(EnchantmentBuilder::getModId))
                 .forEach((mod, builders) -> {
                     JsonArray enchantments = new JsonArray();
                     JsonArray destabilization = new JsonArray();
 
+                    // enchantment improvements
                     for (EnchantmentBuilder builder: builders) {
                         enchantments.add(builder.getEnchantmentJson());
                         if (builder.canDestabilize()) {
                             enchantments.add(builder.getEnchantmentDestabilizationJson());
+                            destabilization.add(builder.getDestabilizationJson());
+                        } else if (builder.isDestabilizingCurse()) {
                             destabilization.add(builder.getDestabilizationJson());
                         }
 
                         saveImprovements(cache, builder.getKey(), builder.getImprovementsJson());
                     }
 
+                    // english localization for names and descriptions
                     URL locFile = getClass().getClassLoader().getResource(String.format("assets/%s/lang/%s.json", mod, lang));
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(locFile.openStream()))) {
                         JsonObject existingLocalization = gson.fromJson(reader, JsonObject.class);
@@ -188,8 +199,29 @@ public class EnchantmentProvider implements IDataProvider {
                     saveDestabilization(cache, mod, destabilization);
                 });
 
-        saveLocalization(cache, lang, localization);
-        saveLocalization(cache, lang + "_missing", missingLocalization);
+        saveLocalization(cache, localization);
+        saveMissingLocalization(cache, missingLocalization);
+
+        // enchantment type mappings
+        JsonObject typeMappings = new JsonObject();
+        builders.stream()
+                .collect(Collectors.groupingBy(EnchantmentBuilder::getEnchantmentType))
+                .forEach((enchantmentType, builders) -> {
+                    JsonArray enchantments = new JsonArray();
+                    builders.stream()
+                            .map(EnchantmentBuilder::getKey)
+                            .forEach(enchantments::add);
+
+                    typeMappings.add(enchantmentType.toString(), enchantments);
+                });
+
+        saveImprovementTypeMappings(cache, typeMappings);
+    }
+
+    private EnchantmentBuilder setupEnchantment(String enchantmentId) {
+        EnchantmentBuilder builder = new EnchantmentBuilder(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantmentId)));
+        builders.add(builder);
+        return builder;
     }
 
     private EnchantmentBuilder setupEnchantment(Enchantment enchantment) {
@@ -217,7 +249,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveImprovements(DirectoryCache cache, String enchantmentKey, JsonArray improvements) {
-        Path outputPath = generator.getOutputFolder().resolve("data/tetra/improvements/enchantments/" + enchantmentKey + ".json");
+        Path outputPath = generator.getOutputFolder().resolve("data/tetra/improvements/" + enchantmentKey + ".json");
         try {
             IDataProvider.save(gson, cache, improvements, outputPath);
         } catch (IOException e) {
@@ -225,12 +257,30 @@ public class EnchantmentProvider implements IDataProvider {
         }
     }
 
-    private void saveLocalization(DirectoryCache cache, String filename, JsonObject localizationEntries) {
-        Path outputPath = generator.getOutputFolder().resolve("assets/tetra/lang/" + filename + ".json");
+    private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
+        Path outputPath = generator.getOutputFolder().resolve("assets/tetra/lang/" + lang + ".json");
         try {
             IDataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save localization to {}", outputPath, e);
+        }
+    }
+
+    private void saveMissingLocalization(DirectoryCache cache, JsonObject localizationEntries) {
+        Path outputPath = generator.getOutputFolder().resolve("TEMP/missing_localization.json");
+        try {
+            IDataProvider.save(gson, cache, localizationEntries, outputPath);
+        } catch (IOException e) {
+            logger.error("Couldn't save missing localization to {}", outputPath, e);
+        }
+    }
+
+    private void saveImprovementTypeMappings(DirectoryCache cache, JsonObject mappings) {
+        Path outputPath = generator.getOutputFolder().resolve("TEMP/enchantment_mappings.json");
+        try {
+            IDataProvider.save(gson, cache, mappings, outputPath);
+        } catch (IOException e) {
+            logger.error("Couldn't save missing localization to {}", outputPath, e);
         }
     }
 
