@@ -27,6 +27,17 @@ public class EnchantmentBuilder {
 
     public EnchantmentBuilder(Enchantment enchantment) {
         this.enchantment = enchantment;
+
+        isCurse = enchantment.isCurse();
+        if (isCurse) {
+            destabilizationInstabilityLimit = 20;
+        }
+
+        if (enchantment.getMaxLevel() == 5) {
+            bonusLevels = 10;
+        } else if (enchantment.getMaxLevel() > 1) {
+            bonusLevels = 5;
+        }
     }
 
     public EnchantmentBuilder setDestabilizationProbability(float probability) {
@@ -65,7 +76,12 @@ public class EnchantmentBuilder {
     }
 
     public String getModId() {
-        return enchantment.delegate.name().getNamespace();
+        try {
+            return enchantment.delegate.name().getNamespace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getKey() {
@@ -86,6 +102,10 @@ public class EnchantmentBuilder {
 
     public boolean isDestabilizingCurse() {
         return destabilizationProbability > 0 && isCurse;
+    }
+
+    public boolean shouldCreateImprovements() {
+        return createImprovements;
     }
 
     private String getImprovementKey() {
@@ -162,23 +182,21 @@ public class EnchantmentBuilder {
     public JsonArray getImprovementsJson() {
         JsonArray result = new JsonArray();
 
-        if (createImprovements) {
-            for (int i = enchantment.getMinLevel(); i < enchantment.getMaxLevel() + 1 + bonusLevels; i++) {
-                JsonObject data = new JsonObject();
-                data.addProperty("key", getImprovementKey());
-                data.addProperty("level", i);
-                data.addProperty("enchantment", true);
-                data.addProperty("magicCapacity",
-                        -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2 * capacityMultiplier);
+        for (int i = enchantment.getMinLevel(); i < enchantment.getMaxLevel() + 1 + bonusLevels; i++) {
+            JsonObject data = new JsonObject();
+            data.addProperty("key", getImprovementKey());
+            data.addProperty("level", i);
+            data.addProperty("enchantment", true);
+            data.addProperty("magicCapacity",
+                    -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2 * capacityMultiplier);
 
-                if (isCurse) {
-                    JsonObject glyph = new JsonObject();
-                    glyph.addProperty("tint", "ee5599");
-                    data.add("glyph", glyph);
-                }
-
-                result.add(data);
+            if (isCurse) {
+                JsonObject glyph = new JsonObject();
+                glyph.addProperty("tint", "ee5599");
+                data.add("glyph", glyph);
             }
+
+            result.add(data);
         }
 
         if (canDestabilize()) {

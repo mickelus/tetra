@@ -4,10 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
-import de.ellpeck.naturesaura.enchant.ModEnchantments;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -18,10 +14,6 @@ import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.enchantments.*;
-import shadows.apotheosis.potion.EnchantmentTrueInfinity;
-import shadows.apotheosis.spawn.EnchantmentCapturing;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +24,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class EnchantmentProvider implements IDataProvider {
@@ -56,14 +47,11 @@ public class EnchantmentProvider implements IDataProvider {
     private void setup() {
         // generic
         setupEnchantment(Enchantments.MENDING);
-        setupEnchantment(Enchantments.VANISHING_CURSE)
-                .setDestabilizationInstabilityLimit(20)
-                .setCurse(true);
+        setupEnchantment(Enchantments.VANISHING_CURSE);
 
         // swords
         setupEnchantment(Enchantments.SHARPNESS)
                 .setApply(false)
-                .setBonusLevels(5)
                 .setCreateImprovements(false);
         setupEnchantment(Enchantments.SMITE);
         setupEnchantment(Enchantments.BANE_OF_ARTHROPODS);
@@ -72,7 +60,6 @@ public class EnchantmentProvider implements IDataProvider {
         setupEnchantment(Enchantments.LOOTING);
         setupEnchantment(Enchantments.SWEEPING)
                 .setApply(false)
-                .setBonusLevels(1)
                 .setCreateImprovements(false);
 
         // tridents
@@ -84,10 +71,11 @@ public class EnchantmentProvider implements IDataProvider {
         // tools
         setupEnchantment(Enchantments.EFFICIENCY)
                 .setApply(false)
-                .setBonusLevels(5)
                 .setCreateImprovements(false);
         setupEnchantment(Enchantments.SILK_TOUCH);
-        setupEnchantment(Enchantments.UNBREAKING);
+        setupEnchantment(Enchantments.UNBREAKING)
+                .setApply(false)
+                .setCreateImprovements(false);
         setupEnchantment(Enchantments.FORTUNE);
 
         // bows
@@ -181,7 +169,9 @@ public class EnchantmentProvider implements IDataProvider {
                             destabilization.add(builder.getDestabilizationJson());
                         }
 
-                        saveImprovements(cache, builder.getKey(), builder.getImprovementsJson());
+                        if (builder.shouldCreateImprovements()) {
+                            saveImprovements(cache, builder.getKey(), builder.getImprovementsJson());
+                        }
                     }
 
                     // english localization for names and descriptions
@@ -228,7 +218,13 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private EnchantmentBuilder setupEnchantment(String enchantmentId) {
-        EnchantmentBuilder builder = new EnchantmentBuilder(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantmentId)));
+        Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantmentId));
+
+        if (enchantment == null) {
+            throw new NullPointerException("Missing enchantment '" + enchantmentId + "'");
+        }
+
+        EnchantmentBuilder builder = new EnchantmentBuilder(enchantment);
         builders.add(builder);
         return builder;
     }
