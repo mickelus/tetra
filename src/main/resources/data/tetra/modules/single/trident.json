@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["single/head"],
+    "slots": [
+        "single/head"
+    ],
     "improvements": [
         "tetra:enchantment/impaling",
         "tetra:enchantment/channeling",
@@ -31,16 +33,18 @@
             "key": "trident/trident",
             "durability": 64,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 8,
             "attackSpeed": 0.2,
             "glyph": {
                 "textureX": 192,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/trident/default"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/trident/default"
+                }
+            ]
         }
     ]
 }

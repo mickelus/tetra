@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["single/head"],
+    "slots": [
+        "single/head"
+    ],
     "improvements": [
         "tetra:enchantment/efficiency_pickaxe",
         "tetra:enchantment/silk_touch",
@@ -37,19 +39,24 @@
             "key": "earthpiercer/earthpiercer",
             "durability": 771,
             "integrity": -3,
-            "magicCapacity": 8,
+            "magicCapacity": 48,
             "damage": 2,
             "attackSpeed": -0.4,
             "capabilities": {
-                "pickaxe": [3, 1]
+                "pickaxe": [
+                    3,
+                    1
+                ]
             },
             "glyph": {
                 "textureX": 224,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/earthpiercer/default"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/earthpiercer/default"
+                }
+            ]
         }
     ]
 }

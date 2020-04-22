@@ -32,11 +32,14 @@
             "key": "long_stave/stick",
             "integrity": -2,
             "durability": 181,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 15,
             "attackSpeed": 2.4,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "stick_glyph",
@@ -68,12 +71,15 @@
         {
             "key": "long_stave/oak",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 268,
             "damage": 19,
             "attackSpeed": 2.5,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "oak_glyph",
@@ -105,12 +111,15 @@
         {
             "key": "long_stave/spruce",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 245,
             "damage": 19,
             "attackSpeed": 2.2,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "spruce_glyph",
@@ -142,12 +151,15 @@
         {
             "key": "long_stave/birch",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 300,
             "damage": 19,
             "attackSpeed": 2.5,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "birch_glyph",
@@ -179,12 +191,15 @@
         {
             "key": "long_stave/jungle",
             "integrity": -3,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 268,
             "damage": 19,
             "attackSpeed": 2.5,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "jungle_glyph",
@@ -216,12 +231,15 @@
         {
             "key": "long_stave/acacia",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 281,
             "damage": 22,
             "attackSpeed": 2.875,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "acacia_glyph",
@@ -253,12 +271,15 @@
         {
             "key": "long_stave/dark_oak",
             "integrity": -3,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 244,
             "damage": 21,
             "attackSpeed": 2.5,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "dark_oak_glyph",
@@ -290,12 +311,15 @@
         {
             "key": "long_stave/maple",
             "integrity": -4,
-            "magicCapacity": 16,
+            "magicCapacity": 96,
             "durability": 310,
             "damage": 24,
             "attackSpeed": 2.5,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "maple_glyph",
@@ -327,12 +351,15 @@
         {
             "key": "long_stave/cherry",
             "integrity": -4,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 320,
             "damage": 25,
             "attackSpeed": 2.65,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "cherry_glyph",
@@ -364,12 +391,15 @@
         {
             "key": "long_stave/baobab",
             "integrity": -6,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 490,
             "damage": 28,
             "attackSpeed": 2.65,
             "effects": {
-                "overbowed": [40, 0.5]
+                "overbowed": [
+                    40,
+                    0.5
+                ]
             },
             "glyph": {
                 "tint": "baobab_glyph",

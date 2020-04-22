@@ -32,7 +32,7 @@
             "key": "straight_stave/stick",
             "integrity": -1,
             "durability": 181,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 9.09,
             "attackSpeed": 1.05,
             "glyph": {
@@ -65,7 +65,7 @@
         {
             "key": "straight_stave/oak",
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 268,
             "damage": 12,
             "attackSpeed": 1,
@@ -99,7 +99,7 @@
         {
             "key": "straight_stave/spruce",
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 245,
             "damage": 12,
             "attackSpeed": 0.8,
@@ -133,7 +133,7 @@
         {
             "key": "straight_stave/birch",
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 300,
             "damage": 12,
             "attackSpeed": 1,
@@ -167,7 +167,7 @@
         {
             "key": "straight_stave/jungle",
             "integrity": -2,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 268,
             "damage": 12,
             "attackSpeed": 1,
@@ -201,7 +201,7 @@
         {
             "key": "straight_stave/acacia",
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 281,
             "damage": 14,
             "attackSpeed": 1.25,
@@ -235,7 +235,7 @@
         {
             "key": "straight_stave/dark_oak",
             "integrity": -2,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 244,
             "damage": 13,
             "attackSpeed": 1,
@@ -269,7 +269,7 @@
         {
             "key": "straight_stave/maple",
             "integrity": -3,
-            "magicCapacity": 16,
+            "magicCapacity": 96,
             "durability": 310,
             "damage": 15,
             "attackSpeed": 1,
@@ -303,7 +303,7 @@
         {
             "key": "straight_stave/cherry",
             "integrity": -3,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 320,
             "damage": 16,
             "attackSpeed": 1.1,
@@ -337,7 +337,7 @@
         {
             "key": "straight_stave/baobab",
             "integrity": -5,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 490,
             "damage": 18,
             "attackSpeed": 1.1,

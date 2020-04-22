@@ -1,6 +1,8 @@
 {
     "replace": true,
-    "slots": ["sword/blade"],
+    "slots": [
+        "sword/blade"
+    ],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:enchantment/sharpness",
@@ -52,7 +54,7 @@
             "key": "heavy_blade/oak_log",
             "durability": 100,
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": -0.4,
             "glyph": {
@@ -63,18 +65,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "oak"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "oak"
+                }
+            ]
         },
         {
             "key": "heavy_blade/spruce_log",
             "durability": 100,
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": -0.4,
             "glyph": {
@@ -85,18 +92,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "spruce"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "spruce"
+                }
+            ]
         },
         {
             "key": "heavy_blade/birch_log",
             "durability": 140,
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": -0.4,
             "glyph": {
@@ -107,18 +119,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "birch"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "birch"
+                }
+            ]
         },
         {
             "key": "heavy_blade/jungle_log",
             "durability": 100,
             "integrity": -2,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "damage": 4,
             "attackSpeed": -0.4,
             "glyph": {
@@ -129,18 +146,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "jungle"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "jungle"
+                }
+            ]
         },
         {
             "key": "heavy_blade/acacia_log",
             "durability": 140,
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 4,
             "attackSpeed": -0.45,
             "glyph": {
@@ -151,18 +173,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "acacia"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "acacia"
+                }
+            ]
         },
         {
             "key": "heavy_blade/dark_oak_log",
             "durability": 100,
             "integrity": -2,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "damage": 3,
             "attackSpeed": -0.45,
             "glyph": {
@@ -173,18 +200,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "dark_oak"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "dark_oak"
+                }
+            ]
         },
         {
             "key": "heavy_blade/cobblestone",
             "durability": 210,
             "integrity": -2,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": -0.45,
             "glyph": {
@@ -195,18 +227,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/grainy",
-                "tint": "cobblestone"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/grainy",
+                    "tint": "cobblestone"
+                }
+            ]
         },
         {
             "key": "heavy_blade/stone",
             "durability": 390,
             "integrity": -2,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": -0.55,
             "glyph": {
@@ -217,18 +254,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/crude",
-                "tint": "stone"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/crude",
+                    "tint": "stone"
+                }
+            ]
         },
         {
             "key": "heavy_blade/granite",
             "durability": 430,
             "integrity": -2,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": -0.5,
             "glyph": {
@@ -239,18 +281,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/grainy",
-                "tint": "granite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/grainy",
+                    "tint": "granite"
+                }
+            ]
         },
         {
             "key": "heavy_blade/diorite",
             "durability": 370,
             "integrity": -2,
-            "magicCapacity": 7,
+            "magicCapacity": 42,
             "damage": 4,
             "attackSpeed": -0.45,
             "glyph": {
@@ -261,18 +308,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/grainy",
-                "tint": "diorite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/grainy",
+                    "tint": "diorite"
+                }
+            ]
         },
         {
             "key": "heavy_blade/andesite",
             "durability": 370,
             "integrity": -2,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 5,
             "attackSpeed": -0.5,
             "glyph": {
@@ -283,18 +335,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/grainy",
-                "tint": "andesite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/grainy",
+                    "tint": "andesite"
+                }
+            ]
         },
         {
             "key": "heavy_blade/iron",
             "durability": 450,
             "integrity": -3,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 6,
             "attackSpeed": -0.6,
             "glyph": {
@@ -305,18 +362,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "iron"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "iron"
+                }
+            ]
         },
         {
             "key": "heavy_blade/gold",
             "durability": 30,
             "integrity": -3,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 7,
             "attackSpeed": -0.6,
             "glyph": {
@@ -327,18 +389,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/shiny",
-                "tint": "gold"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/shiny",
+                    "tint": "gold"
+                }
+            ]
         },
         {
             "key": "heavy_blade/obsidian",
             "durability": 2423,
             "integrity": -4,
-            "magicCapacity": 7,
+            "magicCapacity": 42,
             "damage": 9,
             "attackSpeed": -0.8,
             "glyph": {
@@ -349,18 +416,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/grainy",
-                "tint": "obsidian"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/grainy",
+                    "tint": "obsidian"
+                }
+            ]
         },
         {
             "key": "heavy_blade/copper",
             "durability": 295,
             "integrity": -2,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 5,
             "attackSpeed": -0.7,
             "glyph": {
@@ -371,18 +443,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "copper"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "copper"
+                }
+            ]
         },
         {
             "key": "heavy_blade/tin",
             "durability": 151,
             "integrity": -1,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 4,
             "attackSpeed": -0.5,
             "glyph": {
@@ -393,18 +470,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "tin"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "tin"
+                }
+            ]
         },
         {
             "key": "heavy_blade/silver",
             "durability": 105,
             "integrity": -3,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 5,
             "attackSpeed": -0.6,
             "glyph": {
@@ -415,18 +497,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/shiny",
-                "tint": "silver"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/shiny",
+                    "tint": "silver"
+                }
+            ]
         },
         {
             "key": "heavy_blade/nickel",
             "durability": 370,
             "integrity": -3,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 7,
             "attackSpeed": -0.7,
             "glyph": {
@@ -437,18 +524,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "nickel"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "nickel"
+                }
+            ]
         },
         {
             "key": "heavy_blade/lead",
             "durability": 220,
             "integrity": -4,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 6,
             "attackSpeed": -0.6,
             "glyph": {
@@ -459,18 +551,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "lead"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "lead"
+                }
+            ]
         },
         {
             "key": "heavy_blade/bronze",
             "durability": 643,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 6,
             "attackSpeed": -0.7,
             "glyph": {
@@ -481,18 +578,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "bronze"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "bronze"
+                }
+            ]
         },
         {
             "key": "heavy_blade/electrum",
             "durability": 122,
             "integrity": -3,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 5,
             "attackSpeed": -0.6,
             "glyph": {
@@ -503,18 +605,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/shiny",
-                "tint": "electrum"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/shiny",
+                    "tint": "electrum"
+                }
+            ]
         },
         {
             "key": "heavy_blade/steel",
             "durability": 790,
             "integrity": -3,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 7,
             "attackSpeed": -0.7,
             "glyph": {
@@ -525,18 +632,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "steel"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "steel"
+                }
+            ]
         },
         {
             "key": "heavy_blade/thaumium",
             "durability": 851,
             "integrity": -3,
-            "magicCapacity": 25,
+            "magicCapacity": 150,
             "damage": 6.5,
             "attackSpeed": -0.6,
             "glyph": {
@@ -547,18 +659,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "thaumium"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "thaumium"
+                }
+            ]
         },
         {
             "key": "heavy_blade/ironwood",
             "durability": 865,
             "integrity": -3,
-            "magicCapacity": 18,
+            "magicCapacity": 108,
             "damage": 6,
             "attackSpeed": -0.6,
             "glyph": {
@@ -569,17 +686,22 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/ironwood"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/ironwood"
+                }
+            ]
         },
         {
             "key": "heavy_blade/steeleaf",
             "durability": 130,
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 7,
             "attackSpeed": -0.6,
             "glyph": {
@@ -590,18 +712,23 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "steeleaf"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "steeleaf"
+                }
+            ]
         },
         {
             "key": "heavy_blade/fierymetal",
             "durability": 1888,
             "integrity": -7,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 9,
             "attackSpeed": -0.6,
             "glyph": {
@@ -612,17 +739,22 @@
                 "sweeping": 3
             },
             "capabilities": {
-                "cut": [1, 1]
+                "cut": [
+                    1,
+                    1
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/fierymetal"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/fierymetal"
+                }
+            ]
         },
         {
             "key": "heavy_blade/knightmetal",
             "durability": 492,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 6,
             "glyph": {
                 "tint": "knightmetal_glyph",
@@ -632,12 +764,17 @@
                 "sweeping": 2
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/heavy/metal",
-                "tint": "knightmetal"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/heavy/metal",
+                    "tint": "knightmetal"
+                }
+            ]
         }
     ]
 }

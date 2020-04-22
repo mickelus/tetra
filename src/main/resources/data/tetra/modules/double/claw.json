@@ -1,8 +1,14 @@
 {
     "replace": true,
     "type": "tetra:multi_major_module",
-    "slots": ["double/head_left", "double/head_right"],
-    "slotSuffixes": ["_left", "_right"],
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "slotSuffixes": [
+        "_left",
+        "_right"
+    ],
     "improvements": [
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_momentum",
@@ -28,7 +34,7 @@
             "key": "claw/oak",
             "durability": 18,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 0,
             "attackSpeed": -0.3,
             "glyph": {
@@ -36,12 +42,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/crude",
-                "tint": "oak"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/crude",
+                    "tint": "oak"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 1.5]
+                "pry": [
+                    1,
+                    1.5
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -51,7 +62,7 @@
             "key": "claw/cobblestone",
             "durability": 72,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -59,12 +70,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/crude",
-                "tint": "cobblestone"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/crude",
+                    "tint": "cobblestone"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 2.7]
+                "pry": [
+                    1,
+                    2.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -74,7 +90,7 @@
             "key": "claw/flint",
             "durability": 101,
             "integrity": -2,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 1,
             "attackSpeed": -0.1,
             "glyph": {
@@ -82,12 +98,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/crude",
-                "tint": "flint"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/crude",
+                    "tint": "flint"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 2.9]
+                "pry": [
+                    1,
+                    2.9
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -97,7 +118,7 @@
             "key": "claw/iron",
             "durability": 125,
             "integrity": -1,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -105,12 +126,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "iron"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "iron"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 3.4]
+                "pry": [
+                    1,
+                    3.4
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -120,7 +146,7 @@
             "key": "claw/diamond",
             "durability": 640,
             "integrity": -2,
-            "magicCapacity": 10,
+            "magicCapacity": 60,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -128,12 +154,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/shiny",
-                "tint": "diamond"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/shiny",
+                    "tint": "diamond"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 4.1]
+                "pry": [
+                    1,
+                    4.1
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -143,7 +174,7 @@
             "key": "claw/gold",
             "durability": 8,
             "integrity": -1,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -151,12 +182,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/shiny",
-                "tint": "gold"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/shiny",
+                    "tint": "gold"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 6.2]
+                "pry": [
+                    1,
+                    6.2
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -166,7 +202,7 @@
             "key": "claw/copper",
             "durability": 79,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -174,12 +210,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "copper"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "copper"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 2.6]
+                "pry": [
+                    1,
+                    2.6
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -189,7 +230,7 @@
             "key": "claw/tin",
             "durability": 31,
             "integrity": 0,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.5,
             "glyph": {
@@ -197,12 +238,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "tin"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "tin"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 3.4]
+                "pry": [
+                    1,
+                    3.4
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -212,7 +258,7 @@
             "key": "claw/silver",
             "durability": 19,
             "integrity": -1,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -220,12 +266,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/shiny",
-                "tint": "silver"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/shiny",
+                    "tint": "silver"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 5.7]
+                "pry": [
+                    1,
+                    5.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -235,7 +286,7 @@
             "key": "claw/nickel",
             "durability": 115,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -243,12 +294,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "nickel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "nickel"
+                }
+            ],
             "capabilities": {
-                "pry": [2, 3.7]
+                "pry": [
+                    2,
+                    3.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -258,7 +314,7 @@
             "key": "claw/lead",
             "durability": 40,
             "integrity": -1,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -266,12 +322,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "lead"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "lead"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 2.7]
+                "pry": [
+                    1,
+                    2.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -281,7 +342,7 @@
             "key": "claw/bronze",
             "durability": 290,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -289,12 +350,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "bronze"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "bronze"
+                }
+            ],
             "capabilities": {
-                "pry": [2, 3.7]
+                "pry": [
+                    2,
+                    3.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -304,7 +370,7 @@
             "key": "claw/electrum",
             "durability": 59,
             "integrity": -1,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 1,
             "attackSpeed": -0.2,
             "glyph": {
@@ -312,12 +378,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "electrum"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "electrum"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 6.7]
+                "pry": [
+                    1,
+                    6.7
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -327,7 +398,7 @@
             "key": "claw/steel",
             "durability": 318,
             "integrity": -2,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 1,
             "attackSpeed": -0.35,
             "glyph": {
@@ -335,12 +406,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "steel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "steel"
+                }
+            ],
             "capabilities": {
-                "pry": [2, 4.2]
+                "pry": [
+                    2,
+                    4.2
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -350,7 +426,7 @@
             "key": "claw/thaumium",
             "durability": 321,
             "integrity": -2,
-            "magicCapacity": 25,
+            "magicCapacity": 150,
             "damage": 1,
             "attackSpeed": -0.35,
             "glyph": {
@@ -358,12 +434,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "thaumium"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "thaumium"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 3.4]
+                "pry": [
+                    1,
+                    3.4
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -373,7 +454,7 @@
             "key": "claw/ironwood_tf",
             "durability": 215,
             "integrity": -2,
-            "magicCapacity": 18,
+            "magicCapacity": 108,
             "damage": 1,
             "attackSpeed": -0.5,
             "glyph": {
@@ -381,12 +462,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "ironwood"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "ironwood"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 3.8]
+                "pry": [
+                    1,
+                    3.8
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -396,7 +482,7 @@
             "key": "claw/steeleaf",
             "durability": 69,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 1,
             "attackSpeed": -0.35,
             "glyph": {
@@ -404,12 +490,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "steeleaf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "steeleaf"
+                }
+            ],
             "capabilities": {
-                "pry": [2, 4.6]
+                "pry": [
+                    2,
+                    4.6
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -419,7 +510,7 @@
             "key": "claw/fierymetal",
             "durability": 571,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -427,11 +518,16 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/fierymetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/fierymetal"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 5.2]
+                "pry": [
+                    1,
+                    5.2
+                ]
             },
             "effects": {
                 "denailing": 1
@@ -441,7 +537,7 @@
             "key": "claw/knightmetal",
             "durability": 313,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.35,
             "glyph": {
@@ -449,12 +545,17 @@
                 "textureX": 64,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/claw/metal",
-                "tint": "knightmetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/claw/metal",
+                    "tint": "knightmetal"
+                }
+            ],
             "capabilities": {
-                "pry": [1, 4.7]
+                "pry": [
+                    1,
+                    4.7
+                ]
             },
             "effects": {
                 "denailing": 1

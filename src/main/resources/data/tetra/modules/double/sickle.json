@@ -1,8 +1,14 @@
 {
     "replace": true,
     "type": "tetra:multi_major_module",
-    "slots": ["double/head_left", "double/head_right"],
-    "slotSuffixes": ["_left", "_right"],
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "slotSuffixes": [
+        "_left",
+        "_right"
+    ],
     "improvements": [
         "tetra:enchantment/sharpness",
         "tetra:enchantment/sweeping",
@@ -31,7 +37,7 @@
             "key": "sickle/oak",
             "durability": 20,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -39,12 +45,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/crude",
-                "tint": "oak"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/crude",
+                    "tint": "oak"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 1.6667]
+                "cut": [
+                    1,
+                    1.6667
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -56,7 +67,7 @@
             "key": "sickle/cobblestone",
             "durability": 56,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -64,12 +75,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/crude",
-                "tint": "cobblestone"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/crude",
+                    "tint": "cobblestone"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 3.33333]
+                "cut": [
+                    1,
+                    3.33333
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -81,7 +97,7 @@
             "key": "sickle/flint",
             "durability": 78,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 2,
             "attackSpeed": -0.1,
             "glyph": {
@@ -89,12 +105,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/crude",
-                "tint": "flint"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/crude",
+                    "tint": "flint"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 3.5]
+                "cut": [
+                    1,
+                    3.5
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -106,7 +127,7 @@
             "key": "sickle/iron",
             "durability": 115,
             "integrity": -2,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -114,12 +135,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "iron"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "iron"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 5]
+                "cut": [
+                    1,
+                    5
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -131,7 +157,7 @@
             "key": "sickle/diamond",
             "durability": 771,
             "integrity": -2,
-            "magicCapacity": 10,
+            "magicCapacity": 60,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -139,12 +165,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/shiny",
-                "tint": "diamond"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/shiny",
+                    "tint": "diamond"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 6.6667]
+                "cut": [
+                    1,
+                    6.6667
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -156,7 +187,7 @@
             "key": "sickle/gold",
             "durability": 6,
             "integrity": -2,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -164,12 +195,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/shiny",
-                "tint": "gold"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/shiny",
+                    "tint": "gold"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 10]
+                "cut": [
+                    1,
+                    10
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -181,7 +217,7 @@
             "key": "sickle/copper",
             "durability": 122,
             "integrity": 0,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -189,12 +225,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "copper"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "copper"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 4.5]
+                "cut": [
+                    1,
+                    4.5
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -206,7 +247,7 @@
             "key": "sickle/tin",
             "durability": 92,
             "integrity": 0,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -214,12 +255,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "tin"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "tin"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 5.4]
+                "cut": [
+                    1,
+                    5.4
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -231,7 +277,7 @@
             "key": "sickle/silver",
             "durability": 46,
             "integrity": -1,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -239,12 +285,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/shiny",
-                "tint": "silver"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/shiny",
+                    "tint": "silver"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 10]
+                "cut": [
+                    1,
+                    10
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -256,7 +307,7 @@
             "key": "sickle/nickel",
             "durability": 230,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -264,12 +315,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "nickel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "nickel"
+                }
+            ],
             "capabilities": {
-                "cut": [2, 5.2]
+                "cut": [
+                    2,
+                    5.2
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -281,7 +337,7 @@
             "key": "sickle/lead",
             "durability": 65,
             "integrity": -1,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -289,12 +345,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "lead"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "lead"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 4.6]
+                "cut": [
+                    1,
+                    4.6
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -306,7 +367,7 @@
             "key": "sickle/bronze",
             "durability": 360,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -314,12 +375,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "bronze"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "bronze"
+                }
+            ],
             "capabilities": {
-                "cut": [2, 6.2]
+                "cut": [
+                    2,
+                    6.2
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -331,7 +397,7 @@
             "key": "sickle/electrum",
             "durability": 121,
             "integrity": -1,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -339,12 +405,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "electrum"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "electrum"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 9]
+                "cut": [
+                    1,
+                    9
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -356,7 +427,7 @@
             "key": "sickle/steel",
             "durability": 328,
             "integrity": -2,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 2,
             "attackSpeed": -0.35,
             "glyph": {
@@ -364,12 +435,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "steel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "steel"
+                }
+            ],
             "capabilities": {
-                "cut": [2, 6.5]
+                "cut": [
+                    2,
+                    6.5
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -381,7 +457,7 @@
             "key": "sickle/thaumium",
             "durability": 419,
             "integrity": -2,
-            "magicCapacity": 25,
+            "magicCapacity": 150,
             "damage": 2,
             "attackSpeed": -0.35,
             "glyph": {
@@ -389,12 +465,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "thaumium"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "thaumium"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 6.67]
+                "cut": [
+                    1,
+                    6.67
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -406,7 +487,7 @@
             "key": "sickle/ironwood_tf",
             "durability": 426,
             "integrity": -2,
-            "magicCapacity": 18,
+            "magicCapacity": 108,
             "damage": 2,
             "attackSpeed": -0.5,
             "glyph": {
@@ -414,11 +495,16 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/ironwood_tf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/ironwood_tf"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 5.42]
+                "cut": [
+                    1,
+                    5.42
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -430,7 +516,7 @@
             "key": "sickle/steeleaf",
             "durability": 96,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 2,
             "attackSpeed": -0.35,
             "glyph": {
@@ -438,12 +524,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "steeleaf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "steeleaf"
+                }
+            ],
             "capabilities": {
-                "cut": [2, 6.67]
+                "cut": [
+                    2,
+                    6.67
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -455,7 +546,7 @@
             "key": "sickle/fierymetal",
             "durability": 602,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 2,
             "attackSpeed": -0.4,
             "glyph": {
@@ -463,11 +554,16 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/fierymetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/fierymetal"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 7.5]
+                "cut": [
+                    1,
+                    7.5
+                ]
             },
             "effects": {
                 "strikingCut": 1,
@@ -479,7 +575,7 @@
             "key": "sickle/knightmetal",
             "durability": 446,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 2,
             "attackSpeed": -0.35,
             "glyph": {
@@ -487,12 +583,17 @@
                 "textureX": 32,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/sickle/metal",
-                "tint": "knightmetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/sickle/metal",
+                    "tint": "knightmetal"
+                }
+            ],
             "capabilities": {
-                "cut": [1, 6.67]
+                "cut": [
+                    1,
+                    6.67
+                ]
             },
             "effects": {
                 "strikingCut": 1,

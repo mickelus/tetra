@@ -1,8 +1,14 @@
 {
     "replace": true,
     "type": "tetra:multi_major_module",
-    "slots": ["double/head_left", "double/head_right"],
-    "slotSuffixes": ["_left", "_right"],
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "slotSuffixes": [
+        "_left",
+        "_right"
+    ],
     "improvements": [
         "tetra:enchantment/sharpness",
         "tetra:enchantment/smite",
@@ -58,19 +64,24 @@
             "key": "basic_axe/oak",
             "durability": 26,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 6,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "oak_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/crude",
-                "tint": "oak"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/crude",
+                    "tint": "oak"
+                }
+            ],
             "capabilities": {
-                "axe": [1, 2.5]
+                "axe": [
+                    1,
+                    2.5
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -80,19 +91,24 @@
             "key": "basic_axe/cobblestone",
             "durability": 92,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "cobblestone_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/crude",
-                "tint": "cobblestone"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/crude",
+                    "tint": "cobblestone"
+                }
+            ],
             "capabilities": {
-                "axe": [1, 5]
+                "axe": [
+                    1,
+                    5
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -102,19 +118,24 @@
             "key": "basic_axe/flint",
             "durability": 145,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 8,
             "attackSpeed": -0.4,
             "glyph": {
                 "tint": "flint_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/crude",
-                "tint": "flint"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/crude",
+                    "tint": "flint"
+                }
+            ],
             "capabilities": {
-                "axe": [2, 5]
+                "axe": [
+                    2,
+                    5
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -124,19 +145,24 @@
             "key": "basic_axe/iron",
             "durability": 193,
             "integrity": -2,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "iron_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "iron"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "iron"
+                }
+            ],
             "capabilities": {
-                "axe": [3, 6.6666667]
+                "axe": [
+                    3,
+                    6.6666667
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -146,19 +172,24 @@
             "key": "basic_axe/diamond",
             "durability": 992,
             "integrity": -2,
-            "magicCapacity": 10,
+            "magicCapacity": 60,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "diamond_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/shiny",
-                "tint": "diamond"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/shiny",
+                    "tint": "diamond"
+                }
+            ],
             "capabilities": {
-                "axe": [4, 8]
+                "axe": [
+                    4,
+                    8
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -168,19 +199,24 @@
             "key": "basic_axe/gold",
             "durability": 11,
             "integrity": -2,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 6,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "gold_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/shiny",
-                "tint": "gold"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/shiny",
+                    "tint": "gold"
+                }
+            ],
             "capabilities": {
-                "axe": [1, 12]
+                "axe": [
+                    1,
+                    12
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -190,19 +226,24 @@
             "key": "basic_axe/copper",
             "durability": 113,
             "integrity": 0,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 7,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "copper_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "copper"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "copper"
+                }
+            ],
             "capabilities": {
-                "axe": [2, 5]
+                "axe": [
+                    2,
+                    5
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -212,19 +253,24 @@
             "key": "basic_axe/tin",
             "durability": 44,
             "integrity": 0,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 6.5,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "tin_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "tin"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "tin"
+                }
+            ],
             "capabilities": {
-                "axe": [2, 6.6]
+                "axe": [
+                    2,
+                    6.6
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -234,19 +280,24 @@
             "key": "basic_axe/silver",
             "durability": 29,
             "integrity": -1,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "silver_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/shiny",
-                "tint": "silver"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/shiny",
+                    "tint": "silver"
+                }
+            ],
             "capabilities": {
-                "axe": [1, 11]
+                "axe": [
+                    1,
+                    11
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -256,19 +307,24 @@
             "key": "basic_axe/nickel",
             "durability": 156,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 7,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "nickel_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "nickel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "nickel"
+                }
+            ],
             "capabilities": {
-                "axe": [3, 7]
+                "axe": [
+                    3,
+                    7
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -278,19 +334,24 @@
             "key": "basic_axe/lead",
             "durability": 64,
             "integrity": -1,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "lead_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "lead"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "lead"
+                }
+            ],
             "capabilities": {
-                "axe": [3, 5]
+                "axe": [
+                    3,
+                    5
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -300,19 +361,24 @@
             "key": "basic_axe/bronze",
             "durability": 357,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "bronze_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "bronze"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "bronze"
+                }
+            ],
             "capabilities": {
-                "axe": [3, 7.8]
+                "axe": [
+                    3,
+                    7.8
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -322,19 +388,24 @@
             "key": "basic_axe/electrum",
             "durability": 89,
             "integrity": -1,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 7,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "electrum_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "electrum"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "electrum"
+                }
+            ],
             "capabilities": {
-                "axe": [2, 13]
+                "axe": [
+                    2,
+                    13
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -344,19 +415,24 @@
             "key": "basic_axe/steel",
             "durability": 394,
             "integrity": -2,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 8,
             "attackSpeed": -0.6,
             "glyph": {
                 "tint": "steel_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "steel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "steel"
+                }
+            ],
             "capabilities": {
-                "axe": [4, 8.2]
+                "axe": [
+                    4,
+                    8.2
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -366,19 +442,24 @@
             "key": "basic_axe/thaumium",
             "durability": 419,
             "integrity": -2,
-            "magicCapacity": 25,
+            "magicCapacity": 150,
             "damage": 8,
             "attackSpeed": -0.6,
             "glyph": {
                 "tint": "thaumium_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/metal",
-                "tint": "thaumium"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/metal",
+                    "tint": "thaumium"
+                }
+            ],
             "capabilities": {
-                "axe": [3, 6.7]
+                "axe": [
+                    3,
+                    6.7
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -388,18 +469,23 @@
             "key": "basic_axe/ironwood",
             "durability": 416,
             "integrity": -2,
-            "magicCapacity": 18,
+            "magicCapacity": 108,
             "damage": 6,
             "attackSpeed": -0.8,
             "glyph": {
                 "tint": "ironwood_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/ironwood_tf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/ironwood_tf"
+                }
+            ],
             "capabilities": {
-                "axe": [2, 7.22]
+                "axe": [
+                    2,
+                    7.22
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -409,18 +495,23 @@
             "key": "basic_axe/steeleaf",
             "durability": 96,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 7,
             "attackSpeed": -0.6,
             "glyph": {
                 "tint": "steeleaf_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/steeleaf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/steeleaf"
+                }
+            ],
             "capabilities": {
-                "axe": [4, 8.88]
+                "axe": [
+                    4,
+                    8.88
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -430,18 +521,23 @@
             "key": "basic_axe/fierymetal",
             "durability": 756,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 8,
             "attackSpeed": -0.7,
             "glyph": {
                 "tint": "fierymetal_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/fierymetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/fierymetal"
+                }
+            ],
             "capabilities": {
-                "axe": [5, 10]
+                "axe": [
+                    5,
+                    10
+                ]
             },
             "effects": {
                 "stripping": 1
@@ -451,18 +547,23 @@
             "key": "basic_axe/knightmetal",
             "durability": 396,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 7,
             "attackSpeed": -0.6,
             "glyph": {
                 "tint": "knightmetal_glyph",
                 "textureX": 144
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_axe/knightmetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_axe/knightmetal"
+                }
+            ],
             "capabilities": {
-                "axe": [4, 8.88]
+                "axe": [
+                    4,
+                    8.88
+                ]
             },
             "effects": {
                 "stripping": 1

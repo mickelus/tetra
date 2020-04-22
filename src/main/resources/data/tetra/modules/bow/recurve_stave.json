@@ -32,7 +32,7 @@
             "key": "recurve_stave/stick",
             "integrity": -2,
             "durability": 199,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 8,
             "attackSpeed": 0.63,
             "glyph": {
@@ -65,7 +65,7 @@
         {
             "key": "recurve_stave/oak",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 294,
             "damage": 10,
             "attackSpeed": 0.6,
@@ -99,7 +99,7 @@
         {
             "key": "recurve_stave/spruce",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 269,
             "damage": 10,
             "attackSpeed": 0.48,
@@ -133,7 +133,7 @@
         {
             "key": "recurve_stave/birch",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 330,
             "damage": 10,
             "attackSpeed": 0.6,
@@ -167,7 +167,7 @@
         {
             "key": "recurve_stave/jungle",
             "integrity": -3,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 294,
             "damage": 10,
             "attackSpeed": 0.6,
@@ -201,7 +201,7 @@
         {
             "key": "recurve_stave/acacia",
             "integrity": -3,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "durability": 309,
             "damage": 12,
             "attackSpeed": 0.75,
@@ -235,7 +235,7 @@
         {
             "key": "recurve_stave/dark_oak",
             "integrity": -3,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "durability": 268,
             "damage": 11,
             "attackSpeed": 0.6,
@@ -269,7 +269,7 @@
         {
             "key": "recurve_stave/maple",
             "integrity": -4,
-            "magicCapacity": 16,
+            "magicCapacity": 96,
             "durability": 341,
             "damage": 13,
             "attackSpeed": 0.6,
@@ -303,7 +303,7 @@
         {
             "key": "recurve_stave/cherry",
             "integrity": -4,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 352,
             "damage": 14,
             "attackSpeed": 0.66,
@@ -337,7 +337,7 @@
         {
             "key": "recurve_stave/baobab",
             "integrity": -6,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "durability": 539,
             "damage": 16,
             "attackSpeed": 0.66,

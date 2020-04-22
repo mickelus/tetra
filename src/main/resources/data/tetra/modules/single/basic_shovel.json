@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["single/head"],
+    "slots": [
+        "single/head"
+    ],
     "improvements": [
         "tetra:enchantment/efficiency_shovel",
         "tetra:enchantment/silk_touch",
@@ -34,7 +36,7 @@
             "key": "basic_shovel/oak",
             "durability": 20,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 0,
             "attackSpeed": -0.3,
             "glyph": {
@@ -42,22 +44,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/crude",
-                "tint": "oak"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/crude",
+                    "tint": "oak"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [1, 2.5]
+                "shovel": [
+                    1,
+                    2.5
+                ]
             }
         },
         {
             "key": "basic_shovel/cobblestone",
             "durability": 81,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -65,22 +72,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/crude",
-                "tint": "cobblestone"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/crude",
+                    "tint": "cobblestone"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [1, 5]
+                "shovel": [
+                    1,
+                    5
+                ]
             }
         },
         {
             "key": "basic_shovel/flint",
             "durability": 115,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 1,
             "attackSpeed": 0,
             "glyph": {
@@ -88,22 +100,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/crude",
-                "tint": "flint"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/crude",
+                    "tint": "flint"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [2, 5]
+                "shovel": [
+                    2,
+                    5
+                ]
             }
         },
         {
             "key": "basic_shovel/iron",
             "durability": 143,
             "integrity": -2,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -111,22 +128,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "iron"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "iron"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [3, 6.6666667]
+                "shovel": [
+                    3,
+                    6.6666667
+                ]
             }
         },
         {
             "key": "basic_shovel/diamond",
             "durability": 742,
             "integrity": -2,
-            "magicCapacity": 10,
+            "magicCapacity": 60,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -134,22 +156,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/shiny",
-                "tint": "diamond"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/shiny",
+                    "tint": "diamond"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [4, 8]
+                "shovel": [
+                    4,
+                    8
+                ]
             }
         },
         {
             "key": "basic_shovel/gold",
             "durability": 8,
             "integrity": -2,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -157,22 +184,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/shiny",
-                "tint": "gold"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/shiny",
+                    "tint": "gold"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [1, 12]
+                "shovel": [
+                    1,
+                    12
+                ]
             }
         },
         {
             "key": "basic_shovel/copper",
             "durability": 87,
             "integrity": 0,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -180,22 +212,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "copper"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "copper"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [2, 5]
+                "shovel": [
+                    2,
+                    5
+                ]
             }
         },
         {
             "key": "basic_shovel/tin",
             "durability": 35,
             "integrity": 0,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -203,22 +240,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "tin"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "tin"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [2, 6.6]
+                "shovel": [
+                    2,
+                    6.6
+                ]
             }
         },
         {
             "key": "basic_shovel/silver",
             "durability": 21,
             "integrity": -1,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -226,22 +268,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/shiny",
-                "tint": "silver"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/shiny",
+                    "tint": "silver"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [1, 11]
+                "shovel": [
+                    1,
+                    11
+                ]
             }
         },
         {
             "key": "basic_shovel/nickel",
             "durability": 128,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -249,22 +296,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "nickel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "nickel"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [3, 7]
+                "shovel": [
+                    3,
+                    7
+                ]
             }
         },
         {
             "key": "basic_shovel/lead",
             "durability": 45,
             "integrity": -1,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -272,22 +324,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "lead"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "lead"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [3, 5]
+                "shovel": [
+                    3,
+                    5
+                ]
             }
         },
         {
             "key": "basic_shovel/bronze",
             "durability": 310,
             "integrity": -1,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -295,22 +352,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "bronze"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "bronze"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [3, 7.8]
+                "shovel": [
+                    3,
+                    7.8
+                ]
             }
         },
         {
             "key": "basic_shovel/electrum",
             "durability": 66,
             "integrity": -1,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -318,22 +380,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "electrum"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "electrum"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [2, 13]
+                "shovel": [
+                    2,
+                    13
+                ]
             }
         },
         {
             "key": "basic_shovel/steel",
             "durability": 352,
             "integrity": -2,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 1,
             "attackSpeed": -0.25,
             "glyph": {
@@ -341,22 +408,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "steel"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "steel"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [4, 8.2]
+                "shovel": [
+                    4,
+                    8.2
+                ]
             }
         },
         {
             "key": "basic_shovel/thaumium",
             "durability": 359,
             "integrity": -2,
-            "magicCapacity": 25,
+            "magicCapacity": 150,
             "damage": 1,
             "attackSpeed": -0.25,
             "glyph": {
@@ -364,22 +436,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "thaumium"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "thaumium"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [3, 6.7]
+                "shovel": [
+                    3,
+                    6.7
+                ]
             }
         },
         {
             "key": "basic_shovel/ironwood_tf",
             "durability": 355,
             "integrity": -2,
-            "magicCapacity": 18,
+            "magicCapacity": 108,
             "damage": 1,
             "attackSpeed": -0.4,
             "glyph": {
@@ -387,21 +464,26 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/ironwood_tf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/ironwood_tf"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [2, 7.22]
+                "shovel": [
+                    2,
+                    7.22
+                ]
             }
         },
         {
             "key": "basic_shovel/steeleaf",
             "durability": 76,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 1,
             "attackSpeed": -0.25,
             "glyph": {
@@ -409,22 +491,27 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "steeleaf"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "steeleaf"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [4, 8.88]
+                "shovel": [
+                    4,
+                    8.88
+                ]
             }
         },
         {
             "key": "basic_shovel/fierymetal",
             "durability": 634,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.3,
             "glyph": {
@@ -432,21 +519,26 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/fierymetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/fierymetal"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [5, 10]
+                "shovel": [
+                    5,
+                    10
+                ]
             }
         },
         {
             "key": "basic_shovel/knightmetal",
             "durability": 346,
             "integrity": -2,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 1,
             "attackSpeed": -0.25,
             "glyph": {
@@ -454,15 +546,20 @@
                 "textureX": 176,
                 "textureY": 32
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/basic_shovel/metal",
-                "tint": "knightmetal"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/basic_shovel/metal",
+                    "tint": "knightmetal"
+                }
+            ],
             "effects": {
                 "flattening": 1
             },
             "capabilities": {
-                "shovel": [4, 8.88]
+                "shovel": [
+                    4,
+                    8.88
+                ]
             }
         }
     ]

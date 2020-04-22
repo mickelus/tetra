@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["single/head"],
+    "slots": [
+        "single/head"
+    ],
     "improvements": [
         "tetra:enchantment/impaling",
         "tetra:enchantment/channeling",
@@ -31,7 +33,7 @@
             "key": "spearhead/oak",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.2,
             "glyph": {
@@ -39,16 +41,18 @@
                 "textureY": 32,
                 "tint": "oak_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "oak"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "oak"
+                }
+            ]
         },
         {
             "key": "spearhead/spruce",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.4,
             "glyph": {
@@ -56,16 +60,18 @@
                 "textureY": 32,
                 "tint": "spruce_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "spruce"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "spruce"
+                }
+            ]
         },
         {
             "key": "spearhead/birch",
             "durability": 72,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.2,
             "glyph": {
@@ -73,16 +79,18 @@
                 "textureY": 32,
                 "tint": "birch_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "birch"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "birch"
+                }
+            ]
         },
         {
             "key": "spearhead/jungle",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "damage": 3,
             "attackSpeed": 0.2,
             "glyph": {
@@ -90,16 +98,18 @@
                 "textureY": 32,
                 "tint": "jungle_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "jungle"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "jungle"
+                }
+            ]
         },
         {
             "key": "spearhead/acacia",
             "durability": 72,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 4,
             "attackSpeed": 0,
             "glyph": {
@@ -107,16 +117,18 @@
                 "textureY": 32,
                 "tint": "acacia_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "acacia"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "acacia"
+                }
+            ]
         },
         {
             "key": "spearhead/dark_oak",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 17,
+            "magicCapacity": 102,
             "damage": 3,
             "attackSpeed": 0.2,
             "glyph": {
@@ -124,16 +136,18 @@
                 "textureY": 32,
                 "tint": "dark_oak_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "dark_oak"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "dark_oak"
+                }
+            ]
         },
         {
             "key": "spearhead/cobblestone",
             "durability": 102,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -141,16 +155,18 @@
                 "textureY": 32,
                 "tint": "cobblestone_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "cobblestone"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "cobblestone"
+                }
+            ]
         },
         {
             "key": "spearhead/stone",
             "durability": 180,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -158,16 +174,18 @@
                 "textureY": 32,
                 "tint": "stone_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "stone"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "stone"
+                }
+            ]
         },
         {
             "key": "spearhead/granite",
             "durability": 240,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -175,16 +193,18 @@
                 "textureY": 32,
                 "tint": "granite_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "granite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "granite"
+                }
+            ]
         },
         {
             "key": "spearhead/diorite",
             "durability": 180,
             "integrity": -1,
-            "magicCapacity": 7,
+            "magicCapacity": 42,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -192,16 +212,18 @@
                 "textureY": 32,
                 "tint": "diorite_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "diorite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "diorite"
+                }
+            ]
         },
         {
             "key": "spearhead/andesite",
             "durability": 200,
             "integrity": -1,
-            "magicCapacity": 5,
+            "magicCapacity": 30,
             "damage": 5,
             "attackSpeed": 0.2,
             "glyph": {
@@ -209,16 +231,18 @@
                 "textureY": 32,
                 "tint": "andesite_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "andesite"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "andesite"
+                }
+            ]
         },
         {
             "key": "spearhead/flint",
             "durability": 102,
             "integrity": -1,
-            "magicCapacity": 15,
+            "magicCapacity": 90,
             "damage": 5,
             "attackSpeed": 0.1,
             "glyph": {
@@ -226,16 +250,18 @@
                 "textureY": 32,
                 "tint": "flint_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "flint"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "flint"
+                }
+            ]
         },
         {
             "key": "spearhead/iron",
             "durability": 221,
             "integrity": -1,
-            "magicCapacity": 14,
+            "magicCapacity": 84,
             "damage": 5,
             "attackSpeed": 0.2,
             "glyph": {
@@ -243,16 +269,18 @@
                 "textureY": 32,
                 "tint": "iron_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "iron"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "iron"
+                }
+            ]
         },
         {
             "key": "spearhead/gold",
             "durability": 15,
             "integrity": -1,
-            "magicCapacity": 22,
+            "magicCapacity": 132,
             "damage": 3,
             "attackSpeed": 0.2,
             "glyph": {
@@ -260,16 +288,18 @@
                 "textureY": 32,
                 "tint": "gold_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/shiny",
-                "tint": "gold"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/shiny",
+                    "tint": "gold"
+                }
+            ]
         },
         {
             "key": "spearhead/diamond",
             "durability": 1492,
             "integrity": -2,
-            "magicCapacity": 10,
+            "magicCapacity": 60,
             "damage": 6,
             "attackSpeed": 0.2,
             "glyph": {
@@ -277,16 +307,18 @@
                 "textureY": 32,
                 "tint": "diamond_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "diamond"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "diamond"
+                }
+            ]
         },
         {
             "key": "spearhead/obsidian",
             "durability": 1628,
             "integrity": -3,
-            "magicCapacity": 7,
+            "magicCapacity": 42,
             "damage": 8,
             "attackSpeed": 0.1,
             "glyph": {
@@ -294,16 +326,18 @@
                 "textureY": 32,
                 "tint": "obsidian_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/crude",
-                "tint": "obsidian"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/crude",
+                    "tint": "obsidian"
+                }
+            ]
         },
         {
             "key": "spearhead/copper",
             "durability": 148,
             "integrity": 0,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -311,16 +345,18 @@
                 "textureY": 32,
                 "tint": "copper_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "copper"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "copper"
+                }
+            ]
         },
         {
             "key": "spearhead/tin",
             "durability": 126,
             "integrity": 0,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -328,16 +364,18 @@
                 "textureY": 32,
                 "tint": "tin_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "tin"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "tin"
+                }
+            ]
         },
         {
             "key": "spearhead/silver",
             "durability": 60,
             "integrity": -1,
-            "magicCapacity": 21,
+            "magicCapacity": 126,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -345,16 +383,18 @@
                 "textureY": 32,
                 "tint": "silver_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/shiny",
-                "tint": "silver"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/shiny",
+                    "tint": "silver"
+                }
+            ]
         },
         {
             "key": "spearhead/nickel",
             "durability": 200,
             "integrity": -1,
-            "magicCapacity": 12,
+            "magicCapacity": 72,
             "damage": 5.5,
             "attackSpeed": 0.2,
             "glyph": {
@@ -362,16 +402,18 @@
                 "textureY": 32,
                 "tint": "nickel_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "nickel"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "nickel"
+                }
+            ]
         },
         {
             "key": "spearhead/lead",
             "durability": 108,
             "integrity": -2,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 6,
             "attackSpeed": 0.1,
             "glyph": {
@@ -379,16 +421,18 @@
                 "textureY": 32,
                 "tint": "lead_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "lead"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "lead"
+                }
+            ]
         },
         {
             "key": "spearhead/bronze",
             "durability": 320,
             "integrity": 0,
-            "magicCapacity": 13,
+            "magicCapacity": 78,
             "damage": 5,
             "attackSpeed": 0.2,
             "glyph": {
@@ -396,16 +440,18 @@
                 "textureY": 32,
                 "tint": "bronze_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "bronze"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "bronze"
+                }
+            ]
         },
         {
             "key": "spearhead/electrum",
             "durability": 53,
             "integrity": -1,
-            "magicCapacity": 24,
+            "magicCapacity": 144,
             "damage": 4,
             "attackSpeed": 0.2,
             "glyph": {
@@ -413,16 +459,18 @@
                 "textureY": 32,
                 "tint": "electrum_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/shiny",
-                "tint": "electrum"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/shiny",
+                    "tint": "electrum"
+                }
+            ]
         },
         {
             "key": "spearhead/steel",
             "durability": 380,
             "integrity": -1,
-            "magicCapacity": 11,
+            "magicCapacity": 66,
             "damage": 6,
             "attackSpeed": 0.2,
             "glyph": {
@@ -430,10 +478,12 @@
                 "textureY": 32,
                 "tint": "steel_glyph"
             },
-            "models": [{
-                "location": "tetra:items/module/single/head/spearhead/metal",
-                "tint": "steel"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/head/spearhead/metal",
+                    "tint": "steel"
+                }
+            ]
         }
     ]
 }

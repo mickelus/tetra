@@ -55,14 +55,17 @@
             "key": "basic_blade/oak",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "oak_glyph"
@@ -78,14 +81,17 @@
             "key": "basic_blade/spruce",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.4,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "spruce_glyph"
@@ -101,14 +107,17 @@
             "key": "basic_blade/birch",
             "durability": 72,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 3,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "birch_glyph"
@@ -124,14 +133,17 @@
             "key": "basic_blade/jungle",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 68,
+            "magicCapacity": 102,
             "damage": 3,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "jungle_glyph"
@@ -147,14 +159,17 @@
             "key": "basic_blade/acacia",
             "durability": 72,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 4,
             "attackSpeed": 0,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "acacia_glyph"
@@ -170,14 +185,17 @@
             "key": "basic_blade/dark_oak",
             "durability": 50,
             "integrity": -1,
-            "magicCapacity": 68,
+            "magicCapacity": 102,
             "damage": 3,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "dark_oak_glyph"
@@ -193,14 +211,17 @@
             "key": "basic_blade/cobblestone",
             "durability": 102,
             "integrity": -1,
-            "magicCapacity": 20,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "cobblestone_glyph"
@@ -216,14 +237,17 @@
             "key": "basic_blade/stone",
             "durability": 180,
             "integrity": -1,
-            "magicCapacity": 20,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "stone_glyph"
@@ -239,14 +263,17 @@
             "key": "basic_blade/granite",
             "durability": 240,
             "integrity": -1,
-            "magicCapacity": 20,
+            "magicCapacity": 30,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "granite_glyph"
@@ -262,14 +289,17 @@
             "key": "basic_blade/diorite",
             "durability": 180,
             "integrity": -1,
-            "magicCapacity": 28,
+            "magicCapacity": 42,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "diorite_glyph"
@@ -285,14 +315,17 @@
             "key": "basic_blade/andesite",
             "durability": 200,
             "integrity": -1,
-            "magicCapacity": 20,
+            "magicCapacity": 30,
             "damage": 5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "andesite_glyph"
@@ -308,14 +341,17 @@
             "key": "basic_blade/flint",
             "durability": 102,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 5,
             "attackSpeed": 0.1,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "flint_glyph"
@@ -331,14 +367,17 @@
             "key": "basic_blade/iron",
             "durability": 221,
             "integrity": -1,
-            "magicCapacity": 56,
+            "magicCapacity": 84,
             "damage": 5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "iron_glyph"
@@ -354,14 +393,17 @@
             "key": "basic_blade/gold",
             "durability": 15,
             "integrity": -1,
-            "magicCapacity": 88,
+            "magicCapacity": 132,
             "damage": 3,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "gold_glyph"
@@ -377,14 +419,17 @@
             "key": "basic_blade/diamond",
             "durability": 1492,
             "integrity": -2,
-            "magicCapacity": 40,
+            "magicCapacity": 60,
             "damage": 6,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "diamond_glyph"
@@ -400,14 +445,17 @@
             "key": "basic_blade/obsidian",
             "durability": 1628,
             "integrity": -3,
-            "magicCapacity": 28,
+            "magicCapacity": 42,
             "damage": 8,
             "attackSpeed": 0.1,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "obsidian_glyph"
@@ -423,14 +471,17 @@
             "key": "basic_blade/copper",
             "durability": 148,
             "integrity": 0,
-            "magicCapacity": 52,
+            "magicCapacity": 78,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "copper_glyph"
@@ -446,14 +497,17 @@
             "key": "basic_blade/tin",
             "durability": 126,
             "integrity": 0,
-            "magicCapacity": 48,
+            "magicCapacity": 72,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "tin_glyph"
@@ -469,14 +523,17 @@
             "key": "basic_blade/silver",
             "durability": 60,
             "integrity": -1,
-            "magicCapacity": 84,
+            "magicCapacity": 126,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "silver_glyph"
@@ -492,14 +549,17 @@
             "key": "basic_blade/nickel",
             "durability": 200,
             "integrity": -1,
-            "magicCapacity": 48,
+            "magicCapacity": 72,
             "damage": 5.5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "nickel_glyph"
@@ -515,14 +575,17 @@
             "key": "basic_blade/lead",
             "durability": 108,
             "integrity": -2,
-            "magicCapacity": 44,
+            "magicCapacity": 66,
             "damage": 6,
             "attackSpeed": 0.1,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "lead_glyph"
@@ -538,14 +601,17 @@
             "key": "basic_blade/bronze",
             "durability": 320,
             "integrity": 0,
-            "magicCapacity": 52,
+            "magicCapacity": 78,
             "damage": 5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "bronze_glyph"
@@ -561,14 +627,17 @@
             "key": "basic_blade/electrum",
             "durability": 53,
             "integrity": -1,
-            "magicCapacity": 96,
+            "magicCapacity": 144,
             "damage": 4,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "electrum_glyph"
@@ -584,14 +653,17 @@
             "key": "basic_blade/steel",
             "durability": 380,
             "integrity": -1,
-            "magicCapacity": 44,
+            "magicCapacity": 66,
             "damage": 6,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "steel_glyph"
@@ -607,14 +679,17 @@
             "key": "basic_blade/thaumium",
             "durability": 470,
             "integrity": -1,
-            "magicCapacity": 100,
+            "magicCapacity": 150,
             "damage": 5.5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "thaumium_glyph"
@@ -630,14 +705,17 @@
             "key": "basic_blade/ironwood",
             "durability": 482,
             "integrity": -1,
-            "magicCapacity": 72,
+            "magicCapacity": 108,
             "damage": 5,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "ironwood_glyph"
@@ -652,14 +730,17 @@
             "key": "basic_blade/steeleaf",
             "durability": 101,
             "integrity": -1,
-            "magicCapacity": 60,
+            "magicCapacity": 90,
             "damage": 6,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "steeleaf_glyph"
@@ -675,14 +756,17 @@
             "key": "basic_blade/fierymetal",
             "durability": 944,
             "integrity": -5,
-            "magicCapacity": 48,
+            "magicCapacity": 72,
             "damage": 7,
             "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "fierymetal_glyph"
@@ -697,14 +781,17 @@
             "key": "basic_blade/knightmetal",
             "durability": 230,
             "integrity": -2,
-            "magicCapacity": 48,
+            "magicCapacity": 72,
             "damage": 6,
             "attackSpeed": 0.5,
             "effects": {
                 "sweeping": 1
             },
             "capabilities": {
-                "cut": [1, 0.9375]
+                "cut": [
+                    1,
+                    0.9375
+                ]
             },
             "glyph": {
                 "tint": "knightmetal_glyph"
