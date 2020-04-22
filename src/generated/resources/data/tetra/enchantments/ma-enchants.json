@@ -1,0 +1,170 @@
+[
+  {
+    "enchantment": "ma-enchants:curse_breaking",
+    "improvement": "enchantment/ma-enchants_curse_breaking"
+  },
+  {
+    "enchantment": "ma-enchants:curse_butterfingers",
+    "improvement": "enchantment/ma-enchants_curse_butterfingers"
+  },
+  {
+    "enchantment": "ma-enchants:curse_aquaphobia",
+    "improvement": "enchantment/ma-enchants_curse_aquaphobia"
+  },
+  {
+    "enchantment": "ma-enchants:curse_death",
+    "improvement": "enchantment/ma-enchants_curse_death"
+  },
+  {
+    "enchantment": "ma-enchants:reinforced_tip",
+    "improvement": "enchantment/ma-enchants_reinforced_tip"
+  },
+  {
+    "enchantment": "ma-enchants:reinforced_tip",
+    "improvement": "destabilized/ma-enchants_reinforced_tip",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:stone_mending",
+    "improvement": "enchantment/ma-enchants_stone_mending"
+  },
+  {
+    "enchantment": "ma-enchants:stone_mending",
+    "improvement": "destabilized/ma-enchants_stone_mending",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:lumberjack",
+    "improvement": "enchantment/ma-enchants_lumberjack"
+  },
+  {
+    "enchantment": "ma-enchants:momentum",
+    "improvement": "enchantment/ma-enchants_momentum"
+  },
+  {
+    "enchantment": "ma-enchants:butchering",
+    "improvement": "enchantment/ma-enchants_butchering"
+  },
+  {
+    "enchantment": "ma-enchants:butchering",
+    "improvement": "destabilized/ma-enchants_butchering",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:true_shot",
+    "improvement": "enchantment/ma-enchants_true_shot"
+  },
+  {
+    "enchantment": "ma-enchants:quick_draw",
+    "improvement": "enchantment/ma-enchants_quick_draw"
+  },
+  {
+    "enchantment": "ma-enchants:quick_draw",
+    "improvement": "destabilized/ma-enchants_quick_draw",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:floating",
+    "improvement": "enchantment/ma-enchants_floating"
+  },
+  {
+    "enchantment": "ma-enchants:floating",
+    "improvement": "destabilized/ma-enchants_floating",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:paralysis",
+    "improvement": "enchantment/ma-enchants_paralysis"
+  },
+  {
+    "enchantment": "ma-enchants:paralysis",
+    "improvement": "destabilized/ma-enchants_paralysis",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:detonation",
+    "improvement": "enchantment/ma-enchants_detonation"
+  },
+  {
+    "enchantment": "ma-enchants:detonation",
+    "improvement": "destabilized/ma-enchants_detonation",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:combo",
+    "improvement": "enchantment/ma-enchants_combo"
+  },
+  {
+    "enchantment": "ma-enchants:faster_attack",
+    "improvement": "enchantment/ma-enchants_faster_attack"
+  },
+  {
+    "enchantment": "ma-enchants:faster_attack",
+    "improvement": "destabilized/ma-enchants_faster_attack",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:lifesteal",
+    "improvement": "enchantment/ma-enchants_lifesteal"
+  },
+  {
+    "enchantment": "ma-enchants:ice_aspect",
+    "improvement": "enchantment/ma-enchants_ice_aspect"
+  },
+  {
+    "enchantment": "ma-enchants:ice_aspect",
+    "improvement": "destabilized/ma-enchants_ice_aspect",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:wisdom",
+    "improvement": "enchantment/ma-enchants_wisdom"
+  },
+  {
+    "enchantment": "ma-enchants:wisdom",
+    "improvement": "destabilized/ma-enchants_wisdom",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:blazing_walker",
+    "improvement": "enchantment/ma-enchants_blazing_walker"
+  },
+  {
+    "enchantment": "ma-enchants:blazing_walker",
+    "improvement": "destabilized/ma-enchants_blazing_walker",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:step_assist",
+    "improvement": "enchantment/ma-enchants_step_assist"
+  },
+  {
+    "enchantment": "ma-enchants:night_vision",
+    "improvement": "enchantment/ma-enchants_night_vision"
+  },
+  {
+    "enchantment": "ma-enchants:multi_jump",
+    "improvement": "enchantment/ma-enchants_multi_jump"
+  },
+  {
+    "enchantment": "ma-enchants:multi_jump",
+    "improvement": "destabilized/ma-enchants_multi_jump",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "ma-enchants:timeless",
+    "improvement": "enchantment/ma-enchants_timeless"
+  }
+]

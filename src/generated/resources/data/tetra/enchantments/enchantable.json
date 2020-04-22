@@ -1,0 +1,44 @@
+[
+  {
+    "enchantment": "enchantable:stomping",
+    "improvement": "enchantment/enchantable_stomping"
+  },
+  {
+    "enchantment": "enchantable:stomping",
+    "improvement": "destabilized/enchantable_stomping",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "enchantable:iron_skull",
+    "improvement": "enchantment/enchantable_iron_skull"
+  },
+  {
+    "enchantment": "enchantable:replanting",
+    "improvement": "enchantment/enchantable_replanting"
+  },
+  {
+    "enchantment": "enchantable:cultivator",
+    "improvement": "enchantment/enchantable_cultivator"
+  },
+  {
+    "enchantment": "enchantable:excavator",
+    "improvement": "enchantment/enchantable_excavator"
+  },
+  {
+    "enchantment": "enchantable:excavator",
+    "improvement": "destabilized/enchantable_excavator",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "enchantable:ore_eater",
+    "improvement": "enchantment/enchantable_ore_eater"
+  },
+  {
+    "enchantment": "enchantable:ore_eater",
+    "improvement": "destabilized/enchantable_ore_eater",
+    "extract": false,
+    "multiplier": -1.0
+  }
+]

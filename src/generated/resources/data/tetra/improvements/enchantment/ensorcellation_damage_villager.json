@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -20.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -28.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -36.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -44.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -52.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -60.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -68.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -76.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -84.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -92.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -100.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -108.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -116.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -124.0
+  },
+  {
+    "key": "enchantment/ensorcellation_damage_villager",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -132.0
+  },
+  {
+    "key": "destabilized/ensorcellation_damage_villager",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_damage_villager",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_damage_villager",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_damage_villager",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

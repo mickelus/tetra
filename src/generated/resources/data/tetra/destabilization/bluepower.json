@@ -1,0 +1,18 @@
+[
+  {
+    "destabilizationKey": "destabilized/bluepower_vorpal",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "bluepower",
+    "probability": 0.04,
+    "improvementKey": "enchantment/bluepower_vorpal"
+  },
+  {
+    "destabilizationKey": "destabilized/bluepower_disjunction",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "bluepower",
+    "probability": 0.04,
+    "improvementKey": "enchantment/bluepower_disjunction"
+  }
+]

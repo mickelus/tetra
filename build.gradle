@@ -132,16 +132,25 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
 
-    compile fg.deobf("curse.maven:apotheosis:2906078")
-    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")
-
-    compile fg.deobf("curse.maven:cyclic:2934819")
-
-    compile fg.deobf("curse.maven:naturesaura:2920340")
-    compile fg.deobf("curse.maven:naturesaura-patchouli:2925865")
-
-//    compile fg.deobf("curse.maven:corail_tombstone:2925380")
-
+//    compile fg.deobf("curse.maven:apotheosis:2906078")
+//    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")
+//
+//    compile fg.deobf("curse.maven:cyclic:2934819")
+//
+//    compile fg.deobf("curse.maven:naturesaura:2920340")
+//    compile fg.deobf("curse.maven:naturesaura-patchouli:2925865")
+//
+//    compile fg.deobf("curse.maven:ensorcellation:2935190")
+//    compile fg.deobf("curse.maven:ensorcellation-cofh_core:2935185")
+//
+//    compile fg.deobf("curse.maven:enchantable:2931023")
+//
+//    compile fg.deobf("curse.maven:bluepower:2934396")
+//    
+//    compile fg.deobf("curse.maven:ma_enchants:2931675")
+//    
+//    compile fg.deobf("curse.maven:cursed:2913022")
+//    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

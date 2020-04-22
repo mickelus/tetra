@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -93.0
+  },
+  {
+    "key": "enchantment/ensorcellation_displacement",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -103.0
+  },
+  {
+    "key": "destabilized/ensorcellation_displacement",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_displacement",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

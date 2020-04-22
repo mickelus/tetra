@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/riptide",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -37.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -40.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -44.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -47.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -51.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -54.0
+  },
+  {
+    "key": "enchantment/riptide",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -58.0
+  },
+  {
+    "key": "destabilized/riptide",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/riptide",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

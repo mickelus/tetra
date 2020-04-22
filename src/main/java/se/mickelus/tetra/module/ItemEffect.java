@@ -82,11 +82,6 @@ public enum ItemEffect {
     unbreaking,
 
     /**
-     * Fortune: Increases drop chances when harvesting blocks. Each effect level increase the fortune level by 1.
-     */
-    fortune,
-
-    /**
      * Flattening: Rightclicking a grass block converts it to a path block, the same behaviour as vanilla shovels.
      */
     flattening,

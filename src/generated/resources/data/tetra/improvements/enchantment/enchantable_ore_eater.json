@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -48.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -58.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -68.0
+  },
+  {
+    "key": "enchantment/enchantable_ore_eater",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "destabilized/enchantable_ore_eater",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/enchantable_ore_eater",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

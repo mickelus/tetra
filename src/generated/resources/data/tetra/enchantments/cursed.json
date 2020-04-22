@@ -1,0 +1,54 @@
+[
+  {
+    "enchantment": "cursed:blindness",
+    "improvement": "enchantment/cursed_blindness"
+  },
+  {
+    "enchantment": "cursed:curtail",
+    "improvement": "enchantment/cursed_curtail"
+  },
+  {
+    "enchantment": "cursed:echo",
+    "improvement": "enchantment/cursed_echo"
+  },
+  {
+    "enchantment": "cursed:encumbrance",
+    "improvement": "enchantment/cursed_encumbrance"
+  },
+  {
+    "enchantment": "cursed:fading",
+    "improvement": "enchantment/cursed_fading"
+  },
+  {
+    "enchantment": "cursed:fragility",
+    "improvement": "enchantment/cursed_fragility"
+  },
+  {
+    "enchantment": "cursed:ignorance",
+    "improvement": "enchantment/cursed_ignorance"
+  },
+  {
+    "enchantment": "cursed:insomnia",
+    "improvement": "enchantment/cursed_insomnia"
+  },
+  {
+    "enchantment": "cursed:misfortune",
+    "improvement": "enchantment/cursed_misfortune"
+  },
+  {
+    "enchantment": "cursed:obedience",
+    "improvement": "enchantment/cursed_obedience"
+  },
+  {
+    "enchantment": "cursed:radiance",
+    "improvement": "enchantment/cursed_radiance"
+  },
+  {
+    "enchantment": "cursed:silence",
+    "improvement": "enchantment/cursed_silence"
+  },
+  {
+    "enchantment": "cursed:sinking",
+    "improvement": "enchantment/cursed_sinking"
+  }
+]

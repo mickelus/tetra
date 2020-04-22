@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -35.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -44.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -62.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -71.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -89.0
+  },
+  {
+    "key": "enchantment/ensorcellation_vitality",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -98.0
+  },
+  {
+    "key": "destabilized/ensorcellation_vitality",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_vitality",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

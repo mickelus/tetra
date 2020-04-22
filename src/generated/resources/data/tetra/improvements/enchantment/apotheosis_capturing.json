@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -47.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -57.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -66.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -101.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -85.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -104.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -114.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -123.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -133.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -142.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -152.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -161.0
+  },
+  {
+    "key": "enchantment/apotheosis_capturing",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -171.0
+  },
+  {
+    "key": "destabilized/apotheosis_capturing",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_capturing",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_capturing",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_capturing",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

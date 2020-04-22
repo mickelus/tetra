@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -82.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -118.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -178.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -262.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -370.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -502.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -658.0
+  },
+  {
+    "key": "enchantment/apotheosis_scavenger",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -838.0
+  },
+  {
+    "key": "destabilized/apotheosis_scavenger",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_scavenger",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

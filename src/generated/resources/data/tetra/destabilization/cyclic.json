@@ -1,0 +1,66 @@
+[
+  {
+    "destabilizationKey": "destabilized/cyclic_excavate",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_excavate"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_experience_boost",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_experience_boost"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_life_leech",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_life_leech"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_launch",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_launch"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_magnet",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_magnet"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_quickshot",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_quickshot"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_venom",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_venom"
+  },
+  {
+    "destabilizationKey": "destabilized/cyclic_beheading",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "cyclic",
+    "probability": 0.04,
+    "improvementKey": "enchantment/cyclic_beheading"
+  }
+]

@@ -1,0 +1,96 @@
+[
+    {
+        "key": "enchantment/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 1
+        },
+        "magicCapacity": -33
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 2
+        },
+        "magicCapacity": -42
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 3,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 3
+        },
+        "magicCapacity": -51
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 4,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 4
+        },
+        "magicCapacity": -60
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 5,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 5
+        },
+        "magicCapacity": -69
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 6,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 6
+        },
+        "magicCapacity": -78
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 7,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 7
+        },
+        "magicCapacity": -87
+    },
+    {
+        "key": "enchantment/unbreaking",
+        "level": 8,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": 8
+        },
+        "magicCapacity": -96
+    },
+    {
+        "key": "destabilized/unbreaking",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": -1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/unbreaking",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "unbreaking": -2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

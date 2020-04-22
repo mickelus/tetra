@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -13.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "enchantment/ma-enchants_stone_mending",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "destabilized/ma-enchants_stone_mending",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_stone_mending",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

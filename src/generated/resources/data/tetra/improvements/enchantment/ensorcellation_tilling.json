@@ -1,0 +1,80 @@
+[
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -75.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -100.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -125.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -150.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -175.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -200.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -225.0
+  },
+  {
+    "key": "enchantment/ensorcellation_tilling",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -250.0
+  },
+  {
+    "key": "destabilized/ensorcellation_tilling",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_tilling",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_tilling",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

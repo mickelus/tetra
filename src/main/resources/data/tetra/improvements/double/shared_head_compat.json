@@ -1,15 +1,1 @@
-[
-    {
-        "key": "enchantment/ensorcellation_curse_fool",
-        "glyph": {
-            "tint": "ee5599"
-        }
-    },
-
-    {
-        "key": "enchantment/ensorcellation_curse_mercy",
-        "glyph": {
-            "tint": "ee5599"
-        }
-    }
-]
+[]

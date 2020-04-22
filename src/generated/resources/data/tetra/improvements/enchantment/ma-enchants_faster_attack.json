@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -8.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -14.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -20.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -26.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -32.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -44.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -56.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -62.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -68.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -74.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -86.0
+  },
+  {
+    "key": "enchantment/ma-enchants_faster_attack",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -92.0
+  },
+  {
+    "key": "destabilized/ma-enchants_faster_attack",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_faster_attack",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_faster_attack",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_faster_attack",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -48.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -56.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -64.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -72.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -88.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -96.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -104.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -112.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -120.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -128.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -136.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -144.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -152.0
+  },
+  {
+    "key": "enchantment/apotheosis_splitting",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -160.0
+  },
+  {
+    "key": "destabilized/apotheosis_splitting",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_splitting",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_splitting",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_splitting",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

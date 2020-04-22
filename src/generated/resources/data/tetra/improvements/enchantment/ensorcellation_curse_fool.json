@@ -1,0 +1,10 @@
+[
+  {
+    "key": "enchantment/ensorcellation_curse_fool",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

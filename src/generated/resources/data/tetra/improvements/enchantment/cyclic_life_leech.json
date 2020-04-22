@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -13.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/cyclic_life_leech",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "destabilized/cyclic_life_leech",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

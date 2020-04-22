@@ -1,0 +1,164 @@
+[
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -13.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -93.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -103.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -113.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -123.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -133.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -143.0
+  },
+  {
+    "key": "enchantment/cyclic_launch",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -153.0
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 5,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 6,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 7,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 8,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_launch",
+    "level": 9,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

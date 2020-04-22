@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -37.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -57.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -77.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -97.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -117.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -137.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -157.0
+  },
+  {
+    "key": "enchantment/ensorcellation_quick_draw",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -177.0
+  },
+  {
+    "key": "destabilized/ensorcellation_quick_draw",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_quick_draw",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

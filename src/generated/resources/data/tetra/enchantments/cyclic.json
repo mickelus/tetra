@@ -1,0 +1,94 @@
+[
+  {
+    "enchantment": "cyclic:excavate",
+    "improvement": "enchantment/cyclic_excavate"
+  },
+  {
+    "enchantment": "cyclic:excavate",
+    "improvement": "destabilized/cyclic_excavate",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:experience_boost",
+    "improvement": "enchantment/cyclic_experience_boost"
+  },
+  {
+    "enchantment": "cyclic:experience_boost",
+    "improvement": "destabilized/cyclic_experience_boost",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:life_leech",
+    "improvement": "enchantment/cyclic_life_leech"
+  },
+  {
+    "enchantment": "cyclic:life_leech",
+    "improvement": "destabilized/cyclic_life_leech",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:launch",
+    "improvement": "enchantment/cyclic_launch"
+  },
+  {
+    "enchantment": "cyclic:launch",
+    "improvement": "destabilized/cyclic_launch",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:magnet",
+    "improvement": "enchantment/cyclic_magnet"
+  },
+  {
+    "enchantment": "cyclic:magnet",
+    "improvement": "destabilized/cyclic_magnet",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:multishot",
+    "improvement": "enchantment/cyclic_multishot"
+  },
+  {
+    "enchantment": "cyclic:quickshot",
+    "improvement": "enchantment/cyclic_quickshot"
+  },
+  {
+    "enchantment": "cyclic:quickshot",
+    "improvement": "destabilized/cyclic_quickshot",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:reach",
+    "improvement": "enchantment/cyclic_reach"
+  },
+  {
+    "enchantment": "cyclic:venom",
+    "improvement": "enchantment/cyclic_venom"
+  },
+  {
+    "enchantment": "cyclic:venom",
+    "improvement": "destabilized/cyclic_venom",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:beheading",
+    "improvement": "enchantment/cyclic_beheading"
+  },
+  {
+    "enchantment": "cyclic:beheading",
+    "improvement": "destabilized/cyclic_beheading",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "cyclic:step",
+    "improvement": "enchantment/cyclic_step"
+  }
+]

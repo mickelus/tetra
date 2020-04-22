@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -35.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -65.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -110.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_aspect",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -125.0
+  },
+  {
+    "key": "destabilized/ensorcellation_frost_aspect",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

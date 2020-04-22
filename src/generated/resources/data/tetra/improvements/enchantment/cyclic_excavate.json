@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -13.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -93.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -103.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -113.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -123.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -133.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -143.0
+  },
+  {
+    "key": "enchantment/cyclic_excavate",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -153.0
+  },
+  {
+    "key": "destabilized/cyclic_excavate",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_excavate",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_excavate",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_excavate",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

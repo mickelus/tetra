@@ -1,0 +1,184 @@
+[
+  {
+    "enchantment": "minecraft:mending",
+    "improvement": "enchantment/mending"
+  },
+  {
+    "enchantment": "minecraft:vanishing_curse",
+    "improvement": "enchantment/vanishing_curse"
+  },
+  {
+    "enchantment": "minecraft:sharpness",
+    "improvement": "enchantment/sharpness",
+    "apply": false
+  },
+  {
+    "enchantment": "minecraft:sharpness",
+    "improvement": "destabilized/sharpness",
+    "extract": false,
+    "apply": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:smite",
+    "improvement": "enchantment/smite"
+  },
+  {
+    "enchantment": "minecraft:smite",
+    "improvement": "destabilized/smite",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:bane_of_arthropods",
+    "improvement": "enchantment/bane_of_arthropods"
+  },
+  {
+    "enchantment": "minecraft:bane_of_arthropods",
+    "improvement": "destabilized/bane_of_arthropods",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:knockback",
+    "improvement": "enchantment/knockback"
+  },
+  {
+    "enchantment": "minecraft:knockback",
+    "improvement": "destabilized/knockback",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:fire_aspect",
+    "improvement": "enchantment/fire_aspect"
+  },
+  {
+    "enchantment": "minecraft:fire_aspect",
+    "improvement": "destabilized/fire_aspect",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:looting",
+    "improvement": "enchantment/looting"
+  },
+  {
+    "enchantment": "minecraft:looting",
+    "improvement": "destabilized/looting",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:sweeping",
+    "improvement": "enchantment/sweeping",
+    "apply": false
+  },
+  {
+    "enchantment": "minecraft:sweeping",
+    "improvement": "destabilized/sweeping",
+    "extract": false,
+    "apply": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:loyalty",
+    "improvement": "enchantment/loyalty"
+  },
+  {
+    "enchantment": "minecraft:loyalty",
+    "improvement": "destabilized/loyalty",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:impaling",
+    "improvement": "enchantment/impaling"
+  },
+  {
+    "enchantment": "minecraft:impaling",
+    "improvement": "destabilized/impaling",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:riptide",
+    "improvement": "enchantment/riptide"
+  },
+  {
+    "enchantment": "minecraft:riptide",
+    "improvement": "destabilized/riptide",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:channeling",
+    "improvement": "enchantment/channeling"
+  },
+  {
+    "enchantment": "minecraft:efficiency",
+    "improvement": "enchantment/efficiency",
+    "apply": false
+  },
+  {
+    "enchantment": "minecraft:efficiency",
+    "improvement": "destabilized/efficiency",
+    "extract": false,
+    "apply": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:silk_touch",
+    "improvement": "enchantment/silk_touch"
+  },
+  {
+    "enchantment": "minecraft:unbreaking",
+    "improvement": "enchantment/unbreaking",
+    "apply": false
+  },
+  {
+    "enchantment": "minecraft:unbreaking",
+    "improvement": "destabilized/unbreaking",
+    "extract": false,
+    "apply": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:fortune",
+    "improvement": "enchantment/fortune"
+  },
+  {
+    "enchantment": "minecraft:fortune",
+    "improvement": "destabilized/fortune",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:power",
+    "improvement": "enchantment/power"
+  },
+  {
+    "enchantment": "minecraft:power",
+    "improvement": "destabilized/power",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:punch",
+    "improvement": "enchantment/punch"
+  },
+  {
+    "enchantment": "minecraft:punch",
+    "improvement": "destabilized/punch",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:flame",
+    "improvement": "enchantment/flame"
+  },
+  {
+    "enchantment": "minecraft:infinity",
+    "improvement": "enchantment/infinity"
+  }
+]

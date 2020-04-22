@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/loyalty",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -31.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -34.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -41.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -45.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -48.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -52.0
+  },
+  {
+    "key": "enchantment/loyalty",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -55.0
+  },
+  {
+    "key": "destabilized/loyalty",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/loyalty",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

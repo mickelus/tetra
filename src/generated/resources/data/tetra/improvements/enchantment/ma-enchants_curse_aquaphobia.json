@@ -1,0 +1,10 @@
+[
+  {
+    "key": "enchantment/ma-enchants_curse_aquaphobia",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

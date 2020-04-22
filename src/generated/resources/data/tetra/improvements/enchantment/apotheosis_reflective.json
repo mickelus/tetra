@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -36.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -51.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -66.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -81.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -96.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -111.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -126.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -141.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -156.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -171.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -186.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -201.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -216.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -231.0
+  },
+  {
+    "key": "enchantment/apotheosis_reflective",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -246.0
+  },
+  {
+    "key": "destabilized/apotheosis_reflective",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_reflective",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_reflective",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_reflective",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

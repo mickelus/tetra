@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -68.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -98.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -113.0
+  },
+  {
+    "key": "enchantment/cyclic_experience_boost",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -128.0
+  },
+  {
+    "key": "destabilized/cyclic_experience_boost",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/cyclic_experience_boost",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

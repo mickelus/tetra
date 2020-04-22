@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -60.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -70.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -90.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -100.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -110.0
+  },
+  {
+    "key": "enchantment/apotheosis_natures_blessing",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -120.0
+  },
+  {
+    "key": "destabilized/apotheosis_natures_blessing",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_natures_blessing",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

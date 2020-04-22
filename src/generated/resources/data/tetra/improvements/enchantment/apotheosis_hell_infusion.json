@@ -1,0 +1,164 @@
+[
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -59.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -68.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -77.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -86.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -104.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -113.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -122.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -131.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -140.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -149.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -158.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -167.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -176.0
+  },
+  {
+    "key": "enchantment/apotheosis_hell_infusion",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -185.0
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 5,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 6,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 7,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 8,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_hell_infusion",
+    "level": 9,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

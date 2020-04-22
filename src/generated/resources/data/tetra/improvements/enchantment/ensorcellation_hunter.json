@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -35.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -44.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -53.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -62.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -71.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ensorcellation_hunter",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -89.0
+  },
+  {
+    "key": "destabilized/ensorcellation_hunter",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

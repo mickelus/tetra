@@ -9,9 +9,7 @@ import net.minecraft.util.text.TextFormatting;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class EnchantmentBuilder {
     private Enchantment enchantment;
@@ -187,13 +185,14 @@ public class EnchantmentBuilder {
             data.addProperty("key", getImprovementKey());
             data.addProperty("level", i);
             data.addProperty("enchantment", true);
-            data.addProperty("magicCapacity",
-                    -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2 * capacityMultiplier);
 
             if (isCurse) {
                 JsonObject glyph = new JsonObject();
                 glyph.addProperty("tint", "ee5599");
                 data.add("glyph", glyph);
+            } else {
+                data.addProperty("magicCapacity",
+                        -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2 * capacityMultiplier);
             }
 
             result.add(data);
@@ -248,6 +247,29 @@ public class EnchantmentBuilder {
                 result.put("tetra.improvement." + getDestabilizationKey() + ".name", "");
                 result.put("tetra.improvement." + getDestabilizationKey() + ".description", "");
             }
+        }
+
+        return result;
+    }
+
+    public Collection<String> getLocalizationKeys() {
+        LinkedList<String> result = new LinkedList<>();
+
+        String key = enchantment.getName();
+
+        String name = null;
+        if (isCurse) {
+            result.add("tetra.improvement." + getImprovementKey() + ".name");
+        } else {
+            result.add("tetra.improvement." + getImprovementKey() + ".name");
+        }
+
+        result.add("tetra.improvement." + getImprovementKey() + ".description");
+
+
+        if (canDestabilize()) {
+            result.add("tetra.improvement." + getDestabilizationKey() + ".name");
+            result.add("tetra.improvement." + getDestabilizationKey() + ".description");
         }
 
         return result;

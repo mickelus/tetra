@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -52.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -59.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -66.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -73.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -87.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -94.0
+  },
+  {
+    "key": "enchantment/apotheosis_rebounding",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -101.0
+  },
+  {
+    "key": "destabilized/apotheosis_rebounding",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_rebounding",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

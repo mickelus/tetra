@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -40.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -60.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -70.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -90.0
+  },
+  {
+    "key": "enchantment/ensorcellation_trueshot",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -100.0
+  },
+  {
+    "key": "destabilized/ensorcellation_trueshot",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

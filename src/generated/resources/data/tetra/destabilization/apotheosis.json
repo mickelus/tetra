@@ -1,0 +1,122 @@
+[
+  {
+    "destabilizationKey": "destabilized/apotheosis_capturing",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_capturing"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_hell_infusion",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_hell_infusion"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_mounted_strike",
+    "minLevel": 1,
+    "maxLevel": 5,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_mounted_strike"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_depth_miner",
+    "minLevel": 1,
+    "maxLevel": 6,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_depth_miner"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_scavenger",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_scavenger"
+  },
+  {
+    "destabilizationKey": "enchantment/apotheosis_life_mending",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_icy_thorns",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_icy_thorns"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_shield_bash",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_shield_bash"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_reflective",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_reflective"
+  },
+  {
+    "destabilizationKey": "enchantment/apotheosis_berserk",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_knowledge",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_knowledge"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_splitting",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_splitting"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_natures_blessing",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_natures_blessing"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_rebounding",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_rebounding"
+  },
+  {
+    "destabilizationKey": "destabilized/apotheosis_magic_protection",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "apotheosis",
+    "probability": 0.04,
+    "improvementKey": "enchantment/apotheosis_magic_protection"
+  }
+]

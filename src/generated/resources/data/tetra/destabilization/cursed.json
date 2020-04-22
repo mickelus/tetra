@@ -1,0 +1,106 @@
+[
+  {
+    "destabilizationKey": "enchantment/cursed_blindness",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_curtail",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_echo",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_encumbrance",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_fading",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_fragility",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_ignorance",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_insomnia",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_misfortune",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_obedience",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_radiance",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_silence",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/cursed_sinking",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "cursed",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "destabilizationKey": "enchantment/vanishing_curse",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "destabilized/sharpness",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/sharpness"
+  },
+  {
+    "destabilizationKey": "destabilized/smite",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/smite"
+  },
+  {
+    "destabilizationKey": "destabilized/bane_of_arthropods",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/bane_of_arthropods"
+  },
+  {
+    "destabilizationKey": "destabilized/knockback",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "probability": 0.04,
+    "improvementKey": "enchantment/knockback"
+  },
+  {
+    "destabilizationKey": "destabilized/fire_aspect",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "probability": 0.04,
+    "improvementKey": "enchantment/fire_aspect"
+  },
+  {
+    "destabilizationKey": "destabilized/looting",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/looting"
+  },
+  {
+    "destabilizationKey": "destabilized/sweeping",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/sweeping"
+  },
+  {
+    "destabilizationKey": "destabilized/loyalty",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/loyalty"
+  },
+  {
+    "destabilizationKey": "destabilized/impaling",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/impaling"
+  },
+  {
+    "destabilizationKey": "destabilized/riptide",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/riptide"
+  },
+  {
+    "destabilizationKey": "destabilized/efficiency",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/efficiency"
+  },
+  {
+    "destabilizationKey": "destabilized/unbreaking",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/unbreaking"
+  },
+  {
+    "destabilizationKey": "destabilized/fortune",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/fortune"
+  },
+  {
+    "destabilizationKey": "destabilized/power",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "probability": 0.04,
+    "improvementKey": "enchantment/power"
+  },
+  {
+    "destabilizationKey": "destabilized/punch",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "probability": 0.04,
+    "improvementKey": "enchantment/punch"
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 5,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 6,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 7,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "enchantment/ma-enchants_curse_breaking",
+    "level": 8,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

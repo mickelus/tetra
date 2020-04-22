@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -15.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -23.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -31.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -39.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -47.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -55.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -63.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -71.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -79.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -87.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -103.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -111.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -119.0
+  },
+  {
+    "key": "enchantment/bane_of_arthropods",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -127.0
+  },
+  {
+    "key": "destabilized/bane_of_arthropods",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/bane_of_arthropods",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/bane_of_arthropods",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/bane_of_arthropods",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

@@ -1,0 +1,96 @@
+[
+    {
+        "key": "enchantment/sweeping",
+        "level": 1,
+        "enchantment": true,
+        "magicCapacity": -12,
+        "effects": {
+            "sweeping": 3
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 2,
+        "enchantment": true,
+        "magicCapacity": -21,
+        "effects": {
+            "sweeping": 4
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 3,
+        "enchantment": true,
+        "magicCapacity": -30,
+        "effects": {
+            "sweeping": 5
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 4,
+        "enchantment": true,
+        "magicCapacity": -39,
+        "effects": {
+            "sweeping": 6
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 5,
+        "enchantment": true,
+        "magicCapacity": -48,
+        "effects": {
+            "sweeping": 7
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 6,
+        "enchantment": true,
+        "magicCapacity": -57,
+        "effects": {
+            "sweeping": 8
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 7,
+        "enchantment": true,
+        "magicCapacity": -66,
+        "effects": {
+            "sweeping": 9
+        }
+    },
+    {
+        "key": "enchantment/sweeping",
+        "level": 8,
+        "enchantment": true,
+        "magicCapacity": -75,
+        "effects": {
+            "sweeping": 10
+        }
+    },
+    {
+        "key": "destabilized/sweeping",
+        "level": 1,
+        "enchantment": true,
+        "effects": {
+            "sweeping": -3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/sweeping",
+        "level": 2,
+        "enchantment": true,
+        "effects": {
+            "sweeping": -4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

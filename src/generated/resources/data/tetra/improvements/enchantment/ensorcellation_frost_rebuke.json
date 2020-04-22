@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -33.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -45.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -58.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -70.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -108.0
+  },
+  {
+    "key": "enchantment/ensorcellation_frost_rebuke",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -120.0
+  },
+  {
+    "key": "destabilized/ensorcellation_frost_rebuke",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_frost_rebuke",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

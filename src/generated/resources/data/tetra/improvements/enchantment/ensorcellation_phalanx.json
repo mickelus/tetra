@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -26.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -31.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -36.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -41.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -46.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -51.0
+  },
+  {
+    "key": "enchantment/ensorcellation_phalanx",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -56.0
+  },
+  {
+    "key": "destabilized/ensorcellation_phalanx",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

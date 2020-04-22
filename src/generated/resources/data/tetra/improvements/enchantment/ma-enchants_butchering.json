@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -10.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -18.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -26.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -34.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -42.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -58.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -66.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -74.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -82.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -90.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -98.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -106.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -114.0
+  },
+  {
+    "key": "enchantment/ma-enchants_butchering",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -122.0
+  },
+  {
+    "key": "destabilized/ma-enchants_butchering",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_butchering",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_butchering",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ma-enchants_butchering",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

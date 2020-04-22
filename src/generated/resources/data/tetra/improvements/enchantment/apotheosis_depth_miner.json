@@ -1,0 +1,122 @@
+[
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -26.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -39.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -52.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -65.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -78.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -91.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -104.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -117.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -130.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -143.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -156.0
+  },
+  {
+    "key": "enchantment/apotheosis_depth_miner",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -169.0
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 5,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_depth_miner",
+    "level": 6,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

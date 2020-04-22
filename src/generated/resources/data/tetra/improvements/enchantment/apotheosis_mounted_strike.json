@@ -1,0 +1,108 @@
+[
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -11.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -21.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -31.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -41.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -51.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -61.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -71.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -81.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -91.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -101.0
+  },
+  {
+    "key": "enchantment/apotheosis_mounted_strike",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -111.0
+  },
+  {
+    "key": "destabilized/apotheosis_mounted_strike",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_mounted_strike",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_mounted_strike",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_mounted_strike",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_mounted_strike",
+    "level": 5,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

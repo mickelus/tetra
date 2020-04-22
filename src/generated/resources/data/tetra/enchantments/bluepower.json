@@ -1,0 +1,22 @@
+[
+  {
+    "enchantment": "bluepower:vorpal",
+    "improvement": "enchantment/bluepower_vorpal"
+  },
+  {
+    "enchantment": "bluepower:vorpal",
+    "improvement": "destabilized/bluepower_vorpal",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "bluepower:disjunction",
+    "improvement": "enchantment/bluepower_disjunction"
+  },
+  {
+    "enchantment": "bluepower:disjunction",
+    "improvement": "destabilized/bluepower_disjunction",
+    "extract": false,
+    "multiplier": -1.0
+  }
+]

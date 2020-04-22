@@ -1,0 +1,130 @@
+[
+  {
+    "destabilizationKey": "enchantment/ma-enchants_curse_breaking",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/ma-enchants_curse_butterfingers",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/ma-enchants_curse_aquaphobia",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "enchantment/ma-enchants_curse_death",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "instabilityLimit": 20
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_reinforced_tip",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_reinforced_tip"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_stone_mending",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_stone_mending"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_butchering",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_butchering"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_quick_draw",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_quick_draw"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_floating",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_floating"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_paralysis",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_paralysis"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_detonation",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_detonation"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_faster_attack",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_faster_attack"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_ice_aspect",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_ice_aspect"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_wisdom",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_wisdom"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_blazing_walker",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_blazing_walker"
+  },
+  {
+    "destabilizationKey": "destabilized/ma-enchants_multi_jump",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "ma-enchants",
+    "probability": 0.04,
+    "improvementKey": "enchantment/ma-enchants_multi_jump"
+  }
+]

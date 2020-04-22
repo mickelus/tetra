@@ -1,0 +1,124 @@
+[
+  {
+    "key": "enchantment/impaling",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -11.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -19.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -27.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -35.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -43.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -51.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -59.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -67.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -75.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 10,
+    "enchantment": true,
+    "magicCapacity": -83.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 11,
+    "enchantment": true,
+    "magicCapacity": -91.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 12,
+    "enchantment": true,
+    "magicCapacity": -99.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 13,
+    "enchantment": true,
+    "magicCapacity": -107.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 14,
+    "enchantment": true,
+    "magicCapacity": -115.0
+  },
+  {
+    "key": "enchantment/impaling",
+    "level": 15,
+    "enchantment": true,
+    "magicCapacity": -123.0
+  },
+  {
+    "key": "destabilized/impaling",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/impaling",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/impaling",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/impaling",
+    "level": 4,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

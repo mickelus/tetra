@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -30.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -40.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -60.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -70.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/ensorcellation_gourmand",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -90.0
+  },
+  {
+    "key": "destabilized/ensorcellation_gourmand",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

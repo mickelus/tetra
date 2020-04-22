@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -75.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -87.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -99.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -111.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -123.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -135.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -147.0
+  },
+  {
+    "key": "enchantment/apotheosis_knowledge",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -159.0
+  },
+  {
+    "key": "destabilized/apotheosis_knowledge",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_knowledge",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

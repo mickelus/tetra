@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EnchantmentProvider implements IDataProvider {
@@ -105,45 +102,127 @@ public class EnchantmentProvider implements IDataProvider {
         // fishing rods
 //        setupEnchantment(Enchantments.LUCK_OF_THE_SEA);
 //        setupEnchantment(Enchantments.LURE);
-//
-//        // apotheosis
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "capturing")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "hell_infusion")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "mounted_strike")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "depth_miner")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "stable_footing")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "scavenger")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "life_mending")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "icy_thorns")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "tempting")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "shield_bash")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "reflective")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "berserk")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "knowledge")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "splitting")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "natures_blessing")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "rebounding")));
-//        setupEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("apotheosis", "magic_protection")));
-//
-//        // cyclic
-//        setupEnchantment(EnchantRegistry.excavate);
-//        setupEnchantment(EnchantRegistry.experience_boost);
-//        setupEnchantment(EnchantRegistry.life_leech);
-//        setupEnchantment(EnchantRegistry.launch);
-//        setupEnchantment(EnchantRegistry.magnet);
-//        setupEnchantment(EnchantRegistry.multishot);
-//        setupEnchantment(EnchantRegistry.quickshot);
-//        setupEnchantment(EnchantRegistry.reach);
-//        setupEnchantment(EnchantRegistry.venom);
-//
-//        // natures aura
-//        setupEnchantment(de.ellpeck.naturesaura.enchant.ModEnchantments.AURA_MENDING);
 
-        // corail tombstone
-//        setupEnchantment(ovh.corail.tombstone.registry.ModEnchantments.shadow_step);
-//        setupEnchantment(ovh.corail.tombstone.registry.ModEnchantments.soulbound);
-//        setupEnchantment(ovh.corail.tombstone.registry.ModEnchantments.magic_siphon);
-//        setupEnchantment(ovh.corail.tombstone.registry.ModEnchantments.plague_bringer);
+        // apotheosis
+        setupEnchantment("apotheosis:capturing");
+        setupEnchantment("apotheosis:hell_infusion");
+        setupEnchantment("apotheosis:mounted_strike");
+        setupEnchantment("apotheosis:depth_miner");
+        setupEnchantment("apotheosis:stable_footing");
+        setupEnchantment("apotheosis:scavenger");
+        setupEnchantment("apotheosis:life_mending");
+        setupEnchantment("apotheosis:icy_thorns");
+        setupEnchantment("apotheosis:tempting");
+        setupEnchantment("apotheosis:shield_bash");
+        setupEnchantment("apotheosis:reflective");
+        setupEnchantment("apotheosis:berserk");
+        setupEnchantment("apotheosis:knowledge");
+        setupEnchantment("apotheosis:splitting");
+        setupEnchantment("apotheosis:natures_blessing");
+        setupEnchantment("apotheosis:rebounding");
+        setupEnchantment("apotheosis:magic_protection");
+
+        // cyclic
+        setupEnchantment("cyclic:excavate");
+        setupEnchantment("cyclic:experience_boost");
+        setupEnchantment("cyclic:life_leech");
+        setupEnchantment("cyclic:launch");
+        setupEnchantment("cyclic:magnet");
+        setupEnchantment("cyclic:multishot");
+        setupEnchantment("cyclic:quickshot");
+        setupEnchantment("cyclic:reach");
+        setupEnchantment("cyclic:venom");
+        setupEnchantment("cyclic:beheading");
+        setupEnchantment("cyclic:step");
+
+        // natures aura
+        setupEnchantment("naturesaura:aura_mending");
+
+        // ensorcellation
+        setupEnchantment("ensorcellation:magic_protection");
+        setupEnchantment("ensorcellation:displacement");
+        setupEnchantment("ensorcellation:fire_rebuke");
+        setupEnchantment("ensorcellation:frost_rebuke");
+        setupEnchantment("ensorcellation:air_affinity");
+        setupEnchantment("ensorcellation:exp_boost");
+        setupEnchantment("ensorcellation:gourmand");
+        setupEnchantment("ensorcellation:reach");
+        setupEnchantment("ensorcellation:vitality");
+        setupEnchantment("ensorcellation:damage_ender");
+        setupEnchantment("ensorcellation:damage_illager");
+        setupEnchantment("ensorcellation:damage_villager");
+        setupEnchantment("ensorcellation:cavalier");
+        setupEnchantment("ensorcellation:frost_aspect");
+        setupEnchantment("ensorcellation:leech");
+        setupEnchantment("ensorcellation:magic_edge");
+        setupEnchantment("ensorcellation:vorpal");
+        setupEnchantment("ensorcellation:excavating");
+        setupEnchantment("ensorcellation:hunter");
+        setupEnchantment("ensorcellation:quick_draw");
+        setupEnchantment("ensorcellation:trueshot");
+        setupEnchantment("ensorcellation:volley");
+        setupEnchantment("ensorcellation:angler");
+        setupEnchantment("ensorcellation:pilfering");
+        setupEnchantment("ensorcellation:furrowing");
+        setupEnchantment("ensorcellation:tilling");
+        setupEnchantment("ensorcellation:weeding");
+        setupEnchantment("ensorcellation:bulwark");
+        setupEnchantment("ensorcellation:phalanx");
+        setupEnchantment("ensorcellation:soulbound");
+        setupEnchantment("ensorcellation:curse_fool");
+        setupEnchantment("ensorcellation:curse_mercy");
+
+        // bluepower
+        setupEnchantment("bluepower:vorpal");
+        setupEnchantment("bluepower:disjunction");
+
+        // enchantable
+        setupEnchantment("enchantable:stomping");
+        setupEnchantment("enchantable:iron_skull");
+        setupEnchantment("enchantable:replanting");
+        setupEnchantment("enchantable:cultivator");
+        setupEnchantment("enchantable:excavator");
+        setupEnchantment("enchantable:ore_eater");
+
+        // ma enchants
+        setupEnchantment("ma-enchants:curse_breaking");
+        setupEnchantment("ma-enchants:curse_butterfingers");
+        setupEnchantment("ma-enchants:curse_aquaphobia");
+        setupEnchantment("ma-enchants:curse_death");
+        setupEnchantment("ma-enchants:reinforced_tip");
+        setupEnchantment("ma-enchants:stone_mending");
+        setupEnchantment("ma-enchants:lumberjack");
+        setupEnchantment("ma-enchants:momentum");
+        setupEnchantment("ma-enchants:butchering");
+        setupEnchantment("ma-enchants:true_shot");
+        setupEnchantment("ma-enchants:quick_draw");
+        setupEnchantment("ma-enchants:floating");
+        setupEnchantment("ma-enchants:paralysis");
+        setupEnchantment("ma-enchants:detonation");
+        setupEnchantment("ma-enchants:combo");
+        setupEnchantment("ma-enchants:faster_attack");
+        setupEnchantment("ma-enchants:lifesteal");
+        setupEnchantment("ma-enchants:ice_aspect");
+        setupEnchantment("ma-enchants:wisdom");
+        setupEnchantment("ma-enchants:blazing_walker");
+        setupEnchantment("ma-enchants:step_assist");
+        setupEnchantment("ma-enchants:night_vision");
+        setupEnchantment("ma-enchants:multi_jump");
+        setupEnchantment("ma-enchants:timeless");
+
+        setupEnchantment("cursed:blindness");
+        setupEnchantment("cursed:curtail");
+        setupEnchantment("cursed:echo");
+        setupEnchantment("cursed:encumbrance");
+        setupEnchantment("cursed:fading");
+        setupEnchantment("cursed:fragility");
+        setupEnchantment("cursed:ignorance");
+        setupEnchantment("cursed:insomnia");
+        setupEnchantment("cursed:misfortune");
+        setupEnchantment("cursed:obedience");
+        setupEnchantment("cursed:radiance");
+        setupEnchantment("cursed:silence");
+        setupEnchantment("cursed:sinking");
     }
 
     @Override
@@ -176,21 +255,28 @@ public class EnchantmentProvider implements IDataProvider {
 
                     // english localization for names and descriptions
                     URL locFile = getClass().getClassLoader().getResource(String.format("assets/%s/lang/%s.json", mod, lang));
-                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(locFile.openStream()))) {
-                        JsonObject existingLocalization = gson.fromJson(reader, JsonObject.class);
+                    if (locFile != null) {
+                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(locFile.openStream()))) {
+                            JsonObject existingLocalization = gson.fromJson(reader, JsonObject.class);
+                            builders.stream()
+                                    .map(builder -> builder.getLocalizationEntries(existingLocalization))
+                                    .map(Map::entrySet)
+                                    .flatMap(Set::stream)
+                                    .forEach(entry -> {
+                                        if (!entry.getValue().isEmpty()) {
+                                            localization.addProperty(entry.getKey(), entry.getValue());
+                                        } else {
+                                            missingLocalization.addProperty(entry.getKey(), entry.getValue());
+                                        }
+                                    });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         builders.stream()
-                                .map(builder -> builder.getLocalizationEntries(existingLocalization))
-                                .map(Map::entrySet)
-                                .flatMap(Set::stream)
-                                .forEach(entry -> {
-                                    if (!entry.getValue().isEmpty()) {
-                                        localization.addProperty(entry.getKey(), entry.getValue());
-                                    } else {
-                                        missingLocalization.addProperty(entry.getKey(), entry.getValue());
-                                    }
-                                });
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                                .map(EnchantmentBuilder::getLocalizationKeys)
+                                .flatMap(Collection::stream)
+                                .forEach(key -> missingLocalization.addProperty(key, ""));
                     }
 
                     saveEnchantments(cache, mod, enchantments);
@@ -263,7 +349,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
-        Path outputPath = generator.getOutputFolder().resolve("TEMP/" + lang + ".json");
+        Path outputPath = generator.getOutputFolder().resolve("temp/" + lang + ".json");
         try {
             IDataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {

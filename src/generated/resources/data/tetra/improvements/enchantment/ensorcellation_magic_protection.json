@@ -1,0 +1,80 @@
+[
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -14.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -22.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -30.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -46.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -54.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -62.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -70.0
+  },
+  {
+    "key": "enchantment/ensorcellation_magic_protection",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -78.0
+  },
+  {
+    "key": "destabilized/ensorcellation_magic_protection",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_magic_protection",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/ensorcellation_magic_protection",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "key": "enchantment/cursed_sinking",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

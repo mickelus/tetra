@@ -1,0 +1,52 @@
+[
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -12.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -32.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -52.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -72.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -92.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -112.0
+  },
+  {
+    "key": "enchantment/bluepower_vorpal",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -132.0
+  },
+  {
+    "key": "destabilized/bluepower_vorpal",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

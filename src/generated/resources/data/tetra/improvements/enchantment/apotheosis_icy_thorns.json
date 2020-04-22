@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -80.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -110.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -125.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -140.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -155.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -170.0
+  },
+  {
+    "key": "enchantment/apotheosis_icy_thorns",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -185.0
+  },
+  {
+    "key": "destabilized/apotheosis_icy_thorns",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/apotheosis_icy_thorns",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

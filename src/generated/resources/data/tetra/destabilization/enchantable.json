@@ -1,0 +1,26 @@
+[
+  {
+    "destabilizationKey": "destabilized/enchantable_stomping",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "enchantable",
+    "probability": 0.04,
+    "improvementKey": "enchantment/enchantable_stomping"
+  },
+  {
+    "destabilizationKey": "destabilized/enchantable_excavator",
+    "minLevel": 1,
+    "maxLevel": 1,
+    "requiredMod": "enchantable",
+    "probability": 0.04,
+    "improvementKey": "enchantment/enchantable_excavator"
+  },
+  {
+    "destabilizationKey": "destabilized/enchantable_ore_eater",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "requiredMod": "enchantable",
+    "probability": 0.04,
+    "improvementKey": "enchantment/enchantable_ore_eater"
+  }
+]

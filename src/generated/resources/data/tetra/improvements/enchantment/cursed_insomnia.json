@@ -1,0 +1,10 @@
+[
+  {
+    "key": "enchantment/cursed_insomnia",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

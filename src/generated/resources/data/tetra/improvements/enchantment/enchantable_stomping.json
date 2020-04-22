@@ -1,0 +1,80 @@
+[
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -17.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -27.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -37.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -47.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -57.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -67.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -77.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -87.0
+  },
+  {
+    "key": "enchantment/enchantable_stomping",
+    "level": 9,
+    "enchantment": true,
+    "magicCapacity": -97.0
+  },
+  {
+    "key": "destabilized/enchantable_stomping",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/enchantable_stomping",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/enchantable_stomping",
+    "level": 3,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

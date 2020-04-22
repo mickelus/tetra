@@ -1,0 +1,181 @@
+[
+    {
+        "key": "enchantment/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 2.50]
+        },
+        "magicCapacity": -31.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 6.25]
+        },
+        "magicCapacity": -41.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 12.50]
+        },
+        "magicCapacity": -51.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 21.25]
+        },
+        "magicCapacity": -61.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 5,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 32.50]
+        },
+        "magicCapacity": -71.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 6,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 46.25]
+        },
+        "magicCapacity": -81.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 7,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 62.50]
+        },
+        "magicCapacity": -91.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 8,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 81.25]
+        },
+        "magicCapacity": -101.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 9,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 102.50]
+        },
+        "magicCapacity": -111.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 10,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 126.25]
+        },
+        "magicCapacity": -121.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 11,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 152.50]
+        },
+        "magicCapacity": -131.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 12,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 181.25]
+        },
+        "magicCapacity": -141.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 13,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 212.50]
+        },
+        "magicCapacity": -151.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 14,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 246.25]
+        },
+        "magicCapacity": -161.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 15,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, 282.50]
+        },
+        "magicCapacity": -171.0
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, -2.50]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, -6.25]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, -12.50]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "capabilities": {
+            "hammer": [0, -21.25]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+][]

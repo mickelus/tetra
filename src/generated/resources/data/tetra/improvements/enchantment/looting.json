@@ -1,0 +1,66 @@
+[
+  {
+    "key": "enchantment/looting",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -38.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -47.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -57.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 4,
+    "enchantment": true,
+    "magicCapacity": -66.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 5,
+    "enchantment": true,
+    "magicCapacity": -76.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 6,
+    "enchantment": true,
+    "magicCapacity": -85.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 7,
+    "enchantment": true,
+    "magicCapacity": -95.0
+  },
+  {
+    "key": "enchantment/looting",
+    "level": 8,
+    "enchantment": true,
+    "magicCapacity": -104.0
+  },
+  {
+    "key": "destabilized/looting",
+    "level": 1,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/looting",
+    "level": 2,
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]
