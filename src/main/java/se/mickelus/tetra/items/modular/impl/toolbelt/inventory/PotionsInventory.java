@@ -6,17 +6,17 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
-public class InventoryPotions extends InventoryToolbelt {
+public class PotionsInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "potionsInventory";
     public static int maxSize = 10; // 9;
 
-    public InventoryPotions(ItemStack stack) {
+    public PotionsInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.potion);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 
-        predicate = InventoryToolbelt.potionPredicate;
+        predicate = ToolbeltInventory.potionPredicate;
 
         readFromNBT(NBTHelper.getTag(stack));
     }

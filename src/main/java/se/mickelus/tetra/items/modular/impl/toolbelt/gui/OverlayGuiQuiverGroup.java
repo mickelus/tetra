@@ -3,21 +3,21 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class OverlayGuiQuiverGroup extends GuiElement {
     private OverlayGuiQuiverSlot[] slots = new OverlayGuiQuiverSlot[0];
-    InventoryQuiver inventory;
+    QuiverInventory inventory;
 
     public OverlayGuiQuiverGroup(int x, int y) {
         super(x, y, 0, 0);
         setAttachmentPoint(GuiAttachment.bottomRight);
     }
 
-    public void setInventory(InventoryQuiver inventory) {
+    public void setInventory(QuiverInventory inventory) {
         clearChildren();
         this.inventory = inventory;
         ItemStack[] aggregatedStacks = inventory.getAggregatedStacks();

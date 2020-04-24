@@ -10,9 +10,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuickslot;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryStorage;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryToolbelt;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.module.ItemEffect;
 
 public class UtilBooster {
@@ -147,7 +147,7 @@ public class UtilBooster {
     }
 
     private static void refuelBuffer(CompoundNBT tag, ItemStack itemStack) {
-        InventoryToolbelt inventory = new InventoryQuickslot(itemStack);
+        ToolbeltInventory inventory = new QuickslotInventory(itemStack);
         int index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.decrStackSize(index, 1);
@@ -155,7 +155,7 @@ public class UtilBooster {
             return;
         }
 
-        inventory = new InventoryStorage(itemStack);
+        inventory = new StorageInventory(itemStack);
         index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.decrStackSize(index, 1);

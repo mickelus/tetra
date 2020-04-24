@@ -8,7 +8,7 @@ import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuickslot;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -43,7 +43,7 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
                 });
     }
 
-    public void setInventory(InventoryQuickslot inventory) {
+    public void setInventory(QuickslotInventory inventory) {
         clearChildren();
         int numSlots = inventory.getSizeInventory();
         slots = new OverlayGuiQuickslot[numSlots];

@@ -28,7 +28,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryToolbelt;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.network.PacketHandler;
@@ -73,7 +73,7 @@ public class ModularToolbeltItem extends ItemModular implements INamedContainerP
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
 
-        InventoryToolbelt.initializePredicates();
+        ToolbeltInventory.initializePredicates();
 
         RemoveSchema.registerRemoveSchemas(this);
     }

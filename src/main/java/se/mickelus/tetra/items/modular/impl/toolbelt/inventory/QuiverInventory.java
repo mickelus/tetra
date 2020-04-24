@@ -7,17 +7,17 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import java.util.ArrayList;
 
-public class InventoryQuiver extends InventoryToolbelt {
+public class QuiverInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "quiverInventory";
     public static int maxSize = 30; // 27;
 
-    public InventoryQuiver(ItemStack stack) {
+    public QuiverInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.quiver);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.quiver);
 
-        predicate = InventoryToolbelt.quiverPredicate;
+        predicate = ToolbeltInventory.quiverPredicate;
 
         readFromNBT(NBTHelper.getTag(stack));
     }

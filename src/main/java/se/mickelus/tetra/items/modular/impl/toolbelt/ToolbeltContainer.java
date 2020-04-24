@@ -15,17 +15,17 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
 public class ToolbeltContainer extends Container {
     private ItemStack itemStackToolbelt;
-    private InventoryQuickslot quickslotInventory;
-    private InventoryStorage storageInventory;
-    private InventoryPotions potionsInventory;
-    private InventoryQuiver quiverInventory;
+    private QuickslotInventory quickslotInventory;
+    private StorageInventory storageInventory;
+    private PotionsInventory potionsInventory;
+    private QuiverInventory quiverInventory;
 
     public ToolbeltContainer(int windowId, IInventory playerInventory, ItemStack itemStackToolbelt, PlayerEntity player) {
         super(ModularToolbeltItem.containerType, windowId);
-        this.quickslotInventory = new InventoryQuickslot(itemStackToolbelt);
-        this.storageInventory = new InventoryStorage(itemStackToolbelt);
-        this.potionsInventory = new InventoryPotions(itemStackToolbelt);
-        this.quiverInventory = new InventoryQuiver(itemStackToolbelt);
+        this.quickslotInventory = new QuickslotInventory(itemStackToolbelt);
+        this.storageInventory = new StorageInventory(itemStackToolbelt);
+        this.potionsInventory = new PotionsInventory(itemStackToolbelt);
+        this.quiverInventory = new QuiverInventory(itemStackToolbelt);
 
         this.itemStackToolbelt = itemStackToolbelt;
 
@@ -195,7 +195,7 @@ public class ToolbeltContainer extends Container {
             int numStorageSlots = storageInventory.getSizeInventory();
             int playerInventoryStart = numQuickslots + numStorageSlots + numPotionSlots + numQuiverSlots;
 
-            if (slot.inventory instanceof InventoryToolbelt) {
+            if (slot.inventory instanceof ToolbeltInventory) {
                 // handle moving from potion slots separately
                 if (slot.inventory == potionsInventory && slot.getSlotIndex() == index) {
                     int count = slot.getStack().getCount();
@@ -244,19 +244,19 @@ public class ToolbeltContainer extends Container {
         this.quickslotInventory.closeInventory(playerIn);
     }
 
-    public InventoryQuickslot getQuickslotInventory() {
+    public QuickslotInventory getQuickslotInventory() {
         return quickslotInventory;
     }
 
-    public InventoryStorage getStorageInventory() {
+    public StorageInventory getStorageInventory() {
         return storageInventory;
     }
 
-    public InventoryPotions getPotionInventory() {
+    public PotionsInventory getPotionInventory() {
         return potionsInventory;
     }
 
-    public InventoryQuiver getQuiverInventory() {
+    public QuiverInventory getQuiverInventory() {
         return quiverInventory;
     }
 }

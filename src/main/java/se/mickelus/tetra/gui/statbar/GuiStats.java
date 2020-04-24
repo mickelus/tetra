@@ -3,10 +3,10 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryPotions;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuickslot;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryStorage;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.module.ItemEffect;
 
 public class GuiStats {
@@ -61,22 +61,22 @@ public class GuiStats {
 
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),
-                0, InventoryQuickslot.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,
+                0, QuickslotInventory.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.quickslot.tooltip", quickslotGetter));
 
     public static final IStatGetter potionStorageGetter = new StatGetterEffectLevel(ItemEffect.potionSlot, 1d);
     public static final GuiStatBar potion_storage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.potion_storage"),
-                0, InventoryPotions.maxSize, true, potionStorageGetter, LabelGetterBasic.integerLabel,
+                0, PotionsInventory.maxSize, true, potionStorageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.potion_storage.tooltip", potionStorageGetter));
 
     public static final IStatGetter storageGetter = new StatGetterEffectLevel(ItemEffect.storageSlot, 1d);
     public static final GuiStatBar storage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.storage"),
-                0, InventoryStorage.maxSize, true, storageGetter, LabelGetterBasic.integerLabel,
+                0, StorageInventory.maxSize, true, storageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.storage.tooltip", storageGetter));
 
     public static final IStatGetter quiverGetter = new StatGetterEffectLevel(ItemEffect.quiverSlot, 1d);
     public static final GuiStatBar quiver = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quiver"),
-                0, InventoryQuiver.maxSize, true, quiverGetter, LabelGetterBasic.integerLabel,
+                0, QuiverInventory.maxSize, true, quiverGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.quiver.tooltip", quiverGetter));
 
     public static final IStatGetter boosterGetter = new StatGetterEffectLevel(ItemEffect.booster, 1d);

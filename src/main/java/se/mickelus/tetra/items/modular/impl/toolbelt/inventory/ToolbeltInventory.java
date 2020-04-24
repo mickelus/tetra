@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class InventoryToolbelt implements IInventory {
+public class ToolbeltInventory implements IInventory {
     protected static final String slotKey = "slot";
 
     protected ItemStack toolbeltItemStack;
@@ -42,7 +42,7 @@ public class InventoryToolbelt implements IInventory {
     public static ItemPredicate quiverPredicate = ItemPredicate.ANY;
     public static ItemPredicate storagePredicate = ItemPredicate.ANY;
 
-    public InventoryToolbelt(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
+    public ToolbeltInventory(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
         this.inventoryKey = inventoryKey;
         toolbeltItemStack = stack;
 

@@ -37,7 +37,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.modular.ItemModular;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nonnull;
@@ -515,7 +515,7 @@ public class ItemEffectHandler {
         if (!event.hasAmmo() && player.getHeldItem(Hand.OFF_HAND).isEmpty()) {
             ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
             if (!itemStack.isEmpty()) {
-                InventoryQuiver inventory = new InventoryQuiver(itemStack);
+                QuiverInventory inventory = new QuiverInventory(itemStack);
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {

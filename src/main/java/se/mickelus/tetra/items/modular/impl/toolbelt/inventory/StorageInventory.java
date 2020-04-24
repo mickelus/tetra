@@ -9,12 +9,12 @@ import se.mickelus.tetra.module.ItemEffect;
 import java.util.Collection;
 import java.util.List;
 
-public class InventoryStorage extends InventoryToolbelt {
+public class StorageInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "storageInventory";
     public static int maxSize = 30; // 24;
 
-    public InventoryStorage(ItemStack stack) {
+    public StorageInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.storage);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.storage);

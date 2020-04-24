@@ -28,7 +28,7 @@ import java.util.Optional;
 
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
-        InventoryToolbelt inventory = null;
+        ToolbeltInventory inventory = null;
         ItemStack toolbeltStack = findToolbelt(player);
 
         // stops things from crashing if the player has dropped the toolbelt stack after opening the overlay
@@ -38,16 +38,16 @@ public class ToolbeltHelper {
 
         switch (slotType) {
             case quickslot:
-                inventory = new InventoryQuickslot(toolbeltStack);
+                inventory = new QuickslotInventory(toolbeltStack);
                 break;
             case potion:
-                inventory = new InventoryPotions(toolbeltStack);
+                inventory = new PotionsInventory(toolbeltStack);
                 break;
             case quiver:
-                inventory = new InventoryQuiver(toolbeltStack);
+                inventory = new QuiverInventory(toolbeltStack);
                 break;
             case storage:
-                inventory = new InventoryStorage(toolbeltStack);
+                inventory = new StorageInventory(toolbeltStack);
                 break;
         }
 
@@ -98,19 +98,19 @@ public class ToolbeltHelper {
     }
 
     public static boolean storeItemInToolbelt(ItemStack toolbeltStack, ItemStack itemStack) {
-        if (new InventoryPotions(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new PotionsInventory(toolbeltStack).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        if (new InventoryQuiver(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new QuiverInventory(toolbeltStack).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        if (new InventoryQuickslot(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new QuickslotInventory(toolbeltStack).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        if (new InventoryStorage(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new StorageInventory(toolbeltStack).storeItemInInventory(itemStack)) {
             return true;
         }
 
@@ -143,10 +143,10 @@ public class ToolbeltHelper {
     }
 
     public static void emptyOverflowSlots(ItemStack itemStack, PlayerEntity player) {
-        new InventoryQuickslot(itemStack).emptyOverflowSlots(player);
-        new InventoryPotions(itemStack).emptyOverflowSlots(player);
-        new InventoryStorage(itemStack).emptyOverflowSlots(player);
-        new InventoryQuiver(itemStack).emptyOverflowSlots(player);
+        new QuickslotInventory(itemStack).emptyOverflowSlots(player);
+        new PotionsInventory(itemStack).emptyOverflowSlots(player);
+        new StorageInventory(itemStack).emptyOverflowSlots(player);
+        new QuiverInventory(itemStack).emptyOverflowSlots(player);
     }
 
     /**
@@ -158,7 +158,7 @@ public class ToolbeltHelper {
      */
     public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, BlockState blockState) {
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(player);
-        InventoryQuickslot inventory = new InventoryQuickslot(toolbeltStack);
+        QuickslotInventory inventory = new QuickslotInventory(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
         if (traceResult instanceof BlockRayTraceResult) {

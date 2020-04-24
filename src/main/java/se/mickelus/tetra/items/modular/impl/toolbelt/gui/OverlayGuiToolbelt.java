@@ -5,9 +5,9 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiRoot;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryPotions;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuickslot;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryQuiver;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 
 public class OverlayGuiToolbelt extends GuiRoot {
@@ -31,9 +31,9 @@ public class OverlayGuiToolbelt extends GuiRoot {
     }
 
     public void setInventories(ItemStack itemStack) {
-        quickslotGroup.setInventory(new InventoryQuickslot(itemStack));
-        potionGroup.setInventory(new InventoryPotions(itemStack));
-        quiverGroup.setInventory(new InventoryQuiver(itemStack));
+        quickslotGroup.setInventory(new QuickslotInventory(itemStack));
+        potionGroup.setInventory(new PotionsInventory(itemStack));
+        quiverGroup.setInventory(new QuiverInventory(itemStack));
     }
 
     public void setVisible(boolean visible) {

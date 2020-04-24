@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.InventoryPotions;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
     GuiString focusSlot;
 
     private OverlayGuiPotionSlot[] slots = new OverlayGuiPotionSlot[0];
-    InventoryPotions inventory;
+    PotionsInventory inventory;
 
     public OverlayGuiPotionGroup(int x, int y) {
         super(x, y, 0, 0);
@@ -25,7 +25,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
         focusSlot.setAttachmentAnchor(GuiAttachment.topCenter);
     }
 
-    public void setInventory(InventoryPotions inventory) {
+    public void setInventory(PotionsInventory inventory) {
         clearChildren();
         this.inventory = inventory;
         int numSlots = inventory.getSizeInventory();

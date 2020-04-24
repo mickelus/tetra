@@ -9,7 +9,7 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
-public class InventoryQuickslot extends InventoryToolbelt {
+public class QuickslotInventory extends ToolbeltInventory {
 
     public static final int maxSize = 12;
     private static final String inventoryKey = "quickInventory";
@@ -18,7 +18,7 @@ public class InventoryQuickslot extends InventoryToolbelt {
 
     private NonNullList<ItemStack> inventoryShadows;
 
-    public InventoryQuickslot(ItemStack stack) {
+    public QuickslotInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.quick);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.quick);
