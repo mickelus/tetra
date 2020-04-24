@@ -10,7 +10,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 public class StatGetterReach implements IStatGetter {
 
-    private static final int baseValue = 5;
+    private static final float baseValue = 4.5f;
 
     public StatGetterReach() { }
 
