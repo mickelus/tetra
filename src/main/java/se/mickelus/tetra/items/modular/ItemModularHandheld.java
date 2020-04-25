@@ -129,6 +129,11 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     @Override
+    public boolean isDamageable() {
+        return true;
+    }
+
+    @Override
     public boolean onBlockDestroyed(ItemStack itemStack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (state.getBlockHardness(world, pos) > 0) {
             applyDamage(blockDestroyDamage, itemStack, entity);
