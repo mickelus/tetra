@@ -1,28 +1,20 @@
 package se.mickelus.tetra.module;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleVariantData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
-
-import javax.annotation.Nullable;
 
 public abstract class ItemModule implements ICapabilityProvider {
 
@@ -321,7 +313,7 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     @Override
-    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+    public Set<Capability> getCapabilities(ItemStack itemStack) {
         return getVariantData(itemStack).capabilities.getValues();
     }
 }

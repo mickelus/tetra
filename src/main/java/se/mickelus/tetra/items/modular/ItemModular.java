@@ -864,13 +864,13 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
     }
 
     @Override
-    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+    public Set<Capability> getCapabilities(ItemStack itemStack) {
         if (isBroken(itemStack)) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         return getAllModules(itemStack).stream()
-                .flatMap(module -> ((Collection<Capability>)module.getCapabilities(itemStack)).stream())
+                .flatMap(module -> ((Set<Capability>)module.getCapabilities(itemStack)).stream())
                 .collect(Collectors.toSet());
     }
 

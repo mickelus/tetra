@@ -21,6 +21,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ItemModuleMajor extends ItemModule {
@@ -279,7 +280,7 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     @Override
-    public Collection<Capability> getCapabilities(ItemStack itemStack) {
+    public Set<Capability> getCapabilities(ItemStack itemStack) {
         return Streams.concat(
                 super.getCapabilities(itemStack).stream(),
                 Arrays.stream(getImprovements(itemStack))

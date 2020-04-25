@@ -145,18 +145,25 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .filter(action -> action.canPerformOn(player, targetStack))
                 .filter(action -> checkActionCapabilities(player, action, targetStack))
                 .ifPresent(action -> {
+
+                    // applies action capability effects in the following order: inventory, toolbelt, nearby blocks
                     for (Capability capability : action.getRequiredCapabilitiesFor(targetStack)) {
                         int requiredLevel = action.getCapabilityLevel(targetStack, capability);
-                        ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);
+                        ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
                         if (!providingStack.isEmpty()) {
                             if (providingStack.getItem() instanceof ItemModular) {
                                 ((ItemModular) providingStack.getItem()).onActionConsumeCapability(providingStack,
                                         targetStack, player, capability, requiredLevel,true);
                             }
                         } else {
-                            CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                    .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
-                                            player, true));
+                            ItemStack toolbeltResult = CapabilityHelper.consumeActionCapabilityToolbelt(player, targetStack, capability, requiredLevel, true);
+
+                            if (toolbeltResult == null) {
+                                CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                                        .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
+                                                player, true));
+                            }
+
                         }
                     }
 
@@ -272,19 +279,25 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
+            // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
             for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materials)) {
                 int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materials, capability);
-                ItemStack providingStack = CapabilityHelper.getProvidingItemStack(capability, requiredLevel, player);
+                ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
                 if (!providingStack.isEmpty()) {
                     if (providingStack.getItem() instanceof ItemModular) {
                         upgradedStack = ((ItemModular) providingStack.getItem()).onCraftConsumeCapability(providingStack,
                                 upgradedStack, player, capability, requiredLevel,true);
                     }
                 } else {
-                    ItemStack consumeTarget = upgradedStack;
-                    upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                            .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
-                            .orElse(upgradedStack);
+                    ItemStack toolbeltResult = CapabilityHelper.consumeCraftCapabilityToolbelt(player, upgradedStack, capability, requiredLevel, true);
+                    if (toolbeltResult != null) {
+                        upgradedStack = toolbeltResult;
+                    } else {
+                        ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
+                        upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
+                                .orElse(upgradedStack);
+                    }
                 }
             }
 

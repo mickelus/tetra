@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
@@ -19,7 +20,6 @@ import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.ConfigHandler;
 import top.theillusivec4.curios.api.CuriosAPI;
 
 import java.util.Collection;

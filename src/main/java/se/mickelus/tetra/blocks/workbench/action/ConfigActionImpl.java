@@ -9,7 +9,10 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameterSet;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.LootTable;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
@@ -53,7 +56,15 @@ public class ConfigActionImpl extends ConfigAction {
             ItemStack toolStack = requiredCapabilities.valueMap.entrySet().stream()
                     .sorted(Comparator.comparing(Map.Entry::getValue))
                     .findFirst()
-                    .map(entry -> CapabilityHelper.getProvidingItemStack(entry.getKey(), entry.getValue(), player))
+                    .map(entry -> {
+                        ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(entry.getKey(), entry.getValue(), player);
+
+                        if (providingStack.isEmpty()) {
+                            providingStack = CapabilityHelper.getToolbeltProvidingItemStack(entry.getKey(), entry.getValue(), player);
+                        }
+
+                        return providingStack;
+                    })
                     .orElse(ItemStack.EMPTY);
 
             LootContext context = new LootContext.Builder(world)
