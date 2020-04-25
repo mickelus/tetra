@@ -831,7 +831,7 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
 
-            applyUsageEffects(player, providerStack, capabilityLevel * 2);
+            applyUsageEffects(player, providerStack, 10 + capabilityLevel * 5);
         }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
@@ -843,7 +843,7 @@ public class ItemModularHandheld extends ItemModular {
         if (consumeResources) {
             applyDamage(capabilityLevel, providerStack, player);
 
-            applyUsageEffects(player, providerStack, capabilityLevel * 2);
+            applyUsageEffects(player, providerStack, 5 + capabilityLevel * 3);
         }
 
         return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
