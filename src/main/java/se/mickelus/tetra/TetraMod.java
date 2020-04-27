@@ -55,6 +55,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.BlockstateProvider;
 import se.mickelus.tetra.data.provider.EnchantmentProvider;
+import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
@@ -261,8 +262,9 @@ public class TetraMod {
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
         if(event.includeServer()) {
-            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-            dataGenerator.addProvider(new EnchantmentProvider(dataGenerator, event.getExistingFileHelper()));
+//            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
+//            dataGenerator.addProvider(new EnchantmentProvider(dataGenerator, event.getExistingFileHelper()));
+            dataGenerator.addProvider(new ModuleProvider(dataGenerator, event.getExistingFileHelper()));
         }
     }
 
