@@ -125,9 +125,7 @@ dependencies {
     if (findProject(':mgui') != null) {
         compile project(':mgui')
     } else {
-        compile fg.deobf("se.mickelus.mgui:mgui:${mgui_version}") // {
-//            transitive = false
-//        })
+        compile fg.deobf("curse.maven:mgui:2928277")
     }
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
