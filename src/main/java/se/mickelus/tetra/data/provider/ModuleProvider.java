@@ -1,9 +1,6 @@
 package se.mickelus.tetra.data.provider;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -21,8 +18,10 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,13 +47,27 @@ public class ModuleProvider implements IDataProvider {
     }
 
     private void setup() {
-        ModuleBuilder.Material platinum = new ModuleBuilder.Material("platinum", 0xd6f6ff, 1);
-        ModuleBuilder.Material ruby = new ModuleBuilder.Material("ruby", 0xa349f2, 1);
-        ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("enigmatic_iron", 0xddeeee, 2);
+        ModuleBuilder.Material platinum = new ModuleBuilder.Material("platinum", 0xd6f6ff, 0xd6f6ff, 1, 66);
+        ModuleBuilder.Material ruby = new ModuleBuilder.Material("ruby", 0xa349f2, 0xa349f2, 1, 60);
+        ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("enigmatic_iron", 0xddeeee, 0xeeaabb, 2, 55);
 
         setupModule("double/basic_pickaxe", "basic_pickaxe", "basic_pickaxe/iron")
+                .offsetDurability(-20, 0.5f)
+                .offsetSpeed(0, 0.5f)
                 .addVariant(platinum, "minecraft:iron_pickaxe")
-                .addVariant(ruby, "minecraft:iron_pickaxe")
+                .addVariant(ruby, "minecraft:diamond_pickaxe")
+                .addVariant(enigmaticIron);
+
+        setupModule("double/basic_axe", "basic_axe", "basic_axe/iron")
+                .offsetDurability(-20, 0.7f)
+                .offsetSpeed(-0.1f, 1)
+                .addVariant(platinum, "minecraft:iron_axe")
+                .addVariant(ruby, "minecraft:diamond_axe")
+                .addVariant(enigmaticIron);
+
+        setupModule("double/butt", "butt", "butt/iron")
+                .addVariant(platinum)
+                .addVariant(ruby)
                 .addVariant(enigmaticIron);
     }
 
