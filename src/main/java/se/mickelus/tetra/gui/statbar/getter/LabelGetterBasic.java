@@ -18,6 +18,7 @@ public class LabelGetterBasic implements ILabelGetter {
     public static final ILabelGetter decimalLabelInverted = new LabelGetterBasic("%.02f", "%+.02f", true);
     public static final ILabelGetter percentageLabel = new LabelGetterBasic("%.0f%%", "%+.0f%%");
     public static final ILabelGetter percentageLabelDecimal = new LabelGetterBasic("%.01f%%", "%+.01f%%");
+    public static final ILabelGetter percentageLabelDecimalInverted = new LabelGetterBasic("%.01f%%", "%+.01f%%", true);
 
     public LabelGetterBasic(String format) {
         this(format, format);

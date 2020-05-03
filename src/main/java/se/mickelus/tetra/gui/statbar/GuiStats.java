@@ -181,12 +181,12 @@ public class GuiStats {
 
     public static final IStatGetter fierySelfGetter = new StatGetterEffectEfficiency(ItemEffect.fierySelf, 100);
     public static final GuiStatBar fierySelf = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.fierySelf"),
-                0, 100, false, fierySelfGetter, LabelGetterBasic.percentageLabelDecimal,
+                0, 100, false, false, true, fierySelfGetter, LabelGetterBasic.percentageLabelDecimalInverted,
             new TooltipGetterFierySelf());
 
     public static final IStatGetter enderReverbGetter = new StatGetterEffectEfficiency(ItemEffect.enderReverb, 100);
     public static final GuiStatBar enderReverb = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.enderReverb"),
-                0, 100, false, enderReverbGetter, LabelGetterBasic.percentageLabelDecimal,
+                0, 100, false, false, true, enderReverbGetter, LabelGetterBasic.percentageLabelDecimalInverted,
             new TooltipGetterPercentage("tetra.stats.enderReverb.tooltip", enderReverbGetter));
 
     public static final IStatGetter criticalGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
