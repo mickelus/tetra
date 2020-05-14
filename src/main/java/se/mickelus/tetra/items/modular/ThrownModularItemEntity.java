@@ -124,6 +124,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         }
     }
 
+    public boolean hasDealtDamage() {
+        return dealtDamage;
+    }
+
     @Override
     protected ItemStack getArrowStack() {
         return thrownStack.copy();

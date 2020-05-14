@@ -1,0 +1,32 @@
+[
+    {
+        "key": "shield/trim",
+        "group": "trim",
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/trim_scrap",
+        "group": "trim",
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim_scrap"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim_scrap_bevel",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

@@ -1,0 +1,305 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["shield/plate"],
+    "improvements": [
+        "tetra:shield/buckler/studs",
+        "tetra:shield/buckler/trim"
+    ],
+    "variants": [
+        {
+            "key": "buckler/wooden",
+            "durability": 20,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "oak"
+                }
+            ]
+        },
+        {
+            "key": "buckler/spruce",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "spruce"
+                }
+            ]
+        },
+        {
+            "key": "buckler/birch",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "birch"
+                }
+            ]
+        },
+        {
+            "key": "buckler/jungle",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "jungle"
+                }
+            ]
+        },
+        {
+            "key": "buckler/acacia",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "acacia"
+                }
+            ]
+        },
+        {
+            "key": "buckler/dark_oak",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "dark_oak"
+                }
+            ]
+        },
+        {
+            "key": "buckler/maple",
+            "durability": 38,
+            "integrity": -1,
+            "magicCapacity": 96,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "maple_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "maple"
+                }
+            ]
+        },
+        {
+            "key": "buckler/cherry",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "cherry_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "cherry"
+                }
+            ]
+        },
+        {
+            "key": "buckler/baobab",
+            "durability": 47,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "baobab_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/wooden",
+                    "tint": "baobab"
+                }
+            ]
+        },
+        {
+            "key": "buckler/bone",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 108,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "bone_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/bone",
+                    "tint": "bone"
+                }
+            ]
+        },
+        {
+            "key": "buckler/iron",
+            "durability": 58,
+            "integrity": -1,
+            "magicCapacity": 84,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "iron_dark"
+                }
+            ]
+        },
+        {
+            "key": "buckler/bronze",
+            "durability": 36,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "bronze"
+                }
+            ]
+        },
+        {
+            "key": "buckler/steel",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "steel"
+                }
+            ]
+        },
+        {
+            "key": "buckler/vent",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "vent_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/vent",
+                    "tint": "vent"
+                }
+            ]
+        }
+    ]
+}

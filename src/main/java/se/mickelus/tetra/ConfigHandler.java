@@ -11,6 +11,7 @@ import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigHandler {
@@ -53,6 +54,7 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue enableBow;
     public static ForgeConfigSpec.BooleanValue enableSingle;
+    public static ForgeConfigSpec.BooleanValue enableShield;
 
     public static ForgeConfigSpec.BooleanValue enableStonecutter;
 
@@ -166,6 +168,19 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
+        enableShield = builder
+                .comment("Enable modular shields")
+                .worldRestart()
+                .define("shield", false);
+
+        honeShieldBase = builder
+                .comment("The base value for number of uses required before a shield can be honed")
+                .defineInRange("hone_shield_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeShieldIntegrityMultiplier = builder
+                .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .defineInRange("hone_shield_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
 
         enableStonecutter = builder
                 .comment("Enable the stonecutter module for swords, the stonecutter has to be removed from loot tables if this is disabled")
@@ -208,6 +223,10 @@ public class ConfigHandler {
         if (ModularSingleHeadedItem.instance != null) {
             ModularSingleHeadedItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
         }
+
+        if (ModularShieldItem.instance != null) {
+            ModularShieldItem.instance.updateConfig(honeShieldBase.get(), honeShieldIntegrityMultiplier.get());
+        }
     }
 
     /**
@@ -225,6 +244,10 @@ public class ConfigHandler {
 
         if (ModularSingleHeadedItem.instance != null) {
             ModularSingleHeadedItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
+        }
+
+        if (ModularShieldItem.instance != null) {
+            ModularShieldItem.instance.updateConfig(honeShieldBase.get(), honeShieldIntegrityMultiplier.get());
         }
     }
 }

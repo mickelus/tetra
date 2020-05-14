@@ -1,0 +1,16 @@
+[
+    {
+        "key": "shield/studs",
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/studs"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

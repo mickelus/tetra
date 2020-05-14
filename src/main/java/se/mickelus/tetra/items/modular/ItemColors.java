@@ -6,7 +6,7 @@ import java.util.Map;
 public class ItemColors {
     private static Map<String, Integer> colors = new HashMap<>();
 
-    public static int oak                = define(0xdfa940, "oak");
+    public static int oak                = define(0xbf934b, "oak");
     public static int oak_glyph          = define(0x9d804e, "oak_glyph");
     public static int spruce             = define(0x694f2f, "spruce");
     public static int spruce_glyph       = define(0x694f2f, "spruce_glyph");
@@ -104,6 +104,8 @@ public class ItemColors {
     public static int vine_glyph         = define(0x445d24, "vine_glyph");
     public static int bolt               = define(0xffffff, "bolt");
     public static int bolt_glyph         = define(0x383838, "bolt_glyph");
+    public static int vent               = define(0xffffff, "vent");
+    public static int vent_glyph         = define(0x5f524b, "vent_glyph");
 
     public static int inherit            = define(0x000000, "inherit");
 

@@ -1,0 +1,151 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureY": 48
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/wooden"
+        },
+        {
+            "material": {
+                "item": "minecraft:bone"
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/bone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/iron"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/steel"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/baobab"
+        },
+        {
+            "material": {
+                "item": "tetra:vent_plate",
+                "count": 5
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/vent"
+        }
+    ]
+}

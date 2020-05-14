@@ -1,0 +1,305 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["shield/plate"],
+    "improvements": [
+        "tetra:shield/heater/studs",
+        "tetra:shield/heater/trim"
+    ],
+    "variants": [
+        {
+            "key": "heater/wooden",
+            "durability": 20,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking": [1, 4]
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "oak"
+                }
+            ]
+        },
+        {
+            "key": "heater/spruce",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "spruce"
+                }
+            ]
+        },
+        {
+            "key": "heater/birch",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "birch"
+                }
+            ]
+        },
+        {
+            "key": "heater/jungle",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "jungle"
+                }
+            ]
+        },
+        {
+            "key": "heater/acacia",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "acacia"
+                }
+            ]
+        },
+        {
+            "key": "heater/dark_oak",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "dark_oak"
+                }
+            ]
+        },
+        {
+            "key": "heater/maple",
+            "durability": 38,
+            "integrity": -1,
+            "magicCapacity": 96,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "maple_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "maple"
+                }
+            ]
+        },
+        {
+            "key": "heater/cherry",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "cherry_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "cherry"
+                }
+            ]
+        },
+        {
+            "key": "heater/baobab",
+            "durability": 47,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "baobab_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/wooden",
+                    "tint": "baobab"
+                }
+            ]
+        },
+        {
+            "key": "heater/bone",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 108,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "bone_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/bone",
+                    "tint": "bone"
+                }
+            ]
+        },
+        {
+            "key": "heater/iron",
+            "durability": 58,
+            "integrity": -1,
+            "magicCapacity": 84,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "iron_dark"
+                }
+            ]
+        },
+        {
+            "key": "heater/bronze",
+            "durability": 36,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "bronze"
+                }
+            ]
+        },
+        {
+            "key": "heater/steel",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "steel"
+                }
+            ]
+        },
+        {
+            "key": "heater/vent",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "blocking":  [1, 4]
+            },
+            "glyph": {
+                "tint": "vent_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/vent",
+                    "tint": "vent"
+                }
+            ]
+        }
+    ]
+}

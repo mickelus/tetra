@@ -59,6 +59,11 @@ public class GuiStats {
                 0, 20, false, armorGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.armor.tooltip", armorGetter));
 
+    public static final IStatGetter toughnessGetter = new StatGetterEffectLevel(ItemEffect.toughness, 1d);
+    public static final GuiStatBar toughness = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toughness"),
+            0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));
+
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),
                 0, QuickslotInventory.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,

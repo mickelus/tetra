@@ -97,9 +97,21 @@ public enum ItemEffect {
     stripping,
 
     /**
+     * Blocking: Allows the item to block incoming attacks and projectiles while rightclick is held down. Has infinite duration if no
+     * efficiency value is given, otherwise the level defines how many seconds the block be held and the efficiency defines the cooldown
+     * period.
+     */
+    blocking,
+
+    /**
      * Armor: Provides armor when held in the mainhand or the offhand. Armor value provided equals the effect level.
      */
     armor,
+
+    /**
+     * Toughness: Provides armor toughness when held in the mainhand or the offhand. Toughness value provided equals the effect level.
+     */
+    toughness,
 
     /**
      * Counterweight: Increases the attack speed based on how much integrity is used by all of the items modules.

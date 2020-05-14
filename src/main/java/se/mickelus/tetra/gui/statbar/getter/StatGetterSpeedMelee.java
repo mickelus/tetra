@@ -17,7 +17,8 @@ public class StatGetterSpeedMelee implements IStatGetter {
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        return currentStack.getItem() instanceof ItemModularHandheld || previewStack.getItem() instanceof ItemModularHandheld;
+        return currentStack.getItem() instanceof ItemModularHandheld && currentStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(SharedMonsterAttributes.ATTACK_SPEED.getName())
+                || previewStack.getItem() instanceof ItemModularHandheld && previewStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(SharedMonsterAttributes.ATTACK_SPEED.getName());
     }
 
     @Override

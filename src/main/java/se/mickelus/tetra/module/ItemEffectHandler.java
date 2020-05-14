@@ -45,6 +45,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemEffectHandler {
 
@@ -177,6 +178,21 @@ public class ItemEffectHandler {
                         event.setAmount(event.getAmount()  + unarmoredBonusLevel);
                     }
                 });
+
+        if (!event.getSource().isUnblockable()) {
+            Optional.ofNullable(event.getEntityLiving())
+                    .map(entity -> Stream.of(entity.getHeldItemMainhand(), entity.getHeldItemOffhand()))
+                    .orElseGet(Stream::empty)
+                    .filter(itemStack -> !itemStack.isEmpty())
+                    .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
+                    .forEach(itemStack -> {
+                        ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
+                        if (item.getEffectLevel(itemStack, ItemEffect.armor) > 0 || item.getEffectLevel(itemStack, ItemEffect.toughness) > 0) {
+                            item.applyUsageEffects(event.getEntityLiving(), itemStack, event.getAmount());
+                            item.applyDamage((int) event.getAmount(), itemStack, event.getEntityLiving());
+                        }
+                    });
+        }
     }
 
 

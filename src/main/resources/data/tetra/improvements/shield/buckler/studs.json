@@ -1,0 +1,16 @@
+[
+    {
+        "key": "shield/studs",
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

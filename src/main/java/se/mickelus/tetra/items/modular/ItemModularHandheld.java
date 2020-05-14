@@ -83,6 +83,8 @@ public class ItemModularHandheld extends ItemModular {
 
     private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
+    private static final double speedBase = -2.4d;
+
     protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
             Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
             Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(),
@@ -109,6 +111,7 @@ public class ItemModularHandheld extends ItemModular {
 
     protected static final UUID REACH_MODIFIER = UUID.fromString("A7A35FFA-0B44-4AA5-9880-4BD28425E275");
     protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
+    protected static final UUID TOUGHNESS_MODIFIER = UUID.fromString("CE955EA0-2B0E-4E63-BFE7-CE697B5080C8");
 
     // the base amount of damage the item should take after destroying a block
     protected int blockDestroyDamage = 1;
@@ -215,8 +218,7 @@ public class ItemModularHandheld extends ItemModular {
         ActionResultType result = super.onItemUse(context);
 
         // channeled effects
-        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
+        if (getUseDuration(itemStack) > 0) {
             return result;
         }
 
@@ -251,12 +253,12 @@ public class ItemModularHandheld extends ItemModular {
         return result;
     }
 
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         // pass success for channeled abilities
-        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
+        if (getUseDuration(itemStack) > 0) {
             player.setActiveHand(hand);
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
         }
@@ -471,6 +473,10 @@ public class ItemModularHandheld extends ItemModular {
      */
     @Override
     public UseAction getUseAction(ItemStack stack) {
+        if (getEffectLevel(stack, ItemEffect.blocking) > 0) {
+            return UseAction.BLOCK;
+        }
+
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
                 || EnchantmentHelper.getRiptideModifier(stack) > 0) {
             return UseAction.SPEAR;
@@ -479,23 +485,65 @@ public class ItemModularHandheld extends ItemModular {
         return super.getUseAction(stack);
     }
 
+    /**
+     * Returns a value between 0 - 1 representing how long a blocking item has been raised
+     * @param itemStack
+     * @param entity
+     * @return
+     */
+    public float getBlockProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
+        if (getEffectEfficiency(itemStack, ItemEffect.blocking) > 0) {
+            return Optional.ofNullable(entity)
+                    .filter(e -> e.getItemInUseCount() > 0)
+                    .filter(e -> itemStack.equals(e.getActiveItemStack()))
+                    .map( e -> (e.getItemInUseCount()) * 1f / getUseDuration(itemStack))
+                    .orElse(0f);
+        }
+
+        return 0;
+    }
+
     public boolean isThrowing(ItemStack itemStack, @Nullable LivingEntity entity) {
         return UseAction.SPEAR.equals(getUseAction(itemStack)) && Optional.ofNullable(entity)
                 .map(e -> e.getItemInUseCount() > 0)
                 .orElse(false);
     }
 
+    @Override
+    public boolean isShield(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return getEffectLevel(itemStack, ItemEffect.blocking) > 0;
+    }
+
     /**
      * How long it takes to use this item (or how long it can be held at max)
      */
     @Override
-    public int getUseDuration(ItemStack stack) {
-        if (getEffectLevel(stack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptideModifier(stack) > 0) {
+    public int getUseDuration(ItemStack itemStack) {
+        int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
+        if (blockingLevel > 0) {
+            int duration = blockingLevel * 20;
+            return getEffectEfficiency(itemStack, ItemEffect.blocking) > 0 ? duration : 72000;
+        }
+
+        if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
+                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
             return 72000;
         }
 
         return 0;
+    }
+
+    @Override
+    public ItemStack onItemUseFinish(ItemStack itemStack, World world, LivingEntity entity) {
+        CastOptional.cast(entity, PlayerEntity.class)
+                .ifPresent(player -> {
+                    double blockingCooldown = getEffectEfficiency(itemStack, ItemEffect.blocking);
+                    if (blockingCooldown > 0) {
+                        player.getCooldownTracker().setCooldown(this, (int) (blockingCooldown * 20));
+                    }
+                });
+
+        return super.onItemUseFinish(itemStack, world, entity);
     }
 
     /**
@@ -511,61 +559,63 @@ public class ItemModularHandheld extends ItemModular {
             PlayerEntity player = (PlayerEntity) entityLiving;
             int ticksUsed = this.getUseDuration(stack) - timeLeft;
 
+            double blockingCooldown = getEffectEfficiency(stack, ItemEffect.blocking);
+            if (blockingCooldown > 0) {
+                player.getCooldownTracker().setCooldown(this, (int) (blockingCooldown * 20));
+            }
+
             // throwing / riptide, based on vanilla implementation in TridentItem
             if (ticksUsed >= 10) {
                 applyUsageEffects(player, stack, 2);
 
                 int riptideLevel = EnchantmentHelper.getRiptideModifier(stack);
-                if (riptideLevel <= 0 || player.isWet()) {
+                if (riptideLevel > 0 && player.isWet()) {
+                    float yaw = player.rotationYaw;
+                    float pitch = player.rotationPitch;
+                    float x = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+                    float y = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
+                    float z = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+
+                    float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
+
+                    // vanilla divides this by the length of the directional vector, but that should always be 1
+                    x = x * velocityMultiplier;
+                    y = y * velocityMultiplier;
+                    z = z * velocityMultiplier;
+                    player.addVelocity(x, y, z);
+                    player.startSpinAttack(20);
+                    if (player.onGround) {
+                        player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
+                    }
+
+                    SoundEvent soundEvent;
+                    if (riptideLevel >= 3) {
+                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+                    } else if (riptideLevel == 2) {
+                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+                    } else {
+                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+                    }
+                    world.playMovingSound(null, player, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+                    player.addStat(Stats.ITEM_USED.get(this));
+
+                } else if (getEffectLevel(stack, ItemEffect.throwable) > 0) {
                     if (!world.isRemote) {
                         applyDamage(1, stack, player);
 
-                        if (riptideLevel == 0) {
-                            ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
-                            projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
-                            if (player.abilities.isCreativeMode) {
-                                projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-                            }
+                        ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
 
-                            world.addEntity(projectileEntity);
-                            world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                            if (!player.abilities.isCreativeMode) {
-                                player.inventory.deleteStack(stack);
-                            }
-                        }
-                    }
-
-                    if (riptideLevel > 0) {
-                        float yaw = player.rotationYaw;
-                        float pitch = player.rotationPitch;
-                        float x = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
-                        float y = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
-                        float z = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
-
-                        float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
-
-                        // vanilla divides this by the length of the directional vector, but that should always be 1
-                        x = x * velocityMultiplier;
-                        y = y * velocityMultiplier;
-                        z = z * velocityMultiplier;
-                        player.addVelocity(x, y, z);
-                        player.startSpinAttack(20);
-                        if (player.onGround) {
-                            player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
-                        }
-
-                        SoundEvent soundEvent;
-                        if (riptideLevel >= 3) {
-                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
-                        } else if (riptideLevel == 2) {
-                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+                        if (player.abilities.isCreativeMode) {
+                            projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                         } else {
-                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+                            player.inventory.deleteStack(stack);
                         }
-                        world.playMovingSound(null, player, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    }
 
-                    player.addStat(Stats.ITEM_USED.get(this));
+                        projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
+                        world.addEntity(projectileEntity);
+                        world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    }
                 }
             }
         }
@@ -590,14 +640,21 @@ public class ItemModularHandheld extends ItemModular {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, itemStack);
 
         if (slot == EquipmentSlotType.MAINHAND) {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
-                    "tetra.damage_mod", getDamageModifier(itemStack), AttributeModifier.Operation.ADDITION));
+
+            double damageModifier = getDamageModifier(itemStack);
+            if (damageModifier != 0) {
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
+                        "tetra.damage_mod", damageModifier, AttributeModifier.Operation.ADDITION));
+            }
 
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER,
                     "tetra.speed_mod", getSpeedModifier(itemStack), AttributeModifier.Operation.ADDITION));
 
-            multimap.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(REACH_MODIFIER,
-                    "tetra.reach_mod", getRangeModifier(itemStack), AttributeModifier.Operation.ADDITION));
+            double rangeModifier = getRangeModifier(itemStack);
+            if (rangeModifier != 0) {
+                multimap.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(REACH_MODIFIER,
+                        "tetra.reach_mod", rangeModifier, AttributeModifier.Operation.ADDITION));
+            }
         }
 
         if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
@@ -605,6 +662,12 @@ public class ItemModularHandheld extends ItemModular {
             if  (armor > 0) {
                 multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER,
                         "tetra.armor_mod", armor, AttributeModifier.Operation.ADDITION));
+            }
+
+            int toughness = getEffectLevel(itemStack, ItemEffect.toughness);
+            if  (toughness > 0) {
+                multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(TOUGHNESS_MODIFIER,
+                        "tetra.toughness_mod", toughness, AttributeModifier.Operation.ADDITION));
             }
         }
 
@@ -643,7 +706,7 @@ public class ItemModularHandheld extends ItemModular {
     public double getSpeedModifier(ItemStack itemStack) {
         double speedModifier = getAllModules(itemStack).stream()
                 .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-                .reduce(-2.4d, Double::sum);
+                .reduce(speedBase, Double::sum);
 
         speedModifier = Arrays.stream(getSynergyData(itemStack))
                 .mapToDouble(synergyData -> synergyData.attackSpeed)

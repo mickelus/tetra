@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
@@ -31,13 +32,17 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
             matrixStack.push();
 
             IBakedModel model = itemRenderer.getItemModelWithOverrides(itemStack, workbenchTile.getWorld(), null);
-            if (model.isGui3d()) {
+            if (itemStack.getItem() instanceof ModularShieldItem) {
+                matrixStack.translate(0.375, 0.9125, 0.5);
+                matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
+//                matrixStack.scale(0.5f, 0.5f, 0.5f);
+            } else if (model.isGui3d()) {
                 matrixStack.translate(0.5, 1.125, 0.5);
                 matrixStack.scale(.5f, .5f, .5f);
             } else {
                 matrixStack.translate(0.5, 1.0125, 0.5);
                 matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
-                matrixStack.scale(0.375f, 0.375f, 0.375f);
+                matrixStack.scale(0.5f, 0.5f, 0.5f);
             }
 
             Minecraft.getInstance().getItemRenderer().renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED,

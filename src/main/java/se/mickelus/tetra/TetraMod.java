@@ -69,6 +69,7 @@ import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
@@ -184,6 +185,10 @@ public class TetraMod {
 
         if (ConfigHandler.enableSingle.get()) {
             items = ArrayUtils.addAll(items, new ModularSingleHeadedItem());
+        }
+
+        if (ConfigHandler.enableShield.get()) {
+            items = ArrayUtils.addAll(items, new ModularShieldItem());
         }
 
         if (ConfigHandler.enableStonecutter.get()) {

@@ -1,0 +1,43 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["shield/grip"],
+    "variants": [
+        {
+            "key": "basic_grip/oak",
+            "durability": 20,
+            "integrity": 2,
+            "magicCapacity": 20,
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureX": 16,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_grip",
+                    "location": "tetra:items/module/shield/grip/basic_grip/default",
+                    "tint": "oak"
+                }
+            ]
+        },
+        {
+            "key": "basic_grip/iron",
+            "durability": 20,
+            "integrity": 2,
+            "magicCapacity": 20,
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 16,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_grip",
+                    "location": "tetra:items/module/shield/grip/basic_grip/default",
+                    "tint": "iron"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+[
+    {
+        "key": "shield/studs",
+        "models": [
+            {
+                "type": "shield_heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/studs"
+            },
+            {
+                "type": "shield_heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

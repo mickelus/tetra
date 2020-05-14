@@ -1,0 +1,35 @@
+{
+    "replace": true,
+    "slots": ["shield/plate"],
+    "materialSlotCount": 1,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 32,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "improvements": {
+                "shield/trim": 0
+            }
+        },
+        {
+            "material": {
+                "item": "tetra:metal_scrap",
+                "count": 8
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "improvements": {
+                "shield/trim_scrap": 0
+            }
+        }
+    ]
+}

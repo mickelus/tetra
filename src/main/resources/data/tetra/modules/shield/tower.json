@@ -1,0 +1,291 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["shield/plate"],
+    "improvements": [
+        "tetra:shield/tower/studs",
+        "tetra:shield/tower/trim"
+    ],
+    "variants": [
+        {
+            "key": "tower/wooden",
+            "durability": 20,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "oak_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "oak"
+                }
+            ]
+        },
+        {
+            "key": "tower/spruce",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "spruce_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "spruce"
+                }
+            ]
+        },
+        {
+            "key": "tower/birch",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "birch_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "birch"
+                }
+            ]
+        },
+        {
+            "key": "tower/jungle",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "jungle_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "jungle"
+                }
+            ]
+        },
+        {
+            "key": "tower/acacia",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 90,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "acacia_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "acacia"
+                }
+            ]
+        },
+        {
+            "key": "tower/dark_oak",
+            "durability": 31,
+            "integrity": -1,
+            "magicCapacity": 102,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "dark_oak_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "dark_oak"
+                }
+            ]
+        },
+        {
+            "key": "tower/maple",
+            "durability": 38,
+            "integrity": -1,
+            "magicCapacity": 96,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "maple_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "maple"
+                }
+            ]
+        },
+        {
+            "key": "tower/cherry",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "cherry_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "cherry"
+                }
+            ]
+        },
+        {
+            "key": "tower/baobab",
+            "durability": 47,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "baobab_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/wooden",
+                    "tint": "baobab"
+                }
+            ]
+        },
+        {
+            "key": "tower/bone",
+            "durability": 39,
+            "integrity": -1,
+            "magicCapacity": 108,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "bone_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/bone",
+                    "tint": "bone"
+                }
+            ]
+        },
+        {
+            "key": "tower/iron",
+            "durability": 58,
+            "integrity": -1,
+            "magicCapacity": 84,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "iron_dark"
+                }
+            ]
+        },
+        {
+            "key": "tower/bronze",
+            "durability": 36,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "bronze"
+                }
+            ]
+        },
+        {
+            "key": "tower/steel",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "steel"
+                }
+            ]
+        },
+        {
+            "key": "tower/vent",
+            "durability": 244,
+            "integrity": -1,
+            "magicCapacity": 66,
+            "effects": {
+                "blocking": 10
+            },
+            "glyph": {
+                "tint": "vent_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/vent",
+                    "tint": "vent"
+                }
+            ]
+        }
+    ]
+}

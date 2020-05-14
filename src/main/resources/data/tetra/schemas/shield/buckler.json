@@ -1,0 +1,152 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 48,
+        "textureY": 48
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/wooden"
+        },
+        {
+            "material": {
+                "item": "minecraft:bone"
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/bone"
+        },
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/iron"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/bronze"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/steel"
+        },
+        {
+            "material": {
+                "item": "minecraft:spruce_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/spruce"
+        },
+        {
+            "material": {
+                "item": "minecraft:birch_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/birch"
+        },
+        {
+            "material": {
+                "item": "minecraft:jungle_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/jungle"
+        },
+        {
+            "material": {
+                "item": "minecraft:acacia_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/acacia"
+        },
+        {
+            "material": {
+                "item": "minecraft:dark_oak_planks"
+            },
+            "requiredCapabilities": {
+                "axe": 1
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/dark_oak"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/maple"
+            },
+            "requiredCapabilities": {
+                "axe": 2
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/maple"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/cherry"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/cherry"
+        },
+        {
+            "material": {
+                "tag": "forge:planks/baobab"
+            },
+            "requiredCapabilities": {
+                "axe": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/baobab"
+        },
+        {
+            "material": {
+                "item": "tetra:vent_plate",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/vent"
+        }
+    ]
+}
