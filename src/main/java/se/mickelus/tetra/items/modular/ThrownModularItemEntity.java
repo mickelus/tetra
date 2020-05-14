@@ -106,6 +106,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                 setMotion(getMotion().scale(0.95D).add(vec3d.normalize().scale(speed)));
                 if (returningTicks == 0) {
                     playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
+                    setMotion(vec3d.scale(0.01));
                 }
 
                 ++returningTicks;
