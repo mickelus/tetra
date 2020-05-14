@@ -48,9 +48,9 @@ public class GuiSettleProgress extends GuiElement {
         boolean isGain = module.getIntegrityGain(itemStack) > 0;
 
         if (isArrested) {
-            labelString.setString(TextFormatting.RED + I18n.format("arrested.name"));
+            labelString.setString(TextFormatting.RED + I18n.format("tetra.improvement.arrested.name"));
             labelString.setAttachment(GuiAttachment.topCenter);
-            tooltip = Collections.singletonList(I18n.format("arrested.description"));
+            tooltip = Collections.singletonList(I18n.format("tetra.improvement.arrested.description"));
 
             valueString.setString("");
             bar.setValue(0, 0);
