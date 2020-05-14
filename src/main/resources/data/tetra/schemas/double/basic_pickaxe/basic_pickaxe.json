@@ -16,8 +16,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:flint",
-                "count": 2
+                "item": "minecraft:flint"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -27,8 +26,7 @@
         },
         {
             "material": {
-                "item": "minecraft:iron_ingot",
-                "count": 2
+                "item": "minecraft:iron_ingot"
             },
             "requiredCapabilities": {
                 "hammer": 1
@@ -38,8 +36,7 @@
         },
         {
             "material": {
-                "item": "minecraft:diamond",
-                "count": 2
+                "item": "minecraft:diamond"
             },
             "requiredCapabilities": {
                 "hammer": 1
@@ -52,8 +49,7 @@
         },
         {
             "material": {
-                "item": "minecraft:gold_ingot",
-                "count": 2
+                "item": "minecraft:gold_ingot"
             },
             "requiredCapabilities": {
                 "hammer": 1
@@ -63,8 +59,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/copper",
-                "count": 2
+                "tag": "forge:ingots/copper"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -74,8 +69,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/tin",
-                "count": 2
+                "tag": "forge:ingots/tin"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -85,8 +79,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/silver",
-                "count": 2
+                "tag": "forge:ingots/silver"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -96,8 +89,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/nickel",
-                "count": 2
+                "tag": "forge:ingots/nickel"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -107,8 +99,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/lead",
-                "count": 2
+                "tag": "forge:ingots/lead"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -118,8 +109,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/bronze",
-                "count": 2
+                "tag": "forge:ingots/bronze"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -129,8 +119,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/electrum",
-                "count": 2
+                "tag": "forge:ingots/electrum"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -140,8 +129,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/steel",
-                "count": 2
+                "tag": "forge:ingots/steel"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -161,8 +149,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/steeleaf",
-                "count": 2
+                "tag": "forge:ingots/steeleaf"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -175,8 +162,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/fiery",
-                "count": 2
+                "tag": "forge:ingots/fiery"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -189,8 +175,7 @@
         },
         {
             "material": {
-                "tag": "forge:ingots/knightmetal",
-                "count": 2
+                "tag": "forge:ingots/knightmetal"
             },
             "requiredCapabilities": {
                 "hammer": 2
@@ -203,8 +188,7 @@
         },
         {
             "material": {
-                "tag": "minecraft:planks",
-                "count": 2
+                "tag": "minecraft:planks"
             },
             "requiredCapabilities": {
                 "axe": 1
@@ -214,8 +198,7 @@
         },
         {
             "material": {
-                "tag": "forge:cobblestone",
-                "count": 2
+                "tag": "forge:cobblestone"
             },
             "requiredCapabilities": {
                 "hammer": 1
@@ -225,8 +208,7 @@
         },
         {
             "material": {
-                "tag": "forge:stone",
-                "count": 2
+                "tag": "forge:stone"
             },
             "requiredCapabilities": {
                 "hammer": 1
