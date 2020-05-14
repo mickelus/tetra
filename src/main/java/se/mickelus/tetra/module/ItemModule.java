@@ -116,7 +116,7 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public String getItemPrefix(ItemStack itemStack) {
-        String variantPrefixKey = "tetra.module_variant." + getVariantData(itemStack).key + ".prefix";
+        String variantPrefixKey = "tetra.variant." + getVariantData(itemStack).key + ".prefix";
         if (I18n.hasKey(variantPrefixKey)) {
             return I18n.format(variantPrefixKey);
         }
