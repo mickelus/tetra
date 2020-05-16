@@ -121,15 +121,14 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
 
             world.setBlockState(pos, blockState.with(propIntegrity, integrity - progress));
         } else {
-            if (world instanceof ServerWorld) {
+            boolean didBreak = ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState, false);
+            if (didBreak && world instanceof ServerWorld) {
                 ResourceLocation lootTable = Capability.hammer.equals(capability) ? hammerbonusLootTable : pryBonusLootTable;
 
                 BlockInteraction.getLoot(lootTable, player, hand, (ServerWorld) world, blockState)
                         .forEach(lootStack -> spawnAsEntity(world, pos, lootStack));
             }
 
-            world.playEvent(player, 2001, pos, Block.getStateId(blockState));
-            ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState, false);
         }
 
         return true;

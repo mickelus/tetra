@@ -407,7 +407,7 @@ public class ItemEffectHandler {
             if (exp != -1) {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
                         && !breakingPlayer.func_223729_a(world, pos, gameType)
-                        && blockState.canHarvestBlock(world, pos, breakingPlayer)
+                        && (!harvest || blockState.canHarvestBlock(world, pos, breakingPlayer))
                         && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
 
                 if (canRemove) {

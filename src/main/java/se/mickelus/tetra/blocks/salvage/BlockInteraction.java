@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.salvage;
 
 import com.google.common.base.Predicates;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,8 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -111,9 +114,18 @@ public class BlockInteraction {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
 
-        if (player.getCooledAttackStrength(0) < 0.8) {
-            player.resetCooldown();
-            return ActionResultType.FAIL;
+        if (Hand.MAIN_HAND == hand) {
+            if (player.getCooledAttackStrength(0) < 0.8) {
+                if (player.getHeldItemOffhand().isEmpty()) {
+                    player.resetCooldown();
+                    return ActionResultType.FAIL;
+                }
+                return ActionResultType.PASS;
+            }
+        } else {
+            if (player.getCooldownTracker().hasCooldown(heldStack.getItem())) {
+                return ActionResultType.FAIL;
+            }
         }
 
         AxisAlignedBB boundingBox = blockState.getShape(world, pos).getBoundingBox();
@@ -155,7 +167,15 @@ public class BlockInteraction {
                         possibleInteraction.requiredLevel);
             }
 
-            player.resetCooldown();
+            if (Hand.MAIN_HAND == hand) {
+                player.resetCooldown();
+            } else {
+                int swingSpeed = CastOptional.cast(heldStack.getItem(), ItemModularHandheld.class)
+                        .map(item -> (int) (20 / (4 + item.getSpeedModifier(heldStack))))
+                        .orElse(10);
+                player.getCooldownTracker().setCooldown(heldStack.getItem(), swingSpeed);
+            }
+
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
