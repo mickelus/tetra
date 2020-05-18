@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["shield/plate"],
+    "slots": [
+        "shield/plate"
+    ],
     "improvements": [
         "tetra:shield/buckler/studs",
         "tetra:shield/buckler/trim"
@@ -9,7 +11,7 @@
     "variants": [
         {
             "key": "buckler/wooden",
-            "durability": 20,
+            "durability": 227,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
@@ -30,8 +32,8 @@
         },
         {
             "key": "buckler/spruce",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 204,
+            "integrity": 0,
             "magicCapacity": 90,
             "effects": {
                 "toughness": 4
@@ -51,7 +53,7 @@
         },
         {
             "key": "buckler/birch",
-            "durability": 31,
+            "durability": 259,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
@@ -72,7 +74,7 @@
         },
         {
             "key": "buckler/jungle",
-            "durability": 31,
+            "durability": 227,
             "integrity": -1,
             "magicCapacity": 102,
             "effects": {
@@ -93,7 +95,7 @@
         },
         {
             "key": "buckler/acacia",
-            "durability": 31,
+            "durability": 240,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
@@ -114,7 +116,7 @@
         },
         {
             "key": "buckler/dark_oak",
-            "durability": 31,
+            "durability": 203,
             "integrity": -1,
             "magicCapacity": 102,
             "effects": {
@@ -135,8 +137,8 @@
         },
         {
             "key": "buckler/maple",
-            "durability": 38,
-            "integrity": -1,
+            "durability": 269,
+            "integrity": 0,
             "magicCapacity": 96,
             "effects": {
                 "toughness": 4
@@ -156,7 +158,7 @@
         },
         {
             "key": "buckler/cherry",
-            "durability": 39,
+            "durability": 279,
             "integrity": -1,
             "magicCapacity": 78,
             "effects": {
@@ -177,8 +179,8 @@
         },
         {
             "key": "buckler/baobab",
-            "durability": 47,
-            "integrity": -1,
+            "durability": 449,
+            "integrity": -2,
             "magicCapacity": 78,
             "effects": {
                 "toughness": 4
@@ -198,7 +200,7 @@
         },
         {
             "key": "buckler/bone",
-            "durability": 39,
+            "durability": 280,
             "integrity": -1,
             "magicCapacity": 108,
             "effects": {
@@ -219,8 +221,8 @@
         },
         {
             "key": "buckler/iron",
-            "durability": 58,
-            "integrity": -1,
+            "durability": 310,
+            "integrity": -2,
             "magicCapacity": 84,
             "effects": {
                 "toughness": 4
@@ -240,8 +242,8 @@
         },
         {
             "key": "buckler/bronze",
-            "durability": 36,
-            "integrity": -1,
+            "durability": 290,
+            "integrity": 0,
             "magicCapacity": 78,
             "effects": {
                 "toughness": 4
@@ -261,8 +263,8 @@
         },
         {
             "key": "buckler/steel",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 480,
+            "integrity": -3,
             "magicCapacity": 66,
             "effects": {
                 "toughness": 4
@@ -282,8 +284,8 @@
         },
         {
             "key": "buckler/vent",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 512,
+            "integrity": -2,
             "magicCapacity": 66,
             "effects": {
                 "toughness": 4

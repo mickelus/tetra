@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["shield/plate"],
+    "slots": [
+        "shield/plate"
+    ],
     "improvements": [
         "tetra:shield/tower/studs",
         "tetra:shield/tower/trim"
@@ -9,8 +11,8 @@
     "variants": [
         {
             "key": "tower/wooden",
-            "durability": 20,
-            "integrity": -1,
+            "durability": 227,
+            "integrity": -2,
             "magicCapacity": 90,
             "effects": {
                 "blocking": 10
@@ -29,7 +31,7 @@
         },
         {
             "key": "tower/spruce",
-            "durability": 31,
+            "durability": 204,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
@@ -49,8 +51,8 @@
         },
         {
             "key": "tower/birch",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 259,
+            "integrity": -2,
             "magicCapacity": 90,
             "effects": {
                 "blocking": 10
@@ -69,8 +71,8 @@
         },
         {
             "key": "tower/jungle",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 227,
+            "integrity": -2,
             "magicCapacity": 102,
             "effects": {
                 "blocking": 10
@@ -89,8 +91,8 @@
         },
         {
             "key": "tower/acacia",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 240,
+            "integrity": -2,
             "magicCapacity": 90,
             "effects": {
                 "blocking": 10
@@ -109,8 +111,8 @@
         },
         {
             "key": "tower/dark_oak",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 203,
+            "integrity": -2,
             "magicCapacity": 102,
             "effects": {
                 "blocking": 10
@@ -129,7 +131,7 @@
         },
         {
             "key": "tower/maple",
-            "durability": 38,
+            "durability": 269,
             "integrity": -1,
             "magicCapacity": 96,
             "effects": {
@@ -149,8 +151,8 @@
         },
         {
             "key": "tower/cherry",
-            "durability": 39,
-            "integrity": -1,
+            "durability": 279,
+            "integrity": -2,
             "magicCapacity": 78,
             "effects": {
                 "blocking": 10
@@ -169,8 +171,8 @@
         },
         {
             "key": "tower/baobab",
-            "durability": 47,
-            "integrity": -1,
+            "durability": 449,
+            "integrity": -3,
             "magicCapacity": 78,
             "effects": {
                 "blocking": 10
@@ -189,8 +191,8 @@
         },
         {
             "key": "tower/bone",
-            "durability": 39,
-            "integrity": -1,
+            "durability": 280,
+            "integrity": -2,
             "magicCapacity": 108,
             "effects": {
                 "blocking": 10
@@ -209,8 +211,8 @@
         },
         {
             "key": "tower/iron",
-            "durability": 58,
-            "integrity": -1,
+            "durability": 310,
+            "integrity": -3,
             "magicCapacity": 84,
             "effects": {
                 "blocking": 10
@@ -229,7 +231,7 @@
         },
         {
             "key": "tower/bronze",
-            "durability": 36,
+            "durability": 290,
             "integrity": -1,
             "magicCapacity": 78,
             "effects": {
@@ -249,8 +251,8 @@
         },
         {
             "key": "tower/steel",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 480,
+            "integrity": -4,
             "magicCapacity": 66,
             "effects": {
                 "blocking": 10
@@ -269,8 +271,8 @@
         },
         {
             "key": "tower/vent",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 512,
+            "integrity": -3,
             "magicCapacity": 66,
             "effects": {
                 "blocking": 10

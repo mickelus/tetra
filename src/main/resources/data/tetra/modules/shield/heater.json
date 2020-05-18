@@ -1,7 +1,9 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["shield/plate"],
+    "slots": [
+        "shield/plate"
+    ],
     "improvements": [
         "tetra:shield/heater/studs",
         "tetra:shield/heater/trim"
@@ -9,11 +11,14 @@
     "variants": [
         {
             "key": "heater/wooden",
-            "durability": 20,
+            "durability": 272,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
-                "blocking": [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "oak_glyph",
@@ -30,11 +35,14 @@
         },
         {
             "key": "heater/spruce",
-            "durability": 31,
-            "integrity": -1,
+            "durability": 244,
+            "integrity": 0,
             "magicCapacity": 90,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "spruce_glyph",
@@ -51,11 +59,14 @@
         },
         {
             "key": "heater/birch",
-            "durability": 31,
+            "durability": 310,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "birch_glyph",
@@ -72,11 +83,14 @@
         },
         {
             "key": "heater/jungle",
-            "durability": 31,
+            "durability": 272,
             "integrity": -1,
             "magicCapacity": 102,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "jungle_glyph",
@@ -93,11 +107,14 @@
         },
         {
             "key": "heater/acacia",
-            "durability": 31,
+            "durability": 288,
             "integrity": -1,
             "magicCapacity": 90,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "acacia_glyph",
@@ -114,11 +131,14 @@
         },
         {
             "key": "heater/dark_oak",
-            "durability": 31,
+            "durability": 243,
             "integrity": -1,
             "magicCapacity": 102,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "dark_oak_glyph",
@@ -135,11 +155,14 @@
         },
         {
             "key": "heater/maple",
-            "durability": 38,
-            "integrity": -1,
+            "durability": 322,
+            "integrity": 0,
             "magicCapacity": 96,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "maple_glyph",
@@ -156,11 +179,14 @@
         },
         {
             "key": "heater/cherry",
-            "durability": 39,
+            "durability": 334,
             "integrity": -1,
             "magicCapacity": 78,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "cherry_glyph",
@@ -177,11 +203,14 @@
         },
         {
             "key": "heater/baobab",
-            "durability": 47,
-            "integrity": -1,
+            "durability": 538,
+            "integrity": -2,
             "magicCapacity": 78,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "baobab_glyph",
@@ -198,11 +227,14 @@
         },
         {
             "key": "heater/bone",
-            "durability": 39,
+            "durability": 336,
             "integrity": -1,
             "magicCapacity": 108,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "bone_glyph",
@@ -219,11 +251,14 @@
         },
         {
             "key": "heater/iron",
-            "durability": 58,
-            "integrity": -1,
+            "durability": 372,
+            "integrity": -2,
             "magicCapacity": 84,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "iron_glyph",
@@ -240,11 +275,14 @@
         },
         {
             "key": "heater/bronze",
-            "durability": 36,
-            "integrity": -1,
+            "durability": 348,
+            "integrity": 0,
             "magicCapacity": 78,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "bronze_glyph",
@@ -261,11 +299,14 @@
         },
         {
             "key": "heater/steel",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 576,
+            "integrity": -3,
             "magicCapacity": 66,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "steel_glyph",
@@ -282,11 +323,14 @@
         },
         {
             "key": "heater/vent",
-            "durability": 244,
-            "integrity": -1,
+            "durability": 614,
+            "integrity": -2,
             "magicCapacity": 66,
             "effects": {
-                "blocking":  [1, 4]
+                "blocking": [
+                    1,
+                    4
+                ]
             },
             "glyph": {
                 "tint": "vent_glyph",

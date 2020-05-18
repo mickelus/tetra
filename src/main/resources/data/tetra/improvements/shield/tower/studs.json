@@ -1,6 +1,8 @@
 [
     {
         "key": "shield/studs",
+        "integrity": -1,
+        "durability": 48,
         "models": [
             {
                 "type": "shield_tower",

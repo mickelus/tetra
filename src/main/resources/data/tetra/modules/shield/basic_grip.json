@@ -24,7 +24,7 @@
         {
             "key": "basic_grip/iron",
             "durability": 20,
-            "integrity": 2,
+            "integrity": 5,
             "magicCapacity": 20,
             "glyph": {
                 "tint": "iron_glyph",
