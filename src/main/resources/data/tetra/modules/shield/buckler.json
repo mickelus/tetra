@@ -6,7 +6,23 @@
     ],
     "improvements": [
         "tetra:shield/buckler/studs",
-        "tetra:shield/buckler/trim"
+        "tetra:shield/buckler/trim",
+        "tetra:enchantment/unbreaking",
+        "tetra:enchantment/ensorcellation_bulwark",
+        "tetra:enchantment/apotheosis_reflective",
+        "tetra:enchantment/apotheosis_apotheosis_shield_bash",
+        "tetra:enchantment/ma-enchants_curse_breaking",
+        "tetra:enchantment/ma-enchants_timeless",
+        "tetra:enchantment/vanishing_curse",
+        "tetra:enchantment/ensorcellation_soulbound",
+        "tetra:enchantment/ma-enchants_curse_death",
+        "tetra:enchantment/cursed_fragility",
+        "tetra:enchantment/cursed_misfortune",
+        "tetra:enchantment/cursed_fading",
+        "tetra:enchantment/cursed_obedience",
+        "tetra:enchantment/cursed_encumbrance",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
     ],
     "variants": [
         {
