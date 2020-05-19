@@ -64,6 +64,13 @@ public class GuiStats {
             0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));
 
+    public static final GuiStatBar blockingDuration = new GuiStatBarBlockingDuration(0, 0, barLength);
+
+    public static final IStatGetter blockingCooldownGetter = new StatGetterEffectEfficiency(ItemEffect.blocking, 1d);
+    public static final GuiStatBar blockingCooldown = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.blocking_cooldown"),
+            0, 16, false, blockingCooldownGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.blocking_cooldown.tooltip", blockingCooldownGetter));
+
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),
                 0, QuickslotInventory.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,

@@ -89,6 +89,15 @@
   "tetra.stats.toughness": "Toughness",
   "tetra.stats.toughness.tooltip": "Provides §e%s§r toughness when held",
 
+  "tetra.stats.blocking": "Block",
+  "tetra.stats.blocking.tooltip": "Holding down right-click will block incoming attacks and projectiles",
+
+  "tetra.stats.blocking_duration": "Block duration",
+  "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
+
+  "tetra.stats.blocking_cooldown": "Block cooldown",
+  "tetra.stats.blocking_cooldown.tooltip": "After use this item cannot be used again until after §e%s§r seconds",
+
   "tetra.stats.armorPenetration": "Penetrating",
   "tetra.stats.armorPenetration.tooltip": "Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor",
 
