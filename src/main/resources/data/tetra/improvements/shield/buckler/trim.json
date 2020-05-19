@@ -3,8 +3,7 @@
         "key": "shield/trim",
         "group": "trim",
         "integrity": -1,
-        "durability": 7,
-        "durabilityMultiplier": 1.2,
+        "durabilityMultiplier": 1.15,
         "models": [
             {
                 "type": "shield_buckler",
@@ -21,8 +20,7 @@
         "key": "shield/trim_scrap",
         "group": "trim",
         "integrity": -1,
-        "durability": 21,
-        "durabilityMultiplier": 1.5,
+        "durabilityMultiplier": 1.4,
         "models": [
             {
                 "type": "shield_buckler",
