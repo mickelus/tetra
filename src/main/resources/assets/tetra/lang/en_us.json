@@ -2310,12 +2310,12 @@
   "tetra.variant.tower/vent": "Vent plate tower",
 
   "tetra/schema/shield/heater.name": "Heater plate",
-  "tetra/schema/shield/heater.description": "Craft a heater shield plate from the given materials. Heaters medium size shield and average in terms of speed, utility and blocking.",
+  "tetra/schema/shield/heater.description": "Craft a heater shield plate from the given materials. Heaters are medium size shields that cost less integrity that a tower shield, but can only block for a limited amount of time before going on cooldown.",
   "tetra/schema/shield/heater.slot1": "Material",
 
   "tetra.module.shield/heater.item_name": "Heater shield",
   "tetra.module.shield/heater.name": "Heater plate",
-  "tetra.module.shield/heater.description": "The heater shield is a medium size shield and is average in terms of speed, utility and blocking",
+  "tetra.module.shield/heater.description": "The heater shield is a medium size shield that cost less integrity, but can only block for a limited amount of time before going on cooldown.",
 
   "tetra.variant.heater/wooden": "Wooden heater plate",
   "tetra.variant.heater/wooden.prefix": "wooden",
@@ -2346,12 +2346,12 @@
   "tetra.variant.heater/vent": "Vent plate heater",
 
   "tetra/schema/shield/buckler.name": "Buckler plate",
-  "tetra/schema/shield/buckler.description": "Craft a buckler from the given materials. Bucklers are small and make up for their lack of blocking capabilities with high speed and good utility.",
+  "tetra/schema/shield/buckler.description": "Craft a buckler from the given materials. Bucklers cannot be used to block but provide a passive toughness bonus instead.",
   "tetra/schema/shield/buckler.slot1": "Material",
 
   "tetra.module.shield/buckler.item_name": "Buckler",
   "tetra.module.shield/buckler.name": "Buckler plate",
-  "tetra.module.shield/buckler.description": "Bucklers are small and make up for their lack of blocking capabilities with high speed and good utility.",
+  "tetra.module.shield/buckler.description": "Bucklers are small shields that provide a passive toughness bonus.",
 
   "tetra.variant.buckler/wooden": "Wooden buckler plate",
   "tetra.variant.buckler/wooden.prefix": "wooden",
@@ -2393,14 +2393,14 @@
   "tetra.variant.basic_grip/iron":"Basic iron grip",
 
   "tetra/schema/shield/studs.name": "Apply studs",
-  "tetra/schema/shield/studs.description": "Nail studs into the shield plate to increase it's durability.",
+  "tetra/schema/shield/studs.description": "Nail studs into the shield plate to increase it's durability by a flat amount.",
   "tetra/schema/shield/studs.slot1": "Material",
 
   "tetra.improvement.shield/studs.name": "Studded",
   "tetra.improvement.shield/studs.description": "Increases durability",
 
   "tetra/schema/shield/trim.name": "Apply trim",
-  "tetra/schema/shield/trim.description": "Frame the shield with a trim to increase it's durability.",
+  "tetra/schema/shield/trim.description": "Frame the shield with a trim to increase it's durability, the durability bonus is multiplicative.",
   "tetra/schema/shield/trim.slot1": "Material",
 
   "tetra.improvement.shield/trim.name": "Iron trim",
