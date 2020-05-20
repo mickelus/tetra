@@ -1,10 +1,8 @@
 package se.mickelus.tetra.items.journal.gui.craft;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.GuiAnimation;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -24,11 +22,16 @@ public class GuiJournalItem extends GuiClickable {
     private List<GuiAnimation> selectAnimations;
     private List<GuiAnimation> deselectAnimations;
 
+    private List<GuiAnimation> hoverAnimations;
+    private List<GuiAnimation> blurAnimations;
+
     private KeyframeAnimation itemShow;
     private KeyframeAnimation itemHide;
 
     private boolean isSelected = false;
     private final GuiTexture backdrop;
+
+    private final GuiTexture icon;
 
     private ItemModular item;
 
@@ -38,13 +41,32 @@ public class GuiJournalItem extends GuiClickable {
         selectAnimations = new ArrayList<>();
         deselectAnimations = new ArrayList<>();
 
+        hoverAnimations = new ArrayList<>();
+        blurAnimations = new ArrayList<>();
+
         backdrop = new GuiTexture(0, 0, 52, 52, GuiTextures.workbench);
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        GuiTexture icon = new GuiTexture(0, 0, 38, 38, 38 * textureIndex, 218, GuiTextures.workbench);
+        icon = new GuiTexture(0, 0, 38, 38, 38 * textureIndex, 218, GuiTextures.workbench);
         icon.setAttachment(GuiAttachment.middleCenter);
         addChild(icon);
+
+        GuiElement labelGroup = new GuiElement(0, 0, 0, 0);
+        String[] labelStrings = I18n.format("tetra.journal.craft." + item.getRegistryName().getPath()).split(" ");
+
+        for (int i = 0; i < labelStrings.length; i++) {
+            GuiString labelLine = new GuiStringOutline(0, i * 10, labelStrings[i]);
+            labelLine.setAttachment(GuiAttachment.topCenter);
+            labelLine.setColor(GuiColors.hover);
+
+            labelGroup.addChild(labelLine);
+        }
+
+        labelGroup.setAttachment(GuiAttachment.middleCenter);
+        labelGroup.setHeight(10 * labelStrings.length);
+        labelGroup.setOpacity(0);
+        addChild(labelGroup);
 
         slotGroup = new GuiElement(37, 15, 0, 0);
         setupSlots(item, onSlotSelect);
@@ -72,6 +94,13 @@ public class GuiJournalItem extends GuiClickable {
         itemHide = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(0))
                 .onStop(complete -> this.isVisible = false);
+
+        // hover/blur animations
+        hoverAnimations.add(new KeyframeAnimation(80, labelGroup)
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(-2, 0)));
+
+        blurAnimations.add(new KeyframeAnimation(120, labelGroup)
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(0, 2)));
 
         this.item = item;
     }
@@ -108,6 +137,10 @@ public class GuiJournalItem extends GuiClickable {
 
             slotGroup.setVisible(true);
             selectAnimations.forEach(GuiAnimation::start);
+
+            icon.setColor(GuiColors.normal);
+            hoverAnimations.forEach(GuiAnimation::stop);
+            blurAnimations.forEach(GuiAnimation::start);
         } else {
             selectAnimations.forEach(GuiAnimation::stop);
             deselectAnimations.forEach(GuiAnimation::start);
@@ -169,12 +202,20 @@ public class GuiJournalItem extends GuiClickable {
     protected void onFocus() {
         if (!isSelected) {
             backdrop.setColor(GuiColors.hover);
+
+            icon.setColor(GuiColors.muted);
+            blurAnimations.forEach(GuiAnimation::stop);
+            hoverAnimations.forEach(GuiAnimation::start);
         }
     }
 
     @Override
     protected void onBlur() {
         backdrop.setColor(GuiColors.normal);
+
+        icon.setColor(GuiColors.normal);
+        hoverAnimations.forEach(GuiAnimation::stop);
+        blurAnimations.forEach(GuiAnimation::start);
     }
 
     private void setupSlots(ItemModular item, Consumer<String> onSlotSelect) {
