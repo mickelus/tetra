@@ -11,6 +11,7 @@ import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 import java.util.function.Consumer;
@@ -44,9 +45,11 @@ public class GuiJournalItems extends GuiElement {
                     .setAttachment(GuiAttachment.topCenter));
         }
 
-//        addChild(new GuiJournalItem(81, 40, ModularDoubleHeadedItem.instance, 3,
-//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
-//                .setAttachment(GuiAttachment.topCenter));
+//        if (ConfigHandler.enableShield.get()) {
+//            addChild(new GuiJournalItem(81, 40, ModularDoubleHeadedItem.instance, 3,
+//                    () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+//                    .setAttachment(GuiAttachment.topCenter));
+//        }
 
         if (ConfigHandler.enableBow.get()) {
             addChild(new GuiJournalItem(1, 40, ModularBowItem.instance, 5,
@@ -58,9 +61,12 @@ public class GuiJournalItems extends GuiElement {
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 //
-//        addChild(new GuiJournalItem(-79, 40, ModularBowItem.instance, 3,
-//                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
-//                .setAttachment(GuiAttachment.topCenter));
+
+        if (ConfigHandler.enableShield.get()) {
+            addChild(new GuiJournalItem(-79, 40, ModularShieldItem.instance, 3,
+                    () -> onItemSelect.accept(ModularShieldItem.instance), onSlotSelect)
+                    .setAttachment(GuiAttachment.topCenter));
+        }
 //
 //        addChild(new GuiJournalItem(121, 0, ModularDoubleHeadedItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
