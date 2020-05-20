@@ -5,6 +5,10 @@
     ],
     "materialSlotCount": 1,
     "displayType": "major",
+    "glyph": {
+        "textureX": 16,
+        "textureY": 48
+    },
     "outcomes": [
         {
             "material": {
