@@ -10,15 +10,17 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 
+@OnlyIn(Dist.CLIENT)
 public class ModularShieldISTER extends ItemStackTileEntityRenderer {
 
     private final ModularShieldModel modelShield = new ModularShieldModel();
-    public static final ModularShieldISTER instance = new ModularShieldISTER();
 
     public ModularShieldISTER() {}
 
