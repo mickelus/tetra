@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,20 +13,21 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
-import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.capabilities.Capability;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModuleBuilder {
 
     public String module;
     public String prefix;
+
+    public String schemaPath;
 
     public JsonObject referenceVariant;
 
@@ -37,13 +39,18 @@ public class ModuleBuilder {
 
     private int integrityOffset = 0;
 
-    private ArrayList<Pair<Material, Item>> variants = new ArrayList<>();
+    private float countMultiplier = 1;
+    private int capabilityOffset = 0;
+
+    private ArrayList<Variant> variants = new ArrayList<>();
 
     private Map<ToolType, BlockState> harvestMap;
 
-    public ModuleBuilder(String module, String prefix, JsonObject referenceVariant) {
+    public ModuleBuilder(String module, String prefix, JsonObject referenceVariant, String schemaPath) {
         this.module = module;
         this.prefix = prefix;
+
+        this.schemaPath = schemaPath;
 
         this.referenceVariant = referenceVariant;
 
@@ -51,6 +58,13 @@ public class ModuleBuilder {
         harvestMap.put(ToolType.AXE, Blocks.OAK_LOG.getDefaultState());
         harvestMap.put(ToolType.PICKAXE, Blocks.STONE.getDefaultState());
         harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.getDefaultState());
+    }
+
+    public ModuleBuilder offsetOutcome(int countMultiplier, int capabilityOffset) {
+        this.countMultiplier = countMultiplier;
+        this.capabilityOffset = capabilityOffset;
+
+        return this;
     }
 
     public ModuleBuilder offsetDurability(int flat, float multiplier) {
@@ -72,7 +86,12 @@ public class ModuleBuilder {
     }
 
     public ModuleBuilder addVariant(Material material) {
-        variants.add(Pair.of(material, null));
+        variants.add(new Variant(material, null));
+        return this;
+    }
+
+    public ModuleBuilder addVariant(Material material, Pair<String, Integer> ... improvements) {
+        variants.add(new Variant(material, null, improvements));
         return this;
     }
 
@@ -82,12 +101,23 @@ public class ModuleBuilder {
         if (item == null) {
             throw new NullPointerException("Missing item '" + itemId + "'");
         }
-        variants.add(Pair.of(material, item));
+        variants.add(new Variant(material, item));
 
         return this;
     }
 
-    public JsonObject getJson() {
+    public ModuleBuilder addVariant(Material material, String itemId, Pair<String, Integer> ... improvements) {
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+
+        if (item == null) {
+            throw new NullPointerException("Missing item '" + itemId + "'");
+        }
+        variants.add(new Variant(material, item, improvements));
+
+        return this;
+    }
+
+    public JsonObject getModuleJson() {
         JsonObject result = new JsonObject();
         JsonArray variantsJson = new JsonArray();
 
@@ -100,9 +130,9 @@ public class ModuleBuilder {
         return result;
     }
 
-    private JsonObject getVariantJson(Pair<Material, Item> dataPair) {
-        Material material = dataPair.getLeft();
-        Item item = dataPair.getRight();
+    private JsonObject getVariantJson(Variant variant) {
+        Material material = variant.material;
+        Item item = variant.item;
 
         JsonObject result = deepCopy(referenceVariant);
 
@@ -178,6 +208,57 @@ public class ModuleBuilder {
         return result;
     }
 
+    public JsonObject getSchemaJson() {
+        JsonObject result = new JsonObject();
+        JsonArray outcomesJson = new JsonArray();
+
+        variants.stream()
+                .map(this::getOutcomeJson)
+                .forEach(outcomesJson::add);
+
+        result.add("outcomes", outcomesJson);
+
+        return result;
+    }
+
+    private JsonObject getOutcomeJson(Variant variant) {
+        Material material = variant.material;
+
+        JsonObject outcome = new JsonObject();
+
+        JsonObject outcomeMaterial = new JsonObject();
+        outcome.add("material", outcomeMaterial);
+        outcomeMaterial.addProperty(material.type, material.itemId);
+
+        if (MathHelper.ceil(material.count * countMultiplier) > 1) {
+            outcomeMaterial.addProperty("count", MathHelper.ceil(material.count * countMultiplier));
+        }
+
+
+        if (material.capability != null && material.capabilityLevel + capabilityOffset > 0) {
+            JsonObject requiredCapabilities = new JsonObject();
+            outcome.add("requiredCapabilities", requiredCapabilities);
+            requiredCapabilities.addProperty(material.capability.toString(), material.capabilityLevel + capabilityOffset);
+        }
+
+        outcome.addProperty("moduleKey", module);
+        outcome.addProperty("moduleVariant", prefix + "/" + material.key);
+
+        Map<String, Integer> improvementMap = Stream.concat(Arrays.stream(material.improvements), Arrays.stream(variant.improvements))
+                .collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
+
+        if (!improvementMap.isEmpty()) {
+            JsonObject improvements = new JsonObject();
+            outcome.add("improvements", improvements);
+
+            for (Map.Entry<String, Integer> improvement: improvementMap.entrySet()) {
+                improvements.addProperty(improvement.getKey(), improvement.getValue());
+            }
+        }
+
+        return outcome;
+    }
+
     private JsonObject deepCopy(JsonObject object) {
         try {
             return ModuleProvider.gson.fromJson(ModuleProvider.gson.toJson(object), JsonObject.class);
@@ -200,12 +281,54 @@ public class ModuleBuilder {
 
         int magicCapacity;
 
+        String type;
+        String itemId;
+        int count;
+        Capability capability;
+        int capabilityLevel;
+        Pair<String, Integer>[] improvements = new Pair[0];
+
         public Material(String key, int tint, int materialTint, int integrity, int magicCapacity) {
             this.key = key;
             this.tint = tint;
             this.materialTint = materialTint;
             this.integrity = integrity;
             this.magicCapacity = magicCapacity;
+        }
+
+        public Material(String key, int tint, int materialTint, int integrity, int magicCapacity, String type,
+                String itemId, int count, Capability capability, int capabilityLevel) {
+            this(key, tint, materialTint, integrity, magicCapacity);
+
+            this.type = type;
+            this.itemId = itemId;
+            this.count = count;
+            this.capability = capability;
+            this.capabilityLevel = capabilityLevel;
+        }
+
+        public Material(String key, int tint, int materialTint, int integrity, int magicCapacity, String type,
+                String itemId, int count, Capability capability, int capabilityLevel, Pair<String, Integer> ... improvements) {
+            this(key, tint, materialTint, integrity, magicCapacity, type, itemId, count, capability, capabilityLevel);
+
+            this.improvements = improvements;
+        }
+    }
+
+    public static class Variant {
+        Material material;
+        Item item;
+        Pair<String, Integer>[] improvements = new Pair[0];
+
+        public Variant(Material material, Item item) {
+            this.material = material;
+            this.item = item;
+        }
+
+        public Variant(Material material, Item item, Pair<String, Integer>[] improvements) {
+            this.material = material;
+            this.item = item;
+            this.improvements = improvements;
         }
     }
 }
