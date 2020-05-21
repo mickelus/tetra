@@ -44,7 +44,7 @@ public class ModuleProvider implements IDataProvider {
     private void setup() {
         ModuleBuilder.Material platinum = new ModuleBuilder.Material("platinum", 0xd6f6ff, 0xd6f6ff, 1, 66, "tag", "forge:ingots/platinum", 1, Capability.hammer, 4);
         ModuleBuilder.Material ruby = new ModuleBuilder.Material("ruby", 0xa349f2, 0xa349f2, 1, 60, "tag", "forge:gems/ruby", 1, Capability.hammer, 2, Pair.of("arrested", 0));
-        ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("enigmatic_iron", 0xddeeee, 0xeeaabb, 2, 55);
+        ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("enigmatic_iron", 0xddeeee, 0xeeaabb, 2, 55, "item", "enigmatica:iron", 1, Capability.hammer, 3);
 
         setupModule("double/basic_pickaxe", "basic_pickaxe", "basic_pickaxe/iron", "double/basic_pickaxe/basic_pickaxe")
                 .offsetDurability(-20, 0.5f)
