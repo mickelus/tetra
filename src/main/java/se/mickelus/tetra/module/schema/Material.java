@@ -108,4 +108,8 @@ public class Material {
         itemStack.setCount(count);
         return itemStack;
     }
+
+    public boolean isTagged() {
+        return tagLocation != null;
+    }
 }

@@ -1,11 +1,8 @@
 package se.mickelus.tetra.items.modular;
 
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
