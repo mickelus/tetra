@@ -116,7 +116,7 @@ public class ModuleProvider implements IDataProvider {
     }
 
     private void saveSchema(DirectoryCache cache, String schemaPath, JsonObject schemaData) {
-        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schema/" + schemaPath + ".json");
+        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schemas/" + schemaPath + ".json");
         try {
             IDataProvider.save(gson, cache, schemaData, outputPath);
         } catch (IOException e) {
