@@ -1,7 +1,6 @@
 package se.mickelus.tetra.module.schema;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.Filter;
 

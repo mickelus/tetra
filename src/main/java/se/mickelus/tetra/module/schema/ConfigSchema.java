@@ -64,7 +64,7 @@ public class ConfigSchema extends BaseSchema {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
                 .filter(outcome -> outcome.material.predicate != null && outcome.material.predicate.test(materialStack))
-                .findAny();
+                .reduce((a, b) -> b); // returns the last element, there's no findLast :c
     }
 
     @Override
