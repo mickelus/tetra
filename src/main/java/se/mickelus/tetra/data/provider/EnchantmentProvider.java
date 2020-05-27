@@ -349,7 +349,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
-        Path outputPath = generator.getOutputFolder().resolve("temp/" + lang + ".json");
+        Path outputPath = generator.getOutputFolder().resolve("temp/enchantments_" + lang + ".json");
         try {
             IDataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {

@@ -14,8 +14,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.capabilities.Capability;
 
 import java.util.*;
@@ -27,9 +30,12 @@ public class ModuleBuilder {
     public String module;
     public String prefix;
 
+    public String localization;
+
     public String schemaPath;
 
-    public JsonObject referenceVariant;
+    public JsonObject referenceModule;
+    public String fallbackReference;
 
     private int durabilityOffset = 0;
     private float durabilityMultiplier = 1;
@@ -46,13 +52,16 @@ public class ModuleBuilder {
 
     private Map<ToolType, BlockState> harvestMap;
 
-    public ModuleBuilder(String module, String prefix, JsonObject referenceVariant, String schemaPath) {
+    public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schemaPath) {
         this.module = module;
         this.prefix = prefix;
 
+        this.localization = localization;
+
         this.schemaPath = schemaPath;
 
-        this.referenceVariant = referenceVariant;
+        this.referenceModule = referenceModule;
+        this.fallbackReference = fallbackReference;
 
         harvestMap = new HashMap<>();
         harvestMap.put(ToolType.AXE, Blocks.OAK_LOG.getDefaultState());
@@ -117,6 +126,24 @@ public class ModuleBuilder {
         return this;
     }
 
+    private JsonObject getReferenceVariant(JsonObject moduleJson, String[] variantReferences, String fallbackReference) {
+        JsonArray variants = moduleJson.getAsJsonArray("variants");
+
+        String[] referenceKeys = ArrayUtils.add(variantReferences, fallbackReference);
+
+        for (int i = 0; i < referenceKeys.length; i++) {
+            for (int j = 0; j < variants.size(); j++) {
+                JsonObject variant = variants.get(j).getAsJsonObject();
+                String variantKey = variant.get("key").getAsString();
+                if (variantKey.contains(referenceKeys[i])) {
+                    return variant;
+                }
+            }
+        }
+
+        throw new NullPointerException("Could not find variant reference for: " + module);
+    }
+
     public JsonObject getModuleJson() {
         JsonObject result = new JsonObject();
         JsonArray variantsJson = new JsonArray();
@@ -134,6 +161,7 @@ public class ModuleBuilder {
         Material material = variant.material;
         Item item = variant.item;
 
+        JsonObject referenceVariant = getReferenceVariant(referenceModule, variant.material.references, fallbackReference);
         JsonObject result = deepCopy(referenceVariant);
 
         result.addProperty("key", prefix + "/" + material.key);
@@ -259,6 +287,17 @@ public class ModuleBuilder {
         return outcome;
     }
 
+    public Map<String, String> getLocalizationEntries() {
+        Map<String, String> result = new LinkedHashMap<>();
+
+        variants.forEach(variant -> {
+            result.put("tetra.variant." + variant.material.key, StringUtils.capitalize(variant.material.localization + " " + localization));
+            result.put("tetra.variant." + variant.material.key + ".prefix", StringUtils.capitalize(variant.material.localization));
+        });
+
+        return result;
+    }
+
     private JsonObject deepCopy(JsonObject object) {
         try {
             return ModuleProvider.gson.fromJson(ModuleProvider.gson.toJson(object), JsonObject.class);
@@ -270,6 +309,8 @@ public class ModuleBuilder {
 
     public static class Material {
         String key;
+
+        String localization;
 
         /** basically a hex color code (but with a prefix for java to parse it as an int, example: 0x00ff00 would be green **/
         int tint = 0x000000;
@@ -288,31 +329,34 @@ public class ModuleBuilder {
         int capabilityLevel;
         Pair<String, Integer>[] improvements = new Pair[0];
 
-        public Material(String key, int tint, int materialTint, int integrity, int magicCapacity) {
+        String[] references = new String[0];
+
+        public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
+                String itemId, int count, Capability capability, int capabilityLevel, String[] references) {
             this.key = key;
+            this.localization = localization;
             this.tint = tint;
             this.materialTint = materialTint;
             this.integrity = integrity;
             this.magicCapacity = magicCapacity;
-        }
-
-        public Material(String key, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel) {
-            this(key, tint, materialTint, integrity, magicCapacity);
 
             this.type = type;
             this.itemId = itemId;
             this.count = count;
             this.capability = capability;
             this.capabilityLevel = capabilityLevel;
+
+            this.references = references;
         }
 
-        public Material(String key, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel, Pair<String, Integer> ... improvements) {
-            this(key, tint, materialTint, integrity, magicCapacity, type, itemId, count, capability, capabilityLevel);
+        public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
+                String itemId, int count, Capability capability, int capabilityLevel, String[] references, Pair<String, Integer> ... improvements) {
+            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, capability, capabilityLevel, references);
 
             this.improvements = improvements;
         }
+
+
     }
 
     public static class Variant {
