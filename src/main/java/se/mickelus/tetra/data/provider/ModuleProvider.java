@@ -72,7 +72,7 @@ public class ModuleProvider implements IDataProvider {
         setupModule(
                 "double/basic_pickaxe", // this is resource location / path for the module, check src/main/resources/data/tetra/modules to see what's available
                 "basic_pickaxe", // this will be used to prefix variant keys, variant keys typically begin with the module name e.g. basic_pickaxe/iron
-                "pick", // this will be combined with the localization entry for each material to produce the names for all module variants
+                "%s pick", // %s will be replaced by the localization entry for each material to produce the names for all module variants
                 "basic_pickaxe/iron", // the generator will fall back to using the variant with this key if none of the references from the material matches any variant key
                 "double/basic_pickaxe/basic_pickaxe") // the path for the schema file, I've not been consistent in how I've structured this so double check that this is correct
                 .offsetDurability(-20, 0.5f) // pickaxes have two heads and the default handle has 20 durability so the durability of the module should be = (itemDurability - 20) * 0.5
@@ -81,7 +81,7 @@ public class ModuleProvider implements IDataProvider {
                 .addVariant(ruby, "minecraft:diamond_pickaxe")
                 .addVariant(enigmaticIron, Pair.of("enchantment/fortune", 1));
 
-        setupModule("double/basic_axe", "basic_axe", "axe", "basic_axe/iron", "double/basic_axe/basic_axe")
+        setupModule("double/basic_axe", "basic_axe", "%s axe", "basic_axe/iron", "double/basic_axe/basic_axe")
                 .offsetOutcome(2, 0) // offsets the amount of material required (defined per material above) by a multiplier of two
                 .offsetDurability(-20, 0.7f)
                 .offsetSpeed(-0.1f, 1)
@@ -89,7 +89,7 @@ public class ModuleProvider implements IDataProvider {
                 .addVariant(ruby, "minecraft:diamond_axe", Pair.of("enchantment/fire_aspect", 1))
                 .addVariant(enigmaticIron, Pair.of("enchantment/looting", 1));
 
-        setupModule("double/butt", "butt", "butt", "butt/iron", "double/butt/butt")
+        setupModule("double/butt", "butt", "%s butt", "butt/iron", "double/butt/butt")
                 .offsetOutcome(1, -1)
                 .addVariant(platinum)
                 .addVariant(ruby)
