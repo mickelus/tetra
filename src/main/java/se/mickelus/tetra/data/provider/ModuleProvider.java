@@ -72,7 +72,7 @@ public class ModuleProvider implements IDataProvider {
         setupModule(
                 "double/basic_pickaxe", // this is resource location / path for the module, check src/main/resources/data/tetra/modules to see what's available
                 "basic_pickaxe", // this will be used to prefix variant keys, variant keys typically begin with the module name e.g. basic_pickaxe/iron
-                "pickaxe", // this will be combined with the localization entry for each material to produce the names for all module variants
+                "pick", // this will be combined with the localization entry for each material to produce the names for all module variants
                 "basic_pickaxe/iron", // the generator will fall back to using the variant with this key if none of the references from the material matches any variant key
                 "double/basic_pickaxe/basic_pickaxe") // the path for the schema file, I've not been consistent in how I've structured this so double check that this is correct
                 .offsetDurability(-20, 0.5f) // pickaxes have two heads and the default handle has 20 durability so the durability of the module should be = (itemDurability - 20) * 0.5

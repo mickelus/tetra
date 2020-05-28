@@ -291,8 +291,8 @@ public class ModuleBuilder {
         Map<String, String> result = new LinkedHashMap<>();
 
         variants.forEach(variant -> {
-            result.put("tetra.variant." + variant.material.key, StringUtils.capitalize(variant.material.localization + " " + localization));
-            result.put("tetra.variant." + variant.material.key + ".prefix", StringUtils.capitalize(variant.material.localization));
+            result.put("tetra.variant." + prefix + "/" + variant.material.key, StringUtils.capitalize(variant.material.localization + " " + localization));
+            result.put("tetra.variant." + prefix + "/" + variant.material.key + ".prefix", StringUtils.capitalize(variant.material.localization));
         });
 
         return result;
