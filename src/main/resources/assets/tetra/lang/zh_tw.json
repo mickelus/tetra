@@ -1035,7 +1035,6 @@
     "tetra.improvement.head_hone/pickaxe_tier.name": "打磨: 挖礦等级",
     "tetra.improvement.head_hone/pickaxe_tier.description": "增加挖礦等级 1",
 
-
     "double/axe_hammer": "木工锤",
     "double/axe_axe": "巨斧",
     "double/axe_pickaxe": "錾斧",
@@ -1044,7 +1043,6 @@
     "double/adze_axe": "切割型鹤嘴锄",
     "double/claw_hammer": "羊角锤",
     "double/claw_axe": "木匠斧",
-
 
     "tetra/schema/double/basic_handle/basic_handle.name": "工具手柄",
     "tetra/schema/double/basic_handle/basic_handle.description": "堅固的手柄能夠支持更重、更高級的工具頭。",
@@ -2070,7 +2068,7 @@
     "tetra.improvement.enchantment/fortune.description": "當破壞方塊時增加掉落物",
     "tetra.improvement.enchantment/silk_touch.name": "絲綢之觸",
     "tetra.improvement.enchantment/silk_touch.description": "精準採集方塊",
-    "tetra.improvement.destabilized/haunted.name": §5不稳定: 詭譎",
+    "tetra.improvement.destabilized/haunted.name": "§5不稳定: 詭譎",
     "tetra.improvement.destabilized/haunted.description": "這個部件鬧鬼了,某些時候會將反作用給予使用者！將随时间消失.",
     "tetra.improvement.destabilized/fire_aspect.name": "§5不稳定: 燃燒",
     "tetra.improvement.destabilized/fire_aspect.description": "使用時會導致自身著火,在炎熱環境中著火會更频繁",
