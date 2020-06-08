@@ -129,6 +129,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         return dealtDamage;
     }
 
+    public boolean isOnGround() {
+        return timeInGround > 0;
+    }
+
     @Override
     protected ItemStack getArrowStack() {
         return thrownStack.copy();
@@ -202,18 +206,17 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                 .orElse(8d);
 
         if (target instanceof LivingEntity) {
-            LivingEntity livingentity = (LivingEntity)target;
-            damage += EnchantmentHelper.getModifierForCreature(thrownStack, livingentity.getCreatureAttribute());
-        }
+            LivingEntity targetLivingEntity = (LivingEntity)target;
+            damage += EnchantmentHelper.getModifierForCreature(thrownStack, targetLivingEntity.getCreatureAttribute());
 
-        if (target.attackEntityFrom(damagesource, (float) damage) && target instanceof LivingEntity) {
-            LivingEntity livingentity1 = (LivingEntity)target;
-            if (shooter instanceof LivingEntity) {
-                EnchantmentHelper.applyThornEnchantments(livingentity1, shooter);
-                EnchantmentHelper.applyArthropodEnchantments((LivingEntity)shooter, livingentity1);
+            if (target.attackEntityFrom(damagesource, (float) damage)) {
+                if (shooter instanceof LivingEntity) {
+                    EnchantmentHelper.applyThornEnchantments(targetLivingEntity, shooter);
+                    ItemModularHandheld.applyEnchantmentHitEffects(getArrowStack(), targetLivingEntity, (LivingEntity) shooter);
+                }
+
+                arrowHit(targetLivingEntity);
             }
-
-            arrowHit(livingentity1);
         }
 
         setMotion(getMotion().mul(-0.01D, -0.1D, -0.01D));

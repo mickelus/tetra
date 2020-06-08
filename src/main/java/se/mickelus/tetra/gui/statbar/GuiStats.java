@@ -23,6 +23,11 @@ public class GuiStats {
             0, 40, false, rangedDamageGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.ranged_damage.tooltip", rangedDamageGetter));
 
+    public static final IStatGetter shieldDamageGetter = new StatGetterDamageShield();
+    public static final GuiStatBar shieldDamage = new GuiStatBar(0, 0,barLength, I18n.format("tetra.stats.shield_damage"),
+            0, 40, false, shieldDamageGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.shield_damage.tooltip", shieldDamageGetter));
+
     public static final IStatGetter speedGetter = new StatGetterSpeedMelee();
     public static final GuiStatBar speed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed"),
                 0, 4, false, speedGetter, LabelGetterBasic.decimalLabel,
@@ -43,6 +48,17 @@ public class GuiStats {
             I18n.format("tetra.stats.ranged_speed_normalized"), -4, 4, false, true, true,
             rangedSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ranged_speed_normalized.tooltip", rangedSpeedGetterNormalized));
+
+    public static final IStatGetter shieldSpeedGetter = new StatGetterSpeedShield();
+    public static final GuiStatBar shieldSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.shield_speed"),
+            0, 32, false, false, true, shieldSpeedGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.shield_speed.tooltip", shieldSpeedGetter));
+
+    public static final IStatGetter shieldSpeedGetterNormalized = new StatGetterSpeedShield();
+    public static final GuiStatBar shieldSpeedNormalized = new GuiStatBar(0, 0, barLength,
+            I18n.format("tetra.stats.shield_speed_normalized"), -16, 16, false, true, true,
+            shieldSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.shield_speed_normalized.tooltip", shieldSpeedGetterNormalized));
 
     public static final IStatGetter reachGetter = new StatGetterReach();
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.reach"),
@@ -66,10 +82,15 @@ public class GuiStats {
 
     public static final GuiStatBar blockingDuration = new GuiStatBarBlockingDuration(0, 0, barLength);
 
-    public static final IStatGetter blockingCooldownGetter = new StatGetterEffectEfficiency(ItemEffect.blocking, 1d);
-    public static final GuiStatBar blockingCooldown = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.blocking_cooldown"),
-            0, 16, false, blockingCooldownGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.blocking_cooldown.tooltip", blockingCooldownGetter));
+    public static final IStatGetter bashingGetter = new StatGetterEffectLevel(ItemEffect.bashing, 1d);
+    public static final GuiStatBar bashing = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bashing"),
+            0, 16, false, bashingGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterBashing());
+
+    public static final IStatGetter throwableGetter = new StatGetterEffectEfficiency(ItemEffect.throwable, 1d);
+    public static final GuiStatBar throwable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.throwable"),
+            0, 3, false, throwableGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("tetra.stats.throwable.tooltip", throwableGetter));
 
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),

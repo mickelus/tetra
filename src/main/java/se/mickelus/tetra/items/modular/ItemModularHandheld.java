@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
@@ -26,11 +27,11 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
@@ -40,8 +41,10 @@ import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.effects.StunEffect;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -83,7 +86,7 @@ public class ItemModularHandheld extends ItemModular {
 
     private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
-    private static final double speedBase = -2.4d;
+    protected double speedBase = -2.4d;
 
     protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
             Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
@@ -118,6 +121,9 @@ public class ItemModularHandheld extends ItemModular {
 
     // the base amount of damage the item should take after hitting an entity
     protected int entityHitDamage = 1;
+
+    // if the blocking level exceeds this value the item has an infinite blocking duration
+    public static final int blockingDurationLimit = 16;
 
     public ItemModularHandheld(Properties properties) {
         super(properties);
@@ -206,6 +212,26 @@ public class ItemModularHandheld extends ItemModular {
         }
     }
 
+    /**
+     * Variant on {@link EnchantmentHelper#applyArthropodEnchantments} that allows control over the held itemstack
+     * @param itemStack
+     * @param target
+     * @param attacker
+     */
+    public static void applyEnchantmentHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+        EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> {
+            enchantment.onEntityDamaged(attacker, target, level);
+        });
+
+        if (attacker != null) {
+            for (ItemStack equipment: attacker.getEquipmentAndArmor()) {
+                EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> {
+                    enchantment.onEntityDamaged(attacker, target, level);
+                });
+            }
+        }
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
@@ -217,37 +243,37 @@ public class ItemModularHandheld extends ItemModular {
 
         ActionResultType result = super.onItemUse(context);
 
-        // channeled effects
-        if (getUseDuration(itemStack) > 0) {
-            return result;
-        }
+        boolean canChannel = getUseDuration(itemStack) > 0;
 
-        int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
-        int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
+        if (!canChannel || player.isCrouching()) {
 
-        if (flatteningLevel > 0 && (strippingLevel > 0 && player.isCrouching() || strippingLevel == 0)) {
-            result = flattenPath(player, world, pos, hand, facing);
-        } else if (strippingLevel > 0) {
-            result = stripBlock(context);
-        }
+            int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
+            int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
 
-        int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
-        if (tillingLevel > 0) {
-            result = tillBlock(context);
-        }
+            if (flatteningLevel > 0 && (strippingLevel > 0 && player.isCrouching() || strippingLevel == 0)) {
+                result = flattenPath(player, world, pos, hand, facing);
+            } else if (strippingLevel > 0) {
+                result = stripBlock(context);
+            }
+
+            int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
+            if (tillingLevel > 0) {
+                result = tillBlock(context);
+            }
 
 
-        int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
-        if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
-            result = denailBlock(player, world, pos, hand, facing);
+            int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
+            if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
+                result = denailBlock(player, world, pos, hand, facing);
+
+                if (result.equals(ActionResultType.SUCCESS)) {
+                    player.resetCooldown();
+                }
+            }
 
             if (result.equals(ActionResultType.SUCCESS)) {
-                player.resetCooldown();
+                applyUsageEffects(player, itemStack, 2);
             }
-        }
-
-        if (result.equals(ActionResultType.SUCCESS)) {
-            applyUsageEffects(player, itemStack, 2);
         }
 
         return result;
@@ -264,6 +290,122 @@ public class ItemModularHandheld extends ItemModular {
         }
 
         return new ActionResult<>(ActionResultType.PASS, itemStack);
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
+        if (!player.getCooldownTracker().hasCooldown(this)) {
+            if (getUseDuration(itemStack) == 0 || player.isCrouching()) {
+                int bashingLevel = getEffectLevel(itemStack, ItemEffect.bashing);
+                if (bashingLevel > 0) {
+                    bashEntity(itemStack, bashingLevel, player, target);
+
+                    tickProgression(player, itemStack, 2);
+                    applyDamage(2, itemStack, player);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean itemInteractionForEntitySecondary(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
+        int bashingLevel = getEffectLevel(itemStack, ItemEffect.bashing);
+        if (bashingLevel > 0) {
+            bashEntity(itemStack, bashingLevel, player, target);
+
+            tickProgression(player, itemStack, 2);
+            applyDamage(2, itemStack, player);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void bashEntity(ItemStack itemStack, int bashingLevel, PlayerEntity player, LivingEntity target) {
+
+        double damage = getAbilityBaseDamage(itemStack) + EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
+
+        if (target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage)) {
+            // applies enchantment effects on both parties
+            EnchantmentHelper.applyThornEnchantments(target, player);
+            ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
+
+            // tetra item effects
+            applyHitEffects(itemStack, target, player);
+
+            // knocks back the target based on effect level + knockback enchantment level
+            int knockbackFactor = bashingLevel
+                    + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack)
+                    + (player.isSprinting() ? 1 : 0);
+            target.knockBack(player, knockbackFactor * 0.5f,
+                    player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
+
+            // stuns the target if bash efficiency is > 0
+            double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
+            if (stunDuration > 0) {
+                target.addPotionEffect(new EffectInstance(StunEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
+            }
+        }
+
+        player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
+
+        player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack)) * 20);
+    }
+
+    public void throwItem(PlayerEntity player, ItemStack stack, int riptideLevel, float cooldownBase) {
+        World world = player.world;
+        if (!world.isRemote) {
+            applyDamage(1, stack, player);
+
+            ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
+
+            if (player.abilities.isCreativeMode) {
+                projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+            } else {
+                player.inventory.deleteStack(stack);
+            }
+
+            projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
+            world.addEntity(projectileEntity);
+            world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+        }
+
+        player.getCooldownTracker().setCooldown(this, Math.round(cooldownBase * 20));
+    }
+
+    public void causeRiptideEffect(PlayerEntity player, int riptideLevel) {
+        float yaw = player.rotationYaw;
+        float pitch = player.rotationPitch;
+        float x = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+        float y = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
+        float z = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+
+        float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
+
+        // vanilla divides this by the length of the directional vector, but that should always be 1
+        x = x * velocityMultiplier;
+        y = y * velocityMultiplier;
+        z = z * velocityMultiplier;
+        player.addVelocity(x, y, z);
+        player.startSpinAttack(20);
+        if (player.onGround) {
+            player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
+        }
+
+        SoundEvent soundEvent;
+        if (riptideLevel >= 3) {
+            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+        } else if (riptideLevel == 2) {
+            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+        } else {
+            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+        }
+        player.world.playMovingSound(null, player, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+        player.addStat(Stats.ITEM_USED.get(this));
+
     }
 
     /**
@@ -522,7 +664,7 @@ public class ItemModularHandheld extends ItemModular {
         int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
         if (blockingLevel > 0) {
             int duration = blockingLevel * 20;
-            return getEffectEfficiency(itemStack, ItemEffect.blocking) > 0 ? duration : 72000;
+            return blockingLevel < blockingDurationLimit ? duration : 72000;
         }
 
         if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
@@ -537,9 +679,15 @@ public class ItemModularHandheld extends ItemModular {
     public ItemStack onItemUseFinish(ItemStack itemStack, World world, LivingEntity entity) {
         CastOptional.cast(entity, PlayerEntity.class)
                 .ifPresent(player -> {
-                    double blockingCooldown = getEffectEfficiency(itemStack, ItemEffect.blocking);
-                    if (blockingCooldown > 0) {
-                        player.getCooldownTracker().setCooldown(this, (int) (blockingCooldown * 20));
+                    double blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
+                    if (blockingLevel > 0) {
+                        if (blockingLevel < blockingDurationLimit) {
+                            player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
+                        }
+
+                        if (player.isCrouching() && world.isRemote) {
+                            onPlayerStoppedUsingSecondary(itemStack, world, entity, 0);
+                        }
                     }
                 });
 
@@ -559,64 +707,64 @@ public class ItemModularHandheld extends ItemModular {
             PlayerEntity player = (PlayerEntity) entityLiving;
             int ticksUsed = this.getUseDuration(stack) - timeLeft;
 
-            double blockingCooldown = getEffectEfficiency(stack, ItemEffect.blocking);
-            if (blockingCooldown > 0) {
-                player.getCooldownTracker().setCooldown(this, (int) (blockingCooldown * 20));
-            }
+            double cooldownBase = getCooldownBase(stack);
+            int blockingLevel = getEffectLevel(stack, ItemEffect.blocking);
+            int throwingLevel = getEffectLevel(stack, ItemEffect.throwable);
+            int riptideLevel = EnchantmentHelper.getRiptideModifier(stack);
 
-            // throwing / riptide, based on vanilla implementation in TridentItem
-            if (ticksUsed >= 10) {
-                applyUsageEffects(player, stack, 2);
+            if (blockingLevel > 0) {
+                if (blockingLevel < blockingDurationLimit) {
+                    player.getCooldownTracker().setCooldown(this, (int) Math.round(cooldownBase * 20));
+                }
 
-                int riptideLevel = EnchantmentHelper.getRiptideModifier(stack);
-                if (riptideLevel > 0 && player.isWet()) {
-                    float yaw = player.rotationYaw;
-                    float pitch = player.rotationPitch;
-                    float x = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
-                    float y = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
-                    float z = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
-
-                    float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
-
-                    // vanilla divides this by the length of the directional vector, but that should always be 1
-                    x = x * velocityMultiplier;
-                    y = y * velocityMultiplier;
-                    z = z * velocityMultiplier;
-                    player.addVelocity(x, y, z);
-                    player.startSpinAttack(20);
-                    if (player.onGround) {
-                        player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
-                    }
-
-                    SoundEvent soundEvent;
-                    if (riptideLevel >= 3) {
-                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
-                    } else if (riptideLevel == 2) {
-                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
-                    } else {
-                        soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
-                    }
-                    world.playMovingSound(null, player, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
-                    player.addStat(Stats.ITEM_USED.get(this));
-
-                } else if (getEffectLevel(stack, ItemEffect.throwable) > 0) {
-                    if (!world.isRemote) {
-                        applyDamage(1, stack, player);
-
-                        ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
-
-                        if (player.abilities.isCreativeMode) {
-                            projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-                        } else {
-                            player.inventory.deleteStack(stack);
-                        }
-
-                        projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
-                        world.addEntity(projectileEntity);
-                        world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                if (player.isCrouching()) {
+                    if (ticksUsed >= 10 && riptideLevel > 0 && player.isWet()) {
+                        causeRiptideEffect(player, riptideLevel);
+                    } else if (ticksUsed >= 10 && throwingLevel > 0) {
+                        throwItem(player, stack, riptideLevel, (float) cooldownBase);
+                    } else if (world.isRemote) {
+                        onPlayerStoppedUsingSecondary(stack, world, entityLiving, timeLeft);
                     }
                 }
+            } else if (ticksUsed >= 10) {
+                if (riptideLevel > 0 && player.isWet()) {
+                    causeRiptideEffect(player, riptideLevel);
+                } else if (getEffectLevel(stack, ItemEffect.throwable) > 0) {
+                    throwItem(player, stack, riptideLevel, (float) cooldownBase);
+                }
+            }
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void onPlayerStoppedUsingSecondary(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
+        if (entity instanceof PlayerEntity) {
+            LivingEntity target = Optional.ofNullable(Minecraft.getInstance().objectMouseOver)
+                    .filter(rayTraceResult -> rayTraceResult.getType() == RayTraceResult.Type.ENTITY)
+                    .map(rayTraceResult -> ((EntityRayTraceResult)rayTraceResult).getEntity())
+                    .flatMap(hitEntity -> CastOptional.cast(hitEntity, LivingEntity.class))
+                    .orElse(null);
+
+            Hand activeHand = entity.getActiveHand();
+
+            PacketHandler.sendToServer(new SecondaryAbilityPacket(target, activeHand));
+
+            handleSecondaryAbility((PlayerEntity) entity, activeHand, target);
+        }
+    }
+
+    public static void handleSecondaryAbility(PlayerEntity player, Hand hand, LivingEntity target) {
+        ItemStack activeStack = player.getHeldItem(hand);
+
+        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
+            ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
+
+            if (target != null) {
+                item.itemInteractionForEntitySecondary(activeStack, player, target, hand);
+
+                player.resetActiveHand();
+                player.getCooldownTracker().setCooldown(item, (int) Math.round(item.getCooldownBase(activeStack) * 20 * 1.5));
+                player.swingArm(hand);
             }
         }
     }
@@ -696,6 +844,10 @@ public class ItemModularHandheld extends ItemModular {
                 .reduce(damageModifier, (a, b) -> a * b);
     }
 
+    public double getAbilityBaseDamage(ItemStack itemStack) {
+        return getDamageModifier(itemStack);
+    }
+
     public static double getDamageModifierStatic(ItemStack itemStack) {
         if (itemStack.getItem() instanceof ItemModularHandheld) {
             return ((ItemModularHandheld) itemStack.getItem()).getDamageModifier(itemStack);
@@ -744,6 +896,10 @@ public class ItemModularHandheld extends ItemModular {
             return ((ItemModularHandheld) itemStack.getItem()).getSpeedModifier(itemStack);
         }
         return 2;
+    }
+
+    public double getCooldownBase(ItemStack itemStack) {
+        return 1 / (4 + getSpeedModifier(itemStack));
     }
 
     public double getRangeModifier(ItemStack itemStack) {

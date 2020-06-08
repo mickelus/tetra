@@ -7,6 +7,7 @@
     "improvements": [
         "tetra:shield/buckler/studs",
         "tetra:shield/buckler/trim",
+        "tetra:shield/buckler/aerodynamic_trim",
         "tetra:enchantment/unbreaking",
         "tetra:enchantment/ensorcellation_bulwark",
         "tetra:enchantment/apotheosis_reflective",
@@ -30,6 +31,8 @@
             "durability": 227,
             "integrity": -1,
             "magicCapacity": 90,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -51,6 +54,8 @@
             "durability": 204,
             "integrity": 0,
             "magicCapacity": 90,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -72,6 +77,8 @@
             "durability": 259,
             "integrity": -1,
             "magicCapacity": 90,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -93,6 +100,8 @@
             "durability": 227,
             "integrity": -1,
             "magicCapacity": 102,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -114,6 +123,8 @@
             "durability": 240,
             "integrity": -1,
             "magicCapacity": 90,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -135,6 +146,8 @@
             "durability": 203,
             "integrity": -1,
             "magicCapacity": 102,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -156,6 +169,8 @@
             "durability": 269,
             "integrity": 0,
             "magicCapacity": 96,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -177,6 +192,8 @@
             "durability": 279,
             "integrity": -1,
             "magicCapacity": 78,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -198,6 +215,8 @@
             "durability": 449,
             "integrity": -2,
             "magicCapacity": 78,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -219,6 +238,8 @@
             "durability": 280,
             "integrity": -1,
             "magicCapacity": 108,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -240,6 +261,8 @@
             "durability": 310,
             "integrity": -2,
             "magicCapacity": 84,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -261,6 +284,8 @@
             "durability": 290,
             "integrity": 0,
             "magicCapacity": 78,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -282,6 +307,8 @@
             "durability": 480,
             "integrity": -3,
             "magicCapacity": 66,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },
@@ -303,6 +330,8 @@
             "durability": 512,
             "integrity": -2,
             "magicCapacity": 66,
+            "attackSpeed": 3,
+            "damage": 2,
             "effects": {
                 "toughness": 4
             },

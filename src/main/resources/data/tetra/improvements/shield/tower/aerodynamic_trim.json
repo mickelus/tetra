@@ -1,0 +1,21 @@
+[
+    {
+        "key": "shield/aerodynamic_trim",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

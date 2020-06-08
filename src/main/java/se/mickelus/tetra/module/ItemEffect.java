@@ -104,6 +104,15 @@ public enum ItemEffect {
     blocking,
 
     /**
+     * Bashing: Right-clicking an entity will knock it back, damage it, stun it and apply enchantment & item effects from the item. A stunned entity
+     * cannot move, deals no damage if it attacks and has infinite swing cooldown.
+     * The level of the effect + the level of the knockback enchantment on the item determines the knockback distance, using the same formulae as the
+     * knockback enchantment usually would.
+     * The efficiency of the effect determines the duration of the stun effect, 1.5 efficiency => 1.5 second duration.
+     */
+    bashing,
+
+    /**
      * Armor: Provides armor when held in the mainhand or the offhand. Armor value provided equals the effect level.
      */
     armor,

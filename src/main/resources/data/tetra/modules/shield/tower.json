@@ -7,6 +7,7 @@
     "improvements": [
         "tetra:shield/tower/studs",
         "tetra:shield/tower/trim",
+        "tetra:shield/tower/aerodynamic_trim",
         "tetra:enchantment/unbreaking",
         "tetra:enchantment/ensorcellation_bulwark",
         "tetra:enchantment/apotheosis_reflective",
@@ -30,8 +31,10 @@
             "durability": 227,
             "integrity": -2,
             "magicCapacity": 90,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "oak_glyph",
@@ -50,8 +53,10 @@
             "durability": 204,
             "integrity": -1,
             "magicCapacity": 90,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "spruce_glyph",
@@ -70,8 +75,10 @@
             "durability": 259,
             "integrity": -2,
             "magicCapacity": 90,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "birch_glyph",
@@ -90,8 +97,10 @@
             "durability": 227,
             "integrity": -2,
             "magicCapacity": 102,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "jungle_glyph",
@@ -110,8 +119,10 @@
             "durability": 240,
             "integrity": -2,
             "magicCapacity": 90,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "acacia_glyph",
@@ -130,8 +141,10 @@
             "durability": 203,
             "integrity": -2,
             "magicCapacity": 102,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "dark_oak_glyph",
@@ -150,8 +163,10 @@
             "durability": 269,
             "integrity": -1,
             "magicCapacity": 96,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "maple_glyph",
@@ -170,8 +185,10 @@
             "durability": 279,
             "integrity": -2,
             "magicCapacity": 78,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "cherry_glyph",
@@ -190,8 +207,10 @@
             "durability": 449,
             "integrity": -3,
             "magicCapacity": 78,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "baobab_glyph",
@@ -210,8 +229,10 @@
             "durability": 280,
             "integrity": -2,
             "magicCapacity": 108,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "bone_glyph",
@@ -230,8 +251,10 @@
             "durability": 310,
             "integrity": -3,
             "magicCapacity": 84,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "iron_glyph",
@@ -250,8 +273,10 @@
             "durability": 290,
             "integrity": -1,
             "magicCapacity": 78,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "bronze_glyph",
@@ -270,8 +295,10 @@
             "durability": 480,
             "integrity": -4,
             "magicCapacity": 66,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "steel_glyph",
@@ -290,8 +317,10 @@
             "durability": 512,
             "integrity": -3,
             "magicCapacity": 66,
+            "attackSpeed": 8,
+            "damage": 6,
             "effects": {
-                "blocking": 10
+                "blocking": 16
             },
             "glyph": {
                 "tint": "vent_glyph",

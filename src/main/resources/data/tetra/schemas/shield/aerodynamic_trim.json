@@ -1,0 +1,23 @@
+{
+    "replace": true,
+    "slots": ["shield/plate"],
+    "materialSlotCount": 1,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 80,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/aerodynamic_trim": 0
+            }
+        }
+    ]
+}

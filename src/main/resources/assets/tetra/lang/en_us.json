@@ -67,7 +67,13 @@
   "tetra.stats.ranged_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
 
   "tetra.stats.ranged_speed_normalized": "Speed",
-  "tetra.stats.ranged_speed_normalized.tooltip": "Changes attack speed by §e%s",
+  "tetra.stats.ranged_speed_normalized.tooltip": "Changes draw speed by §e%s §rseconds",
+
+  "tetra.stats.shield_speed": "Cooldown",
+  "tetra.stats.shield_speed.tooltip": "This shield has a §e%s §rseconds base cooldown for abilities",
+
+  "tetra.stats.shield_speed_normalized": "Speed",
+  "tetra.stats.shield_speed_normalized.tooltip": "Changes base cooldown by §e%s §rseconds",
 
   "tetra.stats.speed_normalized": "Speed",
   "tetra.stats.speed_normalized.tooltip": "Changes attack speed by §e%s",
@@ -77,6 +83,9 @@
 
   "tetra.stats.ranged_damage": "Base Damage",
   "tetra.stats.ranged_damage.tooltip": "Basic projectiles deal §e%s §rdamage when fired from a fully drawn bow",
+
+  "tetra.stats.shield_damage": "Damage",
+  "tetra.stats.shield_damage.tooltip": "The base damage value for shield abilities is §e%s",
 
   "tetra.stats.bleeding": "Bleeding",
   "tetra.stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds",
@@ -92,12 +101,14 @@
 
   "tetra.stats.blocking": "Block",
   "tetra.stats.blocking.tooltip": "Holding down right-click will block incoming attacks and projectiles",
-
-  "tetra.stats.blocking_duration": "Block duration",
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
+  "tetra.stats.blocking.tooltip_extended": "If this item has a secondary ability available then that ability can be used by pressing shift + right-click, or by holding shift as right-click is released (this will trigger a 50%% longer cooldown).",
 
-  "tetra.stats.blocking_cooldown": "Block cooldown",
-  "tetra.stats.blocking_cooldown.tooltip": "After use this item cannot be used again until after §e%s§r seconds",
+  "tetra.stats.bashing": "Bashing",
+  "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n\nKnockback factor: §e%s§r\nStun duration: §e%s§r seconds",
+
+  "tetra.stats.throwable": "Throwable",
+  "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. When thrown the item will deal §e%s%%§r item damage if it hits an entity, hitting a block will break the block if the item's mining tier is high enough and the items harvest speed is greater than the block's hardness",
 
   "tetra.stats.armorPenetration": "Penetrating",
   "tetra.stats.armorPenetration.tooltip": "Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor",
@@ -1334,12 +1345,12 @@
   "tetra.variant.basic_axe/knightmetal.prefix": "Knightmetal",
 
   "tetra/schema/double/basic_pickaxe/basic_pickaxe.name": "Pickaxe head",
-  "tetra/schema/double/basic_pickaxe/basic_pickaxe.description": "Forge a pickaxe head from the given material.\n\nDouble pickaxe heads may provide synergy bonuses.",
+  "tetra/schema/double/basic_pickaxe/basic_pickaxe.description": "Forge a pickaxe head from the given material.\n\nUsing double pickaxe heads makes the pickaxe able to break tougher blocks.",
   "tetra/schema/double/basic_pickaxe/basic_pickaxe.slot1": "Head material",
 
   "tetra.module.double/basic_pickaxe.item_name": "Pickaxe",
   "tetra.module.double/basic_pickaxe.name": "Pickaxe head",
-  "tetra.module.double/basic_pickaxe.description": "A basic pickaxe head that can be used for mining.\n\nDouble pickaxe heads may provide synergy bonuses.",
+  "tetra.module.double/basic_pickaxe.description": "A basic pickaxe head that can be used for mining.\n\nUsing double pickaxe heads makes the pickaxe able to break tougher blocks.",
 
   "tetra.improvement.basic_pickaxe/smelting.name": "Smelting",
   "tetra.improvement.basic_pickaxe/smelting.description": "[NOT IMPLEMENTED] Automatically smelts broken blocks",
@@ -2393,14 +2404,14 @@
   "tetra.variant.basic_grip/oak": "Basic oak grip",
   "tetra.variant.basic_grip/iron":"Basic iron grip",
 
-  "tetra/schema/shield/studs.name": "Apply studs",
+  "tetra/schema/shield/studs.name": "Studded plate",
   "tetra/schema/shield/studs.description": "Nail studs into the shield plate to increase it's durability by a flat amount.",
   "tetra/schema/shield/studs.slot1": "Material",
 
   "tetra.improvement.shield/studs.name": "Studded",
   "tetra.improvement.shield/studs.description": "Increases durability",
 
-  "tetra/schema/shield/trim.name": "Apply trim",
+  "tetra/schema/shield/trim.name": "Trim edge",
   "tetra/schema/shield/trim.description": "Frame the shield with a trim to increase it's durability, the durability bonus is multiplicative.",
   "tetra/schema/shield/trim.slot1": "Material",
 
@@ -2408,6 +2419,22 @@
   "tetra.improvement.shield/trim.description": "Increases durability",
   "tetra.improvement.shield/trim_scrap.name": "Scrap trim",
   "tetra.improvement.shield/trim_scrap.description": "Increases durability",
+
+  "tetra/schema/shield/aerodynamic_trim.name": "Aerodynamic trim",
+  "tetra/schema/shield/aerodynamic_trim.description": "Frame the shield with an aerodynamic trim which allows the shield to be thrown.",
+  "tetra/schema/shield/aerodynamic_trim.slot1": "Material",
+
+  "tetra.improvement.shield/aerodynamic_trim.name": "Aerodynamic trim",
+  "tetra.improvement.shield/aerodynamic_trim.description": "Allows the shield to be thrown",
+
+  "tetra/schema/shield/sturdy_boss.name": "Sturdy boss",
+  "tetra/schema/shield/sturdy_boss.description": "Craft a sturdy boss from the given materials, this enables the shield to be used for bashing other entities.",
+  "tetra/schema/shield/sturdy_boss.slot1": "Material",
+
+  "tetra.module.shield/sturdy_boss.name": "Sturdy boss",
+  "tetra.module.shield/sturdy_boss.description": "A sturdy boss that allows the shield to be used to bash entities.",
+
+  "tetra.variant.sturdy_boss/iron": "Sturdy iron boss",
 
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
   "tetra.advancements.story.more_upgrades.description": "Craft a mallet from sticks and logs\n\n§8§oTetra begins",

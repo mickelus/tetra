@@ -1,0 +1,32 @@
+{
+    "replace": true,
+    "type": "tetra:basic_module",
+    "slots": ["shield/boss"],
+    "variants": [
+        {
+            "key": "sturdy_boss/iron",
+            "durability": 30,
+            "integrity": -1,
+            "attackSpeed": 0.5,
+            "effects": {
+                "bashing": [2, 3]
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/sturdy_boss",
+                    "tint": "iron"
+                },
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/sturdy_boss_shadow"
+                }
+            ]
+        }
+    ]
+}

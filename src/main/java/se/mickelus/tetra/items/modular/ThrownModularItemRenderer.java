@@ -76,7 +76,7 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
     private void transformShield(ThrownModularItemEntity entity, float partialTicks, MatrixStack matrixStack) {
         matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch)));
 
-        if (entity.hasDealtDamage()) {
+        if (entity.isOnGround()) {
             matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
         } else {
             matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) + (entity.ticksExisted + partialTicks) * 100));

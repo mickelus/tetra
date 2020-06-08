@@ -1,0 +1,21 @@
+[
+    {
+        "key": "shield/aerodynamic_trim",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/trim"
+            },
+            {
+                "type": "shield_heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

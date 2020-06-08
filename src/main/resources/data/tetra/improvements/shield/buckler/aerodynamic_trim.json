@@ -1,0 +1,21 @@
+[
+    {
+        "key": "shield/aerodynamic_trim",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    }
+]

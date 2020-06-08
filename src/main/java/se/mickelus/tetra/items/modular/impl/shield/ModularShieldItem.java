@@ -40,6 +40,8 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         requiredModules = new String[] { shieldKey, gripKey };
 
+        speedBase = 0;
+
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
         SchemaRegistry.instance.registerSchema(new RepairSchema(this));
@@ -61,7 +63,13 @@ public class ModularShieldItem extends ItemModularHandheld {
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
         Multimap<String, AttributeModifier> modifiers = super.getAttributeModifiers(slot, itemStack);
         modifiers.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
+        modifiers.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
         return modifiers;
+    }
+
+    @Override
+    public double getCooldownBase(ItemStack itemStack) {
+        return getSpeedModifier(itemStack);
     }
 
     @Override

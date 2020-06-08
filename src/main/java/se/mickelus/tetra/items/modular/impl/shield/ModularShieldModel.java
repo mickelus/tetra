@@ -16,11 +16,16 @@ public class ModularShieldModel extends Model {
     private final ModelRenderer bucklerPlate;
 
     private final ModelRenderer grip;
+    private ModelRenderer straps;
+
+    private ModelRenderer boss;
 
     public static final String towerModelType = "shield_tower";
     public static final String heaterModelType = "shield_heater";
     public static final String bucklerModelType = "shield_buckler";
     public static final String gripModelType = "shield_grip";
+    public static final String strapsModelType = "shield_straps";
+    public static final String bossModelType = "shield_boss";
 
     public ModularShieldModel() {
         super(RenderType::getEntityTranslucent);
@@ -39,6 +44,13 @@ public class ModularShieldModel extends Model {
 
         grip = new ModelRenderer(this, 0, 0);
         grip.addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, 0.0F);
+
+        straps = new ModelRenderer(this, 0, 0);
+        straps.addBox(2, -3, -1, 1, 6, 1, 0);
+        straps.addBox(-3, -3, -1, 1, 6, 1, 0);
+
+        boss = new ModelRenderer(this, 0, 0);
+        boss.addBox(-5.0F, -5.0F, -2.01F, 10.0F, 10.0F, 1.0F, 0.0F);
     }
 
     public ModelRenderer getModel(String modelType) {
@@ -51,6 +63,10 @@ public class ModularShieldModel extends Model {
                 return bucklerPlate;
             case gripModelType:
                 return grip;
+            case strapsModelType:
+                return straps;
+            case bossModelType:
+                return boss;
         }
 
         return null;

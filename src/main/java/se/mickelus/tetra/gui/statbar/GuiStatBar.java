@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui.statbar;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAlignment;
@@ -23,6 +24,7 @@ public class GuiStatBar extends GuiStatBase {
     protected GuiBar bar;
 
     protected List<String> tooltip;
+    protected List<String> extendedTooltip;
 
     protected GuiAlignment alignment = GuiAlignment.left;
 
@@ -90,6 +92,7 @@ public class GuiStatBar extends GuiStatBase {
             diffValue = statGetter.getValue(player, previewStack);
 
             tooltip = Collections.singletonList(tooltipGetter.getTooltip(player, previewStack));
+            extendedTooltip = Collections.singletonList(tooltipGetter.getTooltipExtended(player, previewStack));
         } else {
             value = statGetter.getValue(player, currentStack);
 
@@ -101,6 +104,7 @@ public class GuiStatBar extends GuiStatBase {
             }
 
             tooltip = Collections.singletonList(tooltipGetter.getTooltip(player, currentStack));
+            extendedTooltip = Collections.singletonList(tooltipGetter.getTooltipExtended(player, currentStack));
         }
 
         updateValue(value, diffValue);
@@ -135,6 +139,9 @@ public class GuiStatBar extends GuiStatBase {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
+            if (Screen.hasShiftDown()) {
+                return extendedTooltip;
+            }
             return tooltip;
         }
         return super.getTooltipLines();

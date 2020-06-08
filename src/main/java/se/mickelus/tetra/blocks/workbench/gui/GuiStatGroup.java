@@ -35,12 +35,15 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.speed);
         bars.add(GuiStats.rangedDamage);
         bars.add(GuiStats.rangedSpeed);
+        bars.add(GuiStats.shieldDamage);
+        bars.add(GuiStats.shieldSpeed);
         bars.add(GuiStats.reach);
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
         bars.add(GuiStats.toughness);
         bars.add(GuiStats.blockingDuration);
-        bars.add(GuiStats.blockingCooldown);
+        bars.add(GuiStats.bashing);
+        bars.add(GuiStats.throwable);
         bars.add(GuiStats.quickslot);
         bars.add(GuiStats.potion_storage);
         bars.add(GuiStats.storage);

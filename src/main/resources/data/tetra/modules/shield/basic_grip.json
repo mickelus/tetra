@@ -4,6 +4,8 @@
     "slots": ["shield/grip"],
     "improvements": [
         "tetra:enchantment/mending",
+        "tetra:enchantment/loyalty",
+        "tetra:enchantment/knockback",
         "tetra:enchantment/ensorcellation_phalanx",
         "tetra:enchantment/naturesaura_aura_mending",
         "tetra:enchantment/apotheosis_life_mending",
@@ -27,6 +29,7 @@
             "durability": 20,
             "integrity": 2,
             "magicCapacity": 20,
+            "attackSpeed": 2,
             "glyph": {
                 "tint": "oak_glyph",
                 "textureX": 16,
@@ -44,7 +47,8 @@
             "key": "basic_grip/iron",
             "durability": 20,
             "integrity": 5,
-            "magicCapacity": 20,
+            "magicCapacity": 84,
+            "attackSpeed": 2,
             "glyph": {
                 "tint": "iron_glyph",
                 "textureX": 16,

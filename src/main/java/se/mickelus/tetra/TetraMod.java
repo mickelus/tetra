@@ -58,6 +58,7 @@ import se.mickelus.tetra.data.provider.EnchantmentProvider;
 import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
+import se.mickelus.tetra.effects.StunEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.*;
@@ -228,6 +229,7 @@ public class TetraMod {
         packetHandler.registerPacket(HonePacket.class, HonePacket::new);
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
+        packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
 
         WorkbenchTile.init(packetHandler);
 
@@ -284,6 +286,7 @@ public class TetraMod {
         public static void registerEffects(final RegistryEvent.Register<Effect> event) {
             event.getRegistry().register(new BleedingEffect());
             event.getRegistry().register(new EarthboundEffect());
+            event.getRegistry().register(new StunEffect());
         }
 
         @SubscribeEvent
