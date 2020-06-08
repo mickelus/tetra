@@ -38,7 +38,7 @@ public class StatGetterSpeedRanged implements IStatGetter {
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> {
                     ImprovementData data = module.getImprovement(itemStack, improvement);
-                    return data.damage + (data.damageMultiplier - 1) * module.getDamageModifier(itemStack);
+                    return data.attackSpeed + (data.attackSpeedMultiplier - 1) * module.getSpeedModifier(itemStack);
                 })
                 .orElse(0d);
     }
