@@ -1,0 +1,123 @@
+{
+    "replace": true,
+    "type": "tetra:basic_major_module",
+    "slots": ["shield/grip"],
+    "improvements": [
+        "tetra:enchantment/mending",
+        "tetra:enchantment/loyalty",
+        "tetra:enchantment/knockback",
+        "tetra:enchantment/ensorcellation_phalanx",
+        "tetra:enchantment/naturesaura_aura_mending",
+        "tetra:enchantment/apotheosis_life_mending",
+        "tetra:enchantment/ma-enchants_curse_breaking",
+        "tetra:enchantment/cyclic_experience_boost",
+        "tetra:enchantment/ma-enchants_timeless",
+        "tetra:enchantment/vanishing_curse",
+        "tetra:enchantment/ensorcellation_soulbound",
+        "tetra:enchantment/ma-enchants_curse_death",
+        "tetra:enchantment/cursed_fragility",
+        "tetra:enchantment/cursed_misfortune",
+        "tetra:enchantment/cursed_fading",
+        "tetra:enchantment/cursed_obedience",
+        "tetra:enchantment/cursed_encumbrance",
+        "tetra:settling_improvements",
+        "tetra:destabilization_improvements"
+    ],
+    "variants": [
+        {
+            "key": "straps/string",
+            "durability": 0,
+            "integrity": 2,
+            "magicCapacity": 90,
+            "attackSpeed": 0,
+            "glyph": {
+                "tint": "string_glyph",
+                "textureX": 64,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/default",
+                    "tint": "string"
+                }
+            ]
+        },
+        {
+            "key": "straps/vine",
+            "durability": 20,
+            "integrity": 3,
+            "magicCapacity": 66,
+            "attackSpeed": 1,
+            "glyph": {
+                "tint": "vine_glyph",
+                "textureX": 64,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/default",
+                    "tint": "vine"
+                }
+            ]
+        },
+        {
+            "key": "straps/hide",
+            "durability": 30,
+            "integrity": 3,
+            "magicCapacity": 66,
+            "attackSpeed": 1,
+            "glyph": {
+                "tint": "hide_glyph",
+                "textureX": 64,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/default",
+                    "tint": "hide"
+                }
+            ]
+        },
+        {
+            "key": "straps/leather",
+            "durability": 5,
+            "integrity": 4,
+            "magicCapacity": 72,
+            "attackSpeed": 1,
+            "glyph": {
+                "tint": "leather_glyph",
+                "textureX": 64,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/default",
+                    "tint": "leather"
+                }
+            ]
+        },
+        {
+            "key": "straps/phantom_membrane",
+            "durability": 15,
+            "integrity": 6,
+            "magicCapacity": 66,
+            "attackSpeed": 1,
+            "glyph": {
+                "tint": "phantom_glyph",
+                "textureX": 64,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/default",
+                    "tint": "phantom"
+                }
+            ]
+        }
+    ]
+}

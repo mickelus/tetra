@@ -2404,6 +2404,19 @@
   "tetra.variant.basic_grip/oak": "Basic oak grip",
   "tetra.variant.basic_grip/iron":"Basic iron grip",
 
+  "tetra/schema/shield/straps.name": "Straps",
+  "tetra/schema/shield/straps.description": "Replace the grip with straps crafted from the given materials. A shield held with straps is typically less taxing to use. Grips are the primary source of integrity for shields.",
+  "tetra/schema/shield/straps.slot1": "Material",
+
+  "tetra.module.shield/straps.name": "Straps",
+  "tetra.module.shield/straps.description": "Straps used holding the shield. A shield held with straps is typically less taxing to use. Grips are the primary source of integrity for shields.",
+
+  "tetra.variant.straps/string": "Woven straps",
+  "tetra.variant.straps/vine": "Vine straps",
+  "tetra.variant.straps/hide": "Hide straps",
+  "tetra.variant.straps/leather": "Leather straps",
+  "tetra.variant.straps/phantom_membrane": "Phantom sinew straps",
+
   "tetra/schema/shield/studs.name": "Studded plate",
   "tetra/schema/shield/studs.description": "Nail studs into the shield plate to increase it's durability by a flat amount.",
   "tetra/schema/shield/studs.slot1": "Material",
