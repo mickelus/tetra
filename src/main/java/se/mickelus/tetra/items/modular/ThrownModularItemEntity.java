@@ -191,20 +191,22 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
      * Called when the arrow hits an entity
      */
     @Override
-    protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-        Entity target = p_213868_1_.getEntity();
+    protected void onEntityHit(EntityRayTraceResult raytrace) {
+        Entity target = raytrace.getEntity();
         Entity shooter = getShooter();
         DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
         dealtDamage = true;
         SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
-        float damage = 8.0F;
+        double damage = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                .map(item -> item.getAbilityBaseDamage(thrownStack))
+                .orElse(8d);
 
         if (target instanceof LivingEntity) {
             LivingEntity livingentity = (LivingEntity)target;
             damage += EnchantmentHelper.getModifierForCreature(thrownStack, livingentity.getCreatureAttribute());
         }
 
-        if (target.attackEntityFrom(damagesource, damage) && target instanceof LivingEntity) {
+        if (target.attackEntityFrom(damagesource, (float) damage) && target instanceof LivingEntity) {
             LivingEntity livingentity1 = (LivingEntity)target;
             if (shooter instanceof LivingEntity) {
                 EnchantmentHelper.applyThornEnchantments(livingentity1, shooter);
