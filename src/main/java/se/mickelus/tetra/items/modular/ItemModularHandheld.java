@@ -324,29 +324,28 @@ public class ItemModularHandheld extends ItemModular {
     }
 
     public void bashEntity(ItemStack itemStack, int bashingLevel, PlayerEntity player, LivingEntity target) {
-
+        // apply damage
         double damage = getAbilityBaseDamage(itemStack) + EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
+        target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
 
-        if (target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage)) {
-            // applies enchantment effects on both parties
-            EnchantmentHelper.applyThornEnchantments(target, player);
-            ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
+        // applies enchantment effects on both parties
+        EnchantmentHelper.applyThornEnchantments(target, player);
+        ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
 
-            // tetra item effects
-            applyHitEffects(itemStack, target, player);
+        // tetra item effects
+        applyHitEffects(itemStack, target, player);
 
-            // knocks back the target based on effect level + knockback enchantment level
-            int knockbackFactor = bashingLevel
-                    + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack)
-                    + (player.isSprinting() ? 1 : 0);
-            target.knockBack(player, knockbackFactor * 0.5f,
-                    player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
+        // knocks back the target based on effect level + knockback enchantment level
+        int knockbackFactor = bashingLevel
+                + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack)
+                + (player.isSprinting() ? 1 : 0);
+        target.knockBack(player, knockbackFactor * 0.5f,
+                player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
 
-            // stuns the target if bash efficiency is > 0
-            double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
-            if (stunDuration > 0) {
-                target.addPotionEffect(new EffectInstance(StunEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
-            }
+        // stuns the target if bash efficiency is > 0
+        double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
+        if (stunDuration > 0) {
+            target.addPotionEffect(new EffectInstance(StunEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
         }
 
         player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
