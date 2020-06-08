@@ -1010,17 +1010,42 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
             ItemModule[] modules = getAllModules(itemStack).stream()
                     .sorted(Comparator.comparing(ItemModule::getUnlocalizedName))
                     .toArray(ItemModule[]::new);
+
             String[] variantKeys = getAllModules(itemStack).stream()
                     .map(module -> module.getVariantData(itemStack))
                     .map(data -> data.key)
                     .sorted()
                     .toArray(String[]::new);
 
+            String[] improvements = Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .map(module -> module.getImprovements(itemStack))
+                    .flatMap(Arrays::stream)
+                    .map(data -> data.key)
+                    .sorted()
+                    .toArray(String[]::new);
+
             return Arrays.stream(synergies)
                     .filter(synergy -> hasVariantSynergy(synergy, variantKeys) || hasModuleSynergy(itemStack, synergy, modules))
+                    .filter(synergy -> synergy.improvements.length == 0 || hasImprovementSynergy(synergy, improvements))
                     .toArray(SynergyData[]::new);
         }
         return new SynergyData[0];
+    }
+
+    protected boolean hasImprovementSynergy(SynergyData synergy, String[] improvements) {
+        int improvementMatches = 0;
+        for (String improvement : improvements) {
+            if (improvementMatches == synergy.moduleVariants.length) {
+                break;
+            }
+
+            if (improvement.equals(synergy.moduleVariants[improvementMatches])) {
+                improvementMatches++;
+            }
+        }
+
+        return synergy.moduleVariants.length > 0 && improvementMatches == synergy.moduleVariants.length;
     }
 
     protected boolean hasVariantSynergy(SynergyData synergy, String[] variantKeys) {

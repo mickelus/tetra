@@ -6,6 +6,9 @@ package se.mickelus.tetra.module.data;
  */
 public class SynergyData extends ModuleVariantData {
 
+    // an array of improvements that the item must have for this synergy to apply
+    public String[] improvements = new String[0];
+
     // an array of module variants that the item must have for this synergy to apply
     public String[] moduleVariants = new String[0];
 
