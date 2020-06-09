@@ -9,11 +9,11 @@
         "models": [
             {
                 "type": "shield_heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/trim"
+                "location": "tetra:items/module/shield/plate/heater/improvements/aerodynamic_trim"
             },
             {
                 "type": "shield_heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/trim_bevel",
+                "location": "tetra:items/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ]

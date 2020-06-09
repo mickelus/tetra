@@ -13,7 +13,7 @@
             },
             {
                 "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ]

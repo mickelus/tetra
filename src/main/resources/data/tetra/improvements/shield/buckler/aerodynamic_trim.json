@@ -9,11 +9,11 @@
         "models": [
             {
                 "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/trim"
+                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim"
             },
             {
                 "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/trim_bevel",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ]
