@@ -38,8 +38,6 @@ public class SchemaStore extends MergingDataStore<SchemaDefinition, SchemaDefini
             schema.outcomes = Arrays.stream(schema.outcomes)
                     .sorted((a, b) -> Boolean.compare(b.material != null && b.material.isTagged(), a.material != null && a.material.isTagged()))
                     .toArray(OutcomeDefinition[]::new);
-
-            System.out.println(schema);
         }
     }
 }

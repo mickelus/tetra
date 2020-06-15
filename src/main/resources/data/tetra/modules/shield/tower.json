@@ -5,9 +5,12 @@
         "shield/plate"
     ],
     "improvements": [
-        "tetra:shield/tower/studs",
-        "tetra:shield/tower/trim",
-        "tetra:shield/tower/aerodynamic_trim",
+        "tetra:shield/plate/tower/studs",
+        "tetra:shield/plate/tower/trim",
+        "tetra:shield/plate/tower/aerodynamic_trim",
+        "tetra:shield/plate/piercing",
+        "tetra:shield/plate/ricochet",
+        "tetra:shield/plate/shared_hone",
         "tetra:enchantment/unbreaking",
         "tetra:enchantment/ensorcellation_bulwark",
         "tetra:enchantment/apotheosis_reflective",

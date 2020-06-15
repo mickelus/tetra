@@ -1,0 +1,25 @@
+[
+    {
+        "key": "shield/ricochet",
+        "level": 1,
+        "effects": {
+            "ricochet": 1
+        }
+    },
+    {
+        "key": "shield/ricochet",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "ricochet": 2
+        }
+    },
+    {
+        "key": "shield/ricochet",
+        "level": 3,
+        "integrity": -1,
+        "effects": {
+            "ricochet": 3
+        }
+    }
+]

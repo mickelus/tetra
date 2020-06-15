@@ -9,14 +9,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.network.play.server.SPlaySoundEventPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
@@ -138,13 +136,28 @@ public class ItemEffectHandler {
                 });
     }
 
+
+    @SubscribeEvent
+    public void onLivingAttack(LivingAttackEvent event) {
+        if (!event.getSource().isUnblockable() && event.getEntityLiving().isActiveItemStackBlocking()) {
+            Optional.ofNullable(event.getEntityLiving())
+                    .map(LivingEntity::getActiveItemStack)
+                    .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                    .ifPresent(itemStack -> {
+                        ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
+                        if (UseAction.BLOCK.equals(itemStack.getUseAction())) {
+                            item.applyUsageEffects(event.getEntityLiving(), itemStack, event.getAmount());
+                        }
+                    });
+        }
+    }
+
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
         Optional.ofNullable(event.getSource().getTrueSource())
-                .filter(entity -> entity instanceof PlayerEntity)
+                .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
@@ -158,6 +171,24 @@ public class ItemEffectHandler {
                         }
                     }
                 });
+
+        if (!event.getSource().isUnblockable()) {
+            Optional.ofNullable(event.getEntityLiving())
+                    .map(entity -> Stream.of(entity.getHeldItemMainhand(), entity.getHeldItemOffhand()))
+                    .orElseGet(Stream::empty)
+                    .filter(itemStack -> !itemStack.isEmpty())
+                    .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
+                    .forEach(itemStack -> {
+                        ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
+                        if (item.getEffectLevel(itemStack, ItemEffect.armor) > 0 || item.getEffectLevel(itemStack, ItemEffect.toughness) > 0) {
+                            int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
+                                    (float) event.getEntityLiving().getTotalArmorValue(),
+                                    (float) event.getEntityLiving().getAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getValue()));
+                            item.applyUsageEffects(event.getEntityLiving(), itemStack, reducedAmount);
+                            item.applyDamage(reducedAmount, itemStack, event.getEntityLiving());
+                        }
+                    });
+        }
     }
 
     @SubscribeEvent
@@ -166,7 +197,6 @@ public class ItemEffectHandler {
                 .filter(entity -> entity instanceof PlayerEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                 .ifPresent(itemStack -> {
                     int penetratingLevel = getEffectLevel(itemStack, ItemEffect.armorPenetration);
@@ -179,21 +209,6 @@ public class ItemEffectHandler {
                         event.setAmount(event.getAmount()  + unarmoredBonusLevel);
                     }
                 });
-
-        if (!event.getSource().isUnblockable()) {
-            Optional.ofNullable(event.getEntityLiving())
-                    .map(entity -> Stream.of(entity.getHeldItemMainhand(), entity.getHeldItemOffhand()))
-                    .orElseGet(Stream::empty)
-                    .filter(itemStack -> !itemStack.isEmpty())
-                    .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
-                    .forEach(itemStack -> {
-                        ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                        if (item.getEffectLevel(itemStack, ItemEffect.armor) > 0 || item.getEffectLevel(itemStack, ItemEffect.toughness) > 0) {
-                            item.applyUsageEffects(event.getEntityLiving(), itemStack, event.getAmount());
-                            item.applyDamage((int) event.getAmount(), itemStack, event.getEntityLiving());
-                        }
-                    });
-        }
     }
 
 

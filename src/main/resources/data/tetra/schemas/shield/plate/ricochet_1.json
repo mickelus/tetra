@@ -1,0 +1,31 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 80,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!plate/ricochet": -1,
+            "shield/aerodynamic_trim": 0
+        }
+    },
+    "outcomes": [
+        {
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "plate/ricochet": 1
+            }
+        }
+    ]
+}

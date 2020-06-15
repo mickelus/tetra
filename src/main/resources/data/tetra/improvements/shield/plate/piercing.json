@@ -1,0 +1,25 @@
+[
+    {
+        "key": "shield/piercing",
+        "level": 1,
+        "effects": {
+            "piercing": 1
+        }
+    },
+    {
+        "key": "shield/piercing",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "piercing": 2
+        }
+    },
+    {
+        "key": "shield/piercing",
+        "level": 3,
+        "integrity": -1,
+        "effects": {
+            "piercing": 3
+        }
+    }
+]

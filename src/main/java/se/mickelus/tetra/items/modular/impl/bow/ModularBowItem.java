@@ -149,6 +149,11 @@ public class ModularBowItem extends ItemModular {
                             projectile.setFire(100);
                         }
 
+                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing);
+                        if (piercingLevel > 0) {
+                            projectile.setPierceLevel((byte) piercingLevel);
+                        }
+
                         itemStack.damageItem(1, player, (p_220009_1_) -> {
                             p_220009_1_.sendBreakAnimation(player.getActiveHand());
                         });

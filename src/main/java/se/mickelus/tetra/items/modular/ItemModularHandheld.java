@@ -42,6 +42,8 @@ import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.effects.StunEffect;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.network.PacketHandler;
@@ -357,6 +359,7 @@ public class ItemModularHandheld extends ItemModular {
         World world = player.world;
         if (!world.isRemote) {
             applyDamage(1, stack, player);
+            applyUsageEffects(player, stack, 1);
 
             ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
 
@@ -368,7 +371,14 @@ public class ItemModularHandheld extends ItemModular {
 
             projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
             world.addEntity(projectileEntity);
-            world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+            if (this instanceof ModularSingleHeadedItem) {
+                world.playMovingSound(null, projectileEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            } else if (this instanceof ModularShieldItem) {
+                world.playMovingSound(null, projectileEntity, SoundEvents.BLOCK_DISPENSER_LAUNCH, SoundCategory.PLAYERS, 1.0F, 2F);
+            } else {
+                world.playMovingSound(null, projectileEntity, SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.PLAYERS, 1.0F, 0.7F);
+            }
         }
 
         player.getCooldownTracker().setCooldown(this, Math.round(cooldownBase * 20));

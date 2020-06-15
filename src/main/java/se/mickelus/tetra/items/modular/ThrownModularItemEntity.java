@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.modular;
 
+import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,10 +33,15 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
+import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
 
 public class ThrownModularItemEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "thrown_modular_item";
@@ -42,6 +49,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     public static final String stackKey = "stack";
     public static final String dealtDamageKey = "DealtDamage";
     private static final DataParameter<Byte> LOYALTY_LEVEL = EntityDataManager.createKey(ThrownModularItemEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> RICOCHET_LEVEL = EntityDataManager.createKey(ThrownModularItemEntity.class, DataSerializers.BYTE);
 
     private ItemStack thrownStack = new ItemStack(Items.TRIDENT);
 
@@ -51,6 +59,8 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     private boolean dealtDamage;
     public int returningTicks;
 
+    private IntOpenHashSet hitEntities = new IntOpenHashSet(5);
+
     public ThrownModularItemEntity(EntityType<? extends ThrownModularItemEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -59,6 +69,19 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         super(type, thrower, worldIn);
         thrownStack = thrownStackIn.copy();
         dataManager.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyaltyModifier(thrownStackIn));
+
+        CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                .map(item -> item.getEffectLevel(thrownStack, ItemEffect.ricochet))
+                .ifPresent(level -> dataManager.set(RICOCHET_LEVEL, level.byteValue()));
+
+        if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
+            setHitSound(SoundEvents.ITEM_TRIDENT_HIT_GROUND);
+        } else if (thrownStack.getItem() instanceof ModularShieldItem) {
+            setHitSound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK);
+        } else {
+            setHitSound(SoundEvents.ENTITY_PLAYER_ATTACK_WEAK);
+        }
+
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -74,6 +97,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     protected void registerData() {
         super.registerData();
         dataManager.register(LOYALTY_LEVEL, (byte)0);
+        dataManager.register(RICOCHET_LEVEL, (byte)0);
     }
 
     /**
@@ -131,6 +155,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
     public boolean isOnGround() {
         return timeInGround > 0;
+    }
+
+    public int getRicochetLevel() {
+        return dataManager.get(RICOCHET_LEVEL);
     }
 
     @Override
@@ -199,7 +227,26 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         Entity target = raytrace.getEntity();
         Entity shooter = getShooter();
         DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
-        dealtDamage = true;
+
+
+        if (getPierceLevel() > 0 || getRicochetLevel() > 0) {
+            if (hitEntities == null) {
+                hitEntities = new IntOpenHashSet(5);
+            }
+
+            if (hitEntities.contains(target.getEntityId())) {
+                return;
+            }
+
+            if (hitEntities.size() < getPierceLevel() || hitEntities.size() < getRicochetLevel()) {
+                hitEntities.add(target.getEntityId());
+            } else {
+                dealtDamage = true;
+            }
+        } else {
+            dealtDamage = true;
+        }
+
         SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
         double damage = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
                 .map(item -> item.getAbilityBaseDamage(thrownStack))
@@ -219,7 +266,6 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             }
         }
 
-        setMotion(getMotion().mul(-0.01D, -0.1D, -0.01D));
         float f1 = 1.0F;
         if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.getPosition();
@@ -238,15 +284,29 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                     .ifPresent(item -> item.applyHitEffects(thrownStack, (LivingEntity) target, (LivingEntity) shooter));
         }
 
-        playSound(soundevent, f1, 1.0F);
-    }
+        if (shooter instanceof LivingEntity) {
+            CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                    .ifPresent(item -> item.tickProgression((LivingEntity) shooter, thrownStack, 1));
+        }
 
-    /**
-     * The sound made when an entity is hit by this projectile
-     */
-    @Override
-    protected SoundEvent getHitEntitySound() {
-        return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
+        playSound(soundevent, f1, 1.0F);
+
+        if (dealtDamage) {
+            setMotion(getMotion().mul(-0.01D, -0.1D, -0.01D));
+        } else if (getRicochetLevel() > 0 && !world.isRemote) {
+            setMotion(world.getEntitiesInAABBexcluding(shooter, new AxisAlignedBB(target.getPosition()).grow(8d), entity ->
+                    !hitEntities.contains(entity.getEntityId())
+                            && entity instanceof LivingEntity
+                            && !entity.isInvulnerableTo(damagesource)
+                            && (shooter == null || !entity.isOnSameTeam(shooter)))
+                    .stream()
+                    .findFirst()
+                    .map(entity -> entity.getPosition().add(0, entity.getHeight() + 1, 0))
+                    .map(pos -> new Vec3d(pos).subtract(getPositionVec()))
+                    .map(Vec3d::normalize)
+                    .map(direction -> direction.scale(getMotion().length() * 0.7))
+                    .orElse(getMotion().mul(-0.01D, -0.1D, -0.01D)));
+        }
     }
 
     /**
@@ -272,6 +332,9 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
         dealtDamage = compound.getBoolean(dealtDamageKey);
         dataManager.set(LOYALTY_LEVEL, (byte)EnchantmentHelper.getLoyaltyModifier(thrownStack));
+        CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                .map(item -> item.getEffectLevel(thrownStack, ItemEffect.ricochet))
+                .ifPresent(level -> dataManager.set(RICOCHET_LEVEL, level.byteValue()));
     }
 
     @Override

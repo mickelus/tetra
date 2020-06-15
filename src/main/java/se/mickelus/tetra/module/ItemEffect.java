@@ -112,6 +112,10 @@ public enum ItemEffect {
      */
     bashing,
 
+    ricochet,
+
+    piercing,
+
     /**
      * Armor: Provides armor when held in the mainhand or the offhand. Armor value provided equals the effect level.
      */
