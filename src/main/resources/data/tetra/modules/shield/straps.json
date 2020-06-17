@@ -3,6 +3,9 @@
     "type": "tetra:basic_major_module",
     "slots": ["shield/grip"],
     "improvements": [
+        "tetra:shield/grip/hone_damage_mult",
+        "tetra:shield/grip/hone_speed_flat",
+        "tetra:shield/grip/hone_durability",
         "tetra:enchantment/mending",
         "tetra:enchantment/loyalty",
         "tetra:enchantment/knockback",
