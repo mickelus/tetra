@@ -6,7 +6,7 @@
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
-        "textureX": 96,
+        "textureX": 104,
         "textureY": 16
     },
     "outcomes": [
@@ -17,8 +17,8 @@
             "requiredCapabilities": {
                 "hammer": 3
             },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/iron"
+            "moduleKey": "shield/spike",
+            "moduleVariant": "spike/iron"
         }
     ]
 }

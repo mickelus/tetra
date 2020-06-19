@@ -1,0 +1,32 @@
+{
+    "replace": true,
+    "type": "tetra:basic_module",
+    "slots": ["shield/boss"],
+    "variants": [
+        {
+            "key": "spike/iron",
+            "durability": 30,
+            "integrity": -1,
+            "attackSpeed": 0.5,
+            "effects": {
+                "blockingReflect": [30, 0.8]
+            },
+            "glyph": {
+                "tint": "iron_glyph",
+                "textureX": 104,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "iron"
+                },
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike_shadow"
+                }
+            ]
+        }
+    ]
+}

@@ -103,6 +103,8 @@ public enum ItemEffect {
      */
     blocking,
 
+    blockingReflect,
+
     /**
      * Bashing: Right-clicking an entity will knock it back, damage it, stun it and apply enchantment & item effects from the item. A stunned entity
      * cannot move, deals no damage if it attacks and has infinite swing cooldown.

@@ -2556,13 +2556,22 @@
   "tetra.improvement.plate_hone/durability.description": "Increases durability",
 
   "tetra/schema/shield/sturdy_boss.name": "Sturdy boss",
-  "tetra/schema/shield/sturdy_boss.description": "Craft a sturdy boss from the given materials, this enables the shield to be used for bashing other entities.",
+  "tetra/schema/shield/sturdy_boss.description": "Craft a sturdy boss from the given materials. The sturdy boss makes it possible to bash other entities using the shield.",
   "tetra/schema/shield/sturdy_boss.slot1": "Material",
 
   "tetra.module.shield/sturdy_boss.name": "Sturdy boss",
   "tetra.module.shield/sturdy_boss.description": "A sturdy boss that allows the shield to be used to bash entities.",
 
   "tetra.variant.sturdy_boss/iron": "Sturdy iron boss",
+
+  "tetra/schema/shield/spike.name": "Spike",
+  "tetra/schema/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker .",
+  "tetra/schema/shield/spike.slot1": "Material",
+
+  "tetra.module.shield/spike.name": "Spike",
+  "tetra.module.shield/spike.description": "A shield spike that has a chance to damage the attacker when blocking melee attacks.",
+
+  "tetra.variant.spike/iron": "Iron spike",
 
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
   "tetra.advancements.story.more_upgrades.description": "Craft a mallet from sticks and logs\n\n§8§oTetra begins",

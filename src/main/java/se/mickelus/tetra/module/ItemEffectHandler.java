@@ -4,6 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -145,8 +147,24 @@ public class ItemEffectHandler {
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
                     .ifPresent(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
+                        LivingEntity blocker = event.getEntityLiving();
                         if (UseAction.BLOCK.equals(itemStack.getUseAction())) {
-                            item.applyUsageEffects(event.getEntityLiving(), itemStack, event.getAmount());
+                            item.applyUsageEffects(blocker, itemStack, event.getAmount());
+                        }
+
+                        if (event.getSource().getImmediateSource() instanceof LivingEntity) {
+                            LivingEntity attacker = (LivingEntity) event.getSource().getImmediateSource();
+
+                            if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRNG().nextFloat() * 100) {
+                                attacker.attackEntityFrom(new EntityDamageSource("thorns", blocker).setIsThornsDamage(),
+                                        (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack, ItemEffect.blockingReflect)));
+                                item.applyHitEffects(itemStack, attacker, blocker);
+                                ItemModularHandheld.applyEnchantmentHitEffects(itemStack, attacker, blocker);
+
+                                float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+                                attacker.knockBack(blocker, knockbackFactor * 0.5f,
+                                        blocker.getPosX() - attacker.getPosX(), blocker.getPosZ() - attacker.getPosZ());
+                            }
                         }
                     });
         }
