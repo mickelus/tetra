@@ -41,11 +41,11 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
         bars.add(GuiStats.toughness);
-        bars.add(GuiStats.blockingDuration);
+        bars.add(GuiStats.blocking);
         bars.add(GuiStats.bashing);
         bars.add(GuiStats.throwable);
         bars.add(GuiStats.quickslot);
-        bars.add(GuiStats.potion_storage);
+        bars.add(GuiStats.potionStorage);
         bars.add(GuiStats.storage);
         bars.add(GuiStats.quiver);
         bars.add(GuiStats.booster);

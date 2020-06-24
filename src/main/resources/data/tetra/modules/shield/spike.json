@@ -9,7 +9,7 @@
             "integrity": -1,
             "attackSpeed": 0.5,
             "effects": {
-                "blockingReflect": [30, 0.8]
+                "blockingReflect": [30, 1]
             },
             "glyph": {
                 "tint": "iron_glyph",

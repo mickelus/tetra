@@ -104,6 +104,8 @@
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
   "tetra.stats.blocking.tooltip_extended": "If this item has a secondary ability available then that ability can be used by pressing shift + right-click, or by holding shift as right-click is released (this will trigger a 50%% longer cooldown).",
 
+  "tetra.stats.blocking_reflect.tooltip": "§eReflect\n§7Blocking melee attacks has a §e%s§7 chance to deal §e%s§7 damage the attacker and apply on hit effects\n",
+
   "tetra.stats.bashing": "Bashing",
   "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n\nKnockback factor: §e%s§r\nStun duration: §e%s§r seconds",
 
@@ -2565,7 +2567,7 @@
   "tetra.variant.sturdy_boss/iron": "Sturdy iron boss",
 
   "tetra/schema/shield/spike.name": "Spike",
-  "tetra/schema/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker .",
+  "tetra/schema/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.",
   "tetra/schema/shield/spike.slot1": "Material",
 
   "tetra.module.shield/spike.name": "Spike",

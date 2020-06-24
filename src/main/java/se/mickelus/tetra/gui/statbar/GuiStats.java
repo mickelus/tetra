@@ -80,7 +80,7 @@ public class GuiStats {
             0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));
 
-    public static final GuiStatBar blockingDuration = new GuiStatBarBlockingDuration(0, 0, barLength);
+    public static final GuiStatBar blocking = new GuiStatBarBlockingDuration(0, 0, barLength);
 
     public static final IStatGetter bashingGetter = new StatGetterEffectLevel(ItemEffect.bashing, 1d);
     public static final GuiStatBar bashing = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bashing"),
@@ -98,7 +98,7 @@ public class GuiStats {
             new TooltipGetterInteger("tetra.stats.toolbelt.quickslot.tooltip", quickslotGetter));
 
     public static final IStatGetter potionStorageGetter = new StatGetterEffectLevel(ItemEffect.potionSlot, 1d);
-    public static final GuiStatBar potion_storage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.potion_storage"),
+    public static final GuiStatBar potionStorage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.potion_storage"),
                 0, PotionsInventory.maxSize, true, potionStorageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.potion_storage.tooltip", potionStorageGetter));
 
