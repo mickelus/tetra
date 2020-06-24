@@ -88,17 +88,18 @@ public class GuiStatBarCapability extends GuiStatBar {
         int previewSweeping = currentSweeping;
 
         if (!previewStack.isEmpty()) {
-            previewStriking -= strikingGetter != null ? (int) strikingGetter.getValue(player, previewStack) : 0;
-            previewSweeping -= (int) sweepingGetter.getValue(player, previewStack);
+            previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, previewStack) : 0;
+            previewSweeping = (int) sweepingGetter.getValue(player, previewStack);
         } else if (slot != null) {
             if (improvement != null) {
-                previewStriking -= strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot, improvement) : 0;
-                previewSweeping -= (int) sweepingGetter.getValue(player, currentStack, slot, improvement);
+                previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot, improvement) : 0;
+                previewSweeping = (int) sweepingGetter.getValue(player, currentStack, slot, improvement);
             } else {
-                previewStriking -= strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot) : 0;
-                previewSweeping -= (int) sweepingGetter.getValue(player, currentStack, slot);
-
+                previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot) : 0;
+                previewSweeping = (int) sweepingGetter.getValue(player, currentStack, slot);
             }
+            currentStriking -= previewStriking;
+            currentSweeping -= previewSweeping;
         }
 
         if (currentStriking > 0 || previewStriking > 0) {
@@ -106,12 +107,12 @@ public class GuiStatBarCapability extends GuiStatBar {
                 strikingIndicator.setVisible(false);
                 sweepingIndicator.setVisible(true);
 
-                sweepingIndicator.setColor(getDiffColor(previewSweeping, currentSweeping));
+                sweepingIndicator.setColor(getDiffColor(currentSweeping, previewSweeping));
             } else {
                 strikingIndicator.setVisible(true);
                 sweepingIndicator.setVisible(false);
 
-                strikingIndicator.setColor(getDiffColor(previewStriking, currentStriking));
+                strikingIndicator.setColor(getDiffColor(currentStriking, previewStriking));
             }
         } else {
             strikingIndicator.setVisible(false);
