@@ -27,9 +27,9 @@ public class GuiJournalImprovement extends GuiElement {
 
         backdrop = new GuiTexture(1, 3, 16, 9, 52, 3, GuiTextures.workbench);
         addChild(backdrop);
-        addChild(new GuiTexture(7, 8, 7, 7, 68, 16, GuiTextures.workbench));
 
         addChild(new GuiModuleGlyph(0, 0, 16, 16, schema.getGlyph()).setShift(false));
+        addChild(new GuiTexture(7, 8, 7, 7, 68, 16, GuiTextures.workbench));
 
         String schemaName = schema.getName();
         if (schemaName.length() > 4) {

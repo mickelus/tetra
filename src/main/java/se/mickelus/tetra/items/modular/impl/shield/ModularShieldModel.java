@@ -4,6 +4,7 @@ package se.mickelus.tetra.items.modular.impl.shield;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.model.ShieldModel;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -12,7 +13,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldModel extends Model {
     private final ModelRenderer towerPlate;
+
     private final ModelRenderer heaterPlate;
+
     private final ModelRenderer bucklerPlate;
 
     private final ModelRenderer grip;
@@ -26,6 +29,12 @@ public class ModularShieldModel extends Model {
     public static final String gripModelType = "shield_grip";
     public static final String strapsModelType = "shield_straps";
     public static final String bossModelType = "shield_boss";
+
+    public ModularShieldBannerModel bannerModel;
+
+    public static final String towerBannerModelType = "banner_tower";
+    public static final String heaterBannerModelType = "banner_heater";
+    public static final String bucklerBannerModelType = "banner_buckler";
 
     public ModularShieldModel() {
         super(RenderType::getEntityTranslucent);
@@ -51,6 +60,8 @@ public class ModularShieldModel extends Model {
 
         boss = new ModelRenderer(this, 0, 0);
         boss.addBox(-5.0F, -5.0F, -2.01F, 10.0F, 10.0F, 1.0F, 0.0F);
+
+        bannerModel = new ModularShieldBannerModel();
     }
 
     public ModelRenderer getModel(String modelType) {
@@ -67,6 +78,12 @@ public class ModularShieldModel extends Model {
                 return straps;
             case bossModelType:
                 return boss;
+            case towerBannerModelType:
+                return bannerModel.towerBanner;
+            case heaterBannerModelType:
+                return bannerModel.heaterBanner;
+            case bucklerBannerModelType:
+                return bannerModel.bucklerBanner;
         }
 
         return null;

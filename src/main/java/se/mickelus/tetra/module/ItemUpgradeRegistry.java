@@ -14,6 +14,7 @@ import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,12 +23,12 @@ public class ItemUpgradeRegistry {
 
     public static ItemUpgradeRegistry instance;
 
-    private List<Function<ItemStack, ItemStack>> replacementFunctions;
+    private List<BiFunction<ItemStack, ItemStack, ItemStack>> replacementHooks;
     private List<ReplacementDefinition> replacementDefinitions;
 
     public ItemUpgradeRegistry() {
         instance = this;
-        replacementFunctions = new ArrayList<> ();
+        replacementHooks = new ArrayList<> ();
 
         replacementDefinitions = Collections.emptyList();
         DataManager.replacementData.onReload(() -> {
@@ -59,8 +60,13 @@ public class ItemUpgradeRegistry {
         return schema.isVisibleForPlayer(player, targetStack);
     }
 
-    public void registerReplacementFunction(Function<ItemStack, ItemStack> replacementFunction) {
-        replacementFunctions.add(replacementFunction);
+    /**
+     * Register a hook that will be run for every item that is converted into a tetra item
+     * @param hook Bi-function where the first itemstack is the original itemstack and the second is the replacement stack, the returned value will
+     *             override the replacement stack
+     */
+    public void registerReplacementHook(BiFunction<ItemStack, ItemStack, ItemStack> hook) {
+        replacementHooks.add(hook);
     }
 
     /**
@@ -76,12 +82,10 @@ public class ItemUpgradeRegistry {
                 replacementStack.setDamage(itemStack.getDamage());
                 transferEnchantments(itemStack, replacementStack);
 
-                return replacementStack;
-            }
-        }
-        for (Function<ItemStack, ItemStack> replacementFunction: replacementFunctions) {
-            ItemStack replacementStack = replacementFunction.apply(itemStack);
-            if (replacementStack != null) {
+                for (BiFunction<ItemStack, ItemStack, ItemStack> hook: replacementHooks) {
+                    replacementStack = hook.apply(itemStack, replacementStack);
+                }
+
                 return replacementStack;
             }
         }

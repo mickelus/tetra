@@ -2508,6 +2508,13 @@
   "tetra.improvement.shield/aerodynamic_trim.name": "Aerodynamic trim",
   "tetra.improvement.shield/aerodynamic_trim.description": "Allows the shield to be thrown",
 
+  "tetra/schema/shield/plate/banner.name": "Banner",
+  "tetra/schema/shield/plate/banner.description": "Cover the face of the plate with a banner.",
+  "tetra/schema/shield/plate/banner.slot1": "Banner",
+
+  "tetra.improvement.shield/banner.name": "Bannered",
+  "tetra.improvement.shield/banner.description": "Covered in a banner",
+
   "tetra/schema/shield/plate/ricochet_1.name": "Hone: Ricochet",
   "tetra/schema/shield/plate/ricochet_1.description": "Improve the trim to allow the shield to hit an additional nearby enemy when thrown.",
   "tetra/schema/shield/plate/ricochet_2.name": "Hone: Ricochet",

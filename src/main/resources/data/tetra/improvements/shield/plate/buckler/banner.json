@@ -1,0 +1,6 @@
+[
+    {
+        "key": "shield/banner",
+        "models": [{ "type": "banner_buckler" }]
+    }
+]

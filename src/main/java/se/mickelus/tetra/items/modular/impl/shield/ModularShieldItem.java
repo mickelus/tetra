@@ -12,19 +12,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.util.CastOptional;
+
+import java.util.Objects;
+import java.util.Optional;
 
 public class ModularShieldItem extends ItemModularHandheld {
-    public final static String shieldKey = "shield/plate";
+    public final static String plateKey = "shield/plate";
     public final static String gripKey = "shield/grip";
     public final static String bossKey = "shield/boss";
 
     public static final String unlocalizedName = "modular_shield";
+
+    public static final String bannerImprovementKey = "shield/banner";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ModularShieldItem instance;
@@ -35,23 +44,39 @@ public class ModularShieldItem extends ItemModularHandheld {
                 .setISTER(() -> ModularShieldISTER::new));
         setRegistryName(unlocalizedName);
 
-        majorModuleKeys = new String[] { shieldKey, gripKey };
+        majorModuleKeys = new String[] {plateKey, gripKey };
         minorModuleKeys = new String[] { bossKey };
 
-        requiredModules = new String[] { shieldKey, gripKey };
+        requiredModules = new String[] {plateKey, gripKey };
 
         speedBase = 0;
 
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
         SchemaRegistry.instance.registerSchema(new RepairSchema(this));
+        SchemaRegistry.instance.registerSchema(new ApplyBannerSchema());
         RemoveSchema.registerRemoveSchemas(this);
+
+        ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
         this.addPropertyOverride(new ResourceLocation("blocking"), (itemStack, world, entity) -> {
             return entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F;
         });
 
         DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+    }
+
+    private ItemStack copyBanner(ItemStack original, ItemStack replacement) {
+        if (equals(replacement.getItem())) {
+            Optional.ofNullable(original.getChildTag("BlockEntityTag"))
+                    .ifPresent(tag -> NBTHelper.getTag(replacement).put("BlockEntityTag", tag));
+
+            CastOptional.cast(getModuleFromSlot(replacement, plateKey), ItemModuleMajor.class)
+                    .filter(module -> module.acceptsImprovement(bannerImprovementKey))
+                    .ifPresent(module -> module.addImprovement(replacement, bannerImprovementKey, 0));
+        }
+
+        return replacement;
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiTextures;
 
 /**
  * Used to describe glyphs for modules and schemas in the UI.
@@ -36,7 +37,7 @@ public class GlyphData {
      *
      * Json format: "domain:path"
      */
-    public ResourceLocation textureLocation = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/glyphs.png");
+    public ResourceLocation textureLocation = GuiTextures.glyphs;
 
     public GlyphData() {}
 
