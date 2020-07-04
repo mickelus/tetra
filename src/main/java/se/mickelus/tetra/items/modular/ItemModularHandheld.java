@@ -643,7 +643,8 @@ public class ItemModularHandheld extends ItemModular {
      * @return
      */
     public float getBlockProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
-        if (getEffectEfficiency(itemStack, ItemEffect.blocking) > 0) {
+        int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
+        if (blockingLevel > 0 && blockingLevel < blockingDurationLimit) {
             return Optional.ofNullable(entity)
                     .filter(e -> e.getItemInUseCount() > 0)
                     .filter(e -> itemStack.equals(e.getActiveItemStack()))

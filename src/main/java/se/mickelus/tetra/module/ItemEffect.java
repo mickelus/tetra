@@ -97,9 +97,8 @@ public enum ItemEffect {
     stripping,
 
     /**
-     * Blocking: Allows the item to block incoming attacks and projectiles while rightclick is held down. Has infinite duration if no
-     * efficiency value is given, otherwise the level defines how many seconds the block be held and the efficiency defines the cooldown
-     * period.
+     * Blocking: Allows the item to block incoming attacks and projectiles while rightclick is held down. The level defines how many seconds the block
+     * can be held, the duration is infinite if the level is 16 or above.
      */
     blocking,
 
