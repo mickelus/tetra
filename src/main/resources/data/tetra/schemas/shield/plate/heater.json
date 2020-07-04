@@ -39,10 +39,80 @@
         },
         {
             "material": {
+                "item": "minecraft:gold_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/electrum"
+        },
+        {
+            "material": {
                 "tag": "forge:ingots/bronze"
             },
             "requiredCapabilities": {
-                "hammer": 1
+                "hammer": 2
             },
             "moduleKey": "shield/heater",
             "moduleVariant": "heater/bronze"
@@ -52,7 +122,7 @@
                 "tag": "forge:ingots/steel"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 4
             },
             "moduleKey": "shield/heater",
             "moduleVariant": "heater/steel"
@@ -139,8 +209,7 @@
         },
         {
             "material": {
-                "item": "tetra:vent_plate",
-                "count": 4
+                "item": "tetra:vent_plate"
             },
             "requiredCapabilities": {
                 "hammer": 4

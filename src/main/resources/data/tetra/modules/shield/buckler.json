@@ -61,7 +61,7 @@
             "durability": 204,
             "integrity": 0,
             "magicCapacity": 90,
-            "attackSpeed": 3,
+            "attackSpeed": 2.5,
             "damage": 2,
             "effects": {
                 "toughness": 4
@@ -131,7 +131,7 @@
             "integrity": -1,
             "magicCapacity": 90,
             "attackSpeed": 3,
-            "damage": 2,
+            "damage": 2.5,
             "effects": {
                 "toughness": 4
             },
@@ -246,7 +246,7 @@
             "integrity": -1,
             "magicCapacity": 108,
             "attackSpeed": 3,
-            "damage": 2,
+            "damage": 2.5,
             "effects": {
                 "toughness": 4
             },
@@ -268,8 +268,8 @@
             "durability": 310,
             "integrity": -2,
             "magicCapacity": 84,
-            "attackSpeed": 3,
-            "damage": 2,
+            "attackSpeed": 4,
+            "damage": 3,
             "effects": {
                 "toughness": 4
             },
@@ -286,13 +286,152 @@
                 }
             ]
         },
+
+        {
+            "key": "buckler/gold",
+            "durability": 20,
+            "integrity": -2,
+            "magicCapacity": 132,
+            "attackSpeed": 4,
+            "damage": 3.5,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/shiny",
+                    "tint": "gold"
+                }
+            ]
+        },
+        {
+            "key": "buckler/copper",
+            "durability": 232,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "attackSpeed": 4,
+            "damage": 3,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "copper"
+                }
+            ]
+        },
+        {
+            "key": "buckler/tin",
+            "durability": 278,
+            "integrity": -1,
+            "magicCapacity": 72,
+            "attackSpeed": 4,
+            "damage": 3,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "tin"
+                }
+            ]
+        },
+        {
+            "key": "buckler/silver",
+            "durability": 40,
+            "integrity": -2,
+            "magicCapacity": 126,
+            "attackSpeed": 4,
+            "damage": 3.5,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/shiny",
+                    "tint": "silver"
+                }
+            ]
+        },
+        {
+            "key": "buckler/nickel",
+            "durability": 290,
+            "integrity": -2,
+            "magicCapacity": 72,
+            "attackSpeed": 4,
+            "damage": 3,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "nickel"
+                }
+            ]
+        },
+        {
+            "key": "buckler/lead",
+            "durability": 170,
+            "integrity": -3,
+            "magicCapacity": 66,
+            "attackSpeed": 4.5,
+            "damage": 3.5,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/metal",
+                    "tint": "lead"
+                }
+            ]
+        },
         {
             "key": "buckler/bronze",
-            "durability": 290,
+            "durability": 410,
             "integrity": 0,
             "magicCapacity": 78,
-            "attackSpeed": 3,
-            "damage": 2,
+            "attackSpeed": 4,
+            "damage": 3,
             "effects": {
                 "toughness": 4
             },
@@ -311,11 +450,11 @@
         },
         {
             "key": "buckler/steel",
-            "durability": 480,
+            "durability": 512,
             "integrity": -3,
             "magicCapacity": 66,
-            "attackSpeed": 3,
-            "damage": 2,
+            "attackSpeed": 4.5,
+            "damage": 3.5,
             "effects": {
                 "toughness": 4
             },
@@ -333,12 +472,35 @@
             ]
         },
         {
+            "key": "buckler/electrum",
+            "durability": 31,
+            "integrity": -2,
+            "magicCapacity": 144,
+            "attackSpeed": 4,
+            "damage": 3.5,
+            "effects": {
+                "toughness": 4
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 48,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/shiny",
+                    "tint": "electrum"
+                }
+            ]
+        },
+        {
             "key": "buckler/vent",
             "durability": 512,
             "integrity": -2,
             "magicCapacity": 66,
             "attackSpeed": 3,
-            "damage": 2,
+            "damage": 3,
             "effects": {
                 "toughness": 4
             },

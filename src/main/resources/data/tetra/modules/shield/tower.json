@@ -60,7 +60,7 @@
             "durability": 204,
             "integrity": -1,
             "magicCapacity": 90,
-            "attackSpeed": 8,
+            "attackSpeed": 7,
             "damage": 6,
             "effects": {
                 "blocking": 16
@@ -127,7 +127,7 @@
             "integrity": -2,
             "magicCapacity": 90,
             "attackSpeed": 8,
-            "damage": 6,
+            "damage": 6.5,
             "effects": {
                 "blocking": 16
             },
@@ -193,7 +193,7 @@
             "integrity": -2,
             "magicCapacity": 78,
             "attackSpeed": 8,
-            "damage": 6,
+            "damage": 7.5,
             "effects": {
                 "blocking": 16
             },
@@ -237,7 +237,7 @@
             "integrity": -2,
             "magicCapacity": 108,
             "attackSpeed": 8,
-            "damage": 6,
+            "damage": 6.5,
             "effects": {
                 "blocking": 16
             },
@@ -258,8 +258,8 @@
             "durability": 310,
             "integrity": -3,
             "magicCapacity": 84,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attackSpeed": 9,
+            "damage": 7,
             "effects": {
                 "blocking": 16
             },
@@ -276,12 +276,144 @@
             ]
         },
         {
-            "key": "tower/bronze",
+            "key": "tower/gold",
+            "durability": 20,
+            "integrity": -3,
+            "magicCapacity": 132,
+            "attackSpeed": 9,
+            "damage": 8,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/shiny",
+                    "tint": "gold"
+                }
+            ]
+        },
+        {
+            "key": "tower/copper",
+            "durability": 232,
+            "integrity": -2,
+            "magicCapacity": 78,
+            "attackSpeed": 9,
+            "damage": 7,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "copper"
+                }
+            ]
+        },
+        {
+            "key": "tower/tin",
+            "durability": 278,
+            "integrity": -2,
+            "magicCapacity": 72,
+            "attackSpeed": 9,
+            "damage": 7,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "tin"
+                }
+            ]
+        },
+        {
+            "key": "tower/silver",
+            "durability": 40,
+            "integrity": -3,
+            "magicCapacity": 126,
+            "attackSpeed": 9,
+            "damage": 8,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/shiny",
+                    "tint": "silver"
+                }
+            ]
+        },
+        {
+            "key": "tower/nickel",
             "durability": 290,
+            "integrity": -3,
+            "magicCapacity": 72,
+            "attackSpeed": 9,
+            "damage": 7,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "nickel"
+                }
+            ]
+        },
+        {
+            "key": "tower/lead",
+            "durability": 170,
+            "integrity": -4,
+            "magicCapacity": 66,
+            "attackSpeed": 10,
+            "damage": 8,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/metal",
+                    "tint": "lead"
+                }
+            ]
+        },
+        {
+            "key": "tower/bronze",
+            "durability": 410,
             "integrity": -1,
             "magicCapacity": 78,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attackSpeed": 9,
+            "damage": 7,
             "effects": {
                 "blocking": 16
             },
@@ -299,11 +431,11 @@
         },
         {
             "key": "tower/steel",
-            "durability": 480,
+            "durability": 512,
             "integrity": -4,
             "magicCapacity": 66,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attackSpeed": 10,
+            "damage": 8,
             "effects": {
                 "blocking": 16
             },
@@ -320,12 +452,34 @@
             ]
         },
         {
+            "key": "tower/electrum",
+            "durability": 31,
+            "integrity": -3,
+            "magicCapacity": 144,
+            "attackSpeed": 9,
+            "damage": 8,
+            "effects": {
+                "blocking": 16
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/shiny",
+                    "tint": "electrum"
+                }
+            ]
+        },
+        {
             "key": "tower/vent",
             "durability": 512,
             "integrity": -3,
             "magicCapacity": 66,
             "attackSpeed": 8,
-            "damage": 6,
+            "damage": 7,
             "effects": {
                 "blocking": 16
             },

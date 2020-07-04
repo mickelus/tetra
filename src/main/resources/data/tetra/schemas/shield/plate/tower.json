@@ -38,10 +38,87 @@
         },
         {
             "material": {
+                "item": "minecraft:gold_ingot",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/electrum"
+        },
+        {
+            "material": {
                 "tag": "forge:ingots/bronze"
             },
             "requiredCapabilities": {
-                "hammer": 1
+                "hammer": 2
             },
             "moduleKey": "shield/tower",
             "moduleVariant": "tower/bronze"
@@ -51,7 +128,7 @@
                 "tag": "forge:ingots/steel"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 4
             },
             "moduleKey": "shield/tower",
             "moduleVariant": "tower/steel"

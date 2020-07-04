@@ -41,10 +41,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "oak_glyph",
@@ -64,13 +61,10 @@
             "durability": 244,
             "integrity": 0,
             "magicCapacity": 90,
-            "attackSpeed": 5,
+            "attackSpeed": 4.5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "spruce_glyph",
@@ -93,10 +87,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "birch_glyph",
@@ -119,10 +110,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "jungle_glyph",
@@ -143,12 +131,9 @@
             "integrity": -1,
             "magicCapacity": 90,
             "attackSpeed": 5,
-            "damage": 5,
+            "damage": 5.5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "acacia_glyph",
@@ -171,10 +156,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "dark_oak_glyph",
@@ -197,10 +179,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "maple_glyph",
@@ -221,12 +200,9 @@
             "integrity": -1,
             "magicCapacity": 78,
             "attackSpeed": 5,
-            "damage": 5,
+            "damage": 5.5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "cherry_glyph",
@@ -249,10 +225,7 @@
             "attackSpeed": 5,
             "damage": 5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "baobab_glyph",
@@ -273,12 +246,9 @@
             "integrity": -1,
             "magicCapacity": 108,
             "attackSpeed": 5,
-            "damage": 5,
+            "damage": 5.5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "bone_glyph",
@@ -298,13 +268,10 @@
             "durability": 372,
             "integrity": -2,
             "magicCapacity": 84,
-            "attackSpeed": 5,
-            "damage": 5,
+            "attackSpeed": 6,
+            "damage": 6,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "iron_glyph",
@@ -320,17 +287,152 @@
             ]
         },
         {
-            "key": "heater/bronze",
+            "key": "heater/gold",
+            "durability": 24,
+            "integrity": -2,
+            "magicCapacity": 132,
+            "attackSpeed": 6,
+            "damage": 6.5,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/shiny",
+                    "tint": "gold"
+                }
+            ]
+        },
+        {
+            "key": "heater/copper",
+            "durability": 278,
+            "integrity": -1,
+            "magicCapacity": 78,
+            "attackSpeed": 6,
+            "damage": 6,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "copper"
+                }
+            ]
+        },
+        {
+            "key": "heater/tin",
+            "durability": 334,
+            "integrity": -1,
+            "magicCapacity": 72,
+            "attackSpeed": 6,
+            "damage": 6,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "tin"
+                }
+            ]
+        },
+        {
+            "key": "heater/silver",
+            "durability": 48,
+            "integrity": -2,
+            "magicCapacity": 126,
+            "attackSpeed": 6.5,
+            "damage": 6,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/shiny",
+                    "tint": "silver"
+                }
+            ]
+        },
+        {
+            "key": "heater/nickel",
             "durability": 348,
+            "integrity": -2,
+            "magicCapacity": 72,
+            "attackSpeed": 6,
+            "damage": 6,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "nickel"
+                }
+            ]
+        },
+        {
+            "key": "heater/lead",
+            "durability": 204,
+            "integrity": -3,
+            "magicCapacity": 66,
+            "attackSpeed": 7,
+            "damage": 7,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/metal",
+                    "tint": "lead"
+                }
+            ]
+        },
+        {
+            "key": "heater/bronze",
+            "durability": 492,
             "integrity": 0,
             "magicCapacity": 78,
-            "attackSpeed": 5,
-            "damage": 5,
+            "attackSpeed": 6,
+            "damage": 6,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "bronze_glyph",
@@ -347,16 +449,13 @@
         },
         {
             "key": "heater/steel",
-            "durability": 576,
+            "durability": 590,
             "integrity": -3,
             "magicCapacity": 66,
-            "attackSpeed": 5,
-            "damage": 5,
+            "attackSpeed": 7,
+            "damage": 6.5,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "steel_glyph",
@@ -372,17 +471,37 @@
             ]
         },
         {
+            "key": "heater/electrum",
+            "durability": 37,
+            "integrity": -2,
+            "magicCapacity": 144,
+            "attackSpeed": 6,
+            "damage": 6.5,
+            "effects": {
+                "blocking": 2
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 32,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "type": "shield_heater",
+                    "location": "tetra:items/module/shield/plate/heater/shiny",
+                    "tint": "electrum"
+                }
+            ]
+        },
+        {
             "key": "heater/vent",
             "durability": 614,
             "integrity": -2,
             "magicCapacity": 66,
             "attackSpeed": 5,
-            "damage": 5,
+            "damage": 6,
             "effects": {
-                "blocking": [
-                    2,
-                    4
-                ]
+                "blocking": 2
             },
             "glyph": {
                 "tint": "vent_glyph",

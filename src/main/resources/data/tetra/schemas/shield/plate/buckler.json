@@ -37,12 +37,83 @@
             "moduleKey": "shield/buckler",
             "moduleVariant": "buckler/iron"
         },
+
+        {
+            "material": {
+                "item": "minecraft:gold_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/gold"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/copper"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/tin"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/silver"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/nickel"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/lead"
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/electrum"
+        },
         {
             "material": {
                 "tag": "forge:ingots/bronze"
             },
             "requiredCapabilities": {
-                "hammer": 1
+                "hammer": 2
             },
             "moduleKey": "shield/buckler",
             "moduleVariant": "buckler/bronze"
@@ -52,7 +123,7 @@
                 "tag": "forge:ingots/steel"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 4
             },
             "moduleKey": "shield/buckler",
             "moduleVariant": "buckler/steel"
