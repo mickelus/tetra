@@ -268,10 +268,10 @@
             "durability": 310,
             "integrity": -2,
             "magicCapacity": 84,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "iron_glyph",
@@ -292,10 +292,10 @@
             "durability": 20,
             "integrity": -2,
             "magicCapacity": 132,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3.5,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "gold_glyph",
@@ -315,10 +315,10 @@
             "durability": 232,
             "integrity": -1,
             "magicCapacity": 78,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "copper_glyph",
@@ -338,10 +338,10 @@
             "durability": 278,
             "integrity": -1,
             "magicCapacity": 72,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "tin_glyph",
@@ -361,10 +361,10 @@
             "durability": 40,
             "integrity": -2,
             "magicCapacity": 126,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3.5,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "silver_glyph",
@@ -384,10 +384,10 @@
             "durability": 290,
             "integrity": -2,
             "magicCapacity": 72,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "nickel_glyph",
@@ -407,10 +407,10 @@
             "durability": 170,
             "integrity": -3,
             "magicCapacity": 66,
-            "attackSpeed": 4.5,
+            "attackSpeed": 5.5,
             "damage": 3.5,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "lead_glyph",
@@ -430,10 +430,10 @@
             "durability": 410,
             "integrity": 0,
             "magicCapacity": 78,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "bronze_glyph",
@@ -453,10 +453,10 @@
             "durability": 512,
             "integrity": -3,
             "magicCapacity": 66,
-            "attackSpeed": 4.5,
+            "attackSpeed": 6,
             "damage": 3.5,
             "effects": {
-                "toughness": 4
+                "toughness": 6
             },
             "glyph": {
                 "tint": "steel_glyph",
@@ -476,10 +476,10 @@
             "durability": 31,
             "integrity": -2,
             "magicCapacity": 144,
-            "attackSpeed": 4,
+            "attackSpeed": 5,
             "damage": 3.5,
             "effects": {
-                "toughness": 4
+                "toughness": 5
             },
             "glyph": {
                 "tint": "electrum_glyph",
