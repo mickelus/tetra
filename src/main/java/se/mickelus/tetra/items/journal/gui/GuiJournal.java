@@ -8,7 +8,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.items.journal.GuiJournalRootBase;
 import se.mickelus.tetra.items.journal.JournalPage;
 import se.mickelus.tetra.items.journal.gui.blueprint.GuiJournalBlueprintRoot;
 import se.mickelus.tetra.items.journal.gui.craft.GuiJournalCraftRoot;

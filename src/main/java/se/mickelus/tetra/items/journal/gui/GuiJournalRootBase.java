@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.journal;
+package se.mickelus.tetra.items.journal.gui;
 
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
