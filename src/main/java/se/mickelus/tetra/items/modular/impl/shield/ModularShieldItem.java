@@ -69,11 +69,14 @@ public class ModularShieldItem extends ItemModularHandheld {
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {
         if (equals(replacement.getItem())) {
             Optional.ofNullable(original.getChildTag("BlockEntityTag"))
-                    .ifPresent(tag -> NBTHelper.getTag(replacement).put("BlockEntityTag", tag));
+                    .ifPresent(tag -> {
+                        NBTHelper.getTag(replacement).put("BlockEntityTag", tag);
 
-            CastOptional.cast(getModuleFromSlot(replacement, plateKey), ItemModuleMajor.class)
-                    .filter(module -> module.acceptsImprovement(bannerImprovementKey))
-                    .ifPresent(module -> module.addImprovement(replacement, bannerImprovementKey, 0));
+                        CastOptional.cast(getModuleFromSlot(replacement, plateKey), ItemModuleMajor.class)
+                                .filter(module -> module.acceptsImprovement(bannerImprovementKey))
+                                .ifPresent(module -> module.addImprovement(replacement, bannerImprovementKey, 0));
+                    });
+
         }
 
         return replacement;
