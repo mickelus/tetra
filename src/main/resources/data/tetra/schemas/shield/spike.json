@@ -18,7 +18,7 @@
                 "hammer": 3
             },
             "moduleKey": "shield/spike",
-            "moduleVariant": "spike/bronze"
+            "moduleVariant": "spike/iron"
         },
         {
             "material": {
@@ -28,7 +28,7 @@
                 "hammer": 3
             },
             "moduleKey": "shield/spike",
-            "moduleVariant": "spike/silver"
+            "moduleVariant": "spike/electrum"
         },
         {
             "material": {
