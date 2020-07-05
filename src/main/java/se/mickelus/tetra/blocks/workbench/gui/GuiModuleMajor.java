@@ -132,8 +132,8 @@ public class GuiModuleMajor extends GuiModule {
         improvementElements = new GuiModuleImprovement[improvements.length];
         for (int i = 0; i < improvements.length; i++) {
             final String improvementKey = improvements[i];
-            int currentValue = module.getImprovementLevel(itemStack, improvements[i]);
-            int previewValue = previewModule.getImprovementLevel(previewStack, improvements[i]);
+            int currentValue = module.getImprovementLevel(itemStack, improvementKey);
+            int previewValue = previewModule.getImprovementLevel(previewStack, improvementKey);
             int color;
 
             if (currentValue == -1) {
