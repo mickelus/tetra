@@ -63,7 +63,7 @@
                 "tag": "forge:ingots/tin"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/buckler",
             "moduleVariant": "buckler/tin"
@@ -73,7 +73,7 @@
                 "tag": "forge:ingots/silver"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/buckler",
             "moduleVariant": "buckler/silver"

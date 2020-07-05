@@ -52,7 +52,7 @@
                 "tag": "forge:ingots/copper"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/heater",
             "moduleVariant": "heater/copper"
@@ -62,7 +62,7 @@
                 "tag": "forge:ingots/tin"
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/heater",
             "moduleVariant": "heater/tin"

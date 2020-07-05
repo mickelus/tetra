@@ -53,7 +53,7 @@
                 "count": 2
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/tower",
             "moduleVariant": "tower/copper"
@@ -64,7 +64,7 @@
                 "count": 2
             },
             "requiredCapabilities": {
-                "hammer": 3
+                "hammer": 2
             },
             "moduleKey": "shield/tower",
             "moduleVariant": "tower/tin"
