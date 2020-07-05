@@ -62,6 +62,21 @@ public class ConfigHandler {
         // misc config
         builder.push("misc");
 
+        enableBow = builder
+                .comment("Enable modular bows")
+                .worldRestart()
+                .define("bow", true);
+
+        enableSingle = builder
+                .comment("Enable modular single headed implements")
+                .worldRestart()
+                .define("single_headed", true);
+
+        enableShield = builder
+                .comment("Enable modular shields")
+                .worldRestart()
+                .define("shield", true);
+
         development = builder
                 .comment("Enables commands & data reloading functionality useful for development, has a negative impact on performance")
                 .worldRestart()
@@ -142,11 +157,6 @@ public class ConfigHandler {
                 .comment("Toggles & config for experimental features")
                 .push("experimental");
 
-        enableBow = builder
-                .comment("Enable modular bows")
-                .worldRestart()
-                .define("bow", true);
-
         honeBowBase = builder
                 .comment("The base value for number of uses required before a bow can be honed")
                 .defineInRange("hone_bow_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -155,11 +165,6 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_bow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-        enableSingle = builder
-                .comment("Enable modular single headed implements")
-                .worldRestart()
-                .define("single_headed", true);
-
         honeSingleBase = builder
                 .comment("The base value for number of uses required before a single headed implement can be honed")
                 .defineInRange("hone_single_headed_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -167,11 +172,6 @@ public class ConfigHandler {
         honeSingleIntegrityMultiplier = builder
                 .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
-
-        enableShield = builder
-                .comment("Enable modular shields")
-                .worldRestart()
-                .define("shield", false);
 
         honeShieldBase = builder
                 .comment("The base value for number of uses required before a shield can be honed")
