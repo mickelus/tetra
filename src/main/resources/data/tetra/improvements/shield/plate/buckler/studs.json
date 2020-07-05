@@ -1,12 +1,176 @@
 [
     {
-        "key": "shield/studs",
-        "integrity": -1,
+        "key": "shield/studs_iron",
+        "group": "face",
         "durability": 25,
+        "integrity": -1,
         "models": [
             {
                 "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/studs"
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "iron_dark"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_gold",
+        "group": "face",
+        "durability": 5,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "gold"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_copper",
+        "group": "face",
+        "durability": 19,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "copper"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_tin",
+        "group": "face",
+        "durability": 23,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "tin"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_silver",
+        "group": "face",
+        "durability": 6,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "silver"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_nickel",
+        "group": "face",
+        "durability": 23,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "nickel"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_lead",
+        "group": "face",
+        "durability": 15,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "lead"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_bronze",
+        "group": "face",
+        "durability": 33,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "bronze"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_steel",
+        "group": "face",
+        "durability": 40,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "steel"
+            },
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/studs_electrum",
+        "group": "face",
+        "durability": 6,
+        "integrity": -1,
+        "models": [
+            {
+                "type": "shield_buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs",
+                "tint": "electrum"
             },
             {
                 "type": "shield_buckler",
