@@ -2,7 +2,7 @@
     {
         "key": "shield/studs_iron",
         "group": "face",
-        "durability": 50,
+        "durability": 48,
         "integrity": -1,
         "models": [
             {
