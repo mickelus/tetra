@@ -20,11 +20,194 @@
                 {
                     "type": "shield_boss",
                     "location": "tetra:items/module/shield/boss/spike",
-                    "tint": "iron"
-                },
+                    "tint": "iron_dark"
+                }
+            ]
+        },
+
+        {
+            "key": "spike/gold",
+            "durability": 6,
+            "integrity": -1,
+            "damage": -0.5,
+            "effects": {
+                "blockingReflect": [35, 0.8]
+            },
+            "glyph": {
+                "tint": "gold_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
                 {
                     "type": "shield_boss",
-                    "location": "tetra:items/module/shield/boss/spike_shadow"
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "gold"
+                }
+            ]
+        },
+        {
+            "key": "spike/copper",
+            "durability": 26,
+            "integrity": -1,
+            "effects": {
+                "blockingReflect": [35, 0.7]
+            },
+            "glyph": {
+                "tint": "copper_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "copper"
+                }
+            ]
+        },
+        {
+            "key": "spike/tin",
+            "durability": 30,
+            "integrity": -1,
+            "effects": {
+                "blockingReflect": [35, 0.7]
+            },
+            "glyph": {
+                "tint": "tin_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "tin"
+                }
+            ]
+        },
+        {
+            "key": "spike/silver",
+            "durability": 8,
+            "integrity": -1,
+            "damage": -0.5,
+            "effects": {
+                "blockingReflect": [35, 0.8]
+            },
+            "glyph": {
+                "tint": "silver_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "silver"
+                }
+            ]
+        },
+        {
+            "key": "spike/nickel",
+            "durability": 31,
+            "integrity": -1,
+            "damage": -0.5,
+            "effects": {
+                "blockingReflect": [30, 1]
+            },
+            "glyph": {
+                "tint": "nickel_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "nickel"
+                }
+            ]
+        },
+        {
+            "key": "spike/lead",
+            "durability": 20,
+            "integrity": -1,
+            "attackSpeed": 1,
+            "effects": {
+                "blockingReflect": [20, 1.5]
+            },
+            "glyph": {
+                "tint": "lead_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "lead"
+                }
+            ]
+        },
+        {
+            "key": "spike/bronze",
+            "durability": 42,
+            "integrity": -1,
+            "effects": {
+                "blockingReflect": [30, 1]
+            },
+            "glyph": {
+                "tint": "bronze_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "bronze"
+                }
+            ]
+        },
+        {
+            "key": "spike/steel",
+            "durability": 51,
+            "integrity": -2,
+            "attackSpeed": 0.5,
+            "damage": 1,
+            "effects": {
+                "blockingReflect": [30, 1.5]
+            },
+            "glyph": {
+                "tint": "steel_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "steel"
+                }
+            ]
+        },
+        {
+            "key": "spike/electrum",
+            "durability": 7,
+            "integrity": -1,
+            "effects": {
+                "blockingReflect": [35, 0.8]
+            },
+            "glyph": {
+                "tint": "electrum_glyph",
+                "textureX": 96,
+                "textureY": 16
+            },
+            "models": [
+                {
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/spike",
+                    "tint": "electrum"
                 }
             ]
         }

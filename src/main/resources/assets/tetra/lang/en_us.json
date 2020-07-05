@@ -2682,6 +2682,15 @@
   "tetra.module.shield/spike.description": "A shield spike that has a chance to damage the attacker when blocking melee attacks.",
 
   "tetra.variant.spike/iron": "Iron spike",
+  "tetra.variant.spike/gold": "Golden spike",
+  "tetra.variant.spike/copper": "Copper spike",
+  "tetra.variant.spike/tin": "Tin spike",
+  "tetra.variant.spike/silver": "Silver spike",
+  "tetra.variant.spike/nickel": "Nickel spike",
+  "tetra.variant.spike/lead": "Lead spike",
+  "tetra.variant.spike/electrum": "Electrum spike",
+  "tetra.variant.spike/bronze": "Bronze spike",
+  "tetra.variant.spike/steel": "Steel spike",
 
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
   "tetra.advancements.story.more_upgrades.description": "Craft a mallet from sticks and logs\n\n§8§oTetra begins",
