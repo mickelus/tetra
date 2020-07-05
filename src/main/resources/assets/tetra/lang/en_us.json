@@ -2673,6 +2673,15 @@
   "tetra.module.shield/sturdy_boss.description": "A sturdy boss that allows the shield to be used to bash entities.",
 
   "tetra.variant.sturdy_boss/iron": "Sturdy iron boss",
+  "tetra.variant.sturdy_boss/gold": "Sturdy golden boss",
+  "tetra.variant.sturdy_boss/copper": "Sturdy copper boss",
+  "tetra.variant.sturdy_boss/tin": "Sturdy tin boss",
+  "tetra.variant.sturdy_boss/silver": "Sturdy silver boss",
+  "tetra.variant.sturdy_boss/nickel": "Sturdy nickel boss",
+  "tetra.variant.sturdy_boss/lead": "Sturdy lead boss",
+  "tetra.variant.sturdy_boss/electrum": "Sturdy electrum boss",
+  "tetra.variant.sturdy_boss/bronze": "Sturdy bronze boss",
+  "tetra.variant.sturdy_boss/steel": "Sturdy steel boss",
 
   "tetra/schema/shield/spike.name": "Spike",
   "tetra/schema/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.",
