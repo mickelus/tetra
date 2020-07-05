@@ -8,7 +8,7 @@
             {
                 "type": "shield_tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "iron_dark"
+                "tint": "iron"
             },
             {
                 "type": "shield_tower",

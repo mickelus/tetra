@@ -8,7 +8,7 @@
             {
                 "type": "shield_heater",
                 "location": "tetra:items/module/shield/plate/heater/improvements/trim",
-                "tint": "iron_dark"
+                "tint": "iron"
             },
             {
                 "type": "shield_heater",
