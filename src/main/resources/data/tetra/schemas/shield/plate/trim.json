@@ -13,10 +13,133 @@
                 "item": "minecraft:iron_ingot"
             },
             "requiredCapabilities": {
-                "hammer": 1
+                "hammer": 2
             },
             "improvements": {
-                "shield/trim": 0
+                "shield/trim_iron": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:gold_ingot"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "improvements": {
+                "shield/trim_gold": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/copper"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "improvements": {
+                "shield/trim_copper": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/tin"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "improvements": {
+                "shield/trim_tin": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/silver"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/trim_silver": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/nickel"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/trim_nickel": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/lead"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/trim_lead": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/electrum"
+            },
+            "requiredCapabilities": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/trim_electrum": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/bronze"
+            },
+            "requiredCapabilities": {
+                "hammer": 2
+            },
+            "improvements": {
+                "shield/trim_bronze": 0
+            }
+        },
+        {
+            "material": {
+                "tag": "forge:ingots/steel"
+            },
+            "requiredCapabilities": {
+                "hammer": 4
+            },
+            "improvements": {
+                "shield/trim_steel": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 2
+            },
+            "requiredCapabilities": {
+                "cut": 2
+            },
+            "improvements": {
+                "shield/trim_leather": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 4
+            },
+            "requiredCapabilities": {
+                "cut": 1
+            },
+            "improvements": {
+                "shield/trim_hide": 0
             }
         },
         {
