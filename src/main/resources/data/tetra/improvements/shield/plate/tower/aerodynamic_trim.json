@@ -1,6 +1,6 @@
 [
     {
-        "key": "shield/aerodynamic_trim",
+        "key": "shield/aerodynamic_trim_iron",
         "group": "trim",
         "integrity": -1,
         "effects": {
@@ -9,7 +9,188 @@
         "models": [
             {
                 "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim"
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "iron"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_gold",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "gold"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_copper",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "copper"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_tin",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "tin"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_silver",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "silver"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_nickel",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "nickel"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_lead",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "lead"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_bronze",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "bronze"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_steel",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "steel"
+            },
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ]
+    },
+    {
+        "key": "shield/aerodynamic_trim_electrum",
+        "group": "trim",
+        "integrity": -1,
+        "effects": {
+            "throwable": 1
+        },
+        "models": [
+            {
+                "type": "shield_tower",
+                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim",
+                "tint": "electrum"
             },
             {
                 "type": "shield_tower",
