@@ -153,9 +153,14 @@ public class ModuleVariantData {
     public int magicCapacity = 0;
 
     /**
-     * Custom data for use by addon mods. Use whatever Json format the addon requires.
+     * Custom data for use by addon mods. Consult the addon mod for details on their own format.
+     *
+     * Json format:
+     * {
+     *     "example_mod:custom_data": (format specified by addon mod)
+     * }
      */
-    public Map<String, Object> custom = new HashMap<>();
+    public Map<ResourceLocation, Object> custom = new HashMap<>();
 
     public String getKey() {
         return key;

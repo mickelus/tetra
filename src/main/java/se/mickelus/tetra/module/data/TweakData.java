@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module.data;
 
+import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 
@@ -56,11 +57,11 @@ public class TweakData {
         return baseStats.magicCapacity + step * stepStats.magicCapacity;
     }
 
-    public Map<String, Object> getBaseStatsCustom() {
+    public Map<ResourceLocation, Object> getBaseStatsCustom() {
         return baseStats.custom;
     }
 
-    public Map<String, Object> getStepStatsCustom() {
+    public Map<ResourceLocation, Object> getStepStatsCustom() {
         return stepStats.custom;
     }
 }
