@@ -4,6 +4,9 @@ import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.Priority;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ModuleVariantData contain stats and information for a variant of an item module.
  * Example json:
@@ -148,6 +151,11 @@ public class ModuleVariantData {
     public ModuleModel[] models = new ModuleModel[0];
 
     public int magicCapacity = 0;
+
+    /**
+     * Custom data for use by addon mods. Use whatever Json format the addon requires.
+     */
+    public Map<String, Object> custom = new HashMap<>();
 
     public String getKey() {
         return key;

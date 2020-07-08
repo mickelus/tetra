@@ -3,6 +3,8 @@ package se.mickelus.tetra.module.data;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.module.ItemEffect;
 
+import java.util.Map;
+
 public class TweakData {
     public String variant;
     public String improvement;
@@ -52,5 +54,13 @@ public class TweakData {
 
     public int getMagicCapacity(int step) {
         return baseStats.magicCapacity + step * stepStats.magicCapacity;
+    }
+
+    public Map<String, Object> getBaseStatsCustom() {
+        return baseStats.custom;
+    }
+
+    public Map<String, Object> getStepStatsCustom() {
+        return stepStats.custom;
     }
 }

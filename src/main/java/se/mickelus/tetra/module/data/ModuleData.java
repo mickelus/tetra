@@ -5,6 +5,8 @@ import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -29,6 +31,11 @@ public class ModuleData {
     public ResourceLocation tweakKey;
     public ResourceLocation[] improvements = new ResourceLocation[0];
     public ModuleVariantData[] variants = new ModuleVariantData[0];
+
+    /**
+     * Custom data for use by addon mods. Use whatever Json format the addon requires.
+     */
+    public Map<String, Object> custom = new HashMap<>();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
