@@ -874,40 +874,6 @@ public abstract class ItemModular extends TetraItem implements IItemModular, ICa
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * Apply special effects and possibly consume required resources after this item has been used to craft or upgrade
-     * another item. This is called once for each capability used by the craft, which this item provide.
-     * @param providerStack The providing stack, the itemstack for this item
-     * @param targetStack The itemstack which is being upgraded/crafted/altered in some way
-     * @param player The player performing the actions
-     * @param capability The capability used
-     * @param capabilityLevel The level of the used capability
-     * @param consumeResources
-     */
-    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
-            Capability capability, int capabilityLevel, boolean consumeResources) {
-        ItemStack result = targetStack.copy();
-
-        return result;
-    }
-
-    /**
-     * Apply special effects and possibly consume required resources after this item has been used to perform a
-     * workbench action.
-     * @param providerStack The providing stack, the itemstack for this item
-     * @param targetStack The itemstack which the action is performed upon
-     * @param player The player performing the action
-     * @param capability The capability used
-     * @param capabilityLevel The level of the used capability
-     * @param consumeResources
-     */
-    public ItemStack onActionConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
-            Capability capability, int capabilityLevel, boolean consumeResources) {
-        ItemStack result = targetStack.copy();
-
-        return result;
-    }
-
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         if (isBroken(itemStack)) {
             return -1;

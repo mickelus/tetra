@@ -5,8 +5,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -297,18 +300,20 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     public void tick() {
         super.tick();
 
-        World world = tileEntity.getWorld();
-        BlockPos pos = tileEntity.getPos();
-        int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
-
         inventoryInfo.update(tileEntity.getCurrentSchema(), tileEntity.getCurrentSlot(), currentTarget);
 
-        if (tileEntity.getCurrentSchema() != null && slotDetail.isVisible()) {
-            slotDetail.update(viewingPlayer, tileEntity, availableCapabilities);
-        }
+        World world = tileEntity.getWorld();
+        if (world != null && world.getGameTime() % 20 == 0) {
+            BlockPos pos = tileEntity.getPos();
+            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
-        if (actionList.isVisible()) {
-            actionList.updateCapabilities(availableCapabilities);
+            if (tileEntity.getCurrentSchema() != null && slotDetail.isVisible()) {
+                slotDetail.update(viewingPlayer, tileEntity, availableCapabilities);
+            }
+
+            if (actionList.isVisible()) {
+                actionList.updateCapabilities(availableCapabilities);
+            }
         }
     }
 

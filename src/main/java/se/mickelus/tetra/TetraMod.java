@@ -48,6 +48,8 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
+import se.mickelus.tetra.blocks.rack.RackBlock;
+import se.mickelus.tetra.blocks.rack.RackTile;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -158,7 +160,8 @@ public class TetraMod {
                 new CoreExtractorBaseBlock(),
                 new CoreExtractorPistonBlock(),
                 new CoreExtractorPipeBlock(),
-                new SeepingBedrockBlock()
+                new SeepingBedrockBlock(),
+                new RackBlock()
         };
 
         items = new Item[] {
@@ -358,6 +361,10 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(RackTile::new, RackBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, RackBlock.unlocalizedName));
         }
 
         @SubscribeEvent

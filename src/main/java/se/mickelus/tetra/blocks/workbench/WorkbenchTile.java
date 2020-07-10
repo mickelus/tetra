@@ -40,6 +40,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class WorkbenchTile extends TileEntity implements INamedContainerProvider {
     public static final String unlocalizedName = "workbench";
@@ -160,8 +161,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
                             if (toolbeltResult == null) {
                                 CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                        .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
-                                                player, true));
+                                        .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack, player,
+                                                capability, requiredLevel, true));
                             }
 
                         }
@@ -295,7 +296,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     } else {
                         ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
                         upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
+                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, capability, requiredLevel, true))
+                                .filter(Objects::nonNull)
                                 .orElse(upgradedStack);
                     }
                 }

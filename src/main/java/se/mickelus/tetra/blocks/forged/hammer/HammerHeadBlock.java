@@ -64,8 +64,13 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     }
 
     @Override
+    public boolean canProvideCapabilities(World world, BlockPos pos, BlockPos targetPos) {
+        return pos.equals(targetPos.up());
+    }
+
+    @Override
     public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
-        BlockPos basePos = pos.offset(Direction.UP);
+        BlockPos basePos = pos.up();
         if (world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
@@ -78,7 +83,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
 
     @Override
     public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
-        BlockPos basePos = pos.offset(Direction.UP);
+        BlockPos basePos = pos.up();
         if (Capability.hammer.equals(capability) && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
@@ -91,8 +96,8 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
 
     @Override
     public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            boolean consumeResources) {
-        BlockPos basePos = pos.offset(Direction.UP);
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             baseBlock.consumeFuel(world, basePos);
@@ -107,8 +112,8 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
 
     @Override
     public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            boolean consumeResources) {
-        BlockPos basePos = pos.offset(Direction.UP);
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             baseBlock.consumeFuel(world, basePos);

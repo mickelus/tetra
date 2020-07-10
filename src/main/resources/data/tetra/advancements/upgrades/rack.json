@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:rack"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.rack.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.rack.description"
+        }
+    },
+    "parent": "tetra:upgrades/workbench",
+    "criteria": {
+        "rack": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "tetra:rack"
+            }
+        }
+    }
+}

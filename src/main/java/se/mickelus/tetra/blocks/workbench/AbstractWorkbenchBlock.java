@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,11 +21,14 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorkbenchBlock extends TetraBlock {
     public AbstractWorkbenchBlock(Properties properties) {
@@ -62,44 +66,63 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock {
 
     @Override
     public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
-        BlockState accessoryBlockState = world.getBlockState(pos.offset(Direction.UP));
-        if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
-            ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
-            return block.getCapabilities(world, pos.offset(Direction.UP), accessoryBlockState);
-        }
-        return Collections.emptyList();
+        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
+                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideCapabilities(world, pair.getFirst(), pos))
+                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getCapabilities(world, pair.getFirst(), pair.getSecond()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
-        BlockState accessoryBlockState = world.getBlockState(pos.offset(Direction.UP));
-        if (accessoryBlockState.getBlock() instanceof ITetraBlock) {
-            ITetraBlock block = (ITetraBlock) accessoryBlockState.getBlock();
-            return block.getCapabilityLevel(world, pos.offset(Direction.UP), accessoryBlockState, capability);
-        }
-        return -1;
+        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
+                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideCapabilities(world, pair.getFirst(), pos))
+                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getCapabilityLevel(world, pair.getFirst(), pair.getSecond(), capability))
+                .max(Integer::compare)
+                .orElse(-1);
+    }
+
+    private Pair<BlockPos, BlockState> getProvidingBlockstate(World world, BlockPos pos, BlockState blockState, ItemStack targetStack,
+            Capability capability, int level) {
+        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
+                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideCapabilities(world, pair.getFirst(), pos))
+                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getCapabilityLevel(world, pair.getFirst(), pair.getSecond(), capability) >= level)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            boolean consumeResources) {
-        BlockPos topPos = pos.offset(Direction.UP);
-        if (world.getBlockState(topPos).getBlock() instanceof HammerHeadBlock) {
-            HammerHeadBlock hammer = (HammerHeadBlock) world.getBlockState(topPos).getBlock();
-            return hammer.onCraftConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredCapability, requiredLevel);
+
+        if (provider != null) {
+            ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
+            return block.onCraftConsumeCapability(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredCapability,
+                    requiredLevel, consumeResources);
         }
-        return targetStack;
+
+        return null;
     }
 
     @Override
     public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            boolean consumeResources) {
-        BlockPos topPos = pos.offset(Direction.UP);
-        if (world.getBlockState(topPos).getBlock() instanceof HammerHeadBlock) {
-            HammerHeadBlock hammer = (HammerHeadBlock) world.getBlockState(topPos).getBlock();
-            return hammer.onActionConsumeCapability(world, topPos, world.getBlockState(topPos), targetStack, player, consumeResources);
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredCapability, requiredLevel);
+
+        if (provider != null) {
+            ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
+            return block.onActionConsumeCapability(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredCapability,
+                    requiredLevel, consumeResources);
         }
-        return targetStack;
+
+        return null;
     }
 
     @Override

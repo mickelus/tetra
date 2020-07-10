@@ -40,6 +40,10 @@ public interface ITetraBlock {
         registry.register(item);
     }
 
+    default boolean canProvideCapabilities(World world, BlockPos pos, BlockPos targetPos) {
+        return false;
+    }
+
     default Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
         return Collections.emptyList();
     }
@@ -48,12 +52,13 @@ public interface ITetraBlock {
         return -1;
     }
 
-
-    default ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-        return targetStack;
+    default ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        return null;
     }
 
-    default ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player, boolean consumeResources) {
-        return targetStack;
+    default ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+        return null;
     }
 }

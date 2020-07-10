@@ -226,6 +226,9 @@
   "block.tetra.basic_workbench": "Workbench",
   "block.tetra.basic_workbench.description": "Right click a crafting table with a hammer to create a workbench",
 
+  "block.tetra.rack": "Rack",
+  "block.tetra.rack.description": "Items can be hung on the rack, right-click to add or remove an item.\nA tool hung on a rack near a workbench becomes available for crafting as if it was in the player inventory, the rack needs to be within a 3x3x3 area (centered one block above the workbench) for this to work.",
+
   "block.tetra.block_geode": "Geode block",
   "item.tetra.geode": "Geode",
   "item.tetra.geode.tooltip": "Breaking open at a workbench may yield valuable minerals\n\n§8Drops are affected by the fortune enchantment",
@@ -2798,6 +2801,8 @@
   "tetra.advancements.upgrades.tool_upgrade.description": "Place a vanilla tool such as a pickaxe, axe or a hoe in a workbench and upgrade it",
   "tetra.advancements.upgrades.workbench.title": "Bench mk II",
   "tetra.advancements.upgrades.workbench.description": "Upgrade a crafting table by right-clicking it with a mallet",
+  "tetra.advancements.upgrades.rack.title": "Hang Loose",
+  "tetra.advancements.upgrades.rack.description": "Place a rack near a workbench for easy access to your tools",
 
   "tetra.improvement.destabilized/haunted.name": "§5Destabilized: Haunted",
   "tetra.improvement.destabilized/haunted.description": "This module has been haunted and will sometimes turn against the item's wielder! Will disappear over time.",
