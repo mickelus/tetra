@@ -63,7 +63,7 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     public RackBlock() {
         super(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)
-                .hardnessAndResistance(2.0F, 3.0F)
+                .hardnessAndResistance(1.0F)
                 .sound(SoundType.WOOD));
 
         hasItem = true;
