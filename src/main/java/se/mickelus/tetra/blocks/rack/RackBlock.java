@@ -133,10 +133,7 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction direction = state.get(facingProp);
-        BlockPos blockpos = pos.offset(direction.getOpposite());
-        BlockState blockstate = worldIn.getBlockState(blockpos);
-        return blockstate.isSolidSide(worldIn, blockpos, direction);
+        return worldIn.getBlockState(pos.offset(state.get(facingProp).getOpposite())).getMaterial().isSolid();
     }
 
     @Override
