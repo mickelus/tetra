@@ -33,7 +33,7 @@ public class RackTESR extends TileEntityRenderer<RackTile> {
     @Override
     public void render(RackTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            Direction direction = tile.getWorld().getBlockState(tile.getPos()).get(RackBlock.facingProp);
+            Direction direction = tile.getBlockState().get(RackBlock.facingProp);
             Direction itemDirection = direction.rotateYCCW();
 
             matrixStack.push();
