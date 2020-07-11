@@ -182,6 +182,12 @@ public abstract class ItemModuleMajor extends ItemModule {
         NBTHelper.getTag(itemStack).remove(slot + ":" + improvement);
     }
 
+    public void removeEnchantments(ItemStack itemStack) {
+        Arrays.stream(improvements)
+                .filter(improvement -> improvement.enchantment)
+                .forEach(improvement -> removeImprovement(itemStack, improvement.key));
+    }
+
     @Override
     public TweakData[] getTweaks(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
