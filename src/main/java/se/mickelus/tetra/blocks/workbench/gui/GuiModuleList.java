@@ -68,7 +68,7 @@ public class GuiModuleList extends GuiElement {
         String[] majorModuleNames = item.getMajorModuleNames();
         String[] majorModuleKeys = item.getMajorModuleKeys();
         ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
-        GuiModuleOffsets offsets = GuiModuleOffsets.getMajorOffsets(item);
+        GuiModuleOffsets offsets = item.getMajorGuiOffsets();
         
         majorModuleElements = new GuiModuleMajor[majorModules.length];
 
@@ -96,7 +96,7 @@ public class GuiModuleList extends GuiElement {
         String[] minorModuleNames = item.getMinorModuleNames();
         String[] minorModuleKeys = item.getMinorModuleKeys();
         ItemModule[] minorModules = item.getMinorModules(itemStack);
-        GuiModuleOffsets offsets = GuiModuleOffsets.getMinorOffsets(item);
+        GuiModuleOffsets offsets = item.getMinorGuiOffsets();
 
         minorModuleElements = new GuiModule[minorModules.length];
 

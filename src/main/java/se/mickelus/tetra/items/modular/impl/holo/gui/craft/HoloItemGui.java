@@ -221,11 +221,11 @@ public class HoloItemGui extends GuiClickable {
     private void setupSlots(ModularItem item, Consumer<String> onSlotSelect) {
         String[] majorModuleNames = item.getMajorModuleNames();
         String[] majorModuleKeys = item.getMajorModuleKeys();
-        GuiModuleOffsets majorOffsets = GuiModuleOffsets.getMajorOffsets(item);
+        GuiModuleOffsets majorOffsets = item.getMajorGuiOffsets();
 
         String[] minorModuleNames = item.getMinorModuleNames();
         String[] minorModuleKeys = item.getMinorModuleKeys();
-        GuiModuleOffsets minorOffsets = GuiModuleOffsets.getMinorOffsets(item);
+        GuiModuleOffsets minorOffsets = item.getMinorGuiOffsets();
 
         for (int i = 0; i < majorModuleNames.length; i++) {
             final int x = majorOffsets.getX(i);

@@ -213,6 +213,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))

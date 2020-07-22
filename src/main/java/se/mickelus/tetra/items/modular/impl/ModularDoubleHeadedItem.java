@@ -12,12 +12,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchemaRegistry;
@@ -44,6 +47,11 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     public final static String rightSuffix = "_right";
 
     private static final String unlocalizedName = "modular_double";
+
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(6, 1);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ModularDoubleHeadedItem instance;
@@ -151,6 +159,18 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         return getAllModules(itemStack).stream()
                 .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
                 .reduce(damageModifier, (a, b) -> a * b);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMajorGuiOffsets() {
+        return majorOffsets;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMinorGuiOffsets() {
+        return minorOffsets;
     }
 }
 

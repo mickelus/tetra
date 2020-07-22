@@ -2,10 +2,13 @@ package se.mickelus.tetra.items.modular.impl;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.schema.RemoveSchema;
@@ -23,6 +26,11 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     public final static String bindingKey = "single/binding";
 
     private static final String unlocalizedName = "modular_single";
+
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, -3, -11, 21);
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 0);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ModularSingleHeadedItem instance;
@@ -66,11 +74,24 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
         if (isThrowing(itemStack, entity)) {
             return "throwing";
         }
         return null;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMajorGuiOffsets() {
+        return majorOffsets;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMinorGuiOffsets() {
+        return minorOffsets;
     }
 }
 

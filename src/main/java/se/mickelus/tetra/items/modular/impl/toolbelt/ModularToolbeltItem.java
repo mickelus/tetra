@@ -17,10 +17,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
@@ -48,6 +51,11 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     public final static String slot1Suffix = "_slot1";
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
+
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ModularToolbeltItem instance;
@@ -161,5 +169,17 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
                 })
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMajorGuiOffsets() {
+        return majorOffsets;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMinorGuiOffsets() {
+        return minorOffsets;
     }
 }

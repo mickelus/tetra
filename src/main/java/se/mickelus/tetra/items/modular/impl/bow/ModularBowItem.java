@@ -15,10 +15,13 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
@@ -36,7 +39,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ModularBowItem extends ModularItem {
-
     public final static String staveKey = "bow/stave";
     public final static String stringKey = "bow/string";
     public final static String riserKey = "bow/riser";
@@ -46,6 +48,11 @@ public class ModularBowItem extends ModularItem {
     protected ModuleModel arrowModel0 = new ModuleModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_0"));
     protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_1"));
     protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_2"));
+
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
+    @OnlyIn(Dist.CLIENT)
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
 
     protected ItemStack vanillaBow;
 
@@ -340,6 +347,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
@@ -358,5 +366,17 @@ public class ModularBowItem extends ModularItem {
         }
 
         return models;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMajorGuiOffsets() {
+        return majorOffsets;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiModuleOffsets getMinorGuiOffsets() {
+        return minorOffsets;
     }
 }
