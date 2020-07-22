@@ -19,7 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchemaRegistry;
@@ -35,7 +35,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ModularBowItem extends ItemModular {
+public class ModularBowItem extends ModularItem {
 
     public final static String staveKey = "bow/stave";
     public final static String stringKey = "bow/string";

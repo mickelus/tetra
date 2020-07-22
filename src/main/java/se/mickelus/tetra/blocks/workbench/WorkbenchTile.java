@@ -29,7 +29,7 @@ import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.network.PacketHandler;
@@ -152,8 +152,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                         int requiredLevel = action.getCapabilityLevel(targetStack, capability);
                         ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
                         if (!providingStack.isEmpty()) {
-                            if (providingStack.getItem() instanceof ItemModular) {
-                                ((ItemModular) providingStack.getItem()).onActionConsumeCapability(providingStack,
+                            if (providingStack.getItem() instanceof ModularItem) {
+                                ((ModularItem) providingStack.getItem()).onActionConsumeCapability(providingStack,
                                         targetStack, player, capability, requiredLevel,true);
                             }
                         } else {
@@ -276,8 +276,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             float severity = currentSchema.getSeverity(targetStack, materialsAltered, currentSlot);
             upgradedStack = currentSchema.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
-            if (upgradedStack.getItem() instanceof ItemModular) {
-                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
+            if (upgradedStack.getItem() instanceof ModularItem) {
+                ((ModularItem) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
             // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
@@ -285,8 +285,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materials, capability);
                 ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
                 if (!providingStack.isEmpty()) {
-                    if (providingStack.getItem() instanceof ItemModular) {
-                        upgradedStack = ((ItemModular) providingStack.getItem()).onCraftConsumeCapability(providingStack,
+                    if (providingStack.getItem() instanceof ModularItem) {
+                        upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsumeCapability(providingStack,
                                 upgradedStack, player, capability, requiredLevel,true);
                     }
                 } else {
@@ -335,7 +335,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void tweak(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         handler.ifPresent(handler -> {
             ItemStack tweakedStack = getTargetItemStack().copy();
-            CastOptional.cast(tweakedStack.getItem(), ItemModular.class)
+            CastOptional.cast(tweakedStack.getItem(), ModularItem.class)
                     .ifPresent(item -> item.tweak(tweakedStack, slot, tweaks));
 
             handler.setStackInSlot(0, tweakedStack);

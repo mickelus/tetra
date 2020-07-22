@@ -33,7 +33,7 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -117,8 +117,8 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     public void applyEffects(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player) {
-        if (hasEffect(world, world.getBlockState(pos), EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
+        if (hasEffect(world, world.getBlockState(pos), EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) itemStack.getItem();
             int damage = (int) (itemStack.getMaxDamage() * 0.1);
             item.applyDamage(damage, itemStack, player);
         }

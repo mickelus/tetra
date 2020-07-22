@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
@@ -23,7 +23,7 @@ public class StatGetterDamageMelee implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getDamageModifier(itemStack) + (module.getDamageMultiplierModifier(itemStack) - 1) * getValue(player, itemStack))
                 .orElse(0d);
@@ -31,7 +31,7 @@ public class StatGetterDamageMelee implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> {
                     ImprovementData data = module.getImprovement(itemStack, improvement);

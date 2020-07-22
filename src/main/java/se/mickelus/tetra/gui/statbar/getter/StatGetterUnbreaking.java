@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -14,7 +14,7 @@ public class StatGetterUnbreaking implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .map(level -> 100 - 100d / (level + 1))
                 .orElse(0d);
@@ -22,11 +22,11 @@ public class StatGetterUnbreaking implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
-        int levelItem = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        int levelItem = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .orElse(0);
 
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModule.class))
                 .map(module -> module.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .map(level -> 100d / (levelItem - level + 1) - 100d / (levelItem + 1))
@@ -35,11 +35,11 @@ public class StatGetterUnbreaking implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        int levelItem = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        int levelItem = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .orElse(0);
 
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))
                 .map(data -> data.effects.getLevel(ItemEffect.unbreaking))

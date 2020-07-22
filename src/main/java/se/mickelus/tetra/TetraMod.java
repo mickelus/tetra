@@ -55,8 +55,6 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
-import se.mickelus.tetra.data.provider.BlockstateProvider;
-import se.mickelus.tetra.data.provider.EnchantmentProvider;
 import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
@@ -67,7 +65,7 @@ import se.mickelus.tetra.items.*;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
-import se.mickelus.tetra.items.journal.ItemJournal;
+import se.mickelus.tetra.items.modular.impl.holo.HolosphereItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
@@ -87,7 +85,6 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
-import se.mickelus.tetra.IntegrationHelper;
 
 import java.util.Arrays;
 
@@ -180,7 +177,7 @@ public class TetraMod {
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
                 new ItemVentPlate(),
-                new ItemJournal(),
+                new HolosphereItem(),
                 new EarthpiercerItem()
         };
 

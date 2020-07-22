@@ -9,7 +9,7 @@ import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.gui.statbar.getter.ILabelGetter;
 import se.mickelus.tetra.gui.statbar.getter.IStatGetter;
 import se.mickelus.tetra.gui.statbar.getter.ITooltipGetter;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collections;
@@ -116,7 +116,7 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     protected double getSlotValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
                         return statGetter.getValue(player, itemStack, slot, improvement);

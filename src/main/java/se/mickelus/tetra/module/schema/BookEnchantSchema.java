@@ -12,7 +12,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -70,7 +70,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
-        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, itemSlot))
                 .flatMap (mod -> CastOptional.cast(mod, ItemModuleMajor.class))
                 .orElse(null);
@@ -91,12 +91,12 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ItemModular;
+        return itemStack.getItem() instanceof ModularItem;
     }
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        return CastOptional.cast(targetStack.getItem(), ItemModular.class)
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .map(module -> module.getMagicCapacityGain(targetStack) > 0)
                 .orElse(false);
@@ -117,7 +117,7 @@ public class BookEnchantSchema implements UpgradeSchema {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .filter(mod -> mod instanceof ItemModuleMajor)
                 .map(mod -> (ItemModuleMajor) mod)
@@ -163,7 +163,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        return CastOptional.cast(targetStack.getItem(), ItemModular.class)
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)

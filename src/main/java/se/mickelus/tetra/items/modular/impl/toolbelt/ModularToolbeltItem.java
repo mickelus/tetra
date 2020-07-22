@@ -21,7 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ModularToolbeltItem extends ItemModular implements INamedContainerProvider {
+public class ModularToolbeltItem extends ModularItem implements INamedContainerProvider {
     public final static String unlocalizedName = "modular_toolbelt";
 
     public final static String slot1Key = "toolbelt/slot1";
@@ -57,6 +57,8 @@ public class ModularToolbeltItem extends ItemModular implements INamedContainerP
 
     public ModularToolbeltItem() {
         super(new Properties().maxStackSize(1).group(TetraItemGroup.instance));
+
+        canHone = false;
 
         setRegistryName(unlocalizedName);
 

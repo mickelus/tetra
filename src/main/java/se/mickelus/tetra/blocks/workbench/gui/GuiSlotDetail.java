@@ -14,7 +14,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
@@ -105,7 +105,7 @@ public class GuiSlotDetail extends GuiElement {
     }
 
     public void onTileEntityChange(PlayerEntity player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchema currentSchema) {
-        ItemModule module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        ItemModule module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
                 .orElse(null);
 

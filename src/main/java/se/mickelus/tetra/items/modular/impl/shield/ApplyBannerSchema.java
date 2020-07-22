@@ -11,7 +11,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schema.OutcomePreview;
@@ -108,7 +108,7 @@ public class ApplyBannerSchema implements UpgradeSchema {
 
         if (isMaterialsValid(itemStack, slot, materials)) {
 
-            CastOptional.cast(itemStack.getItem(), ItemModular.class)
+            CastOptional.cast(itemStack.getItem(), ModularItem.class)
                     .map(item -> item.getModuleFromSlot(itemStack, slot))
                     .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
                     .ifPresent(module -> {

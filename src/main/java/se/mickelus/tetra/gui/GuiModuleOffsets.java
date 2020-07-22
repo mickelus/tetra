@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui;
 
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
@@ -60,7 +60,7 @@ public class GuiModuleOffsets {
         return alignment[index];
     }
 
-    public static GuiModuleOffsets getMajorOffsets(ItemModular item) {
+    public static GuiModuleOffsets getMajorOffsets(ModularItem item) {
         if (item instanceof ModularToolbeltItem) {
             return toolbeltMajorOffsets;
         } else if (item instanceof ModularDoubleHeadedItem) {
@@ -74,7 +74,7 @@ public class GuiModuleOffsets {
         }
     }
 
-    public static GuiModuleOffsets getMinorOffsets(ItemModular item) {
+    public static GuiModuleOffsets getMinorOffsets(ModularItem item) {
         if (item instanceof ModularToolbeltItem) {
             return toolbeltMinorOffsets;
         } else if (item instanceof ModularDoubleHeadedItem) {

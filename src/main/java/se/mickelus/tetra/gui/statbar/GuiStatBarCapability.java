@@ -2,16 +2,14 @@ package se.mickelus.tetra.gui.statbar;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiCapability;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -162,7 +160,7 @@ public class GuiStatBarCapability extends GuiStatBar {
     }
 
     protected int getSlotLevel(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
                         return levelGetter.getValue(player, itemStack, slot, improvement);

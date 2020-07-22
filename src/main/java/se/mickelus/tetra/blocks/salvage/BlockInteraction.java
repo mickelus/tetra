@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.salvage;
 
 import com.google.common.base.Predicates;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,7 @@ import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -153,8 +152,8 @@ public class BlockInteraction {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getFace());
 
             if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isDamageable()) {
-                if (heldStack.getItem() instanceof ItemModular) {
-                    ((ItemModular) heldStack.getItem()).applyDamage(2, heldStack, player);
+                if (heldStack.getItem() instanceof ModularItem) {
+                    ((ModularItem) heldStack.getItem()).applyDamage(2, heldStack, player);
                 } else {
                     heldStack.damageItem(2, player, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
                 }

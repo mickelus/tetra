@@ -11,7 +11,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
 import se.mickelus.tetra.gui.statbar.GuiStatBase;
 import se.mickelus.tetra.gui.statbar.GuiStats;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -84,7 +84,7 @@ public class GuiStatGroup extends GuiElement {
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, PlayerEntity player) {
-        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ModularItem;
         setVisible(shouldShow);
         if (shouldShow) {
             barGroup.clearChildren();

@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.IModelConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;
@@ -75,7 +75,7 @@ public class ModularOverrideList extends ItemOverrideList {
     }
 
     protected IBakedModel getOverrideModel(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
-        ItemModular item  = (ItemModular) itemStack.getItem();
+        ModularItem item  = (ModularItem) itemStack.getItem();
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
@@ -84,7 +84,7 @@ public class ModularOverrideList extends ItemOverrideList {
     }
 
     protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, IBakedModel original) {
-        return new CacheKey(original, ((ItemModular) itemStack.getItem()).getModelCacheKey(itemStack, entity));
+        return new CacheKey(original, ((ModularItem) itemStack.getItem()).getModelCacheKey(itemStack, entity));
     }
 
     protected static class CacheKey {

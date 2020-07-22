@@ -13,7 +13,7 @@ import net.minecraft.util.SoundEvents;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schema.SchemaRarity;
 import se.mickelus.tetra.util.CastOptional;
@@ -32,7 +32,7 @@ public class SettleToast implements IToast {
     public SettleToast(ItemStack itemStack, String slot) {
         this.itemStack = itemStack;
 
-        ItemModule itemModule = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        ItemModule itemModule = CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .orElse(null);
 

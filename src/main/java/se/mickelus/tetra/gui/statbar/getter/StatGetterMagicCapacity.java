@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class StatGetterMagicCapacity implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getMajorModules(itemStack))
                 .map(Arrays::stream)
                 .orElse(Stream.empty())
@@ -26,7 +26,7 @@ public class StatGetterMagicCapacity implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot).getMagicCapacityGain(itemStack))
                 .orElse(0);
     }

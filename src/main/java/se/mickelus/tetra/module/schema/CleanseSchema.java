@@ -8,7 +8,7 @@ import net.minecraftforge.common.Tags;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
@@ -83,7 +83,7 @@ public class CleanseSchema implements UpgradeSchema {
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        return CastOptional.cast(targetStack.getItem(), ItemModular.class)
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
@@ -109,7 +109,7 @@ public class CleanseSchema implements UpgradeSchema {
 
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
@@ -141,7 +141,7 @@ public class CleanseSchema implements UpgradeSchema {
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        int cost = CastOptional.cast(targetStack.getItem(), ItemModular.class)
+        int cost = CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
@@ -151,7 +151,7 @@ public class CleanseSchema implements UpgradeSchema {
                 .mapToInt(improvement -> improvement.level + 1)
                 .sum();
 
-        cost += CastOptional.cast(targetStack.getItem(), ItemModular.class)
+        cost += CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)

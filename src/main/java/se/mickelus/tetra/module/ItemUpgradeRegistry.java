@@ -9,13 +9,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ItemUpgradeRegistry {
@@ -71,7 +70,7 @@ public class ItemUpgradeRegistry {
 
     /**
      * Attempts to get a modular itemstack to replace the given non-modular itemstack.
-     * Make sure to call {@link ItemModular#updateIdentifier} on the new item afterwards to make rendering cheaper.
+     * Make sure to call {@link ModularItem#updateIdentifier} on the new item afterwards to make rendering cheaper.
      * @param itemStack A non-modular itemstack
      * @return The modular counterpart to the given item, or an empty itemstack if there is none
      */
@@ -93,8 +92,8 @@ public class ItemUpgradeRegistry {
     }
 
     private void transferEnchantments(ItemStack sourceStack, ItemStack modularStack) {
-        if (modularStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) modularStack.getItem();
+        if (modularStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) modularStack.getItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
                 for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {

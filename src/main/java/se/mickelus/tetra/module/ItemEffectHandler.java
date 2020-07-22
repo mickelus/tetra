@@ -35,7 +35,7 @@ import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.effects.EarthboundEffect;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
@@ -114,12 +114,12 @@ public class ItemEffectHandler {
     }
 
     private int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        ModularItem item = (ModularItem) itemStack.getItem();
         return item.getEffectLevel(itemStack, effect);
     }
 
     private double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        ModularItem item = (ModularItem) itemStack.getItem();
         return item.getEffectEfficiency(itemStack, effect);
     }
 
@@ -128,12 +128,12 @@ public class ItemEffectHandler {
         Optional.ofNullable(event.getAttackingPlayer())
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                 .ifPresent(itemStack -> {
                     int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
                     int xp = event.getDroppedExperience();
                     if (intuitLevel > 0 && xp > 0) {
-                        ((ItemModular) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
+                        ((ModularItem) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
                     }
                 });
     }
@@ -144,7 +144,7 @@ public class ItemEffectHandler {
         if (!event.getSource().isUnblockable() && event.getEntityLiving().isActiveItemStackBlocking()) {
             Optional.ofNullable(event.getEntityLiving())
                     .map(LivingEntity::getActiveItemStack)
-                    .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                    .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                     .ifPresent(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         LivingEntity blocker = event.getEntityLiving();
@@ -176,7 +176,7 @@ public class ItemEffectHandler {
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                 .ifPresent(itemStack -> {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
                     if (quickStrikeLevel > 0) {
@@ -215,7 +215,7 @@ public class ItemEffectHandler {
                 .filter(entity -> entity instanceof PlayerEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                 .ifPresent(itemStack -> {
                     int penetratingLevel = getEffectLevel(itemStack, ItemEffect.armorPenetration);
                     if (penetratingLevel > 0 && event.getAmount() < penetratingLevel) {
@@ -243,7 +243,7 @@ public class ItemEffectHandler {
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ItemModular)
+                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                 .ifPresent(itemStack -> {
                     int backstabLevel = getEffectLevel(itemStack, ItemEffect.backstab);
                     if (backstabLevel > 0 && event.getTarget() instanceof LivingEntity) {
@@ -350,7 +350,7 @@ public class ItemEffectHandler {
                 breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                 itemStack.damageItem(2, breakingPlayer, t -> {});
 
-                ((ItemModular) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
+                ((ModularItem) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
 
                 if (breakingPlayer instanceof ServerPlayerEntity) {
                     sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));

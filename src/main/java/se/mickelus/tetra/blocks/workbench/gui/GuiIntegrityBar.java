@@ -10,7 +10,7 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,15 +47,15 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
-        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ModularItem;
         setVisible(shouldShow);
         if (shouldShow) {
             if (!previewStack.isEmpty()) {
-                integrityGain = ItemModular.getIntegrityGain(previewStack);
-                integrityCost = ItemModular.getIntegrityCost(previewStack);
+                integrityGain = ModularItem.getIntegrityGain(previewStack);
+                integrityCost = ModularItem.getIntegrityCost(previewStack);
             } else {
-                integrityGain = ItemModular.getIntegrityGain(itemStack);
-                integrityCost = ItemModular.getIntegrityCost(itemStack);
+                integrityGain = ModularItem.getIntegrityGain(itemStack);
+                integrityCost = ModularItem.getIntegrityCost(itemStack);
             }
 
             if (integrityGain + integrityCost < 0) {

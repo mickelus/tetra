@@ -9,7 +9,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -134,7 +134,7 @@ public class ConfigSchema extends BaseSchema {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !ItemModular.isHoneable(itemStack))) {
+        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !ModularItem.isHoneable(itemStack))) {
             return false;
         }
 
@@ -228,7 +228,7 @@ public class ConfigSchema extends BaseSchema {
             durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
         }
 
-        float honingFactor = CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
+        float honingFactor = CastOptional.cast(upgradedStack.getItem(), ModularItem.class)
                 .map(item -> 1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack))
                 .map(factor -> Math.min(Math.max(factor, 0), 1))
                 .orElse(0f);
@@ -259,9 +259,9 @@ public class ConfigSchema extends BaseSchema {
 
         if (consumeMaterials) {
             if (definition.hone) {
-                ItemModular.removeHoneable(upgradedStack);
-            } else if (ConfigHandler.moduleProgression.get() && !ItemModular.isHoneable(upgradedStack)) {
-                CastOptional.cast(upgradedStack.getItem(), ItemModular.class)
+                ModularItem.removeHoneable(upgradedStack);
+            } else if (ConfigHandler.moduleProgression.get() && !ModularItem.isHoneable(upgradedStack)) {
+                CastOptional.cast(upgradedStack.getItem(), ModularItem.class)
                         .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
             }
 
@@ -318,7 +318,7 @@ public class ConfigSchema extends BaseSchema {
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack, String slot) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        ModularItem item = (ModularItem) itemStack.getItem();
         ItemModule previousModule = item.getModuleFromSlot(itemStack, slot);
         if (previousModule != null) {
             previousModule.removeModule(itemStack);

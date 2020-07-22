@@ -53,7 +53,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ItemModularHandheld extends ItemModular {
+public class ItemModularHandheld extends ModularItem {
 
     /**
      * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these

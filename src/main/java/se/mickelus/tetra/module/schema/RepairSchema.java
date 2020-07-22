@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -25,16 +25,16 @@ public class RepairSchema extends BaseSchema {
 
     private String key = "repair";
 
-    private ItemModular item;
+    private ModularItem item;
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
-    public RepairSchema(ItemModular item) {
+    public RepairSchema(ModularItem item) {
         this.item = item;
     }
 
     public String getSlot(ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getRepairSlot(itemStack))
                 .orElse(null);
     }
@@ -52,7 +52,7 @@ public class RepairSchema extends BaseSchema {
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
         if (itemStack != null) {
-            return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+            return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                     .map(item -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix,
                             item.getRepairModuleName(itemStack)))
                     .orElse(I18n.format(localizationPrefix + key + descriptionSuffix));
@@ -73,7 +73,7 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getRepairDefinitions(itemStack))
                 .map(Collection::stream)
                 .orElse(Stream.empty())
@@ -85,8 +85,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        if (index == 0 && itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
+        if (index == 0 && itemStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) itemStack.getItem();
             return item.getRepairMaterialCount(itemStack, materialStack);
         }
         return 0;
@@ -94,8 +94,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
-        if (index == 0 && itemStack.getItem() instanceof ItemModular) {
-            return CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        if (index == 0 && itemStack.getItem() instanceof ModularItem) {
+            return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                     .map(item -> item.getRepairDefinitions(itemStack))
                     .map(Collection::stream)
                     .orElse(Stream.empty())
@@ -118,7 +118,7 @@ public class RepairSchema extends BaseSchema {
     @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
-        ItemModular item = (ItemModular) upgradedStack.getItem();
+        ModularItem item = (ModularItem) upgradedStack.getItem();
         int quantity = getRequiredQuantity(itemStack, 0, materials[0]);
 
         item.repair(upgradedStack);
@@ -143,8 +143,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        if (targetStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) targetStack.getItem();
+        if (targetStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) targetStack.getItem();
             return item.getRepairRequiredCapabilities(targetStack, materials[0]);
         }
         return Collections.emptyList();
@@ -152,8 +152,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        if (targetStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) targetStack.getItem();
+        if (targetStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) targetStack.getItem();
             return item.getRepairRequiredCapabilityLevel(targetStack, materials[0], capability);
         }
         return 0;
@@ -161,8 +161,8 @@ public class RepairSchema extends BaseSchema {
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        if (targetStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) targetStack.getItem();
+        if (targetStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) targetStack.getItem();
             return item.getRepairRequiredExperience(targetStack);
         }
         return 0;

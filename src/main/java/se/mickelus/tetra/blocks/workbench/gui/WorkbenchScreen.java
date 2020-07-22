@@ -5,11 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -26,7 +23,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schema.UpgradeSchema;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -193,7 +190,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private void previewTweaks(Map<String, Integer> tweakMap) {
         ItemStack previewStack = currentTarget.copy();
-        CastOptional.cast(previewStack.getItem(), ItemModular.class)
+        CastOptional.cast(previewStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(previewStack, selectedSlot))
                 .ifPresent(module -> tweakMap.forEach((tweakKey, step) -> {
                     if (module.hasTweak(previewStack, tweakKey)) {
@@ -214,7 +211,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         UpgradeSchema newSchema = tileEntity.getCurrentSchema();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (newTarget.getItem() instanceof ItemModular && currentSchema != null) {
+        if (newTarget.getItem() instanceof ModularItem && currentSchema != null) {
             newPreview = buildPreviewStack(currentSchema, newTarget, selectedSlot, tileEntity.getMaterials());
         }
 
@@ -248,7 +245,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         if (targetItemChanged || previewChanged || schemaChanged || slotChanged || materialsChanged) {
             updateItemDisplay(currentTarget, currentPreview);
 
-            if (currentTarget.getItem() instanceof ItemModular) {
+            if (currentTarget.getItem() instanceof ModularItem) {
                 slotDetail.onTileEntityChange(viewingPlayer, tileEntity, currentTarget, selectedSlot, currentSchema);
             }
         }
@@ -270,7 +267,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             if (currentSchema == null && selectedSlot == null) {
                 actionList.setVisible(true);
                 slotDetail.setVisible(false);
-            } else if (currentTarget.getItem() instanceof ItemModular) {
+            } else if (currentTarget.getItem() instanceof ModularItem) {
                 actionList.setVisible(false);
                 slotDetail.setVisible(selectedSlot != null);
             }
@@ -347,7 +344,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
         }
 
-        if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof ItemModular) {
+        if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof ModularItem) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
                 ItemStack previewStack = buildPreviewStack(currentSchema, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getStack()});

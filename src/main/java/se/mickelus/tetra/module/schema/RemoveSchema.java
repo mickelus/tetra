@@ -7,7 +7,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchemaRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -25,17 +25,17 @@ public class RemoveSchema extends BaseSchema {
 
     private String key = "remove";
 
-    private ItemModular item;
+    private ModularItem item;
     private String slot;
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
-    public RemoveSchema(ItemModular item, String slot) {
+    public RemoveSchema(ModularItem item, String slot) {
         this.item = item;
         this.slot = slot;
     }
 
-    public static void registerRemoveSchemas(ItemModular item) {
+    public static void registerRemoveSchemas(ModularItem item) {
         Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
                 .filter(slot -> !item.isModuleRequired(slot))
                 .forEach(slot -> {
@@ -103,7 +103,7 @@ public class RemoveSchema extends BaseSchema {
     @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
-        ItemModular item = (ItemModular) itemStack.getItem();
+        ModularItem item = (ModularItem) itemStack.getItem();
 
 
         float durabilityFactor = 0;
@@ -122,7 +122,7 @@ public class RemoveSchema extends BaseSchema {
         }
 
         if (consumeMaterials) {
-            if (ConfigHandler.moduleProgression.get() && ItemModular.isHoneable(upgradedStack)) {
+            if (ConfigHandler.moduleProgression.get() && ModularItem.isHoneable(upgradedStack)) {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
             }
 

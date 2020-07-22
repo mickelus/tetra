@@ -12,7 +12,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 
 public class FortuneBonusCondition implements ILootCondition {
     private float chance;
@@ -28,8 +28,8 @@ public class FortuneBonusCondition implements ILootCondition {
         if (requiredCapability != null) {
             ItemStack toolStack = context.get(LootParameters.TOOL);
 
-            if (toolStack != null && toolStack.getItem() instanceof ItemModular) {
-                if (((ItemModular) toolStack.getItem()).getCapabilityLevel(toolStack, requiredCapability) > capabilityLevel) {
+            if (toolStack != null && toolStack.getItem() instanceof ModularItem) {
+                if (((ModularItem) toolStack.getItem()).getCapabilityLevel(toolStack, requiredCapability) > capabilityLevel) {
                     fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, toolStack);
                 }
             }

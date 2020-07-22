@@ -11,7 +11,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ItemColors;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
@@ -157,7 +157,7 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        ModularItem item = (ModularItem) itemStack.getItem();
         CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
                 .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
     }

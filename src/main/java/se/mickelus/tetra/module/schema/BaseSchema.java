@@ -2,7 +2,7 @@ package se.mickelus.tetra.module.schema;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 
 public abstract class BaseSchema implements UpgradeSchema {
     @Override
@@ -16,7 +16,7 @@ public abstract class BaseSchema implements UpgradeSchema {
     @Override
     public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, final ItemStack[] materials, String slot) {
         ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, slot, null);
-        return ItemModular.getIntegrityGain(upgradedStack) + ItemModular.getIntegrityCost(upgradedStack) < 0;
+        return ModularItem.getIntegrityGain(upgradedStack) + ModularItem.getIntegrityCost(upgradedStack) < 0;
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.server.ServerWorld;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
@@ -46,8 +46,8 @@ public class UtilBooster {
     }
 
     public static int getBoosterLevel(ItemStack itemStack) {
-        if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) itemStack.getItem();
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof ModularItem) {
+            ModularItem item = (ModularItem) itemStack.getItem();
             return item.getEffectLevel(itemStack, ItemEffect.booster);
         }
 
