@@ -65,7 +65,7 @@ import se.mickelus.tetra.items.*;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
-import se.mickelus.tetra.items.modular.impl.holo.HolosphereItem;
+import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
@@ -177,8 +177,10 @@ public class TetraMod {
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
                 new ItemVentPlate(),
-                new HolosphereItem(),
+                new JournalItem(),
+                new ModularHolosphereItem(),
                 new EarthpiercerItem()
+//                new ReverberatingPearlItem()
         };
 
         if (ConfigHandler.enableBow.get()) {

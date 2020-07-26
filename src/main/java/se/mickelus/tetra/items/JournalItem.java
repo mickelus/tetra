@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.holo;
+package se.mickelus.tetra.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -11,31 +11,27 @@ import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HolosphereItem extends ModularItem {
+// todo 1.16: remove together with model json & texture
+@Deprecated
+public class JournalItem extends TetraItem {
 
-    // todo 1.16: rename
     private static final String unlocalizedName = "journal";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static HolosphereItem instance;
+    public static JournalItem instance;
 
-    public HolosphereItem() {
+    public JournalItem() {
         super(new Properties()
                 .maxStackSize(1)
                 .group(TetraItemGroup.instance));
-
-        canHone = false;
 
         setRegistryName(unlocalizedName);
     }

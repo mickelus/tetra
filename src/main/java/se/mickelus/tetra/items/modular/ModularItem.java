@@ -228,7 +228,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
     }
 
     /**
-     * Helper for manually adding modules, to be used incases like creative tab items which are populated before modules exists. Use
+     * Helper for manually adding modules, to be used in cases like creative tab items which are populated before modules exists. Use
      * with caution as this may break things if the module/variant doesn't actually end up existing.
      * @param itemStack
      * @param slot
@@ -240,6 +240,12 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         tag.putString(slot, module);
         tag.putString(moduleVariantKey, moduleVariant);
+    }
+
+    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
+        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        tag.putString(slot, module);
+        tag.putString(module + "_material", moduleVariant);
     }
 
     public ItemModule getModuleFromSlot(ItemStack itemStack, String slot) {

@@ -1,0 +1,12 @@
+[
+    {
+        "predicate": {
+            "item": "tetra:journal"
+        },
+        "item": "tetra:holo",
+        "modules": {
+            "holo/frame": ["holo/frame", "frame/ancient"],
+            "holo/core": ["holo/core", "core/dim"]
+        }
+    }
+]

@@ -2807,6 +2807,26 @@
   "tetra.improvement.destabilized/haunted.name": "§5Destabilized: Haunted",
   "tetra.improvement.destabilized/haunted.description": "This module has been haunted and will sometimes turn against the item's wielder! Will disappear over time.",
 
+  "tetra.slot.holo/frame": "Frame",
+  "tetra.slot.holo/core": "Core",
+  "tetra.slot.holo/attachment_0": "Attachment",
+  "tetra.slot.holo/attachment_1": "Attachment",
+
+  "tetra.module.holo/frame.name": "Ancient frame",
+  "tetra.module.holo/frame.item_name": "Holosphere",
+  "tetra.module.holo/frame.description": "A frame of what appears to be some sort of metal hosts the various parts that make up the sphere.",
+  "tetra.variant.frame/ancient": "Ancient frame",
+
+  "tetra.module.holo/core.name": "Dim core",
+  "tetra.module.holo/core.description": "At the center of the sphere sits a small cylinder, it's warm to the touch. Everything within the sphere is in some way connected to the cylinder.",
+  "tetra.variant.core/dim": "Dim core",
+
+  "tetra/schema/holo/scanner/scanner.name": "Scanner",
+  "tetra/schema/holo/scanner/scanner.description": "Harness the properies of an §lEye of Ender§r to unlock the scanning capabilities of the sphere.\nWhile the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
+  "tetra/schema/holo/scanner/scanner.slot1": "Eye of Ender",
+  "tetra.module.holo/scanner.description": "Allows the sphere to scan for ancient ruins, while the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
+  "tetra.variant.scanner/scanner": "Scanner",
+
   "tetra.localization.comment_generated": "=============================== VALUES BELOW ARE GENERATED ===============================",
 
   "tetra.improvement.enchantment/vanishing_curse.name": "§5Curse of Vanishing",

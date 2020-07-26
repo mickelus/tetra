@@ -15,7 +15,7 @@ public class GuiColors {
     public static final int negative = 0xff5555;
     public static final int positive = 0x55ff55;
 
-    public static final int scanner = 0xfd5645;
+    public static final int scanner = 0xf25a30;
 
     public static final int separator = normal;
 }

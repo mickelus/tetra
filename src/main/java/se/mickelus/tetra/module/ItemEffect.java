@@ -278,7 +278,29 @@ public enum ItemEffect {
      */
     flow,
 
-    overbowed;
+    overbowed,
+
+    //////////////////////////////////////////////////////////////
+    // holosphere
+    //////////////////////////////////////////////////////////////
+
+    /**
+     * Scanner range: Defines the range of the scanner functionality, the level of the effect decides max distance (in blocks) for scanning. Enables
+     * the scanning functionality if level > 0
+     */
+    scannerRange,
+
+    /**
+     * Scanner horizontal spread: Defines the width of the scan, the number of blips will be twice the level of the effect. Use even values or the UI
+     * will look strange.
+     */
+    scannerHorizontalSpread,
+
+    /**
+     * Scanner vertical spread: Defines how many vertical raytraces are performed when scanning, each level of the effect adds two (up & down) more
+     * vertical raytraces. The additional raytraces start at +-25 degrees and increments at 5 degrees per raytrace.
+     */
+    scannerVerticalSpread;
 
     public static final String hauntedKey = "destabilized/haunted";
 }

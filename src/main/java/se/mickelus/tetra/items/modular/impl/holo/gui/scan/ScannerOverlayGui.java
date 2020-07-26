@@ -1,133 +1,195 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.mgui.gui.*;
-import se.mickelus.mgui.gui.animation.AnimationChain;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiRoot;
+import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.module.ItemEffect;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ScannerOverlayGui extends GuiRoot {
 
     private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
 
-    private GuiElement scanner;
+    private ScannerBarGui scanner;
 
-    List<BlockPos> upHighlights;
-    List<BlockPos> midHighlights;
-    List<BlockPos> downHighlights;
+    BlockPos upHighlight;
+    BlockPos midHighlight;
+    BlockPos downHighlight;
 
-    int count = 30;
+    float widthRatio = 1;
 
-    protected AnimationChain[] upAnimations;
-    protected AnimationChain[] upHighlightAnimations;
-    protected AnimationChain[] midAnimations;
-    protected AnimationChain[] midHighlightAnimations;
-    protected AnimationChain[] downAnimations;
-    protected AnimationChain[] downHighlightAnimations;
+    ScannerSound sound;
+
+    // stats
+    boolean active;
+    int horizontalSpread = 44;
+    int verticalSpread = 3;
+    float cooldown = 1.2f;
+    int range = 32;
 
     public ScannerOverlayGui() {
         super(Minecraft.getInstance());
-        upHighlights = new ArrayList<>();
-        midHighlights = new ArrayList<>();
-        downHighlights = new ArrayList<>();
-        setup();
+
+        scanner = new ScannerBarGui(2, 15, horizontalSpread);
+        scanner.setAttachment(GuiAttachment.middleCenter);
+        scanner.setOpacity(0);
+        addChild(scanner);
+
+        sound = new ScannerSound(mc);
+
+        if (ConfigHandler.development.get()) {
+            MinecraftForge.EVENT_BUS.register(new ScannerDebugRenderer(this));
+        }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-//        if (event.side.isClient() && event.player.world.getGameTime() % 5 == 0) {
-//            highlights = BlockPos.getAllInBox(event.player.getPosition().add(-16, -5, -16), event.player.getPosition().add(16, 5, 16))
-//                    .filter(pos -> "tetra".equals(event.player.world.getBlockState(pos).getBlock().getRegistryName().getNamespace()))
-//                    .map(BlockPos::new)
-//                    .collect(Collectors.toList());
-//        }
+    private void updateStats() {
+        ItemStack itemStack = Stream.concat(mc.player.inventory.offHandInventory.stream(), mc.player.inventory.mainInventory.stream())
+                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
+                .findFirst()
+                .orElse(ItemStack.EMPTY);
 
-        if (event.side.isClient() && event.player.world.getGameTime() % 2 == 0) {
+        if (!itemStack.isEmpty()) {
+            ModularHolosphereItem item = (ModularHolosphereItem) itemStack.getItem();
+            horizontalSpread = item.getEffectLevel(itemStack, ItemEffect.scannerHorizontalSpread);
+            verticalSpread = item.getEffectLevel(itemStack, ItemEffect.scannerVerticalSpread);
+            range = item.getEffectLevel(itemStack, ItemEffect.scannerRange);
 
-            int offset = (int) (event.player.world.getGameTime() / 2) % (count * 3);
+            cooldown = Math.max((float) item.getSpeedModifier(itemStack), 1);
 
-            if (offset < count * 2) {
+            active = range > 0;
+
+            if (active && horizontalSpread != scanner.getHorizontalSpread()) {
+                scanner = new ScannerBarGui(2, 15, horizontalSpread);
+            }
+        } else {
+            active = false;
+        }
+    }
+
+    private void updateGuiVisibility() {
+        int scannerRange = Stream.of(mc.player.getHeldItemMainhand(), mc.player.getHeldItemOffhand())
+                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
+                .map(stack -> ((ModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.scannerRange))
+                .findFirst()
+                .orElse(0);
+
+        if (!scanner.isVisible() && scannerRange > 0) {
+            updateStats();
+        }
+
+        if (scannerRange > 0) {
+            scanner.show();
+        } else {
+            scanner.hide();
+        }
+    }
+
+
+    @SubscribeEvent
+    public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        sound.reset();
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        World world = mc.world;
+
+        if (world == null) {
+            return;
+        }
+
+        updateGuiVisibility();
+
+        if (world.getGameTime() % 200 == 0) {
+            updateStats();
+        }
+
+        if (active && world.getGameTime() % 2 == 0) {
+            PlayerEntity player = mc.player;
+            double fov = mc.gameSettings.fov;
+
+            int offset = (int) (world.getGameTime() / 2) % (int) (horizontalSpread * 2 * cooldown);
+            if (offset < horizontalSpread * 2) {
+                int yawOffset = (int) ((-horizontalSpread + offset) * fov / horizontalSpread * widthRatio);
                 if (offset % 2 == 0) {
-                    upHighlights = getPositions(event.player, event.player.world, -30,(-count + offset) * 3);
-                    downHighlights = getPositions(event.player, event.player.world, 30,(-count + offset) * 3);
-
-                    if (upHighlights.isEmpty()) {
-                        upAnimations[offset / 2].start();
-                    } else {
-                        upHighlightAnimations[offset / 2].start();
-                        event.player.playSound(SoundEvents.BLOCK_PORTAL_AMBIENT, 0.1f, 2f);
+                    upHighlight = IntStream.range(0, verticalSpread)
+                            .map(i -> i * -5 - 25)
+                            .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
+                            .filter(Objects::nonNull)
+                            .findAny()
+                            .orElse(null);
+                    scanner.highlightUp(offset / 2, upHighlight != null);
+                    if (upHighlight != null) {
+                        sound.activate();
                     }
 
-
-                    if (downHighlights.isEmpty()) {
-                        downAnimations[offset / 2].start();
-                    } else {
-                        downHighlightAnimations[offset / 2].start();
-                        event.player.playSound(SoundEvents.BLOCK_PORTAL_AMBIENT, 0.1f, 1.6f);
+                    downHighlight = IntStream.range(0, verticalSpread)
+                            .map(i -> i * 5 + 25)
+                            .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
+                            .filter(Objects::nonNull)
+                            .findAny()
+                            .orElse(null);
+                    scanner.highlightDown(offset / 2, downHighlight != null);
+                    if (downHighlight != null) {
+                        sound.activate();
                     }
-                } else if (offset / 2 < count - 1) {
-                    midHighlights = getPositions(event.player, event.player.world, 0,(-count + offset) * 3);
+                } else if (offset / 2 < horizontalSpread - 1) {
+                    midHighlight = IntStream.range(-1, 2)
+                            .map(i -> i * 10)
+                            .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
+                            .filter(Objects::nonNull)
+                            .findAny()
+                            .orElse(null);
 
-                    if (midHighlights.isEmpty()) {
-                        midAnimations[offset / 2].start();
-                    } else {
-                        midHighlightAnimations[offset / 2].start();
-                        event.player.playSound(SoundEvents.BLOCK_PORTAL_AMBIENT, 0.1f, 1.8f);
+                    scanner.highlightMid(offset / 2, midHighlight != null);
+                    if (midHighlight != null) {
+                        sound.activate();
                     }
+
                 }
             }
         }
     }
 
-    private List<BlockPos> getPositions(PlayerEntity player, World world, int pitchOffset, int yawOffset) {
-        float distance = 32;
+    @Nullable
+    private BlockPos getPositions(PlayerEntity player, World world, int pitchOffset, int yawOffset) {
         Vec3d eyePosition = player.getEyePosition(0);
         Vec3d lookVector = getVectorForRotation(player.getPitch(1) + pitchOffset, player.getYaw(1) + yawOffset);
-        Vec3d endVector = eyePosition.add(lookVector.x * distance, lookVector.y * distance, lookVector.z * distance);
+        Vec3d endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        ArrayList<BlockPos> result = new ArrayList<>();
-
-        IBlockReader.func_217300_a(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
+        return IBlockReader.func_217300_a(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
             BlockState blockState = world.getBlockState(blockPos);
 
             if (blockState.getBlock().getTags().contains(tag)) {
-                result.add(blockPos.toImmutable());
+                return blockPos.toImmutable();
             }
-
-//            IFluidState ifluidstate = world.getFluidState(blockPos);
-//            Vec3d start = ctx.func_222253_b();
-//            Vec3d end = ctx.func_222250_a();
-//            VoxelShape voxelshape = ctx.getBlockShape(blockstate, world, blockPos);
-//            BlockRayTraceResult blockraytraceresult = world.rayTraceBlocks(start, end, blockPos, voxelshape, blockstate);
-//            VoxelShape voxelshape1 = ctx.getFluidShape(ifluidstate, world, blockPos);
-//            BlockRayTraceResult blockraytraceresult1 = voxelshape1.rayTrace(start, end, blockPos);
-//            double d0 = blockraytraceresult == null ? Double.MAX_VALUE : ctx.func_222253_b().squareDistanceTo(blockraytraceresult.getHitVec());
-//            double d1 = blockraytraceresult1 == null ? Double.MAX_VALUE : ctx.func_222253_b().squareDistanceTo(blockraytraceresult1.getHitVec());
             return null;
         }, ctx -> null);
-
-        return result;
     }
 
     private Vec3d getVectorForRotation(float pitch, float yaw) {
@@ -138,92 +200,6 @@ public class ScannerOverlayGui extends GuiRoot {
         float f4 = MathHelper.cos(f);
         float f5 = MathHelper.sin(f);
         return new Vec3d(f3 * f4, -f5, f2 * f4);
-    }
-
-    private void setup() {
-        upAnimations = new AnimationChain[count];
-        midAnimations = new AnimationChain[count];
-        downAnimations = new AnimationChain[count];
-        upHighlightAnimations = new AnimationChain[count];
-        midHighlightAnimations = new AnimationChain[count];
-        downHighlightAnimations = new AnimationChain[count];
-
-        scanner = new GuiElement(1, 12, count * 6, 9);
-        scanner.setAttachment(GuiAttachment.topCenter);
-        addChild(scanner);
-
-        scanner.addChild(new GuiRect(-3, -2, scanner.getWidth() + 3, scanner.getHeight() + 2, 0).setOpacity(0.5f));
-
-        scanner.addChild(new GuiTexture(-2, -1, 2, 2, 1, 1, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.topLeft));
-        scanner.addChild(new GuiTexture(-2, -1, 2, 2, 1, 0, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.bottomLeft));
-
-        scanner.addChild(new GuiTexture(-1, -1, 2, 2, 0, 1, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.topRight));
-        scanner.addChild(new GuiTexture(-1, -1, 2, 2, 0, 0, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.bottomRight));
-
-
-        scanner.addChild(new GuiTexture(-2, -1, 3, 2, 0, 1, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.topCenter));
-        scanner.addChild(new GuiTexture(-2, -1, 3, 2, 0, 0, GuiTextures.hud).setOpacity(0.8f).setAttachment(GuiAttachment.bottomCenter));
-
-        for (int i = 0; i < count; i++) {
-            GuiElement up = new GuiTexture(i * 6, 0, 3, 3, GuiTextures.hud).setOpacity(0.3f);
-            scanner.addChild(up);
-            upAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, up).applyTo(new Applier.Opacity(0.7f)),
-                    new KeyframeAnimation(600, up).applyTo(new Applier.Opacity(0.3f)));
-
-
-            GuiElement upHighlight = new GuiTexture(i * 6, 0, 3, 3, GuiTextures.hud)
-                    .setColor(GuiColors.scanner)
-                    .setOpacity(0);
-            scanner.addChild(upHighlight);
-            upHighlightAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, upHighlight).applyTo(new Applier.Opacity(0.9f)),
-                    new KeyframeAnimation(1000, upHighlight).applyTo(new Applier.Opacity(0)));
-
-            GuiElement down = new GuiTexture(i * 6, 4, 3, 3, GuiTextures.hud).setOpacity(0.3f);
-            scanner.addChild(down);
-            downAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, down).applyTo(new Applier.Opacity(0.7f)),
-                    new KeyframeAnimation(600, down).applyTo(new Applier.Opacity(0.3f)));
-
-
-            GuiElement downHighlight = new GuiTexture(i * 6, 4, 3, 3, GuiTextures.hud)
-                    .setColor(GuiColors.scanner)
-                    .setOpacity(0);
-            scanner.addChild(downHighlight);
-            downHighlightAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, downHighlight).applyTo(new Applier.Opacity(0.9f)),
-                    new KeyframeAnimation(1000, downHighlight).applyTo(new Applier.Opacity(0)));
-        }
-
-        for (int i = 0; i < count - 1; i++) {
-            GuiElement center = new GuiTexture(i * 6 + 3, 2, 3, 3, GuiTextures.hud).setOpacity(0.3f);
-            scanner.addChild(center);
-            midAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, center).applyTo(new Applier.Opacity(0.7f)),
-                    new KeyframeAnimation(600, center).applyTo(new Applier.Opacity(0.3f)));
-
-            GuiElement centerHighlight = new GuiTexture(i * 6 + 3, 2, 3, 3, GuiTextures.hud)
-                    .setColor(GuiColors.scanner)
-                    .setOpacity(0);
-            scanner.addChild(centerHighlight);
-            midHighlightAnimations[i] = new AnimationChain(
-                    new KeyframeAnimation(100, centerHighlight).applyTo(new Applier.Opacity(0.9f)),
-                    new KeyframeAnimation(1000, centerHighlight).applyTo(new Applier.Opacity(0)));
-        }
-
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.topLeft));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.topCenter));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.topRight));
-//
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.middleLeft));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.middleCenter));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.middleRight));
-//
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.bottomLeft));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.bottomCenter));
-//        addChild(new GuiRect(0, 0, 2, 2, GuiColors.hover).setAttachment(GuiAttachment.bottomRight));
-
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -244,30 +220,8 @@ public class ScannerOverlayGui extends GuiRoot {
             int mouseY = (int) (mc.mouseHelper.getMouseY() * height / window.getHeight());
 
             this.drawChildren(new MatrixStack(), 0, 0, width, height, mouseX, mouseY, 1.0F);
+
+            widthRatio = scanner.getWidth() * 1f / width;
         }
-    }
-
-
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onRenderWorld(RenderWorldLastEvent event) {
-        WorldRenderer worldRenderer = event.getContext();
-        MatrixStack matrixStack = event.getMatrixStack();
-//        Tessellator tessellator = Tessellator.getInstance();
-//        IVertexBuilder vertexBuilder = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource().getBuffer(RenderType.getLines());
-//        Vec3d eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
-//
-//        GlStateManager.lineWidth(3);
-//        upHighlights.forEach(pos -> drawDebugBox(pos, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f));
-//        midHighlights.forEach(pos -> drawDebugBox(pos, eyePos, matrixStack, vertexBuilder, 0, 1, 0, 0.5f));
-//        downHighlights.forEach(pos -> drawDebugBox(pos, eyePos, matrixStack, vertexBuilder, 0, 0, 1, 0.5f));
-//        GlStateManager.lineWidth(1.0F);
-    }
-
-    private void drawDebugBox(BlockPos blockPos, Vec3d eyePos, MatrixStack matrixStack, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha) {
-        Vec3d pos = new Vec3d(blockPos).subtract(eyePos);
-        AxisAlignedBB aabb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
-
-        // draw center box
-        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.grow(0.0030000000949949026D), red, green, blue, alpha);
     }
 }

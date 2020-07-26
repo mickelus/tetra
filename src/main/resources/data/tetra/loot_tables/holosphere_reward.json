@@ -1,0 +1,20 @@
+{
+    "pools": [
+        {
+            "name": "holosphere_reward",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:holo",
+                    "functions": [
+                        {
+                            "function": "set_nbt",
+                            "tag": "{\"holo/frame\": \"holo/frame\",\"holo/frame_material\": \"frame/ancient\", \"holo/core\": \"holo/core\",\"holo/core_material\": \"core/dim\"}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
