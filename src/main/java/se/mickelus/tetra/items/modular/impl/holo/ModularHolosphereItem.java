@@ -37,7 +37,6 @@ public class ModularHolosphereItem extends ModularItem {
     public final static String attachmentAKey = "holo/attachment_0";
     public final static String attachmentBKey = "holo/attachment_1";
 
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

@@ -48,9 +48,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     private static final String unlocalizedName = "modular_double";
 
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(6, 1);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

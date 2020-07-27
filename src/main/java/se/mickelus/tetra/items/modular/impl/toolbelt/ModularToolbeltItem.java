@@ -52,9 +52,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     public final static String slot2Suffix = "_slot2";
     public final static String slot3Suffix = "_slot3";
 
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

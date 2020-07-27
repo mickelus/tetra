@@ -49,9 +49,7 @@ public class ModularBowItem extends ModularItem {
     protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_1"));
     protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_2"));
 
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
-    @OnlyIn(Dist.CLIENT)
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
 
     protected ItemStack vanillaBow;
