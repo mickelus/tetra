@@ -16,6 +16,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -96,9 +97,15 @@ public class RackBlock extends TetraWaterloggedBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         Direction facing = blockState.get(facingProp);
+        AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
         if (facing == hit.getFace()) {
             System.out.println(hit.getHitVec());
-            int slot = getHitX(facing, hit.getHitVec(), pos) > 0.5 ? 1 : 0;
+            Vec3d hitVec = hit.getHitVec();
+            int slot = getHitX(facing, boundingBox,
+                    (float) hitVec.x - pos.getX(),
+                    (float) hitVec.y - pos.getY(),
+                    (float) hitVec.z - pos.getZ())
+                    > 0.5 ? 1 : 0;
 
             TileEntityOptional.from(world, pos, RackTile.class)
                     .ifPresent(tile -> tile.slotInteract(slot, player, hand));
@@ -109,20 +116,19 @@ public class RackBlock extends TetraWaterloggedBlock {
         return ActionResultType.PASS;
     }
 
-    private double getHitX(Direction facing, Vec3d hitVector, BlockPos blockPos) {
+    private static double getHitX(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
-            case WEST:
-                return Math.abs(hitVector.getZ() % 1);
-            case EAST:
-                return 1 - Math.abs(hitVector.getZ() % 1);
             case NORTH:
-                return Math.abs(hitVector.getX() % 1);
+                return boundingBox.maxX - hitX;
             case SOUTH:
-                return 1 - Math.abs(hitVector.getX() % 1);
+                return hitX - boundingBox.minX;
+            case WEST:
+                return hitZ - boundingBox.minZ;
+            case EAST:
+                return boundingBox.maxZ - hitZ;
         }
         return 0;
     }
-
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
