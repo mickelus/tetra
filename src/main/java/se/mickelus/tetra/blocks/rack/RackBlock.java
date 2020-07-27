@@ -229,13 +229,26 @@ public class RackBlock extends TetraWaterloggedBlock {
     @Override
     public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             Capability requiredCapability, int requiredLevel, boolean consumeResources) {
-        return Optional.ofNullable(world.getTileEntity(pos))
+        LazyOptional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
-                .map(ItemHandlerWrapper::new)
-                .map(inv -> CapabilityHelper.getInventoryProvidingItemStack(inv, requiredCapability, requiredLevel))
-                .map(providerStack -> ((ICapabilityProvider) providerStack.getItem()).onActionConsumeCapability(providerStack, targetStack, player, requiredCapability, requiredLevel, consumeResources))
-                .orElse(null);
+                .map(ItemHandlerWrapper::new);
+
+        if (optional.isPresent()) {
+            IInventory inventory = optional.orElse(null);
+            ItemStack providerStack = CapabilityHelper.getInventoryProvidingItemStack(inventory, requiredCapability, requiredLevel);
+
+            if (!providerStack.isEmpty()) {
+                if (consumeResources) {
+                    spawnConsumeParticle(world, pos, blockState, inventory, providerStack);
+                }
+
+                return ((ICapabilityProvider) providerStack.getItem())
+                        .onActionConsumeCapability(providerStack, targetStack, player, requiredCapability, requiredLevel, consumeResources);
+            }
+        }
+
+        return null;
     }
 
     /**
