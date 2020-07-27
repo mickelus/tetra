@@ -2,9 +2,17 @@ package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
+import se.mickelus.tetra.Tooltips;
 
 public interface ITooltipGetter {
-    public String getTooltip(PlayerEntity player, ItemStack itemStack);
+    public default String getTooltip(PlayerEntity player, ItemStack itemStack) {
+        if (hasExtendedTooltip(player, itemStack)) {
+            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expand.getFormattedText();
+        }
+
+        return getTooltipBase(player, itemStack);
+    }
 
     /**
      * Used for showing extended tooltips when shift is held down
@@ -13,6 +21,21 @@ public interface ITooltipGetter {
      * @return
      */
     public default String getTooltipExtended(PlayerEntity player, ItemStack itemStack) {
+        if (hasExtendedTooltip(player, itemStack)) {
+            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expanded.getFormattedText() + "\n"
+                    + TextFormatting.GRAY + getTooltipExtension(player, itemStack);
+        }
+
         return getTooltip(player, itemStack);
+    }
+
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack);
+
+    public default boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+        return false;
+    }
+
+    public default String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+        return null;
     }
 }

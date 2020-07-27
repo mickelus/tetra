@@ -41,7 +41,7 @@ public class TooltipGetterCapability implements ITooltipGetter {
 
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         String modifier = "";
 
         if (strikingGetter != null && strikingGetter.getValue(player, itemStack) > 0) {

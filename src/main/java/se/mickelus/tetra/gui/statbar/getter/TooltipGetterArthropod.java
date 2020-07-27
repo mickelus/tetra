@@ -14,7 +14,7 @@ public class TooltipGetterArthropod implements ITooltipGetter {
 
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         return I18n.format("tetra.stats.arthropod.tooltip",
                 String.format("%.2f", levelGetter.getValue(player, itemStack) * 2.5),
                 String.format("%.2f", levelGetter.getValue(player, itemStack) * 0.5));

@@ -16,7 +16,17 @@ public class TooltipGetterDecimal implements ITooltipGetter {
 
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         return I18n.format(localizationKey, String.format("%.2f", statGetter.getValue(player, itemStack)));
+    }
+
+    @Override
+    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+        return I18n.hasKey(localizationKey + "_extended");
+    }
+
+    @Override
+    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+        return I18n.format(localizationKey + "_extended");
     }
 }

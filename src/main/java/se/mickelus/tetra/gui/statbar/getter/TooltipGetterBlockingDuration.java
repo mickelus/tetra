@@ -22,6 +22,7 @@ public class TooltipGetterBlockingDuration implements ITooltipGetter {
         reflectEfficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.blockingReflect, 1);
     }
 
+    @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         String modifier = "";
 
@@ -38,13 +39,12 @@ public class TooltipGetterBlockingDuration implements ITooltipGetter {
     }
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
-        return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expand.getFormattedText();
+    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+        return true;
     }
 
     @Override
-    public String getTooltipExtended(PlayerEntity player, ItemStack itemStack) {
-        return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expanded.getFormattedText() + "\n"
-                + TextFormatting.DARK_GRAY + I18n.format("tetra.stats.blocking.tooltip_extended");
+    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+        return I18n.format("tetra.stats.blocking.tooltip_extended");
     }
 }

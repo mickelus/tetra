@@ -12,7 +12,7 @@ public class TooltipGetterCriticalStrike implements ITooltipGetter {
     public TooltipGetterCriticalStrike() { }
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         return I18n.format("tetra.stats.criticalStrike.tooltip",
                 String.format("%.0f%%", levelGetter.getValue(player, itemStack)),
                 String.format("%.0f%%", efficiencyGetter.getValue(player, itemStack)),

@@ -13,7 +13,7 @@ public class TooltipGetterSpeed implements ITooltipGetter {
 
 
     @Override
-    public String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         double speed = statGetter.getValue(player, itemStack);
         return I18n.format(localizationKey, String.format("%.2f", 1 / speed), String.format("%.2f", speed));
     }
