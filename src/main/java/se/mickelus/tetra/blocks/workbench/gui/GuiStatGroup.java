@@ -74,6 +74,10 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.earthbind);
         bars.add(GuiStats.releaseLatch);
         bars.add(GuiStats.overbowed);
+        bars.add(GuiStats.holoSpeed);
+        bars.add(GuiStats.scannerRange);
+        bars.add(GuiStats.scannerHorizontalSpread);
+        bars.add(GuiStats.scannerVerticalSpread);
         bars.add(GuiStats.intuit);
 
         Arrays.stream(Capability.values())

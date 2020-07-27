@@ -193,6 +193,19 @@
   "tetra.stats.criticalStrike": "Crit",
   "tetra.stats.criticalStrike.tooltip": "Has a chance to critically hit when hitting entities or breaking blocks.\n\n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n\n§7This effect cannot occur for blocks that are exceptionally hard",
 
+  "tetra.stats.holo_speed": "Cooldown",
+  "tetra.stats.holo_speed.tooltip": "§e%sx§r cooldown multiplier for abilities and usages",
+
+  "tetra.stats.holo.scannerRange": "Scan range",
+  "tetra.stats.holo.scannerRange.tooltip": "The scanner can scan reach up to §e%s§r blocks away",
+
+  "tetra.stats.holo.scannerHorizontalSpread": "Scan horz",
+  "tetra.stats.holo.scannerHorizontalSpread.tooltip": "The scanner has a horizontal resolution of §e%s units\n§7Angle between units: §e%s deg",
+
+  "tetra.stats.holo.scannerVerticalSpread": "Scan vert",
+  "tetra.stats.holo.scannerVerticalSpread.tooltip": "The scanner covers a vertical span of §e%s deg",
+  "tetra.stats.holo.scannerVerticalSpread.tooltip_extended": "The vertical span is split into three slices, the center slice covers §e20 deg§7 around the center. The upper and lower slice covers everything above §e+-25 deg§7, the upper and lower slice are only active if the vertical spread is §e50 deg§7 or greater",
+
   "tetra.stats.intuit": "Intuit",
   "tetra.stats.intuit.tooltip": "Experience gained from killing entities and destroying blocks yields honing progress at a §e%sx§r ratio",
 

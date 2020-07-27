@@ -61,7 +61,7 @@ public class ModularHolosphereItem extends ModularItem {
     @Override
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
-        
+
         RemoveSchema.registerRemoveSchemas(this);
     }
 

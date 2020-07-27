@@ -252,6 +252,26 @@ public class GuiStats {
             0, 50, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.magicCapacity.tooltip", magicCapacityGetter));
 
+    public static final IStatGetter holoSpeedGetter = new StatGetterSpeedHolo();
+    public static final GuiStatBar holoSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo_speed"),
+            0, 3, false, false, true, holoSpeedGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.holo_speed.tooltip", holoSpeedGetter));
+
+    public static final IStatGetter scannerRangeGetter = new StatGetterEffectLevel(ItemEffect.scannerRange, 1);
+    public static final GuiStatBar scannerRange = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerRange"),
+            0, 64, false, scannerRangeGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.holo.scannerRange.tooltip", scannerRangeGetter));
+
+    public static final IStatGetter scannerHorizontalSpreadGetter = new StatGetterEffectLevel(ItemEffect.scannerHorizontalSpread, 4);
+    public static final GuiStatBar scannerHorizontalSpread = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerHorizontalSpread"),
+            0, 128, false, scannerHorizontalSpreadGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterScannerHorizontalRange(scannerHorizontalSpreadGetter));
+
+    public static final IStatGetter scannerVerticalSpreadGetter = new StatGetterEffectLevel(ItemEffect.scannerVerticalSpread, 10, 40);
+    public static final GuiStatBar scannerVerticalSpread = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerVerticalSpread"),
+            0, 180, false, scannerVerticalSpreadGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.holo.scannerVerticalSpread.tooltip", scannerVerticalSpreadGetter));
+
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 
 
