@@ -21,6 +21,8 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
+import se.mickelus.tetra.module.schema.RemoveSchema;
+import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -54,6 +56,13 @@ public class ModularHolosphereItem extends ModularItem {
         minorModuleKeys = new String[0];
 
         requiredModules = new String[] { coreKey, frameKey };
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        super.init(packetHandler);
+        
+        RemoveSchema.registerRemoveSchemas(this);
     }
 
     @Override
@@ -109,7 +118,7 @@ public class ModularHolosphereItem extends ModularItem {
         return majorOffsets;
     }
 
-    public double getSpeedModifier(ItemStack itemStack) {
+    public double getCooldownBase(ItemStack itemStack) {
         double speedModifier = getAllModules(itemStack).stream()
                 .map(itemModule -> itemModule.getSpeedModifier(itemStack))
                 .reduce(0d, Double::sum);

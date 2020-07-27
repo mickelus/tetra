@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
+import net.minecraft.client.Minecraft;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
@@ -13,22 +14,36 @@ import se.mickelus.tetra.gui.GuiTextures;
 import java.util.ArrayList;
 
 public class ScannerBarGui extends GuiElement {
-    private final AnimationChain[] upAnimations;
-    private final AnimationChain[] upHighlightAnimations;
-    private final AnimationChain[] midAnimations;
-    private final AnimationChain[] midHighlightAnimations;
-    private final AnimationChain[] downAnimations;
-    private final AnimationChain[] downHighlightAnimations;
+    private AnimationChain[] upAnimations;
+    private AnimationChain[] upHighlightAnimations;
+    private AnimationChain[] midAnimations;
+    private AnimationChain[] midHighlightAnimations;
+    private AnimationChain[] downAnimations;
+    private AnimationChain[] downHighlightAnimations;
 
-    private final KeyframeAnimation showAnimation;
-    private final KeyframeAnimation hideAnimation;
+    private KeyframeAnimation showAnimation;
+    private KeyframeAnimation hideAnimation;
 
     int horizontalSpread;
 
+    private static final int unitWidth = 6;
+
     public ScannerBarGui(int x, int y, int horizontalSpread) {
-        super(x, y, horizontalSpread * 6, 9);
+        super(x, y, horizontalSpread * unitWidth, 9);
 
         this.horizontalSpread = horizontalSpread;
+
+        setup();
+
+        showAnimation = new KeyframeAnimation(300, this)
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y, y - 4));
+        hideAnimation = new KeyframeAnimation(300, this)
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 4, y))
+                .withDelay(200);
+    }
+
+    private void setup() {
+        setWidth(horizontalSpread * unitWidth);
 
         upAnimations = new AnimationChain[horizontalSpread];
         midAnimations = new AnimationChain[horizontalSpread];
@@ -99,16 +114,19 @@ public class ScannerBarGui extends GuiElement {
                     new KeyframeAnimation(100, centerHighlight).applyTo(new Applier.Opacity(0.9f)),
                     new KeyframeAnimation(1000, centerHighlight).applyTo(new Applier.Opacity(0)));
         }
-
-        showAnimation = new KeyframeAnimation(300, this)
-                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y, y - 4));
-        hideAnimation = new KeyframeAnimation(300, this)
-                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 4, y))
-                .withDelay(200);
     }
 
-    public int getHorizontalSpread() {
-        return horizontalSpread;
+    public static double getDegreesPerUnit() {
+        return Minecraft.getInstance().gameSettings.fov * unitWidth / Minecraft.getInstance().getMainWindow().getScaledWidth();
+    }
+
+    public void setHorizontalSpread(int horizontalSpread) {
+        if (horizontalSpread != 0 && this.horizontalSpread != horizontalSpread) {
+            this.horizontalSpread = horizontalSpread;
+
+            clearChildren();
+            setup();
+        }
     }
 
     protected void show() {

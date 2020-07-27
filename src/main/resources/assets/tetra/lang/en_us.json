@@ -2279,7 +2279,7 @@
 
   "tetra.module.bow/adjustable_strength.name": "Limb adjuster",
   "tetra.variant.adjustable_strength/bolt": "Limb adjuster",
-  "tetra.variant.adjustable_strength/bolt.description": "Attach two bolts to the riser. By fastening or unfastening the bolts it's possible to §ltweak§r the strength of the bow.",
+  "tetra.variant.adjustable_strength/bolt.description": "Bolts suspend the riser in an adjustable configuration, by fastening or unfastening the bolts it's possible to §ltweak§r the strength of the bow.",
 
   "tetra.tweak.bow/adjustable_strength.label": "Bow strength",
   "tetra.tweak.bow/adjustable_strength.tooltip": "§eTighten§r the bolts to increase the bow strength, increasing damage.\n§eLoosen§r the bolts to make the bow easier to draw, increasing draw speed.",
@@ -2826,6 +2826,23 @@
   "tetra/schema/holo/scanner/scanner.slot1": "Eye of Ender",
   "tetra.module.holo/scanner.description": "Allows the sphere to scan for ancient ruins, while the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
   "tetra.variant.scanner/scanner": "Scanner",
+
+  "tetra/schema/holo/scanner/adjustable.name": "Adjustable",
+  "tetra/schema/holo/scanner/adjustable.description": "With the use of two bolts it's possible to improve the scanner so that some of it's properties become tweakable.",
+  "tetra/schema/holo/scanner/adjustable.slot1": "Bolts",
+
+  "tetra.improvement.scanner/adjustable.name": "Adjustable",
+  "tetra.improvement.scanner/adjustable.description": "The behaviour of the scanner can be tweaked.",
+
+  "tetra.tweak.scanner/adjustable_range.label": "Efficiency",
+  "tetra.tweak.scanner/adjustable_range.tooltip": "Change priority between higher scan range or shorter delay between sweeps.",
+  "tetra.tweak.scanner/adjustable_range.left": "Speed",
+  "tetra.tweak.scanner/adjustable_range.right": "Range",
+
+  "tetra.tweak.scanner/adjustable_span.label": "Span",
+  "tetra.tweak.scanner/adjustable_span.tooltip": "Change priority between vertical or horizontal span.",
+  "tetra.tweak.scanner/adjustable_span.left": "Vertical",
+  "tetra.tweak.scanner/adjustable_span.right": "Horizontal",
 
   "tetra.localization.comment_generated": "=============================== VALUES BELOW ARE GENERATED ===============================",
 

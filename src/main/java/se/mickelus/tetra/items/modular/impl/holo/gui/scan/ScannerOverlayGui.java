@@ -75,17 +75,15 @@ public class ScannerOverlayGui extends GuiRoot {
 
         if (!itemStack.isEmpty()) {
             ModularHolosphereItem item = (ModularHolosphereItem) itemStack.getItem();
-            horizontalSpread = item.getEffectLevel(itemStack, ItemEffect.scannerHorizontalSpread);
+            horizontalSpread = 2 * item.getEffectLevel(itemStack, ItemEffect.scannerHorizontalSpread);
             verticalSpread = item.getEffectLevel(itemStack, ItemEffect.scannerVerticalSpread);
             range = item.getEffectLevel(itemStack, ItemEffect.scannerRange);
 
-            cooldown = Math.max((float) item.getSpeedModifier(itemStack), 1);
+            cooldown = Math.max((float) item.getCooldownBase(itemStack), 1);
+
+            scanner.setHorizontalSpread(horizontalSpread);
 
             active = range > 0;
-
-            if (active && horizontalSpread != scanner.getHorizontalSpread()) {
-                scanner = new ScannerBarGui(2, 15, horizontalSpread);
-            }
         } else {
             active = false;
         }
@@ -119,7 +117,7 @@ public class ScannerOverlayGui extends GuiRoot {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         World world = mc.world;
 
-        if (world == null) {
+        if (world == null || TickEvent.Phase.START != event.phase) {
             return;
         }
 
@@ -135,28 +133,30 @@ public class ScannerOverlayGui extends GuiRoot {
 
             int offset = (int) (world.getGameTime() / 2) % (int) (horizontalSpread * 2 * cooldown);
             if (offset < horizontalSpread * 2) {
-                int yawOffset = (int) ((-horizontalSpread + offset) * fov / horizontalSpread * widthRatio);
+                int yawOffset = (int) ((-horizontalSpread + offset) * ScannerBarGui.getDegreesPerUnit());
                 if (offset % 2 == 0) {
-                    upHighlight = IntStream.range(0, verticalSpread)
-                            .map(i -> i * -5 - 25)
-                            .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
-                            .filter(Objects::nonNull)
-                            .findAny()
-                            .orElse(null);
-                    scanner.highlightUp(offset / 2, upHighlight != null);
-                    if (upHighlight != null) {
-                        sound.activate();
-                    }
+                    if (verticalSpread > 0) {
+                        upHighlight = IntStream.range(0, verticalSpread)
+                                .map(i -> i * -5 - 25)
+                                .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
+                                .filter(Objects::nonNull)
+                                .findAny()
+                                .orElse(null);
+                        scanner.highlightUp(offset / 2, upHighlight != null);
+                        if (upHighlight != null) {
+                            sound.activate();
+                        }
 
-                    downHighlight = IntStream.range(0, verticalSpread)
-                            .map(i -> i * 5 + 25)
-                            .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
-                            .filter(Objects::nonNull)
-                            .findAny()
-                            .orElse(null);
-                    scanner.highlightDown(offset / 2, downHighlight != null);
-                    if (downHighlight != null) {
-                        sound.activate();
+                        downHighlight = IntStream.range(0, verticalSpread)
+                                .map(i -> i * 5 + 25)
+                                .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
+                                .filter(Objects::nonNull)
+                                .findAny()
+                                .orElse(null);
+                        scanner.highlightDown(offset / 2, downHighlight != null);
+                        if (downHighlight != null) {
+                            sound.activate();
+                        }
                     }
                 } else if (offset / 2 < horizontalSpread - 1) {
                     midHighlight = IntStream.range(-1, 2)

@@ -8,7 +8,7 @@
     "variants": [
         {
             "key": "frame/ancient",
-            "integrity": 2,
+            "integrity": 3,
             "glyph": {
                 "textureX": 80,
                 "textureY": 48

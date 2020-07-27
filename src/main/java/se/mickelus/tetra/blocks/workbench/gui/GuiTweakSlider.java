@@ -37,7 +37,7 @@ public class GuiTweakSlider extends GuiElement {
 
         steps = tweak.steps;
 
-        tooltip = Collections.singletonList("tetra.tweak." + I18n.format(tweak.key + ".tooltip"));
+        tooltip = Collections.singletonList(I18n.format("tetra.tweak." + tweak.key + ".tooltip"));
     }
 
     public void setValue(int value) {

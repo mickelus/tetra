@@ -42,8 +42,16 @@ public class TweakData {
         return baseStats.durabilityMultiplier + step * (stepStats.durabilityMultiplier - 1);
     }
 
+    public int getEffectLevel(ItemEffect effect, int step) {
+        return baseStats.effects.getLevel(effect) + step * stepStats.effects.getLevel(effect);
+    }
+
     public float getEffectEfficiency(ItemEffect effect, int step) {
         return baseStats.effects.getEfficiency(effect) + step * stepStats.effects.getEfficiency(effect);
+    }
+
+    public int getCapabilityLevel(Capability capability, int step) {
+        return baseStats.capabilities.getLevel(capability) + step * stepStats.capabilities.getLevel(capability);
     }
 
     public float getCapabilityEfficiency(Capability capability, int step) {

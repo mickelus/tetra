@@ -1,0 +1,24 @@
+[
+    {
+        "improvement": "scanner/adjustable",
+        "key": "scanner/adjustable_range",
+        "steps": 6,
+        "stepStats": {
+            "effects": {
+                "scannerRange": 2
+            },
+            "attackSpeed": 0.05
+        }
+    },
+    {
+        "improvement": "scanner/adjustable",
+        "key": "scanner/adjustable_span",
+        "steps": 3,
+        "stepStats": {
+            "effects": {
+                "scannerHorizontalSpread": 1,
+                "scannerVerticalSpread": -1
+            }
+        }
+    }
+]

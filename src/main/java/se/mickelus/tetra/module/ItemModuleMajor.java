@@ -189,6 +189,17 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     @Override
+    public boolean isTweakable(ItemStack itemStack) {
+        String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
+                .map(improvement -> improvement.key)
+                .toArray(String[]::new);
+
+        return Arrays.stream(tweaks)
+                .anyMatch(tweak -> ArrayUtils.contains(improvementKeys, tweak.improvement))
+                || super.isTweakable(itemStack);
+    }
+
+    @Override
     public TweakData[] getTweaks(ItemStack itemStack) {
         CompoundNBT tag = NBTHelper.getTag(itemStack);
         String variant = tag.getString(this.variantTagKey);

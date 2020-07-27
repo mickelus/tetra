@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
@@ -287,7 +288,9 @@ public abstract class ItemModule implements ICapabilityProvider {
     public void hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {}
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        return getVariantData(itemStack).effects.getLevel(effect);
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToInt(tweak -> tweak.getEffectLevel(effect, getTweakStep(itemStack, tweak)))
+                .sum() + getVariantData(itemStack).effects.getLevel(effect);
     }
 
     public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
@@ -302,7 +305,9 @@ public abstract class ItemModule implements ICapabilityProvider {
 
     @Override
     public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
-        return getVariantData(itemStack).capabilities.getLevel(capability);
+        return Arrays.stream(getTweaks(itemStack))
+                .mapToInt(tweak -> tweak.getCapabilityLevel(capability, getTweakStep(itemStack, tweak)))
+                .sum() + getVariantData(itemStack).capabilities.getLevel(capability);
     }
 
     @Override

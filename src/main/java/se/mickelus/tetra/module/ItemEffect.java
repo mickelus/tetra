@@ -291,8 +291,7 @@ public enum ItemEffect {
     scannerRange,
 
     /**
-     * Scanner horizontal spread: Defines the width of the scan, the number of blips will be twice the level of the effect. Use even values or the UI
-     * will look strange.
+     * Scanner horizontal spread: Defines the width of the scan, the number of hits per sweep will be four times the level of the effect.
      */
     scannerHorizontalSpread,
 

@@ -4,8 +4,6 @@
         "bow/riser"
     ],
     "materialSlotCount": 1,
-    "materialRevealSlot": 0,
-    "rarity": "temporary",
     "displayType": "minor",
     "glyph": {
         "tint": "bolt_glyph",

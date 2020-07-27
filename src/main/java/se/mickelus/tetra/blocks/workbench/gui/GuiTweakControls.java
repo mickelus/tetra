@@ -51,7 +51,7 @@ public class GuiTweakControls extends GuiElement {
             TweakData[] data = module.getTweaks(itemStack);
             tweakControls.setHeight(data.length * 22);
             for (int i = 0; i < data.length; i++) {
-                TweakData tweak = data[0];
+                TweakData tweak = data[i];
                 GuiTweakSlider slider = new GuiTweakSlider(0, i * 22, 200, tweak, step -> applyTweak(tweak.key, step));
                 slider.setAttachment(GuiAttachment.topCenter);
                 slider.setValue(module.getTweakStep(itemStack, tweak));
