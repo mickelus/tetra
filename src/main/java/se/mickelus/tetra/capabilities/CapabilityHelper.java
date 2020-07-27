@@ -247,6 +247,7 @@ public class CapabilityHelper {
     public static ItemStack getToolbeltProvidingItemStack(Capability capability, int level, Entity entity) {
         return CastOptional.cast(entity, PlayerEntity.class)
                 .map(ToolbeltHelper::findToolbelt)
+                .filter(itemStack -> !itemStack.isEmpty())
                 .map(toolbeltStack -> {
                     ItemStack itemStack = getInventoryProvidingItemStack(new QuickslotInventory(toolbeltStack), capability, level);
 
