@@ -14,6 +14,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.template.IntegrityProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -26,6 +27,7 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
@@ -37,6 +39,7 @@ import se.mickelus.tetra.generation.processing.ForgedContainerProcessor;
 import se.mickelus.tetra.generation.processing.ForgedCrateProcessor;
 import se.mickelus.tetra.generation.processing.ForgedHammerProcessor;
 import se.mickelus.tetra.generation.processing.TransferUnitProcessor;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.ItemHandlerWrapper;
 
 import java.util.Arrays;
@@ -66,9 +69,15 @@ public class FeatureEntry extends Feature<FeatureReference> {
     }
 
     private void addToBiomes() {
+        if (EffectiveSide.get().isClient()) {
+            return;
+        }
+
         for (Biome biome : ForgeRegistries.BIOMES) {
             biome.getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES)
-                    .removeIf(configuredFeature -> configuredFeature.feature.equals(this));
+                    .removeIf(configuredFeature -> CastOptional.cast(configuredFeature.config, DecoratedFeatureConfig.class)
+                            .filter(config -> FeatureEntry.this.equals(config.feature.feature))
+                            .isPresent());
         }
 
         DataManager.featureData.getData().values().stream()
@@ -82,7 +91,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
                             })
                             .forEach(biome -> biome.addFeature(
                                     GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
-                                    FeatureEntry.instance.withConfiguration(new FeatureReference(params.location)).withPlacement(
+                                    withConfiguration(new FeatureReference(params.location)).withPlacement(
                                             Placement.CHANCE_RANGE.configure(
                                                     new ChanceRangeConfig(1, params.minY, params.minY, params.maxY))
                                     )
@@ -96,6 +105,8 @@ public class FeatureEntry extends Feature<FeatureReference> {
         FeatureParameters params = DataManager.featureData.getData(ref.location);
         ResourceLocation dimensionType = world.getDimension().getType().getRegistryName();
 
+        // roll for probability here instead of the behaviour in the ChanceRangeConfig as that tend to cause structures to clump up,
+        // todo: seeds can be salted per feature if it's a proper structure
         if (params != null && Arrays.asList(params.dimensions).contains(dimensionType) && rand.nextFloat() < params.probability) {
             generateFeatureRoot(params, world, pos, rand);
             return true;
