@@ -30,8 +30,7 @@ public class JournalItem extends TetraItem {
 
     public JournalItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .group(TetraItemGroup.instance));
+                .maxStackSize(1));
 
         setRegistryName(unlocalizedName);
     }
