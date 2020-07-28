@@ -31,6 +31,7 @@ public class HoloStatsGui extends GuiElement {
 
         bars.add(GuiStats.integrity);
         bars.add(GuiStats.damage);
+        bars.add(GuiStats.rangedDamage);
         bars.add(GuiStats.shieldDamage);
         bars.add(GuiStats.speedNormalized);
         bars.add(GuiStats.rangedSpeedNormalized);
