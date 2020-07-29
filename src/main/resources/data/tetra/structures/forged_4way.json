@@ -1,5 +1,5 @@
 {
-    "biomes": ["cold", "snowy"],
+    "biomes": ["cold", "snowy", "mountain"],
     "origin": [3, 0, 3],
     "probability": 0.025,
     "minY": 7,

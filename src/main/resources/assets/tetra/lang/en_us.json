@@ -316,7 +316,7 @@
   "tetra.salvage_earthpiercer_action.label": "Salvage",
 
   "item.tetra.forged_unsettling": "Slight vibrations cause unsettling reverberation within anything it touches",
-  "item.tetra.forged_description": "Found in structures deep underground in snowy biomes",
+  "item.tetra.forged_description": "Found in structures deep underground in cold or mountainous biomes",
 
   "item.tetra.tooltip_reveal": "Reveals related upgrade schemas while in the inventory",
   "item.tetra.tooltip_expand": "§7[§8shift§7] §8+",
@@ -2746,7 +2746,7 @@
   "tetra.advancements.spelunking.root.title": "Spelunking",
   "tetra.advancements.spelunking.root.description": "Delve deep underground",
   "tetra.advancements.spelunking.ancient_ruins.title" : "Long Gone",
-  "tetra.advancements.spelunking.ancient_ruins.description": "Find ancient ruins deep down in a cold biome",
+  "tetra.advancements.spelunking.ancient_ruins.description": "Find ancient ruins deep down in cold or mountainous biomes",
   "tetra.advancements.spelunking.scanner.title" : "Sweepstakes",
   "tetra.advancements.spelunking.scanner.description": "Install a holosphere scanner to make it easier to find ancient ruins",
   "tetra.advancements.spelunking.containers.title": "\"Salvage\"",
