@@ -24,10 +24,12 @@ import se.mickelus.mgui.gui.GuiRoot;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.module.ItemEffect;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -55,8 +57,8 @@ public class ScannerOverlayGui extends GuiRoot {
     public ScannerOverlayGui() {
         super(Minecraft.getInstance());
 
-        scanner = new ScannerBarGui(2, 15, horizontalSpread);
-        scanner.setAttachment(GuiAttachment.middleCenter);
+        scanner = new ScannerBarGui(2, 16, horizontalSpread);
+        scanner.setAttachment(GuiAttachment.topCenter);
         scanner.setOpacity(0);
         addChild(scanner);
 
@@ -68,7 +70,11 @@ public class ScannerOverlayGui extends GuiRoot {
     }
 
     private void updateStats() {
-        ItemStack itemStack = Stream.concat(mc.player.inventory.offHandInventory.stream(), mc.player.inventory.mainInventory.stream())
+        ItemStack itemStack = Stream.of(
+                mc.player.inventory.offHandInventory.stream(),
+                mc.player.inventory.mainInventory.stream(),
+                ToolbeltHelper.getToolbeltItems(mc.player).stream())
+                .flatMap(Function.identity())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
                 .findFirst()
                 .orElse(ItemStack.EMPTY);

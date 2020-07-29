@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -16,15 +17,14 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
+import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 import top.theillusivec4.curios.api.CuriosAPI;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
@@ -140,6 +140,27 @@ public class ToolbeltHelper {
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    public static List<ItemStack> getToolbeltItems(PlayerEntity player) {
+        return Optional.of(ToolbeltHelper.findToolbelt(player))
+                .filter(toolbeltStack -> !toolbeltStack.isEmpty())
+                .map(toolbeltStack -> {
+                    QuickslotInventory quickslots = new QuickslotInventory(toolbeltStack);
+                    StorageInventory storage = new StorageInventory(toolbeltStack);
+                    List<ItemStack> result = new ArrayList<>(quickslots.getSizeInventory() + storage.getSizeInventory());
+
+                    for (int i = 0; i < quickslots.getSizeInventory(); i++) {
+                        result.add(i, quickslots.getStackInSlot(i));
+                    }
+
+                    for (int i = 0; i < storage.getSizeInventory(); i++) {
+                        result.add(quickslots.getSizeInventory() + i, storage.getStackInSlot(i));
+                    }
+
+                    return result;
+                })
+                .orElse(Collections.emptyList());
     }
 
     public static void emptyOverflowSlots(ItemStack itemStack, PlayerEntity player) {
