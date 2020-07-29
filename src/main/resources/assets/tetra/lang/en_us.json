@@ -2088,11 +2088,11 @@
 
 
   "tetra/schema/toolbelt/quiver/quiver.name": "Quiver",
-  "tetra/schema/toolbelt/quiver/quiver.description": "Attach a quiver to the toolbelt. The quiver can hold a large amount of arrows.",
+  "tetra/schema/toolbelt/quiver/quiver.description": "Craft a quiver attachment for the toolbelt. The quiver can hold a large amount of arrows that can be accessed using the toolbelt's quick access functionality. Can be upgraded with a quick latch which allows arrows to be drawn directly from the quiver.",
   "tetra/schema/toolbelt/quiver/quiver.slot1": "Material",
 
   "tetra.module.toolbelt/quiver.name": "Quiver",
-  "tetra.module.toolbelt/quiver.description": "A quiver that can hold a large amount of arrows.",
+  "tetra.module.toolbelt/quiver.description": "A quiver that can hold a large amount of arrows, can be accessed using the toolbelt's quick access functionality.",
 
   "tetra.variant.quiver/forged_mesh": "Mesh quiver",
   "tetra.variant.quiver/leather": "Leather quiver",
