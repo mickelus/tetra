@@ -22,8 +22,8 @@ public class GuiPotionsBackdrop extends GuiElement {
 
         // background rects
         addChild(new GuiRect(0, 3, width, 22, 0xff000000));
-        addChild(new GuiRect(0, 4, width, 1, GuiColors.muted));
-        addChild(new GuiRect(0, 23, width, 1, GuiColors.normal));
+        addChild(new GuiRect(0, 4, width, 1, GuiColors.mutedStrong));
+        addChild(new GuiRect(0, 23, width, 1, GuiColors.muted));
 
         // left cap
         GuiTexture leftCap = new GuiTexture(0, 0, 16, 28, 64, 0, texture);

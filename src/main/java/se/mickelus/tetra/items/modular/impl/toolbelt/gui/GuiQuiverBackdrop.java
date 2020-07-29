@@ -6,6 +6,7 @@ import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 
@@ -21,7 +22,7 @@ public class GuiQuiverBackdrop extends GuiElement {
 
         // background rects
         addChild(new GuiRect(0, 3, width, 22, 0xff000000));
-        addChild(new GuiRect(0, 4, width, 20, 0xffffffff));
+        addChild(new GuiRect(0, 4, width, 20, GuiColors.muted));
         addChild(new GuiRect(0, 5, width, 18, 0xff000000));
 
         // left cap

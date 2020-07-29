@@ -9,6 +9,7 @@ public class GuiColors {
     public static final int selected = 0xffff00;
 
     public static final int muted = 0x7f7f7f;
+    public static final int mutedStrong = 0x404040;
     public static final int hoverMuted = 0x8f8f6f;
 
     public static final int warning = 0xffff00;
