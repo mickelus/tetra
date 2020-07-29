@@ -16,6 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -61,6 +62,7 @@ public class ModularHolosphereItem extends ModularItem {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo"));
         RemoveSchema.registerRemoveSchemas(this);
     }
 

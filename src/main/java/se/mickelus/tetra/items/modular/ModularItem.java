@@ -879,8 +879,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             return Collections.emptySet();
         }
 
-        return getAllModules(itemStack).stream()
-                .flatMap(module -> ((Set<Capability>)module.getCapabilities(itemStack)).stream())
+        return Stream.concat(
+                getAllModules(itemStack).stream().flatMap(module -> (module.getCapabilities(itemStack)).stream()),
+                Arrays.stream(getSynergyData(itemStack)).flatMap(synergyData -> synergyData.capabilities.getValues().stream()))
                 .collect(Collectors.toSet());
     }
 
@@ -891,6 +892,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
 
         return getAllModules(itemStack).stream()
                 .mapToInt(module -> module.getEffectLevel(itemStack, effect))
+                .sum()
+                + Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.effects)
+                .mapToInt(effectData -> effectData.getLevel(effect))
                 .sum();
     }
 
@@ -901,6 +906,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
 
         return getAllModules(itemStack).stream()
                 .mapToDouble(module -> module.getEffectEfficiency(itemStack, effect))
+                .sum()
+                + Arrays.stream(getSynergyData(itemStack))
+                .map(synergyData -> synergyData.effects)
+                .mapToDouble(effectData -> effectData.getEfficiency(effect))
                 .sum();
     }
 
@@ -909,9 +918,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             return Collections.emptyList();
         }
 
-        return getAllModules(itemStack).stream()
-                .flatMap(module -> ((Collection<ItemEffect>)module.getEffects(itemStack)).stream())
-                .distinct()
+        return Stream.concat(
+                getAllModules(itemStack).stream().flatMap(module -> (module.getEffects(itemStack)).stream()),
+                Arrays.stream(getSynergyData(itemStack)).flatMap(synergyData -> synergyData.effects.getValues().stream()))
                 .collect(Collectors.toSet());
 
     }

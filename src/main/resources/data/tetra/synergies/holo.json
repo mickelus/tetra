@@ -1,0 +1,11 @@
+[
+    {
+        "modules": ["holo/scanner", "holo/scanner"],
+        "attackSpeed": -0.4,
+        "effects": {
+            "scannerRange": -14,
+            "scannerHorizontalSpread":  -12,
+            "scannerVerticalSpread": -2
+        }
+    }
+]
