@@ -2747,6 +2747,8 @@
   "tetra.advancements.spelunking.root.description": "Delve deep underground",
   "tetra.advancements.spelunking.ancient_ruins.title" : "Long Gone",
   "tetra.advancements.spelunking.ancient_ruins.description": "Find ancient ruins deep down in a cold biome",
+  "tetra.advancements.spelunking.scanner.title" : "Sweepstakes",
+  "tetra.advancements.spelunking.scanner.description": "Install a holosphere scanner to make it easier to find ancient ruins",
   "tetra.advancements.spelunking.containers.title": "\"Salvage\"",
   "tetra.advancements.spelunking.containers.description": "Hit the highlighted areas on crates and containers with the correct tools to break them open",
   "tetra.advancements.spelunking.earthpiercer.title": "Planetary Piercing",
