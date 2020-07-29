@@ -1077,14 +1077,20 @@
   "tetra.variant.machete/knightmetal": "Knightmetal machete",
   "tetra.variant.machete/knightmetal.prefix": "Knightmetal",
 
-  "tetra/schema/sword/stonecutter.name": "Stonecutter",
-  "tetra/schema/sword/stonecutter.description": "Replace the current blade with the stonecutter, a heavy blade that cuts through stone with ease.",
-  "tetra/schema/sword/stonecutter.slot1": "Stonecutter",
+  "tetra/schema/sword/stonecutter/stonecutter.name": "Stonecutter",
+  "tetra/schema/sword/stonecutter/stonecutter.description": "Replace the current blade with the stonecutter, a heavy blade that cuts through stone with ease.",
+  "tetra/schema/sword/stonecutter/stonecutter.slot1": "Stonecutter",
 
   "tetra.module.sword/stonecutter.item_name": "Stonecutter",
   "tetra.module.sword/stonecutter.name": "Stonecutter",
   "tetra.module.sword/stonecutter.description": "A heavy blade that cuts through stone with ease.",
   "tetra.variant.stonecutter/stonecutter": "Stonecutter",
+
+  "tetra.improvement.stonecutter_hone/efficiency.name": "Hone: Mine Efficiency",
+  "tetra.improvement.stonecutter_hone/efficiency.description": "Increases mining efficiency",
+
+  "tetra.improvement.stonecutter_hone/tier.name": "Hone: Mine Tier",
+  "tetra.improvement.stonecutter_hone/tier.description": "Increases mining tier by 1",
 
   "tetra/schema/double/shared_head/hone_durability_1.name": "Hone: Durability I",
   "tetra/schema/double/shared_head/hone_durability_1.description": "Hone the module to increase the durability it provides by 4%%.",
@@ -1171,13 +1177,13 @@
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_1.name": "Hone: Mine Eff. I",
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_1.description": "Hone the module to increase efficiency for mining by 1.",
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_2.name": "Hone: Mine Eff. II",
-  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_2.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 1 to 2.5.",
+  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_2.description": "Further hone the mining efficiency improvement for this module, increasing the efficiency bonus from 1 to 2.5.",
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_3.name": "Hone: Mine Eff. III",
-  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_3.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 2.5 to 5.",
+  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_3.description": "Further hone the mining efficiency improvement for this module, increasing the efficiency bonus from 2.5 to 5.",
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_4.name": "Hone: Mine Eff. IV",
-  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_4.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 5 to 10.",
+  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_4.description": "Further hone the mining efficiency improvement for this module, increasing the efficiency bonus from 5 to 10.",
   "tetra/schema/double/shared_head/hone_pickaxe_efficiency_5.name": "Hone: Mine Eff. V",
-  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_5.description": "Further hone the dig efficiency improvement for this module, increasing the efficiency bonus from 10 to 15.",
+  "tetra/schema/double/shared_head/hone_pickaxe_efficiency_5.description": "Further hone the mining efficiency improvement for this module, increasing the efficiency bonus from 10 to 15.",
 
   "tetra.improvement.head_hone/pickaxe_efficiency.name": "Hone: Mine Efficiency",
   "tetra.improvement.head_hone/pickaxe_efficiency.description": "Increases mining efficiency",
