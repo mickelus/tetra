@@ -228,7 +228,7 @@ public class ModularBowItem extends ModularItem {
                 .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
                 .reduce(speedModifier, (a, b) -> a * b);
 
-        return Math.max(0.001, speedModifier);
+        return Math.max(0.1, speedModifier);
     }
 
     /**
