@@ -65,6 +65,14 @@
             "experienceCost": 2,
             "moduleKey": "double/socket",
             "moduleVariant": "double_socket/lapis"
+        },
+        {
+            "material": {
+                "tag": "botania:runes/mana"
+            },
+            "experienceCost": 3,
+            "moduleKey": "double/socket",
+            "moduleVariant": "double_socket/mana_rune"
         }
     ]
 }

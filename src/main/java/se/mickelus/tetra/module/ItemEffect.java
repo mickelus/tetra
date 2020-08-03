@@ -299,7 +299,19 @@ public enum ItemEffect {
      * Scanner vertical spread: Defines how many vertical raytraces are performed when scanning, each level of the effect adds two (up & down) more
      * vertical raytraces. The additional raytraces start at +-25 degrees and increments at 5 degrees per raytrace.
      */
-    scannerVerticalSpread;
+    scannerVerticalSpread,
+
+    //////////////////////////////////////////////////////////////
+    // compat
+    //////////////////////////////////////////////////////////////
+
+    /**
+     * Mana repair (botania): Allows this item to be automatically repaired if the player has mana. The mana cost per durability equals the level
+     * of the effect
+     */
+    manaRepair;
+
+
 
     public static final String hauntedKey = "destabilized/haunted";
 }

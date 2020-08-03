@@ -237,6 +237,11 @@ public class GuiStats {
             0, 16, false, earthbindGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.earthbind.tooltip", earthbindGetter));
 
+    public static final IStatGetter manaRepairGetter = new StatGetterEffectLevel(ItemEffect.manaRepair, 1);
+    public static final GuiStatBar manaRepair = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.manaRepair"),
+            0, 256, false, manaRepairGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", manaRepairGetter));
+
     public static final IStatGetter releaseLatchGetter = new StatGetterEffectLevel(ItemEffect.releaseLatch, 1);
     public static final GuiStatBar releaseLatch = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bow.releaseLatch"),
             0, 1, false, releaseLatchGetter, LabelGetterBasic.integerLabel,

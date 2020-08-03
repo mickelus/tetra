@@ -60,3 +60,9 @@ description="Tetra revolves around modular items and attempts to blend it togeth
     versionRange="[2.0,)"
     ordering="AFTER"
     side="BOTH"
+[[dependencies.tetra]]
+    modId="botania"
+    mandatory=false
+    versionRange="[1.15,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -10,6 +10,9 @@ public class IntegrationHelper {
     public static final String curiosModId = "curios";
     public static final Boolean isCuriosLoaded = ModList.get().isLoaded(curiosModId);
 
+    public static final String botaniaModId = "botania";
+    public static final Boolean isBotaniaLoaded = ModList.get().isLoaded(botaniaModId);
+
     public static void enqueueIMC(InterModEnqueueEvent event) {
         if(isCuriosLoaded) {
             InterModComms.sendTo(curiosModId, CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("belt").setSize(1));

@@ -7,6 +7,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.UnbreakingEnchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -31,11 +32,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.forgespi.Environment;
+import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.capabilities.Capability;
@@ -54,6 +58,7 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schema.RepairDefinition;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
+import vazkii.botania.api.mana.ManaItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -411,6 +416,24 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
         causeHauntEffect(entity, itemStack, multiplier);
         causeFierySelfEffect(entity, itemStack, multiplier);
         causeEnderReverbEffect(entity, itemStack, multiplier);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, World world, Entity entity, int itemSlot, boolean isSelected) {
+        if (!world.isRemote && world.getGameTime() % 20 == 0) {
+            int manaRepairLevel = getEffectLevel(itemStack, ItemEffect.manaRepair);
+
+            if (manaRepairLevel > 0 && IntegrationHelper.isBotaniaLoaded && itemStack.getDamage() > 0) {
+                CastOptional.cast(entity, PlayerEntity.class)
+                        .ifPresent(player -> {
+                            if (ManaItemHandler.instance().requestManaExactForTool(itemStack, player, manaRepairLevel * 2, true)) {
+                                itemStack.setDamage(itemStack.getDamage() - 1);
+                            }
+                        });
+
+            }
+        }
+
     }
 
     @Override

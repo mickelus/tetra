@@ -212,6 +212,9 @@
   "tetra.stats.earthbind": "Earthbind",
   "tetra.stats.earthbind.tooltip": "Hitting an entity has a §e10%%§r chance to lock it in place for §e%s seconds§r. Occurs more often at lower y-levels, up to a §e50%%§r chance at bedrock",
 
+  "tetra.stats.manaRepair": "Mana rep",
+  "tetra.stats.manaRepair.tooltip": "This item will use mana to repair itself over time, repairing one point of durability costs §e%s§r mana",
+
   "tetra.stats.magicCapacity": "Magic capacity",
   "tetra.stats.magicCapacity.tooltip": "The amount of magic that the module may hold, this capacity is utilized by improvement such as enchantments.\n\n§7Magic capacity: §e%s",
 
@@ -684,6 +687,8 @@
   "tetra.variant.sword_socket/pristine_emerald.description": "A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.",
   "tetra.variant.sword_socket/pristine_lapis": "Socket [§9Lapis+§r]",
   "tetra.variant.sword_socket/pristine_lapis.description": "A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.",
+  "tetra.variant.sword_socket/mana_rune": "Socket [§dMana§r]",
+  "tetra.variant.sword_socket/mana_rune.description": "A rune, fitted onto the sword where the blade meets the hilt. The rune uses mana to repair the item over time.",
 
   "tetra/schema/sword/counterweight.name": "Counterweight",
   "tetra/schema/sword/counterweight.description": "Balance the blade with a counterweight. Greatly increases attack speed if the counterweight consumes the same amount of integrity as all other modules combined. If integrity usage differs the bonus is reduced, a large difference reduces the bonus further and may even reduce the attack speed.",
@@ -1298,6 +1303,8 @@
   "tetra.variant.double_socket/pristine_emerald.description": "A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.",
   "tetra.variant.double_socket/pristine_lapis": "Socket [§9Lapis+§r]",
   "tetra.variant.double_socket/pristine_lapis.description": "A gem, fitted onto the side of the tool head. The gem is enchanted and provides magical boons to the tools wielder.\n\nThe gem is of pristine quality and provides increased effects.",
+  "tetra.variant.double_socket/mana_rune": "Socket [§dMana§r]",
+  "tetra.variant.double_socket/mana_rune.description": "A rune, fitted onto the side of the tool head. The rune uses mana to repair the item over time.",
 
   "tetra/schema/double/binding.name": "Binding",
   "tetra/schema/double/binding.description": "Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.",
@@ -1807,6 +1814,8 @@
   "tetra.variant.single_socket/pristine_emerald.description": "A gem, attached where the head meets the handle. The gem is enchanted and provides magical boons to the wielder.\n\nThe gem is of pristine quality and provides increased effects.",
   "tetra.variant.single_socket/pristine_lapis": "Socket [§9Lapis+§r]",
   "tetra.variant.single_socket/pristine_lapis.description": "A gem, attached where the head meets the handle. The gem is enchanted and provides magical boons to the wielder.\n\nThe gem is of pristine quality and provides increased effects.",
+  "tetra.variant.single_socket/mana_rune": "Socket [§dMana§r]",
+  "tetra.variant.single_socket/mana_rune.description": "A rune, attached where the head meets the handle. The rune uses mana to repair the item over time.",
 
   "tetra/schema/single/binding.name": "Binding",
   "tetra/schema/single/binding.description": "Bind the tool head to the handle by binding it with rope or straps, or by using completely different materials and methods.",

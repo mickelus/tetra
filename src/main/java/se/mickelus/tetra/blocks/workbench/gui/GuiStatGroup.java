@@ -72,6 +72,7 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.enderReverb);
         bars.add(GuiStats.criticalStrike);
         bars.add(GuiStats.earthbind);
+        bars.add(GuiStats.manaRepair);
         bars.add(GuiStats.releaseLatch);
         bars.add(GuiStats.overbowed);
         bars.add(GuiStats.holoSpeed);

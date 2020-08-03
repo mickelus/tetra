@@ -130,6 +130,22 @@
             "effects": {
                 "intuit": 2
             }
+        },
+        {
+            "key": "single_socket/mana_rune",
+            "integrity": -1,
+            "glyph": {
+                "tint": "c16bc8",
+                "textureX": 80,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/single/binding/socket/pristine",
+                "tint": "9a3aa8"
+            }],
+            "effects": {
+                "manaRepair": 60
+            }
         }
     ]
 }
