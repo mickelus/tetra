@@ -14,7 +14,8 @@ public class StatGetterSpeedRanged implements IStatGetter {
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        return currentStack.getItem() instanceof ModularBowItem || previewStack.getItem() instanceof ModularBowItem;
+        return (currentStack.getItem() instanceof ModularBowItem || previewStack.getItem() instanceof ModularBowItem)
+                && (getValue(player, currentStack) != 0 || getValue(player, previewStack) != 0);
     }
 
     @Override
