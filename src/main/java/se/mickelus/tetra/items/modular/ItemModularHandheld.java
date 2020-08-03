@@ -203,7 +203,7 @@ public class ItemModularHandheld extends ModularItem {
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
         if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getPosY()  / 128 ))) {
-            target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, 80, 0, false, true));
+            target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, earthbindLevel * 20, 0, false, true));
 
             if (target.world instanceof ServerWorld) {
                 BlockState blockState = target.world.getBlockState(new BlockPos(target.getPosX(), target.getPosY() - 1, target.getPosZ()));

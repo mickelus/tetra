@@ -234,8 +234,8 @@ public class GuiStats {
 
     public static final IStatGetter earthbindGetter = new StatGetterEffectLevel(ItemEffect.earthbind, 1);
     public static final GuiStatBar earthbind = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.earthbind"),
-            0, 100, false, earthbindGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterPercentage("tetra.stats.earthbind.tooltip", earthbindGetter));
+            0, 16, false, earthbindGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.earthbind.tooltip", earthbindGetter));
 
     public static final IStatGetter releaseLatchGetter = new StatGetterEffectLevel(ItemEffect.releaseLatch, 1);
     public static final GuiStatBar releaseLatch = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bow.releaseLatch"),
@@ -249,7 +249,7 @@ public class GuiStats {
 
     public static final IStatGetter magicCapacityGetter = new StatGetterMagicCapacity();
     public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.magicCapacity"),
-            0, 50, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
+            0, 150, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.magicCapacity.tooltip", magicCapacityGetter));
 
     public static final IStatGetter holoSpeedGetter = new StatGetterSpeedHolo();

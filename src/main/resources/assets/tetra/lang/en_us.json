@@ -209,6 +209,9 @@
   "tetra.stats.intuit": "Intuit",
   "tetra.stats.intuit.tooltip": "Experience gained from killing entities and destroying blocks yields honing progress at a §e%sx§r ratio",
 
+  "tetra.stats.earthbind": "Earthbind",
+  "tetra.stats.earthbind.tooltip": "Hitting an entity has a §e10%%§r chance to lock it in place for §e%s seconds§r. Occurs more often at lower y-levels, up to a §e50%%§r chance at bedrock",
+
   "tetra.stats.magicCapacity": "Magic capacity",
   "tetra.stats.magicCapacity.tooltip": "The amount of magic that the module may hold, this capacity is utilized by improvement such as enchantments.\n\n§7Magic capacity: §e%s",
 
