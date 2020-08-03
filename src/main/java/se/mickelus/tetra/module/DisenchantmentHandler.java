@@ -21,16 +21,11 @@ import java.util.stream.Stream;
 public class DisenchantmentHandler implements IContainerListener {
 
 
+    // removal of listener not possible due to that being client only, and there's not really a reason to remove the listener anyway
     @SubscribeEvent
     public void onPlayerContainerOpen(PlayerContainerEvent.Open event) {
         CastOptional.cast(event.getContainer(), GrindstoneContainer.class)
                 .ifPresent(container -> container.addListener(this));
-    }
-
-    @SubscribeEvent
-    public void onPlayerContainerClose(PlayerContainerEvent.Close event) {
-        CastOptional.cast(event.getContainer(), GrindstoneContainer.class)
-                .ifPresent(container -> container.removeListener(this));
     }
 
     @Override
