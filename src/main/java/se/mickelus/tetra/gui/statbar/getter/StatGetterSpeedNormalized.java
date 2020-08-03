@@ -14,7 +14,8 @@ public class StatGetterSpeedNormalized implements IStatGetter {
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        return currentStack.getItem() instanceof ItemModularHandheld || previewStack.getItem() instanceof ItemModularHandheld;
+        return (currentStack.getItem() instanceof ItemModularHandheld || previewStack.getItem() instanceof ItemModularHandheld)
+                && (getValue(player, currentStack) != 0 || getValue(player, previewStack) != 0);
     }
 
     @Override
