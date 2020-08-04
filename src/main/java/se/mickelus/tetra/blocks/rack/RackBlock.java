@@ -132,9 +132,13 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return Optional.of(getDefaultState().with(facingProp, context.getFace()))
-                .filter(blockState -> blockState.isValidPosition(context.getWorld(), context.getPos()))
-                .orElse(null);
+        if (Direction.Axis.Y != context.getFace().getAxis()) {
+            return Optional.of(getDefaultState().with(facingProp, context.getFace()))
+                    .filter(blockState -> blockState.isValidPosition(context.getWorld(), context.getPos()))
+                    .orElse(null);
+        }
+
+        return null;
     }
 
     @Override
