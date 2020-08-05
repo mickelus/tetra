@@ -7,14 +7,14 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
@@ -174,21 +174,21 @@ public class ModuleBuilder {
 
         if (item != null) {
             ItemStack itemStack = new ItemStack(item);
-            Multimap<String, AttributeModifier> attributes = itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND);
+            Multimap<Attribute, AttributeModifier> attributes = itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND);
 
             if (result.has("durability")) {
                 result.addProperty("durability", (int) (( itemStack.getMaxDamage() + durabilityOffset) * durabilityMultiplier));
             }
 
             if (result.has("damage")) {
-                double damage = attributes.get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).stream()
+                double damage = attributes.get(Attributes.ATTACK_DAMAGE).stream()
                         .filter(modifier -> AttributeModifier.Operation.ADDITION.equals(modifier.getOperation()))
                         .mapToDouble(AttributeModifier::getAmount)
                         .sum();
                 result.addProperty("damage", damage);
             }
 
-            double attackSpeed = attributes.get(SharedMonsterAttributes.ATTACK_SPEED.getName()).stream()
+            double attackSpeed = attributes.get(Attributes.ATTACK_SPEED).stream()
                     .filter(modifier -> AttributeModifier.Operation.ADDITION.equals(modifier.getOperation()))
                     .mapToDouble(AttributeModifier::getAmount)
                     .sum();

@@ -3,7 +3,7 @@ package se.mickelus.tetra.client.model;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.renderer.TransformationMatrix;
+import net.minecraft.util.math.vector.TransformationMatrix;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -50,9 +50,8 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         Optional.ofNullable(overrideList).ifPresent(ModularOverrideList::clearCache);
     }
 
-
     @Override
-    public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter,
+    public Collection<RenderMaterial> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter,
             Set<Pair<String, String>> missingTextureErrors) {
         return Collections.emptyList();
     }
@@ -68,7 +67,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
      * @return
      */
     @Override
-    public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter,
+    public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter,
             IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation) {
 
         overrideList = new ModularOverrideList(this, owner, bakery, spriteGetter, modelTransform, modelLocation);
@@ -76,7 +75,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
     }
 
     public IBakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides,
+            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides,
             ResourceLocation modelLocation) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -84,7 +83,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
         for(int i = 0; i < moduleModels.size(); i++) {
             ModuleModel model = moduleModels.get(i);
-            TextureAtlasSprite tas = spriteGetter.apply(new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, model.location));
+            TextureAtlasSprite tas = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, model.location));
             builder.addAll(getQuadsForSprite(i, tas, rotationTransform, model.tint));
         }
         TextureAtlasSprite particle = spriteGetter.apply(owner.resolveTexture("particle"));

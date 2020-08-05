@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,7 +28,7 @@ public class ScannerDebugRenderer {
         if (player != null && player.isCreative()) {
             MatrixStack matrixStack = event.getMatrixStack();
             IVertexBuilder vertexBuilder = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource().getBuffer(RenderType.getLines());
-            Vec3d eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
+            Vector3d eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
 
             GlStateManager.lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);
@@ -38,8 +38,8 @@ public class ScannerDebugRenderer {
         }
     }
 
-    private void drawDebugBox(BlockPos blockPos, Vec3d eyePos, MatrixStack matrixStack, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha) {
-        Vec3d pos = new Vec3d(blockPos).subtract(eyePos);
+    private void drawDebugBox(BlockPos blockPos, Vector3d eyePos, MatrixStack matrixStack, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha) {
+        Vector3d pos = Vector3d.copy(blockPos).subtract(eyePos);
         AxisAlignedBB aabb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
 
         // draw center box

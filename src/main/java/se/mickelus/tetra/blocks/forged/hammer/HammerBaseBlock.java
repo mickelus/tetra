@@ -20,7 +20,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -33,9 +36,9 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -77,7 +80,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     };
 
     public HammerBaseBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
 
@@ -102,7 +105,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
         tooltip.add(locationTooltip);
         tooltip.add(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
-                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+                .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }
 
     public boolean isFueled(World world, BlockPos pos) {
@@ -165,11 +168,11 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
 
     public static boolean hasEffect(World world, BlockState blockState, EnumHammerEffect effect) {
         if (effect.requiresBoth) {
-            return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), world.getSeed()))
-                    && effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), world.getSeed()));
+            return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), 0))
+                    && effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), 0));
         }
-        return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), world.getSeed()))
-                || effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), world.getSeed()));
+        return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), 0))
+                || effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), 0));
     }
 
     @Override

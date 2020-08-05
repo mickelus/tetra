@@ -32,8 +32,7 @@ public class PristineLapisItem extends TetraItem {
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslationTextComponent("item.tetra.pristine_gem.description").setStyle(new Style()
-                    .setColor(TextFormatting.GRAY)));
+            tooltip.add(new TranslationTextComponent("item.tetra.pristine_gem.description").mergeStyle(TextFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }

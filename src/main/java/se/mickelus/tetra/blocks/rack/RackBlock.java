@@ -19,11 +19,10 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -100,7 +99,7 @@ public class RackBlock extends TetraWaterloggedBlock {
         AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
         if (facing == hit.getFace()) {
             System.out.println(hit.getHitVec());
-            Vec3d hitVec = hit.getHitVec();
+            Vector3d hitVec = hit.getHitVec();
             int slot = getHitX(facing, boundingBox,
                     (float) hitVec.x - pos.getX(),
                     (float) hitVec.y - pos.getY(),
@@ -173,8 +172,7 @@ public class RackBlock extends TetraWaterloggedBlock {
             final ITooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslationTextComponent("block.tetra.rack.description").setStyle(new Style()
-                    .setColor(TextFormatting.GRAY)));
+            tooltip.add(new TranslationTextComponent("block.tetra.rack.description").mergeStyle(TextFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }
@@ -269,16 +267,16 @@ public class RackBlock extends TetraWaterloggedBlock {
     private void spawnConsumeParticle(World world, BlockPos pos, BlockState blockState, IInventory inventory, ItemStack providerStack) {
         if (world instanceof ServerWorld) {
             Direction facing = blockState.get(RackBlock.facingProp);
-            Vec3d particlePos = new Vec3d(pos).add(0.5f, 0.75f, 0.5f).add(new Vec3d(facing.getDirectionVec()).scale(-0.3));
+            Vector3d particlePos = Vector3d.copy(pos).add(0.5f, 0.75f, 0.5f).add(Vector3d.copy(facing.getDirectionVec()).scale(-0.3));
 
             ItemStack firstSlot = inventory.getStackInSlot(0);
             firstSlot = Optional.of(ItemUpgradeRegistry.instance.getReplacement(firstSlot))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .orElse(firstSlot);
             if (ItemStack.areItemStacksEqual(providerStack, firstSlot)) {
-                particlePos = particlePos.add(new Vec3d(facing.rotateYCCW().getDirectionVec()).scale(-0.25));
+                particlePos = particlePos.add(Vector3d.copy(facing.rotateYCCW().getDirectionVec()).scale(-0.25));
             } else {
-                particlePos = particlePos.add(new Vec3d(facing.rotateYCCW().getDirectionVec()).scale(0.25));
+                particlePos = particlePos.add(Vector3d.copy(facing.rotateYCCW().getDirectionVec()).scale(0.25));
             }
 
             ((ServerWorld) world).spawnParticle(new RedstoneParticleData(0.0f, 0.66f, 0.66f, 1f), particlePos.getX(), particlePos.getY(), particlePos.getZ(), 2, 0, 0, 0, 0f);

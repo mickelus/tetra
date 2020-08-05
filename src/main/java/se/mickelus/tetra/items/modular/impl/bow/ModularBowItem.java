@@ -130,7 +130,7 @@ public class ModularBowItem extends ModularItem {
 
                     if (!world.isRemote) {
                         AbstractArrowEntity projectile = ammoItem.createArrow(world, ammoStack, player);
-                        projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F,
+                        projectile.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F,
                                 projectileVelocity * 3.0F, 1.0F);
 
                         if (projectileVelocity == 1.0F) {

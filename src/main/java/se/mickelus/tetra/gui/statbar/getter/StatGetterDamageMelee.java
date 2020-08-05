@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.statbar.getter;
 
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -16,9 +16,9 @@ public class StatGetterDamageMelee implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        return itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).stream()
+        return itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream()
                 .map(AttributeModifier::getAmount)
-                .reduce(0d, Double::sum) + player.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
+                .reduce(0d, Double::sum) + player.getAttribute(Attributes.ATTACK_DAMAGE).getBaseValue();
     }
 
     @Override

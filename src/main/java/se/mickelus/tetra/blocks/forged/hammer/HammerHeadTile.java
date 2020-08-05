@@ -23,10 +23,4 @@ public class HammerHeadTile extends TileEntity {
     public long getActivationTime() {
         return activationTime;
     }
-
-    @Override
-    public boolean hasFastRenderer()
-    {
-        return true;
-    }
 }

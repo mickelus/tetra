@@ -207,8 +207,8 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState blockState, CompoundNBT compound) {
+        super.read(blockState, compound);
 
         if (compound.contains(chargeKey)) {
             currentCharge = compound.getInt(chargeKey);
@@ -239,7 +239,7 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(packet.getNbtCompound());
+        this.read(getBlockState(), packet.getNbtCompound());
 //        BlockState state = getBlockState();
 
 //        world.notifyBlockUpdate(pos, state, state,3);

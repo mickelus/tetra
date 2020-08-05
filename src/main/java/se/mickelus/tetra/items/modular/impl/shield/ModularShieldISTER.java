@@ -8,12 +8,10 @@ import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.ShieldModel;
-import net.minecraft.client.renderer.model.Material;
-import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.tileentity.BannerTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -36,7 +34,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
     public ModularShieldISTER() {}
 
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 //        boolean flag = itemStack.getChildTag("BlockEntityTag") != null;
         matrixStack.push();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
@@ -54,7 +52,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
                             renderBanner(itemStack, modelRenderer, matrixStack, buffer, combinedLight, combinedOverlay);
                         }
                     } else if (modelRenderer != null) {
-                        Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, modelData.location);
+                        RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, modelData.location);
                         IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(
                                 ItemRenderer.getBuffer(buffer, model.getRenderType(material.getAtlasLocation()), false, itemStack.hasEffect()));
 
@@ -82,7 +80,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
         for(int i = 0; i < 17 && i < list.size(); ++i) {
             Pair<BannerPattern, DyeColor> pair = list.get(i);
             float[] tint = pair.getSecond().getColorComponentValues();
-            Material material = new Material(Atlases.SHIELD_ATLAS, pair.getFirst().func_226957_a_(false));
+            RenderMaterial material = new RenderMaterial(Atlases.SHIELD_ATLAS, pair.getFirst().getTextureLocation(false));
             IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, RenderType.getEntitySmoothCutout(material.getAtlasLocation()), false, itemStack.hasEffect()));
             modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 1.0f);
         }
@@ -96,7 +94,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
             Pair<BannerPattern, DyeColor> pair = list.get(i);
             if (!pair.getFirst().equals(BannerPattern.BASE)) {
                 float[] tint = pair.getSecond().getColorComponentValues();
-                Material material = new Material(Atlases.SHIELD_ATLAS, pair.getFirst().func_226957_a_(false));
+                RenderMaterial material = new RenderMaterial(Atlases.SHIELD_ATLAS, pair.getFirst().getTextureLocation(false));
                 IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, RenderType.getEntityNoOutline(material.getAtlasLocation()), false, itemStack.hasEffect()));
                 modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 0.7f);
             }

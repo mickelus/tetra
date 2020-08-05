@@ -19,7 +19,7 @@ public class BlockForgedPillar extends RotatedPillarBlock implements ITetraBlock
     public static BlockForgedPillar instance;
 
     public BlockForgedPillar() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
     }

@@ -36,8 +36,7 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
 
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("block.tetra.basic_workbench.description").setStyle(new Style()
-                .setColor(TextFormatting.GRAY)));
+        tooltip.add(new TranslationTextComponent("block.tetra.basic_workbench.description").mergeStyle(TextFormatting.GRAY));
     }
 
     public static ActionResultType upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {

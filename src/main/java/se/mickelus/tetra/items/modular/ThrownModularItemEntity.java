@@ -1,6 +1,5 @@
 package se.mickelus.tetra.items.modular;
 
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,9 +19,13 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,8 +43,6 @@ import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
 
 public class ThrownModularItemEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "thrown_modular_item";
@@ -109,7 +110,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             dealtDamage = true;
         }
 
-        Entity shooter = getShooter();
+        Entity shooter = func_234616_v_();
         if ((dealtDamage || getNoClip()) && shooter != null) {
             int loyaltyLevel = dataManager.get(LOYALTY_LEVEL);
             if (loyaltyLevel > 0 && !shouldReturnToThrower()) {
@@ -120,17 +121,17 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                 remove();
             } else if (loyaltyLevel > 0) {
                 setNoClip(true);
-                Vec3d vec3d = new Vec3d(shooter.getPosX() - getPosX(), shooter.getPosYEye() - getPosY(), shooter.getPosZ() - getPosZ());
-                setRawPosition(getPosX(), getPosY() + vec3d.y * 0.015D * (double)loyaltyLevel, getPosZ());
+                Vector3d Vector3d = new Vector3d(shooter.getPosX() - getPosX(), shooter.getPosYEye() - getPosY(), shooter.getPosZ() - getPosZ());
+                setRawPosition(getPosX(), getPosY() + Vector3d.y * 0.015D * (double)loyaltyLevel, getPosZ());
                 if (world.isRemote) {
                     lastTickPosY = getPosY();
                 }
 
                 double speed = 0.05D * (double)loyaltyLevel;
-                setMotion(getMotion().scale(0.95D).add(vec3d.normalize().scale(speed)));
+                setMotion(getMotion().scale(0.95D).add(Vector3d.normalize().scale(speed)));
                 if (returningTicks == 0) {
                     playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
-                    setMotion(vec3d.scale(0.01));
+                    setMotion(Vector3d.scale(0.01));
                 }
 
                 ++returningTicks;
@@ -141,7 +142,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     }
 
     private boolean shouldReturnToThrower() {
-        Entity entity = getShooter();
+        Entity entity = func_234616_v_();
         if (entity != null && entity.isAlive()) {
             return !(entity instanceof ServerPlayerEntity) || !entity.isSpectator();
         } else {
@@ -171,17 +172,17 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
      */
     @Nullable
     @Override
-    protected EntityRayTraceResult rayTraceEntities(Vec3d startVec, Vec3d endVec) {
+    protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
         return dealtDamage ? null : super.rayTraceEntities(startVec, endVec);
     }
 
     @Override
-    protected void onHit(RayTraceResult rayTraceResult) {
-        super.onHit(rayTraceResult);
+    protected void onImpact(RayTraceResult rayTraceResult) {
+        super.onImpact(rayTraceResult);
 
         if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK && !dealtDamage) {
             BlockPos pos = ((BlockRayTraceResult)rayTraceResult).getPos();
-            Entity shooter = getShooter();
+            Entity shooter = func_234616_v_();
             BlockState blockState = world.getBlockState(pos);
 
             if (ForgeHooks.canToolHarvestBlock(world, pos, thrownStack) && shooter instanceof PlayerEntity) {
@@ -199,8 +200,8 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
                     breakBlock((PlayerEntity) shooter, pos, blockState);
 
-                    Vec3i faceVec = ((BlockRayTraceResult) rayTraceResult).getFace().getDirectionVec();
-                    setMotion(new Vec3d(faceVec).scale(0.1));
+                    Vector3i faceVec = ((BlockRayTraceResult) rayTraceResult).getFace().getDirectionVec();
+                    setMotion(Vector3d.copy(faceVec).scale(0.1));
 
                     dealtDamage = true;
                 }
@@ -225,7 +226,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     @Override
     protected void onEntityHit(EntityRayTraceResult raytrace) {
         Entity target = raytrace.getEntity();
-        Entity shooter = getShooter();
+        Entity shooter = func_234616_v_();
         DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
 
 
@@ -270,9 +271,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.getPosition();
             if (world.canSeeSky(blockpos)) {
-                LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, (double)blockpos.getX() + 0.5D, (double)blockpos.getY(), (double)blockpos.getZ() + 0.5D, false);
-                lightningboltentity.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null);
-                ((ServerWorld)world).addLightningBolt(lightningboltentity);
+                LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
+                lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(blockpos));
+                lightningboltentity.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity) shooter : null);
+                this.world.addEntity(lightningboltentity);
                 soundevent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 f1 = 5.0F;
             }
@@ -302,8 +304,8 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                     .stream()
                     .findFirst()
                     .map(entity -> entity.getPosition().add(0, entity.getHeight() + 1, 0))
-                    .map(pos -> new Vec3d(pos).subtract(getPositionVec()))
-                    .map(Vec3d::normalize)
+                    .map(pos -> Vector3d.copy(pos).subtract(getPositionVec()))
+                    .map(Vector3d::normalize)
                     .map(direction -> direction.scale(getMotion().length() * 0.7))
                     .orElse(getMotion().mul(-0.01D, -0.1D, -0.01D)));
         }
@@ -314,7 +316,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
      */
     @Override
     public void onCollideWithPlayer(PlayerEntity entityIn) {
-        Entity entity = getShooter();
+        Entity entity = func_234616_v_();
         if (entity == null || entity.getUniqueID() == entityIn.getUniqueID()) {
             super.onCollideWithPlayer(entityIn);
         }

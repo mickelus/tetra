@@ -23,10 +23,10 @@ public class JumpHandlerBooster {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.isGameFocused()) {
-            if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isCrouching()) {
+            if (jumpKey.isKeyDown() && mc.player.isOnGround() && mc.player.isCrouching()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
                 PacketHandler.sendToServer(packet);
-            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.onGround) {
+            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.isOnGround()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true);
                 PacketHandler.sendToServer(packet);
             } else if (!jumpKey.isKeyDown() && wasJumpKeyDown) {

@@ -14,7 +14,7 @@ public enum EnumHammerConfig implements IStringSerializable {
     public static final EnumProperty<EnumHammerConfig> westProp = EnumProperty.create("configw", EnumHammerConfig.class);
 
     @Override
-    public String getName() {
+    public String getString() {
         return toString().toLowerCase();
     }
 

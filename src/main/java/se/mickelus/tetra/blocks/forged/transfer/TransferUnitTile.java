@@ -250,8 +250,8 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState blockState, CompoundNBT compound) {
+        super.read(blockState, compound);
 
         if (compound.contains("cell")) {
             cell = ItemStack.read(compound.getCompound("cell"));
@@ -290,6 +290,6 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(packet.getNbtCompound());
+        this.read(getBlockState(), packet.getNbtCompound());
     }
 }

@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -9,8 +10,8 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
-import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGuiGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 
 import java.util.Arrays;
@@ -78,25 +79,26 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public void render(final int mouseX, final int mouseY, final float partialTicks) {
-        renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
+    public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        renderBackground(matrixStack, 0);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
 
-        defaultGui.draw(new MatrixStack(), (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
+        defaultGui.draw(matrixStack, (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
-        renderHoveredToolTip(mouseX, mouseY);
+        renderHoveredToolTip(matrixStack, mouseX, mouseY);
     }
 
-    protected void renderHoveredToolTip(int mouseX, int mouseY) {
+    protected void renderHoveredToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            tooltipLines = tooltipLines.stream()
+            List<ITextComponent> textComponents = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
                     .flatMap(line -> Arrays.stream(line.split("\n")))
+                    .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, 300, font);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 300, font);
         }
     }
 

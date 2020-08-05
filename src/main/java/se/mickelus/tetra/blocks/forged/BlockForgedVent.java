@@ -17,10 +17,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -86,7 +82,7 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
     private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
 
     public BlockForgedVent() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesNotSolid);
 
         hasItem = true;
 
@@ -104,18 +100,8 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
 
         if (!world.isRemote) {
             ServerWorld serverWorld = (ServerWorld) world;
-            LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(boltLootTable);
 
-            LootContext context = new LootContext.Builder(serverWorld)
-                    .withLuck(player.getLuck())
-                    .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.BLOCK_STATE, blockState)
-                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
-                    .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.POSITION, player.getPosition())
-                    .build(LootParameterSets.BLOCK);
-
-            table.generate(context).forEach(itemStack -> {
+            BlockInteraction.getLoot(boltLootTable, player, hand, serverWorld, blockState).forEach(itemStack -> {
                 if (!player.inventory.addItemStackToInventory(itemStack)) {
                     player.dropItem(itemStack, false);
                 }
@@ -144,18 +130,7 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
 
         if (!world.isRemote) {
             ServerWorld serverWorld = (ServerWorld) world;
-            LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(ventLootTable);
-
-            LootContext context = new LootContext.Builder(serverWorld)
-                    .withLuck(player.getLuck())
-                    .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.BLOCK_STATE, blockState)
-                    .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
-                    .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.POSITION, player.getPosition())
-                    .build(LootParameterSets.BLOCK);
-
-            table.generate(context).forEach(itemStack -> {
+            BlockInteraction.getLoot(ventLootTable, player, hand, serverWorld, blockState).forEach(itemStack -> {
                 if (!player.inventory.addItemStackToInventory(itemStack)) {
                     player.dropItem(itemStack, false);
                 }
@@ -242,11 +217,6 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
         }
 
         return state.with(propRotation, state.get(propRotation));
-    }
-
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader world, BlockPos pos) {
-        return false;
     }
 
     @Override

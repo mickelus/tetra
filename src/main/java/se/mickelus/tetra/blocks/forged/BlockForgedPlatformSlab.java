@@ -20,7 +20,7 @@ public class BlockForgedPlatformSlab extends SlabBlock implements ITetraBlock {
     public static BlockForgedPlatformSlab instance;
 
     public BlockForgedPlatformSlab() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
     }

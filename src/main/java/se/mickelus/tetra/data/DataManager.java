@@ -9,16 +9,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraft.world.storage.loot.functions.ILootFunction;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
-import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
@@ -32,7 +25,6 @@ import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schema.Material;
 import se.mickelus.tetra.module.schema.RepairDefinition;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -57,10 +49,12 @@ public class DataManager {
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
-            .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
-            .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
-            .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
-            .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
+
+            // todo 1.16: might have only been used by extended loot pools, safe to remove?
+//            .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
+//            .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
+//            .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
+//            .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
             .create();
 
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
@@ -89,18 +83,15 @@ public class DataManager {
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerAboutToStartEvent event) {
-        logger.info("Setting up data reload listeners");
-
-        for (DataStore dataStore : dataStores) {
-            event.getServer().getResourceManager().addReloadListener(dataStore);
-        }
+    public void addReloadListener(AddReloadListenerEvent event) {
+        logger.debug("Setting up datastore reload listeners");
+        Arrays.stream(dataStores).forEach(event::addListener);
     }
 
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
         // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
-        logger.info("Sending data to client: {}", event.getPlayer().getName().getFormattedText());
+        logger.info("Sending data to client: {}", event.getPlayer().getName().getUnformattedComponentText());
         for (DataStore dataStore : dataStores) {
             dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());
         }

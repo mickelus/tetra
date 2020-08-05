@@ -16,7 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -104,7 +104,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
 
     private void causeOpeningEffects(ServerWorld worldServer) {
         Direction facing = worldServer.getBlockState(pos).get(HorizontalBlock.HORIZONTAL_FACING);
-        Vec3d smokeDirection = new Vec3d(facing.rotateY().getDirectionVec());
+        Vector3d smokeDirection = Vector3d.copy(facing.rotateY().getDirectionVec());
         Random random = new Random();
         int smokeCount = 5 + random.nextInt(4);
 
@@ -217,12 +217,12 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+        read(getBlockState(), pkt.getNbtCompound());
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 

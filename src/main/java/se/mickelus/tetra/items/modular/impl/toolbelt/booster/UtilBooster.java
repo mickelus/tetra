@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
@@ -73,11 +73,11 @@ public class UtilBooster {
     public static void boostPlayer(PlayerEntity player, CompoundNBT tag, int level) {
         float boostBase = boostStrength + boostStrength * (level - 1) * 0.4f;
         if (player.isElytraFlying()) {
-            Vec3d vec3d = player.getLookVec();
+            Vector3d Vector3d = player.getLookVec();
             player.addVelocity(
-                    vec3d.x * 0.01f + (vec3d.x * 1.5f - player.getMotion().x) * 0.05f,
-                    vec3d.y * 0.01f + (vec3d.y * 1.5f - player.getMotion().y) * 0.05f,
-                    vec3d.z * 0.01f + (vec3d.z * 1.5f - player.getMotion().z) * 0.05f);
+                    Vector3d.x * 0.01f + (Vector3d.x * 1.5f - player.getMotion().x) * 0.05f,
+                    Vector3d.y * 0.01f + (Vector3d.y * 1.5f - player.getMotion().y) * 0.05f,
+                    Vector3d.z * 0.01f + (Vector3d.z * 1.5f - player.getMotion().z) * 0.05f);
         } else if (player.getMotion().y > -0.1) {
             if (player.isCrouching()) {
                 player.addVelocity(0, boostBase / 1.5, 0);
@@ -98,7 +98,7 @@ public class UtilBooster {
 
     public static void boostPlayerCharged(PlayerEntity player, CompoundNBT tag, int level) {
         float boostBase = chargedBoostStrength + chargedBoostStrength * (level - 1) * boostLevelMultiplier;
-        Vec3d lookVector = player.getLookVec();
+        Vector3d lookVector = player.getLookVec();
 
         // current velocity projected onto the look vector
         player.setMotion(lookVector.scale(player.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
@@ -109,7 +109,7 @@ public class UtilBooster {
                 lookVector.z * boostBase);
         player.velocityChanged = true;
 
-        player.move(MoverType.SELF, new Vec3d(0, 0.4, 0));
+        player.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
 
         if (player.world instanceof ServerWorld) {
             ((ServerWorld)player.world).spawnParticle(ParticleTypes.LARGE_SMOKE, player.getPosX(),

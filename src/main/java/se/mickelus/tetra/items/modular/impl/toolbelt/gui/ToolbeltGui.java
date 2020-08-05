@@ -5,13 +5,14 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.impl.GuiKeybinding;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 
@@ -71,35 +72,35 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack, 0);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        func_230459_a_(matrixStack, mouseX, mouseY);
 
-        drawGuiContainerForegroundLayer(mouseX, mouseY);
+        drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        // GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override
-    protected void renderHoveredToolTip(int mouseX, int mouseY) {
-        super.renderHoveredToolTip(mouseX, mouseY);
+    protected void func_230459_a_(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.func_230459_a_(matrixStack, mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
 
         if (tooltipLines != null) {
-            tooltipLines = tooltipLines.stream()
+            List<ITextComponent> textComponents = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
                     .flatMap(line -> Arrays.stream(line.split("\n")))
+                    .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, font);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, -1, font);
         }
     }
 

@@ -1,10 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import javax.annotation.Nullable;
-
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,15 +9,20 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class HammerBaseTile extends TileEntity {
 
@@ -79,15 +80,14 @@ public class HammerBaseTile extends TileEntity {
 
     private void applyConsumeEffect() {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
-        Vec3d pos = new Vec3d(getPos());
-        pos = pos.add(0.5, 0.5, 0.5);
+        Vector3d pos = Vector3d.copyCentered(getPos());
 
-        Vec3d oppositePos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
-        pos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
+        Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
+        pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
         if (!world.isRemote) {
             if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
-                spawnParticle(ParticleTypes.ENCHANTED_HIT, new Vec3d(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+                spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
             }
 
             if (hasEffect(EnumHammerEffect.LEAKY)) {
@@ -127,7 +127,7 @@ public class HammerBaseTile extends TileEntity {
             }
 
             if (hasEffect(EnumHammerEffect.DAMAGING)) {
-                spawnParticle(ParticleTypes.POOF, new Vec3d(getPos()).add(0.5, -0.9, 0.5), 3, 0.1f);
+                spawnParticle(ParticleTypes.POOF, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 3, 0.1f);
             }
         }
     }
@@ -222,12 +222,10 @@ public class HammerBaseTile extends TileEntity {
 
     public void applyReconfigurationEffect() {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
-        Direction oppositeFacing = facing.getOpposite();
-        Vec3d pos = new Vec3d(getPos());
-        pos = pos.add(0.5, 0.5, 0.5);
+        Vector3d pos = Vector3d.copyCentered(getPos());
 
-        Vec3d oppositePos = pos.add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.55));
-        pos = pos.add(new Vec3d(facing.getDirectionVec()).scale(0.55));
+        Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
+        pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
 
         if (hasEffect(EnumHammerEffect.EFFICIENT)) {
@@ -264,7 +262,7 @@ public class HammerBaseTile extends TileEntity {
     /**
      * Utility for spawning particles from the server
      */
-    private void spawnParticle(IParticleData particle, Vec3d pos, int count, float speed) {
+    private void spawnParticle(IParticleData particle, Vector3d pos, int count, float speed) {
         if (world instanceof ServerWorld) {
             ((ServerWorld) world).spawnParticle(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
         }
@@ -283,12 +281,12 @@ public class HammerBaseTile extends TileEntity {
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
+        this.read(getBlockState(), pkt.getNbtCompound());
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState blockState, CompoundNBT compound) {
+        super.read(blockState, compound);
         if (compound.contains(slotsKey)) {
             ListNBT tagList = compound.getList(slotsKey, 10);
 

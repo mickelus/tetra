@@ -7,13 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 
 import javax.annotation.Nullable;
@@ -37,11 +39,9 @@ public class JournalItem extends TetraItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1")
-                .setStyle(new Style().setColor(TextFormatting.GRAY)));
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").mergeStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(""));
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2")
-                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {

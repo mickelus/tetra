@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -69,6 +70,12 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         this.xSize = 320;
         this.ySize = 240;
 
+
+        this.titleX = -width;
+        this.titleY = -height;
+        this.playerInventoryTitleX = -width;
+        this.playerInventoryTitleY = -height;
+
         this.tileEntity = container.getTileEntity();
         this.container = container;
 
@@ -115,16 +122,14 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     }
 
     @Override
-    public void render(final int mouseX, final int mouseY, final float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
-
-        drawGuiContainerForegroundLayer(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderBackground(matrixStack, 0);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        func_230459_a_(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
@@ -132,16 +137,18 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     }
 
     @Override
-    protected void renderHoveredToolTip(int mouseX, int mouseY) {
-        super.renderHoveredToolTip(mouseX, mouseY);
+    protected void func_230459_a_(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.func_230459_a_(matrixStack, mouseX, mouseY);
+
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            tooltipLines = tooltipLines.stream()
+            List<ITextComponent> textComponents = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
                     .flatMap(line -> Arrays.stream(line.split("\n")))
+                    .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(tooltipLines, mouseX, mouseY, width, height, -1, minecraft.fontRenderer);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, -1, minecraft.fontRenderer);
         }
 
         updateMaterialHoverPreview();

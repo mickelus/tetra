@@ -9,7 +9,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -88,11 +91,9 @@ public class ModularHolosphereItem extends ModularItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1")
-                .setStyle(new Style().setColor(TextFormatting.GRAY)));
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").mergeStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(""));
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2")
-                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
 
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }

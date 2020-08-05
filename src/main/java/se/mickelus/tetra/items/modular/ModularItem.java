@@ -26,7 +26,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -467,10 +470,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        Style basicStyle = new Style().setColor(TextFormatting.GRAY);
         if (isBroken(itemStack)) {
             tooltip.add(new TranslationTextComponent("item.tetra.modular.broken")
-                    .setStyle(new Style().setColor(TextFormatting.DARK_RED).setItalic(true)));
+                    .mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
         }
 
         if (Screen.hasShiftDown()) {
@@ -478,33 +480,31 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)).setStyle(basicStyle));
+                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)).mergeStyle(TextFormatting.GRAY));
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
                                 .map(StringTextComponent::new)
-                                .map(textComponent -> textComponent.setStyle(new Style().setColor(TextFormatting.DARK_GRAY)))
+                                .map(textComponent -> textComponent.mergeStyle(TextFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
                     .map(module -> "* " + module.getName(itemStack))
                     .map(StringTextComponent::new)
-                    .map(textComponent -> textComponent.setStyle(basicStyle))
+                    .map(textComponent -> textComponent.mergeStyle(TextFormatting.GRAY))
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression.get() && canHone) {
                 if (isHoneable(itemStack)) {
-                    tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.AQUA))
-                            .appendSibling(new TranslationTextComponent("tetra.hone.available")
-                                    .setStyle(basicStyle)));
+                    tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.AQUA)
+                            .append(new TranslationTextComponent("tetra.hone.available").mergeStyle(TextFormatting.GRAY)));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningBase(itemStack);
                     String result = String.format("%.1f", 100f * (base - progress) / base);
-                    tooltip.add(new StringTextComponent(" > ").setStyle(new Style().setColor(TextFormatting.DARK_AQUA))
-                            .appendSibling(new TranslationTextComponent("tetra.hone.progress", result)
-                                    .setStyle(basicStyle)));
+                    tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.DARK_AQUA)
+                            .append(new TranslationTextComponent("tetra.hone.progress", result).mergeStyle(TextFormatting.GRAY)));
                 }
             }
         } else {
@@ -517,7 +517,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
                     .stream()
                     .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
                     .map(StringTextComponent::new)
-                    .map(text -> text.setStyle(basicStyle))
+                    .map(text -> text.mergeStyle(TextFormatting.GRAY))
                     .forEach(tooltip::add);
 
             tooltip.add(Tooltips.expand);

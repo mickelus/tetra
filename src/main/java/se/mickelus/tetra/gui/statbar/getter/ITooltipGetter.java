@@ -8,7 +8,7 @@ import se.mickelus.tetra.Tooltips;
 public interface ITooltipGetter {
     public default String getTooltip(PlayerEntity player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
-            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expand.getFormattedText();
+            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expand.getString();
         }
 
         return getTooltipBase(player, itemStack);
@@ -22,7 +22,7 @@ public interface ITooltipGetter {
      */
     public default String getTooltipExtended(PlayerEntity player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
-            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expanded.getFormattedText() + "\n"
+            return getTooltipBase(player, itemStack) + "\n\n" + Tooltips.expanded.getString() + "\n"
                     + TextFormatting.GRAY + getTooltipExtension(player, itemStack);
         }
 

@@ -10,11 +10,9 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.network.PacketHandler;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -71,17 +69,6 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         }
 
         return map;
-    }
-
-    @Override
-    protected void apply(Map<ResourceLocation, JsonElement> splashList, IResourceManager resourceManager, IProfiler profiler) {
-        rawData = splashList;
-
-        if (Environment.get().getDist().isDedicatedServer()) {
-            PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
-        }
-
-        parseData(splashList);
     }
 
     @Override

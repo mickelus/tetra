@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -19,15 +19,15 @@ import java.util.function.Predicate;
 
 public class PropertyMatcher implements Predicate<BlockState> {
     private Block block = null;
-    private final Map< IProperty<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
+    private final Map< Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
     @Override
     public boolean test(BlockState blockState) {
         if (block != null && block != blockState.getBlock()) {
             return false;
         }
 
-        for (Map.Entry<IProperty<?>, Predicate<?>> entry : this.propertyPredicates.entrySet()) {
-            if (!matches(blockState, (IProperty) entry.getKey(), (Predicate) entry.getValue())) {
+        for (Map.Entry<Property<?>, Predicate<?>> entry : this.propertyPredicates.entrySet()) {
+            if (!matches(blockState, (Property) entry.getKey(), (Predicate) entry.getValue())) {
                 return false;
             }
         }
@@ -35,11 +35,11 @@ public class PropertyMatcher implements Predicate<BlockState> {
         return true;
     }
 
-    protected <T extends Comparable<T>> boolean matches(BlockState blockState, IProperty<T> property, Predicate<T> predicate) {
+    protected <T extends Comparable<T>> boolean matches(BlockState blockState, Property<T> property, Predicate<T> predicate) {
         return predicate.test(blockState.get(property));
     }
 
-    public <V extends Comparable<V>> PropertyMatcher where(IProperty<V> property, Predicate<? extends V> is) {
+    public <V extends Comparable<V>> PropertyMatcher where(Property<V> property, Predicate<? extends V> is) {
          this.propertyPredicates.put(property, is);
          return this;
     }
@@ -63,7 +63,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
             if (result.block != null && jsonObject.has("state")) {
                 StateContainer<Block, BlockState> stateContainer = result.block.getStateContainer();
                 for (Map.Entry<String, JsonElement> entry : jsonObject.get("state").getAsJsonObject().entrySet()) {
-                    IProperty<?> property = stateContainer.getProperty(entry.getKey());
+                    Property<?> property = stateContainer.getProperty(entry.getKey());
 
                     if (property == null) {
                         throw new JsonSyntaxException("Unknown block state property '" + entry.getKey() + "' for block '"

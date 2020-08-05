@@ -82,7 +82,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
         int focus = getFocus();
         if (focus != -1) {
-            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getFormattedText());
+            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getString());
         } else {
             focusSlot.setString("");
         }

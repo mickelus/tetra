@@ -1,6 +1,9 @@
 package se.mickelus.tetra.generation;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -8,14 +11,15 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.template.IntegrityProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
@@ -23,9 +27,6 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.gen.placement.ChanceRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -55,7 +56,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
     private TemplateManager templateManager;
 
     public FeatureEntry() {
-        super(FeatureReference::deserialize);
+        super(FeatureReference.codec);
 
         if (ConfigHandler.generateFeatures.get()) {
             DataManager.featureData.onReload(this::addToBiomes);
@@ -65,7 +66,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
     }
 
     public void setup(MinecraftServer server) {
-        templateManager = new TemplateManager(server, server.getDataDirectory(), server.getDataFixer());
+        templateManager = server.func_240792_aT_();
+
+        addToBiomes();
     }
 
     private void addToBiomes() {
@@ -100,10 +103,9 @@ public class FeatureEntry extends Feature<FeatureReference> {
     }
 
     @Override
-    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos,
-            FeatureReference ref) {
+    public boolean func_230362_a_(ISeedReader world, StructureManager structureManager, ChunkGenerator generator, Random rand, BlockPos pos, FeatureReference ref) {
         FeatureParameters params = DataManager.featureData.getData(ref.location);
-        ResourceLocation dimensionType = world.getDimension().getType().getRegistryName();
+        ResourceLocation dimensionType = world.getWorld().func_234923_W_().func_240901_a_();
 
         // roll for probability here instead of the behaviour in the ChanceRangeConfig as that tend to cause structures to clump up,
         // todo: seeds can be salted per feature if it's a proper structure
@@ -153,7 +155,8 @@ public class FeatureEntry extends Feature<FeatureReference> {
             settings.addProcessor(new ForgedHammerProcessor());
             settings.addProcessor(new TransferUnitProcessor());
 
-            boolean blocksAdded = template.addBlocksToWorld(world, pos, settings, 2);
+            // todo 1.16: new BlockPos param here, what does it do?
+            boolean blocksAdded = template.func_237146_a_(world, pos, pos, settings, random,2);
 
             if (blocksAdded) {
                 generateLoot(feature, world, pos, settings, random);
@@ -204,11 +207,11 @@ public class FeatureEntry extends Feature<FeatureReference> {
 
     /**
      * Adds loot from to containers based on the loot field in the feature parameters.
-     * @param feature
-     * @param world
-     * @param pos
-     * @param settings
-     * @param random
+     * @param feature A feature reference
+     * @param world The world in which the feature is generating
+     * @param pos The base position of the feature
+     * @param settings Placement settings
+     * @param random Rand
      */
     private void generateLoot(FeatureParameters feature, IWorld world, BlockPos pos, PlacementSettings settings, Random random) {
         Arrays.stream(feature.loot).forEach(loot ->

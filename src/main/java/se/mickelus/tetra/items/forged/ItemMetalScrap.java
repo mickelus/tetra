@@ -28,7 +28,7 @@ public class ItemMetalScrap extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(new TranslationTextComponent("item.tetra.metal_scrap.description").setStyle(new Style().setColor(TextFormatting.GRAY)));
+        tooltip.add(new TranslationTextComponent("item.tetra.metal_scrap.description").mergeStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(""));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }

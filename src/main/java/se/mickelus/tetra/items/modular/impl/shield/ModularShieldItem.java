@@ -3,10 +3,12 @@ package se.mickelus.tetra.items.modular.impl.shield;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,7 +25,6 @@ import se.mickelus.tetra.module.schema.RemoveSchema;
 import se.mickelus.tetra.module.schema.RepairSchema;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class ModularShieldItem extends ItemModularHandheld {
@@ -59,11 +60,17 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
-        this.addPropertyOverride(new ResourceLocation("blocking"), (itemStack, world, entity) -> {
-            return entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F;
-        });
-
         DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+    }
+
+    @Override
+    public void clientInit() {
+        super.clientInit();
+
+        ItemModelsProperties.func_239418_a_(this, new ResourceLocation("blocking"),
+                (itemStack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
+
+        MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }
 
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {
@@ -88,22 +95,15 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        Multimap<String, AttributeModifier> modifiers = super.getAttributeModifiers(slot, itemStack);
-        modifiers.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
-        modifiers.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> modifiers = super.getAttributeModifiers(slot, itemStack);
+        modifiers.removeAll(Attributes.ATTACK_SPEED);
+        modifiers.removeAll(Attributes.ATTACK_DAMAGE);
         return modifiers;
     }
 
     @Override
     public double getCooldownBase(ItemStack itemStack) {
         return getSpeedModifier(itemStack);
-    }
-
-    @Override
-    public void clientInit() {
-        super.clientInit();
-
-        MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }
 }

@@ -1,7 +1,5 @@
 package se.mickelus.tetra.generation.processing;
 
-import com.mojang.datafixers.Dynamic;
-import com.mojang.datafixers.types.DynamicOps;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,7 +22,7 @@ public class TransferUnitProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public Template.BlockInfo process(IWorldReader world, BlockPos pos, Template.BlockInfo $, Template.BlockInfo blockInfo,
+    public Template.BlockInfo process(IWorldReader world, BlockPos pos, BlockPos pos2, Template.BlockInfo $, Template.BlockInfo blockInfo,
             PlacementSettings placementSettings, @Nullable Template template) {
         if (blockInfo.state.getBlock() instanceof TransferUnitBlock) {
             Random random = placementSettings.getRandom(blockInfo.pos);
@@ -47,7 +45,7 @@ public class TransferUnitProcessor extends StructureProcessor {
             }
 
             // randomize configuration & plate
-            EnumTransferConfig[] configs =  EnumTransferConfig.values();
+            EnumTransferConfig[] configs = EnumTransferConfig.values();
             BlockState newState = blockInfo.state
                     .with(TransferUnitBlock.cellProp, cellState)
                     .with(TransferUnitBlock.configProp, configs[random.nextInt(configs.length)])
@@ -58,11 +56,8 @@ public class TransferUnitProcessor extends StructureProcessor {
         return blockInfo;
     }
 
+    @Override
     protected IStructureProcessorType getType() {
         return ProcessorTypes.transferUnit;
-    }
-
-    protected <T> Dynamic<T> serialize0(DynamicOps<T> ops) {
-        return new Dynamic<>(ops);
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -86,7 +87,8 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
     protected void apply(Map<ResourceLocation, JsonElement> splashList, IResourceManager resourceManager, IProfiler profiler) {
         rawData = splashList;
 
-        if (Environment.get().getDist().isDedicatedServer()) {
+        // PacketHandler dependencies get upset when called upon before the server has started properly
+        if (Environment.get().getDist().isDedicatedServer() && ServerLifecycleHooks.getCurrentServer() != null) {
             PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
         }
 

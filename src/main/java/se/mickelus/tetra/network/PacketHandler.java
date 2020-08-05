@@ -2,9 +2,10 @@ package se.mickelus.tetra.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -93,7 +94,7 @@ public class PacketHandler {
         channel.send(PacketDistributor.ALL.noArg(), message);
     }
 
-    public static void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, DimensionType dim) {
+    public static void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, RegistryKey<World> dim) {
         channel.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), r2, dim)), message);
     }
 

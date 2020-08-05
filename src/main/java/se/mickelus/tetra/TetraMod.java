@@ -14,8 +14,8 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -61,15 +61,17 @@ import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.effects.StunEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
-import se.mickelus.tetra.items.*;
+import se.mickelus.tetra.items.ITetraItem;
+import se.mickelus.tetra.items.JournalItem;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
-import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.items.modular.*;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
@@ -118,7 +120,7 @@ public class TetraMod {
 
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
 
-        LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
+        Registry.register(Registry.LOOT_CONDITION_TYPE, FortuneBonusCondition.identifier, FortuneBonusCondition.type);
 
         new RepairRegistry();
 
@@ -249,8 +251,8 @@ public class TetraMod {
 
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
-        ModuleDevCommand.register(event.getCommandDispatcher());
-        TGenCommand.register(event.getCommandDispatcher());
+        ModuleDevCommand.register(event.getServer().getCommandManager().getDispatcher());
+        TGenCommand.register(event.getServer().getCommandManager().getDispatcher());
     }
 
     @SubscribeEvent

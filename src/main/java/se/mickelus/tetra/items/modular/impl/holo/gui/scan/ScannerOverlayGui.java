@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -184,11 +184,11 @@ public class ScannerOverlayGui extends GuiRoot {
 
     @Nullable
     private BlockPos getPositions(PlayerEntity player, World world, int pitchOffset, int yawOffset) {
-        Vec3d eyePosition = player.getEyePosition(0);
-        Vec3d lookVector = getVectorForRotation(player.getPitch(1) + pitchOffset, player.getYaw(1) + yawOffset);
-        Vec3d endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
+        Vector3d eyePosition = player.getEyePosition(0);
+        Vector3d lookVector = getVectorForRotation(player.getPitch(1) + pitchOffset, player.getYaw(1) + yawOffset);
+        Vector3d endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        return IBlockReader.func_217300_a(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
+        return IBlockReader.doRayTrace(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
             BlockState blockState = world.getBlockState(blockPos);
 
             if (blockState.getBlock().getTags().contains(tag)) {
@@ -198,14 +198,14 @@ public class ScannerOverlayGui extends GuiRoot {
         }, ctx -> null);
     }
 
-    private Vec3d getVectorForRotation(float pitch, float yaw) {
+    private Vector3d getVectorForRotation(float pitch, float yaw) {
         float f = pitch * ((float)Math.PI / 180F);
         float f1 = -yaw * ((float)Math.PI / 180F);
         float f2 = MathHelper.cos(f1);
         float f3 = MathHelper.sin(f1);
         float f4 = MathHelper.cos(f);
         float f5 = MathHelper.sin(f);
-        return new Vec3d(f3 * f4, -f5, f2 * f4);
+        return new Vector3d(f3 * f4, -f5, f2 * f4);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)

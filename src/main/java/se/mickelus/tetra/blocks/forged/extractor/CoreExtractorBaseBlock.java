@@ -1,6 +1,9 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -17,7 +20,10 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -53,7 +59,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     public static CoreExtractorBaseBlock instance;
 
     public CoreExtractorBaseBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesNotSolid);
         setRegistryName(unlocalizedName);
 
         hasItem = true;
@@ -73,7 +79,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
         tooltip.add(ForgedBlockCommon.locationTooltip);
         tooltip.add(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
-                .setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+                .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }
 
     @Override
@@ -82,11 +88,6 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
             TileEntityOptional.from(world, pos, CoreExtractorBaseTile.class)
                     .ifPresent(CoreExtractorBaseTile::updateTransferState);
         }
-    }
-
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
     }
 
     @Override

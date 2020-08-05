@@ -12,7 +12,7 @@ import net.minecraft.tileentity.StructureBlockTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.data.DataManager;
@@ -74,7 +74,7 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
 
         // build arrow
         bufferBuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
-        Vec3i facing = featureChild.facing.getDirectionVec();
+        Vector3i facing = featureChild.facing.getDirectionVec();
         bufferBuilder.pos(x + offset.getX() + 0.5, y + offset.getY() + 0.5, z + offset.getZ() + 0.5).color(0.0F, 0.0F, 0.0F, 0.0F).endVertex();
         bufferBuilder.pos(
                 x + offset.getX() + 0.5 + 0.3 * facing.getX(),

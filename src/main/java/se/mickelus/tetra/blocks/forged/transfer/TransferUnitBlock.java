@@ -69,7 +69,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesNotSolid);
 
         setRegistryName(unlocalizedName);
 
@@ -260,11 +260,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(TransferUnitTile::updateTransferState);
         }
-    }
-
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader world, BlockPos pos) {
-        return false;
     }
 
     @Override

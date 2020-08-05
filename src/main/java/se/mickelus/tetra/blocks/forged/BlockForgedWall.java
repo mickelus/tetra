@@ -18,7 +18,7 @@ public class BlockForgedWall extends TetraBlock {
     public static BlockForgedWall instance;
 
     public BlockForgedWall() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         hasItem = true;
 

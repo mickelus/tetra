@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.statbar.getter;
 
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -17,15 +17,15 @@ public class StatGetterSpeedMelee implements IStatGetter {
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        return currentStack.getItem() instanceof ItemModularHandheld && currentStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(SharedMonsterAttributes.ATTACK_SPEED.getName())
-                || previewStack.getItem() instanceof ItemModularHandheld && previewStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(SharedMonsterAttributes.ATTACK_SPEED.getName());
+        return currentStack.getItem() instanceof ItemModularHandheld && currentStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(Attributes.ATTACK_SPEED)
+                || previewStack.getItem() instanceof ItemModularHandheld && previewStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).containsKey(Attributes.ATTACK_SPEED);
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        return itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_SPEED.getName()).stream()
+        return itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND).get(Attributes.ATTACK_SPEED).stream()
                 .map(AttributeModifier::getAmount)
-                .reduce(0d, Double::sum) + player.getAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue();
+                .reduce(0d, Double::sum) + player.getAttribute(Attributes.ATTACK_SPEED).getBaseValue();
     }
 
     @Override

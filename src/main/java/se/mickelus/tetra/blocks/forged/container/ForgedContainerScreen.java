@@ -110,19 +110,20 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    public void render(final int mouseX, final int mouseY, final float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack, 0);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        func_230459_a_(matrixStack, mouseX, mouseY);
 
-        drawGuiContainerForegroundLayer(mouseX, mouseY);
+        drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
     }
 
+
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        guiRoot.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
+        guiRoot.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 }

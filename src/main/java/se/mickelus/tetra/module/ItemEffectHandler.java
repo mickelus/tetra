@@ -7,7 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -162,7 +162,7 @@ public class ItemEffectHandler {
                                 ItemModularHandheld.applyEnchantmentHitEffects(itemStack, attacker, blocker);
 
                                 float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
-                                attacker.knockBack(blocker, knockbackFactor * 0.5f,
+                                attacker.applyKnockback(knockbackFactor * 0.5f,
                                         blocker.getPosX() - attacker.getPosX(), blocker.getPosZ() - attacker.getPosZ());
                             }
                         }
@@ -181,7 +181,7 @@ public class ItemEffectHandler {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
                     if (quickStrikeLevel > 0) {
                         float maxDamage = (float) ((LivingEntity) event.getSource().getTrueSource())
-                                .getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue();
+                                .getAttribute(Attributes.ATTACK_DAMAGE).getValue();
                         float multiplier = quickStrikeLevel * 0.05f + 0.2f;
 
                         if (event.getAmount() <  multiplier * maxDamage) {
@@ -201,7 +201,7 @@ public class ItemEffectHandler {
                         if (item.getEffectLevel(itemStack, ItemEffect.armor) > 0 || item.getEffectLevel(itemStack, ItemEffect.toughness) > 0) {
                             int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
                                     (float) event.getEntityLiving().getTotalArmorValue(),
-                                    (float) event.getEntityLiving().getAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getValue()));
+                                    (float) event.getEntityLiving().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));
                             item.applyUsageEffects(event.getEntityLiving(), itemStack, reducedAmount);
                             item.applyDamage(reducedAmount, itemStack, event.getEntityLiving());
                         }
@@ -397,29 +397,6 @@ public class ItemEffectHandler {
         }
     }
 
-    public static boolean canHarvestBlock(@Nonnull BlockState state, @Nonnull PlayerEntity player, @Nonnull IBlockReader world,
-            @Nonnull BlockPos pos) {
-        if (state.getMaterial().isToolNotRequired())
-        {
-            return true;
-        }
-
-        ItemStack stack = player.getHeldItemMainhand();
-        ToolType tool = state.getHarvestTool();
-        if (stack.isEmpty() || tool == null)
-        {
-            return player.canHarvestBlock(state);
-        }
-
-        int toolLevel = stack.getItem().getHarvestLevel(stack, tool, player, state);
-        if (toolLevel < 0)
-        {
-            return player.canHarvestBlock(state);
-        }
-
-        return toolLevel >= state.getHarvestLevel();
-    }
-
     /**
      * Break a block in the world, as a player. Based on how players break blocks in vanilla.
      * @param world the world in which to break blocks
@@ -440,7 +417,7 @@ public class ItemEffectHandler {
 
             if (exp != -1) {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
-                        && !breakingPlayer.func_223729_a(world, pos, gameType)
+                        && !breakingPlayer.blockActionRestricted(world, pos, gameType)
                         && (!harvest || blockState.canHarvestBlock(world, pos, breakingPlayer))
                         && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
 

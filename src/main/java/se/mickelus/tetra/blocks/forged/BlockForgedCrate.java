@@ -4,7 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -151,7 +151,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     @Override
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 

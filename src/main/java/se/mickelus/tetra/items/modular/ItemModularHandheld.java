@@ -1,9 +1,6 @@
 package se.mickelus.tetra.items.modular;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,8 +9,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.*;
+import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -25,22 +27,27 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
-import se.mickelus.tetra.effects.BleedingEffect;
-import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.effects.BleedingEffect;
+import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.effects.StunEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -81,7 +88,7 @@ public class ItemModularHandheld extends ModularItem {
 
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
     private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
-    private static final Set<Tag<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
+    private static final Set<ITag.INamedTag<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
 
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
@@ -295,7 +302,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
+    public ActionResultType itemInteractionForEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
         if (!player.getCooldownTracker().hasCooldown(this)) {
             if (getUseDuration(itemStack) == 0 || player.isCrouching()) {
                 int bashingLevel = getEffectLevel(itemStack, ItemEffect.bashing);
@@ -304,12 +311,12 @@ public class ItemModularHandheld extends ModularItem {
 
                     tickProgression(player, itemStack, 2);
                     applyDamage(2, itemStack, player);
-                    return true;
+                    return ActionResultType.SUCCESS;
                 }
             }
         }
 
-        return false;
+        return ActionResultType.FAIL;
     }
 
     public boolean itemInteractionForEntitySecondary(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
@@ -341,7 +348,7 @@ public class ItemModularHandheld extends ModularItem {
         int knockbackFactor = bashingLevel
                 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack)
                 + (player.isSprinting() ? 1 : 0);
-        target.knockBack(player, knockbackFactor * 0.5f,
+        target.applyKnockback(knockbackFactor * 0.5f,
                 player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
 
         // stuns the target if bash efficiency is > 0
@@ -369,7 +376,7 @@ public class ItemModularHandheld extends ModularItem {
                 player.inventory.deleteStack(stack);
             }
 
-            projectileEntity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
+            projectileEntity.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
             world.addEntity(projectileEntity);
 
             if (this instanceof ModularSingleHeadedItem) {
@@ -399,8 +406,8 @@ public class ItemModularHandheld extends ModularItem {
         z = z * velocityMultiplier;
         player.addVelocity(x, y, z);
         player.startSpinAttack(20);
-        if (player.onGround) {
-            player.move(MoverType.SELF, new Vec3d(0, 1.1999999, 0));
+        if (player.isOnGround()) {
+            player.move(MoverType.SELF, new Vector3d(0, 1.1999999, 0));
         }
 
         SoundEvent soundEvent;
@@ -577,7 +584,7 @@ public class ItemModularHandheld extends ModularItem {
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .filter(entity -> attacker.getDistanceSq(entity) < (range + 2) * (range + 2))
                     .forEach(entity -> {
-                        entity.knockBack(attacker, knockback,
+                        entity.applyKnockback(knockback,
                                 MathHelper.sin(attacker.rotationYaw * 0.017453292f),
                                 -MathHelper.cos(attacker.rotationYaw * 0.017453292f));
                         if (attacker instanceof PlayerEntity) {
@@ -794,23 +801,23 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, itemStack);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
 
         if (slot == EquipmentSlotType.MAINHAND) {
 
             double damageModifier = getDamageModifier(itemStack);
             if (damageModifier != 0) {
-                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
+                multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
                         "tetra.damage_mod", damageModifier, AttributeModifier.Operation.ADDITION));
             }
 
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER,
+            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER,
                     "tetra.speed_mod", getSpeedModifier(itemStack), AttributeModifier.Operation.ADDITION));
 
             double rangeModifier = getRangeModifier(itemStack);
             if (rangeModifier != 0) {
-                multimap.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(REACH_MODIFIER,
+                multimap.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER,
                         "tetra.reach_mod", rangeModifier, AttributeModifier.Operation.ADDITION));
             }
         }
@@ -818,13 +825,13 @@ public class ItemModularHandheld extends ModularItem {
         if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
             int armor = getEffectLevel(itemStack, ItemEffect.armor);
             if  (armor > 0) {
-                multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER,
+                multimap.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER,
                         "tetra.armor_mod", armor, AttributeModifier.Operation.ADDITION));
             }
 
             int toughness = getEffectLevel(itemStack, ItemEffect.toughness);
             if  (toughness > 0) {
-                multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(TOUGHNESS_MODIFIER,
+                multimap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(TOUGHNESS_MODIFIER,
                         "tetra.toughness_mod", toughness, AttributeModifier.Operation.ADDITION));
             }
         }

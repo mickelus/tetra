@@ -22,7 +22,7 @@ public class BakedWrapper implements IBakedModel {
     private ItemOverrideList itemOverrideList;
 
     public BakedWrapper(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation,
+            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation,
             ItemOverrideList itemOverrideList) {
 
         particleAtlas = spriteGetter.apply(owner.resolveTexture("particle"));

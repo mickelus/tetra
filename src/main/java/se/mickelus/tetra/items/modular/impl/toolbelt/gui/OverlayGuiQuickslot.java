@@ -69,7 +69,7 @@ public class OverlayGuiQuickslot extends GuiElement {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
-            fontRenderer.drawStringWithShadow(itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
+            fontRenderer.drawStringWithShadow(matrixStack, itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
         }
 
         drawItemStack(matrixStack, itemStack, x + refX + 38, y + refY + 1);

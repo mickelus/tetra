@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
@@ -37,7 +37,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
             makeCuboidShape(2, 9, 0, 14, 16, 16));
 
     public ForgedWorkbenchBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
 
@@ -64,7 +64,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
     }
 
     @Override
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 

@@ -44,7 +44,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     public static HammerHeadBlock instance;
 
     public HammerHeadBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
 

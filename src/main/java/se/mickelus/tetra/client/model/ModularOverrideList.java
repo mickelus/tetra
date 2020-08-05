@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -36,12 +37,12 @@ public class ModularOverrideList extends ItemOverrideList {
     private ModularItemModel model;
     private IModelConfiguration owner;
     private ModelBakery bakery;
-    private Function<Material, TextureAtlasSprite> spriteGetter;
+    private Function<RenderMaterial, TextureAtlasSprite> spriteGetter;
     private IModelTransform modelTransform;
     private ResourceLocation modelLocation;
 
     public ModularOverrideList(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation) {
+            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation) {
         this.model = model;
         this.owner = owner;
         this.bakery = bakery;
@@ -57,7 +58,7 @@ public class ModularOverrideList extends ItemOverrideList {
 
     @Nullable
     @Override
-    public IBakedModel getModelWithOverrides(IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
+    public IBakedModel func_239290_a_(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
         CompoundNBT baseTag = NBTHelper.getTag(stack);
         IBakedModel result = originalModel;
 

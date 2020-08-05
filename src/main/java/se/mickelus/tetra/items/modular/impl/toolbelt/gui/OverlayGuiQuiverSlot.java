@@ -58,7 +58,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
             addChild(count);
             count.setVisible(false);
 
-            hoverLabel = new GuiString(-5, 0, itemStack.getDisplayName().getFormattedText());
+            hoverLabel = new GuiString(-5, 0, itemStack.getDisplayName().getString());
             hoverLabel.setAttachmentPoint(GuiAttachment.middleRight);
             hoverLabel.setAttachmentAnchor(GuiAttachment.middleLeft);
             addChild(hoverLabel);

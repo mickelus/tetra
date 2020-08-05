@@ -1,12 +1,7 @@
 package se.mickelus.tetra.generation;
 
-import com.google.common.collect.ImmutableMap;
-import com.mojang.datafixers.Dynamic;
-import com.mojang.datafixers.types.DynamicOps;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.IFeatureConfig;
 
 /**
  * Used to specify additional details for feature generation, containing information about where and how a feature is to

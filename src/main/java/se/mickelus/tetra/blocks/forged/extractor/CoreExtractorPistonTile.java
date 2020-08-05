@@ -32,7 +32,7 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
             endTime = world.getGameTime() + activationDuration;
 
             if (!world.isRemote) {
-                PacketHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(pos, endTime), pos, 64, world.dimension.getType());
+                PacketHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(pos, endTime), pos, 64, world.func_234923_W_());
             }
         }
     }
@@ -50,11 +50,6 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
             return Math.min(1, Math.max(0, (world.getGameTime() + activationDuration - endTime + partialTicks) / activationDuration));
         }
         return 0;
-    }
-
-    @Override
-    public boolean hasFastRenderer() {
-        return true;
     }
 
     @Override
