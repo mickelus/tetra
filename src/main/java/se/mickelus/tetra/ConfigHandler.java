@@ -123,7 +123,7 @@ public class ConfigHandler {
 
         settleLimitBase = builder
                 .comment("The base value for number of uses required for a module to settle")
-                .defineInRange("settle_base", 200, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("settle_base", 270, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         settleLimitLevelMultiplier = builder
                 .comment("Level multiplier for settling limit, a value of 3 would cause a module that has settled once to require 3x as many uses before it settles again")
@@ -143,11 +143,11 @@ public class ConfigHandler {
 
         honedoubleBase = builder
                 .comment("The base value for number of uses required before a tool can be honed")
-                .defineInRange("hone_double_base", 190, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_double_base", 140, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honedoubleIntegrityMultiplier = builder
                 .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
-                .defineInRange("hone_double_integrity_multiplier", 90, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_double_integrity_multiplier", 70, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
 
