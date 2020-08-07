@@ -19,6 +19,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameType;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -149,7 +150,7 @@ public class ItemEffectHandler {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         LivingEntity blocker = event.getEntityLiving();
                         if (UseAction.BLOCK.equals(itemStack.getUseAction())) {
-                            item.applyUsageEffects(blocker, itemStack, event.getAmount());
+                            item.applyUsageEffects(blocker, itemStack, MathHelper.ceil(event.getAmount() / 2f));
                         }
 
                         if (event.getSource().getImmediateSource() instanceof LivingEntity) {
