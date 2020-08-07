@@ -19,6 +19,9 @@
             "material": {
                 "tag": "minecraft:wool"
             },
+            "requiredCapabilities": {
+                "cut": 1
+            },
             "moduleKey": "toolbelt/belt",
             "moduleVariant": "belt/sash"
         }
