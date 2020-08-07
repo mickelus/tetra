@@ -4,13 +4,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 public class GuiInventoryInfo extends GuiElement {
     private PlayerInventory inventory;
     private ItemStack targetStack;
     private String slot;
-    private UpgradeSchema schema;
+    private UpgradeSchematic schematic;
 
     private GuiInventoryHighlight[] highlights;
 
@@ -41,15 +41,15 @@ public class GuiInventoryInfo extends GuiElement {
     }
 
     public void update() {
-        if (schema != null && targetStack != null) {
+        if (schematic != null && targetStack != null) {
             // player inventory
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 3; y++) {
                     int stackIndex = y * 9 + x + 9;
                     boolean shouldHighlight = false;
 
-                    for (int materialIndex = 0; materialIndex < schema.getNumMaterialSlots(); materialIndex++) {
-                        if (schema.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                    for (int materialIndex = 0; materialIndex < schematic.getNumMaterialSlots(); materialIndex++) {
+                        if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
                             shouldHighlight = true;
                             break;
                         }
@@ -63,8 +63,8 @@ public class GuiInventoryInfo extends GuiElement {
             for (int stackIndex = 0; stackIndex < 9; stackIndex++) {
                 boolean shouldHighlight = false;
 
-                for (int materialIndex = 0; materialIndex < schema.getNumMaterialSlots(); materialIndex++) {
-                    if (schema.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                for (int materialIndex = 0; materialIndex < schematic.getNumMaterialSlots(); materialIndex++) {
+                    if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
                         shouldHighlight = true;
                         break;
                     }
@@ -79,8 +79,8 @@ public class GuiInventoryInfo extends GuiElement {
         }
     }
 
-    public void update(UpgradeSchema schema, String slot, ItemStack targetStack) {
-        this.schema = schema;
+    public void update(UpgradeSchematic schematic, String slot, ItemStack targetStack) {
+        this.schematic = schematic;
         this.slot = slot;
         this.targetStack = targetStack;
         update();

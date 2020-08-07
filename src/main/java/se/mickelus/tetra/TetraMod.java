@@ -81,8 +81,8 @@ import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.module.schema.BookEnchantSchema;
-import se.mickelus.tetra.module.schema.CleanseSchema;
+import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
+import se.mickelus.tetra.module.schematic.CleanseSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
@@ -124,8 +124,8 @@ public class TetraMod {
 
         new RepairRegistry();
 
-        SchemaRegistry schemaRegistry = new SchemaRegistry();
-        schemaRegistry.registerSchema(new BookEnchantSchema());
+        SchematicRegistry schematicRegistry = new SchematicRegistry();
+        schematicRegistry.registerSchematic(new BookEnchantSchematic());
 
         new ItemUpgradeRegistry();
 
@@ -241,7 +241,7 @@ public class TetraMod {
         proxy.postInit();
 
         DestabilizationEffect.init();
-        SchemaRegistry.instance.registerSchema(new CleanseSchema());
+        SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
     }
 
     @SubscribeEvent

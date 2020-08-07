@@ -15,7 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import se.mickelus.mgui.gui.ToggleableSlot;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 
 public class WorkbenchContainer extends Container {
@@ -110,11 +110,11 @@ public class WorkbenchContainer extends Container {
     }
 
     public void updateSlots() {
-        UpgradeSchema currentSchema = workbench.getCurrentSchema();
+        UpgradeSchematic currentSchematic = workbench.getCurrentSchematic();
         int numMaterialSlots = 0;
 
-        if (currentSchema != null) {
-            numMaterialSlots = currentSchema.getNumMaterialSlots();
+        if (currentSchematic != null) {
+            numMaterialSlots = currentSchematic.getNumMaterialSlots();
         }
 
         for (int i = 0; i < materialSlots.length; i++) {

@@ -5,7 +5,7 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.module.schema.OutcomePreview;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
 
 import java.util.function.Consumer;
 

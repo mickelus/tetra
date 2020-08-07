@@ -18,7 +18,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
     private final ItemPredicate before;
     private final ItemPredicate after;
 
-    private final String schema;
+    private final String schematic;
 
     private final String slot;
     private final String module;
@@ -29,11 +29,11 @@ public class ModuleCraftCriterion extends CriterionInstance {
 
     public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
-    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schema, String slot, String module, String variant, Capability capability, int capabilityLevel) {
+    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, Capability capability, int capabilityLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
-        this.schema = schema;
+        this.schematic = schematic;
         this.slot = slot;
         this.module = module;
         this.variant = variant;
@@ -41,13 +41,13 @@ public class ModuleCraftCriterion extends CriterionInstance {
         this.capabilityLevel = capabilityLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schema, String slot, String module,
+    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String module,
             String variant, Capability capability, int capabilityLevel) {
-        trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schema, slot, module, variant, capability,
+        trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, capability,
                 capabilityLevel));
     }
 
-    public boolean test(ItemStack before, ItemStack after, String schema, String slot, String module, String variant,
+    public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String module, String variant,
             Capability capability, int capabilityLevel) {
         if (this.before != null && !this.before.test(before)) {
             return false;
@@ -57,7 +57,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.schema != null && !this.schema.equals(schema)) {
+        if (this.schematic != null && !this.schematic.equals(schematic)) {
             return false;
         }
 
@@ -92,7 +92,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
                 JsonOptional.field(json, "after")
                         .map(ItemPredicate::deserialize)
                         .orElse(null),
-                JsonOptional.field(json, "schema")
+                JsonOptional.field(json, "schematic")
                         .map(JsonElement::getAsString)
                         .orElse(null),
                 JsonOptional.field(json, "slot")

@@ -1,10 +1,10 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import se.mickelus.tetra.module.data.CapabilityData;
 
 
 public class RepairDefinition {
-    public Material material;
+    public OutcomeMaterial material;
     public CapabilityData requiredCapabilities;
     public String moduleKey;
     public String moduleVariant;

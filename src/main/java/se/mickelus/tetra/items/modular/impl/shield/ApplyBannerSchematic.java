@@ -14,17 +14,17 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.schema.OutcomePreview;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
+import se.mickelus.tetra.module.schematic.SchematicType;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
-public class ApplyBannerSchema implements UpgradeSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class ApplyBannerSchematic implements UpgradeSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String key = "shield/plate/banner";
 
     private static final String nameSuffix = ".name";
@@ -33,7 +33,7 @@ public class ApplyBannerSchema implements UpgradeSchema {
 
     private GlyphData glyph = new GlyphData(GuiTextures.glyphs, 96, 240);
 
-    public ApplyBannerSchema() {}
+    public ApplyBannerSchematic() {}
 
     @Override
     public String getKey() {
@@ -154,8 +154,8 @@ public class ApplyBannerSchema implements UpgradeSchema {
     }
 
     @Override
-    public SchemaType getType() {
-        return SchemaType.improvement;
+    public SchematicType getType() {
+        return SchematicType.improvement;
     }
 
     @Override

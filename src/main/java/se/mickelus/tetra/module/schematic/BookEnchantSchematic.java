@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
@@ -21,8 +21,8 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
 
-public class BookEnchantSchema implements UpgradeSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class BookEnchantSchematic implements UpgradeSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String key = "book_enchant";
 
     private static final String nameSuffix = ".name";
@@ -31,7 +31,7 @@ public class BookEnchantSchema implements UpgradeSchema {
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
 
-    public BookEnchantSchema() {}
+    public BookEnchantSchematic() {}
 
     @Override
     public String getKey() {
@@ -186,8 +186,8 @@ public class BookEnchantSchema implements UpgradeSchema {
     }
 
     @Override
-    public SchemaType getType() {
-        return SchemaType.improvement;
+    public SchematicType getType() {
+        return SchematicType.improvement;
     }
 
     @Override

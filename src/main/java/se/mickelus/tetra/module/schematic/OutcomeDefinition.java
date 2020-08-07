@@ -1,11 +1,11 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import se.mickelus.tetra.module.data.CapabilityData;
 
 import java.util.HashMap;
 
 /**
- * Used to define outcomes of a schema, which combination of materials and capabilities yield which variation of a
+ * Used to define outcomes of a schematic, which combination of materials and capabilities yield which variation of a
  * module or improvement.
  * Example json:
  * {
@@ -28,9 +28,9 @@ public class OutcomeDefinition {
 
     /**
      * Required material for the outcome. Basically an item predicate, see material documentation for more information.
-     * Optional, only required if the schema which contains this outcome has 1 or more material slots.
+     * Optional, only required if the schematic which contains this outcome has 1 or more material slots.
      */
-    public Material material = new Material();
+    public OutcomeMaterial material = new OutcomeMaterial();
 
     /**
      * The slot in which to look for the material.
@@ -59,7 +59,7 @@ public class OutcomeDefinition {
 
     /**
      * A key referring to a module.
-     * Optional, but the schema should then apply improvements or the outcome with be nothing.
+     * Optional, but the schematic should then apply improvements or the outcome with be nothing.
      */
     public String moduleKey;
 

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,8 +17,8 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class CleanseSchema implements UpgradeSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class CleanseSchematic implements UpgradeSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String key = "cleanse";
 
     private static final String nameSuffix = ".name";
@@ -27,7 +27,7 @@ public class CleanseSchema implements UpgradeSchema {
 
     private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
 
-    public CleanseSchema() { }
+    public CleanseSchematic() { }
 
     @Override
     public String getKey() {
@@ -163,8 +163,8 @@ public class CleanseSchema implements UpgradeSchema {
     }
 
     @Override
-    public SchemaType getType() {
-        return SchemaType.other;
+    public SchematicType getType() {
+        return SchematicType.other;
     }
 
     @Override

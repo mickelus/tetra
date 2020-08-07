@@ -5,14 +5,14 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.SchematicType;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-public class GuiSchemaDetail extends GuiElement {
+public class GuiSchematicDetail extends GuiElement {
 
     private static final int MAX_NUM_SLOTS = 2;
 
-    private UpgradeSchema schema;
+    private UpgradeSchematic schematic;
 
     private GuiElement glyph;
     private GuiString title;
@@ -31,9 +31,9 @@ public class GuiSchemaDetail extends GuiElement {
 
     private GuiExperience experienceIndicator;
 
-    public GuiSchemaDetail(int x, int y, Runnable backListener, Runnable craftListener) {
+    public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
-        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("tetra.workbench.schema_detail.back"), backListener));
+        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("tetra.workbench.schematic_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);
@@ -74,31 +74,31 @@ public class GuiSchemaDetail extends GuiElement {
         capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
         addChild(capabilityIndicatorList);
 
-        experienceIndicator = new GuiExperience(170, 42, "tetra.workbench.schema_detail.experience");
+        experienceIndicator = new GuiExperience(170, 42, "tetra.workbench.schematic_detail.experience");
         addChild(experienceIndicator);
 
-        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("tetra.workbench.schema_detail.craft"), craftListener);
+        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("tetra.workbench.schematic_detail.craft"), craftListener);
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchema schema, ItemStack itemStack, String slot, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
-        this.schema = schema;
+    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
+        this.schematic = schematic;
 
-        title.setString(schema.getName());
-        title.setColor(schema.getRarity().tint);
-        description.setString(schema.getDescription(itemStack));
+        title.setString(schematic.getName());
+        title.setColor(schematic.getRarity().tint);
+        description.setString(schematic.getDescription(itemStack));
 
         glyph.clearChildren();
-        GlyphData glyphData = schema.getGlyph();
+        GlyphData glyphData = schematic.getGlyph();
         GuiTexture border = null;
         GuiTexture glyphTexture;
-        if (schema.getType() == SchemaType.major) {
+        if (schematic.getType() == SchematicType.major) {
             border = new GuiTexture(0, 2, 16, 9, 52, 3, GuiTextures.workbench);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
-        } else if (schema.getType() == SchemaType.minor) {
+        } else if (schematic.getType() == SchematicType.minor) {
             border = new GuiTexture(2, 1, 11, 11, 68, 0, GuiTextures.workbench);
             glyphTexture = new GuiTexture(4, 3, 8, 8, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
-        } else if (schema.getType() == SchemaType.improvement) {
+        } else if (schematic.getType() == SchematicType.improvement) {
             border = new GuiTexture(0, 2, 16, 9, 52, 3, GuiTextures.workbench);
             glyphTexture = new GuiTexture(-1, -1, 16, 16, glyphData.textureX, glyphData.textureY, glyphData.textureLocation);
         } else {
@@ -107,28 +107,28 @@ public class GuiSchemaDetail extends GuiElement {
 
         if (border != null) {
             border.setOpacity(0.3f);
-            border.setColor(schema.getRarity().tint);
+            border.setColor(schematic.getRarity().tint);
             glyph.addChild(border);
         }
-        glyphTexture.setColor(schema.getRarity().tint);
+        glyphTexture.setColor(schematic.getRarity().tint);
         glyph.addChild(glyphTexture);
 
-        if (schema.getType() == SchemaType.improvement) {
+        if (schematic.getType() == SchematicType.improvement) {
             glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
         }
 
 
-        for (int i = 0; i < schema.getNumMaterialSlots(); i++) {
-            slotNames[i].setString(schema.getSlotName(itemStack, i));
+        for (int i = 0; i < schematic.getNumMaterialSlots(); i++) {
+            slotNames[i].setString(schematic.getSlotName(itemStack, i));
             slotNames[i].setVisible(true);
 
             slotPlaceholders[i].setVisible(i < materials.length && materials[i].isEmpty());
-            slotPlaceholders[i].setItems(schema.getSlotPlaceholders(itemStack, i));
+            slotPlaceholders[i].setItems(schematic.getSlotPlaceholders(itemStack, i));
 
             slotBorders[i].setVisible(true);
 
-            if (schema.acceptsMaterial(itemStack, slot, i, materials[i])) {
-                int requiredCount = schema.getRequiredQuantity(itemStack, i, materials[i]);
+            if (schematic.acceptsMaterial(itemStack, slot, i, materials[i])) {
+                int requiredCount = schematic.getRequiredQuantity(itemStack, i, materials[i]);
                 if (!materials[i].isEmpty() && requiredCount > 1) {
                     slotQuantities[i].setString("/" + requiredCount);
                     slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? GuiColors.negative : GuiColors.normal);
@@ -139,24 +139,24 @@ public class GuiSchemaDetail extends GuiElement {
             }
         }
 
-        for (int i = schema.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
+        for (int i = schematic.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
             slotNames[i].setVisible(false);
             slotQuantities[i].setVisible(false);
             slotPlaceholders[i].setVisible(false);
             slotBorders[i].setVisible(false);
         }
 
-        capabilityIndicatorList.update(schema, itemStack, slot, materials, availableCapabilities);
+        capabilityIndicatorList.update(schematic, itemStack, slot, materials, availableCapabilities);
 
-        int xpCost = schema.getExperienceCost(itemStack, materials, slot);
+        int xpCost = schematic.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
         if (xpCost > 0) {
             experienceIndicator.update(xpCost, xpCost <= playerLevel);
         }
     }
 
-    public void updateMagicCapacity(UpgradeSchema schema, String slot, ItemStack itemStack, ItemStack previewStack) {
-        if (slot != null && (schema != null && SchemaType.major.equals(schema.getType()) && magicCapacity.providesCapacity(itemStack, previewStack, slot)
+    public void updateMagicCapacity(UpgradeSchematic schematic, String slot, ItemStack itemStack, ItemStack previewStack) {
+        if (slot != null && (schematic != null && SchematicType.major.equals(schematic.getType()) && magicCapacity.providesCapacity(itemStack, previewStack, slot)
                 || magicCapacity.hasChanged(itemStack, previewStack, slot))) {
             magicCapacity.update(itemStack, previewStack, slot);
             magicCapacity.setVisible(true);

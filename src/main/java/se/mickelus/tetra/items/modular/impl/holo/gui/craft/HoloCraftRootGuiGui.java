@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.LinkedList;
 
@@ -17,11 +17,11 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
     private HoloItemsGui itemsView;
     private ModularItem item;
 
-    private HoloSchemasGui schemasView;
+    private HoloSchematicsGui schematicsView;
     private String slot;
 
-    private HoloSchemaGui schemaView;
-    private UpgradeSchema schema;
+    private HoloSchematicGui schematicView;
+    private UpgradeSchematic schematic;
 
     public HoloCraftRootGuiGui(int x, int y) {
         super(x, y);
@@ -33,13 +33,13 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
         itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect);
         addChild(itemsView);
 
-        schemasView = new HoloSchemasGui(0, 20, width, height, this::onSchemaSelect);
-        schemasView.setVisible(false);
-        addChild(schemasView);
+        schematicsView = new HoloSchematicsGui(0, 20, width, height, this::onSchematicSelect);
+        schematicsView.setVisible(false);
+        addChild(schematicsView);
 
-        schemaView = new HoloSchemaGui(0, 20, width, height);
-        schemaView.setVisible(false);
-        addChild(schemaView);
+        schematicView = new HoloSchematicGui(0, 20, width, height);
+        schematicView.setVisible(false);
+        addChild(schematicView);
     }
 
     @Override
@@ -75,10 +75,10 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
         itemsView.setVisible(true);
 
         this.slot = null;
-        schemasView.setVisible(false);
+        schematicsView.setVisible(false);
 
-        this.schema = null;
-        schemaView.setVisible(false);
+        this.schematic = null;
+        schematicView.setVisible(false);
 
         if (depth > 1) {
             itemsView.animateBack();
@@ -90,24 +90,24 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
     private void onSlotSelect(String slot) {
         this.slot = slot;
 
-        schemasView.update(item, slot);
-        schemasView.setVisible(true);
+        schematicsView.update(item, slot);
+        schematicsView.setVisible(true);
 
         itemsView.setVisible(false);
 
-        this.schema = null;
-        schemaView.setVisible(false);
+        this.schematic = null;
+        schematicView.setVisible(false);
 
         updateBreadcrumb();
     }
 
-    private void onSchemaSelect(UpgradeSchema schema) {
-        this.schema = schema;
+    private void onSchematicSelect(UpgradeSchematic schematic) {
+        this.schematic = schematic;
 
-        schemaView.update(item, slot, schema);
-        schemaView.setVisible(true);
+        schematicView.update(item, slot, schematic);
+        schematicView.setVisible(true);
 
-        schemasView.setVisible(false);
+        schematicsView.setVisible(false);
 
         itemsView.setVisible(false);
 
@@ -128,8 +128,8 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
                 result.add(getSlotName());
             }
 
-            if (schema != null) {
-                result.add(schema.getName());
+            if (schematic != null) {
+                result.add(schematic.getName());
             }
 
             depth = result.size() - 1;
@@ -165,10 +165,10 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
                 itemsView.animateOpen();
                 break;
             case 2:
-                schemasView.animateOpen();
+                schematicsView.animateOpen();
                 break;
             case 3:
-                schemaView.animateOpen();
+                schematicView.animateOpen();
                 break;
         }
 

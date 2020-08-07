@@ -25,7 +25,7 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
-import se.mickelus.tetra.module.schema.RemoveSchema;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
@@ -66,7 +66,7 @@ public class ModularHolosphereItem extends ModularItem {
         super.init(packetHandler);
 
         DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo"));
-        RemoveSchema.registerRemoveSchemas(this);
+        RemoveSchematic.registerRemoveSchematics(this);
     }
 
     @Override

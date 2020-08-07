@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +9,7 @@ import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.SchemaRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import java.util.Arrays;
@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 
-public class RemoveSchema extends BaseSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class RemoveSchematic extends BaseSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
@@ -30,17 +30,17 @@ public class RemoveSchema extends BaseSchema {
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
-    public RemoveSchema(ModularItem item, String slot) {
+    public RemoveSchematic(ModularItem item, String slot) {
         this.item = item;
         this.slot = slot;
     }
 
-    public static void registerRemoveSchemas(ModularItem item) {
+    public static void registerRemoveSchematics(ModularItem item) {
         Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
                 .filter(slot -> !item.isModuleRequired(slot))
                 .forEach(slot -> {
-                    RemoveSchema schema = new RemoveSchema(item, slot);
-                    SchemaRegistry.instance.registerSchema(schema);
+                    RemoveSchematic schematic = new RemoveSchematic(item, slot);
+                    SchematicRegistry.instance.registerSchematic(schematic);
                 });
     }
 
@@ -148,8 +148,8 @@ public class RemoveSchema extends BaseSchema {
     }
 
     @Override
-    public SchemaType getType() {
-        return SchemaType.other;
+    public SchematicType getType() {
+        return SchematicType.other;
     }
 
     @Override

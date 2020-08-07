@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-public class RepairSchema extends BaseSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class RepairSchematic extends BaseSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";
     private static final String slotSuffix = ".slot1";
     private static final String descriptionSuffix = ".description";
@@ -29,7 +29,7 @@ public class RepairSchema extends BaseSchema {
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
-    public RepairSchema(ModularItem item) {
+    public RepairSchematic(ModularItem item) {
         this.item = item;
     }
 
@@ -78,7 +78,7 @@ public class RepairSchema extends BaseSchema {
                 .map(Collection::stream)
                 .orElse(Stream.empty())
                 .map(definition -> definition.material)
-                .map(Material::getApplicableItemStacks)
+                .map(OutcomeMaterial::getApplicableItemStacks)
                 .flatMap(Arrays::stream)
                 .toArray(ItemStack[]::new);
     }
@@ -169,8 +169,8 @@ public class RepairSchema extends BaseSchema {
     }
 
     @Override
-    public SchemaType getType() {
-        return SchemaType.other;
+    public SchematicType getType() {
+        return SchematicType.other;
     }
 
     @Override

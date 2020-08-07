@@ -1,10 +1,10 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.items.modular.ModularItem;
 
-public abstract class BaseSchema implements UpgradeSchema {
+public abstract class BaseSchematic implements UpgradeSchematic {
     @Override
     public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
         return isMaterialsValid(itemStack, slot, materials)

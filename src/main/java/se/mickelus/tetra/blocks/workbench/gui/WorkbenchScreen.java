@@ -25,7 +25,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private ItemStack currentTarget = ItemStack.EMPTY;
     private ItemStack currentPreview = ItemStack.EMPTY;
-    private UpgradeSchema currentSchema = null;
+    private UpgradeSchematic currentSchematic = null;
 
     private ItemStack[] currentMaterials;
 
@@ -101,7 +101,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         defaultGui.addChild(actionList);
 
         slotDetail = new GuiSlotDetail(46, 102,
-                schema -> tileEntity.setCurrentSchema(schema, selectedSlot),
+                schematic -> tileEntity.setCurrentSchematic(schematic, selectedSlot),
                 () -> selectSlot(null),
                 this::craftUpgrade,
                 this::previewTweaks,
@@ -182,17 +182,17 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private void selectSlot(String slotKey) {
         selectedSlot = slotKey;
-        tileEntity.clearSchema();
+        tileEntity.clearSchematic();
         moduleList.setFocus(selectedSlot);
 
         if (selectedSlot != null) {
-            slotDetail.onTileEntityChange(viewingPlayer, tileEntity, tileEntity.getTargetItemStack(), selectedSlot, tileEntity.getCurrentSchema());
+            slotDetail.onTileEntityChange(viewingPlayer, tileEntity, tileEntity.getTargetItemStack(), selectedSlot, tileEntity.getCurrentSchematic());
         }
         slotDetail.setVisible(selectedSlot != null);
     }
 
-    private void deselectSchema() {
-        tileEntity.clearSchema();
+    private void deselectSchematic() {
+        tileEntity.clearSchematic();
     }
 
     private void craftUpgrade() {
@@ -219,20 +219,20 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private void onTileEntityChange() {
         ItemStack newTarget = tileEntity.getTargetItemStack();
         ItemStack newPreview = ItemStack.EMPTY;
-        UpgradeSchema newSchema = tileEntity.getCurrentSchema();
+        UpgradeSchematic newSchematic = tileEntity.getCurrentSchematic();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (newTarget.getItem() instanceof ModularItem && currentSchema != null) {
-            newPreview = buildPreviewStack(currentSchema, newTarget, selectedSlot, tileEntity.getMaterials());
+        if (newTarget.getItem() instanceof ModularItem && currentSchematic != null) {
+            newPreview = buildPreviewStack(currentSchematic, newTarget, selectedSlot, tileEntity.getMaterials());
         }
 
         boolean targetItemChanged = !ItemStack.areItemStacksEqual(currentTarget, newTarget);
         boolean previewChanged = !ItemStack.areItemStacksEqual(currentPreview, newPreview);
-        boolean schemaChanged = !Objects.equals(currentSchema, newSchema);
+        boolean schematicChanged = !Objects.equals(currentSchematic, newSchematic);
         boolean materialsChanged = diffMaterials(tileEntity.getMaterials());
 
         currentPreview = newPreview;
-        currentSchema = newSchema;
+        currentSchematic = newSchematic;
 
         if (targetItemChanged) {
             ItemStack.areItemStacksEqual(currentTarget, newTarget);
@@ -253,15 +253,15 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
                     action -> tileEntity.performAction(viewingPlayer, action.getKey()));
         }
 
-        if (targetItemChanged || previewChanged || schemaChanged || slotChanged || materialsChanged) {
+        if (targetItemChanged || previewChanged || schematicChanged || slotChanged || materialsChanged) {
             updateItemDisplay(currentTarget, currentPreview);
 
             if (currentTarget.getItem() instanceof ModularItem) {
-                slotDetail.onTileEntityChange(viewingPlayer, tileEntity, currentTarget, selectedSlot, currentSchema);
+                slotDetail.onTileEntityChange(viewingPlayer, tileEntity, currentTarget, selectedSlot, currentSchematic);
             }
         }
 
-        inventoryInfo.update(currentSchema, currentSlot, currentTarget);
+        inventoryInfo.update(currentSchematic, currentSlot, currentTarget);
 
         if (!currentTarget.isEmpty()) {
             if (!hadItem) {
@@ -275,7 +275,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         }
 
         if (!currentTarget.isEmpty()) {
-            if (currentSchema == null && selectedSlot == null) {
+            if (currentSchematic == null && selectedSlot == null) {
                 actionList.setVisible(true);
                 slotDetail.setVisible(false);
             } else if (currentTarget.getItem() instanceof ModularItem) {
@@ -308,14 +308,14 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     public void tick() {
         super.tick();
 
-        inventoryInfo.update(tileEntity.getCurrentSchema(), tileEntity.getCurrentSlot(), currentTarget);
+        inventoryInfo.update(tileEntity.getCurrentSchematic(), tileEntity.getCurrentSlot(), currentTarget);
 
         World world = tileEntity.getWorld();
         if (world != null && world.getGameTime() % 20 == 0) {
             BlockPos pos = tileEntity.getPos();
             int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
-            if (tileEntity.getCurrentSchema() != null && slotDetail.isVisible()) {
+            if (tileEntity.getCurrentSchematic() != null && slotDetail.isVisible()) {
                 slotDetail.update(viewingPlayer, tileEntity, availableCapabilities);
             }
 
@@ -329,7 +329,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         moduleList.update(itemStack, previewStack, selectedSlot);
         statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
         integrityBar.setItemStack(itemStack, previewStack);
-        slotDetail.updatePreview(currentSchema, selectedSlot, itemStack, previewStack);
+        slotDetail.updatePreview(currentSchematic, selectedSlot, itemStack, previewStack);
     }
 
     private void itemShowAnimation() {
@@ -349,21 +349,21 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private void updateMaterialHoverPreview() {
         int newPreviewMaterialSlot = -1;
         Slot hoveredSlot = getSlotUnderMouse();
-        UpgradeSchema currentSchema = tileEntity.getCurrentSchema();
+        UpgradeSchematic currentSchematic = tileEntity.getCurrentSchematic();
         ItemStack targetStack = tileEntity.getTargetItemStack();
-        if (currentSchema != null && hoveredSlot != null && hoveredSlot.getHasStack()) {
+        if (currentSchematic != null && hoveredSlot != null && hoveredSlot.getHasStack()) {
             newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
         }
 
         if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof ModularItem) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
-                ItemStack previewStack = buildPreviewStack(currentSchema, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getStack()});
+                ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getStack()});
                 updateItemDisplay(targetStack, previewStack);
             } else {
                 ItemStack previewStack = ItemStack.EMPTY;
-                if (currentSchema != null) {
-                    previewStack = buildPreviewStack(currentSchema, targetStack, selectedSlot, materials);
+                if (currentSchematic != null) {
+                    previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, materials);
                 }
                 updateItemDisplay(targetStack, previewStack);
             }
@@ -371,9 +371,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         }
     }
 
-    private ItemStack buildPreviewStack(UpgradeSchema schema, ItemStack targetStack, String slot, ItemStack[] materials) {
-        if (schema.isMaterialsValid(targetStack, slot, materials)) {
-            return schema.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
+    private ItemStack buildPreviewStack(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials) {
+        if (schematic.isMaterialsValid(targetStack, slot, materials)) {
+            return schematic.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
         }
         return ItemStack.EMPTY;
     }

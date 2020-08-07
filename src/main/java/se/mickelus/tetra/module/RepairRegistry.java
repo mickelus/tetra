@@ -4,8 +4,8 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
-import se.mickelus.tetra.module.schema.RepairDefinition;
+import se.mickelus.tetra.module.schematic.SchematicDefinition;
+import se.mickelus.tetra.module.schematic.RepairDefinition;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,10 +27,10 @@ public class RepairRegistry {
         DataManager.repairData.onReload(() -> setupDefinitions(DataManager.repairData.getData()));
     }
 
-    public void injectFromSchemas(Collection<SchemaDefinition> schemaDefinitions) {
-        injectedRepairs = schemaDefinitions.stream()
-                .filter(schemaDefinition -> schemaDefinition.repair)
-                .flatMap(schemaDefinition -> Arrays.stream(schemaDefinition.outcomes))
+    public void injectFromSchematics(Collection<SchematicDefinition> schematicDefinitions) {
+        injectedRepairs = schematicDefinitions.stream()
+                .filter(schematicDefinition -> schematicDefinition.repair)
+                .flatMap(schematicDefinition -> Arrays.stream(schematicDefinition.outcomes))
                 .filter(RepairDefinition::validateOutcome)
                 .map(RepairDefinition::new)
                 .collect(Collectors.toList());

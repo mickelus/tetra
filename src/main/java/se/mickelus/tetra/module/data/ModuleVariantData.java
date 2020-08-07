@@ -29,7 +29,7 @@ import se.mickelus.tetra.module.Priority;
 public class ModuleVariantData {
 
     /**
-     * The key for the module variant. This is used for referencing the module and should be unique. In schema
+     * The key for the module variant. This is used for referencing the module and should be unique. In schematic
      * outcome definitions the moduleVariant field should match this value. Also used as part of localized strings.
      */
     public String key;

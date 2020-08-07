@@ -23,8 +23,8 @@ import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
-import se.mickelus.tetra.module.schema.Material;
-import se.mickelus.tetra.module.schema.RepairDefinition;
+import se.mickelus.tetra.module.schematic.OutcomeMaterial;
+import se.mickelus.tetra.module.schematic.RepairDefinition;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class DataManager {
             .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
-            .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
+            .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.MaterialDeserializer())
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
@@ -66,7 +66,7 @@ public class DataManager {
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
     public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
             ReplacementDefinition[].class);
-    public static SchemaStore schemaData = new SchemaStore(gson, "schemas");
+    public static SchematicStore schematicData = new SchematicStore(gson, "schematics");
     public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicatus", ItemPredicate[].class);
     public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
     public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
@@ -74,7 +74,7 @@ public class DataManager {
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
     private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
-            replacementData, schemaData, repairData, predicateData, actionData, destabilizationData, featureData };
+            replacementData, schematicData, repairData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;
 

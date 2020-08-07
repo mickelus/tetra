@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import com.google.gson.*;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.lang.reflect.Type;
 
 /**
- * Materials define a required item in a schema outcome. It's parsed (and mostly it behaves) as if it was an
+ * Materials define a required item in a schematic outcome. It's parsed (and mostly it behaves) as if it was an
  * item predicate. Count is stored separately and has to be smaller than size of a provided itemstack for it to match.
  * Example json:
  * {
@@ -26,18 +26,18 @@ import java.lang.reflect.Type;
  *     "count": 2
  * }
  */
-public class Material {
+public class OutcomeMaterial {
     public ItemPredicate predicate;
     public int count = 1;
 
     private ItemStack itemStack;
     private ResourceLocation tagLocation;
 
-    public static class MaterialDeserializer implements JsonDeserializer<Material> {
+    public static class MaterialDeserializer implements JsonDeserializer<OutcomeMaterial> {
 
         @Override
-        public Material deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
-            Material material = new Material();
+        public OutcomeMaterial deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
+            OutcomeMaterial material = new OutcomeMaterial();
 
             if (element != null && !element.isJsonNull()) {
                 JsonObject jsonObject = JSONUtils.getJsonObject(element, "material");

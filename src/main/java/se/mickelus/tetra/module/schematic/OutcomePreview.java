@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.module.data.CapabilityData;
@@ -9,12 +9,12 @@ public class OutcomePreview {
     public GlyphData glyph;
     public ItemStack itemStack;
 
-    public SchemaType type;
+    public SchematicType type;
 
     public CapabilityData capabilities;
     public ItemStack[] materials;
 
-    public OutcomePreview(String key, GlyphData glyph, ItemStack itemStack, SchemaType type, CapabilityData capabilities, ItemStack[] materials) {
+    public OutcomePreview(String key, GlyphData glyph, ItemStack itemStack, SchematicType type, CapabilityData capabilities, ItemStack[] materials) {
         this.key = key;
         this.glyph = glyph;
         this.itemStack = itemStack;

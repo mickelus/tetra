@@ -31,7 +31,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -53,12 +53,12 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
-    private static final String schemaKey = "schema";
+    private static final String schematicKey = "schematic";
 
     public static final int inventorySlots = 4;
 
     private ItemStack previousTarget = ItemStack.EMPTY;
-    private UpgradeSchema currentSchema;
+    private UpgradeSchematic currentSchematic;
     private String currentSlot;
 
     private Map<String, Runnable> changeListeners;
@@ -105,7 +105,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             protected void onContentsChanged(int slot) {
                 ItemStack itemStack = getStackInSlot(slot);
                 if (slot == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
-                    currentSchema = null;
+                    currentSchematic = null;
                     currentSlot = null;
 
                     emptyMaterialSlots();
@@ -116,8 +116,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             @Override
             public int getSlots() {
-                if (currentSchema != null) {
-                    return currentSchema.getNumMaterialSlots() + 1;
+                if (currentSchematic != null) {
+                    return currentSchematic.getNumMaterialSlots() + 1;
                 }
                 return 1;
             }
@@ -179,36 +179,36 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                         >= action.getCapabilityLevel(itemStack, capability));
     }
 
-    public UpgradeSchema getCurrentSchema() {
-        return currentSchema;
+    public UpgradeSchematic getCurrentSchematic() {
+        return currentSchematic;
     }
 
-    public void setCurrentSchema(UpgradeSchema schema, String currentSlot) {
+    public void setCurrentSchematic(UpgradeSchematic schematic, String currentSlot) {
 
-        this.currentSchema = schema;
+        this.currentSchematic = schematic;
         this.currentSlot = currentSlot;
 
         changeListeners.values().forEach(Runnable::run);
         sync();
     }
 
-    public void clearSchema() {
-        setCurrentSchema(null, null);
+    public void clearSchematic() {
+        setCurrentSchematic(null, null);
     }
 
     /**
      * Intended for updating the TE when receiving update packets on the server.
-     * @param currentSchema A schema, or null if it should be unset
+     * @param currentSchematic A schematic, or null if it should be unset
      * @param currentSlot A slot key, or null if it should be unset
      * @param player
      */
-    public void update(UpgradeSchema currentSchema, String currentSlot, PlayerEntity player) {
+    public void update(UpgradeSchematic currentSchematic, String currentSlot, PlayerEntity player) {
         // todo: inventory change hack, better solution?
-        if (currentSchema == null && player != null) {
+        if (currentSchematic == null && player != null) {
             emptyMaterialSlots(player);
         }
 
-        this.currentSchema = currentSchema;
+        this.currentSchematic = currentSchematic;
         this.currentSlot = currentSlot;
 
         sync();
@@ -219,7 +219,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private void sync() {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchema, currentSlot));
+            PacketHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchematic, currentSlot));
         } else {
             world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             markDirty();
@@ -272,17 +272,17 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
 
-        if (currentSchema != null && currentSchema.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableCapabilities)) {
-            float severity = currentSchema.getSeverity(targetStack, materialsAltered, currentSlot);
-            upgradedStack = currentSchema.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
+        if (currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableCapabilities)) {
+            float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
+            upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             if (upgradedStack.getItem() instanceof ModularItem) {
                 ((ModularItem) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
             // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
-            for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materials)) {
-                int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materials, capability);
+            for (Capability capability : currentSchematic.getRequiredCapabilities(targetStack, materials)) {
+                int requiredLevel = currentSchematic.getRequiredCapabilityLevel(targetStack, materials, capability);
                 ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
                 if (!providingStack.isEmpty()) {
                     if (providingStack.getItem() instanceof ModularItem) {
@@ -303,7 +303,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 }
             }
 
-            int xpCost = currentSchema.getExperienceCost(targetStack, materials, currentSlot);
+            int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);
             if (!player.isCreative() && xpCost > 0) {
                 player.addExperienceLevel(-xpCost);
             }
@@ -319,7 +319,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             handler.setStackInSlot(0, tempStack);
         });
 
-        clearSchema();
+        clearSchematic();
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
@@ -383,8 +383,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
-        String schemaKey = compound.getString(WorkbenchTile.schemaKey);
-        currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+        String schematicKey = compound.getString(WorkbenchTile.schematicKey);
+        currentSchematic = ItemUpgradeRegistry.instance.getSchematic(schematicKey);
 
         if (compound.contains(currentSlotKey)) {
             currentSlot = compound.getString(currentSlotKey);
@@ -402,8 +402,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 
-        if (currentSchema != null) {
-            compound.putString(schemaKey, currentSchema.getKey());
+        if (currentSchematic != null) {
+            compound.putString(schematicKey, currentSchematic.getKey());
         }
 
         if (currentSlot != null) {

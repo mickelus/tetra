@@ -15,7 +15,7 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.schema.SchemaRarity;
+import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
@@ -68,7 +68,7 @@ public class SettleToast implements IToast {
                 glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchemaRarity.hone.tint);
+            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
             toastGui.getMinecraft().fontRenderer.drawString(matrixStack, toastGui.getMinecraft().fontRenderer.func_238412_a_(moduleName, 118), 37, 18, GuiColors.muted);
 
 

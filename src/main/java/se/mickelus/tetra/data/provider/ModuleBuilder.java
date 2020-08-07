@@ -32,7 +32,7 @@ public class ModuleBuilder {
 
     public String localization;
 
-    public String schemaPath;
+    public String schematicPath;
 
     public JsonObject referenceModule;
     public String fallbackReference;
@@ -52,13 +52,13 @@ public class ModuleBuilder {
 
     private Map<ToolType, BlockState> harvestMap;
 
-    public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schemaPath) {
+    public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schematicPath) {
         this.module = module;
         this.prefix = prefix;
 
         this.localization = localization;
 
-        this.schemaPath = schemaPath;
+        this.schematicPath = schematicPath;
 
         this.referenceModule = referenceModule;
         this.fallbackReference = fallbackReference;
@@ -236,7 +236,7 @@ public class ModuleBuilder {
         return result;
     }
 
-    public JsonObject getSchemaJson() {
+    public JsonObject getSchematicJson() {
         JsonObject result = new JsonObject();
         JsonArray outcomesJson = new JsonArray();
 

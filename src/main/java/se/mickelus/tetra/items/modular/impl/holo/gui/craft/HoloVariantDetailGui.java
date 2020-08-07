@@ -16,9 +16,9 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.OutcomePreview;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
+import se.mickelus.tetra.module.schematic.SchematicType;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -112,17 +112,17 @@ public class HoloVariantDetailGui extends GuiElement {
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
             ItemStack improvementStack = baseOutcome.itemStack;
-            UpgradeSchema[] improvementSchemas = Arrays.stream(ItemUpgradeRegistry.instance.getSchemas(slot))
-                    .filter(improvementSchema -> SchemaType.improvement.equals(improvementSchema.getType()))
-                    .filter(improvementSchema -> improvementSchema.isApplicableForItem(improvementStack))
-                    .toArray(UpgradeSchema[]::new);
+            UpgradeSchematic[] improvementSchematics = Arrays.stream(ItemUpgradeRegistry.instance.getSchematics(slot))
+                    .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
+                    .filter(improvementSchematic -> improvementSchematic.isApplicableForItem(improvementStack))
+                    .toArray(UpgradeSchematic[]::new);
 
-            improvementsLabel.setVisible(improvementSchemas.length > 0);
-            improvements.setVisible(improvementSchemas.length > 0);
-            if (improvementSchemas.length > 0) {
+            improvementsLabel.setVisible(improvementSchematics.length > 0);
+            improvements.setVisible(improvementSchematics.length > 0);
+            if (improvementSchematics.length > 0) {
                 improvements.clearChildren();
-                for (int i = 0; i < improvementSchemas.length; i++) {
-                    improvements.addChild(new HoloImprovementGui(0, i * 18, improvementSchemas[i]));
+                for (int i = 0; i < improvementSchematics.length; i++) {
+                    improvements.addChild(new HoloImprovementGui(0, i * 18, improvementSchematics[i]));
                 }
             }
 

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,22 +22,22 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ConfigSchema extends BaseSchema {
-    private static final String localizationPrefix = TetraMod.MOD_ID + "/schema/";
+public class ConfigSchematic extends BaseSchematic {
+    private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot";
 
-    private SchemaDefinition definition;
+    private SchematicDefinition definition;
 
     private String keySuffix;
     private String moduleSlot;
 
-    public ConfigSchema(SchemaDefinition definition) throws InvalidSchemaException {
+    public ConfigSchematic(SchematicDefinition definition) throws InvalidSchematicException {
         this(definition, "", null);
     }
 
-    public ConfigSchema(SchemaDefinition definition, String keySuffix, String moduleSlot) throws InvalidSchemaException {
+    public ConfigSchematic(SchematicDefinition definition, String keySuffix, String moduleSlot) throws InvalidSchematicException {
         this.definition = definition;
         this.keySuffix = keySuffix;
         this.moduleSlot = moduleSlot;
@@ -49,7 +49,7 @@ public class ConfigSchema extends BaseSchema {
                 .toArray(String[]::new);
 
         if (faultyModuleOutcomes.length != 0) {
-            throw new InvalidSchemaException(definition.key, faultyModuleOutcomes);
+            throw new InvalidSchematicException(definition.key, faultyModuleOutcomes);
         }
     }
 
@@ -345,12 +345,12 @@ public class ConfigSchema extends BaseSchema {
     }
 
     @Override
-    public SchemaType getType() {
+    public SchematicType getType() {
         return definition.displayType;
     }
 
     @Override
-    public SchemaRarity getRarity() {
+    public SchematicRarity getRarity() {
         return definition.rarity;
     }
 

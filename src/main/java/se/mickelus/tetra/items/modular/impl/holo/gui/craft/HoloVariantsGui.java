@@ -9,9 +9,9 @@ import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.schema.OutcomePreview;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
+import se.mickelus.tetra.module.schematic.SchematicType;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -53,17 +53,17 @@ public class HoloVariantsGui extends GuiElement {
         this.onVariantSelect = onVariantSelect;
     }
 
-    public void update(ModularItem item, String slot, UpgradeSchema schema) {
+    public void update(ModularItem item, String slot, UpgradeSchematic schematic) {
         variantsContainer.clearChildren();
 
-        OutcomePreview[] outcomes = Arrays.stream(schema.getPreviews(new ItemStack(item), slot))
+        OutcomePreview[] outcomes = Arrays.stream(schematic.getPreviews(new ItemStack(item), slot))
                 .filter(preview -> preview.materials.length != 0)
                 .toArray(OutcomePreview[]::new);
 
         variants = new HoloVariantItemGui[outcomes.length];
         itemAnimations = new KeyframeAnimation[outcomes.length];
         for (int i = 0; i < outcomes.length; i++) {
-            if (SchemaType.minor.equals(outcomes[i].type)) {
+            if (SchematicType.minor.equals(outcomes[i].type)) {
                 variants[i] = new HoloVariantItemGui((i / 2) * 15, (i % 2) * 15, outcomes[i],
                         onVariantHover, onVariantBlur, onVariantSelect);
                 variantsContainer.addChild(variants[i]);

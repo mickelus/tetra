@@ -33,7 +33,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.schema.RemoveSchema;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
@@ -83,7 +83,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
 
         ToolbeltInventory.initializePredicates();
 
-        RemoveSchema.registerRemoveSchemas(this);
+        RemoveSchematic.registerRemoveSchematics(this);
     }
 
     @Override

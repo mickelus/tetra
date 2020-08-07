@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
@@ -9,7 +9,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
 
-public abstract class BasicSchema extends BaseSchema {
+public abstract class BasicSchematic extends BaseSchematic {
 
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
@@ -19,7 +19,7 @@ public abstract class BasicSchema extends BaseSchema {
     protected ItemModule module;
     protected Item item;
 
-    public BasicSchema(String key, ItemModule module, Item item) {
+    public BasicSchematic(String key, ItemModule module, Item item) {
         this.key = key;
         this.module = module;
         this.item = item;
@@ -70,11 +70,11 @@ public abstract class BasicSchema extends BaseSchema {
     }
 
     @Override
-    public SchemaType getType() {
+    public SchematicType getType() {
         if (module instanceof ItemModuleMajor) {
-            return SchemaType.major;
+            return SchematicType.major;
         } else {
-            return SchemaType.minor;
+            return SchematicType.minor;
         }
     }
 

@@ -20,9 +20,9 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.SchemaRegistry;
-import se.mickelus.tetra.module.schema.RemoveSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
@@ -54,9 +54,9 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
-        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
-        SchemaRegistry.instance.registerSchema(new ApplyBannerSchema());
-        RemoveSchema.registerRemoveSchemas(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
+        SchematicRegistry.instance.registerSchematic(new ApplyBannerSchematic());
+        RemoveSchematic.registerRemoveSchematics(this);
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 

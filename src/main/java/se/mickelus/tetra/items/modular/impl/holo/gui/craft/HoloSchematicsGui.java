@@ -1,32 +1,32 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import se.mickelus.tetra.blocks.workbench.gui.GuiSchemaListItem;
+import se.mickelus.tetra.blocks.workbench.gui.GuiSchematicListItem;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.SchemaRarity;
-import se.mickelus.tetra.module.schema.SchemaType;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.SchematicRarity;
+import se.mickelus.tetra.module.schematic.SchematicType;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class HoloSchemasGui extends GuiElement {
+public class HoloSchematicsGui extends GuiElement {
 
-    private Consumer<UpgradeSchema> onSchemaSelect;
+    private Consumer<UpgradeSchematic> onSchematicSelect;
 
     private KeyframeAnimation openAnimation;
 
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
-    public HoloSchemasGui(int x, int y, int width, int height, Consumer<UpgradeSchema> onSchemaSelect) {
+    public HoloSchematicsGui(int x, int y, int width, int height, Consumer<UpgradeSchematic> onSchematicSelect) {
         super(x, y, width, height);
 
-        this.onSchemaSelect = onSchemaSelect;
+        this.onSchematicSelect = onSchematicSelect;
 
         openAnimation = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(y - 5, y))
@@ -43,24 +43,24 @@ public class HoloSchemasGui extends GuiElement {
     public void update(ModularItem item, String slot) {
         int offset = 0;
         int pageLines = 8;
-        UpgradeSchema[] schemas = Arrays.stream(ItemUpgradeRegistry.instance.getSchemas(slot))
-                .filter(schema -> !schema.isHoning())
-                .filter(schema -> !schema.getRarity().equals(SchemaRarity.temporary))
-                .filter(schema -> !schema.getType().equals(SchemaType.improvement))
-                .filter(Filter.distinct(UpgradeSchema::getName))
-                .toArray(UpgradeSchema[]::new);
+        UpgradeSchematic[] schematics = Arrays.stream(ItemUpgradeRegistry.instance.getSchematics(slot))
+                .filter(schematic -> !schematic.isHoning())
+                .filter(schematic -> !schematic.getRarity().equals(SchematicRarity.temporary))
+                .filter(schematic -> !schematic.getType().equals(SchematicType.improvement))
+                .filter(Filter.distinct(UpgradeSchematic::getName))
+                .toArray(UpgradeSchematic[]::new);
 
-        int count = schemas.length;
+        int count = schematics.length;
 
         clearChildren();
 
         for (int i = 0; i < count; i++) {
-            UpgradeSchema schema = schemas[i + offset];
-            addChild(new GuiSchemaListItem(
+            UpgradeSchematic schematic = schematics[i + offset];
+            addChild(new GuiSchematicListItem(
                     i / pageLines * 106,
                     i % pageLines * 14,
                     103,
-                    schema, () -> onSchemaSelect.accept(schema)));
+                    schematic, () -> onSchematicSelect.accept(schematic)));
         }
     }
 

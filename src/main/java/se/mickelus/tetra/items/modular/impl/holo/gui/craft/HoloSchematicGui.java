@@ -2,10 +2,10 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.schema.OutcomePreview;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-public class HoloSchemaGui extends GuiElement {
+public class HoloSchematicGui extends GuiElement {
 
     private HoloVariantsGui list;
     private HoloVariantDetailGui detail;
@@ -15,7 +15,7 @@ public class HoloSchemaGui extends GuiElement {
 
     String slot;
 
-    public HoloSchemaGui(int x, int y, int width, int height) {
+    public HoloSchematicGui(int x, int y, int width, int height) {
         super(x, y, width, height);
 
         list = new HoloVariantsGui(0, 0, width, this::onVariantHover, this::onVariantBlur, this::onVariantSelect);
@@ -26,8 +26,8 @@ public class HoloSchemaGui extends GuiElement {
 
     }
 
-    public void update(ModularItem item, String slot, UpgradeSchema schema) {
-        list.update(item, slot, schema);
+    public void update(ModularItem item, String slot, UpgradeSchematic schematic) {
+        list.update(item, slot, schematic);
 
         this.slot = slot;
 

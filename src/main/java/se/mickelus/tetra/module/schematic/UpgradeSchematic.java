@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -8,7 +8,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-public interface UpgradeSchema {
+public interface UpgradeSchematic {
 
     public String getKey();
     public String getName();
@@ -54,16 +54,16 @@ public interface UpgradeSchema {
 
     /**
      * Returns true if this upgrade can be applied to the given slot on the given item.
-     * @param slot the slot on which the schema will be applied
+     * @param slot the slot on which the schematic will be applied
      * @param itemStack the itemstack that is to be upgraded
      * @return
      */
     public boolean isApplicableForSlot(String slot, ItemStack itemStack);
 
     /**
-     * This is a final check if the player should be able to see the schema in schema listings, based on the player or its surroundings.
+     * This is a final check if the player should be able to see the schematic in schematic listings, based on the player or its surroundings.
      * @param player The player
-     * @param targetStack The target itemstack for the schema
+     * @param targetStack The target itemstack for the schematic
      * @return true if it should be visible, otherwise false
      */
     public default boolean isVisibleForPlayer(PlayerEntity player, ItemStack targetStack) {
@@ -75,7 +75,7 @@ public interface UpgradeSchema {
      * @param player the player performing the upgrade
      * @param itemStack the itemstack that is to be upgraded
      * @param materials the materials to be used for the upgrade
-     * @param slot the slot on which the schema will be applied
+     * @param slot the slot on which the schematic will be applied
      * @param availableCapabilities
      * @return
      */
@@ -93,17 +93,17 @@ public interface UpgradeSchema {
     }
 
     /**
-     * Returns true if this is a honing schema and should have it's usage regulated by honing rules.
+     * Returns true if this is a honing schematic and should have it's usage regulated by honing rules.
      * @return
      */
     public default boolean isHoning() {
         return false;
     }
 
-    public SchemaType getType();
+    public SchematicType getType();
 
-    public default SchemaRarity getRarity() {
-        return SchemaRarity.basic;
+    public default SchematicRarity getRarity() {
+        return SchematicRarity.basic;
     }
 
     public GlyphData getGlyph();

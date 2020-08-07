@@ -54,7 +54,7 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
-import se.mickelus.tetra.module.schema.RepairDefinition;
+import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 

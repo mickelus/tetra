@@ -25,10 +25,10 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.SchemaRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.schema.RemoveSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -70,8 +70,8 @@ public class ModularBowItem extends ModularItem {
 
         updateConfig(ConfigHandler.honeBowBase.get(), ConfigHandler.honeBowIntegrityMultiplier.get());
 
-        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
-        RemoveSchema.registerRemoveSchemas(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
+        RemoveSchematic.registerRemoveSchematics(this);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

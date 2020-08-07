@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Collection;
 
@@ -27,14 +27,14 @@ public class GuiCapabilityRequirementList extends GuiElement {
         requiredLevels = new int[indicators.length];
     }
 
-    public void update(UpgradeSchema schema, ItemStack targetStack, String slot, ItemStack[] materials, int[] availableCapabilities) {
-        setVisible(schema.isMaterialsValid(targetStack, slot, materials));
+    public void update(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials, int[] availableCapabilities) {
+        setVisible(schematic.isMaterialsValid(targetStack, slot, materials));
 
         int visibleCount = 0;
         Capability[] capabilities = Capability.values();
-        Collection<Capability> requiredCapabilities = schema.getRequiredCapabilities(targetStack, materials);
+        Collection<Capability> requiredCapabilities = schematic.getRequiredCapabilities(targetStack, materials);
         for (int i = 0; i < capabilities.length; i++) {
-            requiredLevels[i] = schema.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
+            requiredLevels[i] = schematic.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
             if (requiredCapabilities.contains(capabilities[i]) && requiredLevels[i] > 0) {
                 indicators[i].setX(-visibleCount * indicators[i].getWidth());
                 indicators[i].updateRequirement(requiredLevels[i], availableCapabilities[i]);

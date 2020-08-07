@@ -11,7 +11,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -38,25 +38,25 @@ public class ItemUpgradeRegistry {
         });
     }
 
-    public UpgradeSchema[] getAvailableSchemas(PlayerEntity player, ItemStack itemStack) {
-        return SchemaRegistry.instance.getAllSchemas().stream()
-                .filter(upgradeSchema -> playerHasSchema(player, itemStack, upgradeSchema))
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
-                .toArray(UpgradeSchema[]::new);
+    public UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, ItemStack itemStack) {
+        return SchematicRegistry.instance.getAllSchematics().stream()
+                .filter(upgradeSchematic -> playerHasSchematic(player, itemStack, upgradeSchematic))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
+                .toArray(UpgradeSchematic[]::new);
     }
 
-    public UpgradeSchema[] getSchemas(String slot) {
-        return SchemaRegistry.instance.getAllSchemas().stream()
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(slot, ItemStack.EMPTY))
-                .toArray(UpgradeSchema[]::new);
+    public UpgradeSchematic[] getSchematics(String slot) {
+        return SchematicRegistry.instance.getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, ItemStack.EMPTY))
+                .toArray(UpgradeSchematic[]::new);
     }
 
-    public UpgradeSchema getSchema(String key) {
-        return SchemaRegistry.instance.getSchema(new ResourceLocation(TetraMod.MOD_ID, key));
+    public UpgradeSchematic getSchematic(String key) {
+        return SchematicRegistry.instance.getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
     }
 
-    public boolean playerHasSchema(PlayerEntity player, ItemStack targetStack, UpgradeSchema schema) {
-        return schema.isVisibleForPlayer(player, targetStack);
+    public boolean playerHasSchematic(PlayerEntity player, ItemStack targetStack, UpgradeSchematic schematic) {
+        return schematic.isVisibleForPlayer(player, targetStack);
     }
 
     /**

@@ -8,19 +8,15 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.EnumUtils;
-import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
 import se.mickelus.tetra.util.JsonOptional;
 
 public class ImprovementCraftCriterion extends CriterionInstance {
     private final ItemPredicate before;
     private final ItemPredicate after;
 
-    private final String schema;
+    private final String schematic;
 
     private final String slot;
     private final String improvement;
@@ -31,11 +27,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
 
     public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
-    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schema, String slot, String improvement, int improvementLevel, Capability capability, int capabilityLevel) {
+    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, Capability capability, int capabilityLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
-        this.schema = schema;
+        this.schematic = schematic;
         this.slot = slot;
         this.improvement = improvement;
         this.improvementLevel = improvementLevel;
@@ -43,13 +39,13 @@ public class ImprovementCraftCriterion extends CriterionInstance {
         this.capabilityLevel = capabilityLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schema, String slot, String improvement,
+    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
             int improvementLevel, Capability capability, int capabilityLevel) {
         trigger.fulfillCriterion(player,
-                criterion -> criterion.test(before, after, schema, slot, improvement, improvementLevel, capability, capabilityLevel));
+                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, capability, capabilityLevel));
     }
 
-    public boolean test(ItemStack before, ItemStack after, String schema, String slot, String improvement, int improvementLevel,
+    public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
             Capability capability, int capabilityLevel) {
 
         if (this.before != null && !this.before.test(before)) {
@@ -60,7 +56,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.schema != null && !this.schema.equals(schema)) {
+        if (this.schematic != null && !this.schematic.equals(schematic)) {
             return false;
         }
 
@@ -95,7 +91,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                 JsonOptional.field(json, "after")
                         .map(ItemPredicate::deserialize)
                         .orElse(null),
-                JsonOptional.field(json, "schema")
+                JsonOptional.field(json, "schematic")
                         .map(JsonElement::getAsString)
                         .orElse(null),
                 JsonOptional.field(json, "slot")

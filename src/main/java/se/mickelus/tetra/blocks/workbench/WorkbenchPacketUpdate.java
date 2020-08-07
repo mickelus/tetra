@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.AbstractPacket;
 
 import java.io.IOException;
@@ -12,14 +12,14 @@ import java.io.IOException;
 public class WorkbenchPacketUpdate extends AbstractPacket {
 
     private BlockPos pos;
-    private UpgradeSchema schema;
+    private UpgradeSchematic schematic;
     private String selectedSlot;
 
     public WorkbenchPacketUpdate() {}
 
-    public WorkbenchPacketUpdate(BlockPos pos, UpgradeSchema schema, String selectedSlot) {
+    public WorkbenchPacketUpdate(BlockPos pos, UpgradeSchematic schematic, String selectedSlot) {
         this.pos = pos;
-        this.schema = schema;
+        this.schematic = schematic;
         this.selectedSlot = selectedSlot;
     }
 
@@ -30,8 +30,8 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
         buffer.writeInt(pos.getZ());
 
         try {
-            if (schema != null) {
-                writeString(schema.getKey(), buffer);
+            if (schematic != null) {
+                writeString(schematic.getKey(), buffer);
             } else {
                 writeString("", buffer);
             }
@@ -42,7 +42,7 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
                 writeString("", buffer);
             }
         } catch (IOException exception) {
-            System.err.println("An error occurred when writing schema name to packet buffer");
+            System.err.println("An error occurred when writing schematic name to packet buffer");
         }
     }
 
@@ -54,8 +54,8 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
         pos = new BlockPos(x, y, z);
 
         try {
-            String schemaKey = readString(buffer);
-            schema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+            String schematicKey = readString(buffer);
+            schematic = ItemUpgradeRegistry.instance.getSchematic(schematicKey);
 
             selectedSlot = readString(buffer);
 
@@ -63,7 +63,7 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
                 selectedSlot = null;
             }
         } catch (IOException exception) {
-            System.err.println("An error occurred when reading schema name from packet buffer");
+            System.err.println("An error occurred when reading schematic name from packet buffer");
         }
     }
 
@@ -71,7 +71,7 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
     public void handle(PlayerEntity player) {
         WorkbenchTile workbench = (WorkbenchTile) player.world.getTileEntity(pos);
         if (workbench != null) {
-            workbench.update(schema, selectedSlot, player);
+            workbench.update(schematic, selectedSlot, player);
         }
     }
 }

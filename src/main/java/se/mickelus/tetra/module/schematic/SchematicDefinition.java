@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module.schema;
+package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -9,10 +9,10 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * Schemas define how players craft new modules, and which materials yield which module variant.
+ * Schematics define how players craft new modules, and which materials yield which module variant.
  * Example json:
  * {
- *     "key": "basic_blade_schema",
+ *     "key": "basic_blade_schematic",
  *     "slots": ["sword/blade"],
  *     "materialSlotCount": 1,
  *     "displayType": "major",
@@ -47,12 +47,12 @@ import java.util.stream.Stream;
  *     ]
  * }
  */
-public class SchemaDefinition {
+public class SchematicDefinition {
 
     /**
-     * Marks if this should replace or merge with existing entries (if any) for this schema definition. The default behaviour for upgrade
-     * schemas added by other mods and datapacks is to merge values set by those into the existing entry (if any).
-     * By setting replace to true it's possible to completely replace schemas registered by tetra, which can be useful when one wants to
+     * Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade
+     * schematics added by other mods and datapacks is to merge values set by those into the existing entry (if any).
+     * By setting replace to true it's possible to completely replace schematics registered by tetra, which can be useful when one wants to
      * remove something.
      */
     public boolean replace = false;
@@ -60,12 +60,12 @@ public class SchemaDefinition {
     /**
      * The key used for localized human readable strings such as name and description. If this is not available the
      * key field is used for picking up localized strings instead, which is preferable in most cases. This field is
-     * useful when multiple schemas should use the same name, description etc.
+     * useful when multiple schematics should use the same name, description etc.
      */
     public String localizationKey;
 
     /**
-     * An array of slots which this schema is applicable for.
+     * An array of slots which this schematic is applicable for.
      */
     public String[] slots = new String[0];
 
@@ -77,54 +77,54 @@ public class SchemaDefinition {
     public String[] keySuffixes = new String[0];
 
     /**
-     * The number of material that can be used when crafting with this schema, currently only a value 0 or 1 is
+     * The number of material that can be used when crafting with this schematic, currently only a value 0 or 1 is
      * supported.
      */
     public int materialSlotCount = 0;
 
     /**
-     * States if a repair schema should also be generated based on this schema. Useful when the crafted module
+     * States if a repair schematic should also be generated based on this schematic. Useful when the crafted module
      * is repaired using the same materials and capabilities as if it was crafted.
      */
     public boolean repair = true;
 
     /**
-     * Defines if this schema should only be applicable when the player has a honing attempt available for the item.
+     * Defines if this schematic should only be applicable when the player has a honing attempt available for the item.
      */
     public boolean hone = false;
 
     /**
-     * An item predicate which has to be met for this schema to be applicable. Will not show up in the schema list
+     * An item predicate which has to be met for this schematic to be applicable. Will not show up in the schematic list
      * if this is not met. Optional, allows all items by default (as long as they have the required slots)
      */
     public ItemPredicate requirement = ItemPredicate.ANY;
 
     /**
-     * If set this schema will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
+     * If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
      * provided index.
      */
     public int materialRevealSlot = -1;
 
     /**
-     * Defines the outline around the schema glyph, visible in most views where players interact with the schema
+     * Defines the outline around the schematic glyph, visible in most views where players interact with the schematic
      * somehow. Has four possible values: "minor", "major", "improvement", "other". Minor and major display a similar
      * outline as minor and major modules, "improvement" looks like a major module outline with a plus, "other" has no
      * outline and the outline can instead be part of the glyph.
      */
-    public SchemaType displayType = SchemaType.other;
+    public SchematicType displayType = SchematicType.other;
 
     /**
-     * The rarity of a schema affects how it is rendered. Colors and effects are used to differentiate between effects.
+     * The rarity of a schematic affects how it is rendered. Colors and effects are used to differentiate between effects.
      */
-    public SchemaRarity rarity = SchemaRarity.basic;
+    public SchematicRarity rarity = SchematicRarity.basic;
 
     /**
-     * The glyph displayed for this schema, preferably the same as the module it will be used to craft but with no tint.
+     * The glyph displayed for this schematic, preferably the same as the module it will be used to craft but with no tint.
      */
     public GlyphData glyph = new GlyphData();
 
     /**
-     * An array of all potential outcomes of this schema.
+     * An array of all potential outcomes of this schematic.
      */
     public OutcomeDefinition[] outcomes = new OutcomeDefinition[0];
 
@@ -133,14 +133,14 @@ public class SchemaDefinition {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * The id for the schema, should be unique. This is automatically set based on the schema definition's location within the resource
+     * The id for the schematic, should be unique. This is automatically set based on the schematic definition's location within the resource
      * directory structure.
      */
     public String key;
 
-    private static final SchemaDefinition defaultValues = new SchemaDefinition();
+    private static final SchematicDefinition defaultValues = new SchematicDefinition();
 
-    public static void copyFields(SchemaDefinition from, SchemaDefinition to) {
+    public static void copyFields(SchematicDefinition from, SchematicDefinition to) {
         to.slots = Stream.concat(Arrays.stream(to.slots), Arrays.stream(from.slots))
                 .distinct()
                 .toArray(String[]::new);

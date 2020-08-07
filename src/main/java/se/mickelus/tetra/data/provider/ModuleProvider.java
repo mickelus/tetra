@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ModuleProvider implements IDataProvider {
     private static final Logger logger = LogManager.getLogger();
@@ -74,7 +73,7 @@ public class ModuleProvider implements IDataProvider {
                 "basic_pickaxe", // this will be used to prefix variant keys, variant keys typically begin with the module name e.g. basic_pickaxe/iron
                 "%s pick", // %s will be replaced by the localization entry for each material to produce the names for all module variants
                 "basic_pickaxe/iron", // the generator will fall back to using the variant with this key if none of the references from the material matches any variant key
-                "double/basic_pickaxe/basic_pickaxe") // the path for the schema file, I've not been consistent in how I've structured this so double check that this is correct
+                "double/basic_pickaxe/basic_pickaxe") // the path for the schematic file, I've not been consistent in how I've structured this so double check that this is correct
                 .offsetDurability(-20, 0.5f) // pickaxes have two heads and the default handle has 20 durability so the durability of the module should be = (itemDurability - 20) * 0.5
                 .offsetSpeed(0, 0.5f) // same math goes for the speed, the flimsy handle has no impact on speed so the speed of the item should be split equally between the heads
                 .addVariant(platinum, "minecraft:iron_pickaxe")
@@ -101,7 +100,7 @@ public class ModuleProvider implements IDataProvider {
         setup();
 
         builders.forEach(builder -> saveModule(cache, builder.module, builder.getModuleJson()));
-        builders.forEach(builder -> saveSchema(cache, builder.schemaPath, builder.getSchemaJson()));
+        builders.forEach(builder -> saveSchematic(cache, builder.schematicPath, builder.getSchematicJson()));
 
         JsonObject localization = new JsonObject();
         builders.stream()
@@ -112,7 +111,7 @@ public class ModuleProvider implements IDataProvider {
         saveLocalization(cache, localization);
     }
 
-    private ModuleBuilder setupModule(String module, String prefix, String localization, String fallbackReference, String schemaPath) {
+    private ModuleBuilder setupModule(String module, String prefix, String localization, String fallbackReference, String schematicPath) {
         JsonObject referenceModule = null;
         try {
             IResource resource = existingFileHelper.getResource(new ResourceLocation("tetra", module), ResourcePackType.SERVER_DATA, ".json", "modules");
@@ -124,7 +123,7 @@ public class ModuleProvider implements IDataProvider {
         }
 
 
-        ModuleBuilder builder = new ModuleBuilder(module, prefix, localization, referenceModule, fallbackReference, schemaPath);
+        ModuleBuilder builder = new ModuleBuilder(module, prefix, localization, referenceModule, fallbackReference, schematicPath);
         builders.add(builder);
         return builder;
     }
@@ -138,12 +137,12 @@ public class ModuleProvider implements IDataProvider {
         }
     }
 
-    private void saveSchema(DirectoryCache cache, String schemaPath, JsonObject schemaData) {
-        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schemas/" + schemaPath + ".json");
+    private void saveSchematic(DirectoryCache cache, String schematicPath, JsonObject schematicData) {
+        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schematics/" + schematicPath + ".json");
         try {
-            IDataProvider.save(gson, cache, schemaData, outputPath);
+            IDataProvider.save(gson, cache, schematicData, outputPath);
         } catch (IOException e) {
-            logger.error("Couldn't save schema data to {}", outputPath, e);
+            logger.error("Couldn't save schematic data to {}", outputPath, e);
         }
     }
 

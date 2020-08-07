@@ -5,9 +5,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.module.SchemaRegistry;
-import se.mickelus.tetra.module.schema.RemoveSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
 
 public class ModularBladedItem extends ItemModularHandheld {
 
@@ -36,8 +36,8 @@ public class ModularBladedItem extends ItemModularHandheld {
 
         updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
 
-        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
-        RemoveSchema.registerRemoveSchemas(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
+        RemoveSchematic.registerRemoveSchematics(this);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

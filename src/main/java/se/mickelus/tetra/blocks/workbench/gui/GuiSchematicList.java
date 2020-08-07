@@ -3,20 +3,18 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.*;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.function.Consumer;
 
-public class GuiSchemaList extends GuiElement {
+public class GuiSchematicList extends GuiElement {
     private static int pageLength = 8;
 
     private int page = 0;
 
-    private UpgradeSchema[] schemas;
+    private UpgradeSchematic[] schematics;
 
-    private Consumer<UpgradeSchema> schemaSelectionConsumer;
+    private Consumer<UpgradeSchematic> schematicSelectionConsumer;
 
     private GuiElement listGroup;
 
@@ -25,7 +23,7 @@ public class GuiSchemaList extends GuiElement {
 
     private GuiText emptyStateText;
 
-    public GuiSchemaList(int x, int y, Consumer<UpgradeSchema> schemaSelectionConsumer) {
+    public GuiSchematicList(int x, int y, Consumer<UpgradeSchematic> schematicSelectionConsumer) {
         super(x, y, 224, 67);
 
         listGroup = new GuiElement(3, 3, width - 6, height - 6);
@@ -36,33 +34,33 @@ public class GuiSchemaList extends GuiElement {
         buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
         addChild(buttonForward);
 
-        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("tetra.workbench.schema_list.empty"));
+        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_list.empty"));
         addChild(emptyStateText);
 
-        this.schemaSelectionConsumer = schemaSelectionConsumer;
+        this.schematicSelectionConsumer = schematicSelectionConsumer;
     }
 
-    public void setSchemas(UpgradeSchema[] schemas) {
-        this.schemas = schemas;
-        emptyStateText.setVisible(schemas.length == 0);
+    public void setSchematics(UpgradeSchematic[] schematics) {
+        this.schematics = schematics;
+        emptyStateText.setVisible(schematics.length == 0);
         setPage(0);
     }
 
-    private void updateSchemas() {
+    private void updateSchematics() {
         int offset = page * pageLength;
         int count = pageLength;
 
-        if (count + offset > schemas.length) {
-            count = schemas.length - offset;
+        if (count + offset > schematics.length) {
+            count = schematics.length - offset;
         }
 
         listGroup.clearChildren();
         for (int i = 0; i < count; i++) {
-            UpgradeSchema schema = schemas[i + offset];
-            listGroup.addChild(new GuiSchemaListItem(
+            UpgradeSchematic schematic = schematics[i + offset];
+            listGroup.addChild(new GuiSchematicListItem(
                     i / (pageLength / 2) * 109,
                     i % (pageLength / 2) * 14,
-                    schema, () -> schemaSelectionConsumer.accept(schema)));
+                    schematic, () -> schematicSelectionConsumer.accept(schematic)));
         }
     }
 
@@ -75,11 +73,11 @@ public class GuiSchemaList extends GuiElement {
 
         buttonBack.setVisible(page > 0);
         buttonForward.setVisible(page < getNumPages() - 1);
-        updateSchemas();
+        updateSchematics();
 
     }
 
     private int getNumPages() {
-        return (int) Math.ceil(1f * schemas.length / pageLength );
+        return (int) Math.ceil(1f * schematics.length / pageLength );
     }
 }

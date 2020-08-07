@@ -5,7 +5,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 
 /**
- * Used to describe glyphs for modules and schemas in the UI.
+ * Used to describe glyphs for modules and schematics in the UI.
  *
  * Example json:
  * {
