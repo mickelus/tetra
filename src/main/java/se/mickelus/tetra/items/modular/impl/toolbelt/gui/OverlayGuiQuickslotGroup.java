@@ -48,9 +48,9 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
         int numSlots = inventory.getSizeInventory();
         slots = new OverlayGuiQuickslot[numSlots];
 
-        addChild(new GuiTexture(0, numSlots * -OverlayGuiQuickslot.height / 2 - 7, 22, 7, 0, 28, toolbeltTexture));
-        addChild(new GuiTexture(0, numSlots * OverlayGuiQuickslot.height / 2, 22, 7, 0, 35, toolbeltTexture));
-        addChild(new GuiRect(0, numSlots * -OverlayGuiQuickslot.height / 2, 22, numSlots * OverlayGuiQuickslot.height, 0xcc000000));
+        addChild(new GuiTexture(0, numSlots * -OverlayGuiQuickslot.height / 2 - 9, 22, 7, 0, 28, toolbeltTexture));
+        addChild(new GuiTexture(0, numSlots * OverlayGuiQuickslot.height / 2 + 2, 22, 7, 0, 35, toolbeltTexture));
+        addChild(new GuiRect(0, numSlots * -OverlayGuiQuickslot.height / 2 - 2, 22, numSlots * OverlayGuiQuickslot.height + 4, 0xcc000000));
 
         for (int i = 0; i < numSlots; i++) {
             ItemStack itemStack = inventory.getStackInSlot(i);

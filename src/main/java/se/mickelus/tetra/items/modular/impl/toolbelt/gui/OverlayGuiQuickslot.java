@@ -69,26 +69,28 @@ public class OverlayGuiQuickslot extends GuiElement {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (hasFocus()) {
-            fontRenderer.drawStringWithShadow(matrixStack, itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
+            fontRenderer.drawStringWithShadow(matrixStack, itemStack.getDisplayName().getString(), x + refX + 63, y + refY + 6, GuiColors.hover);
         }
 
         drawItemStack(matrixStack, itemStack, x + refX + 38, y + refY + 1);
     }
 
     private void drawItemStack(MatrixStack matrixStack, ItemStack itemStack, int x, int y) {
+        RenderSystem.pushMatrix();
         GlStateManager.enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.enableStandardItemLighting();
 
-        RenderSystem.color4f(1, 1, 1, opacity);
+//        RenderSystem.color4f(1, 1, 1, opacity);
         mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
         mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
         if (opacity < 1) {
             GlStateManager.disableDepthTest();
-//            drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
+            drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
         }
         RenderSystem.color4f(1, 1, 1, 1);
         RenderHelper.disableStandardItemLighting();
+        RenderSystem.popMatrix();
     }
 
 
