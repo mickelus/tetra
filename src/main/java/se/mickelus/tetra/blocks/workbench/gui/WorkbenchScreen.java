@@ -136,6 +136,10 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 
+    // override this to stop titles from rendering
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
+
     @Override
     protected void func_230459_a_(MatrixStack matrixStack, int mouseX, int mouseY) {
         super.func_230459_a_(matrixStack, mouseX, mouseY);

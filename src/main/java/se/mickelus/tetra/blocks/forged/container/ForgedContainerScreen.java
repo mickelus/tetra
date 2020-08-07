@@ -126,4 +126,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
         guiRoot.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
 }

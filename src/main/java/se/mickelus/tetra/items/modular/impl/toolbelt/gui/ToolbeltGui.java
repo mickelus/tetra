@@ -105,6 +105,9 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
+
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         return super.mouseClicked(mouseX, mouseY, mouseButton);
 
