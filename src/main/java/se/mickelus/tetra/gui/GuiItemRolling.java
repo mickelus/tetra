@@ -30,7 +30,7 @@ public class GuiItemRolling extends GuiElement {
 
     public GuiItemRolling setItems(ItemStack[] itemStacks) {
         items = Arrays.stream(itemStacks)
-                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).setCount(showCount))
+                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).enforceCount(showCount))
                 .toArray(GuiItem[]::new);
 
         return this;

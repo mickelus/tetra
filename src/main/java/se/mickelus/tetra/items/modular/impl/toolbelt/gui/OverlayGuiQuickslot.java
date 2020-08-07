@@ -7,6 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
@@ -26,6 +27,8 @@ public class OverlayGuiQuickslot extends GuiElement {
 
     private FontRenderer fontRenderer;
 
+    private GuiItem guiItem;
+
     public OverlayGuiQuickslot(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, height);
 
@@ -42,10 +45,15 @@ public class OverlayGuiQuickslot extends GuiElement {
             fontRenderer = mc.fontRenderer;
         }
 
+        guiItem = new GuiItem(38, 1);
+        guiItem.setOpacity(0);
+        guiItem.setItem(itemStack);
+        addChild(guiItem);
+
         isVisible = false;
         opacity = 0;
-        showAnimation = new KeyframeAnimation(80, this)
-            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y - 3, y))
+        showAnimation = new KeyframeAnimation(500, guiItem)
+            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(-1, 1))
             .withDelay(slot * 100);
 
     }
@@ -67,30 +75,17 @@ public class OverlayGuiQuickslot extends GuiElement {
     @Override
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+        if (opacity * guiItem.getOpacity() < 1) {
+            drawOverlay(matrixStack, refX + x + guiItem.getX(), refY + y + guiItem.getY(), opacity * guiItem.getOpacity());
+        }
 
         if (hasFocus()) {
             fontRenderer.drawStringWithShadow(matrixStack, itemStack.getDisplayName().getString(), x + refX + 63, y + refY + 6, GuiColors.hover);
         }
-
-        drawItemStack(matrixStack, itemStack, x + refX + 38, y + refY + 1);
     }
 
-    private void drawItemStack(MatrixStack matrixStack, ItemStack itemStack, int x, int y) {
-        RenderSystem.pushMatrix();
-        GlStateManager.enableDepthTest();
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableStandardItemLighting();
-
-//        RenderSystem.color4f(1, 1, 1, opacity);
-        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
-        if (opacity < 1) {
-            GlStateManager.disableDepthTest();
-            drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
-        }
-        RenderSystem.color4f(1, 1, 1, 1);
-        RenderHelper.disableStandardItemLighting();
-        RenderSystem.popMatrix();
+    private void drawOverlay(MatrixStack matrixStack, int x, int y, float opacity) {
+        drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
     }
 
 
