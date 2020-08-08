@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "localizationKey": "single/basic_handle/wrap_handle_hone_2",
+    "localizationKey": "single/handle/wrap_handle_hone_2",
     "slots": [
         "single/handle"
     ],
