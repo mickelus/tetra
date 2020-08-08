@@ -52,7 +52,7 @@ public class OverlayGuiQuickslot extends GuiElement {
 
         isVisible = false;
         opacity = 0;
-        showAnimation = new KeyframeAnimation(500, guiItem)
+        showAnimation = new KeyframeAnimation(80, guiItem)
             .applyTo(new Applier.Opacity(1), new Applier.TranslateY(-1, 1))
             .withDelay(slot * 100);
 
