@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
@@ -23,7 +23,7 @@ public class RepairAction implements WorkbenchAction {
     @Override
     public boolean canPerformOn(PlayerEntity player, ItemStack itemStack) {
         if (itemStack.getItem() instanceof ModularItem) {
-            UpgradeSchematic[] schematics = ItemUpgradeRegistry.instance.getAvailableSchematics(player, itemStack);
+            UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, itemStack);
             return Arrays.stream(schematics)
                     .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
                     .anyMatch(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic);
@@ -44,7 +44,7 @@ public class RepairAction implements WorkbenchAction {
 
     @Override
     public void perform(PlayerEntity player, ItemStack itemStack, WorkbenchTile workbench) {
-        UpgradeSchematic[] schematics = ItemUpgradeRegistry.instance.getAvailableSchematics(player, itemStack);
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, itemStack);
         Arrays.stream(schematics)
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
                 .filter(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic)

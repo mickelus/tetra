@@ -15,7 +15,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -112,7 +112,7 @@ public class HoloVariantDetailGui extends GuiElement {
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
             ItemStack improvementStack = baseOutcome.itemStack;
-            UpgradeSchematic[] improvementSchematics = Arrays.stream(ItemUpgradeRegistry.instance.getSchematics(slot))
+            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
                     .filter(improvementSchematic -> improvementSchematic.isApplicableForItem(improvementStack))
                     .toArray(UpgradeSchematic[]::new);

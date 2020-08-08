@@ -31,6 +31,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -384,7 +385,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
         String schematicKey = compound.getString(WorkbenchTile.schematicKey);
-        currentSchematic = ItemUpgradeRegistry.instance.getSchematic(schematicKey);
+        currentSchematic = SchematicRegistry.getSchematic(schematicKey);
 
         if (compound.contains(currentSlotKey)) {
             currentSlot = compound.getString(currentSlotKey);

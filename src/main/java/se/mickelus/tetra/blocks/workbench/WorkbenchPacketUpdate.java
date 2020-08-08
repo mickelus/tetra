@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -55,7 +55,7 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
 
         try {
             String schematicKey = readString(buffer);
-            schematic = ItemUpgradeRegistry.instance.getSchematic(schematicKey);
+            schematic = SchematicRegistry.getSchematic(schematicKey);
 
             selectedSlot = readString(buffer);
 

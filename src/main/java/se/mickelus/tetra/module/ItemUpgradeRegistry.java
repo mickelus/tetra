@@ -2,7 +2,6 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +10,6 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -36,27 +34,6 @@ public class ItemUpgradeRegistry {
                     .filter(replacementDefinition -> replacementDefinition.predicate != null)
                     .collect(Collectors.toList());
         });
-    }
-
-    public UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, ItemStack itemStack) {
-        return SchematicRegistry.instance.getAllSchematics().stream()
-                .filter(upgradeSchematic -> playerHasSchematic(player, itemStack, upgradeSchematic))
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
-                .toArray(UpgradeSchematic[]::new);
-    }
-
-    public UpgradeSchematic[] getSchematics(String slot) {
-        return SchematicRegistry.instance.getAllSchematics().stream()
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, ItemStack.EMPTY))
-                .toArray(UpgradeSchematic[]::new);
-    }
-
-    public UpgradeSchematic getSchematic(String key) {
-        return SchematicRegistry.instance.getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
-    }
-
-    public boolean playerHasSchematic(PlayerEntity player, ItemStack targetStack, UpgradeSchematic schematic) {
-        return schematic.isVisibleForPlayer(player, targetStack);
     }
 
     /**

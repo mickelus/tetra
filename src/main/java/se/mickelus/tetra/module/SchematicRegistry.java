@@ -1,5 +1,7 @@
 package se.mickelus.tetra.module;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -92,11 +94,32 @@ public class SchematicRegistry {
         return Collections.singletonList(new ImmutablePair<>(identifier, null));
     }
 
-    public UpgradeSchematic getSchematic(ResourceLocation identifier) {
-        return schematicMap.get(identifier);
+    public static UpgradeSchematic getSchematic(ResourceLocation identifier) {
+        return instance.schematicMap.get(identifier);
     }
 
-    public Collection<UpgradeSchematic> getAllSchematics() {
-        return schematicMap.values();
+    public static UpgradeSchematic getSchematic(String key) {
+        return getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
+    }
+
+    public static Collection<UpgradeSchematic> getAllSchematics() {
+        return instance.schematicMap.values();
+    }
+
+    public static UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, ItemStack itemStack) {
+        return instance.getAllSchematics().stream()
+                .filter(upgradeSchematic -> playerHasSchematic(player, itemStack, upgradeSchematic))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+    public static UpgradeSchematic[] getSchematics(String slot) {
+        return instance.getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, ItemStack.EMPTY))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+    public static boolean playerHasSchematic(PlayerEntity player, ItemStack targetStack, UpgradeSchematic schematic) {
+        return schematic.isVisibleForPlayer(player, targetStack);
     }
 }

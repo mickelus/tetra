@@ -16,7 +16,7 @@ import se.mickelus.tetra.capabilities.CapabilityHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -160,7 +160,7 @@ public class GuiSlotDetail extends GuiElement {
 
     private void updateSchematicList(PlayerEntity player, WorkbenchTile tileEntity, String selectedSlot) {
         ItemStack targetStack = tileEntity.getTargetItemStack();
-        UpgradeSchematic[] schematics = ItemUpgradeRegistry.instance.getAvailableSchematics(player, targetStack);
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, targetStack);
         schematics = Arrays.stream(schematics)
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(selectedSlot, targetStack))
                 .sorted(Comparator.comparing(UpgradeSchematic::getRarity).thenComparing(UpgradeSchematic::getType).thenComparing(UpgradeSchematic::getKey))
