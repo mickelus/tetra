@@ -1,6 +1,9 @@
 package se.mickelus.tetra.module;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
@@ -13,7 +16,7 @@ public enum Priority {
     HIGHER,
     HIGHEST;
 
-    public static class PriorityAdapter implements JsonDeserializer<Priority> {
+    public static class Deserializer implements JsonDeserializer<Priority> {
 
         @Override
         public Priority deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

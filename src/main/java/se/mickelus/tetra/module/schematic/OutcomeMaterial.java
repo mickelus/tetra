@@ -33,7 +33,7 @@ public class OutcomeMaterial {
     private ItemStack itemStack;
     private ResourceLocation tagLocation;
 
-    public static class MaterialDeserializer implements JsonDeserializer<OutcomeMaterial> {
+    public static class Deserializer implements JsonDeserializer<OutcomeMaterial> {
 
         @Override
         public OutcomeMaterial deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {

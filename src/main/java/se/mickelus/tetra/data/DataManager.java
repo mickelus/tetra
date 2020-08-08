@@ -39,22 +39,16 @@ public class DataManager {
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
-            .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
+            .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
-            .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.MaterialDeserializer())
+            .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.Deserializer())
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
-
-            // todo 1.16: might have only been used by extended loot pools, safe to remove?
-//            .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
-//            .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
-//            .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
-//            .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
             .create();
 
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
