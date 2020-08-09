@@ -32,12 +32,12 @@ public class EarthpiercerItem extends TetraItem {
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.add(ForgedBlockCommon.unsettlingTooltip);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
             tooltip.add(Tooltips.reveal);
-            tooltip.add(new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(" "));
             tooltip.add(ForgedBlockCommon.locationTooltip);
         } else {
             tooltip.add(Tooltips.expand);

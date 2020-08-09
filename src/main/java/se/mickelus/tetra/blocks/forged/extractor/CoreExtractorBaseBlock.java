@@ -77,7 +77,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
                 .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }

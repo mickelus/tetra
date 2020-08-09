@@ -103,7 +103,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     @Override
     public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         tooltip.add(locationTooltip);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
                 .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }

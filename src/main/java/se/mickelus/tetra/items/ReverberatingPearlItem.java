@@ -30,12 +30,12 @@ public class ReverberatingPearlItem extends TetraItem {
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.add(new TranslationTextComponent("item." + unlocalizedName + ".tooltip"));
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
             tooltip.add(Tooltips.reveal);
-            tooltip.add(new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(" "));
             tooltip.add(new TranslationTextComponent("item." + unlocalizedName + ".tooltip_extended"));
         } else {
             tooltip.add(Tooltips.expand);

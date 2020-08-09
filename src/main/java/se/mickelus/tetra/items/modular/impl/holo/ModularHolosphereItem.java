@@ -92,8 +92,8 @@ public class ModularHolosphereItem extends ModularItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").mergeStyle(TextFormatting.GRAY));
-        tooltip.add(new StringTextComponent(""));
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
+        tooltip.add(new StringTextComponent(" "));
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2"));
 
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }

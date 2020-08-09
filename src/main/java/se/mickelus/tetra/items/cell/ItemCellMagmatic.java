@@ -62,7 +62,7 @@ public class ItemCellMagmatic extends TetraItem {
         }
 
         tooltip.add(chargeLine);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
         tooltip.add(locationTooltip);
     }
 
