@@ -4,11 +4,10 @@
         {
             "offset": [3, 1, 7],
             "facing": "EAST",
-            "chance": 0.5,
+            "chance": 0.8,
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_transfer_unit",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
@@ -17,10 +16,9 @@
         {
             "offset": [6, 1, 6],
             "facing": "WEST",
-            "chance": 0.5,
+            "chance": 0.8,
             "features": [
                 "tetra:forged_container",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
@@ -33,7 +31,6 @@
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_transfer_unit",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
@@ -50,7 +47,6 @@
             "chance": 0.1,
             "features": [
                 "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1",
                 "tetra:forged_crate_3x1x1",
@@ -63,7 +59,6 @@
             "facing": "SOUTH",
             "chance": 0.1,
             "features": [
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
