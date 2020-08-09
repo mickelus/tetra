@@ -1,6 +1,5 @@
 {
     "itemGroup.tetra": "Tetra",
-    "item.tetra.journal": "全息球",
     "item.tetra.holo.tooltip1": "当触碰球体时会将tetra的蓝图和部件信息投射在屏幕上",
     "item.tetra.holo.tooltip2": "[右键使用]",
     "tetra.holo.craft.breadcrumb.root": "物品",

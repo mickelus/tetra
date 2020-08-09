@@ -62,7 +62,6 @@ import se.mickelus.tetra.effects.StunEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
-import se.mickelus.tetra.items.JournalItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.*;
@@ -179,7 +178,6 @@ public class TetraMod {
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
                 new ItemVentPlate(),
-                new JournalItem(),
                 new ModularHolosphereItem(),
                 new EarthpiercerItem()
 //                new ReverberatingPearlItem()

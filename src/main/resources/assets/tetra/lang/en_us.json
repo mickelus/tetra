@@ -1,7 +1,6 @@
 {
   "itemGroup.tetra": "Tetra",
 
-  "item.tetra.journal": "Holosphere",
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§8[§7right click§8] §7use",
   "tetra.holo.craft.breadcrumb.root": "Items",
