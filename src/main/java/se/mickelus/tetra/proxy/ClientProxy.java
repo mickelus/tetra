@@ -45,8 +45,6 @@ public class ClientProxy implements IProxy {
         if (ConfigHandler.development.get()) {
             ClientRegistry.bindTileEntityRenderer(TileEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
         }
-
-        ModelLoaderRegistry.registerLoader(new ResourceLocation(TetraMod.MOD_ID, "modular_loader"), new ModularModelLoader());
     }
 
     @Override
