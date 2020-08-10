@@ -14,6 +14,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Type;
 
@@ -27,6 +29,8 @@ import java.lang.reflect.Type;
  * }
  */
 public class OutcomeMaterial {
+    private static final Logger logger = LogManager.getLogger();
+
     public ItemPredicate predicate;
     public int count = 1;
 
@@ -63,8 +67,9 @@ public class OutcomeMaterial {
 
                 try {
                     material.predicate = ItemPredicate.deserialize(element);
-                } catch (JsonSyntaxException e) {
+                } catch (JsonParseException e) {
                     // skips setting craft predicate, material will be treated as invalid
+                    logger.debug("Failed to parse outcome material predicate for \"{}\": {}", jsonObject.toString(), e.getMessage());
                 }
             }
             return material;
@@ -73,7 +78,9 @@ public class OutcomeMaterial {
 
     @OnlyIn(Dist.CLIENT)
     public ITextComponent[] getDisplayNames() {
-        if (itemStack != null) {
+        if (predicate == null) {
+            return new ITextComponent[] {new StringTextComponent("Unknown material")};
+        } else if (itemStack != null) {
             return new ITextComponent[] {itemStack.getDisplayName()};
         } else if (tagLocation != null) {
             return ItemTags.getCollection()
@@ -89,7 +96,9 @@ public class OutcomeMaterial {
 
     @OnlyIn(Dist.CLIENT)
     public ItemStack[] getApplicableItemStacks() {
-        if (itemStack != null && !itemStack.isEmpty()) {
+        if (predicate == null) {
+            return new ItemStack[0];
+        } else if (itemStack != null && !itemStack.isEmpty()) {
             return new ItemStack[] { itemStack };
         } else if (tagLocation != null) {
             return ItemTags.getCollection()
