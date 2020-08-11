@@ -99,7 +99,7 @@ public class RepairSchematic extends BaseSchematic {
                     .map(item -> item.getRepairDefinitions(itemStack))
                     .map(Collection::stream)
                     .orElse(Stream.empty())
-                    .map(definition -> definition.material.predicate)
+                    .map(definition -> definition.material.getPredicate())
                     .anyMatch(predicate -> predicate.test(materialStack));
         }
         return false;

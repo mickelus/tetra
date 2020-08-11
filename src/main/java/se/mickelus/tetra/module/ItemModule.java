@@ -201,7 +201,7 @@ public abstract class ItemModule implements ICapabilityProvider {
 
     public RepairDefinition getRepairDefinition(ItemStack itemStack, ItemStack materialStack) {
         return RepairRegistry.instance.getDefinitions(getVariantData(itemStack).key).stream()
-                .filter(definition -> definition.material.predicate.test(materialStack))
+                .filter(definition -> definition.material.getPredicate().test(materialStack))
                 .findFirst()
                 .orElse(null);
     }

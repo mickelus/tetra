@@ -18,8 +18,8 @@ import java.util.List;
 
 public class ReverberatingPearlItem extends TetraItem {
     private static final String unlocalizedName = "reverberating_pearl";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ReverberatingPearlItem instance;
+//    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+//    public static ReverberatingPearlItem instance;
 
     public ReverberatingPearlItem() {
         super(new Properties().group(TetraItemGroup.instance));

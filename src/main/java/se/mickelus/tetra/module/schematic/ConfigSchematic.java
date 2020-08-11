@@ -63,7 +63,7 @@ public class ConfigSchematic extends BaseSchematic {
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
-                .filter(outcome -> outcome.material.predicate != null && outcome.material.predicate.test(materialStack))
+                .filter(outcome -> outcome.material.getPredicate() != null && outcome.material.getPredicate().test(materialStack))
                 .reduce((a, b) -> b); // returns the last element, there's no findLast :c
     }
 

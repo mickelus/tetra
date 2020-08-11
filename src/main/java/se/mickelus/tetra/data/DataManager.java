@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
@@ -80,6 +81,11 @@ public class DataManager {
     public void addReloadListener(AddReloadListenerEvent event) {
         logger.debug("Setting up datastore reload listeners");
         Arrays.stream(dataStores).forEach(event::addListener);
+    }
+
+    @SubscribeEvent
+    public void tagsUpdated(TagsUpdatedEvent event) {
+        logger.debug("Reloaded tags");
     }
 
     @SubscribeEvent

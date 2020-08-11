@@ -7,16 +7,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 
 /**
@@ -31,7 +33,8 @@ import java.lang.reflect.Type;
 public class OutcomeMaterial {
     private static final Logger logger = LogManager.getLogger();
 
-    public ItemPredicate predicate;
+    private ItemPredicate predicate;
+    private LazyOptional<ItemPredicate> lazyPredicate;
     public int count = 1;
 
     private ItemStack itemStack;
@@ -65,12 +68,16 @@ public class OutcomeMaterial {
                     material.tagLocation = new ResourceLocation(JSONUtils.getString(jsonObject, "tag"));
                 }
 
-                try {
-                    material.predicate = ItemPredicate.deserialize(element);
-                } catch (JsonParseException e) {
-                    // skips setting craft predicate, material will be treated as invalid
-                    logger.debug("Failed to parse outcome material predicate for \"{}\": {}", jsonObject.toString(), e.getMessage());
-                }
+                material.lazyPredicate = LazyOptional.of(() -> {
+                    try {
+                        return ItemPredicate.deserialize(element);
+                    } catch (JsonParseException e) {
+                        // skips setting craft predicate, material will be treated as invalid
+                        logger.debug("Failed to parse outcome material predicate for \"{}\": {}", jsonObject.toString(), e.getMessage());
+                        throw e;
+                    }
+                });
+
             }
             return material;
         }
@@ -78,12 +85,12 @@ public class OutcomeMaterial {
 
     @OnlyIn(Dist.CLIENT)
     public ITextComponent[] getDisplayNames() {
-        if (predicate == null) {
+        if (getPredicate() == null) {
             return new ITextComponent[] {new StringTextComponent("Unknown material")};
         } else if (itemStack != null) {
             return new ITextComponent[] {itemStack.getDisplayName()};
         } else if (tagLocation != null) {
-            return ItemTags.getCollection()
+            return TagCollectionManager.func_232928_e_().func_232925_b_()
                     .getOrCreate(tagLocation)
                     .getAllElements()
                     .stream()
@@ -96,12 +103,12 @@ public class OutcomeMaterial {
 
     @OnlyIn(Dist.CLIENT)
     public ItemStack[] getApplicableItemStacks() {
-        if (predicate == null) {
+        if (getPredicate() == null) {
             return new ItemStack[0];
         } else if (itemStack != null && !itemStack.isEmpty()) {
             return new ItemStack[] { itemStack };
         } else if (tagLocation != null) {
-            return ItemTags.getCollection()
+            return TagCollectionManager.func_232928_e_().func_232925_b_()
                     .getOrCreate(tagLocation)
                     .getAllElements()
                     .stream()
@@ -113,6 +120,15 @@ public class OutcomeMaterial {
         return new ItemStack[0];
     }
 
+    @Nullable
+    public ItemPredicate getPredicate() {
+        try {
+            return lazyPredicate.orElse(null);
+        } catch (JsonParseException e) {
+            return null;
+        }
+    }
+
     private ItemStack setCount(ItemStack itemStack) {
         itemStack.setCount(count);
         return itemStack;
@@ -120,5 +136,9 @@ public class OutcomeMaterial {
 
     public boolean isTagged() {
         return tagLocation != null;
+    }
+
+    public boolean isValid() {
+        return isTagged() || itemStack != null;
     }
 }

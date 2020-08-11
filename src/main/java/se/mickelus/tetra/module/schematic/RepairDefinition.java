@@ -23,6 +23,6 @@ public class RepairDefinition {
     }
 
     public static boolean validateOutcome(OutcomeDefinition outcome) {
-        return outcome.moduleVariant != null && outcome.material != null && outcome.material.predicate != null;
+        return outcome.moduleVariant != null && outcome.material != null && outcome.material.isValid();
     }
 }
