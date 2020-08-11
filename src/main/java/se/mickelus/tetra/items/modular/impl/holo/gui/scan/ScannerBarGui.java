@@ -39,7 +39,8 @@ public class ScannerBarGui extends GuiElement {
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y, y - 4));
         hideAnimation = new KeyframeAnimation(300, this)
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 4, y))
-                .withDelay(200);
+                .withDelay(200)
+                .onStop(complete -> this.isVisible = false);
     }
 
     private void setup() {
@@ -130,7 +131,9 @@ public class ScannerBarGui extends GuiElement {
     }
 
     protected void show() {
+        isVisible = true;
         if (opacity < 1 && !showAnimation.isActive()) {
+            isVisible = true;
             hideAnimation.stop();
             showAnimation.start();
         }

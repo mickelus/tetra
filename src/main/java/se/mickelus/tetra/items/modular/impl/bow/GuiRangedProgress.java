@@ -24,6 +24,8 @@ public class GuiRangedProgress extends GuiRoot {
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
 
+    private float progress;
+
     public GuiRangedProgress(Minecraft mc) {
         super(mc);
 
@@ -71,11 +73,13 @@ public class GuiRangedProgress extends GuiRoot {
             }
             showAnimation.stop();
         }
+
+        this.progress = progress;
     }
 
     @Override
     public void draw() {
-        if (isVisible()) {
+        if (isVisible() && (progress > 0 || hideAnimation.isActive())) {
             MainWindow window = mc.getMainWindow();
             int width = window.getScaledWidth();
             int height = window.getScaledHeight();

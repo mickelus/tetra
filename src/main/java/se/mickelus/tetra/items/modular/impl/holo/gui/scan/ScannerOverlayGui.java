@@ -60,6 +60,7 @@ public class ScannerOverlayGui extends GuiRoot {
         scanner = new ScannerBarGui(2, 16, horizontalSpread);
         scanner.setAttachment(GuiAttachment.topCenter);
         scanner.setOpacity(0);
+        scanner.setVisible(false);
         addChild(scanner);
 
         sound = new ScannerSound(mc);
