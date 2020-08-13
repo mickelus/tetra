@@ -43,7 +43,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
-import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.effects.BleedingEffect;

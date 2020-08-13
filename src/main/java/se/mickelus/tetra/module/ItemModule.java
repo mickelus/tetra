@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.capabilities.ICapabilityProvider;
 import se.mickelus.tetra.module.data.ModuleVariantData;

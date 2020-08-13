@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.network.AbstractPacket;
 

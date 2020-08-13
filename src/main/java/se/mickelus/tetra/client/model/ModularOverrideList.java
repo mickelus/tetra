@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.IModelConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.ModuleModel;
 

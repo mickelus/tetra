@@ -1,4 +1,4 @@
-package se.mickelus.tetra;
+package se.mickelus.tetra.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

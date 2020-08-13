@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.NBTHelper;
+import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
