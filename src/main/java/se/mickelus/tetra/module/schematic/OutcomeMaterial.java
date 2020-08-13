@@ -151,7 +151,7 @@ public class OutcomeMaterial {
             return material;
         }
 
-        // todo: workaround as vanilla predicates always use the non-networked tag manager 
+        // todo: workaround as vanilla predicates always use the non-networked tag manager
         private ItemPredicate deserializeTagPredicate(@Nullable JsonElement element) {
             JsonObject jsonObject = JSONUtils.getJsonObject(element, "item");
 

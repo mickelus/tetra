@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " s ",
+        "sls",
+        " s "
+    ],
+    "key": {
+        "s": {
+            "item": "tetra:metal_scrap"
+        },
+        "l": {
+            "item": "minecraft:redstone_lamp"
+        }
+    },
+    "result": {
+        "item": "tetra:holo",
+        "nbt": {
+            "holo/core": "holo/core",
+            "holo/core_material": "core/dim",
+            "holo/frame": "holo/frame",
+            "holo/frame_material": "frame/ancient"
+        }
+    }
+}

@@ -82,8 +82,8 @@ public class ModularHolosphereItem extends ModularItem {
         if (isInGroup(group)) {
             ItemStack itemStack = new ItemStack(this);
 
-            putModuleInSlot(itemStack, coreKey, "holo/frame", "frame/ancient");
-            putModuleInSlot(itemStack, frameKey, "holo/core", "core/dim");
+            putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
+            putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
 
             items.add(itemStack);
         }
