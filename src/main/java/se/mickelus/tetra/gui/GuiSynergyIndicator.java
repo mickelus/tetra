@@ -1,8 +1,11 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -87,12 +90,11 @@ public class GuiSynergyIndicator extends GuiElement {
     }
 
     private boolean providesStats(SynergyData data) {
-        return data.damage != 0 || data.damageMultiplier != 1
-                || data.attackSpeed != 0 || data.attackSpeedMultiplier != 1
+        return data.attributes != null
+                || data.tools != null
+                || data.effects != null
                 || data.durability != 0 || data.durabilityMultiplier != 1
                 || data.integrity != 0 || data.integrityMultiplier != 1
-                || !data.effects.valueMap.isEmpty() || !data.effects.efficiencyMap.isEmpty()
-                || !data.capabilities.valueMap.isEmpty() || !data.capabilities.efficiencyMap.isEmpty()
                 || data.magicCapacity != 0;
     }
 
@@ -129,18 +131,15 @@ public class GuiSynergyIndicator extends GuiElement {
     private List<String> getDataLines(SynergyData data) {
         List<String> result = new ArrayList<>();
 
-        if (data.damage != 0) {
-            result.add(getValueDouble(data.damage, 0) + I18n.format("tetra.stats.damage"));
-        }
-        if (data.damageMultiplier != 1) {
-            result.add(getValueMultiplier(data.damageMultiplier) + I18n.format("tetra.stats.damage"));
-        }
-
-        if (data.attackSpeed != 0) {
-            result.add(getValueDouble(data.attackSpeed, 0) + I18n.format("tetra.stats.speed"));
-        }
-        if (data.attackSpeedMultiplier != 1) {
-            result.add(getValueMultiplier(data.attackSpeedMultiplier) + I18n.format("tetra.stats.speed"));
+        if (data.attributes != null) {
+            data.attributes.forEach((attribute, modifier) -> {
+                double amount = modifier.getAmount();
+                if (modifier.getOperation() == AttributeModifier.Operation.ADDITION) {
+                    result.add(getValueDouble(amount, 0) + I18n.format(attribute.func_233754_c_()));
+                } else {
+                    result.add(getValueMultiplier(amount + 1) + I18n.format(attribute.func_233754_c_()));
+                }
+            });
         }
 
         if (data.durability != 0) {
@@ -157,17 +156,22 @@ public class GuiSynergyIndicator extends GuiElement {
             result.add(getValueMultiplier(data.integrityMultiplier) + I18n.format("tetra.stats.integrity"));
         }
 
-        data.effects.valueMap.forEach((itemEffect, level) ->
-                result.add(getValueInteger(level, 0) + I18n.format("tetra.stats." + itemEffect) + " " + I18n.format("tetra.stats.level_suffix")));
+        if (data.effects != null) {
+            data.effects.levelMap.forEach((itemEffect, level) ->
+                    result.add(getValueInteger(level, 0) + I18n.format("tetra.stats." + itemEffect.getKey()) + " " + I18n.format("tetra.stats.level_suffix")));
 
-        data.effects.efficiencyMap.forEach((itemEffect, efficiency) ->
-                result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.stats." + itemEffect) + " " + I18n.format("tetra.stats.strength_suffix")));
+            data.effects.efficiencyMap.forEach((itemEffect, efficiency) ->
+                    result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.stats." + itemEffect.getKey()) + " " + I18n.format("tetra.stats.strength_suffix")));
+        }
 
-        data.capabilities.valueMap.forEach((capability, level) ->
-                result.add(getValueInteger(level, 0) + I18n.format("tetra.capability." + capability) + " " + I18n.format("tetra.stats.tier_suffix")));
+        if (data.tools != null) {
+            data.tools.levelMap.forEach((tool, level) ->
+                    result.add(getValueInteger(level, 0) + I18n.format("tetra.tool." + tool.getName()) + " " + I18n.format("tetra.stats.tier_suffix")));
 
-        data.capabilities.efficiencyMap.forEach((capability, efficiency) ->
-                result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.capability." + capability) + " " + I18n.format("tetra.stats.efficiency_suffix")));
+            data.tools.efficiencyMap.forEach((tool, efficiency) ->
+                    result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.tool." + tool.getName()) + " " + I18n.format("tetra.stats.efficiency_suffix")));
+        }
+
 
         if (data.magicCapacity != 0) {
             result.add(getValueDouble(data.integrity, 0) + I18n.format("tetra.stats.magicCapacity"));

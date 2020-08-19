@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -26,8 +27,7 @@ import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -41,7 +41,6 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class WorkbenchTile extends TileEntity implements INamedContainerProvider {
     public static final String unlocalizedName = "workbench";
@@ -147,37 +146,37 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .filter(action -> action.canPerformOn(player, targetStack))
                 .filter(action -> checkActionCapabilities(player, action, targetStack))
                 .ifPresent(action -> {
-
-                    // applies action capability effects in the following order: inventory, toolbelt, nearby blocks
-                    for (Capability capability : action.getRequiredCapabilitiesFor(targetStack)) {
-                        int requiredLevel = action.getCapabilityLevel(targetStack, capability);
-                        ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
+                    action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
+                        // consume player inventory
+                        ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(requiredTool, requiredLevel, player);
                         if (!providingStack.isEmpty()) {
                             if (providingStack.getItem() instanceof ModularItem) {
-                                ((ModularItem) providingStack.getItem()).onActionConsumeCapability(providingStack,
-                                        targetStack, player, capability, requiredLevel,true);
+                                ((ModularItem) providingStack.getItem()).onActionConsume(providingStack,
+                                        targetStack, player, requiredTool, requiredLevel,true);
                             }
                         } else {
-                            ItemStack toolbeltResult = CapabilityHelper.consumeActionCapabilityToolbelt(player, targetStack, capability, requiredLevel, true);
+                            // consume toolbelt inventory
+                            ItemStack toolbeltResult = PropertyHelper.consumeActionCapabilityToolbelt(player, targetStack, requiredTool, requiredLevel,
+                                    true);
 
+                            // consume blocks
                             if (toolbeltResult == null) {
                                 CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
                                         .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack, player,
-                                                capability, requiredLevel, true));
+                                                requiredTool, requiredLevel, true));
                             }
-
                         }
-                    }
+                    });
 
                     action.perform(player, targetStack, this);
                 });
     }
 
     private boolean checkActionCapabilities(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
-        return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
-                .allMatch(capability ->
-                        CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
-                        >= action.getCapabilityLevel(itemStack, capability));
+        return action.getRequiredTools(itemStack).entrySet().stream()
+                .allMatch(requirement ->
+                        PropertyHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                        >= requirement.getValue());
     }
 
     public UpgradeSchematic getCurrentSchematic() {
@@ -268,12 +267,12 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         BlockState blockState = world.getBlockState(getPos());
 
-        int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, getWorld(), getPos(), blockState);
+        Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getWorld(), getPos(), blockState);
 
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
 
-        if (currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableCapabilities)) {
+        if (currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
             float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
@@ -282,23 +281,26 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             }
 
             // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
-            for (Capability capability : currentSchematic.getRequiredCapabilities(targetStack, materials)) {
-                int requiredLevel = currentSchematic.getRequiredCapabilityLevel(targetStack, materials, capability);
-                ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
+            currentSchematic.getRequiredToolLevels(targetStack, materials).forEach((tool, level) -> {
+
+            });
+            for (Map.Entry<ToolType, Integer> entry : currentSchematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
+                ToolType tool = entry.getKey();
+                int level = entry.getValue();
+                ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
                 if (!providingStack.isEmpty()) {
                     if (providingStack.getItem() instanceof ModularItem) {
-                        upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsumeCapability(providingStack,
-                                upgradedStack, player, capability, requiredLevel,true);
+                        upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsume(providingStack,
+                                upgradedStack, player, tool, level,true);
                     }
                 } else {
-                    ItemStack toolbeltResult = CapabilityHelper.consumeCraftCapabilityToolbelt(player, upgradedStack, capability, requiredLevel, true);
+                    ItemStack toolbeltResult = PropertyHelper.consumeCraftCapabilityToolbelt(player, upgradedStack, tool, level, true);
                     if (toolbeltResult != null) {
                         upgradedStack = toolbeltResult;
                     } else {
                         ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
                         upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, capability, requiredLevel, true))
-                                .filter(Objects::nonNull)
+                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, tool, level, true))
                                 .orElse(upgradedStack);
                     }
                 }

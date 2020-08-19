@@ -28,14 +28,15 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -50,7 +51,7 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
-public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInteractive {
+public class HammerBaseBlock extends TetraBlock implements IBlockInteractive {
     public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty propCell1 = BooleanProperty.create("cell1");
     public static final BooleanProperty propCell1Charged = BooleanProperty.create("cell1charged");
@@ -64,17 +65,17 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     public static HammerBaseBlock instance;
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.east.face, 5, 11, 9, 11,
+            new BlockInteraction(ToolTypes.pry, 1, EnumHammerPlate.east.face, 5, 11, 9, 11,
                     EnumHammerPlate.east.prop, true, (world, pos, blockState, player, hand, hitFace) ->
                     removePlate(world, pos, blockState, player, hand, EnumHammerPlate.east)),
-            new BlockInteraction(Capability.pry, 1, EnumHammerPlate.west.face, 5, 11, 9, 11,
+            new BlockInteraction(ToolTypes.pry, 1, EnumHammerPlate.west.face, 5, 11, 9, 11,
                     EnumHammerPlate.west.prop, true, (world, pos, blockState, player, hand, hitFace) ->
                     removePlate(world, pos, blockState, player, hand, EnumHammerPlate.west)),
 
-            new BlockInteraction(Capability.hammer, 1, Direction.EAST, 6, 10, 2, 9,
+            new BlockInteraction(ToolTypes.hammer, 1, Direction.EAST, 6, 10, 2, 9,
                     EnumHammerPlate.east.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, Direction.EAST)),
-            new BlockInteraction(Capability.hammer, 1, Direction.WEST, 6, 10, 2, 9,
+            new BlockInteraction(ToolTypes.hammer, 1, Direction.WEST, 6, 10, 2, 9,
                     EnumHammerPlate.west.prop, false, (world, pos, blockState, player, hand, hitFace) ->
                     reconfigure(world, pos, blockState, player, Direction.WEST))
     };
@@ -259,7 +260,7 @@ public class HammerBaseBlock extends TetraBlock implements IBlockCapabilityInter
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(final BlockState state, final Direction face, final Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(final BlockState state, final Direction face, final Collection<ToolType> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.get(propFacing), face, capabilities))
                 .toArray(BlockInteraction[]::new);

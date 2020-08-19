@@ -5,16 +5,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class CleanseSchematic implements UpgradeSchematic {
@@ -93,7 +96,7 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
@@ -123,18 +126,13 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkCapabilities(ItemStack targetStack, ItemStack[] materials, int[] availableCapabilities) {
+    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolType, Integer> availableTools) {
         return true;
     }
 
     @Override
-    public Collection<Capability> getRequiredCapabilities(ItemStack targetStack, ItemStack[] materials) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
-        return 0;
+    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+        return Collections.emptyMap();
     }
 
     @Override

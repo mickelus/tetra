@@ -24,16 +24,17 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -44,7 +45,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
+public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBlockInteractive {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
@@ -57,25 +58,25 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     public static final BooleanProperty openProp = BooleanProperty.create("open");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 0, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 1, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 2, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 3, hand)),
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
                             .where(flippedProp, equalTo(false)),
                     ForgedContainerBlock::open),
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
@@ -144,7 +145,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.get(facingProp), face, capabilities))
                 .toArray(BlockInteraction[]::new);

@@ -8,6 +8,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventor
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.properties.TetraAttributes;
 
 public class GuiStats {
 
@@ -23,7 +24,7 @@ public class GuiStats {
             0, 40, false, rangedDamageGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.ranged_damage.tooltip", rangedDamageGetter));
 
-    public static final IStatGetter shieldDamageGetter = new StatGetterDamageShield();
+    public static final IStatGetter shieldDamageGetter = new StatGetterAttribute(TetraAttributes.damage.get());
     public static final GuiStatBar shieldDamage = new GuiStatBar(0, 0,barLength, I18n.format("tetra.stats.shield_damage"),
             0, 40, false, shieldDamageGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.shield_damage.tooltip", shieldDamageGetter));
@@ -49,7 +50,7 @@ public class GuiStats {
             rangedSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ranged_speed_normalized.tooltip", rangedSpeedGetterNormalized));
 
-    public static final IStatGetter shieldSpeedGetter = new StatGetterSpeedShield();
+    public static final IStatGetter shieldSpeedGetter = new StatGetterAttribute(TetraAttributes.speed.get());
     public static final GuiStatBar shieldSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.shield_speed"),
             0, 32, false, false, true, shieldSpeedGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.shield_speed.tooltip", shieldSpeedGetter));

@@ -23,7 +23,7 @@
                 "item": "minecraft:leather",
                 "count": 1
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "improvements": {
@@ -35,7 +35,7 @@
                 "item": "minecraft:rabbit_hide",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "improvements": {

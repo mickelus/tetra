@@ -38,8 +38,10 @@
             "durability": 227,
             "integrity": -2,
             "magicCapacity": 90,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -60,8 +62,10 @@
             "durability": 204,
             "integrity": -1,
             "magicCapacity": 90,
-            "attackSpeed": 7,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 7
+            },
             "effects": {
                 "blocking": 16
             },
@@ -82,8 +86,10 @@
             "durability": 259,
             "integrity": -2,
             "magicCapacity": 90,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -104,8 +110,10 @@
             "durability": 227,
             "integrity": -2,
             "magicCapacity": 102,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -126,8 +134,10 @@
             "durability": 240,
             "integrity": -2,
             "magicCapacity": 90,
-            "attackSpeed": 8,
-            "damage": 6.5,
+            "attributes": {
+                "tetra:damage": 6.5,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -148,8 +158,10 @@
             "durability": 203,
             "integrity": -2,
             "magicCapacity": 102,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -170,8 +182,10 @@
             "durability": 269,
             "integrity": -1,
             "magicCapacity": 96,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -192,8 +206,10 @@
             "durability": 279,
             "integrity": -2,
             "magicCapacity": 78,
-            "attackSpeed": 8,
-            "damage": 7.5,
+            "attributes": {
+                "tetra:damage": 7.5,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -214,8 +230,10 @@
             "durability": 449,
             "integrity": -3,
             "magicCapacity": 78,
-            "attackSpeed": 8,
-            "damage": 6,
+            "attributes": {
+                "tetra:damage": 6,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -236,8 +254,10 @@
             "durability": 280,
             "integrity": -2,
             "magicCapacity": 108,
-            "attackSpeed": 8,
-            "damage": 6.5,
+            "attributes": {
+                "tetra:damage": 6.5,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },
@@ -258,8 +278,10 @@
             "durability": 310,
             "integrity": -3,
             "magicCapacity": 84,
-            "attackSpeed": 9,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -280,8 +302,10 @@
             "durability": 20,
             "integrity": -3,
             "magicCapacity": 132,
-            "attackSpeed": 9,
-            "damage": 8,
+            "attributes": {
+                "tetra:damage": 8,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -302,8 +326,10 @@
             "durability": 232,
             "integrity": -2,
             "magicCapacity": 78,
-            "attackSpeed": 9,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -324,8 +350,10 @@
             "durability": 278,
             "integrity": -2,
             "magicCapacity": 72,
-            "attackSpeed": 9,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -346,8 +374,10 @@
             "durability": 40,
             "integrity": -3,
             "magicCapacity": 126,
-            "attackSpeed": 9,
-            "damage": 8,
+            "attributes": {
+                "tetra:damage": 8,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -368,8 +398,10 @@
             "durability": 290,
             "integrity": -3,
             "magicCapacity": 72,
-            "attackSpeed": 9,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -390,8 +422,10 @@
             "durability": 170,
             "integrity": -4,
             "magicCapacity": 66,
-            "attackSpeed": 10,
-            "damage": 8,
+            "attributes": {
+                "tetra:damage": 8,
+                "tetra:speed": 10
+            },
             "effects": {
                 "blocking": 16
             },
@@ -412,8 +446,10 @@
             "durability": 410,
             "integrity": -1,
             "magicCapacity": 78,
-            "attackSpeed": 9,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -434,8 +470,10 @@
             "durability": 512,
             "integrity": -4,
             "magicCapacity": 66,
-            "attackSpeed": 10,
-            "damage": 8,
+            "attributes": {
+                "tetra:damage": 8,
+                "tetra:speed": 10
+            },
             "effects": {
                 "blocking": 16
             },
@@ -456,8 +494,10 @@
             "durability": 31,
             "integrity": -3,
             "magicCapacity": 144,
-            "attackSpeed": 9,
-            "damage": 8,
+            "attributes": {
+                "tetra:damage": 8,
+                "tetra:speed": 9
+            },
             "effects": {
                 "blocking": 16
             },
@@ -478,8 +518,10 @@
             "durability": 512,
             "integrity": -3,
             "magicCapacity": 66,
-            "attackSpeed": 8,
-            "damage": 7,
+            "attributes": {
+                "tetra:damage": 7,
+                "tetra:speed": 8
+            },
             "effects": {
                 "blocking": 16
             },

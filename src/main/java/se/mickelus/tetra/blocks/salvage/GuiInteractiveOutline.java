@@ -72,9 +72,9 @@ public class GuiInteractiveOutline extends GuiElement {
                 })
                 .start();
 
-        if (blockInteraction.requiredCapability != null) {
+        if (blockInteraction.requiredTool != null) {
             capability = new GuiInteractiveCapability(0, 0,
-                    blockInteraction.requiredCapability, blockInteraction.requiredLevel, player);
+                    blockInteraction.requiredTool, blockInteraction.requiredLevel, player);
             addChild(capability);
 
              float centerY = y + height / 2f;

@@ -2,10 +2,11 @@ package se.mickelus.tetra.gui.statbar;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.blocks.workbench.gui.GuiCapability;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.*;
@@ -13,10 +14,10 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
-public class GuiStatBarCapability extends GuiStatBar {
+public class GuiStatBarTool extends GuiStatBar {
     private static final int efficiencyMax = 50;
 
-    private GuiCapability capabilityElement;
+    private GuiTool icon;
     private IStatGetter levelGetter;
 
     private GuiTexture strikingIndicator;
@@ -25,25 +26,25 @@ public class GuiStatBarCapability extends GuiStatBar {
     private GuiTexture sweepingIndicator;
     private IStatGetter sweepingGetter;
 
-    public GuiStatBarCapability(int x, int y, int width, Capability capability) {
+    public GuiStatBarTool(int x, int y, int width, ToolType toolType) {
         super(x, y, width, "", 0, efficiencyMax,
-                false, new StatGetterCapabilityEfficiency(capability), LabelGetterBasic.decimalLabel,
-                new TooltipGetterCapability(capability));
+                false, new StatGetterToolEfficiency(toolType), LabelGetterBasic.decimalLabel,
+                new TooltipGetterTool(toolType));
 
         bar.setWidth(width - 16);
         bar.setX(16);
 
-        levelGetter = new StatGetterCapabilityLevel(capability);
-        capabilityElement = new GuiCapability(-3, -3, capability);
-        addChild(capabilityElement);
+        levelGetter = new StatGetterToolLevel(toolType);
+        icon = new GuiTool(-3, -3, toolType);
+        addChild(icon);
 
-        if (capability == Capability.axe) {
+        if (toolType == ToolType.AXE) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingAxe, 1);
-        } else if (capability == Capability.pickaxe) {
+        } else if (toolType == ToolType.PICKAXE) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1);
-        } else if (capability == Capability.cut) {
+        } else if (toolType == ToolTypes.cut) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingCut, 1);
-        } else if (capability == Capability.shovel) {
+        } else if (toolType == ToolType.SHOVEL) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingShovel, 1);
         }
 
@@ -73,7 +74,7 @@ public class GuiStatBarCapability extends GuiStatBar {
             color = getDiffColor(previewLevel, level);
         }
 
-        capabilityElement.update(level, color);
+        icon.update(level, color);
 
         updateIndicators(player, currentStack, previewStack, slot, improvement);
     }
@@ -125,7 +126,7 @@ public class GuiStatBarCapability extends GuiStatBar {
 
         if (GuiAlignment.left.equals(alignment)) {
             bar.setX(16);
-            capabilityElement.setX(-3);
+            icon.setX(-3);
 
             strikingIndicator.setX(16);
             strikingIndicator.setAttachment(alignment.toAttachment());
@@ -133,7 +134,7 @@ public class GuiStatBarCapability extends GuiStatBar {
             sweepingIndicator.setAttachment(alignment.toAttachment());
         } else {
             bar.setX(0);
-            capabilityElement.setX(0);
+            icon.setX(0);
 
             strikingIndicator.setX(-16);
             strikingIndicator.setAttachment(alignment.toAttachment());
@@ -141,7 +142,7 @@ public class GuiStatBarCapability extends GuiStatBar {
             sweepingIndicator.setAttachment(alignment.toAttachment());
         }
 
-        capabilityElement.setAttachment(alignment.toAttachment());
+        icon.setAttachment(alignment.toAttachment());
     }
 
     @Override

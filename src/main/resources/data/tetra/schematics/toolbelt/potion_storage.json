@@ -21,7 +21,7 @@
                 "item": "tetra:forged_mesh",
                 "count": 1
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "toolbelt/potion_storage",

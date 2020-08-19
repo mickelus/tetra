@@ -20,12 +20,13 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -64,39 +65,39 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean canProvideCapabilities(World world, BlockPos pos, BlockPos targetPos) {
+    public boolean canProvideTools(World world, BlockPos pos, BlockPos targetPos) {
         return pos.equals(targetPos.up());
     }
 
     @Override
-    public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
         BlockPos basePos = pos.up();
         if (world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
             if (baseBlock.isFueled(world, basePos)) {
-                return Collections.singletonList(Capability.hammer);
+                return Collections.singletonList(ToolTypes.hammer);
             }
         }
-        return super.getCapabilities(world, pos, blockState);
+        return super.getTools(world, pos, blockState);
     }
 
     @Override
-    public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
+    public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
         BlockPos basePos = pos.up();
-        if (Capability.hammer.equals(capability) && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
+        if (ToolTypes.hammer.equals(toolType) && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
             if (baseBlock.isFueled(world, basePos)) {
                 return baseBlock.getHammerLevel(world, basePos);
             }
         }
-        return super.getCapabilityLevel(world, pos, blockState, capability);
+        return super.getToolLevel(world, pos, blockState, toolType);
     }
 
     @Override
     public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
@@ -112,7 +113,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
 
     @Override
     public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();

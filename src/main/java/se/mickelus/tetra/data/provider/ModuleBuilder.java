@@ -19,7 +19,6 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import se.mickelus.tetra.capabilities.Capability;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -263,10 +262,10 @@ public class ModuleBuilder {
         }
 
 
-        if (material.capability != null && material.capabilityLevel + capabilityOffset > 0) {
-            JsonObject requiredCapabilities = new JsonObject();
-            outcome.add("requiredCapabilities", requiredCapabilities);
-            requiredCapabilities.addProperty(material.capability.toString(), material.capabilityLevel + capabilityOffset);
+        if (material.toolType != null && material.capabilityLevel + capabilityOffset > 0) {
+            JsonObject requiredTools = new JsonObject();
+            outcome.add("requiredTools", requiredTools);
+            requiredTools.addProperty(material.toolType.toString(), material.capabilityLevel + capabilityOffset);
         }
 
         outcome.addProperty("moduleKey", module);
@@ -325,14 +324,14 @@ public class ModuleBuilder {
         String type;
         String itemId;
         int count;
-        Capability capability;
+        ToolType toolType;
         int capabilityLevel;
         Pair<String, Integer>[] improvements = new Pair[0];
 
         String[] references = new String[0];
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel, String[] references) {
+                String itemId, int count, ToolType toolType, int capabilityLevel, String[] references) {
             this.key = key;
             this.localization = localization;
             this.tint = tint;
@@ -343,15 +342,15 @@ public class ModuleBuilder {
             this.type = type;
             this.itemId = itemId;
             this.count = count;
-            this.capability = capability;
+            this.toolType = toolType;
             this.capabilityLevel = capabilityLevel;
 
             this.references = references;
         }
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel, String[] references, Pair<String, Integer> ... improvements) {
-            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, capability, capabilityLevel, references);
+                String itemId, int count, ToolType toolType, int capabilityLevel, String[] references, Pair<String, Integer> ... improvements) {
+            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, toolType, capabilityLevel, references);
 
             this.improvements = improvements;
         }

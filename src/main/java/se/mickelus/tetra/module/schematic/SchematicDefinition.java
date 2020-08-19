@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  *                 "item": "minecraft:oak_planks",
  *                 "count": 2
  *             },
- *             "requiredCapabilities": {
+ *             "requiredTools": {
  *                 "axe": 1,
  *                 "hammer": 4
  *             },
@@ -35,7 +35,7 @@ import java.util.stream.Stream;
  *                 "name": "forge:ingots/steeleaf",
  *                 "count": 2
  *             },
- *             "requiredCapabilities": {
+ *             "requiredTools": {
  *                 "hammer": 2
  *             },
  *             "moduleKey": "sword/basic_blade",

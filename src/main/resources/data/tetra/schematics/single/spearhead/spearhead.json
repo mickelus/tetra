@@ -15,7 +15,7 @@
                 "item": "minecraft:oak_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -26,7 +26,7 @@
                 "item": "minecraft:spruce_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -37,7 +37,7 @@
                 "item": "minecraft:birch_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -48,7 +48,7 @@
                 "item": "minecraft:jungle_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -59,7 +59,7 @@
                 "item": "minecraft:acacia_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -70,7 +70,7 @@
                 "item": "minecraft:dark_oak_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "single/spearhead",
@@ -81,7 +81,7 @@
                 "tag": "forge:cobblestone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -92,7 +92,7 @@
                 "item": "minecraft:stone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -103,7 +103,7 @@
                 "item": "minecraft:granite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -114,7 +114,7 @@
                 "item": "minecraft:diorite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -125,7 +125,7 @@
                 "item": "minecraft:andesite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -139,7 +139,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -150,7 +150,7 @@
                 "item": "minecraft:flint",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -161,7 +161,7 @@
                 "item": "minecraft:gold_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -172,7 +172,7 @@
                 "tag": "forge:gems/diamond",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/spearhead",
@@ -186,7 +186,7 @@
                 "item": "minecraft:obsidian",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "single/spearhead",
@@ -200,7 +200,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -211,7 +211,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -222,7 +222,7 @@
                 "tag": "forge:ingots/silver",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -233,7 +233,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -244,7 +244,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -255,7 +255,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -266,7 +266,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",
@@ -277,7 +277,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "single/spearhead",

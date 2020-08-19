@@ -2,14 +2,17 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 public class RepairAction implements WorkbenchAction {
 
@@ -33,13 +36,18 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public Capability[] getRequiredCapabilitiesFor(ItemStack itemStack) {
-        return new Capability[0];
+    public Collection<ToolType> getRequiredToolTypes(ItemStack itemStack) {
+        return Collections.emptySet();
     }
 
     @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+    public int getRequiredToolLevel(ItemStack itemStack, ToolType toolType) {
         return 0;
+    }
+
+    @Override
+    public Map<ToolType, Integer> getRequiredTools(ItemStack itemStack) {
+        return Collections.emptyMap();
     }
 
     @Override

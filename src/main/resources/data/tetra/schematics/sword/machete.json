@@ -15,7 +15,7 @@
                 "item": "minecraft:oak_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -26,7 +26,7 @@
                 "item": "minecraft:spruce_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -37,7 +37,7 @@
                 "item": "minecraft:birch_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -48,7 +48,7 @@
                 "item": "minecraft:jungle_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -59,7 +59,7 @@
                 "item": "minecraft:acacia_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -70,7 +70,7 @@
                 "item": "minecraft:dark_oak_planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/machete",
@@ -81,7 +81,7 @@
                 "tag": "forge:cobblestone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -92,7 +92,7 @@
                 "item": "minecraft:stone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -103,7 +103,7 @@
                 "item": "minecraft:granite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -114,7 +114,7 @@
                 "item": "minecraft:diorite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -125,7 +125,7 @@
                 "item": "minecraft:andesite",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -136,7 +136,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -147,7 +147,7 @@
                 "item": "minecraft:flint",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -158,7 +158,7 @@
                 "item": "minecraft:gold_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -169,7 +169,7 @@
                 "tag": "forge:gems/diamond",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/machete",
@@ -183,7 +183,7 @@
                 "item": "minecraft:obsidian",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/machete",
@@ -197,7 +197,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -208,7 +208,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -219,7 +219,7 @@
                 "tag": "forge:ingots/silver",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -230,7 +230,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -241,7 +241,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -252,7 +252,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -263,7 +263,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -274,7 +274,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -285,7 +285,7 @@
                 "tag": "forge:ingots/ironwood",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -296,7 +296,7 @@
                 "tag": "forge:ingots/steeleaf",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -310,7 +310,7 @@
                 "tag": "forge:ingots/fiery",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",
@@ -324,7 +324,7 @@
                 "tag": "forge:ingots/knightmetal",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/machete",

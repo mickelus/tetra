@@ -1,28 +1,29 @@
 package se.mickelus.tetra.module;
 
 
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Streams;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class ItemModuleMajor extends ItemModule {
 
@@ -226,109 +227,33 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     @Override
-    public double getDamageModifier(ItemStack itemStack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
-                .mapToDouble(improvement -> improvement.damage)
-                .sum() + super.getDamageModifier(itemStack);
+                .map(improvement -> improvement.attributes)
+                .filter(Objects::nonNull)
+                .reduce(super.getAttributeModifiers(itemStack), AttributeHelper::merge);
     }
 
     @Override
-    public double getDamageMultiplierModifier(ItemStack itemStack) {
+    public ItemProperties getProperties(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
-                .map(improvement -> improvement.damageMultiplier)
-                .reduce((float) super.getDamageMultiplierModifier(itemStack), (a, b) -> a * b);
+                .reduce(super.getProperties(itemStack), ItemProperties::merge, ItemProperties::merge);
     }
 
     @Override
-    public double getSpeedModifier(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToDouble(improvement -> improvement.attackSpeed)
-                .sum() + super.getSpeedModifier(itemStack);
-    }
-
-    @Override
-    public double getSpeedMultiplierModifier(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .map(improvement -> improvement.attackSpeedMultiplier)
-                .reduce((float) super.getSpeedMultiplierModifier(itemStack), (a, b) -> a * b);
-    }
-
-    @Override
-    public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
+    public EffectData getEffectData(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.effects)
-                .mapToInt(effects -> effects.getLevel(effect))
-                .sum() + super.getEffectLevel(itemStack, effect);
+                .filter(Objects::nonNull)
+                .reduce(super.getEffectData(itemStack), EffectData::merge);
     }
 
     @Override
-    public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        return (float) Arrays.stream(getImprovements(itemStack))
-                .map(improvement -> improvement.effects)
-                .mapToDouble(effects -> effects.getEfficiency(effect))
-                .sum() + super.getEffectEfficiency(itemStack, effect);
-    }
-
-    @Override
-    public Collection<ItemEffect> getEffects(ItemStack itemStack) {
-        return Streams.concat(
-                super.getEffects(itemStack).stream(),
-                Arrays.stream(getImprovements(itemStack))
-                        .map(improvement -> improvement.effects)
-                        .flatMap(effects -> effects.getValues().stream()))
-                .distinct()
-                .collect(Collectors.toSet());
-    }
-
-    @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+    public ToolData getToolData(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
-                .map(improvementData -> improvementData.capabilities)
-                .mapToInt(capabilityData -> capabilityData.getLevel(capability))
-                .sum() + super.getCapabilityLevel(itemStack, capability);
-    }
-
-    @Override
-    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
-        return (float) Arrays.stream(getImprovements(itemStack))
-                .map(improvementData -> improvementData.capabilities)
-                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
-                .sum() + super.getCapabilityEfficiency(itemStack, capability);
-    }
-
-    @Override
-    public Set<Capability> getCapabilities(ItemStack itemStack) {
-        return Streams.concat(
-                super.getCapabilities(itemStack).stream(),
-                Arrays.stream(getImprovements(itemStack))
-                        .map(improvement -> improvement.capabilities)
-                        .flatMap(capabilities -> capabilities.getValues().stream()))
-                .distinct()
-                .collect(Collectors.toSet());
-    }
-
-    @Override
-    public int getIntegrityGain(ItemStack itemStack) {
-        return super.getIntegrityGain(itemStack) + getImprovementIntegrityGain(itemStack);
-    }
-
-    @Override
-    public int getIntegrityCost(ItemStack itemStack) {
-        return super.getIntegrityCost(itemStack) + getImprovementIntegrityCost(itemStack);
-    }
-
-    private int getImprovementIntegrityGain(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToInt(improvement -> improvement.integrity)
-                .filter(integrity -> integrity > 0)
-                .sum();
-    }
-
-    private int getImprovementIntegrityCost(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToInt(improvement -> improvement.integrity)
-                .filter(integrity -> integrity < 0)
-                .sum();
+                .map(improvement -> improvement.tools)
+                .filter(Objects::nonNull)
+                .reduce(super.getToolData(itemStack), ToolData::merge);
     }
 
     @Override
@@ -354,24 +279,6 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .mapToInt(improvement -> improvement.magicCapacity)
                 .filter(integrity -> integrity < 0)
                 .sum();
-    }
-
-    @Override
-    public int getDurability(ItemStack itemStack) {
-        return (int)((super.getDurability(itemStack) + getImprovementDurability(itemStack)) * getImprovementDurabilityMultiplier(itemStack));
-    }
-
-    private int getImprovementDurability(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToInt(improvement -> improvement.durability)
-                .sum();
-    }
-
-    private double getImprovementDurabilityMultiplier(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .mapToDouble(improvement -> improvement.durabilityMultiplier)
-                .filter(integrity -> integrity > 0)
-                .reduce(1, (a, b) -> a * b);
     }
 
     protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {

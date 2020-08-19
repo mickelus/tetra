@@ -14,6 +14,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -22,7 +23,7 @@ import se.mickelus.mgui.gui.GuiTextureOffset;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -207,6 +208,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
                     if (module.hasTweak(previewStack, tweakKey)) {
                         module.setTweakStep(previewStack, tweakKey, step);
                     }
+                    ModularItem.updateIdentifier(previewStack);
                 }));
 
         statGroup.update(currentTarget, previewStack, null, null, viewingPlayer);
@@ -313,14 +315,14 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         World world = tileEntity.getWorld();
         if (world != null && world.getGameTime() % 20 == 0) {
             BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(viewingPlayer, world, pos, world.getBlockState(pos));
+            Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
             if (tileEntity.getCurrentSchematic() != null && slotDetail.isVisible()) {
-                slotDetail.update(viewingPlayer, tileEntity, availableCapabilities);
+                slotDetail.update(viewingPlayer, tileEntity, availableTools);
             }
 
             if (actionList.isVisible()) {
-                actionList.updateCapabilities(availableCapabilities);
+                actionList.updateTools(availableTools);
             }
         }
     }
@@ -373,7 +375,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private ItemStack buildPreviewStack(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials) {
         if (schematic.isMaterialsValid(targetStack, slot, materials)) {
-            return schematic.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
+            ItemStack result = schematic.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
+            ModularItem.updateIdentifier(result);
+            return result;
         }
         return ItemStack.EMPTY;
     }

@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.forged;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -17,13 +19,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -33,7 +36,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
+public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockInteractive {
     static final String unlocalizedName = "forged_vent";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -44,36 +47,36 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
     public static final BooleanProperty propBroken = BooleanProperty.create("broken");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 1, 4, 12, 15,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(0)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 1, 4, 1, 4,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(1)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 12, 15, 12, 15,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 12, 15, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(2)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 12, 15, 1, 4,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 12, 15, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(3)),
                     BlockForgedVent::breakBolt),
 
-            new BlockInteraction(Capability.hammer, 3, Direction.WEST, 12, 15, 12, 15,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.WEST, 12, 15, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(0)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.WEST, 12, 15, 1, 4,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.WEST, 12, 15, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(1)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.WEST, 1, 4, 12, 15,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.WEST, 1, 4, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(2)),
                     BlockForgedVent::breakBolt),
-            new BlockInteraction(Capability.hammer, 3, Direction.WEST, 1, 4, 1, 4,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.WEST, 1, 4, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(3)),
                     BlockForgedVent::breakBolt),
 
-            new BlockInteraction(Capability.pry, 1, Direction.EAST, 7, 11, 8, 12,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.EAST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     BlockForgedVent::breakBeam),
-            new BlockInteraction(Capability.pry, 1, Direction.WEST, 7, 11, 8, 12,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.WEST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     BlockForgedVent::breakBeam),
     };
@@ -160,7 +163,7 @@ public class BlockForgedVent extends TetraWaterloggedBlock implements IBlockCapa
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(state, state.get(propX) ? Direction.EAST : Direction.SOUTH, face, capabilities))
                 .toArray(BlockInteraction[]::new);

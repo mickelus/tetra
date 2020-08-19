@@ -3,8 +3,8 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class RepairSchematic extends BaseSchematic {
@@ -142,19 +143,19 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
-    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
+    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         if (targetStack.getItem() instanceof ModularItem) {
             ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredCapabilities(targetStack, materials[0]);
+            return item.getRepairRequiredToolLevels(targetStack, materials[0]);
         }
-        return Collections.emptyList();
+        return Collections.emptyMap();
     }
 
     @Override
-    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
+    public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolType toolType) {
         if (targetStack.getItem() instanceof ModularItem) {
             ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredCapabilityLevel(targetStack, materials[0], capability);
+            return item.getRepairRequiredCapabilityLevel(targetStack, materials[0], toolType);
         }
         return 0;
     }

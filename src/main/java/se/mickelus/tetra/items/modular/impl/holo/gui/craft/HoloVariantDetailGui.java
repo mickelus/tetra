@@ -4,12 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.blocks.workbench.gui.GuiCapabilityRequirement;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
@@ -21,7 +21,10 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HoloVariantDetailGui extends GuiElement {
 
@@ -32,12 +35,12 @@ public class HoloVariantDetailGui extends GuiElement {
     private GuiString improvementsLabel;
     private GuiElement improvements;
 
-    private GuiElement requiredCapabilities;
+    private GuiElement requiredTools;
     private GuiItemRolling material;
 
     private HoloStatsGui stats;
 
-    private int[] capabilityLevels;
+    private Map<ToolType, Integer> availableToolLevels;
 
     private KeyframeAnimation openAnimation;
     private KeyframeAnimation showAnimation;
@@ -57,17 +60,18 @@ public class HoloVariantDetailGui extends GuiElement {
         requirementsLabel.setColor(GuiColors.muted);
         addChild(requirementsLabel);
 
-        requiredCapabilities = new GuiElement(0, 20, width, height);
-        addChild(requiredCapabilities);
+        requiredTools = new GuiElement(0, 20, width, height);
+        addChild(requiredTools);
 
         material = new GuiItemRolling(0, 20);
         addChild(material);
 
         PlayerEntity player = Minecraft.getInstance().player;
-        capabilityLevels = new int[Capability.values().length];
-        for (int i = 0; i < capabilityLevels.length; i++) {
-            capabilityLevels[i] = CapabilityHelper.getPlayerCapabilityLevel(player, Capability.values()[i]);
-        }
+        availableToolLevels = Stream.of(PropertyHelper.getPlayerToolLevels(player), PropertyHelper.getToolbeltToolLevels(player))
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
+
 
         // variant improvements
         improvementsLabel = new GuiStringSmall(57, 13, I18n.format("tetra.holo.craft.improvements"));
@@ -126,15 +130,13 @@ public class HoloVariantDetailGui extends GuiElement {
                 }
             }
 
-            requiredCapabilities.clearChildren();
-            int i = 0;
-            for (Map.Entry<Capability, Integer> entry: baseOutcome.capabilities.valueMap.entrySet()) {
-                GuiCapabilityRequirement requirement = new GuiCapabilityRequirement(20, i * 18, entry.getKey());
-                requirement.updateRequirement(entry.getValue(), capabilityLevels[entry.getKey().ordinal()]);
-                requiredCapabilities.addChild(requirement);
+            requiredTools.clearChildren();
+            baseOutcome.capabilities.levelMap.forEach((tool, level) -> {
+                GuiCapabilityRequirement requirement = new GuiCapabilityRequirement(20, requiredTools.getNumChildren() * 18, tool);
+                requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
+                requiredTools.addChild(requirement);
+            });
 
-                i++;
-            }
             if (baseOutcome.materials.length > 0) {
                 material.setItems(baseOutcome.materials);
             } else {

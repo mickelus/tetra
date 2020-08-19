@@ -16,7 +16,7 @@
                 "item": "minecraft:spruce_planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -27,7 +27,7 @@
                 "item": "minecraft:birch_planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -38,7 +38,7 @@
                 "item": "minecraft:jungle_planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -49,7 +49,7 @@
                 "item": "minecraft:acacia_planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -60,7 +60,7 @@
                 "item": "minecraft:dark_oak_planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -71,7 +71,7 @@
                 "item": "minecraft:granite",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -82,7 +82,7 @@
                 "item": "minecraft:diorite",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -93,7 +93,7 @@
                 "item": "minecraft:andesite",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -104,7 +104,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -115,7 +115,7 @@
                 "item": "minecraft:flint",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/wide_guard",
@@ -126,7 +126,7 @@
                 "item": "minecraft:gold_ingot",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -137,7 +137,7 @@
                 "item": "minecraft:diamond",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -148,7 +148,7 @@
                 "item": "minecraft:obsidian",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/wide_guard",
@@ -159,7 +159,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/wide_guard",
@@ -170,7 +170,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -181,7 +181,7 @@
                 "tag": "forge:ingots/silver",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -192,7 +192,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -203,7 +203,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -214,7 +214,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/wide_guard",
@@ -225,7 +225,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -236,7 +236,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/wide_guard",
@@ -247,7 +247,7 @@
                 "tag": "forge:ingots/ironwood",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -258,7 +258,7 @@
                 "tag": "forge:ingots/steeleaf",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/wide_guard",
@@ -269,7 +269,7 @@
                 "tag": "forge:ingots/fiery",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/wide_guard",
@@ -280,7 +280,7 @@
                 "tag": "forge:ingots/knightmetal",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",
@@ -291,7 +291,7 @@
                 "tag": "minecraft:planks",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -302,7 +302,7 @@
                 "tag": "forge:cobblestone",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/wide_guard",
@@ -313,7 +313,7 @@
                 "tag": "forge:stone",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/wide_guard",

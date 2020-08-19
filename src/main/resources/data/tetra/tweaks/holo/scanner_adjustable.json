@@ -3,7 +3,7 @@
         "improvement": "scanner/adjustable",
         "key": "scanner/adjustable_range",
         "steps": 6,
-        "stepStats": {
+        "properties": {
             "effects": {
                 "scannerRange": 2
             },
@@ -14,7 +14,7 @@
         "improvement": "scanner/adjustable",
         "key": "scanner/adjustable_span",
         "steps": 3,
-        "stepStats": {
+        "properties": {
             "effects": {
                 "scannerHorizontalSpread": 1,
                 "scannerVerticalSpread": -1

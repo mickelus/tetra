@@ -23,7 +23,7 @@
                 "item": "minecraft:string",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "improvements": {

@@ -27,7 +27,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "toolbelt/strap",

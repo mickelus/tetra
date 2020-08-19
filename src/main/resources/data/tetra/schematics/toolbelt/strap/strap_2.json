@@ -29,7 +29,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "toolbelt/strap",

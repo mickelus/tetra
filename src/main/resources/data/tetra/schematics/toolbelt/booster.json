@@ -21,7 +21,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "toolbelt/booster",

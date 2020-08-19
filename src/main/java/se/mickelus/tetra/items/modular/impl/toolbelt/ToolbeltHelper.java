@@ -15,8 +15,8 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
@@ -185,7 +185,7 @@ public class ToolbeltHelper {
             Vector3d hitVector = trace.getHitVec();
             BlockPos blockPos = trace.getPos();
 
-            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
+            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockInteractive.class)
                     .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
                             (float) hitVector.x - blockPos.getX(),
                             (float) hitVector.y - blockPos.getY(),
@@ -201,9 +201,9 @@ public class ToolbeltHelper {
                     }
 
                     if (blockInteraction != null) {
-                        if (itemStack.getItem() instanceof ICapabilityProvider) {
-                            ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
-                            if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
+                        if (itemStack.getItem() instanceof IToolProvider) {
+                            IToolProvider providerItem = ((IToolProvider) itemStack.getItem());
+                            if (providerItem.getToolLevel(itemStack, blockInteraction.requiredTool) >= blockInteraction.requiredLevel) {
                                 return i;
                             }
                         }

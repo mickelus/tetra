@@ -33,7 +33,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.util.RotationHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -382,9 +382,9 @@ public class ItemEffectHandler {
                     event.getTargetX() + 24, event.getTargetY() + 24, event.getTargetZ() + 24);
 
             event.getEntity().getEntityWorld().getEntitiesWithinAABB(PlayerEntity.class, aabb).forEach(player -> {
-                int reverbLevel = CapabilityHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
+                int reverbLevel = PropertyHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
                 if (reverbLevel > 0) {
-                    double effectProbability = CapabilityHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
+                    double effectProbability = PropertyHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
                     if (effectProbability > 0) {
                         if (player.getRNG().nextDouble() < effectProbability * 2) {
                             player.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
@@ -462,7 +462,7 @@ public class ItemEffectHandler {
         final boolean alternate = strikeCounter % 2 == 0;
 
         float efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
-                .map(item -> item.getCapabilityEfficiency(toolStack, tool))
+                .map(item -> item.getToolEfficiency(toolStack, tool))
                 .orElse(0f);
 
         breakingPlayer.spawnSweepParticles();

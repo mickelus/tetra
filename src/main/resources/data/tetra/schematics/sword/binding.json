@@ -15,7 +15,7 @@
                 "item": "minecraft:string",
                 "count": 4
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "moduleKey": "sword/binding",
@@ -25,7 +25,7 @@
             "material": {
                 "item": "minecraft:leather"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             },
             "moduleKey": "sword/binding",
@@ -36,7 +36,7 @@
                 "item": "minecraft:rabbit_hide",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             },
             "moduleKey": "sword/binding",
@@ -47,7 +47,7 @@
                 "item": "minecraft:vine",
                 "count": 4
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "moduleKey": "sword/binding",

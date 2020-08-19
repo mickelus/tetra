@@ -19,11 +19,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
@@ -36,7 +36,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class BlockInteraction {
-    public Capability requiredCapability;
+    public ToolType requiredTool;
     public int requiredLevel;
 
     // if false the player needs to have a tool that provides requiredCapability in their inventory for the interaction to be visible
@@ -54,10 +54,10 @@ public class BlockInteraction {
 
     public float successChance = 1;
 
-    public <V extends Comparable<V>> BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX,
+    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX,
             float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
 
-        this.requiredCapability = requiredCapability;
+        this.requiredTool = requiredTool;
         this.requiredLevel = requiredLevel;
         this.face = face;
         this.minX = minX;
@@ -69,10 +69,10 @@ public class BlockInteraction {
         this.outcome = outcome;
     }
 
-    public BlockInteraction(Capability requiredCapability, int requiredLevel, Direction face, float minX, float maxX, float minY,
+    public BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY,
             float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
 
-        this.requiredCapability = requiredCapability;
+        this.requiredTool = requiredTool;
         this.requiredLevel = requiredLevel;
         this.face = face;
         this.minX = minX;
@@ -93,15 +93,15 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<Capability> availableCapabilities) {
+    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<ToolType> availableCapabilities) {
         return isPotentialInteraction(blockState, Direction.NORTH, hitFace, availableCapabilities);
     }
 
     public boolean isPotentialInteraction(BlockState blockState, Direction blockFacing, Direction hitFace,
-                                          Collection<Capability> availableCapabilities) {
+                                          Collection<ToolType> availableCapabilities) {
         return applicableForState(blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
-                && (alwaysReveal || availableCapabilities.contains(requiredCapability));
+                && (alwaysReveal || availableCapabilities.contains(requiredTool));
     }
 
     public void applyOutcome(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
@@ -111,7 +111,7 @@ public class BlockInteraction {
     public static ActionResultType attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand,
             BlockRayTraceResult rayTrace) {
         ItemStack heldStack = player.getHeldItem(hand);
-        Collection<Capability> availableCapabilities = CapabilityHelper.getItemCapabilities(heldStack);
+        Collection<ToolType> availableTools = PropertyHelper.getItemTools(heldStack);
 
         if (Hand.MAIN_HAND == hand) {
             if (player.getCooledAttackStrength(0) < 0.8) {
@@ -137,21 +137,18 @@ public class BlockInteraction {
                 rayTrace.getHitVec().y - pos.getY(),
                 rayTrace.getHitVec().z - pos.getZ());
 
-        BlockInteraction possibleInteraction = Optional.of(blockState.getBlock())
-                .filter(block -> block instanceof IBlockCapabilityInteractive)
-                .map(block -> (IBlockCapabilityInteractive) block)
-                .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableCapabilities))
+        BlockInteraction possibleInteraction = CastOptional.cast(blockState.getBlock(), IBlockInteractive.class)
+                .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableTools))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
-                .filter(interaction ->
-                        CapabilityHelper.getItemCapabilityLevel(heldStack, interaction.requiredCapability) >= interaction.requiredLevel)
+                .filter(interaction -> PropertyHelper.getItemToolLevel(heldStack, interaction.requiredTool) >= interaction.requiredLevel)
                 .findFirst()
                 .orElse(null);
 
         if (possibleInteraction != null) {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getFace());
 
-            if (availableCapabilities.contains(possibleInteraction.requiredCapability) && heldStack.isDamageable()) {
+            if (availableTools.contains(possibleInteraction.requiredTool) && heldStack.isDamageable()) {
                 if (heldStack.getItem() instanceof ModularItem) {
                     ((ModularItem) heldStack.getItem()).applyDamage(2, heldStack, player);
                 } else {
@@ -162,7 +159,7 @@ public class BlockInteraction {
             if (player instanceof ServerPlayerEntity) {
                 BlockState newState = world.getBlockState(pos);
 
-                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredCapability,
+                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredTool,
                         possibleInteraction.requiredLevel);
             }
 
@@ -186,10 +183,8 @@ public class BlockInteraction {
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
-        return Optional.of(blockState.getBlock())
-                .filter(block -> block instanceof IBlockCapabilityInteractive)
-                .map(block -> (IBlockCapabilityInteractive) block)
-                .map(block -> block.getPotentialInteractions(blockState, hitFace, CapabilityHelper.getPlayerCapabilities(player)))
+        return CastOptional.cast(blockState.getBlock(), IBlockInteractive.class)
+                .map(block -> block.getPotentialInteractions(blockState, hitFace, PropertyHelper.getPlayerTools(player)))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
                 .findFirst()

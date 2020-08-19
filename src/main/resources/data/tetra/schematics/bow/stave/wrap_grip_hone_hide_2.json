@@ -23,7 +23,7 @@
                 "item": "minecraft:rabbit_hide",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             },
             "improvements": {

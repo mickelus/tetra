@@ -16,7 +16,7 @@
             "material": {
                 "item": "tetra:earthpiercer"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "single/earthpiercer",

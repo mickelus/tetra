@@ -1,56 +1,44 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.capabilities.Capability;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 public class GuiCapabilityRequirementList extends GuiElement {
 
-    private GuiCapabilityRequirement[] indicators;
-    private int[] requiredLevels;
+    private Map<ToolType, Integer> requiredTools = Collections.emptyMap();
 
     public GuiCapabilityRequirementList(int x, int y) {
         super(x, y, 54, 18);
-
-        Capability[] capabilities = Capability.values();
-        indicators = new GuiCapabilityRequirement[capabilities.length];
-        for (int i = 0; i < capabilities.length; i++) {
-            indicators[i] = new GuiCapabilityRequirement(0, 0, capabilities[i]);
-            indicators[i].setAttachment(GuiAttachment.topRight);
-            addChild(indicators[i]);
-        }
-
-        requiredLevels = new int[indicators.length];
     }
 
-    public void update(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials, int[] availableCapabilities) {
-        setVisible(schematic.isMaterialsValid(targetStack, slot, materials));
+    public void update(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials, Map<ToolType, Integer> availableTools) {
+        boolean hasValidMaterials = schematic.isMaterialsValid(targetStack, slot, materials);
+        setVisible(hasValidMaterials);
 
-        int visibleCount = 0;
-        Capability[] capabilities = Capability.values();
-        Collection<Capability> requiredCapabilities = schematic.getRequiredCapabilities(targetStack, materials);
-        for (int i = 0; i < capabilities.length; i++) {
-            requiredLevels[i] = schematic.getRequiredCapabilityLevel(targetStack, materials, capabilities[i]);
-            if (requiredCapabilities.contains(capabilities[i]) && requiredLevels[i] > 0) {
-                indicators[i].setX(-visibleCount * indicators[i].getWidth());
-                indicators[i].updateRequirement(requiredLevels[i], availableCapabilities[i]);
-                indicators[i].setVisible(true);
-                visibleCount++;
-            } else {
-                indicators[i].setVisible(false);
-            }
+        if (hasValidMaterials) {
+            clearChildren();
+
+            requiredTools = schematic.getRequiredToolLevels(targetStack, materials);
+
+            requiredTools.forEach((tool, level) -> {
+                GuiCapabilityRequirement indicator = new GuiCapabilityRequirement(getNumChildren() * GuiTool.width, 0, tool);
+                indicator.updateRequirement(level, availableTools.getOrDefault(tool, 0));
+                indicator.setAttachment(GuiAttachment.topRight);
+                addChild(indicator);
+            });
         }
     }
 
-    public void updateAvailableCapabilities(int[] availableCapabilities) {
-        for (int i = 0; i < indicators.length; i++) {
-            if (requiredLevels[i] > 0) {
-                indicators[i].updateRequirement(requiredLevels[i], availableCapabilities[i]);
-            }
-        }
+    public void updateAvailableCapabilities(Map<ToolType, Integer> availableTools) {
+        getChildren(GuiCapabilityRequirement.class).forEach(indicator ->
+                indicator.updateRequirement(
+                        requiredTools.getOrDefault(indicator.getToolType(), 0),
+                        availableTools.getOrDefault(indicator.getToolType(), 0)));
     }
 }

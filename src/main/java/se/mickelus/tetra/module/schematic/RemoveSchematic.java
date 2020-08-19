@@ -3,9 +3,10 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
@@ -13,8 +14,8 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Stream;
 
 
@@ -90,9 +91,9 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(itemStack, materials, availableCapabilities);
+                && checkTools(itemStack, materials, availableTools);
     }
 
     @Override
@@ -135,16 +136,8 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public Collection<Capability> getRequiredCapabilities(final ItemStack targetStack, final ItemStack[] materials) {
-        return Collections.singletonList(Capability.hammer);
-    }
-
-    @Override
-    public int getRequiredCapabilityLevel(final ItemStack targetStack, final ItemStack[] materials, Capability capability) {
-        if (capability == Capability.hammer) {
-            return 1;
-        }
-        return 0;
+    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+        return Collections.singletonMap(ToolTypes.hammer, 1);
     }
 
     @Override

@@ -14,7 +14,7 @@
             "material": {
                 "item": "minecraft:spruce_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -24,7 +24,7 @@
             "material": {
                 "item": "minecraft:birch_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -34,7 +34,7 @@
             "material": {
                 "item": "minecraft:jungle_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -44,7 +44,7 @@
             "material": {
                 "item": "minecraft:acacia_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -54,7 +54,7 @@
             "material": {
                 "item": "minecraft:dark_oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -64,7 +64,7 @@
             "material": {
                 "item": "minecraft:granite"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -74,7 +74,7 @@
             "material": {
                 "item": "minecraft:diorite"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -84,7 +84,7 @@
             "material": {
                 "item": "minecraft:andesite"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -94,7 +94,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -104,7 +104,7 @@
             "material": {
                 "item": "minecraft:flint"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -114,7 +114,7 @@
             "material": {
                 "item": "minecraft:gold_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -124,7 +124,7 @@
             "material": {
                 "item": "minecraft:diamond"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -134,7 +134,7 @@
             "material": {
                 "item": "minecraft:obsidian"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -144,7 +144,7 @@
             "material": {
                 "tag": "forge:ingots/copper"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -154,7 +154,7 @@
             "material": {
                 "tag": "forge:ingots/tin"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -164,7 +164,7 @@
             "material": {
                 "tag": "forge:ingots/silver"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -174,7 +174,7 @@
             "material": {
                 "tag": "forge:ingots/nickel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -184,7 +184,7 @@
             "material": {
                 "tag": "forge:ingots/lead"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -194,7 +194,7 @@
             "material": {
                 "tag": "forge:ingots/bronze"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -204,7 +204,7 @@
             "material": {
                 "tag": "forge:ingots/electrum"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -214,7 +214,7 @@
             "material": {
                 "tag": "forge:ingots/steel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -224,7 +224,7 @@
             "material": {
                 "tag": "forge:ingots/ironwood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -234,7 +234,7 @@
             "material": {
                 "tag": "forge:ingots/steeleaf"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -244,7 +244,7 @@
             "material": {
                 "tag": "forge:ingots/fiery"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -254,7 +254,7 @@
             "material": {
                 "tag": "forge:ingots/knightmetal"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -264,7 +264,7 @@
             "material": {
                 "tag": "minecraft:planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/grip_loop",
@@ -274,7 +274,7 @@
             "material": {
                 "tag": "forge:cobblestone"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",
@@ -284,7 +284,7 @@
             "material": {
                 "tag": "forge:stone"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/grip_loop",

@@ -3,7 +3,7 @@
         "variant": "single_binding/bolt",
         "key": "single_tweak/binding_bolt",
         "steps": 10,
-        "stepStats": {
+        "properties": {
             "durabilityMultiplier": 0.952,
             "damageMultiplier": 1.03,
             "capabilities": {

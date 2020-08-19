@@ -23,7 +23,7 @@
                 "item": "minecraft:leather",
                 "count": 1
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "improvements": {

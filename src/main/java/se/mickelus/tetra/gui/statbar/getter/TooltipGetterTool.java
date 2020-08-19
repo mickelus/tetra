@@ -3,36 +3,35 @@ package se.mickelus.tetra.gui.statbar.getter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.gui.GuiTextures;
+import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.module.ItemEffect;
 
-public class TooltipGetterCapability implements ITooltipGetter {
+public class TooltipGetterTool implements ITooltipGetter {
 
     private final IStatGetter levelGetter;
     private final IStatGetter efficiencyGetter;
     private final String localizationKey;
 
-    private static final String strikingKey = "tetra.stats.capability.striking";
+    private static final String strikingKey = "tetra.stats.tool.striking";
     private IStatGetter strikingGetter;
 
-    private static final String sweepingKey = "tetra.stats.capability.sweeping";
+    private static final String sweepingKey = "tetra.stats.tool.sweeping";
     private IStatGetter sweepingGetter;
 
-    public TooltipGetterCapability(Capability capability) {
-        localizationKey = "tetra.stats." + capability + ".tooltip";
+    public TooltipGetterTool(ToolType tool) {
+        localizationKey = "tetra.stats." + tool.getName() + ".tooltip";
 
-        levelGetter = new StatGetterCapabilityLevel(capability);
-        efficiencyGetter = new StatGetterCapabilityEfficiency(capability);
+        levelGetter = new StatGetterToolLevel(tool);
+        efficiencyGetter = new StatGetterToolEfficiency(tool);
 
-        if (capability == Capability.axe) {
+        if (tool == ToolType.AXE) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingAxe, 1);
-        } else if (capability == Capability.pickaxe) {
+        } else if (tool == ToolType.PICKAXE) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1);
-        } else if (capability == Capability.cut) {
+        } else if (tool == ToolTypes.cut) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingCut, 1);
-        } else if (capability == Capability.shovel) {
+        } else if (tool == ToolType.SHOVEL) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingShovel, 1);
         }
 

@@ -20,7 +20,7 @@
                 "item": "minecraft:flint",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -31,7 +31,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/sickle",
@@ -42,7 +42,7 @@
                 "item": "minecraft:diamond",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/sickle",
@@ -56,7 +56,7 @@
                 "item": "minecraft:gold_ingot",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/sickle",
@@ -67,7 +67,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -78,7 +78,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -89,7 +89,7 @@
                 "tag": "forge:ingots/silver",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -100,7 +100,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -111,7 +111,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -122,7 +122,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -133,7 +133,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -144,7 +144,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -155,7 +155,7 @@
                 "tag": "forge:ingots/ironwood",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -169,7 +169,7 @@
                 "tag": "forge:ingots/steeleaf",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -183,7 +183,7 @@
                 "tag": "forge:ingots/fiery",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -194,7 +194,7 @@
                 "tag": "forge:ingots/knightmetal",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/sickle",
@@ -205,7 +205,7 @@
                 "tag": "minecraft:planks",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "double/sickle",
@@ -216,7 +216,7 @@
                 "tag": "forge:cobblestone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/sickle",
@@ -227,7 +227,7 @@
                 "tag": "forge:stone",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/sickle",

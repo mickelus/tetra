@@ -23,16 +23,12 @@ public class GuiSlotEffect extends GuiElement {
 
         tooltip = I18n.format(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.toString()));
 
-        switch (effect) {
-            case quickAccess:
-                addChild(new GuiTexture(0, 0, 8, 8, 0, 64, texture).setColor(0xbbbbbb));
-                break;
-            case cellSocket:
-                addChild(new GuiTexture(0, 0, 8, 8, 8, 64, texture).setColor(0xbbbbbb));
-                break;
-            default:
-                addChild(new GuiString(0, 0, "?"));
-                break;
+        if (ItemEffect.quickAccess.equals(effect)) {
+            addChild(new GuiTexture(0, 0, 8, 8, 0, 64, texture).setColor(0xbbbbbb));
+        } else if (ItemEffect.cellSocket.equals(effect)) {
+            addChild(new GuiTexture(0, 0, 8, 8, 8, 64, texture).setColor(0xbbbbbb));
+        } else {
+            addChild(new GuiString(0, 0, "?"));
         }
     }
 

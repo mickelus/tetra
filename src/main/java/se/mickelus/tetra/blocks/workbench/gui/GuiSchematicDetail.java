@@ -2,11 +2,14 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
+
+import java.util.Map;
 
 public class GuiSchematicDetail extends GuiElement {
 
@@ -81,7 +84,8 @@ public class GuiSchematicDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, int[] availableCapabilities, int playerLevel) {
+    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolType, Integer> availableTools,
+            int playerLevel) {
         this.schematic = schematic;
 
         title.setString(schematic.getName());
@@ -146,7 +150,7 @@ public class GuiSchematicDetail extends GuiElement {
             slotBorders[i].setVisible(false);
         }
 
-        capabilityIndicatorList.update(schematic, itemStack, slot, materials, availableCapabilities);
+        capabilityIndicatorList.update(schematic, itemStack, slot, materials, availableTools);
 
         int xpCost = schematic.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
@@ -165,7 +169,7 @@ public class GuiSchematicDetail extends GuiElement {
         }
     }
 
-    public void updateAvailableCapabilities(int[] availableCapabilities) {
+    public void updateAvailableCapabilities(Map<ToolType, Integer> availableCapabilities) {
         capabilityIndicatorList.updateAvailableCapabilities(availableCapabilities);
     }
 

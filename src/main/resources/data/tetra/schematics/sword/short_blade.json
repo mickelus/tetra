@@ -13,7 +13,7 @@
             "material": {
                 "item": "minecraft:oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -23,7 +23,7 @@
             "material": {
                 "item": "minecraft:spruce_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -33,7 +33,7 @@
             "material": {
                 "item": "minecraft:birch_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -43,7 +43,7 @@
             "material": {
                 "item": "minecraft:jungle_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -53,7 +53,7 @@
             "material": {
                 "item": "minecraft:acacia_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -63,7 +63,7 @@
             "material": {
                 "item": "minecraft:dark_oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/short_blade",
@@ -73,7 +73,7 @@
             "material": {
                 "item": "minecraft:flint"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/short_blade",
@@ -83,7 +83,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -93,7 +93,7 @@
             "material": {
                 "item": "minecraft:gold_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -103,7 +103,7 @@
             "material": {
                 "item": "minecraft:diamond"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -113,7 +113,7 @@
             "material": {
                 "item": "minecraft:prismarine_shard"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -123,7 +123,7 @@
             "material": {
                 "tag": "forge:ingots/copper"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -133,7 +133,7 @@
             "material": {
                 "tag": "forge:ingots/tin"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -143,7 +143,7 @@
             "material": {
                 "tag": "forge:ingots/silver"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -153,7 +153,7 @@
             "material": {
                 "tag": "forge:ingots/nickel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -163,7 +163,7 @@
             "material": {
                 "tag": "forge:ingots/lead"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -173,7 +173,7 @@
             "material": {
                 "tag": "forge:ingots/bronze"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -183,7 +183,7 @@
             "material": {
                 "tag": "forge:ingots/electrum"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -193,7 +193,7 @@
             "material": {
                 "tag": "forge:ingots/steel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -203,7 +203,7 @@
             "material": {
                 "tag": "forge:ingots/ironwood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -213,7 +213,7 @@
             "material": {
                 "tag": "forge:ingots/steeleaf"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -226,7 +226,7 @@
             "material": {
                 "tag": "forge:ingots/fiery"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",
@@ -239,7 +239,7 @@
             "material": {
                 "tag": "forge:ingots/knightmetal"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/short_blade",

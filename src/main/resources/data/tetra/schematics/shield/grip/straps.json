@@ -15,7 +15,7 @@
                 "item": "minecraft:leather",
                 "count": 1
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             },
             "moduleKey": "shield/straps",
@@ -26,7 +26,7 @@
                 "item": "minecraft:rabbit_hide",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "moduleKey": "shield/straps",
@@ -37,7 +37,7 @@
                 "item": "minecraft:string",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "moduleKey": "shield/straps",
@@ -48,7 +48,7 @@
                 "item": "minecraft:phantom_membrane",
                 "count": 4
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             },
             "moduleKey": "shield/straps",

@@ -2,14 +2,17 @@ package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.modular.ModularItem;
+
+import java.util.Map;
 
 public abstract class BaseSchematic implements UpgradeSchematic {
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, int[] availableCapabilities) {
+    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && !isIntegrityViolation(player, itemStack, materials, slot)
-                && checkCapabilities(itemStack, materials, availableCapabilities)
+                && checkTools(itemStack, materials, availableTools)
                 && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
 
@@ -20,9 +23,9 @@ public abstract class BaseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkCapabilities(final ItemStack targetStack, final ItemStack[] materials, int[] availableCapabilities) {
-        return getRequiredCapabilities(targetStack, materials).stream()
-                .allMatch(capability -> availableCapabilities[capability.ordinal()] >= getRequiredCapabilityLevel(targetStack, materials, capability));
+    public boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ToolType, Integer> availableTools) {
+        return getRequiredToolLevels(targetStack, materials).entrySet().stream()
+                .allMatch(entry -> availableTools.getOrDefault(entry.getKey(), 0) >= entry.getValue());
     }
 
     @Override

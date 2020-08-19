@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import se.mickelus.mgui.gui.hud.GuiRootHud;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,10 +19,10 @@ public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
     }
 
     public void update(BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
-        if (blockState.getBlock() instanceof IBlockCapabilityInteractive) {
-            IBlockCapabilityInteractive block = (IBlockCapabilityInteractive) blockState.getBlock();
+        if (blockState.getBlock() instanceof IBlockInteractive) {
+            IBlockInteractive block = (IBlockInteractive) blockState.getBlock();
 
-            BlockInteraction[] interactions = block.getPotentialInteractions(blockState, face, CapabilityHelper.getPlayerCapabilities(player));
+            BlockInteraction[] interactions = block.getPotentialInteractions(blockState, face, PropertyHelper.getPlayerTools(player));
 
             if (transition) {
                 Collection<GuiInteractiveOutline> previousOutlines = elements.stream()

@@ -17,14 +17,14 @@ public class StatGetterIntegrity implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        return ModularItem.getIntegrityGain(itemStack) + ModularItem.getIntegrityCost(itemStack);
+        return ModularItem.getIntegrityGain(itemStack) - ModularItem.getIntegrityCost(itemStack);
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getIntegrityGain(itemStack) + module.getIntegrityCost(itemStack))
+                .map(module -> module.getIntegrityGain(itemStack) - module.getIntegrityCost(itemStack))
                 .orElse(0);
     }
 

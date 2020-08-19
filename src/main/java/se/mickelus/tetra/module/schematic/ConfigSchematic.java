@@ -4,11 +4,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
@@ -178,42 +178,41 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public Collection<Capability> getRequiredCapabilities(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .flatMap(outcome -> outcome.requiredCapabilities.getValues().stream())
-                    .distinct()
-                    .collect(Collectors.toSet());
+                    .flatMap(outcome -> outcome.requiredTools.levelMap.entrySet().stream())
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
         } else {
             return Arrays.stream(definition.outcomes)
                     .findFirst()
-                    .map(outcome -> outcome.requiredCapabilities.getValues())
-                    .orElseGet(HashSet::new);
+                    .map(outcome -> outcome.requiredTools.levelMap)
+                    .orElseGet(Collections::emptyMap);
         }
     }
 
     @Override
-    public int getRequiredCapabilityLevel(ItemStack targetStack, ItemStack[] materials, Capability capability) {
+    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolType toolType) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .map(outcome -> outcome.requiredCapabilities)
-                    .filter(capabilities -> capabilities.contains(capability))
-                    .map(capabilities -> capabilities.getLevel(capability))
+                    .map(outcome -> outcome.requiredTools)
+                    .filter(capabilities -> capabilities.contains(toolType))
+                    .map(capabilities -> capabilities.getLevel(toolType))
                     .sorted()
                     .findFirst()
                     .orElse(0);
         } else {
             return Arrays.stream(definition.outcomes)
                     .findFirst()
-                    .map(outcome -> outcome.requiredCapabilities)
-                    .filter(capabilities -> capabilities.contains(capability))
-                    .map(capabilities -> capabilities.getLevel(capability))
+                    .map(outcome -> outcome.requiredTools)
+                    .filter(capabilities -> capabilities.contains(toolType))
+                    .map(capabilities -> capabilities.getLevel(toolType))
                     .orElse(0);
         }
 
@@ -295,23 +294,23 @@ public class ConfigSchematic extends BaseSchematic {
         if(player instanceof ServerPlayerEntity) {
 
             if (outcome.moduleKey != null) {
-                if (outcome.requiredCapabilities.getValues().isEmpty()) {
+                if (outcome.requiredTools.getValues().isEmpty()) {
                     ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                             outcome.moduleVariant, null, -1);
                 } else {
-                    outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
+                    outcome.requiredTools.levelMap.forEach((tool, toolLevel) ->
                             ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
-                                    outcome.moduleVariant, capability, capabilityLevel));
+                                    outcome.moduleVariant, tool, toolLevel));
                 }
             }
 
             outcome.improvements.forEach((improvement, level) -> {
-                if (outcome.requiredCapabilities.getValues().isEmpty()) {
+                if (outcome.requiredTools.getValues().isEmpty()) {
                     ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
                 } else {
-                    outcome.requiredCapabilities.valueMap.forEach((capability, capabilityLevel) ->
+                    outcome.requiredTools.levelMap.forEach((tool, toolLevel) ->
                             ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
-                            capability, capabilityLevel));
+                            tool, toolLevel));
                 }
             });
         }
@@ -388,7 +387,7 @@ public class ConfigSchematic extends BaseSchematic {
                     ItemStack itemStack = targetStack.copy();
                     applyOutcome(outcome, itemStack, false, slot, null);
 
-                    return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredCapabilities,
+                    return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
                 })
                 .filter(Filter.distinct(preview -> preview.key))

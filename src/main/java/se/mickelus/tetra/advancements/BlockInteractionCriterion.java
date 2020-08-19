@@ -7,37 +7,37 @@ import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.EnumUtils;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.JsonOptional;
 
 public class BlockInteractionCriterion extends CriterionInstance {
     private final PropertyMatcher after;
-    private final Capability capability;
+    private final ToolType toolType;
     private int capabilityLevel;
 
     public static final GenericTrigger<BlockInteractionCriterion> trigger = new GenericTrigger<>("tetra:block_interaction", BlockInteractionCriterion::deserialize);
 
-    public BlockInteractionCriterion(EntityPredicate.AndPredicate playerCondition, PropertyMatcher after, Capability capability, int capabilityLevel) {
+    public BlockInteractionCriterion(EntityPredicate.AndPredicate playerCondition, PropertyMatcher after, ToolType toolType, int capabilityLevel) {
         super(trigger.getId(), playerCondition);
         this.after = after;
-        this.capability = capability;
+        this.toolType = toolType;
         this.capabilityLevel = capabilityLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, BlockState state, Capability usedCapability, int usedCapabilityLevel) {
-        trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedCapability, usedCapabilityLevel));
+    public static void trigger(ServerPlayerEntity player, BlockState state, ToolType usedToolType, int usedCapabilityLevel) {
+        trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedToolType, usedCapabilityLevel));
 
 
     }
 
-    public boolean test(BlockState state, Capability usedCapability, int usedCapabilityLevel) {
+    public boolean test(BlockState state, ToolType usedToolType, int usedCapabilityLevel) {
         if (after != null && !after.test(state)) {
             return false;
         }
 
-        if (this.capability != null && !this.capability.equals(usedCapability)) {
+        if (this.toolType != null && !this.toolType.equals(usedToolType)) {
             return false;
         }
 
@@ -55,8 +55,7 @@ public class BlockInteractionCriterion extends CriterionInstance {
                         .orElse(null),
                 JsonOptional.field(json, "capability")
                         .map(JsonElement::getAsString)
-                        .filter(cap -> EnumUtils.isValidEnum(Capability.class, cap))
-                        .map(Capability::valueOf)
+                        .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "capabilityLevel")
                         .map(JsonElement::getAsInt)

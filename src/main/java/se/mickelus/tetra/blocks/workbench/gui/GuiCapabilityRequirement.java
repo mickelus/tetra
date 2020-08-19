@@ -2,19 +2,19 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.capabilities.Capability;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.gui.GuiColors;
 
 import java.util.Collections;
 import java.util.List;
 
-public class GuiCapabilityRequirement extends GuiCapability {
+public class GuiCapabilityRequirement extends GuiTool {
 
     int requiredLevel;
     int availableLevel;
 
-    public GuiCapabilityRequirement(int x, int y, Capability capability) {
-        super(x, y, capability);
+    public GuiCapabilityRequirement(int x, int y, ToolType toolType) {
+        super(x, y, toolType);
     }
 
     public void updateRequirement(int requiredLevel, int availableLevel) {
@@ -34,9 +34,9 @@ public class GuiCapabilityRequirement extends GuiCapability {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Collections.singletonList(I18n.format("tetra.capability." + capability + ".requirement", requiredLevel) + "\n\n"
+            return Collections.singletonList(I18n.format("tetra.tool." + toolType.getName() + ".requirement", requiredLevel) + "\n\n"
                     + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
-                    + I18n.format( "tetra.capability.available", availableLevel));
+                    + I18n.format( "tetra.tool.available", availableLevel));
         }
         return super.getTooltipLines();
     }

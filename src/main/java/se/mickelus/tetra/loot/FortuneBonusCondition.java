@@ -12,8 +12,8 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 
@@ -25,18 +25,18 @@ public class FortuneBonusCondition implements ILootCondition {
     private float chance;
     private float fortuneMultiplier;
 
-    private Capability requiredCapability;
-    private int capabilityLevel = -1;
+    private ToolType requiredTool;
+    private int requiredToolLevel = -1;
 
     @Override
     public boolean test(LootContext context) {
         int fortuneLevel = 0;
 
-        if (requiredCapability != null) {
+        if (requiredTool != null) {
             ItemStack toolStack = context.get(LootParameters.TOOL);
 
             if (toolStack != null && toolStack.getItem() instanceof ModularItem) {
-                if (((ModularItem) toolStack.getItem()).getCapabilityLevel(toolStack, requiredCapability) > capabilityLevel) {
+                if (((ModularItem) toolStack.getItem()).getToolLevel(toolStack, requiredTool) > requiredToolLevel) {
                     fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, toolStack);
                 }
             }

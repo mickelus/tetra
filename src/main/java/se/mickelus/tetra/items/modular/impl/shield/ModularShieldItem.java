@@ -5,7 +5,6 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemModelsProperties;
@@ -14,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
@@ -23,7 +21,9 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.NBTHelper;
 
 import java.util.Optional;
 
@@ -96,10 +96,11 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        Multimap<Attribute, AttributeModifier> modifiers = super.getAttributeModifiers(slot, itemStack);
-        modifiers.removeAll(Attributes.ATTACK_SPEED);
-        modifiers.removeAll(Attributes.ATTACK_DAMAGE);
-        return modifiers;
+        if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
+            return getAttributeModifiersCached(itemStack);
+        }
+
+        return AttributeHelper.emptyMap;
     }
 
     @Override

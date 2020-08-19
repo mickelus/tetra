@@ -1,7 +1,13 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -15,26 +21,30 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.AttributeHelper;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class ModularDoubleHeadedItem extends ItemModularHandheld {
+    private static final Logger logger = LogManager.getLogger();
 
     public final static String headLeftKey = "double/head_left";
     public final static String headRightKey = "double/head_right";
@@ -107,7 +117,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         BlockPos pos = context.getPos();
         Hand hand = context.getHand();
         if (player != null && !player.isCrouching() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
-                && getCapabilityLevel(player.getHeldItem(hand), Capability.hammer) > 0) {
+                && getToolLevel(player.getHeldItem(hand), ToolTypes.hammer) > 0) {
             return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
         }
         return super.onItemUseFirst(stack, context);
@@ -128,35 +138,52 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                 .orElse(modulePrefix);
     }
 
+    // overridden to not stack the damage attribute between heads
     @Override
-    public double getDamageModifier(ItemStack itemStack) {
-        if (isBroken(itemStack)) {
-            return 0;
-        }
-
-        // only use the damage from the highest damaging head
-        double damageModifier = Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> moduleAttributes = Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
                 .filter(Objects::nonNull)
-                .mapToDouble(module -> module.getDamageModifier(itemStack))
-                .max()
-                .orElse(0);
+                .map(module -> module.getAttributeModifiers(itemStack))
+                .filter(Objects::nonNull)
+//                .peek(modifiers -> modifiers.asMap().entrySet().forEach(entry -> entry.setValue(AttributeHelper.collapseModifiers(entry.getValue()))))
+                .map(modifiers -> modifiers.asMap().entrySet().stream().collect(Multimaps.flatteningToMultimap(
+                        Map.Entry::getKey,
+                        entry -> AttributeHelper.collapseModifiers(entry.getValue()).stream(),
+                        ArrayListMultimap::create)))
+                .map(Multimap::entries)
+                .flatMap(Collection::stream)
+                .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
+        moduleAttributes = AttributeHelper.retainMax(moduleAttributes, Attributes.ATTACK_DAMAGE);
 
-        damageModifier = getAllModules(itemStack).stream()
+        moduleAttributes = getAllModules(itemStack).stream()
                 .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
-                .map(itemModule -> itemModule.getDamageModifier(itemStack))
-                .reduce(damageModifier, Double::sum);
+                .map(module -> module.getAttributeModifiers(itemStack))
+                .reduce(moduleAttributes, AttributeHelper::merge);
 
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damage)
-                .reduce(damageModifier, Double::sum);
+        return Arrays.stream(getSynergyData(itemStack))
+                .map(synergy -> synergy.attributes)
+                .reduce(moduleAttributes, AttributeHelper::merge);
+    }
 
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damageMultiplier)
-                .reduce(damageModifier, (a, b) -> a * b);
+    // overridden to not stack the tool level/efficiency attribute between heads
+    @Override
+    public ToolData getToolData(ItemStack itemStack) {
+        logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        ToolData result = ToolData.retainMax(Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
+                .filter(Objects::nonNull)
+                .map(module -> module.getToolData(itemStack))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
 
-        return getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
-                .reduce(damageModifier, (a, b) -> a * b);
+        return Stream.concat(
+                getAllModules(itemStack).stream()
+                        .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
+                        .map(module -> module.getToolData(itemStack)),
+                Arrays.stream(getSynergyData(itemStack))
+                        .map(synergy -> synergy.tools))
+                .filter(Objects::nonNull)
+                .reduce(result, ToolData::merge);
+
     }
 
     @Override

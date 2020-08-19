@@ -22,13 +22,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -41,7 +42,7 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 
-public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockCapabilityInteractive, IWaterLoggable {
+public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockInteractive, IWaterLoggable {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockForgedCrate instance;
@@ -51,13 +52,13 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, Direction.EAST, 6, 8, 6, 8,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakPry),
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 1, 4, 1, 4,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakHammer),
-            new BlockInteraction(Capability.hammer, 3, Direction.EAST, 10, 13, 10, 13,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 10, 13, 10, 13,
                     BlockStateMatcher.ANY,
                     BlockForgedCrate::attemptBreakHammer),
     };
@@ -95,25 +96,25 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     private static boolean attemptBreakHammer(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), Capability.hammer, 2, 1);
+        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), ToolTypes.hammer, 2, 1);
     }
 
     private static boolean attemptBreakPry(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), Capability.pry, 0, 2);
+        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), ToolTypes.pry, 0, 2);
     }
 
     private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand,
-            ItemStack itemStack, Capability capability, int min, int multiplier) {
+            ItemStack itemStack, ToolType toolType, int min, int multiplier) {
 
         int integrity = blockState.get(propIntegrity);
 
         int progress = CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                .map(item -> item.getCapabilityLevel(itemStack, capability))
+                .map(item -> item.getToolLevel(itemStack, toolType))
                 .map(level -> ( level - min ) * multiplier)
                 .orElse(1);
 
         if (integrity - progress >= 0) {
-            if (Capability.hammer.equals(capability)) {
+            if (ToolTypes.hammer.equals(toolType)) {
                 world.playSound(player, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
             } else {
                 world.playSound(player, pos, SoundEvents.BLOCK_LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
@@ -123,7 +124,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
         } else {
             boolean didBreak = ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState, false);
             if (didBreak && world instanceof ServerWorld) {
-                ResourceLocation lootTable = Capability.hammer.equals(capability) ? hammerbonusLootTable : pryBonusLootTable;
+                ResourceLocation lootTable = ToolTypes.hammer.equals(toolType) ? hammerbonusLootTable : pryBonusLootTable;
 
                 BlockInteraction.getLoot(lootTable, player, hand, (ServerWorld) world, blockState)
                         .forEach(lootStack -> spawnAsEntity(world, pos, lootStack));
@@ -135,7 +136,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> capabilities) {
             return interactions;
     }
 

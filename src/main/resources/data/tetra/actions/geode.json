@@ -4,7 +4,7 @@
         "requirement": {
             "item": "tetra:geode"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 2
         },
         "lootTable": "tetra:actions/geode"
@@ -14,7 +14,7 @@
         "requirement": {
             "item": "tetra:pristine_diamond"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 2
         },
         "lootTable": "tetra:actions/shatter_diamond"
@@ -24,7 +24,7 @@
         "requirement": {
             "item": "tetra:pristine_emerald"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 2
         },
         "lootTable": "tetra:actions/shatter_emerald"
@@ -34,7 +34,7 @@
         "requirement": {
             "item": "tetra:pristine_lapis"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 2
         },
         "lootTable": "tetra:actions/shatter_lapis"

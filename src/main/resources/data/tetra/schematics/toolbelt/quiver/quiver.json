@@ -21,7 +21,7 @@
                 "item": "tetra:forged_mesh",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "toolbelt/quiver",

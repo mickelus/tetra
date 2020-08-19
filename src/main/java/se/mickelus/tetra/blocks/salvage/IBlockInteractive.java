@@ -1,0 +1,11 @@
+package se.mickelus.tetra.blocks.salvage;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.ToolType;
+
+import java.util.Collection;
+
+public interface IBlockInteractive {
+    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> capabilities);
+}

@@ -16,7 +16,7 @@
     },
     "outcomes": [
         {
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "improvements": {

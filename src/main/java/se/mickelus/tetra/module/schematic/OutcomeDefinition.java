@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.schematic;
 
-import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.module.data.ToolData;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
  *         "item": "minecraft:oak_planks",
  *         "count": 2
  *     },
- *     "requiredCapabilities": {
+ *     "requiredTools": {
  *         "axe": 1,
  *         "hammer": 4
  *     },
@@ -40,7 +40,6 @@ public class OutcomeDefinition {
 
     /**
      * The experience cost for the craft.
-     * todo: not yet implemented
      */
     public int experienceCost = 0;
 
@@ -55,7 +54,7 @@ public class OutcomeDefinition {
      *     "capabilityB": level
      * }
      */
-    public CapabilityData requiredCapabilities = new CapabilityData();
+    public ToolData requiredTools = new ToolData();
 
     /**
      * A key referring to a module.

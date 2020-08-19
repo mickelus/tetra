@@ -1,6 +1,8 @@
 package se.mickelus.tetra.items.modular;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.*;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -9,6 +11,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.UnbreakingEnchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.EndermiteEntity;
@@ -17,6 +21,7 @@ import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
@@ -36,35 +41,39 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.module.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class ModularItem extends TetraItem implements IItemModular, ICapabilityProvider {
+public abstract class ModularItem extends TetraItem implements IItemModular, IToolProvider {
+    private static final Logger logger = LogManager.getLogger();
+
     protected static final String identifierKey = "id";
 
     protected static final String repairCountKey = "repairCount";
@@ -90,8 +99,42 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
 
     protected SynergyData[] synergies = new SynergyData[0];
 
+    public static final UUID reachModifier = UUID.fromString("A7A35FFA-0B44-4AA5-9880-4BD28425E275");
+    public static final UUID armorModifier = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
+    public static final UUID toughnessModifier = UUID.fromString("CE955EA0-2B0E-4E63-BFE7-CE697B5080C8");
+    public static final UUID attackDamageModifier = Item.ATTACK_DAMAGE_MODIFIER;
+    public static final UUID attackSpeedModifier = ItemModularHandheld.ATTACK_SPEED_MODIFIER;
+
+    private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .build();
+
+    private Cache<String, ToolData> toolCache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .build();
+
+    private Cache<String, EffectData> effectCache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .build();
+
+    private Cache<String, ItemProperties> propertyCache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .build();
+
     public ModularItem(Properties properties) {
         super(properties);
+
+        DataManager.moduleData.onReload(this::clearCaches);
+    }
+
+    public String getDataCacheKey(ItemStack itemStack) {
+        return Optional.of(getIdentifier(itemStack))
+                .filter(id -> !id.isEmpty())
+                .orElseGet(() -> NBTHelper.getTag(itemStack).toString());
     }
 
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
@@ -100,36 +143,34 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
                 .orElseGet(() -> NBTHelper.getTag(itemStack).toString());
     }
 
-    @Override
-    public int getMaxDamage(ItemStack stack) {
-        return (int) ((getAllModules(stack).stream()
-                .map(itemModule -> itemModule.getDurability(stack))
-                .reduce(0, Integer::sum) + baseDurability)
-                * getDurabilityMultiplier(stack));
+    public void clearCaches() {
+        logger.debug("Clearing item data caches for {}...", getRegistryName());
+        attributeCache.invalidateAll();
+        toolCache.invalidateAll();
+        effectCache.invalidateAll();
+        propertyCache.invalidateAll();
     }
 
-    public float getDurabilityMultiplier(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDurabilityMultiplier(itemStack))
-                .reduce(1f, (a, b) -> a * b);
+    @Override
+    public int getMaxDamage(ItemStack itemStack) {
+        return Optional.of(getPropertiesCached(itemStack))
+                .map(properties -> (properties.durability + baseDurability) * properties.durabilityMultiplier)
+                .map(Math::round)
+                .orElse(0);
     }
 
     public static int getIntegrityGain(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ModularItem) {
-            return ((ModularItem) itemStack.getItem()).getAllModules(itemStack).stream()
-                    .map(module -> module.getIntegrityGain(itemStack))
-                    .reduce(0, Integer::sum);
-        }
-        return 0;
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getPropertiesCached(itemStack))
+                .map(properties -> properties.integrity)
+                .orElse(0);
     }
 
     public static int getIntegrityCost(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ModularItem) {
-            return ((ModularItem) itemStack.getItem()).getAllModules(itemStack).stream()
-                    .map(module -> module.getIntegrityCost(itemStack))
-                    .reduce(0, Integer::sum);
-        }
-        return 0;
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getPropertiesCached(itemStack))
+                .map(properties -> properties.integrityUsage)
+                .orElse(0);
     }
 
     protected Collection<ItemModule> getAllModules(ItemStack stack) {
@@ -600,16 +641,22 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
         return getMaxDamage(itemStack);
     }
 
-    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack, ItemStack materialStack) {
+    public Collection<ToolType> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairRequiredCapabilities(itemStack, materialStack))
-                .orElse(Collections.emptyList());
+                .map(module -> module.getRepairRequiredTools(itemStack, materialStack))
+                .orElseGet(Collections::emptySet);
     }
 
-    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, Capability capability) {
+    public Map<ToolType, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
-                .filter(module -> module.getRepairRequiredCapabilities(itemStack, materialStack).contains(capability))
-                .map(module -> module.getRepairRequiredCapabilityLevel(itemStack, materialStack, capability))
+                .map(module -> module.getRepairRequiredToolLevels(itemStack, materialStack))
+                .orElseGet(Collections::emptyMap);
+    }
+
+    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, ToolType toolType) {
+        return getRepairModule(itemStack)
+                .filter(module -> module.getRepairRequiredTools(itemStack, materialStack).contains(toolType))
+                .map(module -> module.getRepairRequiredToolLevel(itemStack, materialStack, toolType))
                 .map(level -> Math.max(1, level))
                 .orElse(0);
     }
@@ -793,96 +840,140 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
         }
     }
 
-    public int getCapabilityLevel(ItemStack itemStack, ToolType toolType) {
-        if (toolType != null) {
-            return getCapabilityLevel(itemStack, toolType.getName());
-        }
-        return -1;
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> moduleAttributes = getAllModules(itemStack).stream()
+                .map(module -> module.getAttributeModifiers(itemStack))
+                .filter(Objects::nonNull)
+                .reduce(null, AttributeHelper::merge);
+
+        return Arrays.stream(getSynergyData(itemStack))
+                .map(synergy -> synergy.attributes)
+                .filter(Objects::nonNull)
+                .reduce(moduleAttributes, AttributeHelper::merge);
     }
 
-    public int getCapabilityLevel(ItemStack itemStack, String capability) {
-        if (EnumUtils.isValidEnum(Capability.class, capability)) {
-            return getCapabilityLevel(itemStack, Capability.valueOf(capability));
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersCollapsed(ItemStack itemStack) {
+        logger.debug("Gathering attribute modifiers for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers
+                        .asMap()
+                        .entrySet()
+                        .stream()
+                        .collect(Multimaps.flatteningToMultimap(
+                                Map.Entry::getKey,
+                                entry -> AttributeHelper.collapseModifiers(entry.getValue()).stream(),
+                                ArrayListMultimap::create)))
+                .orElse(null);
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersCached(ItemStack itemStack) {
+        try {
+            return attributeCache.get(getDataCacheKey(itemStack),
+                    () -> Optional.ofNullable(getAttributeModifiersCollapsed(itemStack)).orElseGet(ImmutableMultimap::of));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return getAttributeModifiersCollapsed(itemStack);
         }
-        return -1;
+    }
+
+    public ToolData getToolData(ItemStack itemStack) {
+        logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        return Stream.concat(
+                getAllModules(itemStack).stream()
+                        .map(module -> module.getToolData(itemStack)),
+                Arrays.stream(getSynergyData(itemStack))
+                        .map(synergy -> synergy.tools))
+                .filter(Objects::nonNull)
+                .reduce(null, ToolData::merge);
+    }
+
+    public ToolData getToolDataCached(ItemStack itemStack) {
+        try {
+            return toolCache.get(getDataCacheKey(itemStack),
+                    () -> Optional.ofNullable(getToolData(itemStack)).orElseGet(ToolData::new));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return Optional.ofNullable(getToolData(itemStack)).orElseGet(ToolData::new);
+        }
+    }
+
+    public EffectData getEffectData(ItemStack itemStack) {
+        logger.debug("Gathering effect data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        return Stream.concat(
+                getAllModules(itemStack).stream()
+                        .map(module -> module.getEffectData(itemStack)),
+                Arrays.stream(getSynergyData(itemStack))
+                        .map(synergy -> synergy.effects))
+                .filter(Objects::nonNull)
+                .reduce(null, EffectData::merge);
+    }
+
+    public EffectData getEffectDataCached(ItemStack itemStack) {
+        try {
+            return effectCache.get(getDataCacheKey(itemStack),
+                    () -> Optional.ofNullable(getEffectData(itemStack)).orElseGet(EffectData::new));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return Optional.ofNullable(getEffectData(itemStack)).orElseGet(EffectData::new);
+        }
+    }
+
+    public ItemProperties getProperties(ItemStack itemStack) {
+        logger.debug("Gathering properties for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+
+        return Stream.concat(
+                getAllModules(itemStack).stream().map(module -> module.getProperties(itemStack)),
+                Arrays.stream(getSynergyData(itemStack)))
+                .reduce(new ItemProperties(), ItemProperties::merge);
+    }
+
+    public ItemProperties getPropertiesCached(ItemStack itemStack) {
+        try {
+            return propertyCache.get(getDataCacheKey(itemStack), () -> getProperties(itemStack));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return getProperties(itemStack);
+        }
     }
 
     @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+    public int getToolLevel(ItemStack itemStack, ToolType tool) {
         if (isBroken(itemStack)) {
             return -1;
         }
 
-        int base = getAllModules(itemStack).stream()
-                .map(module -> module.getCapabilityLevel(itemStack, capability))
-                .max(Integer::compare)
-                .orElse(-1);
-
-        int synergyBonus = Arrays.stream(getSynergyData(itemStack))
-                .map(synergyData -> synergyData.capabilities)
-                .mapToInt(capabilityData -> capabilityData.getLevel(capability))
-                .sum();
-
-        return base + synergyBonus;
-    }
-
-    public float getCapabilityEfficiency(ItemStack itemStack, ToolType toolType) {
-        if (toolType != null) {
-            return getCapabilityEfficiency(itemStack, toolType.getName());
-        }
-        return -1;
-    }
-
-    public float getCapabilityEfficiency(ItemStack itemStack, String capability) {
-        if (EnumUtils.isValidEnum(Capability.class, capability)) {
-            return getCapabilityEfficiency(itemStack, Capability.valueOf(capability));
-        }
-        return -1;
+        return getToolDataCached(itemStack).getLevel(tool);
     }
 
     @Override
-    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
+    public float getToolEfficiency(ItemStack itemStack, ToolType tool) {
         if (isBroken(itemStack)) {
             return 0;
         }
 
-        if (getCapabilityLevel(itemStack, capability) <= 0) {
+        if (getToolLevel(itemStack, tool) <= 0) {
             return 0;
         }
 
-        int highestLevel = getAllModules(itemStack).stream()
-                .map(module -> module.getCapabilityLevel(itemStack, capability))
-                .max(Integer::compare)
-                .orElse(-1);
-
-        // grabs the highest efficiency from modules that also provide a capability level (from the module(s) that have the highest capability level
-        // adds the efficiency of all modules that have 0 capability level
-        float efficiency = getAllModules(itemStack).stream()
-                .filter(module -> module.getCapabilityLevel(itemStack, capability) >= highestLevel)
-                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
-                .max(Float::compare)
-                .orElse(1f)
-                + (float) getAllModules(itemStack).stream()
-                .filter(module -> module.getCapabilityLevel(itemStack, capability) == 0)
-                .mapToDouble(module -> module.getCapabilityEfficiency(itemStack, capability))
-                .sum();
-
-        return Math.max(0, efficiency + (float) Arrays.stream(getSynergyData(itemStack))
-                .map(synergyData -> synergyData.capabilities)
-                .mapToDouble(capabilityData -> capabilityData.getEfficiency(capability))
-                .sum());
+        return getToolDataCached(itemStack).getEfficiency(tool);
     }
 
     @Override
-    public Set<Capability> getCapabilities(ItemStack itemStack) {
+    public Set<ToolType> getTools(ItemStack itemStack) {
         if (isBroken(itemStack)) {
             return Collections.emptySet();
         }
 
-        return Stream.concat(
-                getAllModules(itemStack).stream().flatMap(module -> (module.getCapabilities(itemStack)).stream()),
-                Arrays.stream(getSynergyData(itemStack)).flatMap(synergyData -> synergyData.capabilities.getValues().stream()))
-                .collect(Collectors.toSet());
+        return getToolDataCached(itemStack).getValues();
+    }
+
+    @Override
+    public Map<ToolType, Integer> getToolLevels(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return Collections.emptyMap();
+        }
+
+        return getToolDataCached(itemStack).levelMap;
     }
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
@@ -890,13 +981,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             return -1;
         }
 
-        return getAllModules(itemStack).stream()
-                .mapToInt(module -> module.getEffectLevel(itemStack, effect))
-                .sum()
-                + Arrays.stream(getSynergyData(itemStack))
-                .map(synergyData -> synergyData.effects)
-                .mapToInt(effectData -> effectData.getLevel(effect))
-                .sum();
+        return getEffectDataCached(itemStack).getLevel(effect);
     }
 
     public double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
@@ -904,13 +989,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             return 0;
         }
 
-        return getAllModules(itemStack).stream()
-                .mapToDouble(module -> module.getEffectEfficiency(itemStack, effect))
-                .sum()
-                + Arrays.stream(getSynergyData(itemStack))
-                .map(synergyData -> synergyData.effects)
-                .mapToDouble(effectData -> effectData.getEfficiency(effect))
-                .sum();
+        return getEffectDataCached(itemStack).getEfficiency(effect);
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
@@ -918,15 +997,16 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ICa
             return Collections.emptyList();
         }
 
-        return Stream.concat(
-                getAllModules(itemStack).stream().flatMap(module -> (module.getEffects(itemStack)).stream()),
-                Arrays.stream(getSynergyData(itemStack)).flatMap(synergyData -> synergyData.effects.getValues().stream()))
-                .collect(Collectors.toSet());
-
+        return getEffectDataCached(itemStack).getValues();
     }
 
+    /**
+     * Vanilla method for determining if the item should display the enchantment glint
+     * @param itemStack The itemstack for the item
+     * @return true if should display glint
+     */
     @Override
-    public boolean hasEffect(ItemStack itemStack) {
+    public boolean hasEffect(@Nonnull ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack))
                 .anyMatch(improvement -> improvement.enchantment);
     }

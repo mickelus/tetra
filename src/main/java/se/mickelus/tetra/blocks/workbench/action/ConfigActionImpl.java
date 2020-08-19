@@ -13,10 +13,11 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 
@@ -39,13 +40,18 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public Capability[] getRequiredCapabilitiesFor(ItemStack itemStack) {
-        return requiredCapabilities.getValues().toArray(new Capability[0]);
+    public Collection<ToolType> getRequiredToolTypes(ItemStack itemStack) {
+        return requiredTools.getValues();
     }
 
     @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
-        return requiredCapabilities.getLevel(capability);
+    public int getRequiredToolLevel(ItemStack itemStack, ToolType toolType) {
+        return requiredTools.getLevel(toolType);
+    }
+
+    @Override
+    public Map<ToolType, Integer> getRequiredTools(ItemStack itemStack) {
+        return requiredTools.levelMap;
     }
 
     @Override
@@ -53,14 +59,14 @@ public class ConfigActionImpl extends ConfigAction {
         if (!player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
-            ItemStack toolStack = requiredCapabilities.valueMap.entrySet().stream()
+            ItemStack toolStack = requiredTools.levelMap.entrySet().stream()
                     .sorted(Comparator.comparing(Map.Entry::getValue))
                     .findFirst()
                     .map(entry -> {
-                        ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(entry.getKey(), entry.getValue(), player);
+                        ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(entry.getKey(), entry.getValue(), player);
 
                         if (providingStack.isEmpty()) {
-                            providingStack = CapabilityHelper.getToolbeltProvidingItemStack(entry.getKey(), entry.getValue(), player);
+                            providingStack = PropertyHelper.getToolbeltProvidingItemStack(entry.getKey(), entry.getValue(), player);
                         }
 
                         return providingStack;

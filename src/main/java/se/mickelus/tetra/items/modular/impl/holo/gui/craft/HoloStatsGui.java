@@ -2,18 +2,19 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.capabilities.Capability;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.tetra.gui.statbar.GuiStatBarCapability;
+import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.gui.statbar.GuiStatBarTool;
 import se.mickelus.tetra.gui.statbar.GuiStatBase;
 import se.mickelus.tetra.gui.statbar.GuiStats;
 import se.mickelus.tetra.items.modular.ModularItem;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class HoloStatsGui extends GuiElement {
@@ -76,8 +77,8 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.intuit);
         bars.add(GuiStats.magicCapacity);
 
-        Arrays.stream(Capability.values())
-                .map(capability -> new GuiStatBarCapability(0, 0, GuiStats.barLength, capability))
+        Stream.of(ToolTypes.hammer, ToolType.AXE, ToolType.PICKAXE, ToolType.SHOVEL, ToolTypes.cut, ToolTypes.pry, ToolType.HOE)
+                .map(capability -> new GuiStatBarTool(0, 0, GuiStats.barLength, capability))
                 .forEach(bars::add);
 
         bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));

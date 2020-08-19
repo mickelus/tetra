@@ -13,7 +13,7 @@
             "material": {
                 "item": "minecraft:stick"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -23,7 +23,7 @@
             "material": {
                 "item": "minecraft:bone"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/basic_hilt",
@@ -33,7 +33,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -43,7 +43,7 @@
             "material": {
                 "item": "minecraft:blaze_rod"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/basic_hilt",
@@ -56,7 +56,7 @@
             "material": {
                 "item": "minecraft:end_rod"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/basic_hilt",
@@ -69,7 +69,7 @@
             "material": {
                 "tag": "forge:ingots/bronze"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -79,7 +79,7 @@
             "material": {
                 "tag": "forge:ingots/steel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -89,7 +89,7 @@
             "material": {
                 "item": "minecraft:oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -99,7 +99,7 @@
             "material": {
                 "item": "minecraft:spruce_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -109,7 +109,7 @@
             "material": {
                 "item": "minecraft:birch_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -119,7 +119,7 @@
             "material": {
                 "item": "minecraft:jungle_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -129,7 +129,7 @@
             "material": {
                 "item": "minecraft:acacia_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -139,7 +139,7 @@
             "material": {
                 "item": "minecraft:dark_oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "sword/basic_hilt",
@@ -149,7 +149,7 @@
             "material": {
                 "tag": "forge:planks/maple"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/basic_hilt",
@@ -159,7 +159,7 @@
             "material": {
                 "tag": "forge:planks/cherry"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -169,7 +169,7 @@
             "material": {
                 "tag": "forge:planks/baobab"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -179,7 +179,7 @@
             "material": {
                 "tag": "forge:planks/greatwood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -189,7 +189,7 @@
             "material": {
                 "tag": "forge:planks/treated_wood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -199,7 +199,7 @@
             "material": {
                 "tag": "forge:rods/treated_wood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "sword/basic_hilt",
@@ -209,7 +209,7 @@
             "material": {
                 "tag": "forge:planks/ironwood"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/basic_hilt",
@@ -219,7 +219,7 @@
             "material": {
                 "item": "tetra:forged_beam"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/basic_hilt",

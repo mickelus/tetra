@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -9,6 +10,7 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class GuiActionList extends GuiElement {
@@ -43,8 +45,8 @@ public class GuiActionList extends GuiElement {
         }
     }
 
-    public void updateCapabilities(int[] availableCapabilities) {
-        Arrays.stream(actionButtons).forEach(button -> button.update(availableCapabilities));
+    public void updateTools(Map<ToolType, Integer> availableTools) {
+        Arrays.stream(actionButtons).forEach(button -> button.update(availableTools));
     }
 
     public void showAnimation() {

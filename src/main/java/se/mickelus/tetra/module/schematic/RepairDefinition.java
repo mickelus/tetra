@@ -1,11 +1,11 @@
 package se.mickelus.tetra.module.schematic;
 
-import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.module.data.ToolData;
 
 
 public class RepairDefinition {
     public OutcomeMaterial material;
-    public CapabilityData requiredCapabilities;
+    public ToolData requiredTools;
     public String moduleKey;
     public String moduleVariant;
 
@@ -19,7 +19,7 @@ public class RepairDefinition {
         moduleVariant = outcomeDefinition.moduleVariant;
 
         material = outcomeDefinition.material;
-        requiredCapabilities = outcomeDefinition.requiredCapabilities;
+        requiredTools = outcomeDefinition.requiredTools;
     }
 
     public static boolean validateOutcome(OutcomeDefinition outcome) {

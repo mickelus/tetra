@@ -14,7 +14,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "improvements": {
@@ -25,7 +25,7 @@
             "material": {
                 "item": "minecraft:gold_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "improvements": {
@@ -36,7 +36,7 @@
             "material": {
                 "tag": "forge:ingots/copper"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "improvements": {
@@ -47,7 +47,7 @@
             "material": {
                 "tag": "forge:ingots/tin"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "improvements": {
@@ -58,7 +58,7 @@
             "material": {
                 "tag": "forge:ingots/silver"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "improvements": {
@@ -69,7 +69,7 @@
             "material": {
                 "tag": "forge:ingots/nickel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "improvements": {
@@ -80,7 +80,7 @@
             "material": {
                 "tag": "forge:ingots/lead"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "improvements": {
@@ -91,7 +91,7 @@
             "material": {
                 "tag": "forge:ingots/electrum"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "improvements": {
@@ -102,7 +102,7 @@
             "material": {
                 "tag": "forge:ingots/bronze"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "improvements": {
@@ -113,7 +113,7 @@
             "material": {
                 "tag": "forge:ingots/steel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 5
             },
             "improvements": {

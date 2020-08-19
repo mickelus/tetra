@@ -13,7 +13,7 @@ package se.mickelus.tetra.module.data;
  *     }
  * }
  */
-public class ImprovementData extends ModuleVariantData {
+public class ImprovementData extends VariantData {
 
     /**
      * Several improvements with the same key may exist as long as they are of different levels. The level field also

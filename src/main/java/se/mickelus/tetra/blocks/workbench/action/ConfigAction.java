@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.module.data.ToolData;
 
 /**
  * ConfigActions are a variant of workbench actions which can be defined using configuration files.  Loot action is
@@ -35,7 +35,7 @@ public abstract class ConfigAction implements WorkbenchAction {
      *     "capabilityB": level
      * }
      */
-    public CapabilityData requiredCapabilities = new CapabilityData();
+    public ToolData requiredTools = new ToolData();
 
     /**
      * The loot table that rewards will be picked from when the action is performed.

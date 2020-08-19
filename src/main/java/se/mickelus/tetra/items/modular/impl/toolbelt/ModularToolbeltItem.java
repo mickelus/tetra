@@ -33,12 +33,14 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.module.data.TierData;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModularToolbeltItem extends ModularItem implements INamedContainerProvider {
     public final static String unlocalizedName = "modular_toolbelt";
@@ -145,17 +147,15 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         return getAllModules(itemStack).stream()
                 .filter(module -> module.getEffects(itemStack).contains(slotType.effect))
                 .map(module -> {
-                    EnumMap<ItemEffect, Integer> effectLevelMap = new EnumMap<>(ItemEffect.class);
-                    ((Collection<ItemEffect>) module.getEffects(itemStack)).stream()
-                            .filter(itemEffect -> !itemEffect.equals(slotType.effect))
-                            .forEach(itemEffect -> effectLevelMap.put(itemEffect, module.getEffectLevel(itemStack, itemEffect)));
-
+                    Map<ItemEffect, Integer> effectLevels = Optional.ofNullable(module.getEffectData(itemStack))
+                            .map(effects -> effects.levelMap)
+                            .orElseGet(Collections::emptyMap);
 
                     int slotCount = module.getEffectLevel(itemStack, slotType.effect);
                     Collection<Collection<ItemEffect>> result = new ArrayList<>(slotCount);
                     for (int i = 0; i < slotCount; i++) {
                         ArrayList<ItemEffect> slotEffects = new ArrayList<>();
-                        for (Map.Entry<ItemEffect, Integer> entry: effectLevelMap.entrySet()) {
+                        for (Map.Entry<ItemEffect, Integer> entry: effectLevels.entrySet()) {
                             if (entry.getValue() > i) {
                                 slotEffects.add(entry.getKey());
                             }

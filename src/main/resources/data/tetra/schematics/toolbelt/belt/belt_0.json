@@ -19,7 +19,7 @@
             "material": {
                 "tag": "minecraft:wool"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "moduleKey": "toolbelt/belt",

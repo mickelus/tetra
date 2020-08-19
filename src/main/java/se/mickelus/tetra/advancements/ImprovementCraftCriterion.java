@@ -8,8 +8,8 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.EnumUtils;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.util.JsonOptional;
 
 public class ImprovementCraftCriterion extends CriterionInstance {
@@ -22,12 +22,12 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     private final String improvement;
     private final int improvementLevel;
 
-    private final Capability capability;
-    private final int capabilityLevel;
+    private final ToolType toolType;
+    private final int toolLevel;
 
     public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
-    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, Capability capability, int capabilityLevel) {
+    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolType toolType, int toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -35,18 +35,18 @@ public class ImprovementCraftCriterion extends CriterionInstance {
         this.slot = slot;
         this.improvement = improvement;
         this.improvementLevel = improvementLevel;
-        this.capability = capability;
-        this.capabilityLevel = capabilityLevel;
+        this.toolType = toolType;
+        this.toolLevel = toolLevel;
     }
 
     public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
-            int improvementLevel, Capability capability, int capabilityLevel) {
+            int improvementLevel, ToolType toolType, int capabilityLevel) {
         trigger.fulfillCriterion(player,
-                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, capability, capabilityLevel));
+                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolType, capabilityLevel));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
-            Capability capability, int capabilityLevel) {
+            ToolType toolType, int capabilityLevel) {
 
         if (this.before != null && !this.before.test(before)) {
             return false;
@@ -72,11 +72,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.capability != null && !this.capability.equals(capability)) {
+        if (this.toolType != null && !this.toolType.equals(toolType)) {
             return false;
         }
 
-        if (this.capabilityLevel != -1 && this.capabilityLevel != capabilityLevel) {
+        if (this.toolLevel != -1 && this.toolLevel != capabilityLevel) {
             return false;
         }
 
@@ -105,8 +105,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                         .orElse(-1),
                 JsonOptional.field(json, "capability")
                         .map(JsonElement::getAsString)
-                        .filter(cap -> EnumUtils.isValidEnum(Capability.class, cap))
-                        .map(Capability::valueOf)
+                        .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "capabilityLevel")
                         .map(JsonElement::getAsInt)

@@ -14,7 +14,7 @@
                 "tag": "minecraft:oak_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -25,7 +25,7 @@
                 "tag": "minecraft:spruce_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -36,7 +36,7 @@
                 "tag": "minecraft:birch_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -47,7 +47,7 @@
                 "tag": "minecraft:jungle_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -58,7 +58,7 @@
                 "tag": "minecraft:acacia_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -69,7 +69,7 @@
                 "tag": "minecraft:dark_oak_logs",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -80,7 +80,7 @@
                 "tag": "forge:cobblestone",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "sword/heavy_blade",
@@ -91,7 +91,7 @@
                 "item": "minecraft:stone",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -102,7 +102,7 @@
                 "item": "minecraft:granite",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -113,7 +113,7 @@
                 "item": "minecraft:diorite",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -124,7 +124,7 @@
                 "item": "minecraft:andesite",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -135,7 +135,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 16
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -146,7 +146,7 @@
                 "item": "minecraft:gold_ingot",
                 "count": 16
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -157,7 +157,7 @@
                 "item": "minecraft:obsidian",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "sword/heavy_blade",
@@ -171,7 +171,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -182,7 +182,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -193,7 +193,7 @@
                 "tag": "forge:ingots/silver",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -204,7 +204,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -215,7 +215,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -226,7 +226,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -237,7 +237,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -248,7 +248,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -259,7 +259,7 @@
                 "tag": "forge:ingots/ironwood",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -270,7 +270,7 @@
                 "tag": "forge:ingots/steeleaf",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -284,7 +284,7 @@
                 "tag": "forge:ingots/fiery",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",
@@ -298,7 +298,7 @@
                 "tag": "forge:ingots/knightmetal",
                 "count": 8
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "sword/heavy_blade",

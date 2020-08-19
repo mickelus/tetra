@@ -2,32 +2,32 @@ package se.mickelus.tetra.gui.statbar.getter;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.capabilities.Capability;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
 
-public class StatGetterCapabilityEfficiency implements IStatGetter {
+public class StatGetterToolLevel implements IStatGetter {
 
-    private Capability capability;
+    private ToolType tool;
 
-    public StatGetterCapabilityEfficiency(Capability effect) {
-        this.capability = effect;
+    public StatGetterToolLevel(ToolType tool) {
+        this.tool = tool;
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                .map(item -> item.getCapabilityEfficiency(itemStack, capability))
-                .orElse(0f);
+                .map(item -> item.getToolLevel(itemStack, tool))
+                .orElse(0);
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getCapabilityEfficiency(itemStack, capability))
-                .orElse(0f);
+                .map(module -> module.getToolLevel(itemStack, tool))
+                .orElse(0);
     }
 
     @Override
@@ -35,7 +35,8 @@ public class StatGetterCapabilityEfficiency implements IStatGetter {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))
-                .map(improvementData -> improvementData.capabilities.getEfficiency(capability))
-                .orElse(0f);
+                .map(improvementData -> improvementData.tools)
+                .map(data -> data.getLevel(tool))
+                .orElse(0);
     }
 }

@@ -14,7 +14,7 @@
             "material": {
                 "item": "minecraft:oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -31,7 +31,7 @@
             "material": {
                 "item": "minecraft:iron_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "shield/buckler",
@@ -42,7 +42,7 @@
             "material": {
                 "item": "minecraft:gold_ingot"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "shield/buckler",
@@ -52,7 +52,7 @@
             "material": {
                 "tag": "forge:ingots/copper"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "shield/buckler",
@@ -62,7 +62,7 @@
             "material": {
                 "tag": "forge:ingots/tin"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "shield/buckler",
@@ -72,7 +72,7 @@
             "material": {
                 "tag": "forge:ingots/silver"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "shield/buckler",
@@ -82,7 +82,7 @@
             "material": {
                 "tag": "forge:ingots/nickel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "shield/buckler",
@@ -92,7 +92,7 @@
             "material": {
                 "tag": "forge:ingots/lead"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "shield/buckler",
@@ -102,7 +102,7 @@
             "material": {
                 "tag": "forge:ingots/electrum"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "shield/buckler",
@@ -112,7 +112,7 @@
             "material": {
                 "tag": "forge:ingots/bronze"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "shield/buckler",
@@ -122,7 +122,7 @@
             "material": {
                 "tag": "forge:ingots/steel"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "shield/buckler",
@@ -132,7 +132,7 @@
             "material": {
                 "item": "minecraft:spruce_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -142,7 +142,7 @@
             "material": {
                 "item": "minecraft:birch_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -152,7 +152,7 @@
             "material": {
                 "item": "minecraft:jungle_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -162,7 +162,7 @@
             "material": {
                 "item": "minecraft:acacia_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -172,7 +172,7 @@
             "material": {
                 "item": "minecraft:dark_oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 1
             },
             "moduleKey": "shield/buckler",
@@ -182,7 +182,7 @@
             "material": {
                 "tag": "forge:planks/maple"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "shield/buckler",
@@ -192,7 +192,7 @@
             "material": {
                 "tag": "forge:planks/cherry"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "shield/buckler",
@@ -202,7 +202,7 @@
             "material": {
                 "tag": "forge:planks/baobab"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "shield/buckler",
@@ -213,7 +213,7 @@
                 "item": "tetra:vent_plate",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "shield/buckler",

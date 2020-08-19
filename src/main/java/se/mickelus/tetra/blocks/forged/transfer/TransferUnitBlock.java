@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,15 +22,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -40,7 +43,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
+public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockInteractive {
     public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
@@ -50,10 +53,10 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
                     new PropertyMatcher().where(plateProp, equalTo(true)),
                     TransferUnitBlock::removePlate),
-            new BlockInteraction(Capability.hammer, 1, Direction.SOUTH, 4, 10, 5, 9,
+            new BlockInteraction(ToolTypes.hammer, 1, Direction.SOUTH, 4, 10, 5, 9,
                     new PropertyMatcher().where(plateProp, equalTo(false)),
                     TransferUnitBlock::reconfigure),
     };
@@ -177,7 +180,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> capabilities) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(blockState, blockState.get(facingProp), face, capabilities))
                 .toArray(BlockInteraction[]::new);

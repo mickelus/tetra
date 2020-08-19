@@ -33,7 +33,7 @@
                 "item": "minecraft:iron_ingot",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",
@@ -43,7 +43,7 @@
             "material": {
                 "item": "minecraft:obsidian"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 5
             },
             "moduleKey": "double/basic_hammer",
@@ -57,7 +57,7 @@
                 "tag": "forge:ingots/copper",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",
@@ -68,7 +68,7 @@
                 "tag": "forge:ingots/tin",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/basic_hammer",
@@ -79,7 +79,7 @@
                 "tag": "forge:ingots/nickel",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",
@@ -90,7 +90,7 @@
                 "tag": "forge:ingots/lead",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "double/basic_hammer",
@@ -101,7 +101,7 @@
                 "tag": "forge:ingots/bronze",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "double/basic_hammer",
@@ -112,7 +112,7 @@
                 "tag": "forge:ingots/electrum",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 3
             },
             "moduleKey": "double/basic_hammer",
@@ -123,7 +123,7 @@
                 "tag": "forge:ingots/steel",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 5
             },
             "moduleKey": "double/basic_hammer",
@@ -134,7 +134,7 @@
                 "tag": "forge:ingots/ironwood",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "double/basic_hammer",
@@ -145,7 +145,7 @@
                 "tag": "forge:ingots/steeleaf",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",
@@ -156,7 +156,7 @@
                 "tag": "forge:ingots/fiery",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",
@@ -167,7 +167,7 @@
                 "tag": "forge:ingots/knightmetal",
                 "count": 3
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 2
             },
             "moduleKey": "double/basic_hammer",

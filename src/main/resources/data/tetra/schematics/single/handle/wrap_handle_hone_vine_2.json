@@ -23,7 +23,7 @@
                 "item": "minecraft:vine",
                 "count": 2
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             },
             "improvements": {

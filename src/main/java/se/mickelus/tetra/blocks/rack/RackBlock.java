@@ -30,6 +30,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -37,9 +38,8 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.properties.PropertyHelper;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.util.ItemHandlerWrapper;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -183,33 +183,33 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean canProvideCapabilities(World world, BlockPos pos, BlockPos targetPos) {
+    public boolean canProvideTools(World world, BlockPos pos, BlockPos targetPos) {
         return true;
     }
 
     @Override
-    public Collection<Capability> getCapabilities(World world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
         return Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
-                .map(CapabilityHelper::getInventoryCapabilities)
+                .map(PropertyHelper::getInventoryTools)
                 .orElseGet(Collections::emptySet);
     }
 
     @Override
-    public int getCapabilityLevel(World world, BlockPos pos, BlockState blockState, Capability capability) {
+    public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
         return Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
-                .map(inv -> CapabilityHelper.getInventoryCapabilityLevel(inv, capability))
+                .map(inv -> PropertyHelper.getInventoryToolLevel(inv, toolType))
                 .orElse(-1);
     }
 
     @Override
     public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
         LazyOptional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
@@ -219,15 +219,15 @@ public class RackBlock extends TetraWaterloggedBlock {
 
         if (optional.isPresent()) {
             IInventory inventory = optional.orElse(null);
-            ItemStack providerStack = CapabilityHelper.getInventoryProvidingItemStack(inventory, requiredCapability, requiredLevel);
+            ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
             if (!providerStack.isEmpty()) {
                 if (consumeResources) {
                     spawnConsumeParticle(world, pos, blockState, inventory, providerStack);
                 }
 
-                return ((ICapabilityProvider) providerStack.getItem())
-                        .onCraftConsumeCapability(providerStack, targetStack, player, requiredCapability, requiredLevel, consumeResources);
+                return ((IToolProvider) providerStack.getItem())
+                        .onCraftConsume(providerStack, targetStack, player, requiredTool, requiredLevel, consumeResources);
             }
         }
 
@@ -236,7 +236,7 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Override
     public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
-            Capability requiredCapability, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         LazyOptional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -244,15 +244,15 @@ public class RackBlock extends TetraWaterloggedBlock {
 
         if (optional.isPresent()) {
             IInventory inventory = optional.orElse(null);
-            ItemStack providerStack = CapabilityHelper.getInventoryProvidingItemStack(inventory, requiredCapability, requiredLevel);
+            ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
             if (!providerStack.isEmpty()) {
                 if (consumeResources) {
                     spawnConsumeParticle(world, pos, blockState, inventory, providerStack);
                 }
 
-                return ((ICapabilityProvider) providerStack.getItem())
-                        .onActionConsumeCapability(providerStack, targetStack, player, requiredCapability, requiredLevel, consumeResources);
+                return ((IToolProvider) providerStack.getItem())
+                        .onActionConsume(providerStack, targetStack, player, requiredTool, requiredLevel, consumeResources);
             }
         }
 

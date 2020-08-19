@@ -8,10 +8,8 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.EnumUtils;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.util.JsonOptional;
 
 public class ModuleCraftCriterion extends CriterionInstance {
@@ -24,12 +22,12 @@ public class ModuleCraftCriterion extends CriterionInstance {
     private final String module;
     private final String variant;
 
-    private final Capability capability;
+    private final ToolType toolType;
     private final int capabilityLevel;
 
     public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
-    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, Capability capability, int capabilityLevel) {
+    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, int capabilityLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -37,18 +35,18 @@ public class ModuleCraftCriterion extends CriterionInstance {
         this.slot = slot;
         this.module = module;
         this.variant = variant;
-        this.capability = capability;
+        this.toolType = toolType;
         this.capabilityLevel = capabilityLevel;
     }
 
     public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String module,
-            String variant, Capability capability, int capabilityLevel) {
-        trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, capability,
+            String variant, ToolType toolType, int capabilityLevel) {
+        trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, toolType,
                 capabilityLevel));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String module, String variant,
-            Capability capability, int capabilityLevel) {
+            ToolType toolType, int capabilityLevel) {
         if (this.before != null && !this.before.test(before)) {
             return false;
         }
@@ -73,7 +71,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.capability != null && !this.capability.equals(capability)) {
+        if (this.toolType != null && !this.toolType.equals(toolType)) {
             return false;
         }
 
@@ -106,8 +104,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
                         .orElse(null),
                 JsonOptional.field(json, "capability")
                         .map(JsonElement::getAsString)
-                        .filter(cap -> EnumUtils.isValidEnum(Capability.class, cap))
-                        .map(Capability::valueOf)
+                        .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "capabilityLevel")
                         .map(JsonElement::getAsInt)

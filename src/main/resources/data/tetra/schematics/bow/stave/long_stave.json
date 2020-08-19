@@ -15,7 +15,7 @@
                 "item": "minecraft:stick",
                 "count": 4
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 2
             },
             "moduleKey": "bow/long_stave",
@@ -25,7 +25,7 @@
             "material": {
                 "item": "minecraft:oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "bow/long_stave",
@@ -35,7 +35,7 @@
             "material": {
                 "item": "minecraft:spruce_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "bow/long_stave",
@@ -45,7 +45,7 @@
             "material": {
                 "item": "minecraft:birch_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "bow/long_stave",
@@ -55,7 +55,7 @@
             "material": {
                 "item": "minecraft:jungle_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "bow/long_stave",
@@ -65,7 +65,7 @@
             "material": {
                 "item": "minecraft:acacia_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 4
             },
             "moduleKey": "bow/long_stave",
@@ -75,7 +75,7 @@
             "material": {
                 "item": "minecraft:dark_oak_planks"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "moduleKey": "bow/long_stave",
@@ -85,7 +85,7 @@
             "material": {
                 "tag": "forge:planks/maple"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 4
             },
             "moduleKey": "bow/long_stave",
@@ -95,7 +95,7 @@
             "material": {
                 "tag": "forge:planks/cherry"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 4
             },
             "moduleKey": "bow/long_stave",
@@ -105,7 +105,7 @@
             "material": {
                 "tag": "forge:planks/baobab"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 4
             },
             "moduleKey": "bow/long_stave",

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.data.ModuleVariantData;
+import se.mickelus.tetra.module.data.VariantData;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -44,7 +44,7 @@ public class ModuleDevCommand {
 
         ItemModule module = ItemUpgradeRegistry.instance.getModule(StringArgumentType.getString(context, "module"));
 
-        ModuleVariantData[] data = module.getVariantData();
+        VariantData[] data = module.getVariantData();
 
         for (int i = 0; i < data.length; i++) {
             ItemStack itemStack = baseStack.copy();

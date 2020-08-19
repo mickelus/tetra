@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
@@ -12,7 +13,7 @@ import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
@@ -114,17 +115,15 @@ public class GuiSlotDetail extends GuiElement {
         } else {
             World world = tileEntity.getWorld();
             BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, world, pos,
-                    world.getBlockState(pos));
+            Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
 
 
-            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableCapabilities,
+            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools,
                     player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
             schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack,
                     currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
-            schematicDetail.toggleButton(currentSchematic.canApplyUpgrade(player, itemStack, materials,
-                    selectedSlot, availableCapabilities));
+            schematicDetail.toggleButton(currentSchematic.canApplyUpgrade(player, itemStack, materials, selectedSlot, availableTools));
 
             tab = 1;
         }
@@ -142,7 +141,7 @@ public class GuiSlotDetail extends GuiElement {
         tabGroup.setActive(tab);
     }
 
-    public void update(PlayerEntity player, WorkbenchTile tileEntity, int[] availableCapabilities) {
+    public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableCapabilities) {
         schematicDetail.updateAvailableCapabilities(availableCapabilities);
 
         schematicDetail.toggleButton(

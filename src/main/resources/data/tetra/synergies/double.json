@@ -6,8 +6,10 @@
     {
         "modules": ["double/basic_axe", "double/basic_axe"],
         "name": "double/axe_axe",
-        "damageMultiplier": 1.2,
-        "attackSpeedMultiplier": 0.9
+        "attributes": {
+            "**generic.attack_damage": 0.2,
+            "**generic.attack_speed": -0.1
+        }
     },
     {
         "modules": ["double/basic_axe", "double/basic_pickaxe"],
@@ -36,20 +38,20 @@
     {
         "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
         "sameVariant": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/iron", "basic_hammer/iron"],
         "damage": 1,
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
@@ -60,37 +62,37 @@
     {
         "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
         "integrity": 1,
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     },
     {
         "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
-        "capabilities": {
+        "tools": {
             "hammer": 1
         }
     }

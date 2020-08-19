@@ -25,7 +25,7 @@
             },
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/vine",
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             }
         },
@@ -36,7 +36,7 @@
             },
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/hide",
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 1
             }
         },
@@ -46,7 +46,7 @@
             },
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/leather",
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             }
         },
@@ -56,7 +56,7 @@
             },
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/phantom",
-            "requiredCapabilities": {
+            "requiredTools": {
                 "cut": 2
             }
         }

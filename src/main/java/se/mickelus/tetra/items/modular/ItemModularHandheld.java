@@ -19,6 +19,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.UseAction;
@@ -43,9 +44,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.effects.BleedingEffect;
 import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.effects.StunEffect;
@@ -58,7 +59,6 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ModularItem {
 
@@ -120,10 +120,6 @@ public class ItemModularHandheld extends ModularItem {
             .put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD)
             .put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG)
             .build();
-
-    protected static final UUID REACH_MODIFIER = UUID.fromString("A7A35FFA-0B44-4AA5-9880-4BD28425E275");
-    protected static final UUID ARMOR_MODIFIER = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
-    protected static final UUID TOUGHNESS_MODIFIER = UUID.fromString("CE955EA0-2B0E-4E63-BFE7-CE697B5080C8");
 
     // the base amount of damage the item should take after destroying a block
     protected int blockDestroyDamage = 1;
@@ -192,8 +188,6 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-        getAllModules(itemStack).forEach(module -> module.hitEntity(itemStack, target, attacker));
-
         int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
         if (sweepingLevel > 0) {
             sweepAttack(itemStack, target, attacker, sweepingLevel);
@@ -802,67 +796,38 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
+        if (isBroken(itemStack)) {
+            return AttributeHelper.emptyMap;
+        }
 
         if (slot == EquipmentSlotType.MAINHAND) {
-
-            double damageModifier = getDamageModifier(itemStack);
-            if (damageModifier != 0) {
-                multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
-                        "tetra.damage_mod", damageModifier, AttributeModifier.Operation.ADDITION));
-            }
-
-            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER,
-                    "tetra.speed_mod", getSpeedModifier(itemStack), AttributeModifier.Operation.ADDITION));
-
-            double rangeModifier = getRangeModifier(itemStack);
-            if (rangeModifier != 0) {
-                multimap.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER,
-                        "tetra.reach_mod", rangeModifier, AttributeModifier.Operation.ADDITION));
-            }
+            return getAttributeModifiersCached(itemStack);
         }
 
-        if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
-            int armor = getEffectLevel(itemStack, ItemEffect.armor);
-            if  (armor > 0) {
-                multimap.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER,
-                        "tetra.armor_mod", armor, AttributeModifier.Operation.ADDITION));
-            }
-
-            int toughness = getEffectLevel(itemStack, ItemEffect.toughness);
-            if  (toughness > 0) {
-                multimap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(TOUGHNESS_MODIFIER,
-                        "tetra.toughness_mod", toughness, AttributeModifier.Operation.ADDITION));
-            }
+        if (slot == EquipmentSlotType.OFFHAND) {
+            return getAttributeModifiersCached(itemStack).entries().stream()
+                    .filter(entry -> entry.getKey().equals(Attributes.ARMOR) || entry.getKey().equals(Attributes.ARMOR_TOUGHNESS))
+                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
         }
 
-        return multimap;
+        return AttributeHelper.emptyMap;
     }
 
+    @Deprecated
     public double getDamageModifier(ItemStack itemStack) {
         if (isBroken(itemStack)) {
             return 0;
         }
 
-        double damageModifier = getAllModules(itemStack).stream()
-                .mapToDouble(itemModule -> itemModule.getDamageModifier(itemStack))
-                .sum();
-
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damage)
-                .reduce(damageModifier, Double::sum);
-
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damageMultiplier)
-                .reduce(damageModifier, (a, b) -> a * b);
-
-        return getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
-                .reduce(damageModifier, (a, b) -> a * b);
+        return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
     }
 
     public double getAbilityBaseDamage(ItemStack itemStack) {
-        return getDamageModifier(itemStack);
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
+        return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
     }
 
     public static double getDamageModifierStatic(ItemStack itemStack) {
@@ -873,23 +838,10 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public double getSpeedModifier(ItemStack itemStack) {
-        double speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-                .reduce(speedBase, Double::sum);
+        double speedModifier = AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_SPEED))
+                * getCounterWeightMultiplier(itemStack)
+                + speedBase;
 
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeed)
-                .reduce(speedModifier, Double::sum);
-
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeedMultiplier)
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        speedModifier *= getCounterWeightMultiplier(itemStack);
 
         if (speedModifier < -4) {
             speedModifier = -3.9d;
@@ -928,10 +880,7 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public Set<ToolType> getToolTypes(ItemStack stack) {
         if (!isBroken(stack)) {
-            return getCapabilities(stack).stream()
-                    .map(Enum::toString)
-                    .map(ToolType::get)
-                    .collect(Collectors.toSet());
+            return getTools(stack);
         }
         return Collections.emptySet();
     }
@@ -939,10 +888,9 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
         if (!isBroken(stack)) {
-            // todo: change tool capabilities to be zero indexed to align with vanilla
-            int capabilityLevel = getCapabilityLevel(stack, tool);
-            if (capabilityLevel > 0) {
-                return capabilityLevel - 1;
+            int toolTier = getToolLevel(stack, tool);
+            if (toolTier > 0) {
+                return toolTier - 1;
             }
         }
         return -1;
@@ -974,11 +922,11 @@ public class ItemModularHandheld extends ModularItem {
             float speed = (float) (4 + getSpeedModifier(itemStack));
 
             if (tool != null) {
-                speed *= getCapabilityEfficiency(itemStack, tool);
+                speed *= getToolEfficiency(itemStack, tool);
             } else {
                 speed *= getToolTypes(itemStack).stream()
                         .filter(blockState::isToolEffective)
-                        .map(toolType -> getCapabilityEfficiency(itemStack, toolType))
+                        .map(toolType -> getToolEfficiency(itemStack, toolType))
                         .max(Comparator.naturalOrder())
                         .orElse(0f);
             }
@@ -1062,26 +1010,26 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
-            Capability capability, int capabilityLevel, boolean consumeResources) {
+    public ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
+            ToolType tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
-            applyDamage(capabilityLevel, providerStack, player);
+            applyDamage(toolLevel, providerStack, player);
 
-            applyUsageEffects(player, providerStack, 10 + capabilityLevel * 5);
+            applyUsageEffects(player, providerStack, 10 + toolLevel * 5);
         }
 
-        return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
+        return super.onCraftConsume(providerStack, targetStack, player, tool, toolLevel, consumeResources);
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
-            Capability capability, int capabilityLevel, boolean consumeResources) {
+    public ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
+            ToolType tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
-            applyDamage(capabilityLevel, providerStack, player);
+            applyDamage(toolLevel, providerStack, player);
 
-            applyUsageEffects(player, providerStack, 5 + capabilityLevel * 3);
+            applyUsageEffects(player, providerStack, 5 + toolLevel * 3);
         }
 
-        return super.onCraftConsumeCapability(providerStack, targetStack, player, capability, capabilityLevel, consumeResources);
+        return super.onCraftConsume(providerStack, targetStack, player, tool, toolLevel, consumeResources);
     }
 }

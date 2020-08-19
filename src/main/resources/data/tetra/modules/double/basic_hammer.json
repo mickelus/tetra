@@ -53,7 +53,7 @@
                     "location": "tetra:items/module/double/head/basic_hammer/log"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     1,
                     5
@@ -77,7 +77,7 @@
                     "tint": "stone"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     1,
                     5
@@ -101,7 +101,7 @@
                     "tint": "iron"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     2,
                     10
@@ -124,7 +124,7 @@
                     "location": "tetra:items/module/double/head/basic_hammer/obsidian"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     4,
                     20
@@ -148,7 +148,7 @@
                     "tint": "copper"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     2,
                     5
@@ -172,7 +172,7 @@
                     "tint": "tin"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     1,
                     10
@@ -196,7 +196,7 @@
                     "tint": "nickel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     3,
                     15
@@ -220,7 +220,7 @@
                     "tint": "lead"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     2,
                     15
@@ -244,7 +244,7 @@
                     "tint": "bronze"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     3,
                     15
@@ -268,7 +268,7 @@
                     "tint": "electrum"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     1,
                     10
@@ -292,7 +292,7 @@
                     "tint": "steel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     4,
                     18
@@ -316,7 +316,7 @@
                     "tint": "thaumium"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     2,
                     10
@@ -339,7 +339,7 @@
                     "location": "tetra:items/module/double/head/basic_hammer/ironwood_tf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     2,
                     10
@@ -363,7 +363,7 @@
                     "tint": "steeleaf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     3,
                     15
@@ -387,7 +387,7 @@
                     "tint": "fierymetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     3,
                     15
@@ -411,7 +411,7 @@
                     "tint": "knightmetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": [
                     3,
                     15

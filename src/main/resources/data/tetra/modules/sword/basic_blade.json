@@ -365,15 +365,17 @@
         },
         {
             "key": "basic_blade/iron",
+            "attributes": {
+                "generic.attack_damage": 5,
+                "generic.attack_speed": 0.2
+            },
             "durability": 221,
             "integrity": -1,
             "magicCapacity": 84,
-            "damage": 5,
-            "attackSpeed": 0.2,
             "effects": {
                 "sweeping": 1
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     0.9375

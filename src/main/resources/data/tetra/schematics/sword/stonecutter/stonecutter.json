@@ -17,7 +17,7 @@
             "material": {
                 "item": "tetra:stonecutter"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 1
             },
             "moduleKey": "sword/stonecutter",

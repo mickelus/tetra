@@ -20,7 +20,7 @@
             "material": {
                 "item": "tetra:forged_mesh"
             },
-            "requiredCapabilities": {
+            "requiredTools": {
                 "hammer": 4
             },
             "moduleKey": "toolbelt/storage",

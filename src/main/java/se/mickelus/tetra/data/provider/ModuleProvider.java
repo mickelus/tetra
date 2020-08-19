@@ -9,9 +9,10 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.ToolTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,13 +57,13 @@ public class ModuleProvider implements IDataProvider {
 
         // data shared between all module variants of the same materials are defined here, e.g. the localized
         ModuleBuilder.Material platinum = new ModuleBuilder.Material("platinum", "platinum", 0xd6f6ff, 0xd6f6ff,
-                1, 66, "tag", "forge:ingots/platinum", 1, Capability.hammer, 4, metalReferences);
+                1, 66, "tag", "forge:ingots/platinum", 1, ToolTypes.hammer, 4, metalReferences);
 
         ModuleBuilder.Material ruby = new ModuleBuilder.Material("ruby", "ruby", 0xa349f2, 0xa349f2,
-                1, 60, "tag", "forge:gems/ruby", 1, Capability.hammer, 2, gemReferences, Pair.of("arrested", 0));
+                1, 60, "tag", "forge:gems/ruby", 1, ToolTypes.hammer, 2, gemReferences, Pair.of("arrested", 0));
 
         ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("my_metal", "mystic metal", 0xddeeee, 0xeeaabb,
-                2, 88, "item", "mymod:my_metal", 1, Capability.hammer, 1, metalReferences);
+                2, 88, "item", "mymod:my_metal", 1, ToolTypes.hammer, 1, metalReferences);
 
 
         // Setup each module which should have additional variants generated here, using the materials defined above. The material is paired with an

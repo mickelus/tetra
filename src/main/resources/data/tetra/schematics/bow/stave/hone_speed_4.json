@@ -19,7 +19,7 @@
     },
     "outcomes": [
         {
-            "requiredCapabilities": {
+            "requiredTools": {
                 "axe": 3
             },
             "improvements": {
