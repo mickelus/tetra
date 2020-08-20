@@ -30,7 +30,7 @@ public class GuiSchematicDetail extends GuiElement {
 
     private GuiMagicUsage magicCapacity;
 
-    private GuiCapabilityRequirementList capabilityIndicatorList;
+    private ToolRequirementListGui toolRequirementList;
 
     private GuiExperience experienceIndicator;
 
@@ -74,8 +74,8 @@ public class GuiSchematicDetail extends GuiElement {
         magicCapacity = new GuiMagicUsage(121, 28,80);
         addChild(magicCapacity);
 
-        capabilityIndicatorList = new GuiCapabilityRequirementList(80, 39);
-        addChild(capabilityIndicatorList);
+        toolRequirementList = new ToolRequirementListGui(80, 39);
+        addChild(toolRequirementList);
 
         experienceIndicator = new GuiExperience(170, 42, "tetra.workbench.schematic_detail.experience");
         addChild(experienceIndicator);
@@ -150,7 +150,7 @@ public class GuiSchematicDetail extends GuiElement {
             slotBorders[i].setVisible(false);
         }
 
-        capabilityIndicatorList.update(schematic, itemStack, slot, materials, availableTools);
+        toolRequirementList.update(schematic, itemStack, slot, materials, availableTools);
 
         int xpCost = schematic.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
@@ -169,8 +169,8 @@ public class GuiSchematicDetail extends GuiElement {
         }
     }
 
-    public void updateAvailableCapabilities(Map<ToolType, Integer> availableCapabilities) {
-        capabilityIndicatorList.updateAvailableCapabilities(availableCapabilities);
+    public void updateAvailableTools(Map<ToolType, Integer> availableTools) {
+        toolRequirementList.updateAvailableTools(availableTools);
     }
 
     public void toggleButton(boolean enabled) {

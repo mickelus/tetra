@@ -84,7 +84,7 @@ public class SchematicDefinition {
 
     /**
      * States if a repair schematic should also be generated based on this schematic. Useful when the crafted module
-     * is repaired using the same materials and capabilities as if it was crafted.
+     * is repaired using the same materials and tools as if it was crafted.
      */
     public boolean repair = true;
 

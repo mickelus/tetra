@@ -2845,7 +2845,7 @@
   "tetra.variant.core/dim": "Dim core",
 
   "tetra/schematic/holo/scanner/scanner.name": "Scanner",
-  "tetra/schematic/holo/scanner/scanner.description": "Harness the properies of an §lEye of Ender§r to unlock the scanning capabilities of the sphere.\nWhile the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
+  "tetra/schematic/holo/scanner/scanner.description": "Harness the properies of an §lEye of Ender§r to unlock the scanning tools of the sphere.\nWhile the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
   "tetra/schematic/holo/scanner/scanner.slot1": "Eye of Ender",
   "tetra.module.holo/scanner.description": "Allows the sphere to scan for ancient ruins, while the sphere is in the player's inventory it will scans for ruins in the direction that the player is facing. A sound is emitted when ruins are found, more information is displayed if the sphere is held.",
   "tetra.variant.scanner/scanner": "Scanner",

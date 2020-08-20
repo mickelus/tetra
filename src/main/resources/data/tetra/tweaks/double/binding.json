@@ -5,7 +5,7 @@
         "steps": 10,
         "properties": {
             "durabilityMultiplier": 0.952,
-            "capabilities": {
+            "tools": {
                 "hammer": [0, 0.93],
                 "axe": [0, 0.93],
                 "pickaxe": [0, 0.93],

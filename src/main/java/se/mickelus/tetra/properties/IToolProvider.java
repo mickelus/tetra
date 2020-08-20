@@ -16,12 +16,12 @@ public interface IToolProvider {
 
     /**
      * Apply special effects and possibly consume required resources after this item has been used to craft or upgrade
-     * another item. This is called once for each capability used by the craft, which this item provide.
+     * another item. This is called once for each tool used by the craft, which this item provide.
      * @param providerStack The providing stack, the itemstack for this item
      * @param targetStack The itemstack which is being upgraded/crafted/altered in some way
      * @param player The player performing the actions
-     * @param tool The capability used
-     * @param toolLevel The level of the used capability
+     * @param tool The tool used
+     * @param toolLevel The level of the used tool
      * @param consumeResources
      */
     public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player, ToolType tool, int toolLevel,
@@ -37,8 +37,8 @@ public interface IToolProvider {
      * @param providerStack The providing stack, the itemstack for this item
      * @param targetStack The itemstack which the action is performed upon
      * @param player The player performing the action
-     * @param tool The capability used
-     * @param toolLevel The level of the used capability
+     * @param tool The tool used
+     * @param toolLevel The level of the used tool
      * @param consumeResources
      */
     public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player, ToolType tool, int toolLevel,

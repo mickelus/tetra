@@ -5,8 +5,7 @@ import se.mickelus.tetra.module.data.ToolData;
 import java.util.HashMap;
 
 /**
- * Used to define outcomes of a schematic, which combination of materials and capabilities yield which variation of a
- * module or improvement.
+ * Used to define outcomes of a schematic, which combination of materials and tools yield which variation of a module or improvement.
  * Example json:
  * {
  *     "material": {
@@ -44,14 +43,13 @@ public class OutcomeDefinition {
     public int experienceCost = 0;
 
     /**
-     * An object containing required capabilities and levels for each capability. Available capabilities:
-     * hammer, axe, pickaxe, cut, shovel (there may be more, check the Capability class).
-     * Optional, if no capabilities are required this field can be omitted.
+     * Defines which tools (and which level of each tool) are required for this outcome.
+     * Optional, if no tools are required this field can be omitted.
      *
      * Json format:
      * {
-     *     "capabilityA": level,
-     *     "capabilityB": level
+     *     "toolA": level,
+     *     "toolB": level
      * }
      */
     public ToolData requiredTools = new ToolData();

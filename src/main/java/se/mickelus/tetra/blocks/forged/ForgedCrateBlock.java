@@ -29,7 +29,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -42,10 +42,10 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 
-public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBlockInteractive, IWaterLoggable {
+public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, IWaterLoggable {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static BlockForgedCrate instance;
+    public static ForgedCrateBlock instance;
 
     public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
@@ -54,13 +54,13 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(ToolTypes.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStateMatcher.ANY,
-                    BlockForgedCrate::attemptBreakPry),
+                    ForgedCrateBlock::attemptBreakPry),
             new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     BlockStateMatcher.ANY,
-                    BlockForgedCrate::attemptBreakHammer),
+                    ForgedCrateBlock::attemptBreakHammer),
             new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 10, 13, 10, 13,
                     BlockStateMatcher.ANY,
-                    BlockForgedCrate::attemptBreakHammer),
+                    ForgedCrateBlock::attemptBreakHammer),
     };
 
     public static final ResourceLocation pryBonusLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/forged_crate_pry_bonus");
@@ -76,7 +76,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
         }
     }
 
-    public BlockForgedCrate() {
+    public ForgedCrateBlock() {
         super(Properties.create(ForgedBlockCommon.forgedMaterial)
                 .sound(SoundType.METAL)
                 .hardnessAndResistance(7));
@@ -136,7 +136,7 @@ public class BlockForgedCrate extends FallingBlock implements ITetraBlock, IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> tools) {
             return interactions;
     }
 

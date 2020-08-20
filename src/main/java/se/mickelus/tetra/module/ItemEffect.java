@@ -63,10 +63,8 @@ public class ItemEffect {
     public static ItemEffect sweeping = get("sweeping");
 
     /**
-     * Striking: Hitting a block instantly breaks it and triggers attack cooldown. Only applies if the corresponding
-     * harvest capability is high enough to harvest the block and if attack cooldown is above 0.9. Different item
-     * effects for different harvesting tools.
-     * todo: stop really durable blocks from being instantly broken
+     * Striking: Hitting a block instantly breaks it and triggers attack cooldown. Only applies if the corresponding tool level is high enough to
+     * harvest the block and if attack cooldown is above 0.9. Different item effects for different harvesting tools.
      */
     public static ItemEffect strikingAxe = get("strikingAxe");
     public static ItemEffect strikingPickaxe = get("strikingPickaxe");
@@ -146,7 +144,7 @@ public class ItemEffect {
     public static ItemEffect quickStrike = get("quickStrike");
 
     /**
-     * Soft strike: Adds a durability buff improvement to major modules when the item providing the tool capabilities
+     * Soft strike: Adds a durability buff improvement to major modules when the item providing the tool tools
      * has this effect.
      * todo: not yet implemented, rename to work for all tool classes
      */

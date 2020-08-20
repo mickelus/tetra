@@ -31,7 +31,7 @@
     {
         "key": "head_hone/axe_efficiency",
         "level": 1,
-        "capabilities": {
+        "tools": {
             "axe": [0, 1]
         }
     },
@@ -39,7 +39,7 @@
         "key": "head_hone/axe_efficiency",
         "level": 2,
         "integrity": -1,
-        "capabilities": {
+        "tools": {
             "axe": [0, 2.5]
         }
     },
@@ -47,7 +47,7 @@
         "key": "head_hone/axe_efficiency",
         "level": 3,
         "integrity": -1,
-        "capabilities": {
+        "tools": {
             "axe": [0, 5]
         }
     },
@@ -55,7 +55,7 @@
         "key": "head_hone/axe_efficiency",
         "level": 4,
         "integrity": -2,
-        "capabilities": {
+        "tools": {
             "axe": [0, 10]
         }
     },
@@ -63,14 +63,14 @@
         "key": "head_hone/axe_efficiency",
         "level": 5,
         "integrity": -2,
-        "capabilities": {
+        "tools": {
             "axe": [0, 15]
         }
     },
     {
         "key": "head_hone/axe_tier",
         "integrity": -1,
-        "capabilities": {
+        "tools": {
             "axe": 1
         }
     }

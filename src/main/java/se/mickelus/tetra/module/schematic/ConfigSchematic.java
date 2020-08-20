@@ -202,8 +202,8 @@ public class ConfigSchematic extends BaseSchematic {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .map(outcome -> outcome.requiredTools)
-                    .filter(capabilities -> capabilities.contains(toolType))
-                    .map(capabilities -> capabilities.getLevel(toolType))
+                    .filter(tools -> tools.contains(toolType))
+                    .map(tools -> tools.getLevel(toolType))
                     .sorted()
                     .findFirst()
                     .orElse(0);
@@ -211,8 +211,8 @@ public class ConfigSchematic extends BaseSchematic {
             return Arrays.stream(definition.outcomes)
                     .findFirst()
                     .map(outcome -> outcome.requiredTools)
-                    .filter(capabilities -> capabilities.contains(toolType))
-                    .map(capabilities -> capabilities.getLevel(toolType))
+                    .filter(tools -> tools.contains(toolType))
+                    .map(tools -> tools.getLevel(toolType))
                     .orElse(0);
         }
 

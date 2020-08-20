@@ -34,7 +34,7 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -45,7 +45,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBlockInteractive {
+public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
@@ -145,9 +145,9 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(state, state.get(facingProp), face, capabilities))
+                .filter(interaction -> interaction.isPotentialInteraction(state, state.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 

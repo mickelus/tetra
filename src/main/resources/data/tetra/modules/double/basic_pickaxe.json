@@ -57,7 +57,7 @@
                     "tint": "oak"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     0,
                     1.6667
@@ -81,7 +81,7 @@
                     "tint": "cobblestone"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     1,
                     3.33333
@@ -105,7 +105,7 @@
                     "tint": "flint"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     1,
                     3.5
@@ -129,7 +129,7 @@
                     "tint": "iron"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     5
@@ -153,7 +153,7 @@
                     "tint": "diamond"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     3,
                     6.6667
@@ -177,7 +177,7 @@
                     "tint": "gold"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     0,
                     10
@@ -201,7 +201,7 @@
                     "tint": "copper"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     4.5
@@ -225,7 +225,7 @@
                     "tint": "tin"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     1,
                     5.4
@@ -249,7 +249,7 @@
                     "tint": "silver"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     10
@@ -273,7 +273,7 @@
                     "tint": "nickel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     5.2
@@ -297,7 +297,7 @@
                     "tint": "lead"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     4.6
@@ -321,7 +321,7 @@
                     "tint": "bronze"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     6.2
@@ -345,7 +345,7 @@
                     "tint": "electrum"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     1,
                     9
@@ -369,7 +369,7 @@
                     "tint": "steel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     4,
                     6.5
@@ -393,7 +393,7 @@
                     "tint": "thaumium"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     6.67
@@ -416,7 +416,7 @@
                     "location": "tetra:items/module/double/head/basic_pickaxe/ironwood_tf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     2,
                     5.42
@@ -439,7 +439,7 @@
                     "location": "tetra:items/module/double/head/basic_pickaxe/steeleaf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     3,
                     6.67
@@ -462,7 +462,7 @@
                     "location": "tetra:items/module/double/head/basic_pickaxe/fierymetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     4,
                     7.5
@@ -485,7 +485,7 @@
                     "location": "tetra:items/module/double/head/basic_pickaxe/knightmetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     3,
                     6.67

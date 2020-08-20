@@ -6,6 +6,6 @@ import net.minecraftforge.common.ToolType;
 
 import java.util.Collection;
 
-public interface IBlockInteractive {
-    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> capabilities);
+public interface IInteractiveBlock {
+    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> tools);
 }

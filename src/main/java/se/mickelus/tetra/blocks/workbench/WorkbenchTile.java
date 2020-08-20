@@ -144,7 +144,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
                 .filter(action -> action.canPerformOn(player, targetStack))
-                .filter(action -> checkActionCapabilities(player, action, targetStack))
+                .filter(action -> checkActionTools(player, action, targetStack))
                 .ifPresent(action -> {
                     action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
                         // consume player inventory
@@ -156,13 +156,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                             }
                         } else {
                             // consume toolbelt inventory
-                            ItemStack toolbeltResult = PropertyHelper.consumeActionCapabilityToolbelt(player, targetStack, requiredTool, requiredLevel,
+                            ItemStack toolbeltResult = PropertyHelper.consumeActionToolToolbelt(player, targetStack, requiredTool, requiredLevel,
                                     true);
 
                             // consume blocks
                             if (toolbeltResult == null) {
                                 CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                        .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack, player,
+                                        .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, player,
                                                 requiredTool, requiredLevel, true));
                             }
                         }
@@ -172,10 +172,10 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 });
     }
 
-    private boolean checkActionCapabilities(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
+    private boolean checkActionTools(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
         return action.getRequiredTools(itemStack).entrySet().stream()
                 .allMatch(requirement ->
-                        PropertyHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                        PropertyHelper.getCombinedToolLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
                         >= requirement.getValue());
     }
 
@@ -280,7 +280,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 ((ModularItem) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
-            // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
+            // applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
             currentSchematic.getRequiredToolLevels(targetStack, materials).forEach((tool, level) -> {
 
             });
@@ -294,13 +294,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                                 upgradedStack, player, tool, level,true);
                     }
                 } else {
-                    ItemStack toolbeltResult = PropertyHelper.consumeCraftCapabilityToolbelt(player, upgradedStack, tool, level, true);
+                    ItemStack toolbeltResult = PropertyHelper.consumeCraftToolToolbelt(player, upgradedStack, tool, level, true);
                     if (toolbeltResult != null) {
                         upgradedStack = toolbeltResult;
                     } else {
                         ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
                         upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, tool, level, true))
+                                .map(block -> block.onCraftConsumeTool(world, getPos(), blockState, consumeTarget, player, tool, level, true))
                                 .orElse(upgradedStack);
                     }
                 }

@@ -15,7 +15,7 @@
         "config": {
             "trigger": "tetra:block_interaction",
             "conditions": {
-                "capability": "hammer",
+                "tool": "hammer",
                 "after": {
                     "block": "tetra:hammer_base",
                     "state": {

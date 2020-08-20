@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
@@ -29,7 +27,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
@@ -159,10 +156,10 @@ public class TetraMod {
                 new BlockForgedPillar(),
                 new BlockForgedPlatform(),
                 new BlockForgedPlatformSlab(),
-                new BlockForgedVent(),
+                new ForgedVentBlock(),
                 new ForgedWorkbenchBlock(),
                 new ForgedContainerBlock(),
-                new BlockForgedCrate(),
+                new ForgedCrateBlock(),
                 new TransferUnitBlock(),
                 new CoreExtractorBaseBlock(),
                 new CoreExtractorPistonBlock(),

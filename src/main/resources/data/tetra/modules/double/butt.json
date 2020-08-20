@@ -99,7 +99,7 @@
                     "tint": "iron"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -119,7 +119,7 @@
                     "tint": "diamond"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -156,7 +156,7 @@
                     "tint": "copper"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -210,7 +210,7 @@
                     "tint": "nickel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -231,7 +231,7 @@
                     "tint": "lead"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -251,7 +251,7 @@
                     "tint": "bronze"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -271,7 +271,7 @@
                     "tint": "electrum"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -292,7 +292,7 @@
                     "tint": "steel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -312,7 +312,7 @@
                     "tint": "thaumium"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -333,7 +333,7 @@
                     "tint": "ironwood"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -368,7 +368,7 @@
                     "location": "tetra:items/module/double/head/butt/fierymetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         },
@@ -388,7 +388,7 @@
                     "tint": "knightmetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "axe": [
                     1,
                     2
@@ -411,7 +411,7 @@
                     "tint": "knightmetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "hammer": 1
             }
         }

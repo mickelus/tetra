@@ -3,7 +3,7 @@
         "key": "enchantment/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 1.6667]
         },
         "magicCapacity": -31
@@ -12,7 +12,7 @@
         "key": "enchantment/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 4.1667]
         },
         "magicCapacity": -41
@@ -21,7 +21,7 @@
         "key": "enchantment/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 8.3333]
         },
         "magicCapacity": -51
@@ -30,7 +30,7 @@
         "key": "enchantment/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 14.1667]
         },
         "magicCapacity": -61
@@ -39,7 +39,7 @@
         "key": "enchantment/efficiency",
         "level": 5,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 21.6667]
         },
         "magicCapacity": -71
@@ -48,7 +48,7 @@
         "key": "enchantment/efficiency",
         "level": 6,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 30.8333]
         },
         "magicCapacity": -81
@@ -57,7 +57,7 @@
         "key": "enchantment/efficiency",
         "level": 7,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 41.6667]
         },
         "magicCapacity": -91
@@ -66,7 +66,7 @@
         "key": "enchantment/efficiency",
         "level": 8,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 54.1667]
         },
         "magicCapacity": -101
@@ -75,7 +75,7 @@
         "key": "enchantment/efficiency",
         "level": 9,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 68.3333]
         },
         "magicCapacity": -111
@@ -84,7 +84,7 @@
         "key": "enchantment/efficiency",
         "level": 10,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 84.1667]
         },
         "magicCapacity": -121
@@ -93,7 +93,7 @@
         "key": "enchantment/efficiency",
         "level": 11,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 101.6667]
         },
         "magicCapacity": -131
@@ -102,7 +102,7 @@
         "key": "enchantment/efficiency",
         "level": 12,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 120.8333]
         },
         "magicCapacity": -141
@@ -111,7 +111,7 @@
         "key": "enchantment/efficiency",
         "level": 13,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 141.6667]
         },
         "magicCapacity": -151
@@ -120,7 +120,7 @@
         "key": "enchantment/efficiency",
         "level": 14,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 164.1667]
         },
         "magicCapacity": -161
@@ -129,7 +129,7 @@
         "key": "enchantment/efficiency",
         "level": 15,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, 188.3333]
         },
         "magicCapacity": -171
@@ -138,7 +138,7 @@
         "key": "destabilized/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, -1.6667]
         },
         "glyph": {
@@ -149,7 +149,7 @@
         "key": "destabilized/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, -4.1667]
         },
         "glyph": {
@@ -160,7 +160,7 @@
         "key": "destabilized/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, -8.3333]
         },
         "glyph": {
@@ -171,7 +171,7 @@
         "key": "destabilized/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "pickaxe": [0, -14.1667]
         },
         "glyph": {

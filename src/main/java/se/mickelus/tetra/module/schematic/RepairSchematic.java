@@ -155,7 +155,7 @@ public class RepairSchematic extends BaseSchematic {
     public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolType toolType) {
         if (targetStack.getItem() instanceof ModularItem) {
             ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredCapabilityLevel(targetStack, materials[0], toolType);
+            return item.getRepairRequiredToolLevel(targetStack, materials[0], toolType);
         }
         return 0;
     }

@@ -9,22 +9,22 @@ import se.mickelus.mgui.gui.impl.GuiColors;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.properties.PropertyHelper;
 
-public class GuiInteractiveCapability extends GuiElement {
+public class InteractiveToolGui extends GuiElement {
     private GuiTool toolIcon;
 
     private KeyframeAnimation show;
     private KeyframeAnimation hide;
 
     private ToolType toolType;
-    private int capabilityLevel;
+    private int toolLevel;
     private PlayerEntity player;
 
-    public GuiInteractiveCapability(int x, int y, ToolType toolType, int capabilityLevel, PlayerEntity player) {
+    public InteractiveToolGui(int x, int y, ToolType toolType, int toolLevel, PlayerEntity player) {
         super(x, y, 10, 10);
         opacity = 0;
 
         this.toolType = toolType;
-        this.capabilityLevel = capabilityLevel;
+        this.toolLevel = toolLevel;
         this.player = player;
 
         toolIcon = new GuiTool(1, 0, toolType);
@@ -47,12 +47,12 @@ public class GuiInteractiveCapability extends GuiElement {
         int mainHandLevel = PropertyHelper.getItemToolLevel(player.getHeldItemMainhand(), toolType);
         int offHandLevel = PropertyHelper.getItemToolLevel(player.getHeldItemOffhand(), toolType);
 
-        if (mainHandLevel >= capabilityLevel || offHandLevel >= capabilityLevel) {
-            toolIcon.update(capabilityLevel, GuiColors.normal);
-        } else if (PropertyHelper.getPlayerToolLevel(player, toolType) >= capabilityLevel) {
-            toolIcon.update(capabilityLevel, GuiColors.warning);
+        if (mainHandLevel >= toolLevel || offHandLevel >= toolLevel) {
+            toolIcon.update(toolLevel, GuiColors.normal);
+        } else if (PropertyHelper.getPlayerToolLevel(player, toolType) >= toolLevel) {
+            toolIcon.update(toolLevel, GuiColors.warning);
         } else {
-            toolIcon.update(capabilityLevel, GuiColors.negative);
+            toolIcon.update(toolLevel, GuiColors.negative);
         }
     }
 

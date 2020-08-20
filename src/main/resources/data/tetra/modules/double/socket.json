@@ -18,7 +18,7 @@
                 "location": "tetra:items/module/double/binding/socket/default",
                 "tint": "diamond"
             }],
-            "capabilities": {
+            "tools": {
                 "axe": [0, 1],
                 "shovel": [0, 1],
                 "pickaxe": [0, 1],
@@ -90,7 +90,7 @@
                 "location": "tetra:items/module/double/binding/socket/pristine",
                 "tint": "diamond"
             }],
-            "capabilities": {
+            "tools": {
                 "axe": [0, 2],
                 "shovel": [0, 2],
                 "pickaxe": [0, 2],

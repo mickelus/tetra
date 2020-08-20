@@ -51,7 +51,7 @@
                     "tint": "oak"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1.6667
@@ -81,7 +81,7 @@
                     "tint": "cobblestone"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     3.33333
@@ -111,7 +111,7 @@
                     "tint": "flint"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     3.5
@@ -141,7 +141,7 @@
                     "tint": "iron"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     5
@@ -171,7 +171,7 @@
                     "tint": "diamond"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     6.6667
@@ -201,7 +201,7 @@
                     "tint": "gold"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     10
@@ -231,7 +231,7 @@
                     "tint": "copper"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     4.5
@@ -261,7 +261,7 @@
                     "tint": "tin"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     5.4
@@ -291,7 +291,7 @@
                     "tint": "silver"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     10
@@ -321,7 +321,7 @@
                     "tint": "nickel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     2,
                     5.2
@@ -351,7 +351,7 @@
                     "tint": "lead"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     4.6
@@ -381,7 +381,7 @@
                     "tint": "bronze"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     2,
                     6.2
@@ -411,7 +411,7 @@
                     "tint": "electrum"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     9
@@ -441,7 +441,7 @@
                     "tint": "steel"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     2,
                     6.5
@@ -471,7 +471,7 @@
                     "tint": "thaumium"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     6.67
@@ -500,7 +500,7 @@
                     "location": "tetra:items/module/double/head/sickle/ironwood_tf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     5.42
@@ -530,7 +530,7 @@
                     "tint": "steeleaf"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     2,
                     6.67
@@ -559,7 +559,7 @@
                     "location": "tetra:items/module/double/head/sickle/fierymetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     7.5
@@ -589,7 +589,7 @@
                     "tint": "knightmetal"
                 }
             ],
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     6.67

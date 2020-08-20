@@ -3,7 +3,7 @@
         "key": "enchantment/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 1.5],
             "shovel": [0, 1.5]
         },
@@ -13,7 +13,7 @@
         "key": "enchantment/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 3.75],
             "shovel": [0, 3.75]
         },
@@ -23,7 +23,7 @@
         "key": "enchantment/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 7.5],
             "shovel": [0, 7.5]
         },
@@ -33,7 +33,7 @@
         "key": "enchantment/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 12.75],
             "shovel": [0, 12.75]
         },
@@ -43,7 +43,7 @@
         "key": "enchantment/efficiency",
         "level": 5,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 19.5],
             "shovel": [0, 19.5]
         },
@@ -53,7 +53,7 @@
         "key": "enchantment/efficiency",
         "level": 6,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 27.75],
             "shovel": [0, 27.75]
         },
@@ -63,7 +63,7 @@
         "key": "enchantment/efficiency",
         "level": 7,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 37.5],
             "shovel": [0, 37.5]
         },
@@ -73,7 +73,7 @@
         "key": "enchantment/efficiency",
         "level": 8,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 48.75],
             "shovel": [0, 48.75]
         },
@@ -83,7 +83,7 @@
         "key": "enchantment/efficiency",
         "level": 9,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 61.5],
             "shovel": [0, 61.5]
         },
@@ -93,7 +93,7 @@
         "key": "enchantment/efficiency",
         "level": 10,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 75.75],
             "shovel": [0, 75.75]
         },
@@ -103,7 +103,7 @@
         "key": "enchantment/efficiency",
         "level": 11,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 91.5],
             "shovel": [0, 91.5]
         },
@@ -113,7 +113,7 @@
         "key": "enchantment/efficiency",
         "level": 12,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 108.75],
             "shovel": [0, 108.75]
         },
@@ -123,7 +123,7 @@
         "key": "enchantment/efficiency",
         "level": 13,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 127.5],
             "shovel": [0, 127.5]
         },
@@ -133,7 +133,7 @@
         "key": "enchantment/efficiency",
         "level": 14,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 147.75],
             "shovel": [0, 147.75]
         },
@@ -143,7 +143,7 @@
         "key": "enchantment/efficiency",
         "level": 15,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, 169.5],
             "shovel": [0, 169.5]
         },
@@ -153,7 +153,7 @@
         "key": "destabilized/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, -1.5],
             "shovel": [0, -1.5]
         },
@@ -165,7 +165,7 @@
         "key": "destabilized/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, -3.75],
             "shovel": [0, -3.75]
         },
@@ -177,7 +177,7 @@
         "key": "destabilized/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, -7.5],
             "shovel": [0, -7.5]
         },
@@ -189,7 +189,7 @@
         "key": "destabilized/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
+        "tools": {
             "axe": [0, -12.75],
             "shovel": [0, -12.75]
         },

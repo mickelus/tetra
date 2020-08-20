@@ -42,7 +42,7 @@
             "magicCapacity": 48,
             "damage": 2,
             "attackSpeed": -0.4,
-            "capabilities": {
+            "tools": {
                 "pickaxe": [
                     3,
                     1

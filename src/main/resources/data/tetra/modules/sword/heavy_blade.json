@@ -64,7 +64,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -91,7 +91,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -118,7 +118,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -145,7 +145,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -172,7 +172,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -199,7 +199,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -226,7 +226,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -253,7 +253,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -280,7 +280,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -307,7 +307,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -334,7 +334,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -361,7 +361,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -388,7 +388,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -415,7 +415,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -442,7 +442,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -469,7 +469,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -496,7 +496,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -523,7 +523,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -550,7 +550,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -577,7 +577,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -604,7 +604,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -631,7 +631,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -658,7 +658,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -685,7 +685,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -711,7 +711,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -738,7 +738,7 @@
             "effects": {
                 "sweeping": 3
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     1
@@ -763,7 +763,7 @@
             "effects": {
                 "sweeping": 2
             },
-            "capabilities": {
+            "tools": {
                 "cut": [
                     1,
                     0.9375

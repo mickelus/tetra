@@ -21,18 +21,17 @@ public abstract class ConfigAction implements WorkbenchAction {
 
     /**
      * Defines if this action can be performed on a given itemstack, if the itemstack matches the predicate then
-     * the action is allowed (if the capability requirements are met)
+     * the action is allowed (if the tool requirements are met)
      */
     public ItemPredicate requirement;
 
     /**
-     * Defines which capabilities are required for this action, a map where the capability is the key and the value
-     * is the required level.
+     * Defines which tools are required for this action, a map where the tool is the key and the value is the required level.
      *
      * Json format:
      * {
-     *     "capabilityA": level,
-     *     "capabilityB": level
+     *     "toolA": level,
+     *     "toolB": level
      * }
      */
     public ToolData requiredTools = new ToolData();

@@ -40,13 +40,13 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     }
 
     public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
-            int improvementLevel, ToolType toolType, int capabilityLevel) {
+            int improvementLevel, ToolType toolType, int toolLevel) {
         trigger.fulfillCriterion(player,
-                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolType, capabilityLevel));
+                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolType, toolLevel));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
-            ToolType toolType, int capabilityLevel) {
+            ToolType toolType, int toolLevel) {
 
         if (this.before != null && !this.before.test(before)) {
             return false;
@@ -76,7 +76,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.toolLevel != -1 && this.toolLevel != capabilityLevel) {
+        if (this.toolLevel != -1 && this.toolLevel != toolLevel) {
             return false;
         }
 
@@ -103,11 +103,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                 JsonOptional.field(json, "improvementLevel")
                         .map(JsonElement::getAsInt)
                         .orElse(-1),
-                JsonOptional.field(json, "capability")
+                JsonOptional.field(json, "tool")
                         .map(JsonElement::getAsString)
                         .map(ToolType::get)
                         .orElse(null),
-                JsonOptional.field(json, "capabilityLevel")
+                JsonOptional.field(json, "toolLevel")
                         .map(JsonElement::getAsInt)
                         .orElse(-1));
     }

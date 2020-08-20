@@ -45,7 +45,7 @@ public class ModuleBuilder {
     private int integrityOffset = 0;
 
     private float countMultiplier = 1;
-    private int capabilityOffset = 0;
+    private int toolOffset = 0;
 
     private ArrayList<Variant> variants = new ArrayList<>();
 
@@ -68,9 +68,9 @@ public class ModuleBuilder {
         harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.getDefaultState());
     }
 
-    public ModuleBuilder offsetOutcome(int countMultiplier, int capabilityOffset) {
+    public ModuleBuilder offsetOutcome(int countMultiplier, int toolOffset) {
         this.countMultiplier = countMultiplier;
-        this.capabilityOffset = capabilityOffset;
+        this.toolOffset = toolOffset;
 
         return this;
     }
@@ -196,11 +196,11 @@ public class ModuleBuilder {
                 result.addProperty("attackSpeed", ( attackSpeed + 2.4 + speedOffset ) * speedMultiplier);
             }
 
-            if (result.has("capabilities")) {
-                JsonObject capabilitiesJson = result.getAsJsonObject("capabilities");
+            if (result.has("tools")) {
+                JsonObject toolsJson = result.getAsJsonObject("tools");
                 Set<ToolType> toolTypes = itemStack.getToolTypes();
 
-                if (capabilitiesJson.size() == toolTypes.size()) {
+                if (toolsJson.size() == toolTypes.size()) {
                     toolTypes.forEach(toolType -> {
                         BlockState blockState = harvestMap.get(toolType);
 
@@ -208,7 +208,7 @@ public class ModuleBuilder {
                         value.add(itemStack.getHarvestLevel(toolType, null, blockState));
                         value.add(blockState != null ? item.getDestroySpeed(itemStack, blockState) / ( attackSpeed + 4 ): 0);
 
-                        capabilitiesJson.add(toolType.getName(), value);
+                        toolsJson.add(toolType.getName(), value);
                     });
                 } else {
                     long averageLevel = Math.round(toolTypes.stream()
@@ -225,8 +225,8 @@ public class ModuleBuilder {
                     value.add(averageLevel);
                     value.add(averageEfficiency);
 
-                    for (Map.Entry<String, JsonElement> entry : capabilitiesJson.entrySet()) {
-                        capabilitiesJson.add(entry.getKey(), value);
+                    for (Map.Entry<String, JsonElement> entry : toolsJson.entrySet()) {
+                        toolsJson.add(entry.getKey(), value);
                     }
                 }
             }
@@ -262,10 +262,10 @@ public class ModuleBuilder {
         }
 
 
-        if (material.toolType != null && material.capabilityLevel + capabilityOffset > 0) {
+        if (material.toolType != null && material.toolLevel + toolOffset > 0) {
             JsonObject requiredTools = new JsonObject();
             outcome.add("requiredTools", requiredTools);
-            requiredTools.addProperty(material.toolType.toString(), material.capabilityLevel + capabilityOffset);
+            requiredTools.addProperty(material.toolType.toString(), material.toolLevel + toolOffset);
         }
 
         outcome.addProperty("moduleKey", module);
@@ -325,13 +325,13 @@ public class ModuleBuilder {
         String itemId;
         int count;
         ToolType toolType;
-        int capabilityLevel;
+        int toolLevel;
         Pair<String, Integer>[] improvements = new Pair[0];
 
         String[] references = new String[0];
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, ToolType toolType, int capabilityLevel, String[] references) {
+                String itemId, int count, ToolType toolType, int toolLevel, String[] references) {
             this.key = key;
             this.localization = localization;
             this.tint = tint;
@@ -343,14 +343,14 @@ public class ModuleBuilder {
             this.itemId = itemId;
             this.count = count;
             this.toolType = toolType;
-            this.capabilityLevel = capabilityLevel;
+            this.toolLevel = toolLevel;
 
             this.references = references;
         }
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, ToolType toolType, int capabilityLevel, String[] references, Pair<String, Integer> ... improvements) {
-            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, toolType, capabilityLevel, references);
+                String itemId, int count, ToolType toolType, int toolLevel, String[] references, Pair<String, Integer> ... improvements) {
+            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, toolType, toolLevel, references);
 
             this.improvements = improvements;
         }

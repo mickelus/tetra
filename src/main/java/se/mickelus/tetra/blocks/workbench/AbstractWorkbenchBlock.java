@@ -93,13 +93,13 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
         if (provider != null) {
             ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
-            return block.onCraftConsumeCapability(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredTool,
+            return block.onCraftConsumeTool(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredTool,
                     requiredLevel, consumeResources);
         }
 
@@ -107,13 +107,13 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
         if (provider != null) {
             ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
-            return block.onActionConsumeCapability(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredTool,
+            return block.onActionConsumeTool(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredTool,
                     requiredLevel, consumeResources);
         }
 

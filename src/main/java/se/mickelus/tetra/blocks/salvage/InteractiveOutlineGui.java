@@ -9,7 +9,7 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.TetraMod;
 
-public class GuiInteractiveOutline extends GuiElement {
+public class InteractiveOutlineGui extends GuiElement {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
 
     private BlockInteraction blockInteraction;
@@ -19,9 +19,9 @@ public class GuiInteractiveOutline extends GuiElement {
     private GuiTexture bottomLeft;
     private GuiTexture bottomRight;
 
-    private GuiInteractiveCapability capability;
+    private InteractiveToolGui tool;
 
-    public GuiInteractiveOutline(BlockInteraction blockInteraction, PlayerEntity player) {
+    public InteractiveOutlineGui(BlockInteraction blockInteraction, PlayerEntity player) {
         super((int) blockInteraction.minX * 4, (int) blockInteraction.minY * 4,
                 (int) (blockInteraction.maxX - blockInteraction.minX) * 4,
                 (int) (blockInteraction.maxY - blockInteraction.minY) * 4);
@@ -68,36 +68,36 @@ public class GuiInteractiveOutline extends GuiElement {
                         new Applier.TranslateY(0, 2))
                 .withDelay(650)
                 .onStop(complete -> {
-                    if (capability != null) capability.updateFadeTime();
+                    if (tool != null) tool.updateFadeTime();
                 })
                 .start();
 
         if (blockInteraction.requiredTool != null) {
-            capability = new GuiInteractiveCapability(0, 0,
+            tool = new InteractiveToolGui(0, 0,
                     blockInteraction.requiredTool, blockInteraction.requiredLevel, player);
-            addChild(capability);
+            addChild(tool);
 
              float centerY = y + height / 2f;
              float centerX = x + width / 2f;
 
             if (Math.abs(centerX - 16) > Math.abs(centerY - 16)) {
                 if (centerX < 16) {
-                    capability.setAttachmentPoint(GuiAttachment.middleLeft);
-                    capability.setAttachmentAnchor(GuiAttachment.middleRight);
+                    tool.setAttachmentPoint(GuiAttachment.middleLeft);
+                    tool.setAttachmentAnchor(GuiAttachment.middleRight);
                 } else {
-                    capability.setAttachmentPoint(GuiAttachment.middleRight);
-                    capability.setAttachmentAnchor(GuiAttachment.middleLeft);
-                    capability.setX(1);
+                    tool.setAttachmentPoint(GuiAttachment.middleRight);
+                    tool.setAttachmentAnchor(GuiAttachment.middleLeft);
+                    tool.setX(1);
                 }
             } else {
                 if (centerY < 16) {
-                    capability.setAttachmentPoint(GuiAttachment.topCenter);
-                    capability.setAttachmentAnchor(GuiAttachment.bottomCenter);
-                    capability.setY(1);
+                    tool.setAttachmentPoint(GuiAttachment.topCenter);
+                    tool.setAttachmentAnchor(GuiAttachment.bottomCenter);
+                    tool.setY(1);
                 } else {
-                    capability.setAttachmentPoint(GuiAttachment.bottomCenter);
-                    capability.setAttachmentAnchor(GuiAttachment.topCenter);
-                    capability.setY(-2);
+                    tool.setAttachmentPoint(GuiAttachment.bottomCenter);
+                    tool.setAttachmentAnchor(GuiAttachment.topCenter);
+                    tool.setY(-2);
                 }
             }
         }
@@ -107,8 +107,8 @@ public class GuiInteractiveOutline extends GuiElement {
     protected void onFocus() {
         super.onFocus();
 
-        if (capability != null) {
-            capability.show();
+        if (tool != null) {
+            tool.show();
         }
     }
 
@@ -116,8 +116,8 @@ public class GuiInteractiveOutline extends GuiElement {
     protected void onBlur() {
         super.onBlur();
 
-        if (capability != null) {
-            capability.hide();
+        if (tool != null) {
+            tool.hide();
         }
     }
 

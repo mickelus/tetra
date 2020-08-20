@@ -96,7 +96,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
@@ -112,7 +112,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onActionConsumeCapability(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
         if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {

@@ -47,13 +47,13 @@ public class MaterialData {
     /**
      * Multipliers for effects added by modules
      */
-    public int effectTier = 0;
+    public int effectLevel = 0;
     public float effectEfficiency = 0;
 
     /**
-     * Multipliers for tool capabilities added by modules
+     * Multipliers for tool levels and efficiency added by modules
      */
-    public int toolTier = 0;
+    public int toolLevel = 0;
     public float toolEfficiency = 0;
 
     public int glyphTint = 0xffffff;

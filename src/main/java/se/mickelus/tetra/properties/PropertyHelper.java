@@ -166,7 +166,7 @@ public class PropertyHelper {
                 .orElse(ItemStack.EMPTY);
     }
 
-    public static ItemStack consumeCraftCapabilityInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
+    public static ItemStack consumeCraftToolInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
             ToolType tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof ModularItem) {
@@ -177,7 +177,7 @@ public class PropertyHelper {
         return null;
     }
 
-    public static ItemStack consumeActionCapabilityInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
+    public static ItemStack consumeActionToolInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
             ToolType tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof ModularItem) {
@@ -253,19 +253,19 @@ public class PropertyHelper {
     }
 
     @Nullable
-    public static ItemStack consumeCraftCapabilityToolbelt(PlayerEntity player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeCraftToolToolbelt(PlayerEntity player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
                     QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
-                    ItemStack result = consumeCraftCapabilityInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
+                    ItemStack result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         quickslotInventory.markDirty();
                         return result;
                     }
 
                     StorageInventory storageInventory = new StorageInventory(toolbeltStack);
-                    result = consumeCraftCapabilityInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
+                    result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         storageInventory.markDirty();
                         return result;
@@ -277,19 +277,19 @@ public class PropertyHelper {
 
     }
 
-    public static ItemStack consumeActionCapabilityToolbelt(PlayerEntity player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeActionToolToolbelt(PlayerEntity player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
                     QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
-                    ItemStack result = consumeActionCapabilityInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
+                    ItemStack result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         quickslotInventory.markDirty();
                         return result;
                     }
 
                     StorageInventory storageInventory = new StorageInventory(toolbeltStack);
-                    result = consumeActionCapabilityInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
+                    result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         storageInventory.markDirty();
                         return result;
@@ -316,7 +316,7 @@ public class PropertyHelper {
                 .orElse(ItemStack.EMPTY);
     }
 
-    public static int getCombinedCapabilityLevel(PlayerEntity player, World world, BlockPos pos, BlockState blockStateIn, ToolType tool) {
+    public static int getCombinedToolLevel(PlayerEntity player, World world, BlockPos pos, BlockState blockStateIn, ToolType tool) {
         return IntStream.of(
                 getPlayerToolLevel(player, tool),
                 getToolbeltToolLevel(player, tool),

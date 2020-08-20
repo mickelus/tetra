@@ -8,12 +8,12 @@ import se.mickelus.tetra.gui.GuiColors;
 import java.util.Collections;
 import java.util.List;
 
-public class GuiCapabilityRequirement extends GuiTool {
+public class ToolRequirementGui extends GuiTool {
 
     int requiredLevel;
     int availableLevel;
 
-    public GuiCapabilityRequirement(int x, int y, ToolType toolType) {
+    public ToolRequirementGui(int x, int y, ToolType toolType) {
         super(x, y, toolType);
     }
 

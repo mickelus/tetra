@@ -11,16 +11,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CapabililtyInteractiveOverlay {
+public class InteractiveBlockOverlay {
 
-    private GuiCapabilityInteractiveOverlay gui;
+    private InteractiveBlockOverlayGui gui;
 
     private BlockPos previousPos;
     private Direction previousFace;
     private BlockState previousState;
 
-    public CapabililtyInteractiveOverlay() {
-        gui = new GuiCapabilityInteractiveOverlay();
+    public InteractiveBlockOverlay() {
+        gui = new InteractiveBlockOverlayGui();
     }
 
     @SubscribeEvent

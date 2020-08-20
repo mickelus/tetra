@@ -31,7 +31,7 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockInteractive;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -43,7 +43,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockInteractive {
+public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
@@ -180,9 +180,9 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockIn
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(blockState, blockState.get(facingProp), face, capabilities))
+                .filter(interaction -> interaction.isPotentialInteraction(blockState, blockState.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 

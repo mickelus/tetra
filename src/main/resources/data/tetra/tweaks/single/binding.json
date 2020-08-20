@@ -6,7 +6,7 @@
         "properties": {
             "durabilityMultiplier": 0.952,
             "damageMultiplier": 1.03,
-            "capabilities": {
+            "tools": {
                 "axe": [0, 0.93],
                 "pickaxe": [0, 0.93],
                 "shovel": [0, 0.93],

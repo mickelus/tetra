@@ -653,7 +653,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                 .orElseGet(Collections::emptyMap);
     }
 
-    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, ToolType toolType) {
+    public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolType toolType) {
         return getRepairModule(itemStack)
                 .filter(module -> module.getRepairRequiredTools(itemStack, materialStack).contains(toolType))
                 .map(module -> module.getRepairRequiredToolLevel(itemStack, materialStack, toolType))

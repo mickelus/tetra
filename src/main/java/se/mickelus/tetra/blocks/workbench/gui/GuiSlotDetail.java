@@ -141,8 +141,8 @@ public class GuiSlotDetail extends GuiElement {
         tabGroup.setActive(tab);
     }
 
-    public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableCapabilities) {
-        schematicDetail.updateAvailableCapabilities(availableCapabilities);
+    public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
+        schematicDetail.updateAvailableTools(availableTools);
 
         schematicDetail.toggleButton(
                 tileEntity.getCurrentSchematic().canApplyUpgrade(
@@ -150,7 +150,7 @@ public class GuiSlotDetail extends GuiElement {
                         tileEntity.getTargetItemStack(),
                         tileEntity.getMaterials(),
                         tileEntity.getCurrentSlot(),
-                        availableCapabilities));
+                        availableTools));
     }
 
     public void updatePreview(UpgradeSchematic schematic, String slot, ItemStack itemStack, ItemStack previewStack) {

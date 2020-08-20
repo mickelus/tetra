@@ -16,15 +16,15 @@
         "craft": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
+                "tool": "hammer",
+                "toolLevel": 4
             }
         },
         "improvement": {
             "trigger": "tetra:craft_improvement",
             "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
+                "tool": "hammer",
+                "toolLevel": 4
             }
         }
     },

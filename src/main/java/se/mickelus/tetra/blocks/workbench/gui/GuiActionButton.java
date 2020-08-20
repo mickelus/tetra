@@ -11,7 +11,6 @@ import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -20,7 +19,7 @@ public class GuiActionButton extends GuiElement {
     private WorkbenchAction action;
     private ItemStack targetStack;
 
-    private GuiCapabilityRequirement capabilityIndicator;
+    private ToolRequirementGui toolIndicator;
 
     private GuiClickable iconClickable;
     private GuiClickable labelClickable;
@@ -99,8 +98,8 @@ public class GuiActionButton extends GuiElement {
         ToolType requiredTool = action.getRequiredToolTypes(targetStack).stream()
                 .findFirst()
                 .orElse(ToolTypes.hammer);
-        capabilityIndicator = new GuiCapabilityRequirement(6, 7, requiredTool);
-        iconClickable.addChild(capabilityIndicator);
+        toolIndicator = new ToolRequirementGui(6, 7, requiredTool);
+        iconClickable.addChild(toolIndicator);
     }
 
     private void setBorderColors(int color) {
@@ -110,9 +109,9 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(Map<ToolType, Integer> availableCapabilities) {
+    public void update(Map<ToolType, Integer> availableTools) {
         action.getRequiredTools(targetStack).entrySet().stream()
                 .findFirst()
-                .ifPresent(entry -> capabilityIndicator.updateRequirement(entry.getValue(), availableCapabilities.getOrDefault(entry.getKey(), 0)));
+                .ifPresent(entry -> toolIndicator.updateRequirement(entry.getValue(), availableTools.getOrDefault(entry.getKey(), 0)));
     }
 }

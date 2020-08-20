@@ -31,7 +31,6 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -39,7 +38,7 @@ public class BlockInteraction {
     public ToolType requiredTool;
     public int requiredLevel;
 
-    // if false the player needs to have a tool that provides requiredCapability in their inventory for the interaction to be visible
+    // if false the player needs to have an item that provides the required tool in their inventory for the interaction to be visible
     public boolean alwaysReveal = true;
 
     public Direction face;
@@ -93,15 +92,14 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<ToolType> availableCapabilities) {
-        return isPotentialInteraction(blockState, Direction.NORTH, hitFace, availableCapabilities);
+    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
+        return isPotentialInteraction(blockState, Direction.NORTH, hitFace, availableTools);
     }
 
-    public boolean isPotentialInteraction(BlockState blockState, Direction blockFacing, Direction hitFace,
-                                          Collection<ToolType> availableCapabilities) {
+    public boolean isPotentialInteraction(BlockState blockState, Direction blockFacing, Direction hitFace, Collection<ToolType> availableTools) {
         return applicableForState(blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
-                && (alwaysReveal || availableCapabilities.contains(requiredTool));
+                && (alwaysReveal || availableTools.contains(requiredTool));
     }
 
     public void applyOutcome(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
@@ -137,7 +135,7 @@ public class BlockInteraction {
                 rayTrace.getHitVec().y - pos.getY(),
                 rayTrace.getHitVec().z - pos.getZ());
 
-        BlockInteraction possibleInteraction = CastOptional.cast(blockState.getBlock(), IBlockInteractive.class)
+        BlockInteraction possibleInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
                 .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableTools))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
@@ -183,7 +181,7 @@ public class BlockInteraction {
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
-        return CastOptional.cast(blockState.getBlock(), IBlockInteractive.class)
+        return CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
                 .map(block -> block.getPotentialInteractions(blockState, hitFace, PropertyHelper.getPlayerTools(player)))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))

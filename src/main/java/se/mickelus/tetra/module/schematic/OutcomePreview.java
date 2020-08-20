@@ -11,15 +11,15 @@ public class OutcomePreview {
 
     public SchematicType type;
 
-    public ToolData capabilities;
+    public ToolData tools;
     public ItemStack[] materials;
 
-    public OutcomePreview(String key, GlyphData glyph, ItemStack itemStack, SchematicType type, ToolData capabilities, ItemStack[] materials) {
+    public OutcomePreview(String key, GlyphData glyph, ItemStack itemStack, SchematicType type, ToolData tools, ItemStack[] materials) {
         this.key = key;
         this.glyph = glyph;
         this.itemStack = itemStack;
         this.type = type;
-        this.capabilities = capabilities;
+        this.tools = tools;
         this.materials = materials;
     }
 }

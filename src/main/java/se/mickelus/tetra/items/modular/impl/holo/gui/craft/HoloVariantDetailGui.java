@@ -8,7 +8,7 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
-import se.mickelus.tetra.blocks.workbench.gui.GuiCapabilityRequirement;
+import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -131,8 +131,8 @@ public class HoloVariantDetailGui extends GuiElement {
             }
 
             requiredTools.clearChildren();
-            baseOutcome.capabilities.levelMap.forEach((tool, level) -> {
-                GuiCapabilityRequirement requirement = new GuiCapabilityRequirement(20, requiredTools.getNumChildren() * 18, tool);
+            baseOutcome.tools.levelMap.forEach((tool, level) -> {
+                ToolRequirementGui requirement = new ToolRequirementGui(20, requiredTools.getNumChildren() * 18, tool);
                 requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
                 requiredTools.addChild(requirement);
             });

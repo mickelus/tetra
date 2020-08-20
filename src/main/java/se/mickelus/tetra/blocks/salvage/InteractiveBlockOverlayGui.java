@@ -11,23 +11,23 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
+public class InteractiveBlockOverlayGui extends GuiRootHud {
 
 
-    public GuiCapabilityInteractiveOverlay() {
+    public InteractiveBlockOverlayGui() {
 
     }
 
     public void update(BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
-        if (blockState.getBlock() instanceof IBlockInteractive) {
-            IBlockInteractive block = (IBlockInteractive) blockState.getBlock();
+        if (blockState.getBlock() instanceof IInteractiveBlock) {
+            IInteractiveBlock block = (IInteractiveBlock) blockState.getBlock();
 
             BlockInteraction[] interactions = block.getPotentialInteractions(blockState, face, PropertyHelper.getPlayerTools(player));
 
             if (transition) {
-                Collection<GuiInteractiveOutline> previousOutlines = elements.stream()
-                        .filter(element -> element instanceof GuiInteractiveOutline)
-                        .map(element -> (GuiInteractiveOutline) element)
+                Collection<InteractiveOutlineGui> previousOutlines = elements.stream()
+                        .filter(element -> element instanceof InteractiveOutlineGui)
+                        .map(element -> (InteractiveOutlineGui) element)
                         .collect(Collectors.toCollection(LinkedList::new));
 
                 // animate out outlines for all interactions which are no longer possible
@@ -40,15 +40,15 @@ public class GuiCapabilityInteractiveOverlay extends GuiRootHud {
                 // add and animate outlines for all new interactions
                 Arrays.stream(interactions)
                         .filter(interaction -> previousOutlines.stream()
-                                .map(GuiInteractiveOutline::getBlockInteraction)
+                                .map(InteractiveOutlineGui::getBlockInteraction)
                                 .noneMatch(interaction::equals))
-                        .map(interaction -> new GuiInteractiveOutline(interaction, player))
+                        .map(interaction -> new InteractiveOutlineGui(interaction, player))
                         .forEach(this::addChild);
             } else {
                 clearChildren();
 
                 Arrays.stream(interactions)
-                        .map(interaction -> new GuiInteractiveOutline(interaction, player))
+                        .map(interaction -> new InteractiveOutlineGui(interaction, player))
                         .forEach(this::addChild);
 
             }

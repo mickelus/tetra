@@ -78,7 +78,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.magicCapacity);
 
         Stream.of(ToolTypes.hammer, ToolType.AXE, ToolType.PICKAXE, ToolType.SHOVEL, ToolTypes.cut, ToolTypes.pry, ToolType.HOE)
-                .map(capability -> new GuiStatBarTool(0, 0, GuiStats.barLength, capability))
+                .map(tool -> new GuiStatBarTool(0, 0, GuiStats.barLength, tool))
                 .forEach(bars::add);
 
         bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));
