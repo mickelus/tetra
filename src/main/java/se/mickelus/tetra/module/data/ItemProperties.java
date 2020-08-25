@@ -62,14 +62,14 @@ public class ItemProperties {
         ItemProperties result = new ItemProperties();
         result.durability = Math.round(durability * factor);
         if (durabilityMultiplier != 1) {
-            result.durabilityMultiplier = durabilityMultiplier * factor;
+            result.durabilityMultiplier = 1 + (durabilityMultiplier - 1) * factor;
         }
 
         result.integrity = Math.round(integrity * factor);
         result.integrityUsage = Math.round(integrityUsage * factor);
 
         if (integrityMultiplier != 1) {
-            result.integrityMultiplier = integrityMultiplier * factor;
+            result.integrityMultiplier = 1 + (integrityMultiplier - 1) * factor;
         }
 
         return result;

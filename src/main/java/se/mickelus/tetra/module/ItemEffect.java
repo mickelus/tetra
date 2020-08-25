@@ -84,21 +84,6 @@ public class ItemEffect {
     public static ItemEffect unbreaking = get("unbreaking");
 
     /**
-     * Flattening: Rightclicking a grass block converts it to a path block, the same behaviour as vanilla shovels.
-     */
-    public static ItemEffect flattening = get("flattening");
-
-    /**
-     * Tilling: Rightclicking a grass block converts it to a farmland block, the same behaviour as vanilla hoes.
-     */
-    public static ItemEffect tilling = get("tilling");
-
-    /**
-     * Stripping: Rightclicking a log converts it to a stripped log of the same sort of wood, the same behaviour as vanilla axes.
-     */
-    public static ItemEffect stripping = get("stripping");
-
-    /**
      * Blocking: Allows the item to block incoming attacks and projectiles while rightclick is held down. The level defines how many seconds the block
      * can be held, the duration is infinite if the level is 16 or above.
      */

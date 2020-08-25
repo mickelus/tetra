@@ -838,6 +838,8 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
             itemStack.setDamage((int) (durabilityFactor * itemStack.getMaxDamage()
                     - (durabilityFactor * durabilityFactor * module.getDurability(itemStack))));
         }
+
+        updateIdentifier(itemStack);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
