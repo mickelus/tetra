@@ -24,6 +24,7 @@ import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
+import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 
@@ -48,12 +49,16 @@ public class DataManager {
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
             .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
+            .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
+            .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
+            .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .create();
 
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
+    public static DataStore<MaterialData> materialData = new MaterialStore(gson, "materials");
     public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
     public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
     public static DataStore<RepairDefinition> repairData = new DataStore<>(gson, "repairs", RepairDefinition.class);
@@ -69,7 +74,7 @@ public class DataManager {
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private final DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
+    private final DataStore[] dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
             replacementData, schematicData, repairData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;

@@ -194,7 +194,6 @@ public class SchematicDefinition {
         }
 
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes))
-                .filter(Filter.distinct(outcome -> outcome.material))
                 .toArray(OutcomeDefinition[]::new);
     }
 }

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGuiGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 
@@ -43,7 +43,7 @@ public class HoloGui extends Screen {
         defaultGui.addChild(header);
 
         pages = new HoloRootBaseGui[HoloPage.values().length];
-        pages[0] = new HoloCraftRootGuiGui(0, 18);
+        pages[0] = new HoloCraftRootGui(0, 18);
         defaultGui.addChild(pages[0]);
         pages[1] = new HoloScanRootGui(0, 18);
         pages[1].setVisible(false);

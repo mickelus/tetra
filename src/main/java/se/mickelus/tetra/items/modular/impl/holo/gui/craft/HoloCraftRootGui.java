@@ -7,7 +7,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.LinkedList;
 
-public class HoloCraftRootGuiGui extends HoloRootBaseGui {
+public class HoloCraftRootGui extends HoloRootBaseGui {
 
     public static final char backBinding = 'q';
 
@@ -23,7 +23,7 @@ public class HoloCraftRootGuiGui extends HoloRootBaseGui {
     private HoloSchematicGui schematicView;
     private UpgradeSchematic schematic;
 
-    public HoloCraftRootGuiGui(int x, int y) {
+    public HoloCraftRootGui(int x, int y) {
         super(x, y);
 
         breadcrumbs = new HoloBreadcrumbsGui(0, 0, width, this::onBreadcrumbClick);

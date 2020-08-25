@@ -1,8 +1,11 @@
 package se.mickelus.tetra.module.schematic;
 
+import com.google.gson.*;
 import se.mickelus.tetra.module.data.ToolData;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used to define outcomes of a schematic, which combination of materials and tools yield which variation of a module or improvement.
@@ -77,5 +80,18 @@ public class OutcomeDefinition {
      *     "improvementB": level
      * }
      */
-    public HashMap<String, Integer> improvements = new HashMap<>();
+    public Map<String, Integer> improvements = new HashMap<>();
+
+    public static class Deserializer implements JsonDeserializer<OutcomeDefinition> {
+        @Override
+        public OutcomeDefinition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+
+            if (jsonObject.has("materials")) {
+                return context.deserialize(json, MaterialOutcomeDefinition.class);
+            } else {
+                return context.deserialize(json, UniqueOutcomeDefinition.class);
+            }
+        }
+    }
 }

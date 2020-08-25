@@ -48,7 +48,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
         separators = new ArrayList<>();
         buttons = new ArrayList<>();
 
-        GuiKeybinding keybinding = new GuiKeybinding(0, 3, "" + HoloCraftRootGuiGui.backBinding);
+        GuiKeybinding keybinding = new GuiKeybinding(0, 3, "" + HoloCraftRootGui.backBinding);
         keybinding.setAttachmentPoint(GuiAttachment.topRight);
         keybinding.setOpacity(0);
         addChild(keybinding);

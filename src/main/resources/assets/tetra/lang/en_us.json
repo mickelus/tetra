@@ -231,6 +231,16 @@
   "tetra.stats.integrity_usage": "Integrity usage: %s/%s",
   "tetra.stats.integrity_usage.tooltip": "Integrity is provided by some modules (often in a specific slot), while it is required by other modules and most improvements.",
 
+  "tetra.variant_category.fabric.label": "Fabric",
+  "tetra.variant_category.fibre.label": "Fibre",
+  "tetra.variant_category.gem.label": "Gemstone",
+  "tetra.variant_category.metal.label": "Metal",
+  "tetra.variant_category.misc.label": "Misc",
+  "tetra.variant_category.scale.label": "Scales",
+  "tetra.variant_category.skin.label": "Skin",
+  "tetra.variant_category.stone.label": "Stone",
+  "tetra.variant_category.wood.label": "Wood",
+
   "item.tetra.modular.broken": "Broken",
   "item.tetra.modular.empty_slot": "Empty",
   "item.tetra.modular.magic_capacity.label": "Magic capacity",

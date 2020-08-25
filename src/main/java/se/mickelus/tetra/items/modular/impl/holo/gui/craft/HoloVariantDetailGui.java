@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
@@ -63,7 +64,8 @@ public class HoloVariantDetailGui extends GuiElement {
         requiredTools = new GuiElement(0, 20, width, height);
         addChild(requiredTools);
 
-        material = new GuiItemRolling(0, 20);
+        material = new GuiItemRolling(0, 20)
+                .setCountVisibility(GuiItem.CountMode.always);
         addChild(material);
 
         PlayerEntity player = Minecraft.getInstance().player;

@@ -9,10 +9,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.module.data.MaterialVariantData;
+import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.module.schematic.*;
+import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SchematicRegistry {
     private static final Logger logger = LogManager.getLogger();
@@ -68,6 +72,8 @@ public class SchematicRegistry {
 
     // todo: hacky stuff to get multislot modules to work, there has to be another way
     private Collection<Pair<ResourceLocation, ConfigSchematic>> createSchematics(ResourceLocation identifier, SchematicDefinition definition) {
+        processDefinition(definition);
+
         if (definition.slots.length == definition.keySuffixes.length) {
             ArrayList<Pair<ResourceLocation, ConfigSchematic>> result = new ArrayList<>(definition.slots.length);
             for (int i = 0; i < definition.slots.length; i++) {
@@ -94,6 +100,26 @@ public class SchematicRegistry {
         return Collections.singletonList(new ImmutablePair<>(identifier, null));
     }
 
+    private void processDefinition(SchematicDefinition definition) {
+        // todo: merge outcomes instead of filtering duplicates
+        definition.outcomes = Arrays.stream(definition.outcomes)
+                .flatMap(outcome ->
+                        outcome instanceof MaterialOutcomeDefinition
+                                ? expandMaterialOutcome((MaterialOutcomeDefinition) outcome)
+                                : Stream.of(outcome))
+                .filter(Filter.distinct(outcome -> outcome.material))
+                .toArray(OutcomeDefinition[]::new);
+    }
+
+    private Stream<OutcomeDefinition> expandMaterialOutcome(MaterialOutcomeDefinition source) {
+        return Arrays.stream(source.materials)
+                .map(rl -> rl.getPath().endsWith("/")
+                        ? DataManager.materialData.getDataIn(rl)
+                        : Optional.ofNullable(DataManager.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                .flatMap(Collection::stream)
+                .map(source::combine);
+    }
+
     public static UpgradeSchematic getSchematic(ResourceLocation identifier) {
         return instance.schematicMap.get(identifier);
     }
@@ -107,14 +133,14 @@ public class SchematicRegistry {
     }
 
     public static UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, ItemStack itemStack) {
-        return instance.getAllSchematics().stream()
+        return getAllSchematics().stream()
                 .filter(upgradeSchematic -> playerHasSchematic(player, itemStack, upgradeSchematic))
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
                 .toArray(UpgradeSchematic[]::new);
     }
 
     public static UpgradeSchematic[] getSchematics(String slot) {
-        return instance.getAllSchematics().stream()
+        return getAllSchematics().stream()
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, ItemStack.EMPTY))
                 .toArray(UpgradeSchematic[]::new);
     }

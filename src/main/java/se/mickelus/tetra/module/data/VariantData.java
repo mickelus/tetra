@@ -37,6 +37,8 @@ public class VariantData extends ItemProperties {
      */
     public String key;
 
+    public String category = "misc";
+
     public Multimap<Attribute, AttributeModifier> attributes;
 
     public AbilityData[] abilities;

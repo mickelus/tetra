@@ -1,0 +1,112 @@
+package se.mickelus.tetra.module.data;
+
+import com.google.common.collect.Multimap;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.util.ResourceLocation;
+import se.mickelus.tetra.properties.AttributeHelper;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+public class MaterialVariantData extends VariantData {
+
+    public ResourceLocation[] materials = {};
+
+    public MaterialMultiplier extract = new MaterialMultiplier();
+
+    public static class MaterialMultiplier {
+        public Multimap<Attribute, AttributeModifier> primaryAttributes;
+        public Multimap<Attribute, AttributeModifier> secondaryAttributes;
+        public Multimap<Attribute, AttributeModifier> tertiaryAttributes;
+
+        public Integer durability;
+        public Float durabilityMultiplier;
+
+        public Float integrity;
+        public Float magicCapacity;
+
+        public EffectData effects;
+        public ToolData tools;
+
+        public GlyphData glyph;
+
+        public String[] availableTextures = {};
+        public ModuleModel[] models = {};
+    }
+
+    public VariantData combine(MaterialData material) {
+        UniqueVariantData result = new UniqueVariantData();
+
+        result.key = key + material.key;
+
+        if (material.category != null) {
+            result.category = material.category;
+        }
+
+        result.attributes = AttributeHelper.merge(Arrays.asList(
+                attributes,
+                AttributeHelper.multiplyModifiers(extract.primaryAttributes, material.primary),
+                AttributeHelper.multiplyModifiers(extract.secondaryAttributes, material.secondary),
+                AttributeHelper.multiplyModifiers(extract.tertiaryAttributes, material.tertiary)
+        ));
+
+        result.durability = Math.round(durability + Optional.ofNullable(extract.durability)
+                .map(extracted -> extracted * material.durability)
+                .orElse(0f));
+
+        result.durabilityMultiplier = durabilityMultiplier + Optional.ofNullable(extract.durabilityMultiplier)
+                .map(extracted -> extracted * material.durability)
+                .orElse(0f);
+
+        result.integrity = integrity + Optional.ofNullable(extract.integrity)
+                .map(extracted -> extracted * (extracted > 0 ? material.integrityGain : material.integrityCost))
+                .map(Math::round)
+                .orElse(0);
+
+        result.magicCapacity = Math.round(magicCapacity + Optional.ofNullable(extract.magicCapacity)
+                .map(extracted -> extracted * material.magicCapacity)
+                .orElse(0f));
+
+        result.effects = EffectData.merge(Arrays.asList(
+                effects,
+                material.effects,
+                EffectData.multiply(extract.effects, material.effectLevel, material.effectEfficiency)
+        ));
+
+        result.tools = ToolData.merge(Arrays.asList(
+                tools,
+                ToolData.multiply(extract.tools, material.toolLevel, material.toolEfficiency)
+        ));
+
+        result.glyph = Optional.ofNullable(extract.glyph)
+                .map(glyph -> new GlyphData(glyph.textureLocation, glyph.textureX, glyph.textureY, material.tints.glyph))
+                .orElse(glyph);
+
+        result.models = Stream.concat(
+                Arrays.stream(models),
+                Arrays.stream(extract.models).map(model -> new ModuleModel(model.type, combineModelLocation(model.location, material), material.tints.texture)))
+                .toArray(ModuleModel[]::new);
+
+        return result;
+    }
+
+    private ResourceLocation combineModelLocation(ResourceLocation modelLocation, MaterialData material) {
+        if (material.textureOverride) {
+            return appendString(modelLocation, material.textures[0]);
+        } else {
+            List<String> availableTextures = Arrays.asList(extract.availableTextures);
+            return Arrays.stream(material.textures)
+                    .filter(availableTextures::contains)
+                    .findFirst()
+                    .map(texture -> appendString(modelLocation, texture))
+                    .orElseGet(() -> appendString(modelLocation, availableTextures.get(0)));
+        }
+    }
+
+    private ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
+        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
+    }
+}

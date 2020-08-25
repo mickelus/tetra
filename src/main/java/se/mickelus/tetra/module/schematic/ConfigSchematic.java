@@ -15,6 +15,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.Filter;
 
@@ -363,13 +364,15 @@ public class ConfigSchematic extends BaseSchematic {
         return Arrays.stream(definition.outcomes)
                 .map(outcome -> {
                     String key = null;
+                    String category = "misc";
                     GlyphData glyph;
 
                     if (outcome.moduleKey != null) {
-                        ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
+                        VariantData variant = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome)).getVariantData(outcome.moduleVariant);
 
                         key = outcome.moduleVariant;
-                        glyph = module.getVariantData(outcome.moduleVariant).glyph;
+                        glyph = variant.glyph;
+                        category = variant.category;
                     } else {
                         if (outcome.improvements.size() == 1) {
                             for (String improvementKey : outcome.improvements.keySet()) {
@@ -387,7 +390,7 @@ public class ConfigSchematic extends BaseSchematic {
                     ItemStack itemStack = targetStack.copy();
                     applyOutcome(outcome, itemStack, false, slot, null);
 
-                    return new OutcomePreview(key, glyph, itemStack, definition.displayType, outcome.requiredTools,
+                    return new OutcomePreview(key, category, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
                 })
                 .filter(Filter.distinct(preview -> preview.key))

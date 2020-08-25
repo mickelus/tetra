@@ -7,16 +7,38 @@ import com.google.common.collect.Multimaps;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AttributeHelper {
 
     public static final Multimap<Attribute, AttributeModifier> emptyMap = ImmutableMultimap.of();
+
+    /**
+     * Merge two multimaps, values from b will be used when both map contain values for the same key
+     * @param a
+     * @param b
+     * @return
+     */
+    public static Multimap<Attribute, AttributeModifier> overwrite(Multimap<Attribute, AttributeModifier> a, Multimap<Attribute, AttributeModifier> b) {
+        if (a == null) {
+            return b;
+        } else if (b == null) {
+            return a;
+        }
+
+        ArrayListMultimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
+
+        result.putAll(a);
+        b.asMap().forEach(result::replaceValues);
+
+        return result;
+    }
+
+    public static Multimap<Attribute, AttributeModifier> merge(Collection<Multimap<Attribute, AttributeModifier>> modifiers) {
+        return modifiers.stream().reduce(null, AttributeHelper::merge);
+    }
 
     public static Multimap<Attribute, AttributeModifier> merge(Multimap<Attribute, AttributeModifier> a, Multimap<Attribute, AttributeModifier> b) {
         if (a == null) {
@@ -42,15 +64,31 @@ public class AttributeHelper {
             return null;
         }
 
-        Map<Attribute, Double> maxValues = modifiers.entries().stream()
-                .filter(entry -> attributes.contains(entry.getKey()) && entry.getValue().getOperation() == AttributeModifier.Operation.ADDITION)
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getAmount(), Double::max));
+        // old solution, not fully commited, keep around in case new solution borks
+//        Map<Attribute, AttributeModifier> maxValues = modifiers.entries().stream()
+//                .filter(entry -> attributes.contains(entry.getKey()) && entry.getValue().getOperation() == AttributeModifier.Operation.ADDITION)
+//                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a.getAmount() >= b.getAmount() ? a : b));
+//
+//        return modifiers.entries().stream()
+//                .filter(entry -> !maxValues.containsKey(entry.getKey())
+//                        || entry.getValue().getOperation() != AttributeModifier.Operation.ADDITION
+//                        || entry.getValue() == maxValues.get(entry.getKey()))
+//                .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
 
-        return modifiers.entries().stream()
-                .filter(entry -> !maxValues.containsKey(entry.getKey())
-                        || entry.getValue().getOperation() != AttributeModifier.Operation.ADDITION
-                        || entry.getValue().getAmount() == maxValues.get(entry.getKey()))
-                .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
+        return modifiers.asMap().entrySet().stream()
+                .collect(Multimaps.flatteningToMultimap(
+                        Map.Entry::getKey,
+                        entry -> attributes.contains(entry.getKey()) ? retainMax(entry.getValue()).stream() : entry.getValue().stream(),
+                        ArrayListMultimap::create));
+    }
+
+    public static Collection<AttributeModifier> retainMax(Collection<AttributeModifier> modifiers) {
+        return modifiers.stream()
+                .collect(Collectors.groupingBy(AttributeModifier::getOperation, Collectors.maxBy(Comparator.comparing(AttributeModifier::getAmount))))
+                .values()
+                .stream()
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     /**

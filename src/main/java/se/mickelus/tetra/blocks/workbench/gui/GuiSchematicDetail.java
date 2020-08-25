@@ -62,7 +62,7 @@ public class GuiSchematicDetail extends GuiElement {
 
             slotPlaceholders[i] = new GuiItemRolling(121, 5 + i * 18);
             slotPlaceholders[i].setVisible(false);
-            slotPlaceholders[i].setCount(false);
+            slotPlaceholders[i].setCountVisibility(GuiItem.CountMode.never);
             addChild(slotPlaceholders[i]);
 
             slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, GuiTextures.workbench);

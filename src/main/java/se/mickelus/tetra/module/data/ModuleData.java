@@ -62,7 +62,6 @@ public class ModuleData {
                 .toArray(ResourceLocation[]::new);
 
         to.variants = Stream.concat(Arrays.stream(to.variants), Arrays.stream(from.variants))
-                .filter(Filter.distinct(variant -> variant.key))
                 .toArray(VariantData[]::new);
     }
 

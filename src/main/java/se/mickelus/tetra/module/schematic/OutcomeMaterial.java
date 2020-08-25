@@ -11,18 +11,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.potion.Potion;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.TagCollection;
 import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,11 +39,33 @@ import java.lang.reflect.Type;
 public class OutcomeMaterial {
     private static final Logger logger = LogManager.getLogger();
 
-    private ItemPredicate predicate;
     public int count = 1;
 
-    private ItemStack itemStack;
-    private ResourceLocation tagLocation;
+    protected ItemStack itemStack;
+    protected ResourceLocation tagLocation;
+
+    private ItemPredicate predicate;
+
+    public OutcomeMaterial offsetCount(float multiplier, int offset) {
+        OutcomeMaterial result = new OutcomeMaterial();
+        result.count = Math.round(count * multiplier) + offset;
+        result.itemStack = itemStack;
+        result.tagLocation = tagLocation;
+        result.predicate = predicate;
+
+        return result;
+    }
+
+    // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
+    protected static TagCollection<Item> getTagCollection() {
+        if (FMLEnvironment.dist.isClient()) {
+            if (Minecraft.getInstance().world != null) {
+                return Minecraft.getInstance().world.getTags().getItems();
+            }
+        }
+
+        return TagCollectionManager.func_232928_e_().func_232925_b_();
+    }
 
     @OnlyIn(Dist.CLIENT)
     public ITextComponent[] getDisplayNames() {
@@ -66,7 +85,6 @@ public class OutcomeMaterial {
         return new ITextComponent[] {new StringTextComponent("Unknown material")};
     }
 
-    @OnlyIn(Dist.CLIENT)
     public ItemStack[] getApplicableItemStacks() {
         if (getPredicate() == null) {
             return new ItemStack[0];
@@ -83,17 +101,6 @@ public class OutcomeMaterial {
         }
 
         return new ItemStack[0];
-    }
-
-    // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
-    private static TagCollection<Item> getTagCollection() {
-        if (FMLEnvironment.dist.isClient()) {
-            if (Minecraft.getInstance().world != null) {
-                return Minecraft.getInstance().world.getTags().getItems();
-            }
-        }
-
-        return TagCollectionManager.func_232928_e_().func_232925_b_();
     }
 
     @Nullable

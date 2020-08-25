@@ -2,6 +2,7 @@ package se.mickelus.tetra.gui.statbar;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.ai.attributes.Attributes;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -71,12 +72,12 @@ public class GuiStats {
                 0, 2400, false, durabilityGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.durability.tooltip", durabilityGetter));
 
-    public static final IStatGetter armorGetter = new StatGetterEffectLevel(ItemEffect.armor, 1d);
+    public static final IStatGetter armorGetter = new StatGetterAttribute(Attributes.ARMOR);
     public static final GuiStatBar armor = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.armor"),
                 0, 20, false, armorGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.armor.tooltip", armorGetter));
 
-    public static final IStatGetter toughnessGetter = new StatGetterEffectLevel(ItemEffect.toughness, 1d);
+    public static final IStatGetter toughnessGetter = new StatGetterAttribute(Attributes.ARMOR_TOUGHNESS);
     public static final GuiStatBar toughness = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toughness"),
             0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));

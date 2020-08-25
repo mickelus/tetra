@@ -6,11 +6,16 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.module.data.MaterialData;
+import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.ModuleData;
+import se.mickelus.tetra.module.data.VariantData;
+import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModuleRegistry {
     private static final Logger logger = LogManager.getLogger();
@@ -82,7 +87,39 @@ public class ModuleRegistry {
         return Collections.singletonList(new ImmutablePair<>(entry.getKey(), entry.getValue()));
     }
 
+    /**
+     * Expands all material based variants for this module data.
+     * @param moduleData
+     */
+    private void expandMaterialVariants(ModuleData moduleData) {
+        moduleData.variants = Arrays.stream(moduleData.variants)
+                .flatMap(variant ->
+                        variant instanceof MaterialVariantData
+                                ? expandMaterialVariant((MaterialVariantData) variant)
+                                : Stream.of(variant))
+                .toArray(VariantData[]::new);
+    }
+
+    private Stream<VariantData> expandMaterialVariant(MaterialVariantData source) {
+        return Arrays.stream(source.materials)
+                .map(rl -> rl.getPath().endsWith("/")
+                        ? DataManager.materialData.getDataIn(rl)
+                        : Optional.ofNullable(DataManager.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                .flatMap(Collection::stream)
+                .map(source::combine);
+    }
+
+    private void handleVariantDuplicates(ModuleData data) {
+        // todo: merge variant data instead of discarding duplicates
+        data.variants = Arrays.stream(data.variants)
+                .filter(Filter.distinct(variant -> variant.key))
+                .toArray(VariantData[]::new);
+    }
+
     private ItemModule setupModule(ResourceLocation identifier, ModuleData data) {
+        expandMaterialVariants(data);
+        handleVariantDuplicates(data);
+
         return moduleConstructors.get(data.type).apply(identifier, data);
     }
 

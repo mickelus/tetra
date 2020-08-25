@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
-import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
@@ -17,6 +17,9 @@ public class HoloVariantMajorItemGui extends HoloVariantItemGui {
         addChild(backdrop);
 
         addChild(new GuiModuleGlyph(0, 0, 16, 16, outcome.glyph).setShift(false));
+
+        material.setX(1);
+        material.setY(0);
     }
 
     @Override

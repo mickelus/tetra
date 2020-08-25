@@ -16,6 +16,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.network.PacketHandler;
 
 import java.io.*;
@@ -141,7 +142,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
     }
 
     /**
-     * Get the resource at the given location from the set of resources that this listener is managing.
+     * Get the resource at the given location from the set of resources that this listener is managing
      *
      * @param resourceLocation A resource location
      * @return An object matching the type of this listener, or null if none exists at the given location
@@ -155,6 +156,20 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
      */
     public Map<ResourceLocation, V> getData() {
         return dataMap;
+    }
+
+    /**
+     * Get all resources (if any) that are within the directory denoted by the provided resource location
+     *
+     * @param resourceLocation
+     * @return
+     */
+    public Collection<V> getDataIn(ResourceLocation resourceLocation) {
+        return getData().entrySet().stream()
+                .filter(entry -> resourceLocation.getNamespace().equals(entry.getKey().getNamespace())
+                        && entry.getKey().getPath().startsWith(resourceLocation.getPath()))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     /**
