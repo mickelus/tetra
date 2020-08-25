@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 8
+    },
+    "requiredTools": {
+        "hammer": 5
+    },
+    "moduleKey": "sword/basic_hilt",
+    "moduleVariant": "basic_hilt/forged_beam"
+}
