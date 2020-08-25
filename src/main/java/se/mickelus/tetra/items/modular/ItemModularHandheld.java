@@ -1,10 +1,7 @@
 package se.mickelus.tetra.items.modular;
 
 import com.google.common.collect.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,10 +16,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.UseAction;
+import net.minecraft.item.*;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -244,42 +238,47 @@ public class ItemModularHandheld extends ModularItem {
         Direction facing = context.getFace();
         ItemStack itemStack = player.getHeldItem(hand);
 
-        ActionResultType result = super.onItemUse(context);
+        BlockState blockState = world.getBlockState(pos);
+
 
         boolean canChannel = getUseDuration(itemStack) > 0;
-
         if (!canChannel || player.isCrouching()) {
+            for (ToolType tool: getToolDataCached(itemStack).getValues()) {
+                BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItem(), tool);
+                if (block != null) {
+                    SoundEvent sound = Optional.ofNullable(getUseSound(tool))
+                            .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
 
-            int flatteningLevel = getEffectLevel(itemStack, ItemEffect.flattening);
-            int strippingLevel = getEffectLevel(itemStack, ItemEffect.stripping);
+                    world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    if (!world.isRemote) {
+                        world.setBlockState(pos, block, 11);
+                        applyDamage(blockDestroyDamage, context.getItem(), player);
+                        applyUsageEffects(player, itemStack, 2);
+                    }
 
-            if (flatteningLevel > 0 && (strippingLevel > 0 && player.isCrouching() || strippingLevel == 0)) {
-                result = flattenPath(player, world, pos, hand, facing);
-            } else if (strippingLevel > 0) {
-                result = stripBlock(context);
-            }
-
-            int tillingLevel = getEffectLevel(itemStack, ItemEffect.tilling);
-            if (tillingLevel > 0) {
-                result = tillBlock(context);
-            }
-
-
-            int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
-            if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
-                result = denailBlock(player, world, pos, hand, facing);
-
-                if (result.equals(ActionResultType.SUCCESS)) {
-                    player.resetCooldown();
+                    return ActionResultType.func_233537_a_(world.isRemote);
                 }
             }
 
-            if (result.equals(ActionResultType.SUCCESS)) {
-                applyUsageEffects(player, itemStack, 2);
+            int denailingLevel = getEffectLevel(itemStack, ItemEffect.denailing);
+            if (denailingLevel > 0 && player.getCooledAttackStrength(0) > 0.9) {
+                if (denailBlock(player, world, pos, hand, facing)) {
+                    applyDamage(blockDestroyDamage, itemStack, player);
+                    applyUsageEffects(player, itemStack, 2);
+                    player.resetCooldown();
+                    return ActionResultType.func_233537_a_(world.isRemote);
+                }
             }
         }
 
-        return result;
+        return super.onItemUse(context);
+    }
+
+    private SoundEvent getUseSound(ToolType tool) {
+        if      (tool == ToolType.AXE)    return SoundEvents.ITEM_AXE_STRIP;
+        else if (tool == ToolType.HOE)    return SoundEvents.ITEM_HOE_TILL;
+        else if (tool == ToolType.SHOVEL) return SoundEvents.ITEM_SHOVEL_FLATTEN;
+        return null;
     }
 
     @Override
@@ -419,134 +418,31 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     /**
-     * Flattens grass into a path similar to how vanilla shovels does it.
-     * @param player the responsible player entity
-     * @param world the world in which the action takes place
-     * @param pos the position in the world
-     * @param hand the hand holding the tool
-     * @param facing the clicked face
-     * @return ActionResultType.SUCCESS if successful, ActionResultType.FAIL if block cannot be edited by player,
-     * otherwise ActionResultType.PASS
-     */
-    public ActionResultType flattenPath(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
-        ItemStack itemStack = player.getHeldItem(hand);
-
-        if (facing != Direction.DOWN && world.getBlockState(pos.up()).isAir(world, pos.up())) {
-            BlockState blockstate = flattenLookup.get(world.getBlockState(pos).getBlock());
-            if (blockstate != null) {
-                world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1, 1);
-                if (!world.isRemote) {
-                    world.setBlockState(pos, blockstate, 11);
-                    applyDamage(blockDestroyDamage, itemStack, player);
-                    tickProgression(player, itemStack, blockDestroyDamage);
-                }
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.PASS;
-    }
-
-    /**
-     * Tills dirt or grass, turning it into farmland. Tilling coarse dirt turns it into dirt.
-     * @param context the context of the item's usage
-     * otherwise ActionResultType.PASS
-     */
-    public ActionResultType tillBlock(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
-        Hand hand = context.getHand();
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
-        Direction facing = context.getFace();
-
-        ItemStack itemStack = player.getHeldItem(hand);
-
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return ActionResultType.FAIL;
-        }
-
-        // fire the forge event manually as the helper damages durability
-        UseHoeEvent event = new UseHoeEvent(context);
-        MinecraftForge.EVENT_BUS.post(event);
-
-        if (event.isCanceled()) {
-            return ActionResultType.FAIL;
-        }
-        if (event.getResult() == Event.Result.ALLOW) {
-            applyDamage(blockDestroyDamage, itemStack, player);
-            tickProgression(player, itemStack, blockDestroyDamage);
-            return ActionResultType.SUCCESS;
-        }
-
-        if (facing != Direction.DOWN && world.isAirBlock(pos.up())) {
-            BlockState newState = tillLookup.get(world.getBlockState(pos).getBlock());
-
-            if (newState != null) {
-                world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1, 1);
-
-                if (!world.isRemote) {
-                    world.setBlockState(pos, newState, 11);
-                    applyDamage(blockDestroyDamage, itemStack, player);
-                }
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.PASS;
-    }
-
-    public ActionResultType stripBlock(ItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
-        BlockState blockState = world.getBlockState(pos);
-        Block block = stripLookup.get(blockState.getBlock());
-        if (block != null) {
-            PlayerEntity player = context.getPlayer();
-            world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
-
-            if (!world.isRemote) {
-                world.setBlockState(pos, block.getDefaultState().with(RotatedPillarBlock.AXIS, blockState.get(RotatedPillarBlock.AXIS)), 11);
-                applyDamage(blockDestroyDamage, context.getItem(), player);
-            }
-
-            return ActionResultType.SUCCESS;
-        } else {
-            return ActionResultType.PASS;
-        }
-    }
-
-    /**
      * Instantly break plank based blocks.
      * @param player the responsible player entity
      * @param world the world in which the action takes place
      * @param pos the position in the world
      * @param hand the hand holding the tool
      * @param facing the clicked face
-     * @return ActionResultType.SUCCESS if successful, ActionResultType.FAIL if block cannot be edited by player,
-     * otherwise ActionResultType.PASS
+     * @return true if the block can be (and was) denailed, otherwise false
      */
-    public ActionResultType denailBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
+    public boolean denailBlock(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
-            return ActionResultType.FAIL;
+            return false;
         }
 
         BlockState blockState = world.getBlockState(pos);
         if (canDenail(blockState, world, pos)) {
             boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState, true);
             if (success) {
-                applyDamage(blockDestroyDamage, itemStack, player);
-                tickProgression(player, itemStack, blockDestroyDamage);
-
                 player.resetCooldown();
-                return ActionResultType.SUCCESS;
+                return true;
             }
         }
 
-        return ActionResultType.PASS;
+        return false;
     }
 
     private boolean canDenail(BlockState blockState, World world, BlockPos pos) {
