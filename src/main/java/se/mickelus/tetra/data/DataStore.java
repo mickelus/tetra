@@ -42,6 +42,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
 
         this.dataClass = dataClass;
 
+        rawData = Collections.emptyMap();
         dataMap = Collections.emptyMap();
 
         listeners = new LinkedList<>();
@@ -93,7 +94,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
             PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
         }
 
-        parseData(splashList);
+        parseData(rawData);
     }
 
     public void sendToPlayer(ServerPlayerEntity player) {
