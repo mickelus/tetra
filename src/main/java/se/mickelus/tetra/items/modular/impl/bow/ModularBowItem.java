@@ -29,6 +29,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -138,7 +139,7 @@ public class ModularBowItem extends ModularItem {
                         }
 
                         // the damage modifier is based on fully drawn damage, vanilla bows deal 5 times the base damage when fully drawn
-                        projectile.setDamage(projectile.getDamage() + getDamageModifier(itemStack) / 5 - 2);
+                        projectile.setDamage(projectile.getDamage() + entity.getAttributeValue(TetraAttributes.drawStrength.get()) / 5 - 2);
 
                         int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, itemStack);
                         if (powerLevel > 0) {
@@ -189,48 +190,6 @@ public class ModularBowItem extends ModularItem {
         }
     }
 
-    public double getDamageModifier(ItemStack itemStack) {
-        if (isBroken(itemStack)) {
-            return 0;
-        }
-
-        double damageModifier = getAllModules(itemStack).stream()
-                .mapToDouble(itemModule -> itemModule.getDamageModifier(itemStack))
-                .sum();
-
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damage)
-                .reduce(damageModifier, Double::sum);
-
-        damageModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.damageMultiplier)
-                .reduce(damageModifier, (a, b) -> a * b);
-
-        return getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getDamageMultiplierModifier(itemStack))
-                .reduce(damageModifier, (a, b) -> a * b);
-    }
-
-    public double getSpeedModifier(ItemStack itemStack) {
-        double speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-                .reduce(0d, Double::sum);
-
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeed)
-                .reduce(speedModifier, Double::sum);
-
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeedMultiplier)
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        return Math.max(0.1, speedModifier);
-    }
-
     /**
      * Gets the velocity of the arrow entity from the bow's charge
      */
@@ -249,8 +208,8 @@ public class ModularBowItem extends ModularItem {
         return f;
     }
 
-    public int getDrawDuration(ItemStack itemStack) {
-        return (int)(20 * getSpeedModifier(itemStack));
+    public int getDrawDuration(LivingEntity entity) {
+        return (int) (20 * entity.getAttributeValue(TetraAttributes.drawSpeed.get()));
     }
 
     /**
@@ -263,7 +222,7 @@ public class ModularBowItem extends ModularItem {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getItemInUseCount() > 0)
                 .filter(e -> itemStack.equals(e.getActiveItemStack()))
-                .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(itemStack))
+                .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(entity))
                 .orElse(0f);
     }
 

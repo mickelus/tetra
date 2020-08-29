@@ -31,13 +31,13 @@ public class HoloStatsGui extends GuiElement {
         addChild(barGroup);
 
         bars.add(GuiStats.integrity);
-        bars.add(GuiStats.damage);
-        bars.add(GuiStats.rangedDamage);
-        bars.add(GuiStats.shieldDamage);
-        bars.add(GuiStats.speedNormalized);
-        bars.add(GuiStats.rangedSpeedNormalized);
-        bars.add(GuiStats.shieldSpeedNormalized);
-        bars.add(GuiStats.reach);
+        bars.add(GuiStats.attackDamage);
+        bars.add(GuiStats.drawStrength);
+        bars.add(GuiStats.abilityDamage);
+        bars.add(GuiStats.attackSpeedNormalized);
+        bars.add(GuiStats.drawSpeedNormalized);
+        bars.add(GuiStats.abilityCooldownNormalized);
+        bars.add(GuiStats.reachNormalized);
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
         bars.add(GuiStats.toughness);

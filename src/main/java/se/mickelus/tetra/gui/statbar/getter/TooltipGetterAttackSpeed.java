@@ -4,12 +4,14 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class TooltipGetterSpeed implements ITooltipGetter {
+public class TooltipGetterAttackSpeed implements ITooltipGetter {
 
-    private static final IStatGetter statGetter = new StatGetterSpeedMelee();
+    private final IStatGetter statGetter;
     private static final String localizationKey = "tetra.stats.speed.tooltip";
 
-    public TooltipGetterSpeed() { }
+    public TooltipGetterAttackSpeed(IStatGetter statGetter) {
+        this.statGetter = statGetter;
+    }
 
 
     @Override

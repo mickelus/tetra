@@ -18,13 +18,21 @@ import java.util.Optional;
 public class StatGetterAttribute implements IStatGetter {
     private final Attribute attribute;
 
+    private boolean ignoreBase = false;
+
     public StatGetterAttribute(Attribute attribute) {
         this.attribute = attribute;
     }
 
+    public StatGetterAttribute(Attribute attribute, boolean ignoreBase) {
+        this(attribute);
+
+        this.ignoreBase = ignoreBase;
+    }
+
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        double baseValue = attribute.getDefaultValue() + Optional.ofNullable(player.getAttribute(attribute))
+        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
                 .map(ModifiableAttributeInstance::getBaseValue)
                 .orElse(0d);
         return getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue;
@@ -32,7 +40,7 @@ public class StatGetterAttribute implements IStatGetter {
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
-        double baseValue = Optional.ofNullable(player.getAttribute(attribute))
+        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
                 .map(ModifiableAttributeInstance::getBaseValue)
                 .orElse(0d);
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)

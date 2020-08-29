@@ -709,33 +709,17 @@ public class ItemModularHandheld extends ModularItem {
         return AttributeHelper.emptyMap;
     }
 
-    @Deprecated
     public double getDamageModifier(ItemStack itemStack) {
-        if (isBroken(itemStack)) {
-            return 0;
-        }
-
-        return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
+        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE);
     }
 
     public double getAbilityBaseDamage(ItemStack itemStack) {
-        if (isBroken(itemStack)) {
-            return 0;
-        }
-
-        return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
-    }
-
-    public static double getDamageModifierStatic(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ItemModularHandheld) {
-            return ((ItemModularHandheld) itemStack.getItem()).getDamageModifier(itemStack);
-        }
-        return 0;
+        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE);
     }
 
     public double getSpeedModifier(ItemStack itemStack) {
-        double speedModifier = AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_SPEED))
-                * getCounterWeightMultiplier(itemStack)
+        double speedModifier = getAttributeValue(itemStack, Attributes.ATTACK_SPEED)
+                * getCounterWeightBonus(itemStack)
                 + speedBase;
 
 

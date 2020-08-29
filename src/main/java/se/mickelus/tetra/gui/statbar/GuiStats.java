@@ -3,6 +3,7 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraftforge.common.ForgeMod;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -15,57 +16,60 @@ public class GuiStats {
 
     public static final int barLength = 59;
 
-    public static final IStatGetter damageGetter = new StatGetterDamageMelee();
-    public static final GuiStatBar damage = new GuiStatBar(0, 0,barLength, I18n.format("tetra.stats.damage"),
-                0, 40, false, damageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.damage.tooltip", damageGetter));
+    public static final IStatGetter attackDamageGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE);
+    public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.damage"),
+                0, 40, false, attackDamageGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.damage.tooltip", attackDamageGetter));
 
-    public static final IStatGetter rangedDamageGetter = new StatGetterDamageRanged();
-    public static final GuiStatBar rangedDamage = new GuiStatBar(0, 0,barLength, I18n.format("tetra.stats.ranged_damage"),
-            0, 40, false, rangedDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.ranged_damage.tooltip", rangedDamageGetter));
+    public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
+    public static final GuiStatBar attackSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed"),
+                0, 4, false, attackSpeedGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterAttackSpeed(attackSpeedGetter));
 
-    public static final IStatGetter shieldDamageGetter = new StatGetterAttribute(TetraAttributes.damage.get());
-    public static final GuiStatBar shieldDamage = new GuiStatBar(0, 0,barLength, I18n.format("tetra.stats.shield_damage"),
-            0, 40, false, shieldDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.shield_damage.tooltip", shieldDamageGetter));
+    public static final IStatGetter attackSpeedGetterNormalized = new StatGetterAttribute(Attributes.ATTACK_SPEED, true);
+    public static final GuiStatBar attackSpeedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed_normalized"),
+            -3, 3, false, true, false, attackSpeedGetterNormalized, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.speed_normalized.tooltip", attackSpeedGetterNormalized));
 
-    public static final IStatGetter speedGetter = new StatGetterSpeedMelee();
-    public static final GuiStatBar speed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed"),
-                0, 4, false, speedGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterSpeed());
+    public static final IStatGetter drawStrengthGetter = new StatGetterAttribute(TetraAttributes.drawStrength.get());
+    public static final GuiStatBar drawStrength = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.draw_strength"),
+            0, 40, false, drawStrengthGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.draw_strength.tooltip", drawStrengthGetter));
 
-    public static final IStatGetter speedGetterNormalized = new StatGetterSpeedNormalized();
-    public static final GuiStatBar speedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed_normalized"),
-            -3, 3, false, true, false, speedGetterNormalized, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.speed_normalized.tooltip", speedGetterNormalized));
+    public static final IStatGetter drawSpeedGetter = new StatGetterAttribute(TetraAttributes.drawSpeed.get());
+    public static final GuiStatBar drawSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.draw_speed"),
+            0, 10, false, false, true, drawSpeedGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.draw_speed.tooltip", drawSpeedGetter));
 
-    public static final IStatGetter rangedSpeedGetter = new StatGetterSpeedRanged();
-    public static final GuiStatBar rangedSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.ranged_speed"),
-            0, 10, false, false, true, rangedSpeedGetter, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.ranged_speed.tooltip", rangedSpeedGetter));
+    public static final GuiStatBar drawSpeedNormalized = new GuiStatBar(0, 0, barLength,
+            I18n.format("tetra.stats.draw_speed_normalized"), -4, 4, false, true, true,
+            drawSpeedGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.draw_speed_normalized.tooltip", drawSpeedGetter));
 
-    public static final IStatGetter rangedSpeedGetterNormalized = new StatGetterSpeedRanged();
-    public static final GuiStatBar rangedSpeedNormalized = new GuiStatBar(0, 0, barLength,
-            I18n.format("tetra.stats.ranged_speed_normalized"), -4, 4, false, true, true,
-            rangedSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.ranged_speed_normalized.tooltip", rangedSpeedGetterNormalized));
+    public static final IStatGetter abilityDamageGetter = new StatGetterAttribute(TetraAttributes.abilityDamage.get());
+    public static final GuiStatBar abilityDamage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.ability_damage"),
+            0, 40, false, abilityDamageGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.ability_damage.tooltip", abilityDamageGetter));
 
-    public static final IStatGetter shieldSpeedGetter = new StatGetterAttribute(TetraAttributes.speed.get());
-    public static final GuiStatBar shieldSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.shield_speed"),
-            0, 32, false, false, true, shieldSpeedGetter, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.shield_speed.tooltip", shieldSpeedGetter));
+    public static final IStatGetter abilityCooldownGetter = new StatGetterAttribute(TetraAttributes.abilityCooldown.get());
+    public static final GuiStatBar abilityCooldown = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.ability_speed"),
+            0, 32, false, false, true, abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.ability_speed.tooltip", abilityCooldownGetter));
 
-    public static final IStatGetter shieldSpeedGetterNormalized = new StatGetterSpeedShield();
-    public static final GuiStatBar shieldSpeedNormalized = new GuiStatBar(0, 0, barLength,
-            I18n.format("tetra.stats.shield_speed_normalized"), -16, 16, false, true, true,
-            shieldSpeedGetterNormalized, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.shield_speed_normalized.tooltip", shieldSpeedGetterNormalized));
+    public static final GuiStatBar abilityCooldownNormalized = new GuiStatBar(0, 0, barLength,
+            I18n.format("tetra.stats.ability_speed_normalized"), -16, 16, false, true, true,
+            abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
+            new TooltipGetterDecimal("tetra.stats.ability_speed_normalized.tooltip", abilityCooldownGetter));
 
-    public static final IStatGetter reachGetter = new StatGetterReach();
+    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get());
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.reach"),
             0, 20, false, reachGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.reach.tooltip", reachGetter));
+
+    public static final IStatGetter reachGetterNormalized = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get());
+    public static final GuiStatBar reachNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.reach"),
+            0, 20, false, reachGetterNormalized, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.reach.tooltip", reachGetterNormalized));
 
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.durability"),
@@ -253,11 +257,6 @@ public class GuiStats {
     public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.magicCapacity"),
             0, 150, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.magicCapacity.tooltip", magicCapacityGetter));
-
-    public static final IStatGetter holoSpeedGetter = new StatGetterSpeedHolo();
-    public static final GuiStatBar holoSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo_speed"),
-            0, 3, false, false, true, holoSpeedGetter, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.holo_speed.tooltip", holoSpeedGetter));
 
     public static final IStatGetter scannerRangeGetter = new StatGetterEffectLevel(ItemEffect.scannerRange, 1);
     public static final GuiStatBar scannerRange = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerRange"),

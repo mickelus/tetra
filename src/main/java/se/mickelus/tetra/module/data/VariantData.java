@@ -41,8 +41,6 @@ public class VariantData extends ItemProperties {
 
     public Multimap<Attribute, AttributeModifier> attributes;
 
-    public AbilityData[] abilities;
-
     /**
      * The tools field is an object describing which tools this item should be usable as, and on which level and with what efficiency it provides that
      * use. The keys in the object should be names of provided tools and the value is an array containing the level and efficiency. The level is an
@@ -94,44 +92,6 @@ public class VariantData extends ItemProperties {
     public GlyphData glyph = new GlyphData();
 
     public ModuleModel[] models = new ModuleModel[0];
-
-    /**
-     * The damage this module provides, only useful for modules used in handheld items. The damage values from all
-     * modules of the item are summed up. Higher damage values makes you better at hurting others, ouch!
-     * Although it's uncommon, the damage value can be a decimal number.
-     */
-    @Deprecated
-    public float damage = 0;
-
-    /**
-     * Multiplies the flat damage value of the item. A value of 1.1 yields a 10% increase and a value of 0.85 yields a
-     * 15% decrease. This is cumulative, e.g. if two modules increase the damage by 10% the final multiplier will
-     * be 1.1 * 1.1 = 1.21.
-     */
-    @Deprecated
-    public float damageMultiplier = 1;
-
-    /**
-     * The attack speed this module provides, only useful for modules used in handheld items. The attack speed from all
-     * modules of the item are summed up. Negative values makes the attack speed slower and positive values makes it
-     * faster.
-     */
-    @Deprecated
-    public float attackSpeed = 0;
-
-    /**
-     * Multiplies the flat attack speed of the item. A value of 1.1 yields a 10% faster swing speed and a value of
-     * 0.85 yields a 15% slower attack speed. This is cumulative, e.g. if two modules increase the speed by 10% the
-     * final multiplier will be 1.1 * 1.1 = 1.21.
-     */
-    @Deprecated
-    public float attackSpeedMultiplier = 1;
-
-    /**
-     * For handheld items this represent the item's reach. The base reach for items is 5 blocks and this value added to that.
-     */
-    @Deprecated
-    public float range = 0;
 
     public int magicCapacity = 0;
 

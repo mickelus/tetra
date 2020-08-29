@@ -27,6 +27,7 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -121,22 +122,6 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     public double getCooldownBase(ItemStack itemStack) {
-        double speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedModifier(itemStack))
-                .reduce(0d, Double::sum);
-
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeed)
-                .reduce(speedModifier, Double::sum);
-
-        speedModifier = Arrays.stream(getSynergyData(itemStack))
-                .mapToDouble(synergyData -> synergyData.attackSpeedMultiplier)
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        speedModifier = getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getSpeedMultiplierModifier(itemStack))
-                .reduce(speedModifier, (a, b) -> a * b);
-
-        return Math.max(0, speedModifier);
+        return Math.max(0, getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get()));
     }
 }

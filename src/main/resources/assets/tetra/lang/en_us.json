@@ -56,23 +56,26 @@
   "tetra.stats.reach": "Reach",
   "tetra.stats.reach.tooltip": "This item can hit blocks & entities up to §e%s§r blocks away",
 
+  "tetra.stats.reach_normalized": "Reach",
+  "tetra.stats.reach_normalized.tooltip": "Changes how far this item can reach by §e%s§r blocks",
+
   "tetra.stats.durability": "Durability",
   "tetra.stats.durability.tooltip": "This item has §e%s§r durability",
 
   "tetra.stats.speed": "Speed",
   "tetra.stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier",
 
-  "tetra.stats.ranged_speed": "Draw speed",
-  "tetra.stats.ranged_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
+  "tetra.stats.draw_speed": "Speed",
+  "tetra.stats.draw_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
 
-  "tetra.stats.ranged_speed_normalized": "Speed",
-  "tetra.stats.ranged_speed_normalized.tooltip": "Changes draw speed by §e%s §rseconds",
+  "tetra.stats.draw_speed_normalized": "Speed",
+  "tetra.stats.draw_speed_normalized.tooltip": "Changes draw speed by §e%s §rseconds",
 
-  "tetra.stats.shield_speed": "Cooldown",
-  "tetra.stats.shield_speed.tooltip": "This shield has a §e%s §rseconds base cooldown for abilities",
+  "tetra.stats.ability_speed": "Cooldown",
+  "tetra.stats.ability_speed.tooltip": "This item has a §e%s §rseconds base cooldown for abilities",
 
-  "tetra.stats.shield_speed_normalized": "Speed",
-  "tetra.stats.shield_speed_normalized.tooltip": "Changes base cooldown by §e%s §rseconds",
+  "tetra.stats.ability_speed_normalized": "Cooldown",
+  "tetra.stats.ability_speed_normalized.tooltip": "Changes base cooldown by §e%s §rseconds",
 
   "tetra.stats.speed_normalized": "Speed",
   "tetra.stats.speed_normalized.tooltip": "Changes attack speed by §e%s",
@@ -80,11 +83,11 @@
   "tetra.stats.damage": "Damage",
   "tetra.stats.damage.tooltip": "Deals §e%s §rdamage",
 
-  "tetra.stats.ranged_damage": "Base Damage",
-  "tetra.stats.ranged_damage.tooltip": "Basic projectiles deal §e%s §rdamage when fired from a fully drawn bow",
+  "tetra.stats.draw_strength": "Strength",
+  "tetra.stats.draw_strength.tooltip": "When fully drawn this item will add §e%s §rdamage to fired projectiles",
 
-  "tetra.stats.shield_damage": "Damage",
-  "tetra.stats.shield_damage.tooltip": "The base damage value for shield abilities is §e%s",
+  "tetra.stats.ability_damage": "Damage",
+  "tetra.stats.ability_damage.tooltip": "Abilities using this item has a base damage value of §e%s",
 
   "tetra.stats.bleeding": "Bleeding",
   "tetra.stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds",

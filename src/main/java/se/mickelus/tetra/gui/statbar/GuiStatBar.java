@@ -67,7 +67,7 @@ public class GuiStatBar extends GuiStatBase {
         this.labelGetter = labelGetter;
         this.tooltipGetter = tooltipGetter;
 
-        inverted = true;
+        this.inverted = inverted;
     }
 
     public void setAlignment(GuiAlignment alignment) {

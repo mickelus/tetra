@@ -32,12 +32,12 @@ public class GuiStatGroup extends GuiElement {
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
 
-        bars.add(GuiStats.damage);
-        bars.add(GuiStats.speed);
-        bars.add(GuiStats.rangedDamage);
-        bars.add(GuiStats.rangedSpeed);
-        bars.add(GuiStats.shieldDamage);
-        bars.add(GuiStats.shieldSpeed);
+        bars.add(GuiStats.attackDamage);
+        bars.add(GuiStats.attackSpeed);
+        bars.add(GuiStats.drawStrength);
+        bars.add(GuiStats.drawSpeed);
+        bars.add(GuiStats.abilityDamage);
+        bars.add(GuiStats.abilityCooldown);
         bars.add(GuiStats.reach);
         bars.add(GuiStats.durability);
         bars.add(GuiStats.armor);
@@ -75,7 +75,6 @@ public class GuiStatGroup extends GuiElement {
         bars.add(GuiStats.earthbind);
         bars.add(GuiStats.releaseLatch);
         bars.add(GuiStats.overbowed);
-        bars.add(GuiStats.holoSpeed);
         bars.add(GuiStats.scannerRange);
         bars.add(GuiStats.scannerHorizontalSpread);
         bars.add(GuiStats.scannerVerticalSpread);
