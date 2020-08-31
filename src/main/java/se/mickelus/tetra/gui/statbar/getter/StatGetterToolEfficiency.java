@@ -9,16 +9,17 @@ import se.mickelus.tetra.util.CastOptional;
 
 public class StatGetterToolEfficiency implements IStatGetter {
 
-    private ToolType toolType;
+    private ToolType tool;
 
-    public StatGetterToolEfficiency(ToolType effect) {
-        this.toolType = effect;
+    public StatGetterToolEfficiency(ToolType tool) {
+        this.tool = tool;
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                .map(item -> item.getToolEfficiency(itemStack, toolType))
+                .map(item -> item.getToolData(itemStack))
+                .map(data -> data.getEfficiency(tool))
                 .orElse(0f);
     }
 
@@ -26,7 +27,7 @@ public class StatGetterToolEfficiency implements IStatGetter {
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getToolEfficiency(itemStack, toolType))
+                .map(module -> module.getToolEfficiency(itemStack, tool))
                 .orElse(0f);
     }
 
@@ -36,7 +37,7 @@ public class StatGetterToolEfficiency implements IStatGetter {
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))
                 .map(improvementData -> improvementData.tools)
-                .map(data -> data.getEfficiency(toolType))
+                .map(data -> data.getEfficiency(tool))
                 .orElse(0f);
     }
 }

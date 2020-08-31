@@ -157,7 +157,7 @@ public class GuiSynergyIndicator extends GuiElement {
         }
 
         if (data.effects != null) {
-            data.effects.levelMap.forEach((itemEffect, level) ->
+            data.effects.getLevelMap().forEach((itemEffect, level) ->
                     result.add(getValueInteger(level, 0) + I18n.format("tetra.stats." + itemEffect.getKey()) + " " + I18n.format("tetra.stats.level_suffix")));
 
             data.effects.efficiencyMap.forEach((itemEffect, efficiency) ->
@@ -165,7 +165,7 @@ public class GuiSynergyIndicator extends GuiElement {
         }
 
         if (data.tools != null) {
-            data.tools.levelMap.forEach((tool, level) ->
+            data.tools.getLevelMap().forEach((tool, level) ->
                     result.add(getValueInteger(level, 0) + I18n.format("tetra.tool." + tool.getName()) + " " + I18n.format("tetra.stats.tier_suffix")));
 
             data.tools.efficiencyMap.forEach((tool, efficiency) ->

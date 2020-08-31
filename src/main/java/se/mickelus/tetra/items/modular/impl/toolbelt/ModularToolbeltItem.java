@@ -148,7 +148,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
                 .filter(module -> module.getEffects(itemStack).contains(slotType.effect))
                 .map(module -> {
                     Map<ItemEffect, Integer> effectLevels = Optional.ofNullable(module.getEffectData(itemStack))
-                            .map(effects -> effects.levelMap)
+                            .map(TierData::getLevelMap)
                             .orElseGet(Collections::emptyMap);
 
                     int slotCount = module.getEffectLevel(itemStack, slotType.effect);

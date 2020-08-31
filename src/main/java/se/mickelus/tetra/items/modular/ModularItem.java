@@ -983,7 +983,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
             return Collections.emptyMap();
         }
 
-        return getToolDataCached(itemStack).levelMap;
+        return getToolDataCached(itemStack).getLevelMap();
     }
 
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {

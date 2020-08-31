@@ -133,7 +133,7 @@ public class HoloVariantDetailGui extends GuiElement {
             }
 
             requiredTools.clearChildren();
-            baseOutcome.tools.levelMap.forEach((tool, level) -> {
+            baseOutcome.tools.getLevelMap().forEach((tool, level) -> {
                 ToolRequirementGui requirement = new ToolRequirementGui(20, requiredTools.getNumChildren() * 18, tool);
                 requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
                 requiredTools.addChild(requirement);

@@ -214,7 +214,7 @@ public abstract class ItemModule implements IToolProvider {
 
     public Map<ToolType, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredTools.levelMap)
+                .map(definition -> definition.requiredTools.getLevelMap())
                 .orElseGet(Collections::emptyMap);
     }
 
@@ -351,7 +351,7 @@ public abstract class ItemModule implements IToolProvider {
     @Override
     public Map<ToolType, Integer> getToolLevels(ItemStack itemStack) {
         return Optional.ofNullable(getToolData(itemStack))
-                .map(toolData -> toolData.levelMap)
+                .map(TierData::getLevelMap)
                 .orElseGet(Collections::emptyMap);
     }
 

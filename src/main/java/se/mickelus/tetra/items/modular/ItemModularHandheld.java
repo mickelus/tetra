@@ -34,10 +34,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
-import net.minecraftforge.eventbus.api.Event;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
@@ -466,13 +463,14 @@ public class ItemModularHandheld extends ModularItem {
             float damage = (float) Math.max((getDamageModifier(itemStack) + 1) * (sweepingLevel * 0.125f), 1);
             float knockback = sweepingLevel > 4 ? (getEnchantmentLevelFromImprovements(itemStack, Enchantments.KNOCKBACK) + 1) * 0.5f : 0.5f;
             double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
+            double reach = attacker.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
 
             // range values set up to mimic vanilla behaviour
             attacker.world.getEntitiesWithinAABB(LivingEntity.class,
                     target.getBoundingBox().grow(range, 0.25d, range)).stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
-                    .filter(entity -> attacker.getDistanceSq(entity) < (range + 2) * (range + 2))
+                    .filter(entity -> attacker.getDistanceSq(entity) < (range + reach) * (range + reach))
                     .forEach(entity -> {
                         entity.applyKnockback(knockback,
                                 MathHelper.sin(attacker.rotationYaw * 0.017453292f),
@@ -489,31 +487,6 @@ public class ItemModularHandheld extends ModularItem {
 
             CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::spawnSweepParticles);
         }
-    }
-
-    /**
-     * Spawns sweeping particles in the given world at the given coordinates. Similar to the sweeping particle used
-     * by vanilla swords.
-     * @param world The world in which to spawn the particle
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param z the z coordinate
-     * @param xOffset x offset which is later multiplied by a random number (0-1)
-     * @param zOffset z offset which is later multiplied by a random number (0-1)
-     */
-    public static void spawnSweepParticles(World world, double x, double y, double z, double xOffset, double zOffset) {
-        if (world instanceof ServerWorld) {
-            ((ServerWorld)world).spawnParticle(ParticleTypes.SWEEP_ATTACK, x, y, z,
-                    1, xOffset, 0, zOffset, 0);
-        }
-    }
-
-    public static void spawnSweepParticles(LivingEntity attacker) {
-        double xOffset = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
-        double zOffset = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
-
-        spawnSweepParticles(attacker.world, attacker.getPosX() + xOffset, attacker.getPosY() + attacker.getHeight() * 0.5D,
-                attacker.getPosZ() + zOffset, xOffset, zOffset);
     }
 
     /**
@@ -730,21 +703,14 @@ public class ItemModularHandheld extends ModularItem {
         return speedModifier;
     }
 
-    public double getCounterWeightMultiplier(ItemStack itemStack) {
+    public double getCounterWeightBonus(ItemStack itemStack) {
         int counterWeightLevel = getEffectLevel(itemStack, ItemEffect.counterweight);
         if (counterWeightLevel > 0) {
             int integrityCost = getIntegrityCost(itemStack);
 
-            return 0.5 + Math.abs(counterWeightLevel + integrityCost) * 0.2;
+            return Math.max(0, 3 - Math.abs(counterWeightLevel - integrityCost)) * 0.15;
         }
-        return 1;
-    }
-
-    public static double getSpeedModifierStatic(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ItemModularHandheld) {
-            return ((ItemModularHandheld) itemStack.getItem()).getSpeedModifier(itemStack);
-        }
-        return 2;
+        return 0;
     }
 
     public double getCooldownBase(ItemStack itemStack) {

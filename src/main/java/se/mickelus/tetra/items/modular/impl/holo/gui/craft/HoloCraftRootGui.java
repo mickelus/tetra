@@ -1,8 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.I18n;
+import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
+import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.LinkedList;
@@ -40,6 +43,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         schematicView = new HoloSchematicGui(0, 20, width, height);
         schematicView.setVisible(false);
         addChild(schematicView);
+
     }
 
     @Override
@@ -173,5 +177,16 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         }
 
         breadcrumbs.animateOpen(depth > 1);
+    }
+
+    @Override
+    public void onReload() {
+        if (schematic != null) {
+            schematicView.setVisible(false);
+            UpgradeSchematic newSchematic = SchematicRegistry.getSchematic(schematic.getKey());
+            onSchematicSelect(newSchematic);
+        } else if (slot != null) {
+            onSlotSelect(slot);
+        }
     }
 }

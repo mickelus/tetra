@@ -3,10 +3,11 @@ package se.mickelus.tetra.module.data;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TierData<T> {
 
-    public Map<T, Integer> levelMap;
+    public Map<T, Float> levelMap;
     public Map<T, Float> efficiencyMap;
 
     public TierData() {
@@ -20,9 +21,14 @@ public class TierData<T> {
 
     public int getLevel(T key) {
         if (contains(key)) {
-            return levelMap.get(key);
+            return Math.round(levelMap.get(key));
         }
         return 0;
+    }
+
+    public Map<T, Integer> getLevelMap() {
+        return levelMap.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> Math.round(e.getValue())));
     }
 
     public float getEfficiency(T key) {

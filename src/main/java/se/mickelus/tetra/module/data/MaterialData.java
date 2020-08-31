@@ -26,18 +26,18 @@ public class MaterialData {
     /**
      * Multiplier for primary attributes, e.g. damage or similar
      */
-    public float primary = 1;
+    public Float primary;
 
     /**
      * Multiplier for secondary attributes, e.g. speed or similar
      */
-    public float secondary = 1;
+    public Float secondary;
 
     /**
      * Multiplier for tertiary attributes, not sure which attributes this should map to but I want something more for modpacks/datapacks/compat. Try
      * to keep this balanced so that it can actually be used by modules
      */
-    public float tertiary = 1;
+    public Float tertiary;
 
     public float durability = 0;
 
@@ -50,12 +50,6 @@ public class MaterialData {
      * Innate effects gained from the material
      */
     public EffectData effects = new EffectData();
-
-    /**
-     * Multipliers for effects added by modules
-     */
-    public int effectLevel = 0;
-    public float effectEfficiency = 0;
 
     /**
      * Multipliers for tool levels and efficiency added by modules
@@ -100,15 +94,15 @@ public class MaterialData {
             to.category = from.category;
         }
 
-        if (from.primary != defaultValues.primary) {
+        if (from.primary != null) {
             to.primary = from.primary;
         }
 
-        if (from.secondary != defaultValues.secondary) {
+        if (from.secondary != null) {
             to.secondary = from.secondary;
         }
 
-        if (from.tertiary != defaultValues.tertiary) {
+        if (from.tertiary != null) {
             to.tertiary = from.tertiary;
         }
 
@@ -126,15 +120,6 @@ public class MaterialData {
 
         if (from.magicCapacity != defaultValues.magicCapacity) {
             to.magicCapacity = from.magicCapacity;
-        }
-
-
-        if (from.effectLevel != defaultValues.effectLevel) {
-            to.effectLevel = from.effectLevel;
-        }
-
-        if (from.effectEfficiency != defaultValues.effectEfficiency) {
-            to.effectEfficiency = from.effectEfficiency;
         }
 
         if (from.toolLevel != defaultValues.toolLevel) {

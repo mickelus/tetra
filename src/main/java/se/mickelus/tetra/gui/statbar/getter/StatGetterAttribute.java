@@ -47,7 +47,7 @@ public class StatGetterAttribute implements IStatGetter {
                 .map(item -> item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(modifiers -> (AttributeHelper.getAdditionAmount(modifiers) + baseValue) * AttributeHelper.getMultiplyAmount(modifiers))
-                .orElseGet(attribute::getDefaultValue);
+                .orElse(baseValue);
     }
 
     @Override

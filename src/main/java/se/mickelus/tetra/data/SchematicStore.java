@@ -32,12 +32,5 @@ public class SchematicStore extends MergingDataStore<SchematicDefinition, Schema
     @Override
     protected void processData() {
         dataMap.forEach((key, value) -> value.key = key.getPath());
-
-        // put all tag outcomes at the top, so that they are matched last
-        for (SchematicDefinition schematic : dataMap.values()) {
-            schematic.outcomes = Arrays.stream(schematic.outcomes)
-                    .sorted((a, b) -> Boolean.compare(b.material != null && b.material.isTagged(), a.material != null && a.material.isTagged()))
-                    .toArray(OutcomeDefinition[]::new);
-        }
     }
 }

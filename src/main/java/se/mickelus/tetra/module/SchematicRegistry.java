@@ -108,6 +108,7 @@ public class SchematicRegistry {
                                 ? expandMaterialOutcome((MaterialOutcomeDefinition) outcome)
                                 : Stream.of(outcome))
                 .filter(Filter.distinct(outcome -> outcome.material))
+                .sorted((a, b) -> Boolean.compare(b.material != null && b.material.isTagged(), a.material != null && a.material.isTagged()))
                 .toArray(OutcomeDefinition[]::new);
     }
 

@@ -17,9 +17,14 @@ public class GuiStats {
     public static final int barLength = 59;
 
     public static final IStatGetter attackDamageGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE);
-    public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.damage"),
+    public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.attack_damage"),
                 0, 40, false, attackDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.damage.tooltip", attackDamageGetter));
+            new TooltipGetterDecimal("tetra.stats.attack_damage.tooltip", attackDamageGetter));
+
+    public static final IStatGetter attackDamageNormalizedGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true);
+    public static final GuiStatBar attackDamageNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.attack_damage_normalized"),
+            0, 20, false, attackDamageNormalizedGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.attack_damage_normalized.tooltip", attackDamageNormalizedGetter));
 
     public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
     public static final GuiStatBar attackSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed"),
@@ -66,10 +71,10 @@ public class GuiStats {
             0, 20, false, reachGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.reach.tooltip", reachGetter));
 
-    public static final IStatGetter reachGetterNormalized = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get());
-    public static final GuiStatBar reachNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.reach"),
-            0, 20, false, reachGetterNormalized, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.reach.tooltip", reachGetterNormalized));
+    public static final IStatGetter reachGetterNormalized = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), true);
+    public static final GuiStatBar reachNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.reach_normalized"),
+            0, 20, false, true, false, reachGetterNormalized, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimal("tetra.stats.reach_normalized.tooltip", reachGetterNormalized));
 
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.durability"),
@@ -212,6 +217,11 @@ public class GuiStats {
     public static final GuiStatBar quickStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.quickStrike"),
                 0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentage("tetra.stats.quickStrike.tooltip", quickStrikeGetter));
+
+    public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
+    public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.counterweight"),
+            0, 12, true, counterweightGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter));
 
     public static final IStatGetter softStrikeGetter = new StatGetterEffectLevel(ItemEffect.softStrike, 1);
     public static final GuiStatBar softStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.softStrike"),

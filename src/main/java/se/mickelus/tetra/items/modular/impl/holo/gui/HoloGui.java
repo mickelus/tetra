@@ -1,14 +1,24 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.concurrent.ThreadTaskExecutor;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.gui.GuiSpinner;
 import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
@@ -16,10 +26,12 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class HoloGui extends Screen {
+    private static final Logger logger = LogManager.getLogger();
 
     private final HoloHeaderGui header;
 
@@ -28,7 +40,11 @@ public class HoloGui extends Screen {
 
     private GuiElement defaultGui;
 
-    private static HoloGui instance;
+    private GuiElement spinner;
+
+    private static HoloGui instance = null;
+
+    private static boolean hasListener = false;
 
     public HoloGui() {
         super(new StringTextComponent("tetra:holosphere"));
@@ -53,10 +69,21 @@ public class HoloGui extends Screen {
         defaultGui.addChild(pages[2]);
 
         currentPage = pages[0];
+
+        spinner = new GuiSpinner(-8, 6);
+        spinner.setVisible(false);
+        defaultGui.addChild(spinner);
+
+        if (ConfigHandler.development.get() && !hasListener) {
+            DataManager.featureData.onReload(() -> {
+                Minecraft.getInstance().runImmediately(HoloGui::onReload);
+            });
+            hasListener = true;
+        }
     }
 
     public static HoloGui getInstance() {
-        if (instance == null || ConfigHandler.development.get()) {
+        if (instance == null) {
             instance = new HoloGui();
         }
 
@@ -110,9 +137,35 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public boolean charTyped(char typecChar, int keyCode) {
+    public boolean charTyped(char typedChar, int keyCode) {
+        if (ConfigHandler.development.get()) {
+            switch (typedChar) {
+                case 'r':
+                    instance = null;
+                    Minecraft.getInstance().displayGuiScreen(null);
 
-        currentPage.charTyped(typecChar);
+                    HoloGui gui = HoloGui.getInstance();
+                    Minecraft.getInstance().displayGuiScreen(gui);
+                    gui.onShow();
+                    break;
+                case 't':
+                    getMinecraft().player.sendChatMessage("/reload");
+                    spinner.setVisible(true);
+                    break;
+            }
+        }
+
+        currentPage.charTyped(typedChar);
         return false;
+    }
+
+    private static void onReload() {
+        if (instance != null && instance.getMinecraft().currentScreen == instance) {
+            logger.info("Refreshing holosphere gui data");
+            instance.spinner.setVisible(false);
+            if (instance.currentPage != null) {
+                instance.currentPage.onReload();
+            }
+        }
     }
 }

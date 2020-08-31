@@ -23,11 +23,11 @@ public class ToolData extends TierData<ToolType> {
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {
-                        data.levelMap.put(toolType, entryArray.get(0).getAsInt());
+                        data.levelMap.put(toolType, entryArray.get(0).getAsFloat());
                         data.efficiencyMap.put(toolType, entryArray.get(1).getAsFloat());
                     }
                 } else {
-                    data.levelMap.put(toolType, entryValue.getAsInt());
+                    data.levelMap.put(toolType, entryValue.getAsFloat());
                 }
             });
 
@@ -67,7 +67,7 @@ public class ToolData extends TierData<ToolType> {
                 .map(toolData -> toolData.levelMap)
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Float::sum));
         result.efficiencyMap = Stream.of(a, b)
                 .map(toolData -> toolData.efficiencyMap)
                 .map(Map::entrySet)
@@ -82,7 +82,7 @@ public class ToolData extends TierData<ToolType> {
                 .map(data -> {
                     ToolData result = new ToolData();
                     result.levelMap = data.levelMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.round(entry.getValue() * levelMultiplier)));
+                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * levelMultiplier));
                     result.efficiencyMap = data.efficiencyMap.entrySet().stream()
                             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * efficiencyMultiplier));
                     return result;
@@ -95,7 +95,7 @@ public class ToolData extends TierData<ToolType> {
                 .map(data -> {
                     ToolData result = new ToolData();
                     result.levelMap = data.levelMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.round(entry.getValue() * multiplier) + offset));
+                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * multiplier + offset));
                     result.efficiencyMap = data.efficiencyMap;
                     return result;
                 })
@@ -106,8 +106,8 @@ public class ToolData extends TierData<ToolType> {
         ToolData result = new ToolData();
 
         dataCollection.forEach(data -> data.getValues().forEach(tool -> {
-            int level = data.getLevel(tool);
-            if (level >= result.getLevel(tool)) {
+            float level = data.levelMap.getOrDefault(tool, 0f);
+            if (level >= result.levelMap.getOrDefault(tool, 0f)) {
                 result.levelMap.put(tool, level);
                 if (data.getEfficiency(tool) > result.getEfficiency(tool)) {
                     result.efficiencyMap.put(tool, data.getEfficiency(tool));

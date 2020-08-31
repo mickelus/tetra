@@ -42,4 +42,8 @@ public class HoloRootBaseGui extends GuiElement {
         hideAnimation.start();
         return super.onHide();
     }
+
+    public void onReload() {
+
+    }
 }

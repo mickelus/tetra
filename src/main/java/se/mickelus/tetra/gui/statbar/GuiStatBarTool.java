@@ -26,10 +26,18 @@ public class GuiStatBarTool extends GuiStatBar {
     private GuiTexture sweepingIndicator;
     private IStatGetter sweepingGetter;
 
+    private boolean efficiencyVisibility;
+
     public GuiStatBarTool(int x, int y, int width, ToolType toolType) {
+        this(x, y, width, toolType, false);
+    }
+
+    public GuiStatBarTool(int x, int y, int width, ToolType toolType, boolean efficiencyVisibility) {
         super(x, y, width, "", 0, efficiencyMax,
                 false, new StatGetterToolEfficiency(toolType), LabelGetterBasic.decimalLabel,
                 new TooltipGetterTool(toolType));
+
+        this.efficiencyVisibility = efficiencyVisibility;
 
         bar.setWidth(width - 16);
         bar.setX(16);
@@ -129,25 +137,24 @@ public class GuiStatBarTool extends GuiStatBar {
             icon.setX(-3);
 
             strikingIndicator.setX(16);
-            strikingIndicator.setAttachment(alignment.toAttachment());
             sweepingIndicator.setX(16);
-            sweepingIndicator.setAttachment(alignment.toAttachment());
         } else {
             bar.setX(0);
             icon.setX(0);
 
             strikingIndicator.setX(-16);
-            strikingIndicator.setAttachment(alignment.toAttachment());
             sweepingIndicator.setX(-16);
-            sweepingIndicator.setAttachment(alignment.toAttachment());
         }
 
+        strikingIndicator.setAttachment(alignment.toAttachment());
+        sweepingIndicator.setAttachment(alignment.toAttachment());
         icon.setAttachment(alignment.toAttachment());
     }
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        return levelGetter.getValue(player, currentStack) > 0 || levelGetter.getValue(player, previewStack) > 0;
+        return levelGetter.getValue(player, currentStack) > 0 || levelGetter.getValue(player, previewStack) > 0
+                || (efficiencyVisibility && (statGetter.getValue(player, currentStack) > 0 || statGetter.getValue(player, previewStack) > 0));
     }
 
     protected int getDiffColor(int currentValue, int previewValue) {

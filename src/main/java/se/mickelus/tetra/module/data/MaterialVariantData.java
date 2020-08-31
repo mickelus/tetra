@@ -22,13 +22,15 @@ public class MaterialVariantData extends VariantData {
         public Multimap<Attribute, AttributeModifier> secondaryAttributes;
         public Multimap<Attribute, AttributeModifier> tertiaryAttributes;
 
-        public Integer durability;
+        public Float durability;
         public Float durabilityMultiplier;
 
         public Float integrity;
         public Float magicCapacity;
 
-        public EffectData effects;
+        public EffectData primaryEffects;
+        public EffectData secondaryEffects;
+        public EffectData tertiaryEffects;
         public ToolData tools;
 
         public GlyphData glyph;
@@ -73,7 +75,9 @@ public class MaterialVariantData extends VariantData {
         result.effects = EffectData.merge(Arrays.asList(
                 effects,
                 material.effects,
-                EffectData.multiply(extract.effects, material.effectLevel, material.effectEfficiency)
+                EffectData.multiply(extract.primaryEffects, material.primary, material.primary),
+                EffectData.multiply(extract.secondaryEffects, material.secondary, material.secondary),
+                EffectData.multiply(extract.tertiaryEffects, material.tertiary, material.tertiary)
         ));
 
         result.tools = ToolData.merge(Arrays.asList(

@@ -185,12 +185,12 @@ public class ConfigSchematic extends BaseSchematic {
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .flatMap(outcome -> outcome.requiredTools.levelMap.entrySet().stream())
+                    .flatMap(outcome -> outcome.requiredTools.getLevelMap().entrySet().stream())
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
         } else {
             return Arrays.stream(definition.outcomes)
                     .findFirst()
-                    .map(outcome -> outcome.requiredTools.levelMap)
+                    .map(outcome -> outcome.requiredTools.getLevelMap())
                     .orElseGet(Collections::emptyMap);
         }
     }
@@ -299,7 +299,7 @@ public class ConfigSchematic extends BaseSchematic {
                     ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                             outcome.moduleVariant, null, -1);
                 } else {
-                    outcome.requiredTools.levelMap.forEach((tool, toolLevel) ->
+                    outcome.requiredTools.getLevelMap().forEach((tool, toolLevel) ->
                             ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                                     outcome.moduleVariant, tool, toolLevel));
                 }
@@ -309,7 +309,7 @@ public class ConfigSchematic extends BaseSchematic {
                 if (outcome.requiredTools.getValues().isEmpty()) {
                     ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
                 } else {
-                    outcome.requiredTools.levelMap.forEach((tool, toolLevel) ->
+                    outcome.requiredTools.getLevelMap().forEach((tool, toolLevel) ->
                             ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
                             tool, toolLevel));
                 }

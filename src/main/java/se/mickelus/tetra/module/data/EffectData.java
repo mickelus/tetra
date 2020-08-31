@@ -44,7 +44,7 @@ public class EffectData extends TierData<ItemEffect> {
                 .map(toolData -> toolData.levelMap)
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Float::sum));
         result.efficiencyMap = Stream.of(a, b)
                 .map(toolData -> toolData.efficiencyMap)
                 .map(Map::entrySet)
@@ -59,7 +59,7 @@ public class EffectData extends TierData<ItemEffect> {
                 .map(data -> {
                     EffectData result = new EffectData();
                     result.levelMap = data.levelMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.round(entry.getValue() * levelMultiplier)));
+                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * levelMultiplier));
                     result.efficiencyMap = data.efficiencyMap.entrySet().stream()
                             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * efficiencyMultiplier));
                     return result;
@@ -81,11 +81,11 @@ public class EffectData extends TierData<ItemEffect> {
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {
-                        data.levelMap.put(effect, entryArray.get(0).getAsInt());
+                        data.levelMap.put(effect, entryArray.get(0).getAsFloat());
                         data.efficiencyMap.put(effect, entryArray.get(1).getAsFloat());
                     }
                 } else {
-                    data.levelMap.put(effect, entryValue.getAsInt());
+                    data.levelMap.put(effect, entryValue.getAsFloat());
                 }
             });
 

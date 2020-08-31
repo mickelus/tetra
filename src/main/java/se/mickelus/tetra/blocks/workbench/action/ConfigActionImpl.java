@@ -51,7 +51,7 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public Map<ToolType, Integer> getRequiredTools(ItemStack itemStack) {
-        return requiredTools.levelMap;
+        return requiredTools.getLevelMap();
     }
 
     @Override
@@ -59,9 +59,8 @@ public class ConfigActionImpl extends ConfigAction {
         if (!player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
-            ItemStack toolStack = requiredTools.levelMap.entrySet().stream()
-                    .sorted(Comparator.comparing(Map.Entry::getValue))
-                    .findFirst()
+            ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
+                    .min(Map.Entry.comparingByValue())
                     .map(entry -> {
                         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(entry.getKey(), entry.getValue(), player);
 

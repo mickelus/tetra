@@ -18,7 +18,8 @@ public class StatGetterToolLevel implements IStatGetter {
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                .map(item -> item.getToolLevel(itemStack, tool))
+                .map(item -> item.getToolData(itemStack))
+                .map(data -> data.getLevel(tool))
                 .orElse(0);
     }
 

@@ -31,7 +31,7 @@ public class HoloStatsGui extends GuiElement {
         addChild(barGroup);
 
         bars.add(GuiStats.integrity);
-        bars.add(GuiStats.attackDamage);
+        bars.add(GuiStats.attackDamageNormalized);
         bars.add(GuiStats.drawStrength);
         bars.add(GuiStats.abilityDamage);
         bars.add(GuiStats.attackSpeedNormalized);
@@ -67,6 +67,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.flame);
         bars.add(GuiStats.punch);
         bars.add(GuiStats.quickStrike);
+        bars.add(GuiStats.counterweight);
         bars.add(GuiStats.softStrike);
         bars.add(GuiStats.fierySelf);
         bars.add(GuiStats.enderReverb);
@@ -78,7 +79,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.magicCapacity);
 
         Stream.of(ToolTypes.hammer, ToolType.AXE, ToolType.PICKAXE, ToolType.SHOVEL, ToolTypes.cut, ToolTypes.pry, ToolType.HOE)
-                .map(tool -> new GuiStatBarTool(0, 0, GuiStats.barLength, tool))
+                .map(tool -> new GuiStatBarTool(0, 0, GuiStats.barLength, tool, true))
                 .forEach(bars::add);
 
         bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));
