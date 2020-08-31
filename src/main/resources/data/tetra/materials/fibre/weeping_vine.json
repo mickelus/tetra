@@ -1,0 +1,27 @@
+{
+    "key": "weeping",
+    "category": "fibre",
+    "primary": "5",
+    "secondary": "2.4",
+    "tertiary": "1",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "90",
+    "toolLevel": "1",
+    "toolEfficiency": "1.6667",
+    "tints": {
+        "glyph": "weeping_glyph",
+        "texture": "weeping"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:weeping_vines"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

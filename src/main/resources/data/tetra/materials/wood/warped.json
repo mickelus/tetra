@@ -1,0 +1,27 @@
+{
+    "key": "warped",
+    "category": "wood",
+    "primary": "3",
+    "secondary": "1.2",
+    "tertiary": "1",
+    "durability": "100",
+    "integrityCost": "1",
+    "integrityGain": "6",
+    "magicCapacity": "90",
+    "toolLevel": "1",
+    "toolEfficiency": "1.6667",
+    "tints": {
+        "glyph": "warped_glyph",
+        "texture": "warped"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:warped_planks"
+    },
+    "requiredTools": {
+        "axe": 1
+    }
+}

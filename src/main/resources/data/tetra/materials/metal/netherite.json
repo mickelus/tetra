@@ -1,0 +1,27 @@
+{
+    "key": "netherite",
+    "category": "metal",
+    "primary": "7",
+    "secondary": "2.9",
+    "tertiary": "1",
+    "durability": "2031",
+    "integrityCost": "2",
+    "integrityGain": "8",
+    "magicCapacity": "84",
+    "toolLevel": "5",
+    "toolEfficiency": "9",
+    "tints": {
+        "glyph": "netherite_glyph",
+        "texture": "netherite"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:netherite_ingot"
+    },
+    "requiredTools": {
+        "hammer": 1
+    }
+}

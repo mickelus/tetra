@@ -1,0 +1,27 @@
+{
+    "key": "string",
+    "category": "fibre",
+    "primary": "5",
+    "secondary": "0.8",
+    "tertiary": "1",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "2",
+    "magicCapacity": "90",
+    "toolLevel": "1",
+    "toolEfficiency": "1.6667",
+    "tints": {
+        "glyph": "string_glyph",
+        "texture": "string"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:string"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

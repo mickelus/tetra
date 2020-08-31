@@ -41,7 +41,7 @@ public class ItemColors {
     public static int iron               = define(0xffffff, "iron");
     public static int iron_dark          = define(0xaaaaaa, "iron_dark");
     public static int iron_glyph         = define(0xd8d8d8, "iron_glyph");
-    public static int netherite          = define(0x4f3c3e, "netherite");
+    public static int netherite          = define(0x694f52, "netherite");
     public static int netherite_glyph    = define(0x806164, "netherite_glyph");
     public static int gold               = define(0xfffb46, "gold");
     public static int gold_glyph         = define(0xeaee57, "gold_glyph");

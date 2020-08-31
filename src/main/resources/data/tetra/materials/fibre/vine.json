@@ -1,0 +1,27 @@
+{
+    "key": "vine",
+    "category": "fibre",
+    "primary": "5",
+    "secondary": "1.6",
+    "tertiary": "1",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "3",
+    "magicCapacity": "90",
+    "toolLevel": "1",
+    "toolEfficiency": "1.6667",
+    "tints": {
+        "glyph": "vine_glyph",
+        "texture": "vine"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:vine"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

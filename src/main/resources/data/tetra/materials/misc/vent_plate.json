@@ -1,0 +1,27 @@
+{
+    "key": "vent_plate",
+    "category": "metal",
+    "primary": "5",
+    "secondary": "4.2",
+    "tertiary": "5",
+    "durability": "600",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "84",
+    "toolLevel": "3",
+    "toolEfficiency": "5",
+    "tints": {
+        "glyph": "vent_glyph",
+        "texture": "vent"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "tetra:vent_plate"
+    },
+    "requiredTools": {
+        "hammer": 5
+    }
+}
