@@ -6,6 +6,7 @@
     "variants": [
         {
             "key": "sword_socket/diamond",
+            "category": "gem",
             "durability": 412,
             "integrity": -1,
             "glyph": {
@@ -20,6 +21,7 @@
         },
         {
             "key": "sword_socket/emerald",
+            "category": "gem",
             "durability": 48,
             "integrity": -1,
             "glyph": {
@@ -37,6 +39,7 @@
         },
         {
             "key": "sword_socket/lapis",
+            "category": "gem",
             "durability": 22,
             "integrity": -1,
             "glyph": {
@@ -54,6 +57,7 @@
         },
         {
             "key": "sword_socket/amber",
+            "category": "gem",
             "durability": 30,
             "integrity": -1,
             "glyph": {
@@ -71,6 +75,7 @@
         },
         {
             "key": "sword_socket/pristine_diamond",
+            "category": "gem",
             "durability": 648,
             "integrity": -1,
             "glyph": {
@@ -85,6 +90,7 @@
         },
         {
             "key": "sword_socket/pristine_emerald",
+            "category": "gem",
             "durability": 33,
             "integrity": -1,
             "glyph": {
@@ -102,6 +108,7 @@
         },
         {
             "key": "sword_socket/pristine_lapis",
+            "category": "gem",
             "durability": 15,
             "integrity": -1,
             "glyph": {

@@ -38,384 +38,196 @@
     ],
     "variants": [
         {
-            "key": "basic_hammer/log",
-            "durability": 100,
-            "integrity": -1,
-            "magicCapacity": 90,
-            "damage": 4,
-            "attackSpeed": -0.35,
-            "glyph": {
-                "tint": "oak_glyph",
-                "textureX": 64
+            "materials": ["tetra:wood/oak"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/log"
+            "models": [{
+                "location": "tetra:items/module/double/head/basic_hammer/log"
+            }],
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
                 }
-            ],
-            "tools": {
-                "hammer": [
-                    1,
-                    5
-                ]
             }
         },
         {
-            "key": "basic_hammer/stone",
-            "durability": 300,
-            "integrity": -1,
-            "magicCapacity": 30,
-            "damage": 5,
-            "attackSpeed": -0.5,
-            "glyph": {
-                "tint": "stone_glyph",
-                "textureX": 64
+            "materials": ["tetra:stone/diorite"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/stone",
-                    "tint": "stone"
-                }
-            ],
             "tools": {
-                "hammer": [
-                    1,
-                    5
-                ]
+                "hammer": 1
+            },
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                },
+                "availableTextures": ["stone"],
+                "models": [{
+                    "location": "tetra:items/module/double/head/basic_hammer/"
+                }]
             }
         },
         {
-            "key": "basic_hammer/iron",
-            "durability": 300,
-            "integrity": -2,
-            "magicCapacity": 84,
-            "damage": 7,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "iron_glyph",
-                "textureX": 64
+            "materials": ["tetra:metal/iron"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "iron"
-                }
-            ],
             "tools": {
-                "hammer": [
-                    2,
-                    10
-                ]
+                "hammer": 2
+            },
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                },
+                "availableTextures": ["metal"],
+                "models": [{
+                    "location": "tetra:items/module/double/head/basic_hammer/"
+                }]
             }
         },
         {
-            "key": "basic_hammer/obsidian",
-            "durability": 720,
-            "integrity": -3,
-            "magicCapacity": 36,
-            "damage": 9,
-            "attackSpeed": -0.65,
-            "glyph": {
-                "tint": "obsidian_glyph",
-                "textureX": 64
+            "materials": ["tetra:stone/blackstone"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/obsidian"
-                }
-            ],
             "tools": {
-                "hammer": [
-                    4,
-                    20
-                ]
+                "hammer": 3
+            },
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                },
+                "availableTextures": ["stone"],
+                "models": [{
+                    "location": "tetra:items/module/double/head/basic_hammer/"
+                }]
             }
         },
         {
-            "key": "basic_hammer/copper",
-            "durability": 221,
-            "integrity": -2,
-            "magicCapacity": 78,
-            "damage": 6,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "copper_glyph",
-                "textureX": 64
+            "materials": ["tetra:stone/obsidian"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "copper"
-                }
-            ],
             "tools": {
-                "hammer": [
-                    2,
-                    5
-                ]
+                "hammer": 4
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/basic_hammer/obsidian"
+            }],
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                }
             }
         },
         {
-            "key": "basic_hammer/tin",
-            "durability": 120,
-            "integrity": -1,
-            "magicCapacity": 72,
-            "damage": 6,
-            "attackSpeed": -0.35,
-            "glyph": {
-                "tint": "tin_glyph",
-                "textureX": 64
+            "materials": ["tetra:metal/netherite"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_damage": -1,
+                "generic.attack_speed": -1
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "tin"
-                }
-            ],
             "tools": {
-                "hammer": [
-                    1,
-                    10
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/nickel",
-            "durability": 240,
-            "integrity": -4,
-            "magicCapacity": 72,
-            "damage": 7,
-            "attackSpeed": -0.55,
-            "glyph": {
-                "tint": "nickel_glyph",
-                "textureX": 64
+                "hammer": 5
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "nickel"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    3,
-                    15
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/lead",
-            "durability": 120,
-            "integrity": -2,
-            "magicCapacity": 66,
-            "damage": 7,
-            "attackSpeed": -0.55,
-            "glyph": {
-                "tint": "lead_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "lead"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    2,
-                    15
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/bronze",
-            "durability": 465,
-            "integrity": -2,
-            "magicCapacity": 78,
-            "damage": 7,
-            "attackSpeed": -0.55,
-            "glyph": {
-                "tint": "bronze_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "bronze"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    3,
-                    15
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/electrum",
-            "durability": 102,
-            "integrity": -2,
-            "magicCapacity": 144,
-            "damage": 7,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "electrum_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "electrum"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    1,
-                    10
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/steel",
-            "durability": 521,
-            "integrity": -5,
-            "magicCapacity": 66,
-            "damage": 8,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "steel_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "steel"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    4,
-                    18
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/thaumium",
-            "durability": 634,
-            "integrity": -3,
-            "magicCapacity": 150,
-            "damage": 7,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "thaumium_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "thaumium"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    2,
-                    10
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/ironwood",
-            "durability": 591,
-            "integrity": -2,
-            "magicCapacity": 108,
-            "damage": 6,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "ironwood_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/ironwood_tf"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    2,
-                    10
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/steeleaf",
-            "durability": 111,
-            "integrity": -3,
-            "magicCapacity": 90,
-            "damage": 7,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "steeleaf_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "steeleaf"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    3,
-                    15
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/fierymetal",
-            "durability": 947,
-            "integrity": -3,
-            "magicCapacity": 72,
-            "damage": 8,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "fierymetal_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "fierymetal"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    3,
-                    15
-                ]
-            }
-        },
-        {
-            "key": "basic_hammer/knightmetal",
-            "durability": 512,
-            "integrity": -2,
-            "magicCapacity": 72,
-            "damage": 8,
-            "attackSpeed": -0.45,
-            "glyph": {
-                "tint": "knightmetal_glyph",
-                "textureX": 64
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/double/head/basic_hammer/metal",
-                    "tint": "knightmetal"
-                }
-            ],
-            "tools": {
-                "hammer": [
-                    3,
-                    15
-                ]
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.8
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.3,
+                    "generic.attack_speed": -0.2
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                },
+                "availableTextures": ["metal"],
+                "models": [{
+                    "location": "tetra:items/module/double/head/basic_hammer/"
+                }]
             }
         }
     ]

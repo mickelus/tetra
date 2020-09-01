@@ -43,55 +43,8 @@
         }
     },
     {
-        "moduleVariants": ["basic_hammer/stone", "basic_hammer/stone"],
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/iron", "basic_hammer/iron"],
-        "damage": 1,
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/copper", "basic_hammer/copper"],
-        "integrity": 1
-    },
-    {
-        "moduleVariants": ["basic_hammer/tin", "basic_hammer/tin"],
-        "integrity": 1,
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/lead", "basic_hammer/lead"],
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/electrum", "basic_hammer/electrum"],
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/thaumium", "basic_hammer/thaumium"],
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/ironwood", "basic_hammer/ironwood"],
-        "tools": {
-            "hammer": 1
-        }
-    },
-    {
-        "moduleVariants": ["basic_hammer/fierymetal", "basic_hammer/fierymetal"],
+        "modules": ["double/basic_hammer", "double/basic_hammer"],
+        "sameVariant": true,
         "tools": {
             "hammer": 1
         }

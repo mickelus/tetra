@@ -52,6 +52,35 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "key": "basic_blade/",
+            "attributes": {
+                "generic.attack_speed": -2
+            },
+            "effects": {
+                "sweeping": 1
+            },
+            "tools": {
+                "cut": [1, 2]
+            },
+            "durability": -20,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 1
+                },
+                "durability": 0.9,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 0
+                },
+                "availableTextures": ["metal", "shiny", "grainy", "crude"],
+                "models": [{ "location": "tetra:items/module/sword/blade/basic/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "basic_blade/oak",
             "durability": 50,
             "integrity": -1,

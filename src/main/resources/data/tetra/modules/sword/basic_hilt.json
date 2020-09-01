@@ -31,6 +31,32 @@
     ],
     "variants": [
         {
+            "materials": [
+                "tetra:wood/", "tetra:metal/",
+                "tetra:misc/bone", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+            ],
+            "key": "basic_hilt/",
+            "attributes": {
+                "generic.attack_speed": -0.35
+            },
+            "durability": 8,
+            "extract": {
+                "secondaryAttributes": {
+                    "generic.attack_speed": -0.1
+                },
+                "durability": 0.3,
+                "integrity": 1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 16
+                },
+                "availableTextures": ["bright", "default"],
+                "models": [{ "location": "tetra:items/module/sword/hilt/basic/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "basic_hilt/stick",
             "durability": 10,
             "integrity": 3,

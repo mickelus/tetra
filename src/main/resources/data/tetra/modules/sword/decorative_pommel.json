@@ -4,6 +4,24 @@
     "type": "tetra:basic_module",
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "key": "decorative_pommel/",
+            "attributes": {
+                "generic.attack_speed": -0.05
+            },
+            "extract": {
+                "durability": 0.04,
+                "glyph": {
+                    "textureX": 14,
+                    "textureY": 16
+                },
+                "availableTextures": ["default"],
+                "models": [{ "location": "tetra:items/module/sword/pommel/decorative_pommel/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "decorative_pommel/oak",
             "durability": 4,
             "attackSpeed": -0.5,

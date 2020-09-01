@@ -135,11 +135,11 @@ public class ConfigHandler {
 
         honeSwordBase = builder
                 .comment("The base value for number of uses required before a sword can be honed")
-                .defineInRange("hone_sword_base", 120, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_sword_base", 110, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeSwordIntegrityMultiplier = builder
                 .comment("Integrity multiplier for sword honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
-                .defineInRange("hone_sword_integrity_multiplier", 75, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_sword_integrity_multiplier", 65, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honedoubleBase = builder
                 .comment("The base value for number of uses required before a tool can be honed")

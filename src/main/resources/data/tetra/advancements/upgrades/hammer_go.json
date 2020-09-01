@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/obsidian\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/obsidian\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/netherite\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/netherite\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "challenge",
         "title": {
@@ -12,12 +12,12 @@
             "translate": "tetra.advancements.upgrades.hammer_go.description"
         }
     },
-    "parent": "tetra:upgrades/hammer_4",
+    "parent": "tetra:upgrades/hammer_6",
     "criteria": {
         "head": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "variant": "basic_hammer/obsidian"
+                "variant": "basic_hammer/netherite"
             }
         }
     }

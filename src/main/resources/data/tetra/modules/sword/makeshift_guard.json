@@ -5,6 +5,24 @@
     "renderLayer": "higher",
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "key": "makeshift_guard/",
+            "attributes": {
+                "generic.attack_speed": -0.05
+            },
+            "extract": {
+                "durability": 0.06,
+                "glyph": {
+                    "textureX": 7,
+                    "textureY": 16
+                },
+                "availableTextures": ["shiny", "default"],
+                "models": [{ "location": "tetra:items/module/sword/guard/makeshift_guard/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "makeshift_guard/oak",
             "durability": 6,
             "attackSpeed": -0.15,

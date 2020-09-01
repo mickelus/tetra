@@ -16,8 +16,8 @@
         },
         "item": "tetra:modular_double",
         "modules": {
-            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/cobblestone"],
-            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/cobblestone"],
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/stone"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/stone"],
             "double/handle": ["double/basic_handle", "basic_handle/stick"]
         }
     },
@@ -54,6 +54,22 @@
             "double/handle": ["double/basic_handle", "basic_handle/stick"]
         },
         "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/netherite"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/netherite"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/handle:basic_handle/soot": 0,
             "double/head_left:arrested": 0,
             "double/head_right:arrested": 0
         }

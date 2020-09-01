@@ -17,10 +17,10 @@
         },
         "item": "tetra:modular_sword",
         "modules": {
-            "sword/blade": ["sword/basic_blade", "basic_blade/cobblestone"],
+            "sword/blade": ["sword/basic_blade", "basic_blade/stone"],
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
-            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/cobblestone"],
-            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/cobblestone"]
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/stone"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/stone"]
         }
     },
     {
@@ -57,6 +57,21 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/diamond"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/diamond"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/netherite"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/netherite"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/netherite"]
         },
         "improvements": {
             "sword/blade:arrested": 0

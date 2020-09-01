@@ -6,64 +6,21 @@
     "tweakKey": "tetra:sword/binding",
     "variants": [
         {
-            "key": "sword_binding/string",
-            "durability": 12,
-            "integrity": 1,
-            "attackSpeed": -0.1,
-            "glyph": {
-                "tint": "string_glyph",
-                "textureX": 88,
-                "textureY": 16
-            },
-            "models": [{
-                "location": "tetra:items/module/sword/guard/binding/default",
-                "tint": "string"
-            }]
-        },
-        {
-            "key": "sword_binding/leather",
-            "durability": 23,
-            "integrity": 2,
-            "attackSpeed": -0.4,
-            "glyph": {
-                "tint": "leather_glyph",
-                "textureX": 88,
-                "textureY": 16
-            },
-            "models": [{
-                "location": "tetra:items/module/sword/guard/binding/default",
-                "tint": "leather"
-            }]
-        },
-        {
-            "key": "sword_binding/hide",
-            "durability": 18,
-            "integrity": 2,
-            "attackSpeed": -0.3,
-            "glyph": {
-                "tint": "hide_glyph",
-                "textureX": 88,
-                "textureY": 16
-            },
-            "models": [{
-                "location": "tetra:items/module/sword/guard/binding/default",
-                "tint": "hide"
-            }]
-        },
-        {
-            "key": "sword_binding/vine",
-            "durability": 12,
-            "integrity": 1,
-            "attackSpeed": -0.2,
-            "glyph": {
-                "tint": "vine_glyph",
-                "textureX": 88,
-                "textureY": 16
-            },
-            "models": [{
-                "location": "tetra:items/module/sword/guard/binding/default",
-                "tint": "vine"
-            }]
+            "materials": ["tetra:fibre/"],
+            "key": "sword_binding/",
+            "extract": {
+                "secondaryAttributes": {
+                    "generic.attack_speed": -0.1
+                },
+                "durability": 0.1,
+                "integrity": 0.7,
+                "glyph": {
+                    "textureX": 88,
+                    "textureY": 16
+                },
+                "availableTextures": ["default"],
+                "models": [{ "location": "tetra:items/module/sword/guard/binding/" }]
+            }
         },
         {
             "key": "sword_binding/bolt",

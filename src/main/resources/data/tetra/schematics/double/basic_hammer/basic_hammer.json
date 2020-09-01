@@ -15,6 +15,21 @@
     "displayType": "major",
     "outcomes": [
         {
+            "materials": [
+                "tetra:wood/oak",
+                "tetra:stone/diorite",
+                "tetra:metal/iron",
+                "tetra:stone/blackstone",
+                "tetra:stone/obsidian",
+                "tetra:metal/netherite"
+            ],
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        }
+    ],
+    "outcomez": [
+
+        {
             "material": {
                 "tag": "minecraft:logs"
             },

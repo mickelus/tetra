@@ -11,47 +11,9 @@
     },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:string",
-                "count": 4
-            },
-            "requiredTools": {
-                "cut": 1
-            },
+            "materials": ["tetra:fibre/"],
             "moduleKey": "double/binding",
-            "moduleVariant": "double_binding/string"
-        },
-        {
-            "material": {
-                "item": "minecraft:leather"
-            },
-            "requiredTools": {
-                "cut": 2
-            },
-            "moduleKey": "double/binding",
-            "moduleVariant": "double_binding/leather"
-        },
-        {
-            "material": {
-                "item": "minecraft:rabbit_hide",
-                "count": 2
-            },
-            "requiredTools": {
-                "cut": 2
-            },
-            "moduleKey": "double/binding",
-            "moduleVariant": "double_binding/hide"
-        },
-        {
-            "material": {
-                "item": "minecraft:vine",
-                "count": 4
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "moduleKey": "double/binding",
-            "moduleVariant": "double_binding/vine"
+            "moduleVariant": "double_binding/"
         },
         {
             "material": {

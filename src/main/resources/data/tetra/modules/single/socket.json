@@ -6,6 +6,7 @@
     "variants": [
         {
             "key": "single_socket/diamond",
+            "category": "gem",
             "durability": 512,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
@@ -27,6 +28,7 @@
         },
         {
             "key": "single_socket/emerald",
+            "category": "gem",
             "durability": 48,
             "integrity": -1,
             "glyph": {
@@ -44,6 +46,7 @@
         },
         {
             "key": "single_socket/lapis",
+            "category": "gem",
             "durability": 22,
             "integrity": -1,
             "glyph": {
@@ -61,6 +64,7 @@
         },
         {
             "key": "single_socket/amber",
+            "category": "gem",
             "durability": 30,
             "integrity": -1,
             "glyph": {
@@ -78,6 +82,7 @@
         },
         {
             "key": "single_socket/pristine_diamond",
+            "category": "gem",
             "durability": 741,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
@@ -99,6 +104,7 @@
         },
         {
             "key": "single_socket/pristine_emerald",
+            "category": "gem",
             "durability": 25,
             "integrity": -1,
             "glyph": {
@@ -116,6 +122,7 @@
         },
         {
             "key": "single_socket/pristine_lapis",
+            "category": "gem",
             "durability": 18,
             "integrity": -1,
             "glyph": {

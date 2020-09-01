@@ -1,0 +1,37 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:forged_workbench"
+        },
+        "frame": "goal",
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_5.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_5.description"
+        }
+    },
+    "parent": "tetra:upgrades/hammer_4",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "tool": "hammer",
+                "toolLevel": 5
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "tool": "hammer",
+                "toolLevel": 5
+            }
+        }
+    },
+    "requirements": [
+        [
+            "craft",
+            "improvement"
+        ]
+    ]
+}

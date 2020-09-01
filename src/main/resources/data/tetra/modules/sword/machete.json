@@ -51,6 +51,44 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "key": "machete/",
+            "attributes": {
+                "generic.attack_speed": -1.8
+            },
+            "effects": {
+                "sweeping": 1,
+                "strikingCut": 1,
+                "sweepingStrike": 1
+            },
+            "tools": {
+                "cut": [1, 2]
+            },
+            "durability": -20,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 1
+                },
+                "secondaryAttributes": {
+                    "generic.attack_speed": -0.1
+                },
+                "tools": {
+                    "cut": [0, 1.2]
+                },
+                "durability": 0.9,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureY": 32,
+                    "textureX": 48
+                },
+                "availableTextures": ["metal", "shiny", "grainy", "crude"],
+                "models": [{ "location": "tetra:items/module/sword/blade/machete/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "machete/oak",
             "durability": 50,
             "integrity": -2,
