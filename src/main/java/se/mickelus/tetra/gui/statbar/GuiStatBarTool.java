@@ -54,6 +54,8 @@ public class GuiStatBarTool extends GuiStatBar {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingCut, 1);
         } else if (toolType == ToolType.SHOVEL) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingShovel, 1);
+        } else if (toolType == ToolType.HOE) {
+            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingHoe, 1);
         }
 
         strikingIndicator = new GuiTexture(16, -1, 7, 7, 206, 0, GuiTextures.workbench);

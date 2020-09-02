@@ -152,7 +152,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 //                .peek(modifiers -> modifiers.asMap().entrySet().forEach(entry -> entry.setValue(AttributeHelper.collapseModifiers(entry.getValue()))))
                 .map(modifiers -> modifiers.asMap().entrySet().stream().collect(Multimaps.flatteningToMultimap(
                         Map.Entry::getKey,
-                        entry -> AttributeHelper.collapseModifiers(entry.getValue()).stream(),
+                        entry -> AttributeHelper.collapse(entry.getValue()).stream(),
                         ArrayListMultimap::create)))
                 .map(Multimap::entries)
                 .flatMap(Collection::stream)

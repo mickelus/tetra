@@ -4,8 +4,12 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.util.math.MathHelper;
+import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,6 +18,12 @@ import java.util.stream.Stream;
 public class AttributeHelper {
 
     public static final Multimap<Attribute, AttributeModifier> emptyMap = ImmutableMultimap.of();
+
+    private static final Map<String, UUID> attributeIdMap = new HashMap<>();
+    static {
+        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_DAMAGE, AttributeModifier.Operation.ADDITION), ModularItem.attackDamageModifier);
+        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_SPEED, AttributeModifier.Operation.ADDITION), ModularItem.attackSpeedModifier);
+    }
 
     /**
      * Merge two multimaps, values from b will be used when both map contain values for the same key
@@ -97,7 +107,7 @@ public class AttributeHelper {
      * @param modifiers
      * @return
      */
-    public static Collection<AttributeModifier> collapseModifiers(Collection<AttributeModifier> modifiers) {
+    public static Collection<AttributeModifier> collapse(Collection<AttributeModifier> modifiers) {
         return Stream.of(
                 Optional.of(getAdditionAmount(modifiers))
                         .filter(amount -> amount != 0)
@@ -156,5 +166,55 @@ public class AttributeHelper {
 
     public static AttributeModifier multiplyModifier(AttributeModifier modifier, double multiplier) {
         return new AttributeModifier(modifier.getID(), modifier.getName(), modifier.getAmount() * multiplier, modifier.getOperation());
+    }
+
+    public static Multimap<Attribute, AttributeModifier> collapseRound(Multimap<Attribute, AttributeModifier> modifiers) {
+        return Optional.ofNullable(modifiers)
+                .map(Multimap::asMap)
+                .map(Map::entrySet)
+                .map(Collection::stream)
+                .map(entries -> entries.collect(Multimaps.flatteningToMultimap(
+                        Map.Entry::getKey,
+                        entry -> AttributeHelper.collapse(entry.getValue()).stream(),
+                        ArrayListMultimap::create)))
+                .map(AttributeHelper::round)
+                .orElse(null);
+    }
+
+    public static Multimap<Attribute, AttributeModifier> round(Multimap<Attribute, AttributeModifier> modifiers) {
+        return Optional.ofNullable(modifiers)
+                .map(Multimap::entries)
+                .map(Collection::stream)
+                .orElseGet(Stream::empty)
+                .collect(Multimaps.toMultimap(Map.Entry::getKey, e -> round(e.getKey(), e.getValue()), ArrayListMultimap::create));
+    }
+
+    private static AttributeModifier round(Attribute attribute, AttributeModifier mod) {
+        double multiplier = Attributes.ATTACK_DAMAGE.equals(attribute) && mod.getOperation() != AttributeModifier.Operation.ADDITION ? 2 : 20;
+        return new AttributeModifier(mod.getID(), mod.getName(), Math.round(mod.getAmount() * multiplier) / multiplier, mod.getOperation());
+//        return mod;
+    }
+
+    private static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
+        return attribute.func_233754_c_() + operation.ordinal();
+    }
+
+    private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
+        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> MathHelper.getRandomUUID(ThreadLocalRandom.current()));
+    }
+
+    public static AttributeModifier fixIdentifiers(Attribute attribute, AttributeModifier modifier) {
+        return new AttributeModifier(getAttributeId(attribute, modifier.getOperation()), modifier.getName(), modifier.getAmount(), modifier.getOperation());
+    }
+
+    public static Multimap<Attribute, AttributeModifier> fixIdentifiers(Multimap<Attribute, AttributeModifier> modifiers) {
+        return Optional.ofNullable(modifiers)
+                .map(Multimap::entries)
+                .map(Collection::stream)
+                .map(entries -> entries.collect(Multimaps.toMultimap(
+                        Map.Entry::getKey,
+                        entry -> fixIdentifiers(entry.getKey(), entry.getValue()),
+                        ArrayListMultimap::create)))
+                .orElse(null);
     }
 }

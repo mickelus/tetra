@@ -307,6 +307,13 @@ public class ItemEffectHandler {
                         }
                     }
 
+                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.HOE, blockState)) {
+                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingHoe);
+                        if (strikingLevel > 0) {
+                            tool = ToolType.HOE;
+                        }
+                    }
+
                     if (strikingLevel > 0) {
                         int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweepingStrike);
                         if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {

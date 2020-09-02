@@ -70,6 +70,7 @@ public class ItemEffect {
     public static ItemEffect strikingPickaxe = get("strikingPickaxe");
     public static ItemEffect strikingCut = get("strikingCut");
     public static ItemEffect strikingShovel = get("strikingShovel");
+    public static ItemEffect strikingHoe = get("strikingHoe");
 
     /**
      * Sweeping strike: Cause the striking effect to instantly break several blocks around the hit block.

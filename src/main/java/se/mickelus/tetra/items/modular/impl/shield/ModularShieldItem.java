@@ -22,6 +22,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.NBTHelper;
 
@@ -49,8 +50,6 @@ public class ModularShieldItem extends ItemModularHandheld {
         minorModuleKeys = new String[] { bossKey };
 
         requiredModules = new String[] {plateKey, gripKey };
-
-        speedBase = 0;
 
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
@@ -105,6 +104,6 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     @Override
     public double getCooldownBase(ItemStack itemStack) {
-        return getSpeedModifier(itemStack);
+        return getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get());
     }
 }

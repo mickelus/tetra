@@ -19,6 +19,7 @@ public class StatGetterAttribute implements IStatGetter {
     private final Attribute attribute;
 
     private boolean ignoreBase = false;
+    private boolean ignoreBonuses = false;
 
     public StatGetterAttribute(Attribute attribute) {
         this.attribute = attribute;
@@ -28,6 +29,14 @@ public class StatGetterAttribute implements IStatGetter {
         this(attribute);
 
         this.ignoreBase = ignoreBase;
+    }
+
+
+    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses) {
+        this(attribute);
+
+        this.ignoreBase = ignoreBase;
+        this.ignoreBonuses = ignoreBonuses;
     }
 
     @Override
@@ -44,7 +53,7 @@ public class StatGetterAttribute implements IStatGetter {
                 .map(ModifiableAttributeInstance::getBaseValue)
                 .orElse(0d);
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                .map(item -> item.getAttributeModifiers(itemStack))
+                .map(item -> ignoreBonuses ? item.getModuleAttributes(itemStack) : item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(modifiers -> (AttributeHelper.getAdditionAmount(modifiers) + baseValue) * AttributeHelper.getMultiplyAmount(modifiers))
                 .orElse(baseValue);

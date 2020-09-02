@@ -99,11 +99,8 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     protected SynergyData[] synergies = new SynergyData[0];
 
-    public static final UUID reachModifier = UUID.fromString("A7A35FFA-0B44-4AA5-9880-4BD28425E275");
-    public static final UUID armorModifier = UUID.fromString("D96050BE-6A94-4A27-AA0B-2AF705327BA4");
-    public static final UUID toughnessModifier = UUID.fromString("CE955EA0-2B0E-4E63-BFE7-CE697B5080C8");
     public static final UUID attackDamageModifier = Item.ATTACK_DAMAGE_MODIFIER;
-    public static final UUID attackSpeedModifier = ItemModularHandheld.ATTACK_SPEED_MODIFIER;
+    public static final UUID attackSpeedModifier = Item.ATTACK_SPEED_MODIFIER;
 
     private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
@@ -842,16 +839,32 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         updateIdentifier(itemStack);
     }
 
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
-        Multimap<Attribute, AttributeModifier> moduleAttributes = getAllModules(itemStack).stream()
+    /**
+     * Returns attribute modifiers gained from item effects, e.g. attack speed from the counterweight
+     * @param itemStack
+     * @return
+     */
+    public Multimap<Attribute, AttributeModifier> getEffectAttributes(ItemStack itemStack) {
+        return AttributeHelper.emptyMap;
+    }
+
+
+    public Multimap<Attribute, AttributeModifier> getModuleAttributes(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
                 .map(module -> module.getAttributeModifiers(itemStack))
                 .filter(Objects::nonNull)
                 .reduce(null, AttributeHelper::merge);
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> attributes = AttributeHelper.merge(
+                getModuleAttributes(itemStack),
+                getEffectAttributes(itemStack));
 
         return Arrays.stream(getSynergyData(itemStack))
                 .map(synergy -> synergy.attributes)
                 .filter(Objects::nonNull)
-                .reduce(moduleAttributes, AttributeHelper::merge);
+                .reduce(attributes, AttributeHelper::merge);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiersCollapsed(ItemStack itemStack) {
@@ -863,8 +876,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                         .stream()
                         .collect(Multimaps.flatteningToMultimap(
                                 Map.Entry::getKey,
-                                entry -> AttributeHelper.collapseModifiers(entry.getValue()).stream(),
+                                entry -> AttributeHelper.collapse(entry.getValue()).stream(),
                                 ArrayListMultimap::create)))
+                .map(AttributeHelper::fixIdentifiers)
                 .orElse(null);
     }
 

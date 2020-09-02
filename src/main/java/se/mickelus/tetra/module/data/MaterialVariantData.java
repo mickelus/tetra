@@ -48,12 +48,12 @@ public class MaterialVariantData extends VariantData {
             result.category = material.category;
         }
 
-        result.attributes = AttributeHelper.merge(Arrays.asList(
+        result.attributes = AttributeHelper.collapseRound(AttributeHelper.merge(Arrays.asList(
                 attributes,
                 AttributeHelper.multiplyModifiers(extract.primaryAttributes, material.primary),
                 AttributeHelper.multiplyModifiers(extract.secondaryAttributes, material.secondary),
                 AttributeHelper.multiplyModifiers(extract.tertiaryAttributes, material.tertiary)
-        ));
+        )));
 
         result.durability = Math.round(durability + Optional.ofNullable(extract.durability)
                 .map(extracted -> extracted * material.durability)

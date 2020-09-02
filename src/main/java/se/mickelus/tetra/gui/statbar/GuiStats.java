@@ -31,7 +31,7 @@ public class GuiStats {
                 0, 4, false, attackSpeedGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterAttackSpeed(attackSpeedGetter));
 
-    public static final IStatGetter attackSpeedGetterNormalized = new StatGetterAttribute(Attributes.ATTACK_SPEED, true);
+    public static final IStatGetter attackSpeedGetterNormalized = new StatGetterAttribute(Attributes.ATTACK_SPEED, true, true);
     public static final GuiStatBar attackSpeedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed_normalized"),
             -3, 3, false, true, false, attackSpeedGetterNormalized, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.speed_normalized.tooltip", attackSpeedGetterNormalized));

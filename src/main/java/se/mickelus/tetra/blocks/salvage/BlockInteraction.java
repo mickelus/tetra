@@ -164,10 +164,10 @@ public class BlockInteraction {
             if (Hand.MAIN_HAND == hand) {
                 player.resetCooldown();
             } else {
-                int swingSpeed = CastOptional.cast(heldStack.getItem(), ItemModularHandheld.class)
-                        .map(item -> (int) (20 / (4 + item.getSpeedModifier(heldStack))))
+                int cooldown = CastOptional.cast(heldStack.getItem(), ItemModularHandheld.class)
+                        .map(item -> (int) (20 * item.getCooldownBase(heldStack)))
                         .orElse(10);
-                player.getCooldownTracker().setCooldown(heldStack.getItem(), swingSpeed);
+                player.getCooldownTracker().setCooldown(heldStack.getItem(), cooldown);
             }
 
             return ActionResultType.SUCCESS;

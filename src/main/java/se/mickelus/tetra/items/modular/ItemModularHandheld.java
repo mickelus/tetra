@@ -59,23 +59,7 @@ public class ItemModularHandheld extends ModularItem {
      * are not listed here as that's part of that block's implementation.
      */
 
-    // copy of AxeItem.EFFECTIVE_ON, blocks that the axe explicitly state it can efficiently DESTROY
-    private static final Set<Block> axeDestroyBlocks = Sets.newHashSet(Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.BIRCH_PLANKS, Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS, Blocks.BOOKSHELF, Blocks.OAK_WOOD, Blocks.SPRUCE_WOOD, Blocks.BIRCH_WOOD, Blocks.JUNGLE_WOOD, Blocks.ACACIA_WOOD, Blocks.DARK_OAK_WOOD, Blocks.OAK_LOG, Blocks.SPRUCE_LOG, Blocks.BIRCH_LOG, Blocks.JUNGLE_LOG, Blocks.ACACIA_LOG, Blocks.DARK_OAK_LOG, Blocks.CHEST, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, Blocks.MELON, Blocks.LADDER, Blocks.SCAFFOLDING, Blocks.OAK_BUTTON, Blocks.SPRUCE_BUTTON, Blocks.BIRCH_BUTTON, Blocks.JUNGLE_BUTTON, Blocks.DARK_OAK_BUTTON, Blocks.ACACIA_BUTTON, Blocks.OAK_PRESSURE_PLATE, Blocks.SPRUCE_PRESSURE_PLATE, Blocks.BIRCH_PRESSURE_PLATE, Blocks.JUNGLE_PRESSURE_PLATE, Blocks.DARK_OAK_PRESSURE_PLATE, Blocks.ACACIA_PRESSURE_PLATE);
-
-    // copy of hardcoded values in AxeItem, materials that the axe explicitly state it can efficiently HARVEST
-    private static final Set<Material> axeHarvestMaterials = Sets.newHashSet(Material.WOOD, Material.PLANTS, Material.TALL_PLANTS, Material.BAMBOO);
-
-    // copy of PickaxeItem.EFFECTIVE_ON, blocks that the pickaxe explicitly state it can efficiently DESTROY
-    private static final Set<Block> pickaxeDestroyBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.POWERED_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.CHISELED_SANDSTONE, Blocks.CUT_SANDSTONE, Blocks.CHISELED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.GRANITE, Blocks.POLISHED_GRANITE, Blocks.DIORITE, Blocks.POLISHED_DIORITE, Blocks.ANDESITE, Blocks.POLISHED_ANDESITE, Blocks.STONE_SLAB, Blocks.SMOOTH_STONE_SLAB, Blocks.SANDSTONE_SLAB, Blocks.PETRIFIED_OAK_SLAB, Blocks.COBBLESTONE_SLAB, Blocks.BRICK_SLAB, Blocks.STONE_BRICK_SLAB, Blocks.NETHER_BRICK_SLAB, Blocks.QUARTZ_SLAB, Blocks.RED_SANDSTONE_SLAB, Blocks.PURPUR_SLAB, Blocks.SMOOTH_QUARTZ, Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_STONE, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.POLISHED_GRANITE_SLAB, Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.MOSSY_STONE_BRICK_SLAB, Blocks.POLISHED_DIORITE_SLAB, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.END_STONE_BRICK_SLAB, Blocks.SMOOTH_SANDSTONE_SLAB, Blocks.SMOOTH_QUARTZ_SLAB, Blocks.GRANITE_SLAB, Blocks.ANDESITE_SLAB, Blocks.RED_NETHER_BRICK_SLAB, Blocks.POLISHED_ANDESITE_SLAB, Blocks.DIORITE_SLAB, Blocks.SHULKER_BOX, Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
-
-    // copy of hardcoded values in PickaxeItem, materials that the pickaxe explicitly state it can efficiently HARVEST
-    private static final Set<Material> pickaxeHarvestMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
-
-    // copy of ShovelItem.EFFECTIVE_ON, blocks that the shovel explicitly state it can efficiently DESTROY
-    private static final Set<Block> shovelDestroyBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER, Blocks.LIME_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER, Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER, Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
-
-    // copy of hardcoded values in ShovelItem, blocks that the shovel explicitly state it can efficiently HARVEST
-    private static final Set<Block> shovelHarvestBlocks = Sets.newHashSet(Blocks.SNOW, Blocks.SNOW_BLOCK);
+    private static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL);
 
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
     private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
@@ -85,32 +69,6 @@ public class ItemModularHandheld extends ModularItem {
     private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
 
     private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
-
-    protected double speedBase = -2.4d;
-
-    protected static final Map<Block, BlockState> tillLookup = Maps.newHashMap(ImmutableMap.of(
-            Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(),
-            Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(),
-            Blocks.DIRT, Blocks.FARMLAND.getDefaultState(),
-            Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
-
-    protected static final Map<Block, BlockState> flattenLookup = Maps.newHashMap(ImmutableMap.of(
-            Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
-
-    protected static final Map<Block, Block> stripLookup = (new ImmutableMap.Builder<Block, Block>())
-            .put(Blocks.OAK_WOOD, Blocks.STRIPPED_OAK_WOOD)
-            .put(Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG)
-            .put(Blocks.DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD)
-            .put(Blocks.DARK_OAK_LOG, Blocks.STRIPPED_DARK_OAK_LOG)
-            .put(Blocks.ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD)
-            .put(Blocks.ACACIA_LOG, Blocks.STRIPPED_ACACIA_LOG)
-            .put(Blocks.BIRCH_WOOD, Blocks.STRIPPED_BIRCH_WOOD)
-            .put(Blocks.BIRCH_LOG, Blocks.STRIPPED_BIRCH_LOG)
-            .put(Blocks.JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_WOOD)
-            .put(Blocks.JUNGLE_LOG, Blocks.STRIPPED_JUNGLE_LOG)
-            .put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD)
-            .put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG)
-            .build();
 
     // the base amount of damage the item should take after destroying a block
     protected int blockDestroyDamage = 1;
@@ -460,7 +418,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (cooldown > 0.9) {
-            float damage = (float) Math.max((getDamageModifier(itemStack) + 1) * (sweepingLevel * 0.125f), 1);
+            float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
             float knockback = sweepingLevel > 4 ? (getEnchantmentLevelFromImprovements(itemStack, Enchantments.KNOCKBACK) + 1) * 0.5f : 0.5f;
             double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
             double reach = attacker.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
@@ -682,25 +640,20 @@ public class ItemModularHandheld extends ModularItem {
         return AttributeHelper.emptyMap;
     }
 
-    public double getDamageModifier(ItemStack itemStack) {
-        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE);
-    }
-
     public double getAbilityBaseDamage(ItemStack itemStack) {
         return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE);
     }
 
-    public double getSpeedModifier(ItemStack itemStack) {
-        double speedModifier = getAttributeValue(itemStack, Attributes.ATTACK_SPEED)
-                * getCounterWeightBonus(itemStack)
-                + speedBase;
+    @Override
+    public Multimap<Attribute, AttributeModifier> getEffectAttributes(ItemStack itemStack) {
+        Multimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
 
+        Optional.of(getCounterWeightBonus(itemStack))
+                .filter(bonus -> bonus > 0)
+                .map(bonus -> new AttributeModifier("counterweight", bonus, AttributeModifier.Operation.ADDITION))
+                .ifPresent(modifier -> result.put(Attributes.ATTACK_SPEED, modifier));
 
-        if (speedModifier < -4) {
-            speedModifier = -3.9d;
-        }
-
-        return speedModifier;
+        return result;
     }
 
     public double getCounterWeightBonus(ItemStack itemStack) {
@@ -708,19 +661,18 @@ public class ItemModularHandheld extends ModularItem {
         if (counterWeightLevel > 0) {
             int integrityCost = getIntegrityCost(itemStack);
 
-            return Math.max(0, 3 - Math.abs(counterWeightLevel - integrityCost)) * 0.15;
+            return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
         }
         return 0;
     }
 
+    /**
+     * Base cooldown value for abilities/usages related to this item, in ticks
+     * @param itemStack
+     * @return
+     */
     public double getCooldownBase(ItemStack itemStack) {
-        return 1 / (4 + getSpeedModifier(itemStack));
-    }
-
-    public double getRangeModifier(ItemStack itemStack) {
-        return getAllModules(itemStack).stream()
-                .map(itemModule -> itemModule.getRangeModifier(itemStack))
-                .reduce(0d, Double::sum);
+        return 1 / (getAttributeValue(itemStack, Attributes.ATTACK_SPEED) + getCounterWeightBonus(itemStack));
     }
 
     @Override
@@ -746,16 +698,8 @@ public class ItemModularHandheld extends ModularItem {
     public boolean canHarvestBlock(ItemStack stack, BlockState state) {
         if (getHarvestLevel(stack, state.getHarvestTool(), null, state) >= state.getHarvestLevel()) {
             return true;
-        } else {
-            if (state.getHarvestTool() != ToolType.PICKAXE && pickaxeHarvestMaterials.contains(state.getMaterial())) {
-                return getHarvestLevel(stack, ToolType.PICKAXE, null, null) >= 0;
-            } else if (state.getHarvestTool() != ToolType.AXE && axeHarvestMaterials.contains(state.getMaterial())) {
-                return getHarvestLevel(stack, ToolType.AXE, null, null) >= 0;
-            } else if (state.getHarvestTool() != ToolType.SHOVEL && shovelHarvestBlocks.contains(state.getBlock())) {
-                return getHarvestLevel(stack, ToolType.SHOVEL, null, null) >= 0;
-            } else if (state.getHarvestTool() != ToolTypes.cut && cuttingHarvestBlocks.contains(state.getBlock())) {
-                return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
-            }
+        } else if (state.getHarvestTool() != ToolTypes.cut && cuttingHarvestBlocks.contains(state.getBlock())) {
+            return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
         }
 
         return false;
@@ -765,7 +709,7 @@ public class ItemModularHandheld extends ModularItem {
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             ToolType tool = getEffectiveTool(blockState);
-            float speed = (float) (4 + getSpeedModifier(itemStack));
+            float speed = (float) (Attributes.ATTACK_SPEED.getDefaultValue() + getAttributeValue(itemStack, Attributes.ATTACK_SPEED));
 
             if (tool != null) {
                 speed *= getToolEfficiency(itemStack, tool);
@@ -791,24 +735,15 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public static boolean isToolEffective(ToolType toolType, BlockState blockState) {
-        if (axeHarvestMaterials.contains(blockState.getMaterial()) && ToolType.AXE.equals(toolType)) {
-            return true;
-        } else if (pickaxeHarvestMaterials.contains(blockState.getMaterial()) && ToolType.PICKAXE.equals(toolType)) {
-            return true;
-        } else if (cuttingHarvestBlocks.contains(blockState.getBlock()) && ToolTypes.cut.equals(toolType)) {
-            return true;
-        } else if (shovelHarvestBlocks.contains(blockState.getBlock()) && ToolType.SHOVEL.equals(toolType)) {
+        if (ToolTypes.cut.equals(toolType)
+                && (cuttingHarvestBlocks.contains(blockState.getBlock())
+                    || cuttingDestroyMaterials.contains(blockState.getMaterial())
+                    || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag)))) {
             return true;
         }
 
-        if (axeDestroyBlocks.contains(blockState.getBlock()) && ToolType.AXE.equals(toolType)) {
-            return true;
-        } else if (pickaxeDestroyBlocks.contains(blockState.getBlock()) && ToolType.PICKAXE.equals(toolType)) {
-            return true;
-        } else if (cuttingDestroyMaterials.contains(blockState.getMaterial())
-                || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag)) && ToolTypes.cut.equals(toolType)) {
-            return true;
-        } else if (shovelDestroyBlocks.contains(blockState.getBlock()) && ToolType.SHOVEL.equals(toolType)) {
+        if (ToolType.HOE.equals(toolType)
+                && hoeBonusMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
@@ -822,26 +757,12 @@ public class ItemModularHandheld extends ModularItem {
             return tool;
         }
 
-        if (axeHarvestMaterials.contains(blockState.getMaterial())) {
-            return ToolType.AXE;
-        } else if (pickaxeHarvestMaterials.contains(blockState.getMaterial())) {
-            return ToolType.PICKAXE;
-        } else if (cuttingHarvestBlocks.contains(blockState.getBlock())) {
-            return ToolTypes.cut;
-        } else if (shovelHarvestBlocks.contains(blockState.getBlock())) {
-            return ToolType.SHOVEL;
-        }
-
-        if (axeDestroyBlocks.contains(blockState.getBlock())) {
-            return ToolType.AXE;
-        } else if (pickaxeDestroyBlocks.contains(blockState.getBlock())) {
-            return ToolType.PICKAXE;
-        } else if (cuttingDestroyMaterials.contains(blockState.getMaterial())
+        if (cuttingHarvestBlocks.contains(blockState.getBlock())
+                || cuttingDestroyMaterials.contains(blockState.getMaterial())
                 || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag))) {
             return ToolTypes.cut;
-        } else if (shovelDestroyBlocks.contains(blockState.getBlock())) {
-            return ToolType.SHOVEL;
         }
+
         return null;
     }
 
