@@ -12,7 +12,7 @@ description="Tetra revolves around modular items and attempts to blend it togeth
 [[dependencies.tetra]] #optional
     modId="forge"
     mandatory=true
-    versionRange="[32.0.98,)"
+    versionRange="[32.0.107,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
@@ -24,7 +24,7 @@ description="Tetra revolves around modular items and attempts to blend it togeth
 [[dependencies.tetra]]
     modId="mgui"
     mandatory=true
-    versionRange="[3.0.0,]"
+    versionRange="[3.1.0,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
