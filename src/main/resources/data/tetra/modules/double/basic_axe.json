@@ -61,6 +61,36 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "key": "basic_axe/",
+            "attributes": {
+                "generic.attack_speed": -1.8,
+                "generic.attack_damage": 3.5
+            },
+            "durability": -10,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.65
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 0.25
+                },
+                "tools": {
+                    "axe": [1, 1]
+                },
+                "durability": 0.5,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 144
+                },
+                "availableTextures": ["crude", "metal", "shiny"],
+                "models": [{ "location": "tetra:items/module/double/head/basic_axe/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "basic_axe/oak",
             "durability": 26,
             "integrity": -1,

@@ -10,6 +10,16 @@
             "durability": 512,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.1
+            },
+            "tools": {
+                "axe": [0, 2],
+                "shovel": [0, 2],
+                "pickaxe": [0, 2],
+                "hoe": [0, 2],
+                "cut": [0, 2]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -18,13 +28,7 @@
             "models": [{
                 "location": "tetra:items/module/double/binding/socket/default",
                 "tint": "diamond"
-            }],
-            "tools": {
-                "axe": [0, 1],
-                "shovel": [0, 1],
-                "pickaxe": [0, 1],
-                "cut": [0, 1]
-            }
+            }]
         },
         {
             "key": "double_socket/emerald",
@@ -86,6 +90,16 @@
             "durability": 741,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.2
+            },
+            "tools": {
+                "axe": [0, 4],
+                "shovel": [0, 4],
+                "pickaxe": [0, 4],
+                "hoe": [0, 4],
+                "cut": [0, 4]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -94,13 +108,7 @@
             "models": [{
                 "location": "tetra:items/module/double/binding/socket/pristine",
                 "tint": "diamond"
-            }],
-            "tools": {
-                "axe": [0, 2],
-                "shovel": [0, 2],
-                "pickaxe": [0, 2],
-                "cut": [0, 2]
-            }
+            }]
         },
         {
             "key": "double_socket/pristine_emerald",

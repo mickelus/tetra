@@ -37,6 +37,34 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
+            "key": "hoe/",
+            "attributes": {
+                "generic.attack_damage": -3,
+                "generic.attack_speed": -1
+            },
+            "durability": -10,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 1
+                },
+                "tools": {
+                    "hoe": [1, 0.8333]
+                },
+                "durability": 0.5,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 16,
+                    "textureY": 32
+                },
+                "availableTextures": ["crude", "metal", "shiny"],
+                "models": [{ "location": "tetra:items/module/double/head/hoe/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "hoe/oak",
             "durability": 20,
             "integrity": -1,

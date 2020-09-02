@@ -39,6 +39,34 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
+            "key": "adze/",
+            "attributes": {
+                "generic.attack_damage": -2,
+                "generic.attack_speed": -1.4
+            },
+            "durability": -10,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 1
+                },
+                "tools": {
+                    "axe": [0.6, 0.6],
+                    "shovel": [0.6, 0.6]
+                },
+                "durability": 0.5,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureY": 32
+                },
+                "availableTextures": ["crude", "metal", "shiny"],
+                "models": [{ "location": "tetra:items/module/double/head/adze/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "adze/oak",
             "durability": 20,
             "integrity": -1,

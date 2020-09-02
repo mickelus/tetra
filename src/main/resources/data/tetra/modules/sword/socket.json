@@ -7,8 +7,18 @@
         {
             "key": "sword_socket/diamond",
             "category": "gem",
-            "durability": 412,
+            "durability": 512,
+            "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.1
+            },
+            "tools": {
+                "axe": [0, 1],
+                "shovel": [0, 1],
+                "pickaxe": [0, 1],
+                "cut": [0, 1]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -76,7 +86,8 @@
         {
             "key": "sword_socket/pristine_diamond",
             "category": "gem",
-            "durability": 648,
+            "durability": 741,
+            "durabilityMultiplier": 0.8,
             "integrity": -1,
             "glyph": {
                 "tint": "diamond",

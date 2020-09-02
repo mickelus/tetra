@@ -33,6 +33,26 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
+            "key": "butt/",
+            "attributes": {
+                "generic.attack_speed": -0.8
+            },
+            "durability": -10,
+            "extract": {
+                "durability": 0.5,
+                "integrity": -0.5,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 160
+                },
+                "availableTextures": ["crude", "metal", "shiny"],
+                "models": [{ "location": "tetra:items/module/double/head/butt/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "butt/oak",
             "durability": 12,
             "magicCapacity": 90,
