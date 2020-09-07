@@ -51,7 +51,7 @@
 
   "tetra.stats.efficiency_suffix": "效率",
   "tetra.stats.strength_suffix": "力量",
-  "tetra.stats.tier_suffix": "层数",
+  "tetra.stats.tier_suffix": "等级",
   "tetra.stats.level_suffix": "等级",
 
   "tetra.stats.reach": "攻击范围",
@@ -199,12 +199,12 @@
   "tetra.stats.magicCapacity": "魔力容量",
   "tetra.stats.magicCapacity.tooltip": "组件可以容纳的魔力量，可以通过附魔之类的升级来使用。\n\n§7魔力容量：§e%s",
 
-  "tetra.stats.hammer.tooltip": "这个物品可被用于捶打，可在合成和回收时使用\n\n§7锤等级：§e%s\n§7:s锤效率：§e%s",
-  "tetra.stats.axe.tooltip": "这个物品可被用于砍伐木头\n\n§7斧等级： §e%s\n§7:s斧效率：§e%s",
-  "tetra.stats.pickaxe.tooltip": "这个物品可被用于挖掘\n\n§7镐等级：§e%s\n§7:s镐效率：§e%s",
-  "tetra.stats.shovel.tooltip": "这个物品可被用于掘土\n\n§7锹等级：§e%s\n§7:s锹效率：§e%s",
-  "tetra.stats.cut.tooltip": "这个物品可被用于切割，可用于合成和破坏蜘蛛网与植物\n\n§7切割等级：§e%s\n§7:s切割效率：§e%s",
-  "tetra.stats.pry.tooltip": "这个物品可被用于撬开东西，可被用于回收\n\n§7撬棍等级：§e%s\n§7:s撬棍效率：§e%s",
+  "tetra.stats.hammer.tooltip": "这个物品可被用于捶打，可在合成和回收时使用\n%s\n§7锤等级：§e%s\n§7锤效率：§e%s",
+  "tetra.stats.axe.tooltip": "这个物品可被用于砍伐木头\n%s\n§7斧等级：§e%s\n§7斧效率：§e%s",
+  "tetra.stats.pickaxe.tooltip": "这个物品可被用于挖掘\n%s\n§7镐等级：§e%s\n§7镐效率：§e%s",
+  "tetra.stats.shovel.tooltip": "这个物品可被用于掘土\n%s\n§7锹等级：§e%s\n§7锹效率：§e%s",
+  "tetra.stats.cut.tooltip": "这个物品可被用于切割，可用于合成和破坏蜘蛛网与植物\n%s\n§7切割等级：§e%s\n§7切割效率：§e%s",
+  "tetra.stats.pry.tooltip": "这个物品可被用于撬开东西，可被用于回收\n%s\n§7撬棍等级：§e%s\n§7撬棍效率：§e%s",
 
   "tetra.stats.capability.striking": "\n§e打击\n§7挥动时瞬间采集方块，受挥动速度影响\n",
   "tetra.stats.capability.sweeping": "\n§e横扫\n§7挥动时瞬间采集多个方块，受挥动速度影响\n",
