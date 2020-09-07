@@ -68,6 +68,7 @@ import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.*;
+import se.mickelus.tetra.items.loot.DragonSinewItem;
 import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
@@ -184,7 +185,8 @@ public class TetraMod {
                 new ItemMetalScrap(),
                 new ItemVentPlate(),
                 new ModularHolosphereItem(),
-                new EarthpiercerItem()
+                new EarthpiercerItem(),
+                new DragonSinewItem()
 //                new ReverberatingPearlItem()
         };
 
