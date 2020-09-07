@@ -22,7 +22,7 @@ public class ForgedBlockCommon {
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(3)
-            .hardnessAndResistance(12F, 25);
+            .hardnessAndResistance(12F, 2400.0F);
 
     public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterial)
             .sound(SoundType.METAL)
@@ -31,7 +31,7 @@ public class ForgedBlockCommon {
             .setOpaque(ForgedBlockCommon::isntSolid)
             .setSuffocates(ForgedBlockCommon::isntSolid)
             .setBlocksVision(ForgedBlockCommon::isntSolid)
-            .hardnessAndResistance(12F, 25);
+            .hardnessAndResistance(12F, 600.0F);
 
     public static final ITextComponent locationTooltip = new TranslationTextComponent("item.tetra.forged_description")
             .mergeStyle(TextFormatting.GRAY);

@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "tetra:forged_pillar",
+        "tetra:forged_platform",
+        "tetra:forged_platform_slab",
+        "tetra:forged_vent",
+        "tetra:forged_wall"
+    ]
+}
