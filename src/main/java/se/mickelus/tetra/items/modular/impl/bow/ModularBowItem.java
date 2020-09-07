@@ -1,12 +1,19 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,14 +36,12 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ModularBowItem extends ModularItem {
@@ -87,6 +92,25 @@ public class ModularBowItem extends ModularItem {
         MinecraftForge.EVENT_BUS.register(new RangedFOVTransformer());
     }
 
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return AttributeHelper.emptyMap;
+        }
+
+        if (slot == EquipmentSlotType.MAINHAND) {
+            return getAttributeModifiersCached(itemStack);
+        }
+
+        if (slot == EquipmentSlotType.OFFHAND) {
+            return getAttributeModifiersCached(itemStack).entries().stream()
+                    .filter(entry -> !(entry.getKey().equals(Attributes.ATTACK_DAMAGE) || entry.getKey().equals(Attributes.ATTACK_DAMAGE)))
+                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
+        }
+
+        return AttributeHelper.emptyMap;
+    }
+
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
@@ -122,7 +146,8 @@ public class ModularBowItem extends ModularItem {
                     ammoStack = new ItemStack(Items.ARROW);
                 }
 
-                float projectileVelocity = getArrowVelocity(drawProgress, getOverbowCap(itemStack), (float) getOverbowRate(itemStack));
+                double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
+                float projectileVelocity = getArrowVelocity(drawProgress, strength, getOverbowCap(itemStack), (float) getOverbowRate(itemStack));
                 if (projectileVelocity > 0.1f) {
                     ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                             .orElse((ArrowItem) Items.ARROW);
@@ -139,7 +164,7 @@ public class ModularBowItem extends ModularItem {
                         }
 
                         // the damage modifier is based on fully drawn damage, vanilla bows deal 5 times the base damage when fully drawn
-                        projectile.setDamage(projectile.getDamage() + entity.getAttributeValue(TetraAttributes.drawStrength.get()) / 5 - 2);
+                        projectile.setDamage(projectile.getDamage() + strength / 5 - 2);
 
                         int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, itemStack);
                         if (powerLevel > 0) {
@@ -193,23 +218,26 @@ public class ModularBowItem extends ModularItem {
     /**
      * Gets the velocity of the arrow entity from the bow's charge
      */
-    public static float getArrowVelocity(int charge, float overbowCap, float overbowRate) {
-        float f = (float)charge / 20.0F;
+    public static float getArrowVelocity(int charge, double strength, float overbowCap, float overbowRate) {
+        float velocity = (float)charge / 20.0F;
 
-        f = (f * f + f * 2.0F) / 3.0F;
+        velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
 
 
-        if (overbowCap > 0 && f > 1) {
-            f = getProgressOverbowed(f, overbowCap, overbowRate);
-        } else if (f > 1.0F) {
-            f = 1.0F;
+        if (overbowCap > 0 && velocity > 1) {
+            velocity = getProgressOverbowed(velocity, overbowCap, overbowRate);
+        } else if (velocity > 1.0F) {
+            velocity = 1.0F;
         }
 
-        return f;
+        // increase velocity for bows that have a higher draw strength than vanilla bows (vanilla bows equal 10 strength)
+        velocity = velocity * (float) Math.max(1, strength / 10);
+
+        return velocity;
     }
 
-    public int getDrawDuration(LivingEntity entity) {
-        return (int) (20 * entity.getAttributeValue(TetraAttributes.drawSpeed.get()));
+    public int getDrawDuration(ItemStack itemStack, LivingEntity entity) {
+        return (int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get()));
     }
 
     /**
@@ -222,7 +250,7 @@ public class ModularBowItem extends ModularItem {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getItemInUseCount() > 0)
                 .filter(e -> itemStack.equals(e.getActiveItemStack()))
-                .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(entity))
+                .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(itemStack, entity))
                 .orElse(0f);
     }
 
