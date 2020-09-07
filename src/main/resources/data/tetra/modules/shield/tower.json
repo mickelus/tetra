@@ -34,6 +34,43 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:misc/bone", "tetra:misc/vent_plate"],
+            "key": "tower/",
+            "attributes": {
+                "tetra:ability_damage": 5,
+                "tetra:ability_cooldown": 8
+            },
+            "effects": {
+                "blocking": 16
+            },
+            "durability": -20,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:ability_damage": 0.6
+                },
+                "secondaryAttributes": {
+                    "tetra:ability_damage": 0.3,
+                    "tetra:ability_cooldown": 0.3
+                },
+                "tertiaryAttributes": {
+                    "tetra:ability_cooldown": -0.2
+                },
+                "durability": 0.9,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureY": 48
+                },
+                "availableTextures": ["wooden", "metal", "bone", "vent"],
+                "models": [{
+                    "type": "shield_tower",
+                    "location": "tetra:items/module/shield/plate/tower/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "tower/wooden",
             "durability": 227,
             "integrity": -2,

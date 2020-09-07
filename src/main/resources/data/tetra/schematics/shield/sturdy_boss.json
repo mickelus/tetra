@@ -11,104 +11,10 @@
     },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:iron_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
+            "materials": ["tetra:metal/"],
             "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/iron"
-        },
-        {
-            "material": {
-                "item": "minecraft:gold_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/gold"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/copper"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/copper"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/tin"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/tin"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/silver"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/silver"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/nickel"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/nickel"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/lead"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/lead"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/electrum"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/electrum"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/bronze"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/bronze"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/steel"
-            },
-            "requiredTools": {
-                "hammer": 5
-            },
-            "moduleKey": "shield/sturdy_boss",
-            "moduleVariant": "sturdy_boss/steel"
+            "toolOffset": 1,
+            "moduleVariant": "sturdy_boss/"
         }
     ]
 }

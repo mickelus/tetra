@@ -1,8 +1,6 @@
 {
     "replace": true,
-    "slots": [
-        "shield/grip"
-    ],
+    "slots": ["shield/grip"],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -11,48 +9,16 @@
     },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:leather",
-                "count": 1
-            },
-            "requiredTools": {
-                "cut": 2
-            },
+            "materials": ["tetra:fibre/"],
+            "countFactor": 2.5,
             "moduleKey": "shield/straps",
-            "moduleVariant": "straps/leather"
+            "moduleVariant": "straps/"
         },
         {
-            "material": {
-                "item": "minecraft:rabbit_hide",
-                "count": 2
-            },
-            "requiredTools": {
-                "cut": 1
-            },
+            "materials": ["tetra:skin/"],
+            "countFactor": 1.5,
+            "toolOffset": 1,
             "moduleKey": "shield/straps",
-            "moduleVariant": "straps/hide"
-        },
-        {
-            "material": {
-                "item": "minecraft:string",
-                "count": 8
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "moduleKey": "shield/straps",
-            "moduleVariant": "straps/string"
-        },
-        {
-            "material": {
-                "item": "minecraft:phantom_membrane",
-                "count": 4
-            },
-            "requiredTools": {
-                "cut": 2
-            },
-            "moduleKey": "shield/straps",
-            "moduleVariant": "straps/phantom_membrane"
+            "moduleVariant": "straps/"
         }
-    ]
-}
+    ]}

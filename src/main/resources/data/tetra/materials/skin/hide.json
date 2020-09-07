@@ -2,11 +2,11 @@
     "key": "hide",
     "category": "skin",
     "primary": "5",
-    "secondary": "0.4",
+    "secondary": "1.5",
     "tertiary": "1",
     "durability": "200",
     "integrityCost": "1",
-    "integrityGain": "4",
+    "integrityGain": "5",
     "magicCapacity": "90",
     "toolLevel": "1",
     "toolEfficiency": "1.6667",
@@ -19,9 +19,10 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:rabbit_hide"
+        "item": "minecraft:rabbit_hide",
+        "count": 2
     },
     "requiredTools": {
-        "axe": 1
+        "cut": 2
     }
 }

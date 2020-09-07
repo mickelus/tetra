@@ -15,101 +15,22 @@
                 "item": "minecraft:stick",
                 "count": 4
             },
-            "requiredTools": {
-                "axe": 2
-            },
             "moduleKey": "bow/long_stave",
             "moduleVariant": "long_stave/stick"
         },
         {
-            "material": {
-                "item": "minecraft:oak_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
+            "materials": ["tetra:wood/"],
+            "countFactor": 2,
+            "toolOffset": 1,
             "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/oak"
+            "moduleVariant": "long_stave/"
         },
         {
-            "material": {
-                "item": "minecraft:spruce_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
+            "materials": ["tetra:metal/"],
+            "countFactor": 3,
+            "toolOffset": 3,
             "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/spruce"
-        },
-        {
-            "material": {
-                "item": "minecraft:birch_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/birch"
-        },
-        {
-            "material": {
-                "item": "minecraft:jungle_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/jungle"
-        },
-        {
-            "material": {
-                "item": "minecraft:acacia_planks"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/acacia"
-        },
-        {
-            "material": {
-                "item": "minecraft:dark_oak_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/dark_oak"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/maple"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/maple"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/cherry"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/cherry"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/baobab"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/long_stave",
-            "moduleVariant": "long_stave/baobab"
+            "moduleVariant": "long_stave/"
         }
     ]
 }

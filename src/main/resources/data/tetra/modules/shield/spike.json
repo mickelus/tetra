@@ -4,6 +4,41 @@
     "slots": ["shield/boss"],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:misc/bone", "tetra:misc/vent_plate"],
+            "key": "spike/",
+            "attributes": {
+                "tetra:ability_cooldown": 0.3
+            },
+            "effects": {
+                "blockingReflect": [38, 0.9]
+            },
+            "durability": 20,
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:ability_cooldown": 0.1
+                },
+                "primaryEffects": {
+                    "blockingReflect": [0, 0.05]
+                },
+                "secondaryEffects": {
+                    "blockingReflect": -2
+                },
+                "durability": 0.1,
+                "integrity": -1,
+                "glyph": {
+                    "textureX": 104,
+                    "textureY": 16
+                },
+                "availableTextures": ["spike"],
+                "models": [{
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "spike/iron",
             "durability": 30,
             "integrity": -1,

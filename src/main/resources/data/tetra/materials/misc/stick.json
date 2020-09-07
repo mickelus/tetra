@@ -1,9 +1,9 @@
 {
     "key": "stick",
     "category": "wood",
-    "primary": "1",
+    "primary": "1.5",
     "secondary": "0.5",
-    "tertiary": "1",
+    "tertiary": "4",
     "durability": "40",
     "integrityCost": "1",
     "integrityGain": "3",

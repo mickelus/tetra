@@ -29,6 +29,52 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "key": "recurve_stave/",
+            "attributes": {
+                "tetra:draw_speed": 0.7,
+                "tetra:draw_strength": 2.5
+            },
+            "integrity": -1,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:draw_speed": 0.3,
+                    "tetra:draw_strength": 0.5
+                },
+                "tertiaryAttributes": {
+                    "tetra:draw_speed": -0.15,
+                    "tetra:draw_strength": 1.2
+                },
+                "durability": 0.8,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 160,
+                    "textureY": 32
+                },
+                "availableTextures": ["crude"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/stave/recurve/"
+                    },
+                    {
+                        "type": "draw_0",
+                        "location": "tetra:items/module/bow/stave/recurve/"
+                    },
+                    {
+                        "type": "draw_1",
+                        "location": "tetra:items/module/bow/stave/recurve/1_"
+                    },
+                    {
+                        "type": "draw_2",
+                        "location": "tetra:items/module/bow/stave/recurve/1_"
+                    }
+                ]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "recurve_stave/stick",
             "integrity": -2,
             "durability": 199,

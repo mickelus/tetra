@@ -1,8 +1,6 @@
 {
     "replace": true,
-    "slots": [
-        "bow/string"
-    ],
+    "slots": ["bow/string"],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -11,54 +9,16 @@
     },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:string",
-                "count": 2
-            },
+            "materials": ["tetra:fibre/"],
+            "countFactor": 2,
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/string"
+            "moduleVariant": "basic_string/"
         },
         {
-            "material": {
-                "item": "minecraft:vine",
-                "count": 2
-            },
+            "materials": ["tetra:skin/"],
+            "toolOffset": 1,
             "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/vine",
-            "requiredTools": {
-                "cut": 1
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:rabbit_hide",
-                "count": 2
-            },
-            "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/hide",
-            "requiredTools": {
-                "cut": 1
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:leather"
-            },
-            "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/leather",
-            "requiredTools": {
-                "cut": 2
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:phantom_membrane"
-            },
-            "moduleKey": "bow/basic_string",
-            "moduleVariant": "basic_string/phantom",
-            "requiredTools": {
-                "cut": 2
-            }
+            "moduleVariant": "basic_string/"
         }
     ]
 }

@@ -2,8 +2,8 @@
     "key": "acacia",
     "category": "wood",
     "primary": "3",
-    "secondary": "1.4",
-    "tertiary": "1",
+    "secondary": "1.8",
+    "tertiary": "6",
     "durability": "52",
     "integrityCost": "1",
     "integrityGain": "4",
@@ -16,7 +16,7 @@
     },
     "textures": [
         "crude",
-        "default"
+        "wooden"
     ],
     "material": {
         "item": "minecraft:acacia_planks"

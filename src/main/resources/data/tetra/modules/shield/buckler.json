@@ -34,6 +34,44 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:misc/bone", "tetra:misc/vent_plate"],
+            "key": "buckler/",
+            "attributes": {
+                "tetra:ability_damage": 1,
+                "tetra:ability_cooldown": 2.5,
+                "generic.armor_toughness": 0.5
+            },
+            "durability": -20,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:ability_damage": 0.4,
+                    "generic.armor_toughness": 0.4
+                },
+                "secondaryAttributes": {
+                    "tetra:ability_damage": 0.1,
+                    "tetra:ability_cooldown": 0.3,
+                    "generic.armor_toughness": 0.3
+                },
+                "tertiaryAttributes": {
+                    "generic.armor_toughness": 0.2
+                },
+                "durability": 0.9,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 48,
+                    "textureY": 48
+                },
+                "availableTextures": ["wooden", "metal", "bone", "vent"],
+                "models": [{
+                    "type": "shield_buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "buckler/wooden",
             "durability": 227,
             "integrity": -1,

@@ -31,6 +31,36 @@
     ],
     "variants": [
         {
+            "materials": [
+                "tetra:wood/", "tetra:metal/",
+                "tetra:misc/bone", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+            ],
+            "key": "basic_grip/",
+            "attributes": {
+                "tetra:ability_cooldown": 1
+            },
+            "durability": 22,
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:ability_cooldown": 0.3
+                },
+                "durability": 0.2,
+                "integrity": 1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 16,
+                    "textureY": 48
+                },
+                "availableTextures": ["default"],
+                "models": [{
+                    "type": "shield_grip",
+                    "location": "tetra:items/module/shield/grip/basic_grip/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "basic_grip/oak",
             "durability": 10,
             "integrity": 3,

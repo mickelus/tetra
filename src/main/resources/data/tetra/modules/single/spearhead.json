@@ -30,6 +30,35 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "key": "spearhead/",
+            "attributes": {
+                "generic.attack_speed": -1.5,
+                "generic.attack_damage": 0.5
+            },
+            "durability": -20,
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 1.2
+                },
+                "secondaryAttributes": {
+                    "generic.attack_speed": -0.1,
+                    "generic.attack_damage": 0.1
+                },
+                "durability": 0.9,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 208,
+                    "textureY": 32
+                },
+                "availableTextures": ["metal", "shiny", "grainy", "crude"],
+                "models": [{ "location": "tetra:items/module/single/head/spearhead/" }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "spearhead/oak",
             "durability": 50,
             "integrity": -1,

@@ -109,13 +109,14 @@
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
   "tetra.stats.blocking.tooltip_extended": "If this item has a secondary ability available then that ability can be used by pressing shift + right-click, or by holding shift as right-click is released (this will trigger a 50%% longer cooldown).",
 
-  "tetra.stats.blocking_reflect.tooltip": "§eReflect\n§7Blocking melee attacks has a §e%s§7 chance to deal §e%s§7 damage the attacker and apply on hit effects\n",
+  "tetra.stats.blocking_reflect": "Reflect",
+  "tetra.stats.blocking_reflect.tooltip": "Blocking melee attacks has a §e%s§r chance to deal §e%s§r damage the attacker and apply on hit effects",
 
   "tetra.stats.bashing": "Bashing",
   "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n\nKnockback factor: §e%s§r\nStun duration: §e%s§r seconds",
 
   "tetra.stats.throwable": "Throwable",
-  "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. When thrown the item will deal §e%s%%§r item damage if it hits an entity, hitting a block will break the block if the item's mining tier is high enough and the items harvest speed is greater than the block's hardness",
+  "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
 
   "tetra.stats.armorPenetration": "Penetrating",
   "tetra.stats.armorPenetration.tooltip": "Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor",
@@ -278,6 +279,9 @@
   "tetra.shatter_lapis_action.label": "Shatter",
 
   "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered at a workbench, which may yield several regular-quality pieces\n\n§8Drops are affected by the fortune enchantment",
+
+  "item.tetra.dragon_sinew": "Dragon sinew",
+  "item.tetra.dragon_sinew.tooltip": "Widely sought in a different time and place",
 
   "item.tetra.magmatic_cell": "Thermal cell",
   "item.tetra.magmatic_cell.charge": "Charge: %s",
@@ -449,12 +453,12 @@
   "tetra.improvement.hilt_hone/speed.name": "Hone: Speed",
   "tetra.improvement.hilt_hone/speed.description": "Increases swing speed",
 
-  "tetra/schematic/sword/basic_blade.name": "Simple blade",
-  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials.",
+  "tetra/schematic/sword/basic_blade.name": "Basic blade",
+  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials. \n\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/sword/basic_blade.slot1": "Blade material",
 
   "tetra.module.sword/basic_blade.item_name": "Sword",
-  "tetra.module.sword/basic_blade.name": "Simple blade",
+  "tetra.module.sword/basic_blade.name": "Basic blade",
   "tetra.module.sword/basic_blade.description": "A basic blade with average damage, attack speed and integrity usage.",
 
   "tetra.variant.basic_blade/oak": "Wooden blade",
@@ -578,7 +582,7 @@
   "tetra.variant.basic_hilt/forged_beam": "Repurposed beam",
 
   "tetra.improvement.basic_hilt/blazing.name": "Blazing",
-  "tetra.improvement.basic_hilt/blazing.description": "Using this may set you on fire, more sever in hot environments",
+  "tetra.improvement.basic_hilt/blazing.description": "Using this item may set you on fire, more sever in hot environments",
 
   "tetra.improvement.basic_hilt/ender_reverb.name": "Ender reverb",
   "tetra.improvement.basic_hilt/ender_reverb.description": "Reacts negatively with nearby entities originating from the end",
@@ -649,7 +653,7 @@
   "tetra.variant.makeshift_guard/knightmetal": "Makeshift knightmetal guard",
 
   "tetra/schematic/sword/wide_guard.name": "Wide guard",
-  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.",
+  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.\n\nMaterial §fhardness§r and §fflexibility§r increase the armor amount.",
   "tetra/schematic/sword/wide_guard.slot1": "Guard material",
 
   "tetra.module.sword/wide_guard.name": "Wide guard",
@@ -704,7 +708,7 @@
   "tetra.variant.sword_socket/pristine_lapis.description": "A gem, fitted onto the sword where the blade meets the hilt. The gem is enchanted and provides magical boons to the wielder of the sword.\n\nThe gem is of pristine quality and provides improved effects compared to a gem of lesser quality.",
 
   "tetra/schematic/sword/counterweight.name": "Counterweight",
-  "tetra/schematic/sword/counterweight.description": "Balance the blade with a counterweight. Increases the attack speed by 0.15 if the counterweight effect level matches the total integrity for the item, the bonus is reduced by 0.05 for each point of difference between the integrity use and the effect level.",
+  "tetra/schematic/sword/counterweight.description": "Balance the blade with a counterweight. Increases the attack speed by §f0.15§r, this bonus is reduced by §f0.05§r for each point of difference between the total integrity use and the effect level.\n\nMaterial §fhardness§r increase the level of the effect.",
   "tetra/schematic/sword/counterweight.slot1": "Material",
 
   "tetra.module.sword/counterweight.name": "Counterweight",
@@ -874,7 +878,7 @@
   "tetra.variant.grip_loop/knightmetal": "Knightmetal loop",
 
   "tetra/schematic/sword/short_blade.name": "Shortblade",
-  "tetra/schematic/sword/short_blade.description": "Replace the current sword blade with a blade that's shorter and lighter than the common blade. Allows the wielder to swing at a faster rate, but deals slightly less damage per swing compared to a regular blade. The short blade is not capable of sweeping attacks.",
+  "tetra/schematic/sword/short_blade.description": "Replace the current sword blade with a blade that's shorter and lighter than the common blade.\n\n§fCutting§r tool level is based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/sword/short_blade.slot1": "Blade material",
 
   "tetra.module.sword/short_blade.item_name": "Shortblade",
@@ -949,7 +953,7 @@
   "tetra.variant.short_blade/knightmetal.item_name": "Dagger",
 
   "tetra/schematic/sword/heavy_blade.name": "Heavy blade",
-  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade. Sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.",
+  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade.\n\nMaterial §fhardness§r increases §fdamage§r and improves the §fsweeping§r effect.\nMaterial §fdensity§r increases §fdamage§r, but decreases §fattack speed§r.",
   "tetra/schematic/sword/heavy_blade.slot1": "Blade material",
 
   "tetra.module.sword/heavy_blade.item_name": "Greatsword",
@@ -1231,7 +1235,7 @@
   "tetra.synergy.double/claw_axe": "Carpenter's axe",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.",
+  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n\nMaterial §density§r slightly decreases attack speed.",
   "tetra/schematic/double/basic_handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.double/basic_handle.name": "Basic handle",
@@ -1707,14 +1711,14 @@
   "tetra.synergy.single/javelin": "Javelin",
 
   "tetra/schematic/single/handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle a basic handle crafted from the given materials. A sturdier handle supports heavier and more advanced tool heads.",
+  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle a basic handle crafted from the given materials. A sturdier handle supports heavier and more advanced tool heads.\n\nMaterial §density§r slightly decreases attack speed.",
   "tetra/schematic/single/handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.single/basic_handle.name": "Basic handle",
   "tetra.module.single/basic_handle.description": "A basic handle. Handles are the primary source of integrity.",
 
   "tetra/schematic/single/handle/light_handle.name": "Light handle",
-  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.",
+  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.\n\nMaterial §density§r increases thrown damage, but slightly decreases attack speed.",
   "tetra/schematic/single/handle/light_handle.slot1": "Handle material",
 
   "tetra.module.single/light_handle.name": "Light handle",
@@ -1743,7 +1747,7 @@
   "tetra.variant.light_handle/prismarine": "Prismarine handle",
 
   "tetra/schematic/single/handle/long_handle.name": "Long handle",
-  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.",
+  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.\n\nMaterial §flexibility§r and §hardness§r improves the reach effect.\nMaterial §density§r slightly decreases attack speed.",
   "tetra/schematic/single/handle/long_handle.slot1": "Handle material",
 
   "tetra.module.single/long_handle.name": "Long handle",

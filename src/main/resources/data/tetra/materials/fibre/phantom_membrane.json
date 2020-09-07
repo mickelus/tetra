@@ -6,7 +6,7 @@
     "tertiary": "1",
     "durability": "1150",
     "integrityCost": "2",
-    "integrityGain": "5",
+    "integrityGain": "6",
     "magicCapacity": "84",
     "toolLevel": "3",
     "toolEfficiency": "5",
@@ -22,6 +22,6 @@
         "item": "minecraft:phantom_membrane"
     },
     "requiredTools": {
-        "hammer": 1
+        "cut": 1
     }
 }

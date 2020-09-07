@@ -15,8 +15,7 @@
     },
     "textures": [
         "bone",
-        "crude",
-        "default"
+        "crude"
     ],
     "material": {
         "item": "minecraft:bone"

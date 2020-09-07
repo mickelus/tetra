@@ -6,6 +6,41 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:metal/"],
+            "key": "sturdy_boss/",
+            "attributes": {
+                "tetra:ability_cooldown": 0.3
+            },
+            "effects": {
+                "bashing": [1, 1]
+            },
+            "durability": 20,
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:ability_cooldown": 0.3
+                },
+                "primaryEffects": {
+                    "bashing": [0.2, 0.3]
+                },
+                "secondaryEffects": {
+                    "bashing": [0.3, 0.1]
+                },
+                "durability": 0.12,
+                "integrity": -0.5,
+                "glyph": {
+                    "textureX": 96,
+                    "textureY": 16
+                },
+                "availableTextures": ["sturdy_boss"],
+                "models": [{
+                    "type": "shield_boss",
+                    "location": "tetra:items/module/shield/boss/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "sturdy_boss/iron",
             "durability": 33,
             "integrity": -1,

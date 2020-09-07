@@ -57,9 +57,6 @@
                 "generic.attack_speed": -1,
                 "generic.attack_damage": -0.5
             },
-            "tools": {
-                "cut": 0.3
-            },
             "durability": -20,
             "extract": {
                 "primaryAttributes": {
@@ -69,7 +66,7 @@
                     "generic.attack_speed": -0.1
                 },
                 "tools": {
-                    "cut": [0.4, 1]
+                    "cut": [0.7, 1]
                 },
                 "durability": 0.8,
                 "integrity": -1,

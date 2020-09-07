@@ -16,16 +16,6 @@
             ],
             "moduleKey": "double/basic_handle",
             "moduleVariant": "basic_handle/"
-        },
-        {
-            "material": {
-                "item": "minecraft:stick"
-            },
-            "requiredTools": {
-                "hammer": 1
-            },
-            "moduleKey": "double/basic_handle",
-            "moduleVariant": "basic_handle/stick"
         }
     ]
 }

@@ -1,5 +1,11 @@
 [
     {
+        "key": "basic_handle/soot",
+        "models": [{
+            "location": "tetra:items/module/single/handle/improvements/soot"
+        }]
+    },
+    {
         "key": "basic_handle/blazing",
         "effects": {
             "fierySelf": [3, 0.1]

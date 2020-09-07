@@ -1,15 +1,15 @@
 {
     "key": "dragon_sinew",
     "category": "fibre",
-    "primary": "5",
-    "secondary": "1.4",
-    "tertiary": "1",
+    "primary": "1",
+    "secondary": "1.5",
+    "tertiary": "1.5",
     "durability": "1150",
     "integrityCost": "2",
-    "integrityGain": "6.5",
+    "integrityGain": "8",
     "magicCapacity": "84",
-    "toolLevel": "3",
-    "toolEfficiency": "5",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
     "tints": {
         "glyph": "dragon_glyph",
         "texture": "dragon"
@@ -18,9 +18,9 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:iron_ingot"
+        "item": "tetra:dragon_sinew"
     },
     "requiredTools": {
-        "hammer": 1
+        "cut": 3
     }
 }

@@ -1,9 +1,9 @@
 {
     "key": "crimson",
     "category": "wood",
-    "primary": "3",
-    "secondary": "1.5",
-    "tertiary": "1",
+    "primary": "4",
+    "secondary": "2",
+    "tertiary": "7.5",
     "durability": "80",
     "integrityCost": "1",
     "integrityGain": "6",
@@ -16,12 +16,12 @@
     },
     "textures": [
         "crude",
-        "default"
+        "wooden"
     ],
     "material": {
         "item": "minecraft:crimson_planks"
     },
     "requiredTools": {
-        "axe": 1
+        "axe": 3
     }
 }

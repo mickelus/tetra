@@ -11,104 +11,10 @@
     },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:iron_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
+            "materials": ["tetra:metal/", "tetra:misc/bone"],
             "moduleKey": "shield/spike",
-            "moduleVariant": "spike/iron"
-        },
-        {
-            "material": {
-                "item": "minecraft:gold_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/electrum"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/copper"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/copper"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/tin"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/tin"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/silver"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/silver"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/nickel"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/nickel"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/lead"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/lead"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/electrum"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/electrum"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/bronze"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/bronze"
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/steel"
-            },
-            "requiredTools": {
-                "hammer": 5
-            },
-            "moduleKey": "shield/spike",
-            "moduleVariant": "spike/steel"
+            "toolOffset": 1,
+            "moduleVariant": "spike/"
         }
     ]
 }

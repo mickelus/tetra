@@ -16,7 +16,7 @@
     },
     "textures": [
         "crude",
-        "default"
+        "wooden"
     ],
     "material": {
         "tag": "minecraft:planks"

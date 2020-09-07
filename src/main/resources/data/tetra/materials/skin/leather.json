@@ -2,7 +2,7 @@
     "key": "leather",
     "category": "skin",
     "primary": "5",
-    "secondary": "0.4",
+    "secondary": "2",
     "tertiary": "1",
     "durability": "200",
     "integrityCost": "1",
@@ -22,6 +22,6 @@
         "item": "minecraft:leather"
     },
     "requiredTools": {
-        "axe": 1
+        "cut": 2
     }
 }

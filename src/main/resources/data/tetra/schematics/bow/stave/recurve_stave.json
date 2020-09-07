@@ -16,100 +16,23 @@
                 "count": 3
             },
             "requiredTools": {
-                "axe": 2
+                "axe": 3
             },
             "moduleKey": "bow/recurve_stave",
             "moduleVariant": "recurve_stave/stick"
         },
         {
-            "material": {
-                "item": "minecraft:oak_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
+            "materials": ["tetra:wood/"],
+            "toolOffset": 1,
+            "toolFactor": 1.1,
             "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/oak"
+            "moduleVariant": "recurve_stave/"
         },
         {
-            "material": {
-                "item": "minecraft:spruce_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
+            "materials": ["tetra:metal/"],
+            "toolOffset": 3,
             "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/spruce"
-        },
-        {
-            "material": {
-                "item": "minecraft:birch_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/birch"
-        },
-        {
-            "material": {
-                "item": "minecraft:jungle_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/jungle"
-        },
-        {
-            "material": {
-                "item": "minecraft:acacia_planks"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/acacia"
-        },
-        {
-            "material": {
-                "item": "minecraft:dark_oak_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/dark_oak"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/maple"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/maple"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/cherry"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/cherry"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/baobab"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/recurve_stave",
-            "moduleVariant": "recurve_stave/baobab"
+            "moduleVariant": "recurve_stave/"
         }
     ]
 }

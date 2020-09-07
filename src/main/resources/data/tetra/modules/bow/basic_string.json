@@ -28,6 +28,41 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "key": "basic_string/",
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:draw_speed": 0.07
+                },
+                "durability": 0.3,
+                "integrity": 1,
+                "glyph": {
+                    "textureX": 112,
+                    "textureY": 32
+                },
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/string/basic/"
+                    },
+                    {
+                        "type": "draw_0",
+                        "location": "tetra:items/module/bow/string/basic/0_"
+                    },
+                    {
+                        "type": "draw_1",
+                        "location": "tetra:items/module/bow/string/basic/1_"
+                    },
+                    {
+                        "type": "draw_2",
+                        "location": "tetra:items/module/bow/string/basic/2_"
+                    }
+                ]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "basic_string/string",
             "durability": 150,
             "integrity": 2,

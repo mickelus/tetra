@@ -3,7 +3,7 @@
     "category": "wood",
     "primary": "3",
     "secondary": "1.2",
-    "tertiary": "1",
+    "tertiary": "8.5",
     "durability": "100",
     "integrityCost": "1",
     "integrityGain": "6",
@@ -16,12 +16,12 @@
     },
     "textures": [
         "crude",
-        "default"
+        "wooden"
     ],
     "material": {
         "item": "minecraft:warped_planks"
     },
     "requiredTools": {
-        "axe": 1
+        "axe": 3
     }
 }

@@ -29,6 +29,59 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "key": "long_stave/",
+            "attributes": {
+                "tetra:draw_speed": 1.6,
+                "tetra:draw_strength": 5
+            },
+            "effects": {
+                "overbowed": [10, 0.5]
+            },
+            "integrity": -1,
+            "durability": 14,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:draw_speed": 0.4,
+                    "tetra:draw_strength": 0.6
+                },
+                "tertiaryAttributes": {
+                    "tetra:draw_speed": -0.05,
+                    "tetra:draw_strength": 1.5
+                },
+                "primaryEffects": {
+                    "overbowed": 7
+                },
+                "durability": 1.05,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 144,
+                    "textureY": 32
+                },
+                "availableTextures": ["crude"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/stave/long/"
+                    },
+                    {
+                        "type": "draw_0",
+                        "location": "tetra:items/module/bow/stave/long/0_"
+                    },
+                    {
+                        "type": "draw_1",
+                        "location": "tetra:items/module/bow/stave/long/1_"
+                    },
+                    {
+                        "type": "draw_2",
+                        "location": "tetra:items/module/bow/stave/long/2_"
+                    }
+                ]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "long_stave/stick",
             "integrity": -2,
             "durability": 181,

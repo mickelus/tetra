@@ -19,94 +19,16 @@
             "moduleVariant": "straight_stave/stick"
         },
         {
-            "material": {
-                "item": "minecraft:oak_planks"
-            },
-            "requiredTools": {
-                "axe": 1
-            },
+            "materials": ["tetra:wood/"],
+            "toolOffset": 1,
             "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/oak"
+            "moduleVariant": "straight_stave/"
         },
         {
-            "material": {
-                "item": "minecraft:spruce_planks"
-            },
-            "requiredTools": {
-                "axe": 2
-            },
+            "materials": ["tetra:metal/"],
+            "toolOffset": 3,
             "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/spruce"
-        },
-        {
-            "material": {
-                "item": "minecraft:birch_planks"
-            },
-            "requiredTools": {
-                "axe": 2
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/birch"
-        },
-        {
-            "material": {
-                "item": "minecraft:jungle_planks"
-            },
-            "requiredTools": {
-                "axe": 2
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/jungle"
-        },
-        {
-            "material": {
-                "item": "minecraft:acacia_planks"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/acacia"
-        },
-        {
-            "material": {
-                "item": "minecraft:dark_oak_planks"
-            },
-            "requiredTools": {
-                "axe": 2
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/dark_oak"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/maple"
-            },
-            "requiredTools": {
-                "axe": 3
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/maple"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/cherry"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/cherry"
-        },
-        {
-            "material": {
-                "tag": "forge:planks/baobab"
-            },
-            "requiredTools": {
-                "axe": 4
-            },
-            "moduleKey": "bow/straight_stave",
-            "moduleVariant": "straight_stave/baobab"
+            "moduleVariant": "straight_stave/"
         }
     ]
 }

@@ -15,8 +15,8 @@
         "texture": "vent"
     },
     "textures": [
-        "metal",
-        "default"
+        "vent",
+        "metal"
     ],
     "material": {
         "item": "tetra:vent_plate"

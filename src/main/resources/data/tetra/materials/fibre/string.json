@@ -19,7 +19,8 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:string"
+        "item": "minecraft:string",
+        "count": 2
     },
     "requiredTools": {
         "cut": 1

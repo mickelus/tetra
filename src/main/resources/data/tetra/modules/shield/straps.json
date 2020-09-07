@@ -29,6 +29,27 @@
     ],
     "variants": [
         {
+            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "key": "straps/",
+            "integrity": -1,
+            "extract": {
+                "durability": 0.1,
+                "integrity": 1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64,
+                    "textureY": 48
+                },
+                "availableTextures": ["default"],
+                "models": [{
+                    "type": "shield_straps",
+                    "location": "tetra:items/module/shield/grip/straps/"
+                }]
+            }
+        }
+    ],
+    "variantz": [
+        {
             "key": "straps/string",
             "durability": 0,
             "integrity": 2,

@@ -15,7 +15,7 @@
         },
         "item": "tetra:modular_single",
         "modules": {
-            "single/head": ["single/basic_shovel", "basic_shovel/cobblestone"],
+            "single/head": ["single/basic_shovel", "basic_shovel/stone"],
             "single/handle": ["single/basic_handle", "basic_handle/stick"]
         }
     },
@@ -49,6 +49,20 @@
             "single/handle": ["single/basic_handle", "basic_handle/stick"]
         },
         "improvements": {
+            "single/head:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/netherite"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/handle:basic_handle/soot": 0,
             "single/head:arrested": 0
         }
     }
