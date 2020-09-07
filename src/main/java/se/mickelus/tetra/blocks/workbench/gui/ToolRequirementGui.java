@@ -34,7 +34,7 @@ public class ToolRequirementGui extends GuiTool {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
-            return Collections.singletonList(I18n.format("tetra.tool." + toolType.getName() + ".requirement", requiredLevel) + "\n\n"
+            return Collections.singletonList(I18n.format("tetra.tool." + toolType.getName() + ".requirement", requiredLevel) + "\n \n"
                     + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
                     + I18n.format( "tetra.tool.available", availableLevel));
         }

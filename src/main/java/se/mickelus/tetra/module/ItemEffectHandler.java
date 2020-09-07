@@ -197,7 +197,7 @@ public class ItemEffectHandler {
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                     .forEach(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                        if (item.getEffectLevel(itemStack, ItemEffect.armor) > 0 || item.getEffectLevel(itemStack, ItemEffect.toughness) > 0) {
+                        if (item.getAttributeValue(itemStack, Attributes.ARMOR) > 0 || item.getAttributeValue(itemStack, Attributes.ARMOR_TOUGHNESS) > 0) {
                             int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
                                     (float) event.getEntityLiving().getTotalArmorValue(),
                                     (float) event.getEntityLiving().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));

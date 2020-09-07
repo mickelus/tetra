@@ -39,23 +39,23 @@ public class GuiStatBarBlockingDuration extends GuiStatBar {
     }
 
     private void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        int currentStriking = (int) reflectGetter.getValue(player, currentStack);
-        int previewStriking = currentStriking;
+        int currentReflect = (int) reflectGetter.getValue(player, currentStack);
+        int previewReflect = currentReflect;
 
         if (!previewStack.isEmpty()) {
-            previewStriking = (int) reflectGetter.getValue(player, previewStack);
+            previewReflect = (int) reflectGetter.getValue(player, previewStack);
         } else if (slot != null) {
             if (improvement != null) {
-                previewStriking = (int) reflectGetter.getValue(player, currentStack, slot, improvement);
-                currentStriking -= previewStriking;
+                previewReflect = (int) reflectGetter.getValue(player, currentStack, slot, improvement);
+                currentReflect -= previewReflect;
             } else {
-                previewStriking = (int) reflectGetter.getValue(player, currentStack, slot);
-                currentStriking -= previewStriking;
+                previewReflect = (int) reflectGetter.getValue(player, currentStack, slot);
+                currentReflect -= previewReflect;
             }
         }
 
-        reflectIndicator.setVisible(currentStriking > 0 || previewStriking > 0);
-        reflectIndicator.setColor(getDiffColor(currentStriking, previewStriking));
+        reflectIndicator.setVisible(currentReflect > 0 || previewReflect > 0);
+        reflectIndicator.setColor(getDiffColor(currentReflect, previewReflect));
     }
 
     @Override

@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
@@ -90,7 +91,7 @@ public class GuiSchematicDetail extends GuiElement {
 
         title.setString(schematic.getName());
         title.setColor(schematic.getRarity().tint);
-        description.setString(schematic.getDescription(itemStack));
+        description.setString(TextFormatting.GRAY + schematic.getDescription(itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
 
         glyph.clearChildren();
         GlyphData glyphData = schematic.getGlyph();

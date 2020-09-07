@@ -93,12 +93,17 @@ public class GuiStats {
 
     public static final GuiStatBar blocking = new GuiStatBarBlockingDuration(0, 0, barLength);
 
+    public static final IStatGetter blockingReflectGetter = new StatGetterEffectLevel(ItemEffect.blockingReflect, 1d);
+    public static final GuiStatBar blockingReflect = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.blocking_reflect"),
+            0, 100, false, blockingReflectGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterBlockingReflect());
+
     public static final IStatGetter bashingGetter = new StatGetterEffectLevel(ItemEffect.bashing, 1d);
     public static final GuiStatBar bashing = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bashing"),
             0, 16, false, bashingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterBashing());
 
-    public static final IStatGetter throwableGetter = new StatGetterEffectEfficiency(ItemEffect.throwable, 1d);
+    public static final IStatGetter throwableGetter = new StatGetterEffectEfficiency(ItemEffect.throwable, 100d);
     public static final GuiStatBar throwable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.throwable"),
             0, 3, false, throwableGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("tetra.stats.throwable.tooltip", throwableGetter));

@@ -106,16 +106,6 @@ public class ItemEffect {
     public static ItemEffect piercing = get("piercing");
 
     /**
-     * Armor: Provides armor when held in the mainhand or the offhand. Armor value provided equals the effect level.
-     */
-    public static ItemEffect armor = get("armor");
-
-    /**
-     * Toughness: Provides armor toughness when held in the mainhand or the offhand. Toughness value provided equals the effect level.
-     */
-    public static ItemEffect toughness = get("toughness");
-
-    /**
      * Counterweight: Increases the attack speed based on how much integrity is used by all of the items modules.
      * Increases attack speed by 50% if the effect level is equal to the integrity usage, the AS bonus is reduced by 20%
      * for each point they differ. E.g. If the item has counterweight level 1 and uses 4 durability it's attack speed

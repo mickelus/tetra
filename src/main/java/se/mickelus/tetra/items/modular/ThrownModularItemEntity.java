@@ -186,9 +186,9 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             BlockState blockState = world.getBlockState(pos);
 
             if (ForgeHooks.canToolHarvestBlock(world, pos, thrownStack) && shooter instanceof PlayerEntity) {
-                float destroySpeed = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                        .map(item -> item.getDestroySpeed(thrownStack, blockState))
-                        .orElse(1f);
+                double destroySpeed = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                        .map(item -> item.getDestroySpeed(thrownStack, blockState) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable))
+                        .orElse(1d);
 
                 if (destroySpeed > blockState.getBlockHardness(world, pos)) {
                     if (shooter instanceof ServerPlayerEntity) {
@@ -250,7 +250,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
         SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
         double damage = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                .map(item -> item.getAbilityBaseDamage(thrownStack))
+                .map(item -> item.getAbilityBaseDamage(thrownStack) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable))
                 .orElse(8d);
 
         if (target instanceof LivingEntity) {
