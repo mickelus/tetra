@@ -13,13 +13,13 @@ public class TooltipGetterBlockingDuration implements ITooltipGetter {
 
     private static final String reflectKey = "tetra.stats.blocking_reflect.tooltip";
     private IStatGetter reflectLevelGetter;
-    private IStatGetter reflectEfficiencyGetter;
+
+    private final TooltipGetterBlockingReflect reflectTooltip = new TooltipGetterBlockingReflect();
 
     public TooltipGetterBlockingDuration(IStatGetter durationGetter) {
         this.durationGetter = durationGetter;
 
         reflectLevelGetter = new StatGetterEffectLevel(ItemEffect.blockingReflect, 1);
-        reflectEfficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.blockingReflect, 1);
     }
 
     @Override
@@ -28,8 +28,11 @@ public class TooltipGetterBlockingDuration implements ITooltipGetter {
 
         double reflectLevel = reflectLevelGetter.getValue(player, itemStack);
         if (reflectLevel > 0) {
-            modifier = "\n\n" + I18n.format(reflectKey, String.format("%.0f%%", reflectLevel),
-                    String.format("%.0f%%", reflectEfficiencyGetter.getValue(player, itemStack) * 100));
+            modifier = "\n \n"
+                    + TextFormatting.YELLOW + I18n.format("tetra.stats.blocking_reflect")
+                    + "\n"
+                    + TextFormatting.GRAY + reflectTooltip.getTooltipBase(player, itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString())
+                    + "\n";
         }
 
         if (durationGetter.getValue(player, itemStack) < ItemModularHandheld.blockingDurationLimit) {

@@ -42,6 +42,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.armor);
         bars.add(GuiStats.toughness);
         bars.add(GuiStats.blocking);
+        bars.add(GuiStats.blockingReflect);
         bars.add(GuiStats.bashing);
         bars.add(GuiStats.throwable);
         bars.add(GuiStats.quickslot);

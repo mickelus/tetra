@@ -105,7 +105,7 @@ public class GuiStats {
 
     public static final IStatGetter throwableGetter = new StatGetterEffectEfficiency(ItemEffect.throwable, 100d);
     public static final GuiStatBar throwable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.throwable"),
-            0, 3, false, throwableGetter, LabelGetterBasic.percentageLabel,
+            0, 300, false, throwableGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("tetra.stats.throwable.tooltip", throwableGetter));
 
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
