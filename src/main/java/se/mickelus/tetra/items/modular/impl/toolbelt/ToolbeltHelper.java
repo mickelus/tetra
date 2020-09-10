@@ -16,6 +16,8 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.module.ItemEffect;
@@ -196,9 +198,22 @@ public class ToolbeltHelper {
                 ItemStack itemStack = inventory.getStackInSlot(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
                     ToolType requiredTool = blockState.getHarvestTool();
-                    if (requiredTool != null && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) > -1) {
+                    ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
+                    if (requiredTool != null
+                            && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
+                            || effectiveTool != null && itemStack.getItem().getToolTypes(itemStack).contains(effectiveTool)) {
                         return i;
                     }
+
+                    if (ItemModularHandheld.canDenail(blockState)) {
+                        boolean itemCanDenail = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                                .map(item -> item.getEffectLevel(itemStack, ItemEffect.denailing) > 0)
+                                .orElse(false);
+                        if (itemCanDenail) {
+                            return i;
+                        }
+                    }
+
 
                     if (blockInteraction != null) {
                         if (itemStack.getItem() instanceof IToolProvider) {

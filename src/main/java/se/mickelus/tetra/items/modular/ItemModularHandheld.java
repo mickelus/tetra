@@ -70,7 +70,7 @@ public class ItemModularHandheld extends ModularItem {
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
 
-    private static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
+    public static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
 
     // the base amount of damage the item should take after destroying a block
     protected int blockDestroyDamage = 1;
@@ -391,7 +391,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         BlockState blockState = world.getBlockState(pos);
-        if (canDenail(blockState, world, pos)) {
+        if (canDenail(blockState)) {
             boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState, true);
             if (success) {
                 player.resetCooldown();
@@ -402,7 +402,7 @@ public class ItemModularHandheld extends ModularItem {
         return false;
     }
 
-    private boolean canDenail(BlockState blockState, World world, BlockPos pos) {
+    public static boolean canDenail(BlockState blockState) {
         return blockState.getBlock().getTags().contains(nailedTag);
     }
 

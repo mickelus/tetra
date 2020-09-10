@@ -145,22 +145,21 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
 
     public List<Collection<ItemEffect>> getSlotEffects(ItemStack itemStack, SlotType slotType) {
         return getAllModules(itemStack).stream()
-                .filter(module -> module.getEffects(itemStack).contains(slotType.effect))
-                .map(module -> {
-                    Map<ItemEffect, Integer> effectLevels = Optional.ofNullable(module.getEffectData(itemStack))
-                            .map(TierData::getLevelMap)
-                            .orElseGet(Collections::emptyMap);
+                .map(module -> module.getEffectData(itemStack))
+                .filter(Objects::nonNull)
+                .filter(effects -> effects.contains(slotType.effect))
+                .map(effects -> {
+                    Map<ItemEffect, Integer> effectLevels = effects.getLevelMap();
 
-                    int slotCount = module.getEffectLevel(itemStack, slotType.effect);
+                    int slotCount = effectLevels.get(slotType.effect);
                     Collection<Collection<ItemEffect>> result = new ArrayList<>(slotCount);
                     for (int i = 0; i < slotCount; i++) {
-                        ArrayList<ItemEffect> slotEffects = new ArrayList<>();
-                        for (Map.Entry<ItemEffect, Integer> entry: effectLevels.entrySet()) {
-                            if (entry.getValue() > i) {
-                                slotEffects.add(entry.getKey());
-                            }
-                        }
-                        result.add(slotEffects);
+                        int index = i;
+                        result.add(effectLevels.entrySet().stream()
+                                .filter(entry -> !entry.getKey().equals(slotType.effect))
+                                .filter(entry -> entry.getValue() > index)
+                                .map(Map.Entry::getKey)
+                                .collect(Collectors.toList()));
                     }
 
                     return result;

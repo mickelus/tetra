@@ -115,7 +115,8 @@ public class OverlayToolbelt {
 
     private void quickEquip() {
         if (mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
-            BlockState blockState = mc.world.getBlockState(new BlockPos(mc.objectMouseOver.getHitVec()));
+            BlockRayTraceResult raytrace = (BlockRayTraceResult) mc.objectMouseOver;
+            BlockState blockState = mc.world.getBlockState(raytrace.getPos());
             int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
 
             if (index > -1) {
