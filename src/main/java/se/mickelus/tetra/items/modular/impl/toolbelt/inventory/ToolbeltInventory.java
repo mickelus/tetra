@@ -217,7 +217,7 @@ public class ToolbeltInventory implements IInventory {
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        return predicate.test(itemStack);
+        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.test(itemStack);
     }
 
     public boolean storeItemInInventory(ItemStack itemStack) {

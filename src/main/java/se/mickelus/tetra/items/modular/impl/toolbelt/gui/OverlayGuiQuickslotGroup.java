@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.mgui.gui.GuiElement;
@@ -8,13 +9,13 @@ import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class OverlayGuiQuickslotGroup extends GuiElement {
-    private static final ResourceLocation toolbeltTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
 
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
@@ -48,8 +49,8 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
         int numSlots = inventory.getSizeInventory();
         slots = new OverlayGuiQuickslot[numSlots];
 
-        addChild(new GuiTexture(0, numSlots * -OverlayGuiQuickslot.height / 2 - 9, 22, 7, 0, 28, toolbeltTexture));
-        addChild(new GuiTexture(0, numSlots * OverlayGuiQuickslot.height / 2 + 2, 22, 7, 0, 35, toolbeltTexture));
+        addChild(new GuiTexture(0, numSlots * -OverlayGuiQuickslot.height / 2 - 9, 22, 7, 0, 28, GuiTextures.toolbelt));
+        addChild(new GuiTexture(0, numSlots * OverlayGuiQuickslot.height / 2 + 2, 22, 7, 0, 35, GuiTextures.toolbelt));
         addChild(new GuiRect(0, numSlots * -OverlayGuiQuickslot.height / 2 - 2, 22, numSlots * OverlayGuiQuickslot.height + 4, 0xcc000000));
 
         for (int i = 0; i < numSlots; i++) {
@@ -63,9 +64,7 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
 
     @Override
     protected void onShow() {
-        if (hideAnimation.isActive()) {
-            hideAnimation.stop();
-        }
+        hideAnimation.stop();
 
         if (slots.length > 0) {
             showAnimation.start();
@@ -74,9 +73,8 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
 
     @Override
     protected boolean onHide() {
-        if (showAnimation.isActive()) {
-            showAnimation.stop();
-        }
+        showAnimation.stop();
+
         hideAnimation.start();
         Arrays.stream(slots)
                 .filter(Objects::nonNull)
@@ -85,12 +83,20 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
     }
 
     public int getFocus() {
-        for (int i = 0; i < slots.length; i++) {
-            OverlayGuiQuickslot element = slots[i];
-            if (slots[i] != null && element.hasFocus()) {
-                return element.getSlot();
-            }
-        }
-        return -1;
+        return Arrays.stream(slots)
+                .filter(Objects::nonNull)
+                .filter(GuiElement::hasFocus)
+                .map(OverlayGuiQuickslot::getSlot)
+                .findFirst()
+                .orElse(-1);
+    }
+
+    public Hand getHand() {
+        return Arrays.stream(slots)
+                .filter(Objects::nonNull)
+                .filter(GuiElement::hasFocus)
+                .map(OverlayGuiQuickslot::getHand)
+                .findFirst()
+                .orElse(null);
     }
 }

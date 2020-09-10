@@ -159,6 +159,11 @@ public class HoloGui extends Screen {
         return false;
     }
 
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double p_231043_5_) {
+        return false;
+    }
+
     private static void onReload() {
         if (instance != null && instance.getMinecraft().currentScreen == instance) {
             logger.info("Refreshing holosphere gui data");

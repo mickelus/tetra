@@ -6,6 +6,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import se.mickelus.tetra.module.ItemEffect;
 
@@ -14,19 +15,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GuiSlotEffect extends GuiElement {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
-
     String tooltip;
 
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = I18n.format(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.toString()));
+        tooltip = I18n.format(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.getKey()));
 
         if (ItemEffect.quickAccess.equals(effect)) {
-            addChild(new GuiTexture(0, 0, 8, 8, 0, 64, texture).setColor(0xbbbbbb));
+            addChild(new GuiTexture(0, 0, 8, 8, 0, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));
         } else if (ItemEffect.cellSocket.equals(effect)) {
-            addChild(new GuiTexture(0, 0, 8, 8, 8, 64, texture).setColor(0xbbbbbb));
+            addChild(new GuiTexture(0, 0, 8, 8, 8, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));
         } else {
             addChild(new GuiString(0, 0, "?"));
         }

@@ -6,7 +6,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.InputEvent;
@@ -94,7 +94,7 @@ public class OverlayToolbelt {
 
         int focusIndex = findIndex();
         if (focusIndex != -1) {
-            equipToolbeltItem(findSlotType(), focusIndex, Hand.OFF_HAND);
+            equipToolbeltItem(findSlotType(), focusIndex, getHand());
         } else if (System.currentTimeMillis() - openTime < 500) {
             quickEquip();
         }
@@ -138,6 +138,10 @@ public class OverlayToolbelt {
 
     private int findIndex() {
         return gui.getFocusIndex();
+    }
+
+    private Hand getHand() {
+        return gui.getFocusHand();
     }
 
     private ToolbeltSlotType findSlotType() {
