@@ -40,7 +40,7 @@ public class GuiItemRolling extends GuiElement {
     protected void drawChildren(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (items.length > 0) {
             int offset = (int) (System.currentTimeMillis() / 1000) % items.length;
-            items[offset].draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+            items[offset].draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity * getOpacity());
         }
     }
 

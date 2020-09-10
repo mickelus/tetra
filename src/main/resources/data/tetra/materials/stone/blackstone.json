@@ -23,6 +23,6 @@
         "item": "minecraft:blackstone"
     },
     "requiredTools": {
-        "axe": 1
+        "hammer": 3
     }
 }

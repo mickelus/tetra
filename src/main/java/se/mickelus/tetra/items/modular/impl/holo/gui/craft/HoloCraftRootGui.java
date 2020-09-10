@@ -26,6 +26,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private HoloSchematicGui schematicView;
     private UpgradeSchematic schematic;
 
+    private boolean showingMaterials = false;
+    private HoloMaterialsGui materialsView;
+
     public HoloCraftRootGui(int x, int y) {
         super(x, y);
 
@@ -33,7 +36,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         breadcrumbs.setVisible(false);
         addChild(breadcrumbs);
 
-        itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect);
+        itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect, this::onMaterialsSelect);
         addChild(itemsView);
 
         schematicsView = new HoloSchematicsGui(0, 20, width, height, this::onSchematicSelect);
@@ -44,6 +47,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         schematicView.setVisible(false);
         addChild(schematicView);
 
+        materialsView = new HoloMaterialsGui(0, 20, width, height);
+        materialsView.setVisible(false);
+        addChild(materialsView);
     }
 
     @Override
@@ -63,13 +69,33 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 onItemSelect(null);
                 break;
             case 1:
-                onItemSelect(item);
+                if (showingMaterials) {
+                    onMaterialsSelect();
+                } else {
+                    onItemSelect(item);
+                }
                 break;
             case 2:
                 onSlotSelect(slot);
         }
 
         this.depth = depth;
+    }
+
+    private void onMaterialsSelect() {
+        item = null;
+        itemsView.setVisible(false);
+
+        this.slot = null;
+        schematicsView.setVisible(false);
+
+        this.schematic = null;
+        schematicView.setVisible(false);
+
+        this.showingMaterials = true;
+        materialsView.setVisible(true);
+
+        updateBreadcrumb();
     }
 
     private void onItemSelect(ModularItem item) {
@@ -88,6 +114,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
             itemsView.animateBack();
         }
 
+        this.showingMaterials = false;
+        materialsView.setVisible(false);
+
         updateBreadcrumb();
     }
 
@@ -102,6 +131,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         this.schematic = null;
         schematicView.setVisible(false);
 
+        this.showingMaterials = false;
+        materialsView.setVisible(false);
+
         updateBreadcrumb();
     }
 
@@ -115,15 +147,17 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
         itemsView.setVisible(false);
 
+        this.showingMaterials = false;
+        materialsView.setVisible(false);
+
         updateBreadcrumb();
     }
 
     private void updateBreadcrumb() {
         breadcrumbs.setVisible(item != null);
+        LinkedList<String> result = new LinkedList<>();
 
         if (item != null) {
-            LinkedList<String> result = new LinkedList<>();
-
             result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));
 
             result.add(I18n.format("tetra.holo.craft." + item.getRegistryName().getPath()));
@@ -135,10 +169,14 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
             if (schematic != null) {
                 result.add(schematic.getName());
             }
-
-            depth = result.size() - 1;
-            breadcrumbs.setItems(result.toArray(new String[0]));
+        } else if (showingMaterials) {
+            result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));
+            result.add(I18n.format("tetra.holo.craft.breadcrumb.materials"));
         }
+
+        depth = result.size() - 1;
+        breadcrumbs.setVisible(result.size() > 1);
+        breadcrumbs.setItems(result.toArray(new String[0]));
     }
 
     private String getSlotName() {

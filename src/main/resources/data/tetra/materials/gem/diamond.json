@@ -16,8 +16,7 @@
     },
     "textures": [
         "shiny",
-        "crude",
-        "default"
+        "crude"
     ],
     "material": {
         "item": "minecraft:diamond"

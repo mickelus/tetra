@@ -1,5 +1,5 @@
 {
-    "key": "turtle_scute",
+    "key": "shulker_shell",
     "category": "scale",
     "primary": "5",
     "secondary": "0.4",
@@ -11,17 +11,17 @@
     "toolLevel": "1",
     "toolEfficiency": "1.6667",
     "tints": {
-        "glyph": "turtle_glyph",
-        "texture": "turtle"
+        "glyph": "shulker_glyph",
+        "texture": "shulker"
     },
     "textures": [
         "crude",
         "default"
     ],
     "material": {
-        "item": "minecraft:scute"
+        "item": "minecraft:shulker_shell"
     },
     "requiredTools": {
-        "cut": 2
+        "cut": 3
     }
 }

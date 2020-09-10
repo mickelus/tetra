@@ -15,6 +15,7 @@ public class LabelGetterBasic implements ILabelGetter {
 
     public static final ILabelGetter integerLabel = new LabelGetterBasic("%.0f", "%+.0f");
     public static final ILabelGetter decimalLabel = new LabelGetterBasic("%.02f", "%+.02f");
+    public static final ILabelGetter singleDecimalLabel = new LabelGetterBasic("%.01f", "%+.01f");
     public static final ILabelGetter decimalLabelInverted = new LabelGetterBasic("%.02f", "%+.02f", true);
     public static final ILabelGetter percentageLabel = new LabelGetterBasic("%.0f%%", "%+.0f%%");
     public static final ILabelGetter percentageLabelInverted = new LabelGetterBasic("%.0f%%", "%+.0f%%", true);
@@ -50,6 +51,16 @@ public class LabelGetterBasic implements ILabelGetter {
             } else {
                 return String.format(formatDiff, getDiffColor(value, diffValue), diffValue - value, TextFormatting.RESET, diffValue);
             }
+        } else {
+            return String.format(format, diffValue);
+        }
+    }
+
+
+    @Override
+    public String getLabelMerged(double value, double diffValue) {
+        if (value != diffValue) {
+            return getDiffColor(value, diffValue) + String.format(format, diffValue);
         } else {
             return String.format(format, diffValue);
         }

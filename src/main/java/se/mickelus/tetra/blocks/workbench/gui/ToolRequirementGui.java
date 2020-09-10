@@ -17,7 +17,7 @@ public class ToolRequirementGui extends GuiTool {
         super(x, y, toolType);
     }
 
-    public void updateRequirement(int requiredLevel, int availableLevel) {
+    public ToolRequirementGui updateRequirement(int requiredLevel, int availableLevel) {
         setVisible(requiredLevel != 0);
         this.requiredLevel = requiredLevel;
         this.availableLevel = availableLevel;
@@ -29,6 +29,8 @@ public class ToolRequirementGui extends GuiTool {
                 update(requiredLevel, GuiColors.add);
             }
         }
+
+        return this;
     }
 
     @Override

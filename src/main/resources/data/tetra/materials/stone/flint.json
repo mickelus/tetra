@@ -9,7 +9,7 @@
     "integrityGain": "4",
     "magicCapacity": "90",
     "toolLevel": "2",
-    "toolEfficiency": "4.3",
+    "toolEfficiency": "5",
     "tints": {
         "glyph": "flint_glyph",
         "texture": "flint"
@@ -23,6 +23,6 @@
         "item": "minecraft:flint"
     },
     "requiredTools": {
-        "axe": 1
+        "hammer": 2
     }
 }

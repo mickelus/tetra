@@ -1,7 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -14,13 +16,19 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 public class HoloItemsGui extends GuiElement {
 
     private final HoloSeparatorsGui separators;
 
-    public HoloItemsGui(int x, int y, int width, int height, Consumer<ModularItem> onItemSelect, Consumer<String> onSlotSelect) {
+    private final GuiButton materialsButton;
+
+    private KeyframeAnimation openAnimation;
+    private KeyframeAnimation backAnimation;
+
+    public HoloItemsGui(int x, int y, int width, int height, Consumer<ModularItem> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
         super(x, y, width, height);
 
 
@@ -52,7 +60,7 @@ public class HoloItemsGui extends GuiElement {
 //        }
 
         if (ConfigHandler.enableBow.get()) {
-            addChild(new HoloItemGui(1, 40, ModularBowItem.instance, 5,
+            addChild(new HoloItemGui(-79, -40, ModularBowItem.instance, 5,
                     () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
@@ -75,20 +83,26 @@ public class HoloItemsGui extends GuiElement {
 //        addChild(new GuiJournalItem(-119, 0, ModularDoubleHeadedItem.instance, 3,
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
+
+        materialsButton = new GuiButton(0, 90, I18n.format("tetra.holo.craft.materials"), onMaterialsClick);
+        materialsButton.setAttachment(GuiAttachment.topCenter);
+        addChild(materialsButton);
+
+        openAnimation = new KeyframeAnimation(200, this)
+                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
+                .withDelay(800);
+
+        backAnimation = new KeyframeAnimation(100, this)
+                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1));
     }
 
     public void animateOpen() {
-        new KeyframeAnimation(200, this)
-                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
-                .withDelay(800)
-                .onStop(complete -> separators.animateOpen())
-                .start();
+        openAnimation.start();
+        separators.animateOpen();
     }
 
     public void animateBack() {
-        new KeyframeAnimation(100, this)
-                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
-                .start();
+        backAnimation.start();
     }
 
     public void changeItem(Item item) {

@@ -23,6 +23,6 @@
         "item": "minecraft:cobblestone"
     },
     "requiredTools": {
-        "axe": 1
+        "hammer": 1
     }
 }

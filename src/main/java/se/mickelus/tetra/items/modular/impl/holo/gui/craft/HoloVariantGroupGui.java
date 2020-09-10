@@ -81,6 +81,5 @@ public class HoloVariantGroupGui extends GuiElement {
     public void animateIn() {
         labelAnimation.start();
         Arrays.stream(itemAnimations).forEach(KeyframeAnimation::start);
-//        variantsContainer.getChildren(HoloDiagonalGui.class).forEach(HoloDiagonalGui::animateReopen);
     }
 }

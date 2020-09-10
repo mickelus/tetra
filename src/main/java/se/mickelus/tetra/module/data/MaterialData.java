@@ -16,7 +16,7 @@ public class MaterialData {
 
     public String key;
 
-    public String category;
+    public String category = "misc";
 
     /**
      * Innate attributes gained from the material

@@ -8,8 +8,8 @@
     "integrityCost": "3",
     "integrityGain": "1",
     "magicCapacity": "90",
-    "toolLevel": "1",
-    "toolEfficiency": "1.6667",
+    "toolLevel": "4",
+    "toolEfficiency": "9",
     "tints": {
         "glyph": "obsidian_glyph",
         "texture": "obsidian"
@@ -23,6 +23,6 @@
         "item": "minecraft:obsidian"
     },
     "requiredTools": {
-        "axe": 1
+        "hammer": 5
     }
 }

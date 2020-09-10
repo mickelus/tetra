@@ -37,6 +37,9 @@
                 "generic.attack_damage": -3,
                 "generic.attack_speed": -1
             },
+            "effects": {
+                "denailing": 1
+            },
             "durability": -10,
             "extract": {
                 "primaryAttributes": {

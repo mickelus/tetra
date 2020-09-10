@@ -1,24 +1,16 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
-import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringSmall;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
-import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
