@@ -61,6 +61,8 @@ public class ItemModularHandheld extends ModularItem {
 
     private static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL);
 
+    private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANTS, Material.TALL_PLANTS, Material.BAMBOO, Material.GOURD);
+
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
     private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
     private static final Set<ITag.INamedTag<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
@@ -747,6 +749,11 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
+        if (ToolType.AXE.equals(toolType)
+                && axeMaterials.contains(blockState.getMaterial())) {
+            return true;
+        }
+
         return toolType.equals(blockState.getHarvestTool());
     }
 
@@ -761,6 +768,10 @@ public class ItemModularHandheld extends ModularItem {
                 || cuttingDestroyMaterials.contains(blockState.getMaterial())
                 || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().isIn(tag))) {
             return ToolTypes.cut;
+        }
+
+        if (axeMaterials.contains(blockState.getMaterial())) {
+            return ToolType.AXE;
         }
 
         return null;

@@ -100,6 +100,8 @@ public class ItemColors {
     public static int hide_glyph         = define(0xa88054, "hide_glyph");
     public static int turtle             = define(0x445c24, "turtle");
     public static int turtle_glyph       = define(0x445d24, "turtle_glyph");
+    public static int shulker            = define(0x956895, "shulker");
+    public static int shulker_glyph      = define(0x956895, "shulker_glyph");
     public static int phantom            = define(0xdbc4bd, "phantom");
     public static int phantom_glyph      = define(0xc2b29b, "phantom_glyph");
     public static int dragon             = define(0x44395e, "dragon");
