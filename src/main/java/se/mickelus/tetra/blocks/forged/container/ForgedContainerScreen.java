@@ -15,8 +15,8 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiTabVerticalGroup;
 
 import java.util.stream.IntStream;
 
@@ -69,17 +69,17 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
 
-        return guiRoot.onClick((int) mouseX, (int) mouseY);
+        return guiRoot.onMouseClick((int) mouseX, (int) mouseY, button);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int state) {
-        super.mouseReleased(mouseX, mouseY, state);
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
 
-        guiRoot.mouseReleased((int) mouseX, (int) mouseY);
+        guiRoot.onMouseRelease((int) mouseX, (int) mouseY, button);
 
         return true;
     }

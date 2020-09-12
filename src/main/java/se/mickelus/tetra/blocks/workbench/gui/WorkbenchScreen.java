@@ -160,17 +160,17 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
 
-        return defaultGui.onClick((int) mouseX, (int) mouseY);
+        return defaultGui.onMouseClick((int) mouseX, (int) mouseY, button);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int state) {
-        super.mouseReleased(mouseX, mouseY, state);
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
 
-        defaultGui.mouseReleased((int) mouseX, (int) mouseY);
+        defaultGui.onMouseRelease((int) mouseX, (int) mouseY, button);
 
         return true;
     }

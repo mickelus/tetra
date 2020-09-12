@@ -106,16 +106,16 @@ public class HoloItemGui extends GuiClickable {
     }
 
     @Override
-    public boolean onClick(int x, int y) {
+    public boolean onMouseClick(int x, int y, int button) {
         for (int i = elements.size() - 1; i >= 0; i--) {
             if (elements.get(i).isVisible()) {
-                if (elements.get(i).onClick(x, y)) {
+                if (elements.get(i).onMouseClick(x, y, button)) {
                     return true;
                 }
             }
         }
 
-        return super.onClick(x, y);
+        return super.onMouseClick(x, y, button);
     }
 
     public void onItemSelected(Item item) {

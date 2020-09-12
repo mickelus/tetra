@@ -8,7 +8,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiKeybinding;
+import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.GuiColors;
 
 import java.util.ArrayList;

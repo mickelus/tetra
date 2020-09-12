@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.impl.GuiKeybinding;
+import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;

@@ -65,8 +65,8 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public boolean onClick(int x, int y) {
-        if (super.onClick(x, y)) {
+    public boolean onMouseClick(int x, int y, int button) {
+        if (super.onMouseClick(x, y, button)) {
             isDragging = true;
             return true;
         }
@@ -74,7 +74,7 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public void mouseReleased(int x, int y) {
+    public void onMouseRelease(int x, int y, int button) {
         isDragging = false;
     }
 

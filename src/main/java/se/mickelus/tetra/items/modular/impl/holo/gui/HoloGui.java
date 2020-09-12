@@ -3,16 +3,11 @@ package se.mickelus.tetra.items.modular.impl.holo.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.concurrent.ThreadTaskExecutor;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mgui.gui.GuiElement;
@@ -26,7 +21,6 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
@@ -130,10 +124,15 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        defaultGui.onClick((int) mouseX, (int) mouseY);
+    public boolean mouseClicked(double x, double y, int button) {
+        defaultGui.onMouseClick((int) x, (int) y, button);
 
-        return super.mouseClicked(mouseX, mouseY, mouseButton);
+        return super.mouseClicked(x, y, button);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double distance) {
+        return defaultGui.onMouseScroll(mouseX, mouseY, distance);
     }
 
     @Override
@@ -159,10 +158,6 @@ public class HoloGui extends Screen {
         return false;
     }
 
-    @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double p_231043_5_) {
-        return false;
-    }
 
     private static void onReload() {
         if (instance != null && instance.getMinecraft().currentScreen == instance) {
