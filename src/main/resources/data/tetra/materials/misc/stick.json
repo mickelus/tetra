@@ -8,8 +8,8 @@
     "integrityCost": "1",
     "integrityGain": "3",
     "magicCapacity": "90",
-    "toolLevel": "1",
-    "toolEfficiency": "2",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
     "tints": {
         "glyph": "stick_glyph",
         "texture": "stick"

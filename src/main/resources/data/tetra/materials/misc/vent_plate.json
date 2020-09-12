@@ -8,8 +8,8 @@
     "integrityCost": "2",
     "integrityGain": "5",
     "magicCapacity": "84",
-    "toolLevel": "3",
-    "toolEfficiency": "5",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
     "tints": {
         "glyph": "vent_glyph",
         "texture": "vent"

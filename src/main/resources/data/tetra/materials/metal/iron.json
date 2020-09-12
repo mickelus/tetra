@@ -22,6 +22,6 @@
         "item": "minecraft:iron_ingot"
     },
     "requiredTools": {
-        "hammer": 3
+        "hammer": 2
     }
 }

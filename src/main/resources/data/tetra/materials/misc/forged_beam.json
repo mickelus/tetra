@@ -8,8 +8,8 @@
     "integrityCost": "2",
     "integrityGain": "8",
     "magicCapacity": "84",
-    "toolLevel": "3",
-    "toolEfficiency": "5",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
     "tints": {
         "glyph": "forged_beam_glyph",
         "texture": "forged_beam"
