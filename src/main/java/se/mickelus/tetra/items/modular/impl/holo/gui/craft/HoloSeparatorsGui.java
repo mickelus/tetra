@@ -73,4 +73,12 @@ public class HoloSeparatorsGui extends GuiElement {
         getChildren(HoloCrossGui.class).forEach(HoloCrossGui::animateReopen);
         getChildren(HoloDiagonalGui.class).forEach(HoloDiagonalGui::animateReopen);
     }
+
+    @Override
+    protected boolean onHide() {
+        getChildren(HoloCrossGui.class).forEach(HoloCrossGui::stopAnimations);
+        getChildren(HoloDiagonalGui.class).forEach(HoloDiagonalGui::stopAnimations);
+
+        return super.onHide();
+    }
 }

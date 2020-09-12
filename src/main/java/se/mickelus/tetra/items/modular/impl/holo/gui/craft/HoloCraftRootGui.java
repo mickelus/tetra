@@ -203,6 +203,8 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     public void animateOpen() {
         switch (depth) {
             case 0:
+                itemsView.animateOpenAll();
+                break;
             case 1:
                 itemsView.animateOpen();
                 break;

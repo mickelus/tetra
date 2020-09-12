@@ -12,9 +12,12 @@ public class HoloCrossGui extends GuiElement {
 
     protected AnimationChain openAnimation;
     protected AnimationChain reopenAnimation;
-    private static final float targetOpacity = 0.2f;
 
     public HoloCrossGui(int x, int y, int delay) {
+        this(x, y, delay, 0.2f);
+    }
+
+    public HoloCrossGui(int x, int y, int delay, float targetOpacity) {
         super(x, y, 5, 5);
 
         setAttachment(GuiAttachment.middleCenter);
@@ -33,6 +36,7 @@ public class HoloCrossGui extends GuiElement {
         reopenAnimation = new AnimationChain(
                 new KeyframeAnimation(300, this).withDelay(delay / 10).applyTo(new Applier.Opacity(targetOpacity + 0.6f)),
                 new KeyframeAnimation(200, this).applyTo(new Applier.Opacity(targetOpacity)));
+
     }
 
     public void animateOpen() {
@@ -47,5 +51,11 @@ public class HoloCrossGui extends GuiElement {
         reopenAnimation.stop();
         setOpacity(0);
         reopenAnimation.start();
+    }
+
+    public void stopAnimations() {
+        openAnimation.stop();
+        reopenAnimation.stop();
+        setOpacity(0);
     }
 }

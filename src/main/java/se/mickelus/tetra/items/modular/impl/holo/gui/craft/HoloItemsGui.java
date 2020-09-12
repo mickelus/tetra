@@ -23,7 +23,7 @@ public class HoloItemsGui extends GuiElement {
 
     private final HoloSeparatorsGui separators;
 
-    private final GuiButton materialsButton;
+    private final HoloMaterialsButtonGui materialsButton;
 
     private KeyframeAnimation openAnimation;
     private KeyframeAnimation backAnimation;
@@ -84,7 +84,7 @@ public class HoloItemsGui extends GuiElement {
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 
-        materialsButton = new GuiButton(0, 90, I18n.format("tetra.holo.craft.materials"), onMaterialsClick);
+        materialsButton = new HoloMaterialsButtonGui(0, 90, onMaterialsClick);
         materialsButton.setAttachment(GuiAttachment.topCenter);
         addChild(materialsButton);
 
@@ -98,6 +98,10 @@ public class HoloItemsGui extends GuiElement {
 
     public void animateOpen() {
         openAnimation.start();
+    }
+
+    public void animateOpenAll() {
+        openAnimation.start();
         separators.animateOpen();
     }
 
@@ -107,6 +111,7 @@ public class HoloItemsGui extends GuiElement {
 
     public void changeItem(Item item) {
         getChildren(HoloItemGui.class).forEach(child -> child.onItemSelected(item));
+        materialsButton.setVisible(item == null);
 
         if (item == null) {
             separators.animateReopen();

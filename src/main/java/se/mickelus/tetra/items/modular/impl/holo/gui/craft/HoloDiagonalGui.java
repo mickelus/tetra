@@ -50,6 +50,12 @@ public class HoloDiagonalGui extends GuiElement {
         reopenAnimation.start();
     }
 
+    public void stopAnimations() {
+        openAnimation.stop();
+        reopenAnimation.stop();
+        setOpacity(0);
+    }
+
     @Override
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);

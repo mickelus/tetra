@@ -19,13 +19,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class HoloMaterialStatGui extends GuiElement {
-    private GuiTexture backdrop;
+    protected GuiTexture backdrop;
 
-    private GuiString label;
-    private GuiString value;
+    protected GuiString label;
+    protected GuiString value;
 
-    private ILabelGetter valueFormatter;
-    private Function<MaterialData, Float> getter;
+    protected ILabelGetter valueFormatter;
+    protected Function<MaterialData, Float> getter;
 
     List<String> tooltip;
 
@@ -46,7 +46,7 @@ public class HoloMaterialStatGui extends GuiElement {
         addChild(value);
 
         label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat." + key));
-        label.setColor(GuiColors.muted);
+        label.setColor(GuiColors.mutedStrong);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);
     }
@@ -55,7 +55,10 @@ public class HoloMaterialStatGui extends GuiElement {
         update(getter.apply(current), getter.apply(preview));
     }
 
-    public void update(double current, double preview) {
+    protected void update(double current, double preview) {
+        value.setColor(current == 0 && preview == 0 ? GuiColors.mutedStrong : GuiColors.normal);
+        label.setColor(current == 0 && preview == 0 ? 0x222222 : GuiColors.mutedStrong);
+
         value.setString(valueFormatter.getLabelMerged(current, preview));
     }
 

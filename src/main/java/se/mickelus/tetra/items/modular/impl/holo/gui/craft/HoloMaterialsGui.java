@@ -4,6 +4,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HoloMaterialsGui extends GuiElement {
+    private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;
 
     private HoloMaterialDetailGui detail;
@@ -29,8 +31,10 @@ public class HoloMaterialsGui extends GuiElement {
     public HoloMaterialsGui(int x, int y, int width, int height) {
         super(x, y, width, height);
 
-        groups = new GuiHorizontalLayoutGroup(0, 0, height, 12);
-        addChild(groups);
+        groupsScroll = new GuiHorizontalScrollable(0, 0, width, 75).setGlobal(true);
+        addChild(groupsScroll);
+        groups = new GuiHorizontalLayoutGroup(0, 0, 75, 12);
+        groupsScroll.addChild(groups);
 
         detail = new HoloMaterialDetailGui(0, 76, width);
         detail.setVisible(false);
@@ -45,17 +49,19 @@ public class HoloMaterialsGui extends GuiElement {
         Map<String, List<MaterialData>> result = DataManager.materialData.getData().values().stream()
                 .collect(Collectors.groupingBy(data -> data.category, LinkedHashMap::new, Collectors.toList()));
 
-        // some wonk needed to do staggered animations of variants
+        // some wonk needed to do staggered animations
         int offset = 0;
         for (Map.Entry<String, List<MaterialData>> entry : result.entrySet()) {
             groups.addChild(new HoloMaterialGroupGui(0, 0, entry.getKey(), entry.getValue(), offset,
                     this::onItemHover, this::onItemBlur, this::onItemSelect));
             offset += entry.getValue().size();
         }
+        groupsScroll.markDirty();
     }
 
     @Override
     protected void onShow() {
+        onItemHover(null);
         groups.getChildren(HoloMaterialGroupGui.class).forEach(HoloMaterialGroupGui::animateIn);
     }
 
@@ -91,5 +97,15 @@ public class HoloMaterialsGui extends GuiElement {
         groups.getChildren(HoloMaterialGroupGui.class).forEach(group -> group.updateSelection(material));
 
         detail.update(selectedItem, hoveredItem);
+    }
+
+    @Override
+    public boolean onMouseClick(int x, int y, int button) {
+        if (button == 1) {
+            onItemSelect(null);
+            return true;
+        }
+
+        return super.onMouseClick(x, y, button);
     }
 }
