@@ -21,6 +21,9 @@
     "material": {
         "item": "minecraft:twisting_vines"
     },
+    "effects": {
+        "unstable": 10
+    },
     "requiredTools": {
         "cut": 2
     }

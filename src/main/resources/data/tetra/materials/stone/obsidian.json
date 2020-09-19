@@ -22,6 +22,9 @@
     "material": {
         "item": "minecraft:obsidian"
     },
+    "improvements": {
+        "arrested": 0
+    },
     "requiredTools": {
         "hammer": 5
     }

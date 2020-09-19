@@ -1,26 +1,25 @@
 {
-    "key": "gold",
+    "key": "electrum",
     "category": "metal",
-    "primary": "3",
+    "primary": "5",
     "secondary": "4.6",
     "tertiary": "1",
-    "durability": "32",
+    "durability": "58",
     "integrityCost": "2",
     "integrityGain": "1",
-    "magicCapacity": "132",
-    "toolLevel": "1",
-    "toolEfficiency": "12",
+    "magicCapacity": "144",
+    "toolLevel": "2",
+    "toolEfficiency": "13",
     "tints": {
-        "glyph": "gold_glyph",
-        "texture": "gold"
+        "glyph": "electrum_glyph",
+        "texture": "electrum"
     },
     "textures": [
         "shiny",
-        "metal",
-        "default"
+        "metal"
     ],
     "material": {
-        "item": "minecraft:gold_ingot"
+        "tag": "forge:ingots/electrum"
     },
     "effects": {
         "stabilizing": 15

@@ -5,11 +5,11 @@
     "secondary": "1.2",
     "tertiary": "8.5",
     "durability": "100",
-    "integrityCost": "1",
+    "integrityCost": "2",
     "integrityGain": "6",
     "magicCapacity": "90",
-    "toolLevel": "1",
-    "toolEfficiency": "1.6667",
+    "toolLevel": "2",
+    "toolEfficiency": "4",
     "tints": {
         "glyph": "warped_glyph",
         "texture": "warped"
@@ -20,6 +20,9 @@
     ],
     "material": {
         "item": "minecraft:warped_planks"
+    },
+    "effects": {
+        "unstable": 10
     },
     "requiredTools": {
         "axe": 3

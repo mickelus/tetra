@@ -1,0 +1,27 @@
+{
+    "key": "lead",
+    "category": "metal",
+    "primary": "6",
+    "secondary": "5.5",
+    "tertiary": "2",
+    "durability": "120",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "66",
+    "toolLevel": "3",
+    "toolEfficiency": "6",
+    "tints": {
+        "glyph": "lead_glyph",
+        "texture": "lead"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "tag": "forge:ingots/lead"
+    },
+    "requiredTools": {
+        "hammer": 2
+    }
+}

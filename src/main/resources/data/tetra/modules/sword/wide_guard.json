@@ -5,7 +5,7 @@
     "renderLayer": "higher",
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:wood/", "tetra:misc/bone", "tetra:misc/vent_plate"],
+            "materials": ["tetra:metal/", "tetra:wood/", "tetra:scale/", "tetra:misc/bone", "tetra:misc/vent_plate"],
             "key": "wide_guard/",
             "integrity": -1,
             "attributes": {

@@ -1,25 +1,25 @@
 {
-    "key": "crimson",
+    "key": "baobab",
     "category": "wood",
-    "primary": "4",
-    "secondary": "2.5",
+    "primary": "4.5",
+    "secondary": "2",
     "tertiary": "7.5",
-    "durability": "150",
+    "durability": "180",
     "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "90",
+    "integrityGain": "7",
+    "magicCapacity": "78",
     "toolLevel": "2",
     "toolEfficiency": "4",
     "tints": {
-        "glyph": "crimson_glyph",
-        "texture": "crimson"
+        "glyph": "baobab_glyph",
+        "texture": "baobab"
     },
     "textures": [
         "crude",
         "wooden"
     ],
     "material": {
-        "item": "minecraft:crimson_planks"
+        "tag": "forge:planks/baobab"
     },
     "requiredTools": {
         "axe": 3

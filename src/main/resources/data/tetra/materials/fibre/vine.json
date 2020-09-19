@@ -4,10 +4,10 @@
     "primary": "5",
     "secondary": "1.6",
     "tertiary": "1",
-    "durability": "200",
+    "durability": "180",
     "integrityCost": "1",
-    "integrityGain": "3",
-    "magicCapacity": "90",
+    "integrityGain": "4",
+    "magicCapacity": "86",
     "toolLevel": "0",
     "toolEfficiency": "0",
     "tints": {

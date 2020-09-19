@@ -11,7 +11,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:misc/bone", "tetra:misc/vent_plate"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:misc/bone", "tetra:misc/vent_plate"],
             "moduleKey": "sword/wide_guard",
             "moduleVariant": "wide_guard/"
         }

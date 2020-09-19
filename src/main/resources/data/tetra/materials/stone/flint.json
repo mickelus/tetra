@@ -7,7 +7,7 @@
     "durability": "131",
     "integrityCost": "1",
     "integrityGain": "4",
-    "magicCapacity": "90",
+    "magicCapacity": "80",
     "toolLevel": "2",
     "toolEfficiency": "5",
     "tints": {
@@ -21,6 +21,9 @@
     ],
     "material": {
         "item": "minecraft:flint"
+    },
+    "improvements": {
+        "workable": 1
     },
     "requiredTools": {
         "hammer": 2

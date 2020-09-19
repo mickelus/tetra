@@ -193,7 +193,7 @@
     "settled.toast": "一个组件被固定了！",
     "arrested.name": "无法固定",
     "arrested.description": "这个部件是由无法固定的材料制作的",
-    "tetra.hone.progress": "打磨进度：%s%%",
+    "tetra.hone.progress": "打磨进度：%s/%s",
     "tetra.hone.available": "可以打磨",
     "item.tetra.modular.synergy_indicator.empty": "这个部件不能享受协同加成",
     "item.tetra.modular.synergy_indicator.header": "协同加成:",
