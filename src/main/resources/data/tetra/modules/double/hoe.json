@@ -32,8 +32,7 @@
         "tetra:double/hoe_hone",
         "tetra:double/shared_head_compat",
         "tetra:double/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {
@@ -41,7 +40,7 @@
             "key": "hoe/",
             "attributes": {
                 "generic.attack_damage": -3,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.6
             },
             "durability": -10,
             "extract": {

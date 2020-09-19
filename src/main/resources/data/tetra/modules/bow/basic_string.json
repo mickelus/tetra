@@ -36,6 +36,7 @@
                 },
                 "durability": 0.3,
                 "integrity": 1,
+                "magicCapacity": 1,
                 "glyph": {
                     "textureX": 112,
                     "textureY": 32

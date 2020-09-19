@@ -47,8 +47,7 @@
         "tetra:sword/blade/shared",
         "tetra:sword/blade/shared_compat",
         "tetra:sword/blade/shared_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

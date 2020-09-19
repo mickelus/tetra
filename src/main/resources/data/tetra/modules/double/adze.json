@@ -34,8 +34,7 @@
         "tetra:double/adze_hone",
         "tetra:double/shared_head_compat",
         "tetra:double/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

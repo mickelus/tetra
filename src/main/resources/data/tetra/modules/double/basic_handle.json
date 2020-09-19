@@ -30,8 +30,7 @@
         "tetra:double/basic_handle",
         "tetra:double/basic_handle_compat",
         "tetra:double/basic_handle_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

@@ -56,15 +56,14 @@
         "tetra:double/basic_axe_hone",
         "tetra:double/shared_head_compat",
         "tetra:double/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
             "key": "basic_axe/",
             "attributes": {
-                "generic.attack_speed": -1.8,
+                "generic.attack_speed": -1.6,
                 "generic.attack_damage": 3.5
             },
             "durability": -10,

@@ -25,16 +25,14 @@
         "tetra:single/spearhead_hone",
         "tetra:single/shared_head_compat",
         "tetra:single/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
             "key": "spearhead/",
             "attributes": {
-                "generic.attack_speed": -1.5,
-                "generic.attack_damage": 0.5
+                "generic.attack_speed": -1.5
             },
             "durability": -20,
             "extract": {
@@ -45,7 +43,7 @@
                     "generic.attack_speed": -0.1,
                     "generic.attack_damage": 0.1
                 },
-                "durability": 0.9,
+                "durability": 0.8,
                 "integrity": -1,
                 "magicCapacity": 1,
                 "glyph": {

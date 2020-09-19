@@ -31,8 +31,7 @@
         "tetra:single/earthpiercer_hone",
         "tetra:single/shared_head_compat",
         "tetra:single/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

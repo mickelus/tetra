@@ -29,8 +29,7 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

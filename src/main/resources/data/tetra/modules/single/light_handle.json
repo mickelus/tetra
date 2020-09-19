@@ -34,8 +34,7 @@
         "tetra:single/shared_handle",
         "tetra:single/shared_handle_compat",
         "tetra:single/shared_handle_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {
