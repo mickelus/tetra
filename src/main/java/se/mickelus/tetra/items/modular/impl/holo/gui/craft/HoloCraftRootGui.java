@@ -206,7 +206,11 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 itemsView.animateOpenAll();
                 break;
             case 1:
-                itemsView.animateOpen();
+                if (showingMaterials) {
+                    materialsView.animateOpen();
+                } else {
+                    itemsView.animateOpen();
+                }
                 break;
             case 2:
                 schematicsView.animateOpen();
@@ -228,5 +232,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         } else if (slot != null) {
             onSlotSelect(slot);
         }
+
+        materialsView.reload();
     }
 }

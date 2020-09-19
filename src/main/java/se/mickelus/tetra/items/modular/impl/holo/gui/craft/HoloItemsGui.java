@@ -84,7 +84,7 @@ public class HoloItemsGui extends GuiElement {
 //                () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
 //                .setAttachment(GuiAttachment.topCenter));
 
-        materialsButton = new HoloMaterialsButtonGui(0, 90, onMaterialsClick);
+        materialsButton = new HoloMaterialsButtonGui(0, 60, onMaterialsClick);
         materialsButton.setAttachment(GuiAttachment.topCenter);
         addChild(materialsButton);
 

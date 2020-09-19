@@ -5,9 +5,9 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialData;
-import se.mickelus.tetra.module.schematic.OutcomePreview;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,10 +23,7 @@ public class HoloMaterialsGui extends GuiElement {
     private MaterialData selectedItem;
     private MaterialData hoveredItem;
 
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
-//    private final HoloSeparatorsGui separators;
+    private KeyframeAnimation openAnimation;
 
     public HoloMaterialsGui(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -40,20 +37,26 @@ public class HoloMaterialsGui extends GuiElement {
         detail.setVisible(false);
         addChild(detail);
 
+        openAnimation = new KeyframeAnimation(200, this)
+                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
+                .withDelay(800);
+
         updateGroups();
     }
 
     protected void updateGroups() {
         groups.clearChildren();
 
+        boolean isDevelopment = ConfigHandler.development.get();
         Map<String, List<MaterialData>> result = DataManager.materialData.getData().values().stream()
+                .filter(data -> isDevelopment || data.material.getApplicableItemStacks().length > 0)
                 .collect(Collectors.groupingBy(data -> data.category, LinkedHashMap::new, Collectors.toList()));
 
         // some wonk needed to do staggered animations
         int offset = 0;
         for (Map.Entry<String, List<MaterialData>> entry : result.entrySet()) {
             groups.addChild(new HoloMaterialGroupGui(0, 0, entry.getKey(), entry.getValue(), offset,
-                    this::onItemHover, this::onItemBlur, this::onItemSelect));
+                    this::onHover, this::onBlur, this::onSelect));
             offset += entry.getValue().size();
         }
         groupsScroll.markDirty();
@@ -61,37 +64,27 @@ public class HoloMaterialsGui extends GuiElement {
 
     @Override
     protected void onShow() {
-        onItemHover(null);
+        onHover(null);
         groups.getChildren(HoloMaterialGroupGui.class).forEach(HoloMaterialGroupGui::animateIn);
     }
 
     public void animateOpen() {
-        new KeyframeAnimation(200, this)
-                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
-                .withDelay(800)
-//                .onStop(complete -> separators.animateOpen())
-                .start();
+        openAnimation.start();
     }
 
-    public void animateBack() {
-        new KeyframeAnimation(100, this)
-                .applyTo(new Applier.TranslateY(y - 4, y), new Applier.Opacity(0, 1))
-                .start();
-    }
-
-    private void onItemHover(MaterialData material) {
+    private void onHover(MaterialData material) {
         hoveredItem = material;
 
         detail.update(selectedItem, hoveredItem);
     }
 
-    private void onItemBlur(MaterialData material) {
+    private void onBlur(MaterialData material) {
         if (material.equals(hoveredItem)) {
             detail.update(selectedItem, null);
         }
     }
 
-    private void onItemSelect(MaterialData material) {
+    private void onSelect(MaterialData material) {
         selectedItem = material;
 
         groups.getChildren(HoloMaterialGroupGui.class).forEach(group -> group.updateSelection(material));
@@ -102,10 +95,18 @@ public class HoloMaterialsGui extends GuiElement {
     @Override
     public boolean onMouseClick(int x, int y, int button) {
         if (button == 1) {
-            onItemSelect(null);
+            hoveredItem = null;
+            onSelect(null);
             return true;
         }
 
         return super.onMouseClick(x, y, button);
+    }
+
+    public void reload() {
+        updateGroups();
+        if (isVisible()) {
+            animateOpen();
+        }
     }
 }

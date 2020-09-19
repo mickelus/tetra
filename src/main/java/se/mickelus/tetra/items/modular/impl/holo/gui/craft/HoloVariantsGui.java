@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -36,8 +37,9 @@ public class HoloVariantsGui extends GuiElement {
     public void update(ModularItem item, String slot, UpgradeSchematic schematic) {
         groups.clearChildren();
 
+        boolean isDevelopment = ConfigHandler.development.get();
         Map<String, List<OutcomePreview>> result = Arrays.stream(schematic.getPreviews(new ItemStack(item), slot))
-                .filter(preview -> preview.materials.length != 0)
+                .filter(preview -> isDevelopment || preview.materials.length != 0)
                 .collect(Collectors.groupingBy(preview -> preview.category, LinkedHashMap::new, Collectors.toList()));
 
         // some wonk needed to do staggered animations of variants

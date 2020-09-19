@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.ToolType;
@@ -10,7 +11,6 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.gui.GuiItemRolling;
-import se.mickelus.tetra.gui.GuiSynergyIndicator;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.LabelGetterBasic;
 import se.mickelus.tetra.module.ItemEffect;
@@ -30,12 +30,12 @@ public class HoloMaterialDetailGui extends GuiElement {
     private GuiElement content;
 
     private GuiString label;
-
-    private GuiElement header;
+    private GuiTexture labelHighlight;
     private GuiItemRolling icon;
 
     private GuiElement modifiers;
 
+    private GuiElement requiredTools;
     private Map<ToolType, Integer> availableToolLevels;
 
     private KeyframeAnimation openAnimation;
@@ -57,28 +57,34 @@ public class HoloMaterialDetailGui extends GuiElement {
         content = new GuiElement(0, 0, width, 100);
         addChild(content);
 
-        header = new GuiHorizontalLayoutGroup(0, 5, 20, 4);
-        header.setAttachmentAnchor(GuiAttachment.topCenter);
-        content.addChild(header);
+        requiredTools = new GuiHorizontalLayoutGroup(0, 70, 20, 4);
+        requiredTools.setAttachment(GuiAttachment.topCenter);
+        content.addChild(requiredTools);
 
-        content.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench).setColor(0x222222).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialStatGui(30, 20, "primary", LabelGetterBasic.singleDecimalLabel, data -> data.primary).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialStatGui(50, 40, "secondary", LabelGetterBasic.singleDecimalLabel, data -> data.secondary).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialStatGui(30, 60, "tertiary", LabelGetterBasic.singleDecimalLabel, data -> data.tertiary).setAttachment(GuiAttachment.topCenter));
 
-        icon = new GuiItemRolling(0, 6).setCountVisibility(GuiItem.CountMode.never);
+        content.addChild(new HoloMaterialStatGui(70, 20, "tool_level", LabelGetterBasic.integerLabel, data -> (float) data.toolLevel).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialStatGui(70, 60, "tool_efficiency", LabelGetterBasic.singleDecimalLabel, data -> data.toolEfficiency).setAttachment(GuiAttachment.topCenter));
+
+        content.addChild(new HoloMaterialStatGui(-30, 20, "durability", LabelGetterBasic.integerLabel, data -> data.durability).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialIntegrityStatGui(-50, 40).setAttachment(GuiAttachment.topCenter));
+        content.addChild(new HoloMaterialStatGui(-30, 60, "magic_capacity", LabelGetterBasic.integerLabel, data -> (float) data.magicCapacity).setAttachment(GuiAttachment.topCenter));
+
+        content.addChild(new GuiTexture(0, 40, 29, 29, 97, 0, GuiTextures.workbench).setColor(0x222222).setAttachment(GuiAttachment.topCenter));
+        labelHighlight = new GuiTexture(0, 44, 3, 21, 110, 4, GuiTextures.workbench);
+        labelHighlight.setOpacity(0.7f);
+        labelHighlight.setAttachment(GuiAttachment.topCenter);
+        content.addChild(labelHighlight);
+
+        icon = new GuiItemRolling(0, 46).setCountVisibility(GuiItem.CountMode.never);
         icon.setAttachment(GuiAttachment.topCenter);
         content.addChild(icon);
 
-        label = new GuiStringOutline(0, 10, "");
+        label = new GuiStringOutline(0, 50,"");
         label.setAttachment(GuiAttachment.topCenter);
         content.addChild(label);
-
-        content.addChild(new HoloMaterialStatGui(-40, 40, "primary", LabelGetterBasic.singleDecimalLabel, data -> data.primary).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(0, 40, "secondary", LabelGetterBasic.singleDecimalLabel, data -> data.secondary).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(40, 40, "tertiary", LabelGetterBasic.singleDecimalLabel, data -> data.tertiary).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(-20, 20, "tool_level", LabelGetterBasic.integerLabel, data -> (float) data.toolLevel).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(20, 20, "tool_efficiency", LabelGetterBasic.singleDecimalLabel, data -> data.toolEfficiency).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(0, 80, "durability", LabelGetterBasic.integerLabel, data -> data.durability).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialIntegrityStatGui(-20, 60).setAttachment(GuiAttachment.topCenter));
-        content.addChild(new HoloMaterialStatGui(20, 60, "magic_capacity", LabelGetterBasic.integerLabel, data -> (float) data.magicCapacity).setAttachment(GuiAttachment.topCenter));
 
         modifiers = new GuiElement(0, 0, 0, 0);
         modifiers.setAttachment(GuiAttachment.topCenter);
@@ -115,28 +121,31 @@ public class HoloMaterialDetailGui extends GuiElement {
             if (selected != null) {
                 getChildren(HoloCrossGui.class).forEach(HoloCrossGui::animateOpen);
             } else {
-                getChildren(HoloCrossGui.class).forEach(element -> element.setOpacity(0));
+                getChildren(HoloCrossGui.class).forEach(element -> {
+                    element.stopAnimations();
+                    element.setOpacity(0);
+                });
             }
         }
 
         hasSelected = selected != null;
 
         if (current != null) {
-            label.setString(I18n.format("tetra.material." + preview.key));
+            String labelString = I18n.format("tetra.material." + preview.key);
+            label.setString(Minecraft.getInstance().fontRenderer.func_238412_a_(labelString, 70));
+            labelHighlight.setColor(preview.tints.glyph);
             icon.setItems(preview.material.getApplicableItemStacks());
 
-            header.clearChildren();
+            requiredTools.clearChildren();
             Optional.ofNullable(preview.requiredTools)
                     .map(TierData::getLevelMap)
                     .map(Map::entrySet)
                     .map(Collection::stream)
                     .orElseGet(Stream::empty)
                     .map(entry -> new ToolRequirementGui(0, 0, entry.getKey()).updateRequirement(entry.getValue(), availableToolLevels.get(entry.getKey())))
-                    .forEach(header::addChild);
+                    .forEach(requiredTools::addChild);
 
             content.getChildren(HoloMaterialStatGui.class).forEach(stat -> stat.update(current, preview));
-
-            header.setX(label.getWidth() / 2);
 
             modifiers.clearChildren();
             Set<ItemEffect> currentEffects = current.effects.getValues();
@@ -155,8 +164,9 @@ public class HoloMaterialDetailGui extends GuiElement {
 
             for (int i = 0; i < modifiers.getNumChildren(); i++) {
                 GuiElement element = modifiers.getChild(i);
-                int y = (i % 3);
-                element.setX(60 + (y % 2) * 20 + i / 3 * 40);
+                int offset = (i > 0) ? i + 3 : i + 1;
+                int y = (offset % 3);
+                element.setX(60 + (y % 2) * 20 + offset / 3 * 40);
                 element.setY(20 + y * 20);
             }
 

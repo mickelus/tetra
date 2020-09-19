@@ -21,8 +21,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
 
 
     private final GuiTexture backdrop;
-    private final GuiTexture backdropRight;
-    private final GuiTexture backdropLeft;
+    private final GuiTexture icon;
 
     private final GuiString label;
 
@@ -36,16 +35,13 @@ public class HoloMaterialsButtonGui extends GuiClickable {
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        backdropRight = new GuiTexture(9, -1, 13, 19, 189, 10, GuiTextures.workbench);
-        backdropRight.setAttachment(GuiAttachment.middleCenter);
-        addChild(backdropRight);
-
-        backdropLeft = new GuiTexture(-11, -1, 13, 19, 176, 10, GuiTextures.workbench);
-        backdropLeft.setAttachment(GuiAttachment.middleCenter);
-        addChild(backdropLeft);
+        icon = new GuiTexture(0, 0, 38, 38, 0, 180, GuiTextures.workbench);
+        icon.setAttachment(GuiAttachment.middleCenter);
+        addChild(icon);
 
         label = new GuiStringOutline(0, -1, I18n.format("tetra.holo.craft.materials"));
         label.setAttachment(GuiAttachment.middleCenter);
+        label.setOpacity(0);
         addChild(label);
 
         showAnimation = new KeyframeAnimation(80, this)
@@ -56,21 +52,18 @@ public class HoloMaterialsButtonGui extends GuiClickable {
                 .onStop(complete -> this.isVisible = false);
 
 
-        hoverAnimations.add(new KeyframeAnimation(80, backdropRight)
-                .applyTo(new Applier.TranslateX(10)));
-        hoverAnimations.add(new KeyframeAnimation(80, backdropLeft)
-                .applyTo(new Applier.TranslateX(-12)));
+        hoverAnimations.add(new KeyframeAnimation(80, label)
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(-2, 0)));
 
-        blurAnimations.add(new KeyframeAnimation(120, backdropRight)
-                .applyTo(new Applier.TranslateX(9)));
-        blurAnimations.add(new KeyframeAnimation(80, backdropLeft)
-                .applyTo(new Applier.TranslateX(-11)));
+        blurAnimations.add(new KeyframeAnimation(120, label)
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(0, 2)));
     }
 
     @Override
     protected void onFocus() {
         backdrop.setColor(GuiColors.hover);
         label.setColor(GuiColors.hover);
+        icon.setColor(GuiColors.muted);
 
         blurAnimations.forEach(GuiAnimation::stop);
         hoverAnimations.forEach(GuiAnimation::start);
@@ -80,6 +73,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
     protected void onBlur() {
         backdrop.setColor(GuiColors.normal);
         label.setColor(GuiColors.normal);
+        icon.setColor(GuiColors.normal);
 
         hoverAnimations.forEach(GuiAnimation::stop);
         blurAnimations.forEach(GuiAnimation::start);
