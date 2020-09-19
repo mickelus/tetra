@@ -27,6 +27,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -96,33 +97,37 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
-        if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
-            HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
-            baseBlock.consumeFuel(world, basePos);
+        BlockState baseState = world.getBlockState(basePos);
+        ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
+                .map(base -> base.applyCraftEffects(world, basePos, baseState, targetStack, slot, isReplacing, player, requiredTool, requiredLevel, consumeResources))
+                .orElse(targetStack);
 
-            baseBlock.applyEffects(world, basePos, targetStack, player);
 
+        if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
             world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
         }
-        return targetStack;
+
+        return upgradedStack;
     }
 
     @Override
     public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.up();
-        if (consumeResources && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
-            HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
-            baseBlock.consumeFuel(world, basePos);
+        BlockState baseState = world.getBlockState(basePos);
+        ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
+                .map(base -> base.applyActionEffects(world, basePos, baseState, targetStack, player, requiredTool, requiredLevel, consumeResources))
+                .orElse(targetStack);
 
+        if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
             world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
         }
-        return targetStack;
+        return upgradedStack;
     }
 
     @Override

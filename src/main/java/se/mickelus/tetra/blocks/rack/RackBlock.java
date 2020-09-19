@@ -208,7 +208,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean improvement, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 

@@ -14,8 +14,10 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -265,7 +267,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = targetStack;
 
-        BlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = getBlockState();
 
         Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getWorld(), getPos(), blockState);
 
@@ -274,36 +276,16 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         if (currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
             float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
+            boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
+
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             if (upgradedStack.getItem() instanceof ModularItem) {
                 ((ModularItem) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
             }
 
-            // applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
-            currentSchematic.getRequiredToolLevels(targetStack, materials).forEach((tool, level) -> {
-
-            });
             for (Map.Entry<ToolType, Integer> entry : currentSchematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
-                ToolType tool = entry.getKey();
-                int level = entry.getValue();
-                ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
-                if (!providingStack.isEmpty()) {
-                    if (providingStack.getItem() instanceof ModularItem) {
-                        upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsume(providingStack,
-                                upgradedStack, player, tool, level,true);
-                    }
-                } else {
-                    ItemStack toolbeltResult = PropertyHelper.consumeCraftToolToolbelt(player, upgradedStack, tool, level, true);
-                    if (toolbeltResult != null) {
-                        upgradedStack = toolbeltResult;
-                    } else {
-                        ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
-                        upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                .map(block -> block.onCraftConsumeTool(world, getPos(), blockState, consumeTarget, player, tool, level, true))
-                                .orElse(upgradedStack);
-                    }
-                }
+                upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, world, pos, blockState, true);
             }
 
             int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);
@@ -323,6 +305,32 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         });
 
         clearSchematic();
+    }
+
+    /**
+     * applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
+     */
+    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolType tool, int level,
+            PlayerEntity player, World world, BlockPos pos, BlockState blockState, boolean consumeResources) {
+        ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
+        if (!providingStack.isEmpty()) {
+            if (providingStack.getItem() instanceof ModularItem) {
+                upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsume(providingStack,
+                        upgradedStack, player, tool, level,consumeResources);
+            }
+        } else {
+            ItemStack toolbeltResult = PropertyHelper.consumeCraftToolToolbelt(player, upgradedStack, tool, level, consumeResources);
+            if (toolbeltResult != null) {
+                upgradedStack = toolbeltResult;
+            } else {
+                ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
+                upgradedStack = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
+                        .map(block -> block.onCraftConsumeTool(world, pos, blockState, consumeTarget, slot, isReplacing, player, tool, level, consumeResources))
+                        .orElse(upgradedStack);
+            }
+        }
+
+        return upgradedStack;
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {

@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.forged.hammer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.ByteNBT;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
@@ -22,12 +23,24 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class HammerBaseTile extends TileEntity {
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static TileEntityType<HammerBaseTile> type;
+
+//    private static final String modulesAKey = "modA";
+//    private static final String modulesBKey = "modB";
+//    private boolean[] modulesA;
+//    private boolean[] modulesB;
+//
+//    private static final String currentAKey = "curA";
+//    private static final String currentBKey = "curB";
+//    private EnumHammerEffect currentA;
+//    private EnumHammerEffect currentB;
 
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
@@ -36,14 +49,22 @@ public class HammerBaseTile extends TileEntity {
     public HammerBaseTile() {
         super(type);
         slots = new ItemStack[2];
+
+//        modulesA = new boolean[EnumHammerEffect.values().length];
+//        modulesB = new boolean[EnumHammerEffect.values().length];
+
     }
 
     public boolean hasEffect(EnumHammerEffect effect) {
         return HammerBaseBlock.hasEffect(world, getBlockState(), effect);
     }
 
+    public int getEffectLevel(EnumHammerEffect effect) {
+        return HammerBaseBlock.getEffectLevel(world, getBlockState(), effect);
+    }
+
     public int getHammerLevel() {
-        return hasEffect(EnumHammerEffect.OVERCHARGED) ? 5 : 4;
+        return 5 + getEffectLevel(EnumHammerEffect.power);
     }
 
     public boolean isFueled() {
@@ -86,11 +107,11 @@ public class HammerBaseTile extends TileEntity {
         pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
         if (!world.isRemote) {
-            if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
+            if (hasEffect(EnumHammerEffect.power)) {
                 spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
             }
 
-            if (hasEffect(EnumHammerEffect.LEAKY)) {
+            if (hasEffect(EnumHammerEffect.precise)) {
                 int countCell0 = world.rand.nextInt(Math.min(16, getCellFuel(0)));
                 int countCell1 = world.rand.nextInt(Math.min(16, getCellFuel(1)));
                 consumeFuel(0, countCell0);
@@ -126,7 +147,7 @@ public class HammerBaseTile extends TileEntity {
                 }
             }
 
-            if (hasEffect(EnumHammerEffect.DAMAGING)) {
+            if (hasEffect(EnumHammerEffect.reliable)) {
                 spawnParticle(ParticleTypes.POOF, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 3, 0.1f);
             }
         }
@@ -141,11 +162,11 @@ public class HammerBaseTile extends TileEntity {
             usage += 2;
         }
 
-        if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
+        if (hasEffect(EnumHammerEffect.power)) {
             usage += 4;
         }
 
-        if (hasEffect(EnumHammerEffect.EFFICIENT)) {
+        if (hasEffect(EnumHammerEffect.efficient)) {
             usage -= 3;
         }
 
@@ -228,22 +249,19 @@ public class HammerBaseTile extends TileEntity {
         pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
 
-        if (hasEffect(EnumHammerEffect.EFFICIENT)) {
-            System.out.println("EFFICIENT");
+        if (hasEffect(EnumHammerEffect.efficient)) {
             spawnParticle(ParticleTypes.SMOKE, pos, 5, 0.02f);
 
             spawnParticle(ParticleTypes.SMOKE, oppositePos, 5, 0.02f);
         }
 
-        if (hasEffect(EnumHammerEffect.OVERCHARGED)) {
-            System.out.println("OVERCHARGED");
+        if (hasEffect(EnumHammerEffect.power)) {
             spawnParticle(ParticleTypes.ENCHANTED_HIT, pos, 15, 0.1f);
 
             spawnParticle(ParticleTypes.ENCHANTED_HIT, oppositePos, 15, 0.1f);
         }
 
-        if (hasEffect(EnumHammerEffect.LEAKY)) {
-            System.out.println("LEAKY");
+        if (hasEffect(EnumHammerEffect.precise)) {
             spawnParticle(ParticleTypes.LAVA, pos, 3, 0.03f);
             spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 1, 0f);
 
@@ -251,8 +269,7 @@ public class HammerBaseTile extends TileEntity {
             spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 1, 0f);
         }
 
-        if (hasEffect(EnumHammerEffect.DAMAGING)) {
-            System.out.println("DAMAGING");
+        if (hasEffect(EnumHammerEffect.reliable)) {
             spawnParticle(ParticleTypes.POOF, pos, 1, 0.05f);
 
             spawnParticle(ParticleTypes.POOF, oppositePos, 1, 0.05f);
@@ -260,7 +277,7 @@ public class HammerBaseTile extends TileEntity {
     }
 
     /**
-     * Utility for spawning particles from the server
+     * Utility for spawning particles on the server
      */
     private void spawnParticle(IParticleData particle, Vector3d pos, int count, float speed) {
         if (world instanceof ServerWorld) {
@@ -299,6 +316,36 @@ public class HammerBaseTile extends TileEntity {
                 }
             }
         }
+//
+//        if (compound.contains(modulesAKey)) {
+//            byte data = compound.getByte(modulesAKey);
+//            modulesA[0] = ((data & 0x01) != 0);
+//            modulesA[1] = ((data & 0x02) != 0);
+//            modulesA[2] = ((data & 0x04) != 0);
+//            modulesA[3] = ((data & 0x08) != 0);
+//        }
+//
+//        if (compound.contains(modulesBKey)) {
+//            byte data = compound.getByte(modulesBKey);
+//            modulesB[0] = ((data & 0x01) != 0);
+//            modulesB[1] = ((data & 0x02) != 0);
+//            modulesB[2] = ((data & 0x04) != 0);
+//            modulesB[3] = ((data & 0x08) != 0);
+//        }
+//
+//        if (compound.contains(currentAKey)) {
+//            byte data = compound.getByte(currentAKey);
+//            if (data > 0 && data < EnumHammerEffect.values().length) {
+//                currentA = EnumHammerEffect.values()[data];
+//            }
+//        }
+//
+//        if (compound.contains(currentBKey)) {
+//            byte data = compound.getByte(currentBKey);
+//            if (data > 0 && data < EnumHammerEffect.values().length) {
+//                currentB = EnumHammerEffect.values()[data];
+//            }
+//        }
     }
 
     @Override
@@ -309,6 +356,32 @@ public class HammerBaseTile extends TileEntity {
 
         return compound;
     }
+
+//    public static void writeModules(CompoundNBT compound, boolean[] modulesA, boolean[] modulesB, EnumHammerEffect currentA, EnumHammerEffect currentB) {
+//        byte modAByte = 0;
+//        for(int i = 0; i < modulesA.length ;i++) {
+//            if (modulesA[i]) {
+//                modAByte |= (128 >> i);
+//            }
+//        }
+//        compound.put(modulesAKey, ByteNBT.valueOf(modAByte));
+//
+//        byte modBByte = 0;
+//        for(int i = 0; i < modulesB.length ;i++) {
+//            if (modulesA[i]) {
+//                modBByte |= (128 >> i);
+//            }
+//        }
+//        compound.put(modulesAKey, ByteNBT.valueOf(modBByte));
+//
+//        if (currentA != null) {
+//            compound.put(currentAKey, ByteNBT.valueOf((byte) currentA.ordinal()));
+//        }
+//
+//        if (currentB != null) {
+//            compound.put(currentBKey, ByteNBT.valueOf((byte) currentB.ordinal()));
+//        }
+//    }
 
     public static void writeCells(CompoundNBT compound, ItemStack... cells) {
         ListNBT nbttaglist = new ListNBT();

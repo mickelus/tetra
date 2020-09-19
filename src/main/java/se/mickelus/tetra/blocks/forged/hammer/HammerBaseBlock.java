@@ -40,12 +40,15 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.ItemVentPlate;
 import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
@@ -59,6 +62,8 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     public static final BooleanProperty propCell2Charged = BooleanProperty.create("cell2charged");
 
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
+
+    public static final String qualityImprovementKey = "quality";
 
     public static final String unlocalizedName = "hammer_base";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -120,14 +125,6 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
                 .ifPresent(HammerBaseTile::consumeFuel);
     }
 
-    public void applyEffects(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player) {
-        if (hasEffect(world, world.getBlockState(pos), EnumHammerEffect.DAMAGING) && itemStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) itemStack.getItem();
-            int damage = (int) (itemStack.getMaxDamage() * 0.1);
-            item.applyDamage(damage, itemStack, player);
-        }
-    }
-
     public int getHammerLevel(World world, BlockPos pos) {
         return TileEntityOptional.from(world, pos, HammerBaseTile.class)
                 .map(HammerBaseTile::getHammerLevel)
@@ -167,13 +164,49 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
         return true;
     }
 
-    public static boolean hasEffect(World world, BlockState blockState, EnumHammerEffect effect) {
-        if (effect.requiresBoth) {
-            return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), 0))
-                    && effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), 0));
+    public ItemStack applyCraftEffects(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
+            PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+        if (consumeResources) {
+            consumeFuel(world, pos);
         }
+
+        if (isReplacing) {
+            int preciseLevel = getEffectLevel(world, blockState, EnumHammerEffect.precise);
+            if (preciseLevel > 0) {
+                ItemStack upgradedStack = targetStack.copy();
+
+                ItemModuleMajor.addImprovement(upgradedStack, slot, qualityImprovementKey, preciseLevel);
+                return upgradedStack;
+            }
+        }
+
+        return targetStack;
+    }
+
+    public ItemStack applyActionEffects(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+        if (consumeResources) {
+            consumeFuel(world, pos);
+        }
+        return targetStack;
+    }
+
+    public static boolean hasEffect(World world, BlockState blockState, EnumHammerEffect effect) {
         return effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), 0))
                 || effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), 0));
+    }
+
+    public static int getEffectLevel(World world, BlockState blockState, EnumHammerEffect effect) {
+        int level = 0;
+        if (effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.eastProp), 0))) {
+            level++;
+        }
+
+        if (effect.equals(EnumHammerEffect.fromConfig(blockState.get(EnumHammerConfig.westProp), 0))) {
+            level++;
+        }
+
+        return level;
     }
 
     @Override

@@ -127,4 +127,15 @@ public interface UpgradeSchematic {
     public default float getSeverity(ItemStack itemStack, ItemStack[] materials, String slot) {
         return 1;
     }
+
+    /**
+     * Denotes if this upgrade will replace the current module. True even if there currently is no module in the slot.
+     * @param itemStack
+     * @param materials
+     * @param slot
+     * @return
+     */
+    public default boolean willReplace(ItemStack itemStack, ItemStack[] materials, String slot) {
+        return false;
+    }
 }
