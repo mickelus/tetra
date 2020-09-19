@@ -10,8 +10,7 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.util.Filter;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class MultiSlotModule extends ItemModuleMajor {
 
@@ -33,7 +32,10 @@ public class MultiSlotModule extends ItemModuleMajor {
 
         if (data.improvements.length > 0) {
             improvements = Arrays.stream(data.improvements)
-                    .map(key -> DataManager.improvementData.getData(key))
+                    .map(rl -> rl.getPath().endsWith("/")
+                            ? DataManager.improvementData.getDataIn(rl)
+                            : Optional.ofNullable(DataManager.improvementData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                    .flatMap(Collection::stream)
                     .filter(Objects::nonNull)
                     .flatMap(Arrays::stream)
                     .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular;
+package se.mickelus.tetra.module;
 
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.data.DataManager;
