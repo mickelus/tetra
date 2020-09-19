@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Map;
 
@@ -19,7 +20,10 @@ public abstract class BaseSchematic implements UpgradeSchematic {
     @Override
     public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, final ItemStack[] materials, String slot) {
         ItemStack upgradedStack = applyUpgrade(itemStack, materials, false, slot, null);
-        return ModularItem.getIntegrityGain(upgradedStack) + ModularItem.getIntegrityCost(upgradedStack) < 0;
+        return CastOptional.cast(upgradedStack.getItem(), ModularItem.class)
+                .map(item -> item.getProperties(upgradedStack))
+                .map(properties -> properties.integrity < properties.integrityUsage)
+                .orElse(true);
     }
 
     @Override
