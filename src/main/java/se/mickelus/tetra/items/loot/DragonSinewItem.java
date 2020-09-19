@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.loot;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.TableLootEntry;
@@ -15,10 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
@@ -40,7 +37,7 @@ public class DragonSinewItem extends TetraItem {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new LootTableHandler());
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -49,10 +46,14 @@ public class DragonSinewItem extends TetraItem {
         tooltip.add(DragonSinewItem.tooltip);
     }
 
-    @SubscribeEvent
-    public void onLootTableLoad(final LootTableLoadEvent event) {
-        if (event.getName().equals(dragonLootTable)) {
-            event.getTable().addPool(LootPool.builder().addEntry(TableLootEntry.builder(sinewLootTable)).build());
+    public static class LootTableHandler {
+        @SubscribeEvent
+        public void onLootTableLoad(final LootTableLoadEvent event) {
+            if (event.getName().equals(dragonLootTable)) {
+                event.getTable().addPool(LootPool.builder()
+                        .name(TetraMod.MOD_ID + ":" + unlocalizedName)
+                        .addEntry(TableLootEntry.builder(sinewLootTable)).build());
+            }
         }
     }
 }
