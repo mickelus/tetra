@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
@@ -153,7 +154,10 @@ public class CleanseSchematic implements UpgradeSchematic {
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
-                .map(module -> Math.max(3, -module.getMagicCapacity(targetStack)))
+                .map(module -> -module.getMagicCapacity(targetStack))
+                .map(capacity -> capacity * ModularItem.cleanseLevelFactor)
+                .map(MathHelper::ceil)
+                .map(capacity -> Math.max(3, capacity))
                 .orElse(3);
 
 

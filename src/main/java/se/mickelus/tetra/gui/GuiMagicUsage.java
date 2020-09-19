@@ -1,5 +1,7 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -7,10 +9,13 @@ import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.gui.statbar.GuiBar;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,6 +24,7 @@ public class GuiMagicUsage extends GuiElement {
     protected GuiBar bar;
 
     protected List<String> tooltip;
+    protected List<String> tooltipExtended;
 
     public GuiMagicUsage(int x, int y, int barLength) {
         super(x, y, barLength, 12);
@@ -44,7 +50,16 @@ public class GuiMagicUsage extends GuiElement {
 
             bar.setMax(Math.max(max + diffMax, max));
 
-            tooltip = Collections.singletonList(I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue));
+            tooltip = Arrays.asList(
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue),
+                    " ",
+                    Tooltips.expand.getString());
+
+            tooltipExtended = Arrays.asList(
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue),
+                    " ",
+                    Tooltips.expanded.getString(),
+                    I18n.format("item.tetra.modular.magic_capacity.description_extended"));
 
             if (diffMax != 0) {
                 bar.setValue(max, max + diffMax);
@@ -63,6 +78,16 @@ public class GuiMagicUsage extends GuiElement {
             int max = getGain(itemStack, slot);
 
             tooltip = Collections.singletonList(I18n.format("item.tetra.modular.magic_capacity.description", max, value));
+            tooltip = Arrays.asList(
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value),
+                    " ",
+                    Tooltips.expand.getString());
+
+            tooltipExtended = Arrays.asList(
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value),
+                    " ",
+                    Tooltips.expanded.getString(),
+                    I18n.format("item.tetra.modular.magic_capacity.description_extended"));
             valueString.setString(String.format("%d/%d", max - value, max));
 
             bar.setMax(max);
@@ -95,6 +120,10 @@ public class GuiMagicUsage extends GuiElement {
     @Override
     public List<String> getTooltipLines() {
         if (hasFocus()) {
+            if (Screen.hasShiftDown()) {
+                return tooltipExtended;
+            }
+
             return tooltip;
         }
         return super.getTooltipLines();

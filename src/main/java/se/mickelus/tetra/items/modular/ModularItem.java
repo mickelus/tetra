@@ -31,10 +31,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -101,6 +99,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     public static final UUID attackDamageModifier = Item.ATTACK_DAMAGE_MODIFIER;
     public static final UUID attackSpeedModifier = Item.ATTACK_SPEED_MODIFIER;
+
+    public static final float repairLevelFactor = 0.05f;
+    public static final float cleanseLevelFactor = 0.1f;
+    public static final float enchantLevelFactor = 0.1f;
 
     private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
@@ -349,7 +351,8 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public int getHoningBase(ItemStack itemStack) {
-        return Math.max(honeBase + honeIntegrityMultiplier * -getIntegrityCost(itemStack), 1);
+        float workableFactor = (100f - getEffectLevel(itemStack, ItemEffect.workable)) / 100;
+        return (int) Math.max((honeBase + honeIntegrityMultiplier * getIntegrityCost(itemStack)) * workableFactor, 1);
     }
 
     public int getHonedCount(ItemStack itemStack) {
@@ -518,31 +521,31 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add(new StringTextComponent("\u00BB " + module.getName(itemStack)).mergeStyle(TextFormatting.GRAY));
+                        tooltip.add(new StringTextComponent("\u00BB ").mergeStyle(TextFormatting.DARK_GRAY)
+                                .append(new StringTextComponent(module.getName(itemStack)).mergeStyle(TextFormatting.GRAY)));
                         Arrays.stream(module.getImprovements(itemStack))
-                                .map(improvement -> String.format(" - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
+                                .map(improvement -> String.format("  - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
                                 .map(StringTextComponent::new)
                                 .map(textComponent -> textComponent.mergeStyle(TextFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
-                    .map(module -> "* " + module.getName(itemStack))
-                    .map(StringTextComponent::new)
-                    .map(textComponent -> textComponent.mergeStyle(TextFormatting.GRAY))
+                    .map(module -> new StringTextComponent(" * ").mergeStyle(TextFormatting.DARK_GRAY)
+                            .append(new StringTextComponent(module.getName(itemStack)).mergeStyle(TextFormatting.GRAY)))
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression.get() && canHone) {
                 if (isHoneable(itemStack)) {
                     tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.available").mergeStyle(TextFormatting.GRAY)));
+                            .append(new TranslationTextComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormatting(TextFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningBase(itemStack);
-                    String result = String.format("%.1f", 100f * (base - progress) / base);
+                    String percentage = String.format("%.0f", 100f * (base - progress) / base);
                     tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.DARK_AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.progress", result).mergeStyle(TextFormatting.GRAY)));
+                            .append(new TranslationTextComponent("tetra.hone.progress", base - progress, base, percentage).mergeStyle(TextFormatting.GRAY)));
                 }
             }
         } else {
@@ -660,8 +663,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     public int getRepairRequiredExperience(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getMagicCapacity(itemStack))
-                .map(capacity -> Math.max(0, -capacity))
+                .map(module -> -module.getMagicCapacity(itemStack))
+                .map(capacity -> capacity * repairLevelFactor)
+                .map(MathHelper::ceil)
+                .map(capacity -> Math.max(0, capacity))
                 .orElse(0);
     }
 
@@ -784,6 +789,16 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                 .sum();
     }
 
+    /**
+     * Stability modifier for magic capacity, the stabilizing and unstable effects should increase/decrease the magic capacity of all modules by a
+     * percentage equal to the effect levels
+     * @param itemStack
+     * @return
+     */
+    public float getStabilityModifier(ItemStack itemStack) {
+        return 1 + (getEffectLevel(itemStack, ItemEffect.stabilizing) - getEffectLevel(itemStack, ItemEffect.unstable)) / 100f;
+    }
+
     private void applyDestabilizationEffects(ItemStack itemStack, World world, float probabilityMultiplier) {
         if (!world.isRemote) {
             Arrays.stream(getMajorModules(itemStack))
@@ -791,8 +806,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                     .forEach(module -> {
                         int instability = -module.getMagicCapacity(itemStack);
 
-                        for (DestabilizationEffect effect:
-                                DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack))) {
+                        for (DestabilizationEffect effect: DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack))) {
                             int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
                             int newLevel;
 

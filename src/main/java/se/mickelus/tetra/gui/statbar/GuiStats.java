@@ -273,6 +273,16 @@ public class GuiStats {
             0, 150, false, magicCapacityGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.magicCapacity.tooltip", magicCapacityGetter));
 
+    public static final IStatGetter stabilityGetter = new StatGetterStability();
+    public static final GuiStatBar stability = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.stability"),
+            -100, 100, false, true, false, stabilityGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("tetra.stats.stability.tooltip", stabilityGetter));
+
+    public static final IStatGetter workableGetter = new StatGetterEffectLevel(ItemEffect.workable, 1);
+    public static final GuiStatBar workable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.workable"),
+            0, 100, false, workableGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("tetra.stats.workable.tooltip", workableGetter));
+
     public static final IStatGetter scannerRangeGetter = new StatGetterEffectLevel(ItemEffect.scannerRange, 1);
     public static final GuiStatBar scannerRange = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerRange"),
             0, 64, false, scannerRangeGetter, LabelGetterBasic.integerLabel,

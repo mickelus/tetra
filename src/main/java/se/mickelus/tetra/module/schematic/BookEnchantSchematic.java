@@ -8,6 +8,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -160,8 +161,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         return CastOptional.cast(targetStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
-                .filter(module -> module instanceof ItemModuleMajor)
-                .map(module -> (ItemModuleMajor) module)
+                .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
                 .map(module -> {
                     int cost = 0;
                     Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(materials[0]);
@@ -173,7 +173,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                         }
                     }
 
-                    int capacityPenalty = Math.max(0, -module.getMagicCapacity(targetStack));
+                    int capacityPenalty = Math.max(0, MathHelper.ceil(-module.getMagicCapacity(targetStack) * ModularItem.enchantLevelFactor));
 
                     return cost + capacityPenalty;
                 })

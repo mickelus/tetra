@@ -1,0 +1,18 @@
+[
+    {
+        "key": "workable",
+        "level": 1,
+        "textured": false,
+        "effects": {
+            "workable": 15
+        }
+    },
+    {
+        "key": "workable",
+        "level": 2,
+        "textured": false,
+        "effects": {
+            "workable": 25
+        }
+    }
+]

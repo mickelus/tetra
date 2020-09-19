@@ -78,6 +78,8 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.overbowed);
         bars.add(GuiStats.intuit);
         bars.add(GuiStats.magicCapacity);
+        bars.add(GuiStats.stability);
+        bars.add(GuiStats.workable);
 
         Stream.of(ToolTypes.hammer, ToolType.AXE, ToolType.PICKAXE, ToolType.SHOVEL, ToolTypes.cut, ToolTypes.pry, ToolType.HOE)
                 .map(tool -> new GuiStatBarTool(0, 0, GuiStats.barLength, tool, true))

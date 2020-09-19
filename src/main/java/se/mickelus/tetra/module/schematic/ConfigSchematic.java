@@ -317,6 +317,26 @@ public class ConfigSchematic extends BaseSchematic {
         }
     }
 
+    @Override
+    public boolean willReplace(ItemStack itemStack, ItemStack[] materials, String slot) {
+        if (definition.materialSlotCount > 0) {
+            for (int i = 0; i < materials.length; i++) {
+                Optional<OutcomeDefinition> outcomeOptional = getOutcomeFromMaterial(materials[i], i);
+                if (outcomeOptional.isPresent() && outcomeOptional.get().moduleKey != null) {
+                    return true;
+                }
+            }
+        } else {
+            for (OutcomeDefinition outcome : definition.outcomes) {
+                if (outcome.moduleKey != null) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected ItemModule removePreviousModule(final ItemStack itemStack, String slot) {
         ModularItem item = (ModularItem) itemStack.getItem();
         ItemModule previousModule = item.getModuleFromSlot(itemStack, slot);

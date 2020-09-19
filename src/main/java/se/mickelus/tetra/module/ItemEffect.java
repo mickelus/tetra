@@ -258,6 +258,10 @@ public class ItemEffect {
 
     public static ItemEffect overbowed = get("overbowed");
 
+    public static ItemEffect workable = get("workable");
+    public static ItemEffect stabilizing = get("stabilizing");
+    public static ItemEffect unstable = get("unstable");
+
     //////////////////////////////////////////////////////////////
     // holosphere
     //////////////////////////////////////////////////////////////

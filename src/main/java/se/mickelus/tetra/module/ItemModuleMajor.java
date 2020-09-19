@@ -160,6 +160,7 @@ public abstract class ItemModuleMajor extends ItemModule {
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
         ModularItem item = (ModularItem) itemStack.getItem();
         CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
+                .filter(module -> module.acceptsImprovementLevel(improvement, level))
                 .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
     }
 
@@ -266,15 +267,18 @@ public abstract class ItemModuleMajor extends ItemModule {
         return super.getMagicCapacityCost(itemStack) + getImprovementMagicCapacityCost(itemStack);
     }
 
-    private int getImprovementMagicCapacityGain(ItemStack itemStack) {
-        return Math.round(ConfigHandler.magicCapacityMultiplier.get().floatValue() *
-                Arrays.stream(getImprovements(itemStack))
+    public int getImprovementMagicCapacityGain(ItemStack itemStack) {
+        return Math.round(ConfigHandler.magicCapacityMultiplier.get().floatValue()
+                * CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getStabilityModifier(itemStack))
+                .orElse(1f)
+                * Arrays.stream(getImprovements(itemStack))
                         .mapToInt(improvement -> improvement.magicCapacity)
                         .filter(magicCapacity -> magicCapacity > 0)
                         .sum());
     }
 
-    private int getImprovementMagicCapacityCost(ItemStack itemStack) {
+    public int getImprovementMagicCapacityCost(ItemStack itemStack) {
         return -Arrays.stream(getImprovements(itemStack))
                 .mapToInt(improvement -> improvement.magicCapacity)
                 .filter(integrity -> integrity < 0)

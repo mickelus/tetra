@@ -14,8 +14,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
@@ -173,7 +175,11 @@ public abstract class ItemModule implements IToolProvider {
     public int getMagicCapacityGain(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
         if (magicCapacity > 0 ) {
-            return Math.round(magicCapacity * ConfigHandler.magicCapacityMultiplier.get().floatValue());
+            float stabilityMultiplier = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                    .map(item -> item.getStabilityModifier(itemStack))
+                    .orElse(1f);
+
+            return Math.round(magicCapacity * ConfigHandler.magicCapacityMultiplier.get().floatValue() * stabilityMultiplier);
         }
         return 0;
     }
