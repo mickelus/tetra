@@ -49,7 +49,7 @@ public class BlockInteractionCriterion extends CriterionInstance {
 
     private static BlockInteractionCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         return new BlockInteractionCriterion(entityPredicate,
-                JsonOptional.field(json, "block")
+                JsonOptional.field(json, "after")
                         .map(PropertyMatcher::deserialize)
                         .orElse(null),
                 JsonOptional.field(json, "tool")
