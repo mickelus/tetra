@@ -49,7 +49,12 @@ public class OutcomeMaterial {
     public OutcomeMaterial offsetCount(float multiplier, int offset) {
         OutcomeMaterial result = new OutcomeMaterial();
         result.count = Math.round(count * multiplier) + offset;
-        result.itemStack = itemStack;
+
+        if (itemStack != null) {
+            result.itemStack = itemStack.copy();
+            result.itemStack.setCount(result.count);
+        }
+
         result.tagLocation = tagLocation;
         result.predicate = predicate;
 

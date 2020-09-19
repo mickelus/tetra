@@ -187,7 +187,6 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                         .map(synergy -> synergy.tools))
                 .filter(Objects::nonNull)
                 .reduce(result, ToolData::merge);
-
     }
 
     @Override

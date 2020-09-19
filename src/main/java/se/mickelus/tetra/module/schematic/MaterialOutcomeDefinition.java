@@ -29,7 +29,7 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
             result.moduleVariant = moduleVariant + materialData.key;
         }
 
-        result.material = materialData.material.offsetCount(toolFactor, countOffset);
+        result.material = materialData.material.offsetCount(countFactor, countOffset);
 
         if (materialData.requiredTools != null) {
             result.requiredTools = ToolData.offsetLevel(materialData.requiredTools, toolFactor, toolOffset);

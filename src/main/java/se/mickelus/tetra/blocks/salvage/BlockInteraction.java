@@ -53,8 +53,8 @@ public class BlockInteraction {
 
     public float successChance = 1;
 
-    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX,
-            float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
+    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
+            float minX, float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
 
         this.requiredTool = requiredTool;
         this.requiredLevel = requiredLevel;

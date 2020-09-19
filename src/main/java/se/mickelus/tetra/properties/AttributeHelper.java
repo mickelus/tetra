@@ -141,7 +141,7 @@ public class AttributeHelper {
                 + modifiers.stream()
                 .filter(modifier -> modifier.getOperation().equals(AttributeModifier.Operation.MULTIPLY_BASE))
                 .mapToDouble(AttributeModifier::getAmount)
-                .map(amount -> amount * base)
+                .map(amount -> amount * Math.abs(base))
                 .sum();
     }
 
