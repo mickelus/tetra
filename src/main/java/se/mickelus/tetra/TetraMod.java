@@ -24,6 +24,8 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -288,6 +290,15 @@ public class TetraMod {
 //            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
 //            dataGenerator.addProvider(new EnchantmentProvider(dataGenerator, event.getExistingFileHelper()));
             dataGenerator.addProvider(new ModuleProvider(dataGenerator, event.getExistingFileHelper()));
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onBiomeLoading(BiomeLoadingEvent event) {
+        GeodeBlock.registerFeature(event.getGeneration());
+
+        if (ConfigHandler.generateFeatures.get()) {
+            FeatureEntry.instance.registerFeatures(event);
         }
     }
 

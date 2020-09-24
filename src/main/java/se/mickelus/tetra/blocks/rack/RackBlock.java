@@ -32,8 +32,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.util.NonNullFunction;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
@@ -212,7 +214,7 @@ public class RackBlock extends TetraWaterloggedBlock {
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
-        LazyOptional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
+        Optional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
@@ -237,7 +239,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     @Override
     public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
-        LazyOptional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
+        Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getTileEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);

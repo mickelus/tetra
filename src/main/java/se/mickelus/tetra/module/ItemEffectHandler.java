@@ -416,6 +416,7 @@ public class ItemEffectHandler {
     public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
             boolean harvest) {
         if (!world.isRemote) {
+            ServerWorld serverWorld = (ServerWorld) world;
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
             GameType gameType = serverPlayer.interactionManager.getGameType();
 
@@ -434,7 +435,7 @@ public class ItemEffectHandler {
                         blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
 
                         if (exp > 0) {
-                            blockState.getBlock().dropXpOnBlockBreak(world, pos, exp);
+                            blockState.getBlock().dropXpOnBlockBreak(serverWorld, pos, exp);
                         }
                     }
                 }

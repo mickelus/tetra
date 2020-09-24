@@ -17,8 +17,8 @@ buildscript {
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
 
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
@@ -101,8 +101,8 @@ dependencies {
     } else {
         compile fg.deobf("curse.maven:mgui:2928277")
     }
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 
 //    compile fg.deobf("curse.maven:apotheosis:2906078")
 //    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")

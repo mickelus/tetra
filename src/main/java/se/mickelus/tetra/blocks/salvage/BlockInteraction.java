@@ -253,7 +253,7 @@ public class BlockInteraction {
                 .withParameter(LootParameters.BLOCK_STATE, blockState)
                 .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
                 .withParameter(LootParameters.THIS_ENTITY, player)
-                .withParameter(LootParameters.POSITION, player.getPosition())
+                .withParameter(LootParameters.field_237457_g_, player.getPositionVec())
                 .build(LootParameterSets.BLOCK);
 
         return table.generate(context);
