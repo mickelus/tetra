@@ -54,13 +54,13 @@ public class FortuneBonusCondition implements ILootCondition {
 
     public static class Serializer implements ILootSerializer<FortuneBonusCondition> {
         @Override
-        public void func_230424_a_(JsonObject json, FortuneBonusCondition value, JsonSerializationContext context) {
-            DataManager.instance.gson.toJsonTree(value).getAsJsonObject().entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
+        public void serialize(JsonObject json, FortuneBonusCondition value, JsonSerializationContext context) {
+            DataManager.gson.toJsonTree(value).getAsJsonObject().entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
         }
 
         @Override
-        public FortuneBonusCondition func_230423_a_(JsonObject json, JsonDeserializationContext context) {
-            return DataManager.instance.gson.fromJson(json, FortuneBonusCondition.class);
+        public FortuneBonusCondition deserialize(JsonObject json, JsonDeserializationContext context) {
+            return DataManager.gson.fromJson(json, FortuneBonusCondition.class);
         }
     }
 }

@@ -10,7 +10,7 @@ public class FeatureReference implements IFeatureConfig {
 
     public static final Codec<FeatureReference> codec = RecordCodecBuilder
             .create((instance) -> instance.group(
-                    ResourceLocation.RESOURCE_LOCATION_CODEC.fieldOf("location").forGetter(i -> i.location)
+                    ResourceLocation.CODEC.fieldOf("location").forGetter(i -> i.location)
             ).apply(instance, FeatureReference::new));
 
     public FeatureReference(ResourceLocation location) {

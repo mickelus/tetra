@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.TagCollection;
+import net.minecraft.tags.ITagCollection;
 import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -62,14 +62,14 @@ public class OutcomeMaterial {
     }
 
     // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
-    protected static TagCollection<Item> getTagCollection() {
+    protected static ITagCollection<Item> getTagCollection() {
         if (FMLEnvironment.dist.isClient()) {
             if (Minecraft.getInstance().world != null) {
-                return Minecraft.getInstance().world.getTags().getItems();
+                return Minecraft.getInstance().world.getTags().getItemTags();
             }
         }
 
-        return TagCollectionManager.func_232928_e_().func_232925_b_();
+        return TagCollectionManager.getManager().getItemTags();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -80,7 +80,7 @@ public class OutcomeMaterial {
             return new ITextComponent[] {itemStack.getDisplayName()};
         } else if (tagLocation != null) {
             return getTagCollection()
-                    .getOrCreate(tagLocation)
+                    .getTagByID(tagLocation)
                     .getAllElements()
                     .stream()
                     .map(item -> item.getDisplayName(item.getDefaultInstance()))
@@ -97,7 +97,7 @@ public class OutcomeMaterial {
             return new ItemStack[] { itemStack };
         } else if (tagLocation != null) {
             return getTagCollection()
-                    .getOrCreate(tagLocation)
+                    .getTagByID(tagLocation)
                     .getAllElements()
                     .stream()
                     .map(Item::getDefaultInstance)

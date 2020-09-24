@@ -113,7 +113,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        func_230459_a_(matrixStack, mouseX, mouseY);
+        renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
         drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
     }

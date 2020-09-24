@@ -75,7 +75,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
 
     private void renderBanner(ItemStack itemStack, ModelRenderer modelRenderer, MatrixStack matrixStack, IRenderTypeBuffer buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.func_230138_a_(ShieldItem.getColor(itemStack), BannerTileEntity.func_230139_a_(itemStack));
+        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.getPatternColorData(ShieldItem.getColor(itemStack), BannerTileEntity.getPatternData(itemStack));
 
         for(int i = 0; i < 17 && i < list.size(); ++i) {
             Pair<BannerPattern, DyeColor> pair = list.get(i);
@@ -88,7 +88,7 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
 
     private void renderEtching(ItemStack itemStack, ModelRenderer modelRenderer, MatrixStack matrixStack, IRenderTypeBuffer buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.func_230138_a_(ShieldItem.getColor(itemStack), BannerTileEntity.func_230139_a_(itemStack));
+        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.getPatternColorData(ShieldItem.getColor(itemStack), BannerTileEntity.getPatternData(itemStack));
 
         for(int i = 0; i < 17 && i < list.size(); ++i) {
             Pair<BannerPattern, DyeColor> pair = list.get(i);

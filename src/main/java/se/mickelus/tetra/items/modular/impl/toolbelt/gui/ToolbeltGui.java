@@ -75,7 +75,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        func_230459_a_(matrixStack, mouseX, mouseY);
+        renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
         drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
     }
@@ -89,8 +89,8 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void func_230459_a_(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.func_230459_a_(matrixStack, mouseX, mouseY);
+    protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.renderHoveredTooltip(matrixStack, mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
 
         if (tooltipLines != null) {

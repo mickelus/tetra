@@ -135,9 +135,9 @@ public class GuiSynergyIndicator extends GuiElement {
             data.attributes.forEach((attribute, modifier) -> {
                 double amount = modifier.getAmount();
                 if (modifier.getOperation() == AttributeModifier.Operation.ADDITION) {
-                    result.add(getValueDouble(amount, 0) + I18n.format(attribute.func_233754_c_()));
+                    result.add(getValueDouble(amount, 0) + I18n.format(attribute.getAttributeName()));
                 } else {
-                    result.add(getValueMultiplier(amount + 1) + I18n.format(attribute.func_233754_c_()));
+                    result.add(getValueMultiplier(amount + 1) + I18n.format(attribute.getAttributeName()));
                 }
             });
         }

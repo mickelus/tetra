@@ -185,7 +185,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             Entity shooter = func_234616_v_();
             BlockState blockState = world.getBlockState(pos);
 
-            if (ForgeHooks.canToolHarvestBlock(world, pos, thrownStack) && shooter instanceof PlayerEntity) {
+            if (ForgeHooks.isToolEffective(world, pos, thrownStack) && shooter instanceof PlayerEntity) {
                 double destroySpeed = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
                         .map(item -> item.getDestroySpeed(thrownStack, blockState) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable))
                         .orElse(1d);

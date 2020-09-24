@@ -66,7 +66,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     public void clientInit() {
         super.clientInit();
 
-        ItemModelsProperties.func_239418_a_(this, new ResourceLocation("blocking"),
+        ItemModelsProperties.registerProperty(this, new ResourceLocation("blocking"),
                 (itemStack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
 
         MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));

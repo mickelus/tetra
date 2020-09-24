@@ -200,7 +200,7 @@ public class AttributeHelper {
     }
 
     private static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
-        return attribute.func_233754_c_() + operation.ordinal();
+        return attribute.getAttributeName() + operation.ordinal();
     }
 
     private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {

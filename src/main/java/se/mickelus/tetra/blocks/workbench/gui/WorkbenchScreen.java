@@ -126,7 +126,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        func_230459_a_(matrixStack, mouseX, mouseY);
+        renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
@@ -142,8 +142,8 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
 
     @Override
-    protected void func_230459_a_(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.func_230459_a_(matrixStack, mouseX, mouseY);
+    protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
