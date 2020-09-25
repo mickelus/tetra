@@ -7,7 +7,7 @@
     ],
     "key": {
         "#": {
-            "tag": "minecraft:logs"
+            "tag": "minecraft:planks"
         },
         "/": {
             "tag": "forge:rods/wooden"
