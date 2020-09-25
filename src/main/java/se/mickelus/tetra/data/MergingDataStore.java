@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.TetraMod;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -37,6 +38,10 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         int i = this.directory.length() + 1;
 
         for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+            if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
+                continue;
+            }
+
             String path = fullLocation.getPath();
             ResourceLocation location = new ResourceLocation(fullLocation.getNamespace(), path.substring(i, path.length() - jsonExtLength));
 

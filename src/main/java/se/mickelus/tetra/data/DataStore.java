@@ -16,6 +16,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -54,6 +55,10 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         int i = this.directory.length() + 1;
 
         for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+            if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
+                continue;
+            }
+
             String path = fullLocation.getPath();
             ResourceLocation location = new ResourceLocation(fullLocation.getNamespace(), path.substring(i, path.length() - jsonExtLength));
 
