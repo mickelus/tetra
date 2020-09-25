@@ -105,7 +105,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
     @Override
     public boolean func_230362_a_(ISeedReader world, StructureManager structureManager, ChunkGenerator generator, Random rand, BlockPos pos, FeatureReference ref) {
         FeatureParameters params = DataManager.featureData.getData(ref.location);
-        ResourceLocation dimensionType = world.getWorld().func_234923_W_().func_240901_a_();
+        ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
 
         // roll for probability here instead of the behaviour in the ChanceRangeConfig as that tend to cause structures to clump up,
         // todo: seeds can be salted per feature if it's a proper structure
