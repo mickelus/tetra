@@ -142,7 +142,7 @@ public class HoloMaterialDetailGui extends GuiElement {
                     .map(Map::entrySet)
                     .map(Collection::stream)
                     .orElseGet(Stream::empty)
-                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey()).updateRequirement(entry.getValue(), availableToolLevels.get(entry.getKey())))
+                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey()).updateRequirement(entry.getValue(), availableToolLevels.getOrDefault(entry.getKey(), 0)))
                     .forEach(requiredTools::addChild);
 
             content.getChildren(HoloMaterialStatGui.class).forEach(stat -> stat.update(current, preview));
