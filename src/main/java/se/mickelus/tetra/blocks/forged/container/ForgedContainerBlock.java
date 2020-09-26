@@ -174,11 +174,13 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        // only drop loot from open, master/unflipped chests
-        if (state.get(openProp) && !state.get(flippedProp)) {
-            dropBlockInventory(this, world, pos, newState);
-        } else {
-            TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::remove);
+        if (!equals(newState.getBlock())) {
+            // only drop loot from open, primary/unflipped chests
+            if (state.get(openProp) && !state.get(flippedProp)) {
+                dropBlockInventory(this, world, pos, newState);
+            } else {
+                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::remove);
+            }
         }
     }
 
