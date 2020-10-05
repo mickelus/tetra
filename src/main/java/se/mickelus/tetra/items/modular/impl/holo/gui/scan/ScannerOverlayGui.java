@@ -47,6 +47,8 @@ public class ScannerOverlayGui extends GuiRoot {
 
     ScannerSound sound;
 
+    private int ticks;
+
     // stats
     boolean active;
     int horizontalSpread = 44;
@@ -129,16 +131,16 @@ public class ScannerOverlayGui extends GuiRoot {
         }
 
         updateGuiVisibility();
+        ticks++;
 
-        if (world.getGameTime() % 200 == 0) {
+        if (ticks % 200 == 0) {
             updateStats();
         }
 
-        if (active && world.getGameTime() % 2 == 0) {
+        if (active && ticks % 2 == 0) {
             PlayerEntity player = mc.player;
-            double fov = mc.gameSettings.fov;
 
-            int offset = (int) (world.getGameTime() / 2) % (int) (horizontalSpread * 2 * cooldown);
+            int offset = (int) (ticks / 2) % (int) (horizontalSpread * 2 * cooldown);
             if (offset < horizontalSpread * 2) {
                 int yawOffset = (int) ((-horizontalSpread + offset) * ScannerBarGui.getDegreesPerUnit());
                 if (offset % 2 == 0) {
