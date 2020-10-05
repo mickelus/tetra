@@ -72,9 +72,6 @@
             "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
             "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/netherite"],
             "sword/guard": ["sword/makeshift_guard", "makeshift_guard/netherite"]
-        },
-        "improvements": {
-            "sword/blade:arrested": 0
         }
     }
 ]

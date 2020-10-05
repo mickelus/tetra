@@ -62,8 +62,7 @@
             "single/handle": ["single/basic_handle", "basic_handle/stick"]
         },
         "improvements": {
-            "single/handle:basic_handle/soot": 0,
-            "single/head:arrested": 0
+            "single/handle:basic_handle/soot": 0
         }
     }
 ]

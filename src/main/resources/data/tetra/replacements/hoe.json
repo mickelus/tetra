@@ -69,9 +69,7 @@
             "double/handle": ["double/basic_handle", "basic_handle/stick"]
         },
         "improvements": {
-            "double/handle:basic_handle/soot": 0,
-            "double/head_left:arrested": 0,
-            "double/head_right:arrested": 0
+            "double/handle:basic_handle/soot": 0
         }
     }
 ]
