@@ -41,7 +41,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "models": [{
                 "location": "tetra:items/module/double/head/basic_hammer/log"
@@ -52,7 +52,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
@@ -70,7 +70,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "tools": {
                 "hammer": 1
@@ -81,7 +81,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
@@ -103,7 +103,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "tools": {
                 "hammer": 2
@@ -114,7 +114,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
@@ -136,7 +136,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "tools": {
                 "hammer": 3
@@ -147,7 +147,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
@@ -169,7 +169,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "tools": {
                 "hammer": 4
@@ -183,7 +183,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
@@ -201,7 +201,7 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_damage": -1,
-                "generic.attack_speed": -1
+                "generic.attack_speed": -1.1
             },
             "tools": {
                 "hammer": 5
@@ -212,7 +212,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.3,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.08
                 },
                 "tools": {
                     "hammer": [0, 0.8333]
