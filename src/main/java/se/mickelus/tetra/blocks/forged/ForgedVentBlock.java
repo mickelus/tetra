@@ -163,9 +163,9 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(state, state.get(propX) ? Direction.EAST : Direction.SOUTH, face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(propX) ? Direction.EAST : Direction.SOUTH, face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 

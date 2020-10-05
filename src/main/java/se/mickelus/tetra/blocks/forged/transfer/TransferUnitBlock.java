@@ -33,7 +33,7 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.items.forged.ItemVentPlate;
+import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -180,9 +180,9 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(blockState, blockState.get(facingProp), face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
@@ -227,7 +227,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                 return ActionResultType.SUCCESS;
             }
         } else if (blockFacing.equals(hit.getFace().getOpposite()) // attach plate
-                && heldStack.getItem() instanceof ItemVentPlate
+                && heldStack.getItem() instanceof InsulatedPlateItem
                 && !state.get(plateProp)) {
 
             attachPlate(world, pos, state, player);

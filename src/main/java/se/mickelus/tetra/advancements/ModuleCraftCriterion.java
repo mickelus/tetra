@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
@@ -22,11 +23,11 @@ public class ModuleCraftCriterion extends CriterionInstance {
     private final String variant;
 
     private final ToolType toolType;
-    private final int toolLevel;
+    private final MinMaxBounds.IntBound toolLevel;
 
     public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
-    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, int toolLevel) {
+    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, MinMaxBounds.IntBound toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -74,7 +75,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.toolLevel != -1 && this.toolLevel != toolLevel) {
+        if (!this.toolLevel.test(toolLevel)) {
             return false;
         }
 
@@ -106,7 +107,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
                         .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "toolLevel")
-                        .map(JsonElement::getAsInt)
-                        .orElse(-1));
+                        .map(MinMaxBounds.IntBound::fromJson)
+                        .orElse(MinMaxBounds.IntBound.UNBOUNDED));
     }
 }

@@ -17,7 +17,7 @@ import se.mickelus.tetra.TetraMod;
 
 // todo 1.15: ripped out
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerTESR extends TileEntityRenderer<ForgedContainerTile> {
+public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerTile> {
     public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
 
     public ModelRenderer lid;
@@ -27,7 +27,7 @@ public class ForgedContainerTESR extends TileEntityRenderer<ForgedContainerTile>
 
     private static final float openDuration = 300;
 
-    public ForgedContainerTESR(TileEntityRendererDispatcher dispatcher) {
+    public ForgedContainerRenderer(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
 
         lid = new ModelRenderer(128, 64, 0, 0);

@@ -51,10 +51,8 @@ public class BlockInteraction {
 
     public InteractionOutcome outcome;
 
-    public float successChance = 1;
-
     public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
-            float minX, float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
+            float minX, float maxX, float minY, float maxY, InteractionOutcome outcome) {
 
         this.requiredTool = requiredTool;
         this.requiredLevel = requiredLevel;
@@ -63,28 +61,24 @@ public class BlockInteraction {
         this.minY = minY;
         this.maxX = maxX;
         this.maxY = maxY;
-        this.predicate = new PropertyMatcher().where(property, Predicates.equalTo(propertyValue));
 
         this.outcome = outcome;
     }
 
     public BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY,
             float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
+        this(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, outcome);
 
-        this.requiredTool = requiredTool;
-        this.requiredLevel = requiredLevel;
-        this.face = face;
-        this.minX = minX;
-        this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
         this.predicate = predicate;
-
-        this.outcome = outcome;
     }
 
+    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
+            float minX, float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
+        this(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, new PropertyMatcher().where(property, Predicates.equalTo(propertyValue)),
+                outcome);
+    }
 
-    public boolean applicableForState(BlockState blockState) {
+    public boolean applicableForBlock(World world, BlockPos pos, BlockState blockState) {
         return predicate.test(blockState);
     }
 
@@ -92,12 +86,13 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
-        return isPotentialInteraction(blockState, Direction.NORTH, hitFace, availableTools);
+    public boolean isPotentialInteraction(World world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
+        return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
     }
 
-    public boolean isPotentialInteraction(BlockState blockState, Direction blockFacing, Direction hitFace, Collection<ToolType> availableTools) {
-        return applicableForState(blockState)
+    public boolean isPotentialInteraction(World world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
+            Collection<ToolType> availableTools) {
+        return applicableForBlock(world, pos, blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
                 && (alwaysReveal || availableTools.contains(requiredTool));
     }
@@ -136,7 +131,7 @@ public class BlockInteraction {
                 rayTrace.getHitVec().z - pos.getZ());
 
         BlockInteraction possibleInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(blockState, rayTrace.getFace(), availableTools))
+                .map(block -> block.getPotentialInteractions(world, pos, blockState, rayTrace.getFace(), availableTools))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
                 .filter(interaction -> PropertyHelper.getItemToolLevel(heldStack, interaction.requiredTool) >= interaction.requiredLevel)
@@ -170,7 +165,11 @@ public class BlockInteraction {
                 player.getCooldownTracker().setCooldown(heldStack.getItem(), cooldown);
             }
 
-            return ActionResultType.SUCCESS;
+            if (player.world.isRemote) {
+                InteractiveBlockOverlay.markDirty();
+            }
+
+            return ActionResultType.func_233537_a_(player.world.isRemote);
         }
         return ActionResultType.PASS;
     }
@@ -182,7 +181,7 @@ public class BlockInteraction {
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         return CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(blockState, hitFace, PropertyHelper.getPlayerTools(player)))
+                .map(block -> block.getPotentialInteractions(player.world, pos, blockState, hitFace, PropertyHelper.getPlayerTools(player)))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
                 .findFirst()

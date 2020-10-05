@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:hammer_base"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_fix.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_fix.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_cell",
+    "criteria": {
+        "fuel": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "data": {
+                    "functional": "true"
+                }
+            }
+        }
+    }
+}

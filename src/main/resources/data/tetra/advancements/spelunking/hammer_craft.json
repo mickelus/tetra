@@ -8,24 +8,26 @@
         },
         "description": {
             "translate": "tetra.advancements.spelunking.hammer_craft.description"
-        },
-        "show_toast": false,
-        "announce_to_chat": false
+        }
     },
-    "parent": "tetra:spelunking/fuel_hammer",
+    "parent": "tetra:spelunking/hammer_fix",
     "criteria": {
         "craft": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "tool": "hammer",
-                "toolLevel": 4
+                "toolLevel": {
+                    "min": 5
+                }
             }
         },
         "improvement": {
             "trigger": "tetra:craft_improvement",
             "conditions": {
                 "tool": "hammer",
-                "toolLevel": 4
+                "toolLevel": {
+                    "min": 5
+                }
             }
         }
     },

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
@@ -23,11 +24,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     private final int improvementLevel;
 
     private final ToolType toolType;
-    private final int toolLevel;
+    private final MinMaxBounds.IntBound toolLevel;
 
     public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
-    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolType toolType, int toolLevel) {
+    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolType toolType, MinMaxBounds.IntBound toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -76,7 +77,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.toolLevel != -1 && this.toolLevel != toolLevel) {
+        if (!this.toolLevel.test(toolLevel)) {
             return false;
         }
 
@@ -108,7 +109,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                         .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "toolLevel")
-                        .map(JsonElement::getAsInt)
-                        .orElse(-1));
+                        .map(MinMaxBounds.IntBound::fromJson)
+                        .orElse(MinMaxBounds.IntBound.UNBOUNDED));
     }
 }

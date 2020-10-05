@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:combustion_chamber"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_power.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_power.description"
+        }
+    },
+    "parent": "tetra:spelunking/hammer_fix",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "item": {
+                    "item": "tetra:combustion_chamber"
+                }
+            }
+        }
+    }
+}

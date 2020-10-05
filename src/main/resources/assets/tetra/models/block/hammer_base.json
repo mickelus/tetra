@@ -1,26 +1,12 @@
 {
-    "parent": "block/block",
+    "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/hammer_base",
-        "down": "tetra:blocks/hammer_base",
-        "up": "tetra:blocks/hammer_base",
-        "north": "tetra:blocks/hammer_base_socket",
-        "south": "tetra:blocks/hammer_base_socket",
-        "east": "tetra:blocks/hammer_base_side",
-        "west": "tetra:blocks/hammer_base_side"
-    },
-    "elements": [
-        {
-            "from": [ 0, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-                "down":  { "texture": "#down", "cullface": "down" },
-                "up":    { "texture": "#up", "cullface": "up" },
-                "north": { "texture": "#north", "cullface": "north" },
-                "south": { "texture": "#south", "cullface": "south" },
-                "west":  { "texture": "#west", "cullface": "west" },
-                "east":  { "texture": "#east", "cullface": "east" }
-            }
-        }
-    ]
+        "particle": "tetra:blocks/forged_hammer/hammer_base",
+        "down": "tetra:blocks/forged_hammer/hammer_base",
+        "up": "tetra:blocks/forged_hammer/hammer_base",
+        "north": "tetra:blocks/forged_hammer/hammer_base_socket",
+        "south": "tetra:blocks/forged_hammer/hammer_base_socket",
+        "east": "tetra:blocks/forged_hammer/hammer_base_side",
+        "west": "tetra:blocks/forged_hammer/hammer_base_side"
+    }
 }

@@ -3,6 +3,8 @@ package se.mickelus.tetra.blocks.salvage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import se.mickelus.mgui.gui.hud.GuiRootHud;
 import se.mickelus.tetra.properties.PropertyHelper;
 
@@ -18,11 +20,11 @@ public class InteractiveBlockOverlayGui extends GuiRootHud {
 
     }
 
-    public void update(BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
+    public void update(World world, BlockPos pos, BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
         if (blockState.getBlock() instanceof IInteractiveBlock) {
             IInteractiveBlock block = (IInteractiveBlock) blockState.getBlock();
 
-            BlockInteraction[] interactions = block.getPotentialInteractions(blockState, face, PropertyHelper.getPlayerTools(player));
+            BlockInteraction[] interactions = block.getPotentialInteractions(world, pos, blockState, face, PropertyHelper.getPlayerTools(player));
 
             if (transition) {
                 Collection<InteractiveOutlineGui> previousOutlines = elements.stream()

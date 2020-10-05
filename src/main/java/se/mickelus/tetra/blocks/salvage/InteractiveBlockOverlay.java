@@ -10,6 +10,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.util.TileEntityOptional;
 
 public class InteractiveBlockOverlay {
 
@@ -19,8 +20,14 @@ public class InteractiveBlockOverlay {
     private Direction previousFace;
     private BlockState previousState;
 
+    private static boolean isDirty = false;
+
     public InteractiveBlockOverlay() {
         gui = new InteractiveBlockOverlayGui();
+    }
+
+    public static void markDirty() {
+        isDirty = true;
     }
 
     @SubscribeEvent
@@ -37,12 +44,15 @@ public class InteractiveBlockOverlay {
             BlockState blockState = world.getBlockState(blockPos);
 
             if (!shape.isEmpty()) {
-                if (!blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
-                    gui.update(blockState, face, Minecraft.getInstance().player, blockPos.equals(previousPos) && face.equals(previousFace));
+                if (isDirty || !blockState.equals(previousState) || !blockPos.equals(previousPos) || !face.equals(previousFace)) {
+                    gui.update(world, blockPos, blockState, face, Minecraft.getInstance().player,
+                            blockPos.equals(previousPos) && face.equals(previousFace));
 
                     previousPos = blockPos;
                     previousFace = face;
                     previousState = blockState;
+
+                    isDirty = false;
                 }
 
                 gui.draw(event.getMatrix(), event.getInfo().getProjectedView(), rayTrace, shape);

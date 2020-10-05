@@ -19,8 +19,7 @@
                 "tetra:wood/oak",
                 "tetra:stone/diorite",
                 "tetra:metal/iron",
-                "tetra:stone/blackstone",
-                "tetra:stone/obsidian"
+                "tetra:stone/blackstone"
             ],
             "countFactor": 2,
             "moduleKey": "double/basic_hammer",
@@ -28,11 +27,25 @@
         },
         {
             "material": {
-                "item": "minecraft:netherite_ingot",
+                "item": "minecraft:obsidian",
                 "count": 2
             },
             "requiredTools": {
                 "hammer": 6
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/obsidian",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:netherite_ingot",
+                "count": 2
+            },
+            "requiredTools": {
+                "hammer": 7
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/netherite"

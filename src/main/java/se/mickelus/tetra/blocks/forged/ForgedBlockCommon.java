@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.forged;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -21,16 +20,17 @@ public class ForgedBlockCommon {
     public static final Block.Properties propertiesSolid = Block.Properties.create(forgedMaterial)
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
-            .harvestLevel(3)
+            .harvestLevel(5)
             .hardnessAndResistance(12F, 2400.0F);
 
     public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterial)
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
-            .harvestLevel(3)
-            .setOpaque(ForgedBlockCommon::isntSolid)
-            .setSuffocates(ForgedBlockCommon::isntSolid)
-            .setBlocksVision(ForgedBlockCommon::isntSolid)
+            .harvestLevel(5)
+            .notSolid()
+            .setOpaque(ForgedBlockCommon::notSolid)
+            .setSuffocates(ForgedBlockCommon::notSolid)
+            .setBlocksVision(ForgedBlockCommon::notSolid)
             .hardnessAndResistance(12F, 600.0F);
 
     public static final ITextComponent locationTooltip = new TranslationTextComponent("item.tetra.forged_description")
@@ -39,7 +39,7 @@ public class ForgedBlockCommon {
     public static final ITextComponent unsettlingTooltip = new TranslationTextComponent("item.tetra.forged_unsettling")
             .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC);
 
-    private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
+    private static boolean notSolid(BlockState state, IBlockReader reader, BlockPos pos) {
         return false;
     }
 }

@@ -40,13 +40,10 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerTESR;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.forged.extractor.*;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
-import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
-import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
+import se.mickelus.tetra.blocks.forged.hammer.*;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
@@ -183,7 +180,9 @@ public class TetraMod {
                 new ItemMesh(),
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
-                new ItemVentPlate(),
+                new InsulatedPlateItem(),
+                new CombustionChamberItem(),
+                new PlanarStabilizerItem(),
                 new ModularHolosphereItem(),
                 new EarthpiercerItem(),
                 new DragonSinewItem()
@@ -271,7 +270,8 @@ public class TetraMod {
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
 
-            event.addSprite(ForgedContainerTESR.material.getTextureLocation());
+            event.addSprite(ForgedContainerRenderer.material.getTextureLocation());
+            event.addSprite(HammerBaseRenderer.material.getTextureLocation());
         }
     }
 

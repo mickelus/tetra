@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/vent_plate"
+        "layer0": "tetra:items/planar_stabilizer"
     }
 }

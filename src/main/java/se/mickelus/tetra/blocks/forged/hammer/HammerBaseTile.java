@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ByteNBT;
 import net.minecraft.nbt.CompoundNBT;
@@ -10,7 +11,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -23,24 +23,17 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class HammerBaseTile extends TileEntity {
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static TileEntityType<HammerBaseTile> type;
 
-//    private static final String modulesAKey = "modA";
-//    private static final String modulesBKey = "modB";
-//    private boolean[] modulesA;
-//    private boolean[] modulesB;
-//
-//    private static final String currentAKey = "curA";
-//    private static final String currentBKey = "curB";
-//    private EnumHammerEffect currentA;
-//    private EnumHammerEffect currentB;
+    private static final String moduleAKey = "modA";
+    private static final String moduleBKey = "modB";
+    private HammerEffect moduleA;
+    private HammerEffect moduleB;
 
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
@@ -49,22 +42,79 @@ public class HammerBaseTile extends TileEntity {
     public HammerBaseTile() {
         super(type);
         slots = new ItemStack[2];
-
-//        modulesA = new boolean[EnumHammerEffect.values().length];
-//        modulesB = new boolean[EnumHammerEffect.values().length];
-
     }
 
-    public boolean hasEffect(EnumHammerEffect effect) {
-        return HammerBaseBlock.hasEffect(world, getBlockState(), effect);
+    public boolean setModule(boolean isA, Item item) {
+        HammerEffect newModule = HammerEffect.fromItem(item);
+
+        if (newModule != null) {
+            if (isA) {
+                if (moduleA == null) {
+                    moduleA = newModule;
+                    markDirty();
+                    return true;
+                }
+            } else {
+                if (moduleB == null) {
+                    moduleB = newModule;
+                    markDirty();
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
-    public int getEffectLevel(EnumHammerEffect effect) {
-        return HammerBaseBlock.getEffectLevel(world, getBlockState(), effect);
+    public Item removeModule(boolean isA) {
+        if (isA) {
+            if (moduleA != null) {
+                Item item = moduleA.getItem();
+                moduleA = null;
+                markDirty();
+
+                return item;
+            }
+        } else {
+            if (moduleB != null) {
+                Item item = moduleB.getItem();
+                moduleB = null;
+                markDirty();
+
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean hasEffect(HammerEffect effect) {
+        return effect == moduleA || effect == moduleB;
+    }
+
+    public HammerEffect getEffect(boolean isA) {
+        return isA ? moduleA : moduleB;
+    }
+
+    public int getEffectLevel(HammerEffect effect) {
+        int level = 0;
+        if (effect == moduleA) {
+            level++;
+        }
+
+        if (effect == moduleB) {
+            level++;
+        }
+
+        return level;
     }
 
     public int getHammerLevel() {
-        return 5 + getEffectLevel(EnumHammerEffect.power);
+        return 5 + getEffectLevel(HammerEffect.power);
+    }
+
+    public boolean isFunctional() {
+        return isFueled() && getEffect(true) != null && getEffect(false) != null;
     }
 
     public boolean isFueled() {
@@ -90,40 +140,32 @@ public class HammerBaseTile extends TileEntity {
         if (index >= 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
             ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
             item.drainCharge(slots[index], amount);
-
-            if (item.getCharge(slots[index]) <= 0) {
-                BooleanProperty prop = index == 0 ? HammerBaseBlock.propCell1Charged : HammerBaseBlock.propCell2Charged;
-                world.setBlockState(pos, getBlockState().with(prop, false), 3);
-            }
-
         }
     }
 
     private void applyConsumeEffect() {
-        Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
+        Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.facingProp);
         Vector3d pos = Vector3d.copyCentered(getPos());
 
         Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
         pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
         if (!world.isRemote) {
-            if (hasEffect(EnumHammerEffect.power)) {
+            if (hasEffect(HammerEffect.power)) {
                 spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
             }
 
-            if (hasEffect(EnumHammerEffect.precise)) {
-                int countCell0 = world.rand.nextInt(Math.min(16, getCellFuel(0)));
-                int countCell1 = world.rand.nextInt(Math.min(16, getCellFuel(1)));
-                consumeFuel(0, countCell0);
-                consumeFuel(1, countCell1);
+            if (hasEffect(HammerEffect.power)) {
+                spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+                int count = world.rand.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
 
-                if (countCell0 > 0 || countCell1 > 0) {
+                if (count > 2) {
                     // particles cell 1
-                    spawnParticle(ParticleTypes.LAVA, pos, countCell0 * 2, 0.06f);
+                    spawnParticle(ParticleTypes.LAVA, pos, 2, 0.06f);
                     spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 2, 0f);
 
                     // particles cell 2
-                    spawnParticle(ParticleTypes.LAVA, oppositePos, countCell1 * 2, 0.06f);
+                    spawnParticle(ParticleTypes.LAVA, oppositePos, 2, 0.06f);
                     spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
 
                     // gather flammable blocks
@@ -142,33 +184,18 @@ public class HammerBaseTile extends TileEntity {
                     // set blocks on fire
                     Collections.shuffle(flammableBlocks);
                     flammableBlocks.stream()
-                            .limit(countCell0 + countCell1)
+                            .limit(count)
                             .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
                 }
-            }
-
-            if (hasEffect(EnumHammerEffect.reliable)) {
-                spawnParticle(ParticleTypes.POOF, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 3, 0.1f);
             }
         }
     }
 
     private int fuelUsage() {
         int usage = 5;
-        if (!getBlockState().get(EnumHammerPlate.east.prop)) {
-            usage += 2;
-        }
-        if (!getBlockState().get(EnumHammerPlate.west.prop)) {
-            usage += 2;
-        }
 
-        if (hasEffect(EnumHammerEffect.power)) {
-            usage += 4;
-        }
-
-        if (hasEffect(EnumHammerEffect.efficient)) {
-            usage -= 3;
-        }
+        usage += getEffectLevel(HammerEffect.power) * 4;
+        usage *= 1f - getEffectLevel(HammerEffect.efficient) * 0.4;
 
         return Math.max(usage, 1);
     }
@@ -184,6 +211,7 @@ public class HammerBaseTile extends TileEntity {
                 return item.getCharge(slots[index]);
             }
         }
+
         return -1;
     }
 
@@ -191,18 +219,6 @@ public class HammerBaseTile extends TileEntity {
         if (index >= 0 && index < slots.length && slots[index] != null) {
             ItemStack itemStack = slots[index];
             slots[index] = null;
-
-            if (index == 0) {
-                world.setBlockState(pos, getBlockState()
-                        .with(HammerBaseBlock.propCell1, false)
-                        .with(HammerBaseBlock.propCell1Charged, false),
-                        3);
-            } else {
-                world.setBlockState(pos, getBlockState()
-                        .with(HammerBaseBlock.propCell2, false)
-                        .with(HammerBaseBlock.propCell2Charged, false),
-                        3);
-            }
 
             return itemStack;
         }
@@ -222,58 +238,10 @@ public class HammerBaseTile extends TileEntity {
                 && index >= 0 && index < slots.length && slots[index] == null) {
             slots[index] = itemStack;
 
-            boolean hasCharge = ((ItemCellMagmatic) itemStack.getItem()).getCharge(itemStack) > 0;
-            if (index == 0) {
-                world.setBlockState(pos, getBlockState()
-                        .with(HammerBaseBlock.propCell1, true)
-                        .with(HammerBaseBlock.propCell1Charged, hasCharge),
-                        3);
-            } else {
-                world.setBlockState(pos, getBlockState()
-                        .with(HammerBaseBlock.propCell2, true)
-                        .with(HammerBaseBlock.propCell2Charged, hasCharge),
-                        3);
-            }
-
             return true;
         }
 
         return false;
-    }
-
-    public void applyReconfigurationEffect() {
-        Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.propFacing);
-        Vector3d pos = Vector3d.copyCentered(getPos());
-
-        Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
-        pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
-
-
-        if (hasEffect(EnumHammerEffect.efficient)) {
-            spawnParticle(ParticleTypes.SMOKE, pos, 5, 0.02f);
-
-            spawnParticle(ParticleTypes.SMOKE, oppositePos, 5, 0.02f);
-        }
-
-        if (hasEffect(EnumHammerEffect.power)) {
-            spawnParticle(ParticleTypes.ENCHANTED_HIT, pos, 15, 0.1f);
-
-            spawnParticle(ParticleTypes.ENCHANTED_HIT, oppositePos, 15, 0.1f);
-        }
-
-        if (hasEffect(EnumHammerEffect.precise)) {
-            spawnParticle(ParticleTypes.LAVA, pos, 3, 0.03f);
-            spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 1, 0f);
-
-            spawnParticle(ParticleTypes.LAVA, oppositePos, 3, 0.03f);
-            spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 1, 0f);
-        }
-
-        if (hasEffect(EnumHammerEffect.reliable)) {
-            spawnParticle(ParticleTypes.POOF, pos, 1, 0.05f);
-
-            spawnParticle(ParticleTypes.POOF, oppositePos, 1, 0.05f);
-        }
     }
 
     /**
@@ -283,6 +251,10 @@ public class HammerBaseTile extends TileEntity {
         if (world instanceof ServerWorld) {
             ((ServerWorld) world).spawnParticle(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
         }
+    }
+
+    public Direction getFacing() {
+        return getBlockState().get(HammerBaseBlock.facingProp);
     }
 
     @Nullable
@@ -316,36 +288,20 @@ public class HammerBaseTile extends TileEntity {
                 }
             }
         }
-//
-//        if (compound.contains(modulesAKey)) {
-//            byte data = compound.getByte(modulesAKey);
-//            modulesA[0] = ((data & 0x01) != 0);
-//            modulesA[1] = ((data & 0x02) != 0);
-//            modulesA[2] = ((data & 0x04) != 0);
-//            modulesA[3] = ((data & 0x08) != 0);
-//        }
-//
-//        if (compound.contains(modulesBKey)) {
-//            byte data = compound.getByte(modulesBKey);
-//            modulesB[0] = ((data & 0x01) != 0);
-//            modulesB[1] = ((data & 0x02) != 0);
-//            modulesB[2] = ((data & 0x04) != 0);
-//            modulesB[3] = ((data & 0x08) != 0);
-//        }
-//
-//        if (compound.contains(currentAKey)) {
-//            byte data = compound.getByte(currentAKey);
-//            if (data > 0 && data < EnumHammerEffect.values().length) {
-//                currentA = EnumHammerEffect.values()[data];
-//            }
-//        }
-//
-//        if (compound.contains(currentBKey)) {
-//            byte data = compound.getByte(currentBKey);
-//            if (data > 0 && data < EnumHammerEffect.values().length) {
-//                currentB = EnumHammerEffect.values()[data];
-//            }
-//        }
+
+        if (compound.contains(moduleAKey)) {
+            byte data = compound.getByte(moduleAKey);
+            if (data < HammerEffect.values().length) {
+                moduleA = HammerEffect.values()[data];
+            }
+        }
+
+        if (compound.contains(moduleBKey)) {
+            byte data = compound.getByte(moduleBKey);
+            if (data < HammerEffect.values().length) {
+                moduleB = HammerEffect.values()[data];
+            }
+        }
     }
 
     @Override
@@ -354,34 +310,20 @@ public class HammerBaseTile extends TileEntity {
 
         writeCells(compound, slots);
 
+        writeModules(compound, moduleA, moduleB);
+
         return compound;
     }
 
-//    public static void writeModules(CompoundNBT compound, boolean[] modulesA, boolean[] modulesB, EnumHammerEffect currentA, EnumHammerEffect currentB) {
-//        byte modAByte = 0;
-//        for(int i = 0; i < modulesA.length ;i++) {
-//            if (modulesA[i]) {
-//                modAByte |= (128 >> i);
-//            }
-//        }
-//        compound.put(modulesAKey, ByteNBT.valueOf(modAByte));
-//
-//        byte modBByte = 0;
-//        for(int i = 0; i < modulesB.length ;i++) {
-//            if (modulesA[i]) {
-//                modBByte |= (128 >> i);
-//            }
-//        }
-//        compound.put(modulesAKey, ByteNBT.valueOf(modBByte));
-//
-//        if (currentA != null) {
-//            compound.put(currentAKey, ByteNBT.valueOf((byte) currentA.ordinal()));
-//        }
-//
-//        if (currentB != null) {
-//            compound.put(currentBKey, ByteNBT.valueOf((byte) currentB.ordinal()));
-//        }
-//    }
+    public static void writeModules(CompoundNBT compound, HammerEffect moduleA, HammerEffect moduleB) {
+        if (moduleA != null) {
+            compound.put(moduleAKey, ByteNBT.valueOf((byte) moduleA.ordinal()));
+        }
+
+        if (moduleB != null) {
+            compound.put(moduleBKey, ByteNBT.valueOf((byte) moduleB.ordinal()));
+        }
+    }
 
     public static void writeCells(CompoundNBT compound, ItemStack... cells) {
         ListNBT nbttaglist = new ListNBT();

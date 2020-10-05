@@ -136,7 +136,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
             return interactions;
     }
 

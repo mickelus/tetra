@@ -84,14 +84,14 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                     ForgedContainerBlock::open)
     };
 
-    private static VoxelShape shapeZ1 =     makeCuboidShape(1,   0, -15, 15, 12, 15);
-    private static VoxelShape shapeZ2 =     makeCuboidShape(1,   0, 1,   15, 12, 31);
-    private static VoxelShape shapeX1 =     makeCuboidShape(-15, 0, 1,   15, 12, 15);
-    private static VoxelShape shapeX2 =     makeCuboidShape(1,   0, 1,   31, 12, 15);
-    private static VoxelShape shapeZ1Open = makeCuboidShape(1,   0, -15, 15,  9, 15);
-    private static VoxelShape shapeZ2Open = makeCuboidShape(1,   0, 1,   15,  9, 31);
-    private static VoxelShape shapeX1Open = makeCuboidShape(-15, 0, 1,   15,  9, 15);
-    private static VoxelShape shapeX2Open = makeCuboidShape(1,   0, 1,   31,  9, 15);
+    private static final VoxelShape shapeZ1 =     makeCuboidShape(1,   0, -15, 15, 12, 15);
+    private static final VoxelShape shapeZ2 =     makeCuboidShape(1,   0, 1,   15, 12, 31);
+    private static final VoxelShape shapeX1 =     makeCuboidShape(-15, 0, 1,   15, 12, 15);
+    private static final VoxelShape shapeX2 =     makeCuboidShape(1,   0, 1,   31, 12, 15);
+    private static final VoxelShape shapeZ1Open = makeCuboidShape(1,   0, -15, 15,  9, 15);
+    private static final VoxelShape shapeZ2Open = makeCuboidShape(1,   0, 1,   15,  9, 31);
+    private static final VoxelShape shapeX1Open = makeCuboidShape(-15, 0, 1,   15,  9, 15);
+    private static final VoxelShape shapeX2Open = makeCuboidShape(1,   0, 1,   31,  9, 15);
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -112,7 +112,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerTESR::new);
+        ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
         ScreenManager.registerFactory(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 
@@ -145,9 +145,9 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(state, state.get(facingProp), face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 

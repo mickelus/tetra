@@ -2,7 +2,10 @@ package se.mickelus.tetra.items.forged;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -15,12 +18,12 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemVentPlate extends TetraItem {
-    private static final String unlocalizedName = "vent_plate";
+public class PlanarStabilizerItem extends TetraItem {
+    private static final String unlocalizedName = "planar_stabilizer";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemVentPlate instance;
+    public static PlanarStabilizerItem instance;
 
-    public ItemVentPlate() {
+    public PlanarStabilizerItem() {
         super(new Properties().group(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
@@ -28,7 +31,7 @@ public class ItemVentPlate extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(new TranslationTextComponent("item.tetra.vent_plate.description").mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("item.tetra.planar_stabilizer.description").mergeStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(" "));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }

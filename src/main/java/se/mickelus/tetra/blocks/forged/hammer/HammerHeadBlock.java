@@ -76,7 +76,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
         if (world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
-            if (baseBlock.isFueled(world, basePos)) {
+            if (baseBlock.isFunctional(world, basePos)) {
                 return Collections.singletonList(ToolTypes.hammer);
             }
         }
@@ -89,7 +89,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock {
         if (ToolTypes.hammer.equals(toolType) && world.getBlockState(basePos).getBlock() instanceof HammerBaseBlock) {
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
 
-            if (baseBlock.isFueled(world, basePos)) {
+            if (baseBlock.isFunctional(world, basePos)) {
                 return baseBlock.getHammerLevel(world, basePos);
             }
         }
