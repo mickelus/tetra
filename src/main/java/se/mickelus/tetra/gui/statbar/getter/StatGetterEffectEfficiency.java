@@ -44,7 +44,8 @@ public class StatGetterEffectEfficiency implements IStatGetter {
         return base + CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))
-                .map(improvementData -> improvementData.effects.getEfficiency(effect) * multiplier)
+                .map(improvementData -> improvementData.effects)
+                .map(effects -> effects.getEfficiency(effect) * multiplier)
                 .orElse(0d);
     }
 }
