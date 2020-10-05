@@ -88,7 +88,7 @@
   "tetra.stats.durability.tooltip": "This item has §e%s§r durability",
 
   "tetra.stats.speed": "Speed",
-  "tetra.stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 gathering speed multiplier",
+  "tetra.stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 harvest efficiency multiplier",
 
   "tetra.stats.draw_speed": "Speed",
   "tetra.stats.draw_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
@@ -403,17 +403,17 @@
   "item.tetra.forged_bolt": "Bolt",
   "tetra.salvage_bolt_action.label": "Salvage",
 
-  "item.tetra.forged_beam": "Structure beam",
+  "item.tetra.forged_beam": "Structure Beam",
   "tetra.salvage_beam_action.label": "Salvage",
 
-  "item.tetra.forged_mesh": "Flex mesh",
+  "item.tetra.forged_mesh": "Flex Mesh",
   "tetra.salvage_mesh_action.label": "Salvage",
 
-  "item.tetra.quick_latch": "Quick latch",
+  "item.tetra.quick_latch": "Quick Latch",
   "tetra.salvage_quick_latch_action_hammer.label": "Salvage",
   "tetra.salvage_quick_latch_action_pry.label": "Salvage",
 
-  "item.tetra.metal_scrap": "Metal scrap",
+  "item.tetra.metal_scrap": "Metal Scrap",
   "item.tetra.metal_scrap.description": "Shapes of metal, their use undone or never to be known, awaits a purpose anew",
   "tetra.salvage_metal_scrap_action.label": "Salvage",
 
@@ -435,7 +435,7 @@
   "item.tetra.earthpiercer": "Earthpiercer",
   "tetra.salvage_earthpiercer_action.label": "Salvage",
 
-  "item.tetra.forged_unsettling": "Slight vibrations cause unsettling reverberation within anything it touches",
+  "item.tetra.forged_unsettling": "Nauseating vibrations emanates from this artifact, it seems to have been made to be fitted onto a handle",
   "item.tetra.forged_description": "Found in structures deep underground in cold or mountainous biomes",
 
   "item.tetra.tooltip_reveal": "Reveals related upgrade schematics while in the inventory",
@@ -472,6 +472,9 @@
 
   "tetra.improvement.workable.name": "Workable",
   "tetra.improvement.workable.description": "This module is crafted from materials that are easily worked, honing the item takes less time",
+
+  "tetra.improvement.quality.name": "Good Quality",
+  "tetra.improvement.quality.description": "This module is of good quality, it provides a small boost to damage and harvest efficiency",
 
   "tetra.hone.progress": "§8Hone: §7%s§8/§7%s§8 (§7%s%%§8)",
   "tetra.hone.available": "Honing available",
@@ -1555,7 +1558,7 @@
   "tetra.variant.double_binding/bolt.description": "An adjustable bolt attaches the tool heads to the handle.",
 
   "tetra.tweak.double_tweak/binding_bolt.label": "Bolt tightness",
-  "tetra.tweak.double_tweak/binding_bolt.tooltip": "§eTighten§r the bolt to make the tool more rigid, increasing gathering efficiency.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.",
+  "tetra.tweak.double_tweak/binding_bolt.tooltip": "§eTighten§r the bolt to make the tool more rigid, increasing harvest efficiency.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.",
   "tetra.tweak.double_tweak/binding_bolt.left": "Loose",
   "tetra.tweak.double_tweak/binding_bolt.right": "Tight",
 
@@ -2240,7 +2243,7 @@
   "tetra.variant.single_binding/bolt.description": "An adjustable bolt attaches the tool head to the handle.",
 
   "tetra.tweak.single_tweak/binding_bolt.label": "Bolt tightness",
-  "tetra.tweak.single_tweak/binding_bolt.tooltip": "§eTighten§r the bolt to make the tool more rigid, increasing gathering efficiency.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.",
+  "tetra.tweak.single_tweak/binding_bolt.tooltip": "§eTighten§r the bolt to make the tool more rigid, increasing harvest efficiency.\n§eLoosen§r the bolt to allow for a softer rebound, effectively increasing durability.",
   "tetra.tweak.single_tweak/binding_bolt.left": "Loose",
   "tetra.tweak.single_tweak/binding_bolt.right": "Tight",
 
@@ -3326,7 +3329,7 @@
   "tetra.variant.spike/bone": "Bone spike",
 
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
-  "tetra.advancements.story.more_upgrades.description": "Craft a mallet from sticks and logs\n\n§8§oTetra begins",
+  "tetra.advancements.story.more_upgrades.description": "Craft a mallet from two sticks and two planks\n\n§8§oTetra begins",
 
   "tetra.advancements.spelunking.root.title": "Spelunking",
   "tetra.advancements.spelunking.root.description": "Delve deep underground",
@@ -3358,7 +3361,7 @@
   "tetra.advancements.spelunking.hammer_remove.description": "Use a claw to remove an upgrade from a forge hammer",
   "tetra.advancements.spelunking.loot_ruins.title": "Silky Hex",
   "tetra.advancements.spelunking.loot_ruins.description": "Successfully harvest flooring from the ancient ruins",
-  "tetra.advancements.spelunking.pristine_socket.title": "Immaculate Insert",
+  "tetra.advancements.spelunking.pristine_socket.title": "Expensive Maintenance",
   "tetra.advancements.spelunking.pristine_socket.description": "Find a pristine gem in a geode and use it to socket a sword or a tool",
   "tetra.advancements.spelunking.refill_cell.title": "Excitement",
   "tetra.advancements.spelunking.refill_cell.description": "Use a transfer unit or a core extractor to fully charge a thermal cell",
@@ -3368,11 +3371,11 @@
   "tetra.advancements.spelunking.use_bolt.description": "Use a bolt to bind a tool or a sword, then use the tweak tab in a workbench to change the stats of the item",
 
   "tetra.advancements.upgrades.root.title": "Basic Tinkering",
-  "tetra.advancements.upgrades.root.description": "Craft a mallet from sticks and logs\n\nItem Reward: Holosphere",
+  "tetra.advancements.upgrades.root.description": "Craft a mallet from two sticks and two planks\n\nItem Reward: Holosphere",
   "tetra.advancements.upgrades.bow_upgrade.title": "Bowow",
   "tetra.advancements.upgrades.bow_upgrade.description": "Upgrade a bow in a workbench",
   "tetra.advancements.upgrades.double_headed.title": "[?] Double headed tools",
-  "tetra.advancements.upgrades.double_headed.description": "When using double headed tools (e.g. pickaxes, axes, hammers) it's only the head with the highest value that will be considered when determining damage or harvest efficiency.",
+  "tetra.advancements.upgrades.double_headed.description": "When using double headed tools (e.g. pickaxes, axes, hammers) it's only the head with the highest value that will be considered when determining damage or harvest tier/efficiency.",
   "tetra.advancements.upgrades.hammer_2.title": "Hammer II",
   "tetra.advancements.upgrades.hammer_2.description": "Craft a double-sided diorite hammer, the diorite hammer provides tier two hammering capabilities",
   "tetra.advancements.upgrades.hammer_3.title": "Hammer III",
@@ -3838,7 +3841,7 @@
   "tetra.improvement.enchantment/knockback.description": "Knock back targets further",
   "tetra.improvement.enchantment/mending.description": "Repairs durability when gaining experience",
   "tetra.improvement.enchantment/sweeping.description": "Makes sweeping strikes more effective",
-  "tetra.improvement.enchantment/efficiency.description": "Improves gathering efficiency",
+  "tetra.improvement.enchantment/efficiency.description": "Improves harvest efficiency",
   "tetra.improvement.enchantment/fortune.description": "Increases drops when breaking things",
   "tetra.improvement.enchantment/silk_touch.description": "Harvested blocks will not break",
   "tetra.improvement.enchantment/power.description": "Increases damage dealt",
