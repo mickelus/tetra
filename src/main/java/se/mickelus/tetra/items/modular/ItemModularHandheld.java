@@ -62,6 +62,7 @@ public class ItemModularHandheld extends ModularItem {
     private static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL);
 
     private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANTS, Material.TALL_PLANTS, Material.BAMBOO, Material.GOURD);
+    private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
 
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
     private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
@@ -744,13 +745,15 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        if (ToolType.HOE.equals(toolType)
-                && hoeBonusMaterials.contains(blockState.getMaterial())) {
+        if (ToolType.HOE.equals(toolType) && hoeBonusMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        if (ToolType.AXE.equals(toolType)
-                && axeMaterials.contains(blockState.getMaterial())) {
+        if (ToolType.AXE.equals(toolType) && axeMaterials.contains(blockState.getMaterial())) {
+            return true;
+        }
+
+        if (ToolType.PICKAXE.equals(toolType) && pickaxeMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
@@ -772,6 +775,10 @@ public class ItemModularHandheld extends ModularItem {
 
         if (axeMaterials.contains(blockState.getMaterial())) {
             return ToolType.AXE;
+        }
+
+        if (pickaxeMaterials.contains(blockState.getMaterial())) {
+            return ToolType.PICKAXE;
         }
 
         return null;
