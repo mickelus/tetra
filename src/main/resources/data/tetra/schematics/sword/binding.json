@@ -11,7 +11,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": ["tetra:fibre/", "tetra:skin/"],
             "moduleKey": "sword/binding",
             "moduleVariant": "sword_binding/"
         },

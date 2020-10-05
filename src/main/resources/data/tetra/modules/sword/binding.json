@@ -6,7 +6,7 @@
     "tweakKey": "tetra:sword/binding",
     "variants": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": ["tetra:fibre/", "tetra:skin/"],
             "key": "sword_binding/",
             "extract": {
                 "secondaryAttributes": {

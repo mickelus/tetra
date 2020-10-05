@@ -6,7 +6,7 @@
     "tweakKey": "tetra:single/binding",
     "variants": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": ["tetra:fibre/", "tetra:skin/"],
             "key": "single_binding/",
             "extract": {
                 "secondaryAttributes": {
