@@ -21,25 +21,21 @@ import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
     public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
 
-    private ModelRenderer unpowered;
-    private ModelRenderer powered;
+    private final ModelRenderer unpowered;
+    private final ModelRenderer powered;
 
-    private ModelRenderer[] modulesA;
-    private ModelRenderer[] modulesB;
+    private final ModelRenderer[] modulesA;
+    private final ModelRenderer[] modulesB;
 
 
-    private ModelRenderer cellAunpowered;
-    private ModelRenderer cellBunpowered;
-    private ModelRenderer cellApowered;
-    private ModelRenderer cellBpowered;
+    private final ModelRenderer cellAunpowered;
+    private final ModelRenderer cellBunpowered;
+    private final ModelRenderer cellApowered;
+    private final ModelRenderer cellBpowered;
 
     public HammerBaseRenderer(TileEntityRendererDispatcher rendererDispatcher) {
         super(rendererDispatcher);
 
-        update();
-    }
-
-    private void update() {
         unpowered = new ModelRenderer(128, 64, 0, 0);
         unpowered.addBox(0, 0, 0, 16, 16, 16, 0);
 
@@ -79,7 +75,6 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
     @Override
     public void render(HammerBaseTile tile, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (tile.hasWorld()) {
-            update();
             matrixStack.push();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
             // todo: why does the model render upside down by default?
@@ -110,9 +105,6 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
                     cellBunpowered.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
                 }
             }
-
-            // cell a charge/not charge
-            // cell b charge/not charge
 
             if (tile.getEffect(true) != null) {
                 modulesA[tile.getEffect(true).ordinal()].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
