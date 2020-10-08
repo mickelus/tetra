@@ -9,19 +9,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.CountRangeConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.network.PacketHandler;
 
 public class GeodeBlock extends TetraBlock {
 
@@ -45,19 +41,19 @@ public class GeodeBlock extends TetraBlock {
         return Blocks.STONE.getPickBlock(state, target, world, pos, player);
     }
 
-    @Override
-    public void init(PacketHandler packetHandler) {
+    public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
         int density = ConfigHandler.geodeDensity.get();
         if (density > 0) {
-            for (Biome biome : ForgeRegistries.BIOMES) {
-                biome.addFeature(
-                        GenerationStage.Decoration.UNDERGROUND_ORES,
-                        Feature.ORE.withConfiguration(new OreFeatureConfig(
-                                OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3))
-                                .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(density, 0, 0, 32))
-                        )
-                );
-            }
+            int size = 3;
+            int maxHeight = 32;
+            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.field_241882_a, GeodeBlock.instance.getDefaultState(), size);
+            builder.withFeature(
+                    GenerationStage.Decoration.UNDERGROUND_ORES,
+                    Feature.ORE.withConfiguration(config)
+                            .func_242733_d(maxHeight)
+                            .func_242728_a()
+                            .func_242732_c(density)
+            );
         }
     }
 }

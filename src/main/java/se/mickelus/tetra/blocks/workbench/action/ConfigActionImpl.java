@@ -26,7 +26,7 @@ public class ConfigActionImpl extends ConfigAction {
     private static final LootParameterSet lootParameters = new LootParameterSet.Builder()
             .required(LootParameters.TOOL)
             .required(LootParameters.THIS_ENTITY)
-            .required(LootParameters.POSITION)
+            .required(LootParameters.field_237457_g_)
             .build();
 
     @Override
@@ -76,7 +76,7 @@ public class ConfigActionImpl extends ConfigAction {
                     .withLuck(player.getLuck())
                     .withParameter(LootParameters.TOOL, toolStack)
                     .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.POSITION, player.getPosition())
+                    .withParameter(LootParameters.field_237457_g_, player.getPositionVec())
                     .build(lootParameters);
 
             table.generate(context).forEach(itemStack -> {

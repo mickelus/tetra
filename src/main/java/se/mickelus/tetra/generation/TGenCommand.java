@@ -17,6 +17,7 @@ import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 import se.mickelus.tetra.data.DataManager;
 
@@ -54,7 +55,7 @@ public class TGenCommand {
         return 1;
     }
 
-    private static void generate(ResourceLocation featureLocation, World world, BlockPos pos, long seed) throws CommandException {
+    private static void generate(ResourceLocation featureLocation, ISeedReader world, BlockPos pos, long seed) throws CommandException {
         FeatureParameters feature = DataManager.featureData.getData(featureLocation);
         if (feature != null) {
             ChunkPos chunkPos = new ChunkPos(pos);
