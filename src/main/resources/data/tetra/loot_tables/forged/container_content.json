@@ -1,6 +1,37 @@
 {
     "pools": [
         {
+            "name": "forged/container_content_hammer",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:combustion_chamber"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:planar_stabilizer"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:magmatic_cell",
+                    "functions": [
+                        {
+                            "function": "set_damage",
+                            "damage": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "forged/container_content_good",
             "rolls": 1,
             "entries": [
@@ -26,28 +57,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "tetra:combustion_chamber"
-                },
-                {
-                    "type": "item",
-                    "name": "tetra:planar_stabilizer"
-                },
-                {
-                    "type": "item",
                     "name": "tetra:quick_latch"
-                },
-                {
-                    "type": "item",
-                    "name": "tetra:magmatic_cell",
-                    "functions": [
-                        {
-                            "function": "set_damage",
-                            "damage": {
-                                "min": 0,
-                                "max": 1
-                            }
-                        }
-                    ]
                 }
             ]
         },
@@ -112,6 +122,20 @@
                 },
                 {
                     "type": "item",
+                    "name": "minecraft:hopper",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
                     "name": "minecraft:rail",
                     "weight": 1,
                     "functions": [
@@ -119,7 +143,7 @@
                             "function": "set_count",
                             "count": {
                                 "min": 1,
-                                "max": 24
+                                "max": 64
                             }
                         }
                     ]
@@ -133,7 +157,7 @@
                             "function": "set_count",
                             "count": {
                                 "min": 1,
-                                "max": 4
+                                "max": 16
                             }
                         }
                     ]
@@ -147,7 +171,7 @@
                             "function": "set_count",
                             "count": {
                                 "min": 1,
-                                "max": 4
+                                "max": 8
                             }
                         }
                     ]
@@ -171,7 +195,7 @@
                             "function": "set_count",
                             "count": {
                                 "min": 1,
-                                "max": 8
+                                "max": 64
                             }
                         }
                     ]
