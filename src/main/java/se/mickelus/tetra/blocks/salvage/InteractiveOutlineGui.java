@@ -73,8 +73,7 @@ public class InteractiveOutlineGui extends GuiElement {
                 .start();
 
         if (blockInteraction.requiredTool != null) {
-            tool = new InteractiveToolGui(0, 0,
-                    blockInteraction.requiredTool, blockInteraction.requiredLevel, player);
+            tool = new InteractiveToolGui(0, 0, blockInteraction.requiredTool, blockInteraction.requiredLevel, player);
             addChild(tool);
 
              float centerY = y + height / 2f;
@@ -84,10 +83,10 @@ public class InteractiveOutlineGui extends GuiElement {
                 if (centerX < 16) {
                     tool.setAttachmentPoint(GuiAttachment.middleLeft);
                     tool.setAttachmentAnchor(GuiAttachment.middleRight);
+                    tool.setX(-1);
                 } else {
                     tool.setAttachmentPoint(GuiAttachment.middleRight);
                     tool.setAttachmentAnchor(GuiAttachment.middleLeft);
-                    tool.setX(1);
                 }
             } else {
                 if (centerY < 16) {

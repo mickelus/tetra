@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
@@ -17,17 +18,19 @@ public class InteractiveToolGui extends GuiElement {
 
     private ToolType toolType;
     private int toolLevel;
+
     private PlayerEntity player;
+    private int currentSlot;
 
     public InteractiveToolGui(int x, int y, ToolType toolType, int toolLevel, PlayerEntity player) {
-        super(x, y, 10, 10);
+        super(x, y, 16, 16);
         opacity = 0;
 
         this.toolType = toolType;
         this.toolLevel = toolLevel;
         this.player = player;
 
-        toolIcon = new GuiTool(1, 0, toolType);
+        toolIcon = new GuiTool(-1, 0, toolType);
         addChild(toolIcon);
 
         show = new KeyframeAnimation(100, this)
@@ -37,6 +40,7 @@ public class InteractiveToolGui extends GuiElement {
                 .applyTo(new Applier.Opacity(1, 0));
 
         updateTint();
+        currentSlot = player.inventory.currentItem;
     }
 
     public void updateFadeTime() {
@@ -65,5 +69,15 @@ public class InteractiveToolGui extends GuiElement {
     public void hide() {
         show.stop();
         hide.start();
+    }
+
+    @Override
+    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        if (player.inventory.currentItem != currentSlot) {
+            updateTint();
+            currentSlot = player.inventory.currentItem;
+        }
+
+        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }
