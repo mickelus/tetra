@@ -40,7 +40,7 @@ public class HoloMaterialEffectGui extends GuiElement {
         }
 
         label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat_effect"));
-        label.setColor(GuiColors.mutedStrong);
+        label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);
     }

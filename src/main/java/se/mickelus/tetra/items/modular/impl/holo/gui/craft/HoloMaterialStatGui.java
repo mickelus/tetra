@@ -46,7 +46,7 @@ public class HoloMaterialStatGui extends GuiElement {
         addChild(value);
 
         label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat." + key));
-        label.setColor(GuiColors.mutedStrong);
+        label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);
     }
@@ -57,7 +57,7 @@ public class HoloMaterialStatGui extends GuiElement {
 
     protected void update(double current, double preview) {
         value.setColor(current == 0 && preview == 0 ? GuiColors.mutedStrong : GuiColors.normal);
-        label.setColor(current == 0 && preview == 0 ? 0x222222 : GuiColors.mutedStrong);
+        label.setColor(current == 0 && preview == 0 ? 0x222222 : GuiColors.muted);
 
         value.setString(valueFormatter.getLabelMerged(current, preview));
     }
