@@ -40,7 +40,6 @@
             "materials": ["tetra:wood/oak"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "models": [{
@@ -48,10 +47,10 @@
             }],
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
@@ -69,7 +68,6 @@
             "materials": ["tetra:stone/diorite"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "tools": {
@@ -77,10 +75,10 @@
             },
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
@@ -102,7 +100,6 @@
             "materials": ["tetra:metal/iron"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "tools": {
@@ -110,10 +107,10 @@
             },
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
@@ -135,7 +132,6 @@
             "materials": ["tetra:stone/blackstone"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "tools": {
@@ -143,10 +139,10 @@
             },
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
@@ -168,7 +164,6 @@
             "materials": ["tetra:stone/obsidian"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "tools": {
@@ -179,10 +174,10 @@
             }],
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
@@ -200,7 +195,6 @@
             "materials": ["tetra:metal/netherite"],
             "key": "basic_hammer/",
             "attributes": {
-                "generic.attack_damage": -1,
                 "generic.attack_speed": -1.1
             },
             "tools": {
@@ -208,10 +202,10 @@
             },
             "extract": {
                 "primaryAttributes": {
-                    "generic.attack_damage": 0.8
+                    "generic.attack_damage": 0.5
                 },
                 "secondaryAttributes": {
-                    "generic.attack_damage": 0.3,
+                    "generic.attack_damage": 1,
                     "generic.attack_speed": -0.08
                 },
                 "tools": {

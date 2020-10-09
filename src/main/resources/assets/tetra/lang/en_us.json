@@ -1,6 +1,11 @@
 {
   "itemGroup.tetra": "Tetra",
 
+  "tetra.attribute.draw_strength.name": "Draw strength",
+  "tetra.attribute.draw_speed.name": "Draw time",
+  "tetra.attribute.ability_damage.name": "Ability damage",
+  "tetra.attribute.ability_cooldown.name": "Ability cooldown",
+
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§8[§7right click§8] §7use",
   "tetra.holo.craft.breadcrumb.root": "Craft",
@@ -90,10 +95,10 @@
   "tetra.stats.speed": "Speed",
   "tetra.stats.speed.tooltip": "Affects how fast this item can be swung\n\n§e%s §7seconds between swings\n§ex%s§7 harvest efficiency multiplier",
 
-  "tetra.stats.draw_speed": "Speed",
+  "tetra.stats.draw_speed": "Draw time",
   "tetra.stats.draw_speed.tooltip": "This item takes §e%s §rseconds to fully draw",
 
-  "tetra.stats.draw_speed_normalized": "Speed",
+  "tetra.stats.draw_speed_normalized": "Draw time",
   "tetra.stats.draw_speed_normalized.tooltip": "Changes draw speed by §e%s §rseconds",
 
   "tetra.stats.ability_speed": "Cooldown",
@@ -138,7 +143,7 @@
   "tetra.stats.blocking_reflect.tooltip": "Blocking melee attacks has a §e%s§r chance to deal §e%s§r damage the attacker and apply on hit effects",
 
   "tetra.stats.bashing": "Bashing",
-  "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n\nKnockback factor: §e%s§r\nStun duration: §e%s§r seconds",
+  "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n\n§7Knockback factor: §e%s§r\n§7Stun duration: §e%s§7 seconds",
 
   "tetra.stats.throwable": "Throwable",
   "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
@@ -262,15 +267,16 @@
   "tetra.stats.workable": "Workable",
   "tetra.stats.workable.tooltip": "Honing this item takes §e%s§r less time",
 
-  "tetra.stats.hammer.tooltip": "This item can be used for hammering, it's useful for crafting and salvaging\n%s\n§7Hammer tier: §e%s\n§7Hammer efficiency: §e%s",
-  "tetra.stats.axe.tooltip": "This item can be used for chopping wood\n%s\n§7Axe tier: §e%s\n§7Axe efficiency: §e%s",
-  "tetra.stats.pickaxe.tooltip": "This item can be used for mining\n%s\n§7Pickaxe tier: §e%s\n§7Pickaxe efficiency: §e%s",
-  "tetra.stats.shovel.tooltip": "This item can be used for digging\n%s\n§7Shovel tier: §e%s\n§7Shovel efficiency: §e%s",
-  "tetra.stats.cut.tooltip": "This item can be used for cutting, usable for crafting and for breaking webs and plants\n%s\n§7Cut tier: §e%s\n§7Cut efficiency: §e%s",
-  "tetra.stats.pry.tooltip": "This item can be used for prying things open, usable for salvaging\n%s\n§7Pry tier: §e%s\n§7Pry efficiency: §e%s",
+  "tetra.stats.hammer.tooltip": "This item can be used for hammering, it's useful for crafting and salvaging\n %s\n§7Hammer tier: §e%s\n§7Hammer efficiency: §e%s",
+  "tetra.stats.axe.tooltip": "This item can be used for chopping wood\n %s\n§7Axe tier: §e%s\n§7Axe efficiency: §e%s",
+  "tetra.stats.pickaxe.tooltip": "This item can be used for mining\n %s\n§7Pickaxe tier: §e%s\n§7Pickaxe efficiency: §e%s",
+  "tetra.stats.shovel.tooltip": "This item can be used for digging\n %s\n§7Shovel tier: §e%s\n§7Shovel efficiency: §e%s",
+  "tetra.stats.hoe.tooltip": "This item can be used for harvesting plants\n %s\n§7Hoe tier: §e%s\n§7Hoe efficiency: §e%s",
+  "tetra.stats.cut.tooltip": "This item can be used for cutting, usable for crafting and for breaking webs and plants\n %s\n§7Cut tier: §e%s\n§7Cut efficiency: §e%s",
+  "tetra.stats.pry.tooltip": "This item can be used for prying things open, usable for salvaging\n %s\n§7Pry tier: §e%s\n§7Pry efficiency: §e%s",
 
-  "tetra.stats.tool.striking": "\n§eStriking\n§7Instantly harvests hit blocks, limited by swing speed\n",
-  "tetra.stats.tool.sweeping": "\n§eSweeping\n§7Instantly harvests several blocks on hit, limited by swing speed\n",
+  "tetra.stats.tool.striking": "§eStriking\n§7Instantly harvests hit blocks, limited by swing speed",
+  "tetra.stats.tool.sweeping": "§eSweeping\n§7Instantly harvests several blocks on hit, limited by swing speed",
 
   "tetra.stats.integrity": "Integrity",
   "tetra.stats.integrity.tooltip_positive": "This module provides §e%s§r integrity",
@@ -555,7 +561,7 @@
   "tetra.improvement.hilt_hone/speed.description": "Increases swing speed",
 
   "tetra/schematic/sword/basic_blade.name": "Basic blade",
-  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials. \n\nMaterial §fhardness§r increases §fdamage§r.",
+  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials.\n\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/sword/basic_blade.slot1": "Blade material",
 
   "tetra.module.sword/basic_blade.item_name": "Sword",
@@ -576,8 +582,8 @@
   "tetra.variant.basic_blade/dark_oak.prefix": "Dark oak",
   "tetra.variant.basic_blade/cobblestone": "Stone blade",
   "tetra.variant.basic_blade/cobblestone.prefix": "Stone",
-  "tetra.variant.basic_blade/stone": "Solid stone blade",
-  "tetra.variant.basic_blade/stone.prefix": "Solid stone",
+  "tetra.variant.basic_blade/stone": "Stone blade",
+  "tetra.variant.basic_blade/stone.prefix": "Stone",
   "tetra.variant.basic_blade/granite": "Granite blade",
   "tetra.variant.basic_blade/granite.prefix": "Granite",
   "tetra.variant.basic_blade/diorite": "Diorite blade",
@@ -663,7 +669,7 @@
   "tetra/schematic/sword/shared_blade/hooked_3.description": "Further hone the hooked improvement, increases the bonus damage dealt when hitting enemies from behind to 125%%.",
 
   "tetra/schematic/sword/basic_hilt/basic_hilt.name": "Simple hilt",
-  "tetra/schematic/sword/basic_hilt/basic_hilt.description": "Replaces the current hilt with a new one crafted from the provided material.",
+  "tetra/schematic/sword/basic_hilt/basic_hilt.description": "Replaces the current hilt with a new one crafted from the provided material.\n\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/sword/basic_hilt/basic_hilt.slot1": "Hilt material",
 
   "tetra.module.sword/basic_hilt.name": "Simple hilt",
@@ -1046,7 +1052,7 @@
   "tetra.variant.grip_loop/bone": "Bone loop",
 
   "tetra/schematic/sword/short_blade.name": "Shortblade",
-  "tetra/schematic/sword/short_blade.description": "Replace the current sword blade with a blade that's shorter and lighter than the common blade.\n\n§fCutting§r tool level is based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/sword/short_blade.description": "Replace the current sword blade with a blade that's shorter and lighter than the common blade.\n\nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/sword/short_blade.slot1": "Blade material",
 
   "tetra.module.sword/short_blade.item_name": "Shortblade",
@@ -1161,13 +1167,13 @@
   "tetra.variant.heavy_blade/stone": "Stone cleaver",
   "tetra.variant.heavy_blade/stone.prefix": "stone",
   "tetra.variant.heavy_blade/stone.item_name": "Cleaver",
-  "tetra.variant.heavy_blade/granite": "Solid granite cleaver",
+  "tetra.variant.heavy_blade/granite": "Granite cleaver",
   "tetra.variant.heavy_blade/granite.prefix": "granite",
   "tetra.variant.heavy_blade/granite.item_name": "Cleaver",
-  "tetra.variant.heavy_blade/diorite": "Solid diorite cleaver",
+  "tetra.variant.heavy_blade/diorite": "Diorite cleaver",
   "tetra.variant.heavy_blade/diorite.prefix": "diorite",
   "tetra.variant.heavy_blade/diorite.item_name": "Cleaver",
-  "tetra.variant.heavy_blade/andesite": "Solid andesite cleaver",
+  "tetra.variant.heavy_blade/andesite": "Andesite cleaver",
   "tetra.variant.heavy_blade/andesite.prefix": "andesite",
   "tetra.variant.heavy_blade/andesite.item_name": "Cleaver",
   "tetra.variant.heavy_blade/gold": "Excessive ornate blade",
@@ -1229,12 +1235,12 @@
   "tetra.variant.heavy_blade/dark_oak.prefix": "Dark oak",
 
   "tetra/schematic/sword/machete.name": "Machete",
-  "tetra/schematic/sword/machete.description": "Replace the current sword blade with a machete forged from the provided material, which can be used to cut down plants in an area. The machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.",
+  "tetra/schematic/sword/machete.description": "Replace the current sword blade with a machete which can be used to cut down web and some types of plants in an area.\n\nThe §fcutting efficiency§r is based on the material, at an increased rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/sword/machete.slot1": "Blade material",
 
   "tetra.module.sword/machete.item_name": "Machete",
   "tetra.module.sword/machete.name": "Machete",
-  "tetra.module.sword/machete.description": "A machete which can be used to cut down plants in an area, it deals average damage and has an average attack speed.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.",
+  "tetra.module.sword/machete.description": "A machete which can be used to cut down plants in an area.\n\nThe machete works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.",
 
   "tetra.variant.machete/oak": "Wooden machete",
   "tetra.variant.machete/oak.prefix": "Wooden",
@@ -1250,8 +1256,8 @@
   "tetra.variant.machete/dark_oak.prefix": "Dark oak",
   "tetra.variant.machete/cobblestone": "Stone machete",
   "tetra.variant.machete/cobblestone.prefix": "Stone",
-  "tetra.variant.machete/stone": "Solid stone machete",
-  "tetra.variant.machete/stone.prefix": "Solid stone",
+  "tetra.variant.machete/stone": "Stone machete",
+  "tetra.variant.machete/stone.prefix": "Stone",
   "tetra.variant.machete/granite": "Granite machete",
   "tetra.variant.machete/granite.prefix": "Granite",
   "tetra.variant.machete/diorite": "Diorite machete",
@@ -1436,7 +1442,7 @@
   "tetra.synergy.double/claw_axe": "Carpenter's axe",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n\nMaterial §fdensity§r slightly decreases attack speed.",
+  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/double/basic_handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.double/basic_handle.name": "Basic handle",
@@ -1563,7 +1569,7 @@
   "tetra.tweak.double_tweak/binding_bolt.right": "Tight",
 
   "tetra/schematic/double/basic_axe/basic_axe.name": "Axe head",
-  "tetra/schematic/double/basic_axe/basic_axe.description": "Forge an axe head from the given material. The axe can primarily be used to chop things like planks and logs, but it's also useful for stripping bark from logs and for crafting item modules from wood.\n\nDouble axe heads provide synergy bonuses.",
+  "tetra/schematic/double/basic_axe/basic_axe.description": "Craft an axe head from the given material. The axe can be used to break wooden blocks and for stripping logs.\n\nProvides §faxe§r tool capabilities based on the material. Material §fhardness§r (primarily) and §fdensity§r increases §fdamage§r.\nDouble axe heads provide additional §fdamage§r.",
   "tetra/schematic/double/basic_axe/basic_axe.slot1": "Head material",
 
   "tetra.module.double/basic_axe.item_name": "Axe",
@@ -1637,7 +1643,7 @@
   "tetra.variant.basic_axe/emerald.prefix": "Emerald",
 
   "tetra/schematic/double/basic_pickaxe/basic_pickaxe.name": "Pickaxe head",
-  "tetra/schematic/double/basic_pickaxe/basic_pickaxe.description": "Forge a pickaxe head from the given material.\n\nUsing double pickaxe heads makes the pickaxe able to break tougher blocks.",
+  "tetra/schematic/double/basic_pickaxe/basic_pickaxe.description": "Craft a pickaxe head That can be used for mining.\n\nProvides §fpickaxe§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.\nDouble pickaxe heads provide an additional §fpickaxe tier§r.",
   "tetra/schematic/double/basic_pickaxe/basic_pickaxe.slot1": "Head material",
 
   "tetra.module.double/basic_pickaxe.item_name": "Pickaxe",
@@ -1754,7 +1760,7 @@
   "tetra.variant.butt/emerald": "Emerald butt",
 
   "tetra/schematic/double/basic_hammer/basic_hammer.name": "Hammer head",
-  "tetra/schematic/double/basic_hammer/basic_hammer.description": "Forge a hammer head from the given material. The hammer is useful for crafting modular items, and is sometimes used for salvaging.\n\nDouble hammer heads may provide synergy bonuses.",
+  "tetra/schematic/double/basic_hammer/basic_hammer.description": "Craft a hammer head which can be used for crafting modular items, and for salvaging.\nThe §fhammer efficiency§r is based on the material. Material §fhardness§r increases §fdamage§r. Material §fdensity§r increases §fdamage§r but decreases §fattack speed§r.\nDouble hammer heads provide an additional §fhammer tier§r.",
   "tetra/schematic/double/basic_hammer/basic_hammer.slot1": "Head material",
 
   "tetra.module.double/basic_hammer.item_name": "Hammer",
@@ -1792,12 +1798,12 @@
   "tetra.variant.basic_hammer/netherite.prefix": "Netherite",
 
   "tetra/schematic/double/adze/adze.name": "Adze head",
-  "tetra/schematic/double/adze/adze.description": "Craft an adze head from the given material. The adze can primarily be used for digging but can also be used for chopping wood.",
+  "tetra/schematic/double/adze/adze.description": "Craft an adze head from the given material. The adze can be used for digging and for chopping wood.\n\nProvides §fshovel§r and §faxe§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/double/adze/adze.slot1": "Head material",
 
   "tetra.module.double/adze.item_name": "Adze",
   "tetra.module.double/adze.name": "Adze head",
-  "tetra.module.double/adze.description": "A hefty arched blade at right angles to the handle. The adze can primarily be used for digging but can also be used for chopping wood.",
+  "tetra.module.double/adze.description": "A hefty arched blade that can be used for digging and for chopping wood.",
 
   "tetra.variant.adze/oak": "Wooden adze",
   "tetra.variant.adze/oak.prefix": "Wooden",
@@ -1863,7 +1869,7 @@
   "tetra.variant.adze/emerald.prefix": "Emerald",
 
   "tetra/schematic/double/claw/claw.name": "Claw",
-  "tetra/schematic/double/claw/claw.description": "Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.",
+  "tetra/schematic/double/claw/claw.description": "Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.\n\nProvides §fclaw§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/double/claw/claw.slot1": "Claw material",
 
   "tetra.module.double/claw.item_name": "Claw",
@@ -1934,7 +1940,7 @@
   "tetra.variant.claw/emerald.prefix": "Emerald",
 
   "tetra/schematic/double/hoe/hoe.name": "Hoe",
-  "tetra/schematic/double/hoe/hoe.description": "Craft a hoe from the given material, the hoe can be used for tilling soil.",
+  "tetra/schematic/double/hoe/hoe.description": "Craft a hoe from the given material, the hoe can be used for harvesting plants and for tilling soil.\n\nProvides §fhoe§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/double/hoe/hoe.slot1": "Hoe material",
 
   "tetra.module.double/hoe.item_name": "Hoe",
@@ -2005,7 +2011,7 @@
   "tetra.variant.hoe/emerald.prefix": "Emerald",
 
   "tetra/schematic/double/sickle/sickle.name": "Sickle",
-  "tetra/schematic/double/sickle/sickle.description": "Craft a sickle from the given material, which can be used to cut blocks in an area. The sickle works different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.",
+  "tetra/schematic/double/sickle/sickle.description": "Craft a sickle which can be used to cut down plants in an area.\n\nProvides §fhoe§r tool capabilities based on the material, at a decreased rate.\nMaterial §fhardness§r increases §fdamage§r.",
   "tetra/schematic/double/sickle/sickle.slot1": "Sickle material",
 
   "tetra.module.double/sickle.item_name": "Sickle",
@@ -2248,12 +2254,12 @@
   "tetra.tweak.single_tweak/binding_bolt.right": "Tight",
 
   "tetra/schematic/single/basic_shovel/basic_shovel.name": "Shovel head",
-  "tetra/schematic/single/basic_shovel/basic_shovel.description": "Forge an axe head from the given material. The shovel can primarily be used to dig into the earth, but it's also useful for make dirt paths.",
+  "tetra/schematic/single/basic_shovel/basic_shovel.description": "Forge a shovel head from the given material. The shovel can primarily be used to dig into the earth, but it's also useful for making dirt paths.",
   "tetra/schematic/single/basic_shovel/basic_shovel.slot1": "Head material",
 
   "tetra.module.single/basic_shovel.item_name": "Shovel",
   "tetra.module.single/basic_shovel.name": "Shovel head",
-  "tetra.module.single/basic_shovel.description": "A basic shovel head that can primarily be used to dig into the earth, but it's also useful for make dirt paths.",
+  "tetra.module.single/basic_shovel.description": "A basic shovel head that can primarily be used to dig into the earth, but it's also useful for making dirt paths.",
 
   "tetra.variant.basic_shovel/oak": "Wooden shovel",
   "tetra.variant.basic_shovel/oak.prefix": "Wooden",
@@ -2602,7 +2608,7 @@
   "tetra.slot.bow/riser": "Riser",
 
   "tetra/schematic/bow/string/basic_string.name": "Basic String",
-  "tetra/schematic/bow/string/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.",
+  "tetra/schematic/bow/string/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.\n\nMaterial §fdensity§r slightly increases §fdraw time§r.",
   "tetra/schematic/bow/string/basic_string.slot1": "Material",
 
   "tetra.module.bow/basic_string.name": "Basic string",
@@ -2618,12 +2624,12 @@
   "tetra.variant.basic_string/twisting_vine": "Twisting vine bowstring",
 
   "tetra/schematic/bow/stave/straight_stave.name": "Straight stave",
-  "tetra/schematic/bow/stave/straight_stave.description": "Replaces the stave with a new straight stave crafted from the given materials.",
+  "tetra/schematic/bow/stave/straight_stave.description": "Replaces the stave with a straight stave crafted from the given materials.\n\nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
   "tetra/schematic/bow/stave/straight_stave.slot1": "Material",
 
   "tetra.module.bow/straight_stave.item_name": "Bow",
   "tetra.module.bow/straight_stave.name": "Straight stave",
-  "tetra.module.bow/straight_stave.description": "A long bow stave.",
+  "tetra.module.bow/straight_stave.description": "A straight bow stave.",
 
   "tetra.variant.straight_stave/stick": "Makeshift straight stave",
   "tetra.variant.straight_stave/oak": "Oak straight stave",
@@ -2672,7 +2678,7 @@
   "tetra.variant.straight_stave/nickel.prefix": "Nickel",
 
   "tetra/schematic/bow/stave/long_stave.name": "Long stave",
-  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a new long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage than other bows.",
+  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage.\n\nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r greatly increases §fstrength§r and slightly decreases §fdraw time§r.",
   "tetra/schematic/bow/stave/long_stave.slot1": "Material",
 
   "tetra.module.bow/long_stave.item_name": "Longbow",
@@ -2726,7 +2732,7 @@
   "tetra.variant.long_stave/nickel.prefix": "Nickel",
 
   "tetra/schematic/bow/stave/recurve_stave.name": "Recurve stave",
-  "tetra/schematic/bow/stave/recurve_stave.description": "Replaces the stave with a new recurve stave crafted from the given materials. Recurve bows typically have a faster draw speed than other types of bows.",
+  "tetra/schematic/bow/stave/recurve_stave.description": "Replaces the stave with a recurve stave crafted from the given materials. Recurve bows typically have a faster draw speed than other types of bows.\n\nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
   "tetra/schematic/bow/stave/recurve_stave.slot1": "Material",
 
   "tetra.module.bow/recurve_stave.item_name": "Recurve bow",
@@ -2851,7 +2857,7 @@
   "tetra.slot.shield/boss": "Boss",
 
   "tetra/schematic/shield/plate/tower.name": "Tower plate",
-  "tetra/schematic/shield/plate/tower.description": "Craft a tower shield plate from the given materials. Tower shields can block indefinitely and has no cooldown, but it uses more integrity than other types of shields.",
+  "tetra/schematic/shield/plate/tower.description": "Craft a tower shield plate, tower shields can block indefinitely with no cooldown but uses more integrity than other types of shields.\n\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r increases §fdamage§r and §fcooldown§r.\nMaterial §fflexibility§r decreases §fcooldown§r.",
   "tetra/schematic/shield/plate/tower.slot1": "Material",
 
   "tetra.module.shield/tower.item_name": "Tower shield",
@@ -2909,7 +2915,7 @@
   "tetra.variant.tower/vent_plate": "Insulated tower plate",
 
   "tetra/schematic/shield/plate/heater.name": "Heater plate",
-  "tetra/schematic/shield/plate/heater.description": "Craft a heater shield plate from the given materials. Heaters are medium size shields that uses less integrity than a tower shield, but can only block for a limited amount of time before going on cooldown.",
+  "tetra/schematic/shield/plate/heater.description": "Craft a heater shield plate, heaters can block for a limited time before going on cooldown.\n\nMaterial §fhardness§r increases §fdamage§r and §fblock duration§r. Material §fdensity§r increases §fdamage§r and §fcooldown§r, and decreases §fblock duration§r. Material §fflexibility§r increases §fblock duration§r.",
   "tetra/schematic/shield/plate/heater.slot1": "Material",
 
   "tetra.module.shield/heater.item_name": "Heater shield",
@@ -2967,7 +2973,7 @@
   "tetra.variant.heater/netherite.prefix": "Netherite",
 
   "tetra/schematic/shield/plate/buckler.name": "Buckler plate",
-  "tetra/schematic/shield/plate/buckler.description": "Craft a buckler from the given materials. Bucklers cannot be used to block but they provide a passive toughness bonus.",
+  "tetra/schematic/shield/plate/buckler.description": "Craft a buckler from the given materials. Bucklers provide a passive toughness bonus but cannot be used to block.\n\nMaterial §fhardness§r increases §fdamage§r and §ftoughness§r.\nMaterial §fdensity§r increases §fdamage§r, §fcooldown§r and §ftoughness§r.\nMaterial §fflexibility§r increases §ftoughness§r.",
   "tetra/schematic/shield/plate/buckler.slot1": "Material",
 
   "tetra.module.shield/buckler.item_name": "Buckler",
@@ -3290,7 +3296,7 @@
   "tetra.improvement.plate_hone/durability.description": "Increases durability",
 
   "tetra/schematic/shield/sturdy_boss.name": "Sturdy boss",
-  "tetra/schematic/shield/sturdy_boss.description": "Craft a sturdy boss from the given materials. The sturdy boss makes it possible to bash other entities using the shield.",
+  "tetra/schematic/shield/sturdy_boss.description": "Craft a sturdy boss that makes it possible to bash other entities using the shield.\n\nMaterial §fhardness§r increases §fknockback§r and §fstun duration§r.\nMaterial §fdensity§r increases §fknockback§r and §fcooldown§r, and slightly increases §fstun duration§r.",
   "tetra/schematic/shield/sturdy_boss.slot1": "Material",
 
   "tetra.module.shield/sturdy_boss.name": "Sturdy boss",
@@ -3309,7 +3315,7 @@
   "tetra.variant.sturdy_boss/netherite": "Sturdy netherite boss",
 
   "tetra/schematic/shield/spike.name": "Spike",
-  "tetra/schematic/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.",
+  "tetra/schematic/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.\n\nMaterial §fhardness§r increases §freflect damage§r.\nMaterial §fdensity§r decreases §freflect chance§r and increases §fcooldown§r.",
   "tetra/schematic/shield/spike.slot1": "Material",
 
   "tetra.module.shield/spike.name": "Spike",

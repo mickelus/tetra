@@ -15,7 +15,6 @@
         "texture": "stone"
     },
     "textures": [
-        "grainy",
         "crude",
         "default"
     ],
