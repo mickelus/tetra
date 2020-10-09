@@ -33,6 +33,8 @@ public class TooltipGetterTool implements ITooltipGetter {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingCut, 1);
         } else if (tool == ToolType.SHOVEL) {
             strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingShovel, 1);
+        } else if (tool == ToolType.HOE) {
+            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingHoe, 1);
         }
 
         sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1);
@@ -45,9 +47,9 @@ public class TooltipGetterTool implements ITooltipGetter {
 
         if (strikingGetter != null && strikingGetter.getValue(player, itemStack) > 0) {
             if (sweepingGetter.getValue(player, itemStack) > 0) {
-                modifier = I18n.format(sweepingKey);
+                modifier = " \n" + I18n.format(sweepingKey) + "\n ";
             } else {
-                modifier = I18n.format(strikingKey);
+                modifier = " \n" + I18n.format(strikingKey) + "\n ";
             }
         }
 
