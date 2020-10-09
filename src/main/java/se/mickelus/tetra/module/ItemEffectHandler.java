@@ -390,7 +390,7 @@ public class ItemEffectHandler {
 
             event.getEntity().getEntityWorld().getEntitiesWithinAABB(PlayerEntity.class, aabb).forEach(player -> {
                 int reverbLevel = PropertyHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
-                if (reverbLevel > 0) {
+                if (reverbLevel > 0 && !player.isCreative()) {
                     double effectProbability = PropertyHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
                     if (effectProbability > 0) {
                         if (player.getRNG().nextDouble() < effectProbability * 2) {

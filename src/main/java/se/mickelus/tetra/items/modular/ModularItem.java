@@ -390,15 +390,15 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     protected void causeEnderReverbEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.world.isRemote) {
             double effectProbability = getEffectEfficiency(itemStack, ItemEffect.enderReverb);
-            if (effectProbability > 0) {
-                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
-                    AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
-                    List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
-                            target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
-                                    || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
-                    if (nearbyTargets.size() > 0) {
-                        nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
-                    }
+            if (effectProbability > 0
+                    && !CastOptional.cast(entity, PlayerEntity.class).map(PlayerEntity::isCreative).orElse(false)
+                    && entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
+                List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
+                        target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
+                                || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
+                if (nearbyTargets.size() > 0) {
+                    nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
                 }
             }
         }
