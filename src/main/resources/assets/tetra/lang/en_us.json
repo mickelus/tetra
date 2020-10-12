@@ -2088,14 +2088,14 @@
   "tetra.synergy.single/javelin": "Javelin",
 
   "tetra/schematic/single/handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle with a basic handle crafted from the given materials. \n\nProvides integrity based on the material. Material §fdensity§r slightly decreases attack speed.",
+  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle with a basic handle crafted from the given materials. \n\nProvides integrity based on the material. Material §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/single/handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.single/basic_handle.name": "Basic handle",
   "tetra.module.single/basic_handle.description": "A basic handle. Handles are the primary source of integrity.",
 
   "tetra/schematic/single/handle/light_handle.name": "Light handle",
-  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.\n\nProvides integrity based on the material. Material §fdensity§r increases thrown damage, but slightly decreases attack speed.",
+  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.\n\nProvides integrity based on the material. Material §fdensity§r increases §fthrow damage§r, but slightly decreases §fattack speed§r.",
   "tetra/schematic/single/handle/light_handle.slot1": "Handle material",
 
   "tetra.module.single/light_handle.name": "Light handle",
@@ -2131,7 +2131,7 @@
   "tetra.variant.light_handle/nickel": "Light nickel handle",
 
   "tetra/schematic/single/handle/long_handle.name": "Long handle",
-  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.\n\nProvides integrity based on the material. Material §fflexibility§r and §fhardness§r improves the reach effect.\nMaterial §fdensity§r slightly decreases attack speed.",
+  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.\n\nProvides integrity based on the material. Material §fflexibility§r and §fhardness§r improves the §freach§r effect.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
   "tetra/schematic/single/handle/long_handle.slot1": "Handle material",
 
   "tetra.module.single/long_handle.name": "Long handle",
@@ -2326,7 +2326,7 @@
 
 
   "tetra/schematic/single/spearhead/spearhead.name": "Spearhead",
-  "tetra/schematic/single/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.",
+  "tetra/schematic/single/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.\n\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly increases §fdamage§r and slightly decreases §fattack speed§r.",
   "tetra/schematic/single/spearhead/spearhead.slot1": "Head material",
 
   "tetra.module.single/spearhead.item_name": "Spear",
