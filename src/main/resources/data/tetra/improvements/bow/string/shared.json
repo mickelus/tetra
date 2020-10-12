@@ -2,7 +2,9 @@
     {
         "key": "bowstring/release_latch",
         "integrity": -1,
-        "attackSpeedMultiplier": 0.9,
+        "attributes": {
+            "tetra:draw_speed": -0.1
+        },
         "effects": {
             "releaseLatch": 1
         },

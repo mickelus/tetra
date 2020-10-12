@@ -25,7 +25,9 @@
         {
             "key": "single_binding/bolt",
             "durability": 12,
-            "attackSpeed": -0.1,
+            "attributes": {
+                "generic.attack_speed": -0.1
+            },
             "glyph": {
                 "tint": "bolt_glyph",
                 "textureX": 80,

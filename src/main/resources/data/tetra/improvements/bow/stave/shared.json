@@ -5,8 +5,10 @@
         "durability": 3,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.05,
-        "damageMultiplier": 1.1,
+        "attributes": {
+            "tetra:draw_speed": -0.05,
+            "**tetra:draw_strength": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.1],
             "fierySelf": [-1, -0.033]
@@ -23,8 +25,10 @@
         "durability": 6,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.07,
-        "damageMultiplier": 1.15,
+        "attributes": {
+            "tetra:draw_speed": -0.1,
+            "**tetra:draw_strength": 0.15
+        },
         "effects": {
             "enderReverb": [-2, -0.11],
             "fierySelf": [-1, -0.035]
@@ -41,8 +45,10 @@
         "durability": 9,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": -0.1,
-        "damageMultiplier": 1.2,
+        "attributes": {
+            "tetra:draw_speed": -0.15,
+            "**tetra:draw_strength": 0.2
+        },
         "effects": {
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.037]
@@ -59,7 +65,9 @@
         "durability": 8,
         "group": "wrap",
         "integrity": -1,
-        "damageMultiplier": 1.12,
+        "attributes": {
+            "**tetra:draw_strength": 0.05
+        },
         "effects": {
             "enderReverb": [-2, -0.15],
             "fierySelf": [-1, -0.05]
@@ -76,7 +84,9 @@
         "durability": 16,
         "group": "wrap",
         "integrity": -1,
-        "damageMultiplier": 1.15,
+        "attributes": {
+            "**tetra:draw_strength": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.16],
             "fierySelf": [-1, -0.07]
@@ -93,7 +103,9 @@
         "durability": 24,
         "group": "wrap",
         "integrity": -2,
-        "damageMultiplier": 1.2,
+        "attributes": {
+            "**tetra:draw_strength": 0.15
+        },
         "effects": {
             "enderReverb": [-2, -0.18],
             "fierySelf": [-1, -0.09]
@@ -110,7 +122,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.1,
+        "attributes": {
+            "tetra:draw_speed": -0.1
+        },
         "effects": {
             "enderReverb": [-3, -0.1],
             "fierySelf": [-2, -0.033]
@@ -127,7 +141,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.13,
+        "attributes": {
+            "tetra:draw_speed": -0.12
+        },
         "effects": {
             "enderReverb": [-3, -0.17],
             "fierySelf": [-2, -0.046]
@@ -144,7 +160,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": -0.18,
+        "attributes": {
+            "tetra:draw_speed": -0.14
+        },
         "effects": {
             "enderReverb": [-3, -0.25],
             "fierySelf": [-2, -0.06]
@@ -161,8 +179,10 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.1,
-        "damageMultiplier": 1.05,
+        "attributes": {
+            "tetra:draw_speed": -0.1,
+            "**tetra:draw_strength": 0.05
+        },
         "effects": {
             "enderReverb": [-2, -0.1],
             "fierySelf": [-1, -0.033]
@@ -179,8 +199,10 @@
         "durability": 10,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": -0.12,
-        "damageMultiplier": 1.07,
+        "attributes": {
+            "tetra:draw_speed": -0.15,
+            "**tetra:draw_strength": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.11],
             "fierySelf": [-1, -0.036]
@@ -197,8 +219,10 @@
         "durability": 15,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": -0.15,
-        "damageMultiplier": 1.1,
+        "attributes": {
+            "tetra:draw_speed": -0.2,
+            "**tetra:draw_strength": 0.15
+        },
         "effects": {
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.04]

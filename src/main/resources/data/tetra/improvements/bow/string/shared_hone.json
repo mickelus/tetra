@@ -2,30 +2,40 @@
     {
         "key": "bowstring_hone/damage",
         "level": 1,
-        "damageMultiplier": 1.05
+        "attributes": {
+            "**tetra:draw_strength": 0.05
+        }
     },
     {
         "key": "bowstring_hone/damage",
         "level": 2,
         "integrity": -1,
-        "damageMultiplier": 1.1
+        "attributes": {
+            "**tetra:draw_strength": 0.1
+        }
     },
     {
         "key": "bowstring_hone/damage",
         "level": 3,
         "integrity": -1,
-        "damageMultiplier": 1.15
+        "attributes": {
+            "**tetra:draw_strength": 0.15
+        }
     },
     {
         "key": "bowstring_hone/damage",
         "level": 4,
         "integrity": -2,
-        "damageMultiplier": 1.2
+        "attributes": {
+            "**tetra:draw_strength": 0.2
+        }
     },
     {
         "key": "bowstring_hone/damage",
         "level": 5,
         "integrity": -2,
-        "damageMultiplier": 1.3
+        "attributes": {
+            "**tetra:draw_strength": 0.3
+        }
     }
 ]

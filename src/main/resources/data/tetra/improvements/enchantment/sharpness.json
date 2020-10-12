@@ -2,112 +2,144 @@
     {
         "key": "enchantment/sharpness",
         "level": 1,
-        "damage": 1,
+        "attributes": {
+            "generic.attack_damage": 1
+        },
         "enchantment": true,
         "magicCapacity": -11.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 2,
-        "damage": 1.5,
+        "attributes": {
+            "generic.attack_damage": 1.5
+        },
         "enchantment": true,
         "magicCapacity": -22.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 3,
-        "damage": 2,
+        "attributes": {
+            "generic.attack_damage": 2
+        },
         "enchantment": true,
         "magicCapacity": -33.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 4,
-        "damage": 2.5,
+        "attributes": {
+            "generic.attack_damage": 2.5
+        },
         "enchantment": true,
         "magicCapacity": -44.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 5,
-        "damage": 3,
+        "attributes": {
+            "generic.attack_damage": 3
+        },
         "enchantment": true,
         "magicCapacity": -55.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 6,
-        "damage": 3.5,
+        "attributes": {
+            "generic.attack_damage": 3.5
+        },
         "enchantment": true,
         "magicCapacity": -66.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 7,
-        "damage": 4,
+        "attributes": {
+            "generic.attack_damage": 4
+        },
         "enchantment": true,
         "magicCapacity": -77.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 8,
-        "damage": 4.5,
+        "attributes": {
+            "generic.attack_damage": 4.5
+        },
         "enchantment": true,
         "magicCapacity": -88.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 9,
-        "damage": 5,
+        "attributes": {
+            "generic.attack_damage": 5
+        },
         "enchantment": true,
         "magicCapacity": -99.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 10,
-        "damage": 5.5,
+        "attributes": {
+            "generic.attack_damage": 5.5
+        },
         "enchantment": true,
         "magicCapacity": -110.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 11,
-        "damage": 6,
+        "attributes": {
+            "generic.attack_damage": 6
+        },
         "enchantment": true,
         "magicCapacity": -121.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 12,
-        "damage": 6.5,
+        "attributes": {
+            "generic.attack_damage": 6.5
+        },
         "enchantment": true,
         "magicCapacity": -132.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 13,
-        "damage": 7,
+        "attributes": {
+            "generic.attack_damage": 7
+        },
         "enchantment": true,
         "magicCapacity": -143.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 14,
-        "damage": 7.5,
+        "attributes": {
+            "generic.attack_damage": 7.5
+        },
         "enchantment": true,
         "magicCapacity": -154.0
     },
     {
         "key": "enchantment/sharpness",
         "level": 15,
-        "damage": 8,
+        "attributes": {
+            "generic.attack_damage": 8
+        },
         "enchantment": true,
         "magicCapacity": -165.0
     },
     {
         "key": "destabilized/sharpness",
         "level": 1,
-        "damageMultiplier": 0.95,
+        "attributes": {
+            "**generic.attack_damage": -0.05
+        },
         "enchantment": true,
         "glyph": {
             "tint": "ee5599"
@@ -116,7 +148,9 @@
     {
         "key": "destabilized/sharpness",
         "level": 2,
-        "damageMultiplier": 0.9,
+        "attributes": {
+            "**generic.attack_damage": -0.1
+        },
         "enchantment": true,
         "glyph": {
             "tint": "ee5599"
@@ -125,7 +159,9 @@
     {
         "key": "destabilized/sharpness",
         "level": 3,
-        "damageMultiplier": 0.85,
+        "attributes": {
+            "**generic.attack_damage": -0.15
+        },
         "enchantment": true,
         "glyph": {
             "tint": "ee5599"
@@ -134,7 +170,9 @@
     {
         "key": "destabilized/sharpness",
         "level": 4,
-        "damageMultiplier": 0.8,
+        "attributes": {
+            "**generic.attack_damage": -0.2
+        },
         "enchantment": true,
         "glyph": {
             "tint": "ee5599"

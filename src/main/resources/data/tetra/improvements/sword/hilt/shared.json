@@ -1,27 +1,17 @@
 [
     {
-        "key": "basic_hilt/blazing",
-        "effects": {
-            "fierySelf": [2, 0.1]
-        }
-    },
-    {
-        "key": "basic_hilt/ender_reverb",
-        "effects": {
-            "enderReverb": [3, 0.3]
-        }
-    },
-    {
         "key": "basic_hilt/wrap_string",
         "level": 1,
         "durability": 3,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.05,
-        "damageMultiplier": 1.1,
+        "attributes": {
+            "generic.attack_speed": 0.05,
+            "**generic.attack_damage": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.1],
-            "fierySelf": [-1, -0.033]
+            "fierySelf": [-1, -0.03]
         },
         "models": [{
             "location": "tetra:items/module/sword/hilt/basic/improvements/wrap_alt",
@@ -34,11 +24,13 @@
         "durability": 6,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.06,
-        "damageMultiplier": 1.15,
+        "attributes": {
+            "generic.attack_speed": 0.1,
+            "**generic.attack_damage": 0.15
+        },
         "effects": {
-            "enderReverb": [-2, -0.11],
-            "fierySelf": [-1, -0.035]
+            "enderReverb": [-2, -0.12],
+            "fierySelf": [-1, -0.04]
         },
         "models": [{
             "location": "tetra:items/module/sword/hilt/basic/improvements/wrap_alt",
@@ -51,11 +43,13 @@
         "durability": 9,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": 0.07,
-        "damageMultiplier": 1.2,
+        "attributes": {
+            "generic.attack_speed": 0.15,
+            "**generic.attack_damage": 0.2
+        },
         "effects": {
-            "enderReverb": [-2, -0.12],
-            "fierySelf": [-1, -0.037]
+            "enderReverb": [-2, -0.14],
+            "fierySelf": [-1, -0.05]
         },
         "models": [{
             "location": "tetra:items/module/sword/hilt/basic/improvements/wrap_alt",
@@ -68,7 +62,9 @@
         "durability": 8,
         "group": "wrap",
         "integrity": -1,
-        "damageMultiplier": 1.05,
+        "attributes": {
+            "**generic.attack_damage": 0.05
+        },
         "effects": {
             "enderReverb": [-2, -0.15],
             "fierySelf": [-1, -0.05]
@@ -84,7 +80,9 @@
         "durability": 16,
         "group": "wrap",
         "integrity": -1,
-        "damageMultiplier": 1.06,
+        "attributes": {
+            "**generic.attack_damage": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.16],
             "fierySelf": [-1, -0.07]
@@ -100,7 +98,9 @@
         "durability": 24,
         "group": "wrap",
         "integrity": -2,
-        "damageMultiplier": 1.07,
+        "attributes": {
+            "**generic.attack_damage": 0.15
+        },
         "effects": {
             "enderReverb": [-2, -0.18],
             "fierySelf": [-1, -0.09]
@@ -116,7 +116,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.1,
+        "attributes": {
+            "generic.attack_speed": 0.1
+        },
         "effects": {
             "enderReverb": [-3, -0.1],
             "fierySelf": [-2, -0.033]
@@ -132,7 +134,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.12,
+        "attributes": {
+            "generic.attack_speed": 0.12
+        },
         "effects": {
             "enderReverb": [-3, -0.17],
             "fierySelf": [-2, -0.046]
@@ -148,7 +152,9 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": 0.14,
+        "attributes": {
+            "generic.attack_speed": 0.14
+        },
         "effects": {
             "enderReverb": [-3, -0.25],
             "fierySelf": [-2, -0.06]
@@ -164,8 +170,10 @@
         "durability": 5,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.1,
-        "damageMultiplier": 1.05,
+        "attributes": {
+            "generic.attack_speed": 0.1,
+            "**generic.attack_damage": 0.05
+        },
         "effects": {
             "enderReverb": [-2, -0.1],
             "fierySelf": [-1, -0.033]
@@ -181,8 +189,10 @@
         "durability": 10,
         "group": "wrap",
         "integrity": -1,
-        "attackSpeed": 0.15,
-        "damageMultiplier": 1.06,
+        "attributes": {
+            "generic.attack_speed": 0.15,
+            "**generic.attack_damage": 0.1
+        },
         "effects": {
             "enderReverb": [-2, -0.11],
             "fierySelf": [-1, -0.036]
@@ -198,8 +208,10 @@
         "durability": 15,
         "group": "wrap",
         "integrity": -2,
-        "attackSpeed": 0.2,
-        "damageMultiplier": 1.07,
+        "attributes": {
+            "generic.attack_speed": 0.2,
+            "**generic.attack_damage": 0.15
+        },
         "effects": {
             "enderReverb": [-2, -0.12],
             "fierySelf": [-1, -0.04]

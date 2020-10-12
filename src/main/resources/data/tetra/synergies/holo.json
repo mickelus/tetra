@@ -1,7 +1,9 @@
 [
     {
         "modules": ["holo/scanner", "holo/scanner"],
-        "attackSpeed": -0.4,
+        "attributes": {
+            "tetra:ability_cooldown": 0.4
+        },
         "effects": {
             "scannerRange": -14,
             "scannerHorizontalSpread":  -12,

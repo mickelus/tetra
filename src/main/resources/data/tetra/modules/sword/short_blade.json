@@ -82,8 +82,10 @@
             "durability": 140,
             "integrity": -3,
             "magicCapacity": 102,
-            "damage": 5,
-            "attackSpeed": 1.5,
+            "attributes": {
+                "generic.attack_damage": 5,
+                "generic.attack_speed": 1.5
+            },
             "glyph": {
                 "tint": "prismarine_glyph",
                 "textureX": 32

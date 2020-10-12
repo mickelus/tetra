@@ -39,8 +39,10 @@
             "durability": 771,
             "integrity": -3,
             "magicCapacity": 48,
-            "damage": 2,
-            "attackSpeed": -0.4,
+            "attributes": {
+                "generic.attack_damage": 2,
+                "generic.attack_speed": -0.4
+            },
             "tools": {
                 "pickaxe": [
                     3,

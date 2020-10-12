@@ -2,30 +2,40 @@
     {
         "key": "grip_hone/damage_mult",
         "level": 1,
-        "damageMultiplier": 1.1
+        "attributes": {
+            "**generic.attack_damage": 0.1
+        }
     },
     {
         "key": "grip_hone/damage_mult",
         "level": 2,
         "integrity": -1,
-        "damageMultiplier": 1.2
+        "attributes": {
+            "**generic.attack_damage": 0.2
+        }
     },
     {
         "key": "grip_hone/damage_mult",
         "level": 3,
         "integrity": -1,
-        "damageMultiplier": 1.3
+        "attributes": {
+            "**generic.attack_damage": 0.3
+        }
     },
     {
         "key": "grip_hone/damage_mult",
         "level": 4,
         "integrity": -2,
-        "damageMultiplier": 1.4
+        "attributes": {
+            "**generic.attack_damage": 0.4
+        }
     },
     {
         "key": "grip_hone/damage_mult",
         "level": 5,
         "integrity": -2,
-        "damageMultiplier": 1.5
+        "attributes": {
+            "**generic.attack_damage": 0.5
+        }
     }
 ]

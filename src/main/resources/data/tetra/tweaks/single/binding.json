@@ -5,7 +5,9 @@
         "steps": 10,
         "properties": {
             "durabilityMultiplier": 0.952,
-            "damageMultiplier": 1.03,
+            "attributes": {
+                "**generic.attack_damage": 0.03
+            },
             "tools": {
                 "axe": [0, 0.93],
                 "pickaxe": [0, 0.93],

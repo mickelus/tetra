@@ -7,7 +7,9 @@
             "effects": {
                 "scannerRange": 2
             },
-            "attackSpeed": 0.05
+            "attributes": {
+                "tetra:ability_cooldown": 0.05
+            }
         }
     },
     {
