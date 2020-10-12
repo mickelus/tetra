@@ -1,15 +1,15 @@
 {
     "key": "emerald",
     "category": "gem",
-    "primary": "6",
-    "secondary": "2.9",
+    "primary": "5.5",
+    "secondary": "2.5",
     "tertiary": "0",
-    "durability": "1561",
+    "durability": "850",
     "integrityCost": "2",
     "integrityGain": "2",
-    "magicCapacity": 60,
-    "toolLevel": "4",
-    "toolEfficiency": "8",
+    "magicCapacity": 72,
+    "toolLevel": "3",
+    "toolEfficiency": "7",
     "tints": {
         "glyph": "emerald_glyph",
         "texture": "emerald"
