@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
@@ -16,6 +17,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class HoloVariantsGui extends GuiElement {
+    private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;
 
     private Consumer<OutcomePreview> onVariantHover;
@@ -26,8 +28,10 @@ public class HoloVariantsGui extends GuiElement {
             Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, width, 50);
 
+        groupsScroll = new GuiHorizontalScrollable(0, 0, width, height).setGlobal(true);
+        addChild(groupsScroll);
         groups = new GuiHorizontalLayoutGroup(0, 0, height, 12);
-        addChild(groups);
+        groupsScroll.addChild(groups);
 
         this.onVariantHover = onVariantHover;
         this.onVariantBlur = onVariantBlur;
@@ -49,6 +53,8 @@ public class HoloVariantsGui extends GuiElement {
                     onVariantHover, onVariantBlur, onVariantSelect));
             offset += entry.getValue().size();
         }
+
+        groupsScroll.markDirty();
     }
 
     public void updateSelection(OutcomePreview outcome) {
