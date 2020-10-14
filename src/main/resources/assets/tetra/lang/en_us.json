@@ -807,11 +807,11 @@
   "tetra.variant.makeshift_guard/emerald": "Makeshift emerald guard",
 
   "tetra/schematic/sword/wide_guard.name": "Wide guard",
-  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the main-hand or off-hand.\n\nMaterial §fhardness§r and §fflexibility§r increase the armor amount.",
+  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the mainhand or offhand.\n\nMaterial §fhardness§r and §fflexibility§r increase the armor amount.",
   "tetra/schematic/sword/wide_guard.slot1": "Guard material",
 
   "tetra.module.sword/wide_guard.name": "Wide guard",
-  "tetra.module.sword/wide_guard.description": "a wide guard which protects the wielding hand. Provides additional armor when the sword is held in the main-hand or off-hand.",
+  "tetra.module.sword/wide_guard.description": "a wide guard which protects the wielding hand. Provides additional armor when the sword is held in the mainhand or offhand.",
 
   "tetra.variant.wide_guard/oak": "Wooden wide guard",
   "tetra.variant.wide_guard/spruce": "Wide spruce guard",
@@ -1055,7 +1055,7 @@
   "tetra.variant.grip_loop/bone": "Bone loop",
 
   "tetra/schematic/sword/short_blade.name": "Shortblade",
-  "tetra/schematic/sword/short_blade.description": "Replace the current sword blade with a blade that's shorter and lighter than the common blade.\n\nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/sword/short_blade.description": "Craft a light and short blade that can be used for crafting and for offhand attacks.\n\nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r and §fjab damage§r.",
   "tetra/schematic/sword/short_blade.slot1": "Blade material",
 
   "tetra.module.sword/short_blade.item_name": "Shortblade",

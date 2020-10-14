@@ -78,8 +78,6 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     }
 
     public void registerFeatures(BiomeLoadingEvent event) {
-        System.out.println("=== LOADED BIOME " + event.getName().toString());
-
         event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, withConfiguration(NoFeatureConfig.field_236559_b_));
 
 //        DataManager.featureData.getData().values().stream()
