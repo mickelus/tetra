@@ -5,7 +5,8 @@ import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.data.GlyphData;
 
 public class OutcomePreview {
-    public String key;
+    public String moduleKey;
+    public String variantKey;
     public String category;
     public GlyphData glyph;
     public ItemStack itemStack;
@@ -15,8 +16,9 @@ public class OutcomePreview {
     public ToolData tools;
     public ItemStack[] materials;
 
-    public OutcomePreview(String key, String category, GlyphData glyph, ItemStack itemStack, SchematicType type, ToolData tools, ItemStack[] materials) {
-        this.key = key;
+    public OutcomePreview(String moduleKey, String variantKey, String category, GlyphData glyph, ItemStack itemStack, SchematicType type, ToolData tools, ItemStack[] materials) {
+        this.moduleKey = moduleKey;
+        this.variantKey = variantKey;
         this.category = category;
         this.glyph = glyph;
         this.itemStack = itemStack;

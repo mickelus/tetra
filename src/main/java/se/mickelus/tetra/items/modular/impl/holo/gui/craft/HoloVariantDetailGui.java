@@ -10,6 +10,7 @@ import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -112,7 +113,7 @@ public class HoloVariantDetailGui extends GuiElement {
         if (selectedOutcome != null || hoveredOutcome != null) {
             OutcomePreview baseOutcome = hoveredOutcome != null ? hoveredOutcome : selectedOutcome;
 
-            variantLabel.setString(I18n.format("tetra.variant." + baseOutcome.key));
+            variantLabel.setString(I18n.format(ItemModule.getName(baseOutcome.moduleKey, baseOutcome.variantKey)));
 
             synergyIndicator.setX(variantLabel.getWidth() + 4);
             synergyIndicator.update(baseOutcome.itemStack, slot);

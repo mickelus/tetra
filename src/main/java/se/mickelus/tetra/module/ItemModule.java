@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
+import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.*;
@@ -98,8 +99,25 @@ public abstract class ItemModule implements IToolProvider {
         return variantData.length > 0 ? variantData[0] : new VariantData();
     }
 
+    public static String getName(String moduleKey, String variantKey) {
+        if (I18n.hasKey("tetra.variant." + variantKey)) {
+            return I18n.format("tetra.variant." + variantKey);
+        }
+
+        if (I18n.hasKey("tetra.module." + moduleKey + ".material_name")) {
+            String variant = variantKey.substring(variantKey.indexOf('/') + 1);
+            if (I18n.hasKey("tetra.material." + variant + ".prefix")) {
+                return StringUtils.capitalize(I18n.format("tetra.module." + moduleKey + ".material_name",
+                        I18n.format("tetra.material." + variant + ".prefix")).toLowerCase());
+            }
+        }
+
+        return I18n.format("tetra.variant." + variantKey);
+    }
+
     public String getName(ItemStack itemStack) {
-        return I18n.format("tetra.variant." + getVariantData(itemStack).key);
+        String key = getVariantData(itemStack).key;
+        return getName(getUnlocalizedName(), key);
     }
 
     public String getDescription(ItemStack itemStack) {
@@ -129,14 +147,24 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public String getItemPrefix(ItemStack itemStack) {
-        String variantPrefixKey = "tetra.variant." + getVariantData(itemStack).key + ".prefix";
+        String key = getVariantData(itemStack).key;
+        String variantPrefixKey = "tetra.variant." + key + ".prefix";
         if (I18n.hasKey(variantPrefixKey)) {
             return I18n.format(variantPrefixKey);
         }
 
         String modulePrefixKey = "tetra.module." + getUnlocalizedName() + ".prefix";
         if (I18n.hasKey(modulePrefixKey)) {
-            return I18n.format(modulePrefixKey);
+            String prefix = I18n.format(modulePrefixKey);
+
+            // for when module should derive the prefix from the material, slight hack
+            if (prefix.startsWith("Format error:")) {
+                String variant = key.substring(key.indexOf('/') + 1);
+                return StringUtils.capitalize(
+                        I18n.format(modulePrefixKey, I18n.format("tetra.material." + variant + ".prefix").toLowerCase()));
+            }
+
+            return prefix;
         }
         return null;
     }
