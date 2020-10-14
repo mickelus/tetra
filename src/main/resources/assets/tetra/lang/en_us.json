@@ -148,6 +148,9 @@
   "tetra.stats.throwable": "Throwable",
   "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
 
+  "tetra.stats.jab": "Jab",
+  "tetra.stats.jab.tooltip": "Can be used to attack entities using right-click when held in the offhand, dealing §e%s§r damage and applying on-hit effects. Triggers a cooldown equal to the item's attack.",
+
   "tetra.stats.armorPenetration": "Penetrating",
   "tetra.stats.armorPenetration.tooltip": "Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor",
 

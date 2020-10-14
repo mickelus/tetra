@@ -33,8 +33,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
@@ -262,7 +264,18 @@ public class ItemModularHandheld extends ModularItem {
 
                     tickProgression(player, itemStack, 2);
                     applyDamage(2, itemStack, player);
-                    return ActionResultType.SUCCESS;
+                    return ActionResultType.func_233537_a_(player.world.isRemote);
+                }
+
+                if (Hand.OFF_HAND.equals(hand)) {
+                    int jabLevel = getEffectLevel(itemStack, ItemEffect.jab);
+                    if (jabLevel > 0) {
+                        jabEntity(itemStack, jabLevel, player, target);
+
+                        tickProgression(player, itemStack, 2);
+                        applyDamage(2, itemStack, player);
+                        return ActionResultType.func_233537_a_(player.world.isRemote);
+                    }
                 }
             }
         }
@@ -283,9 +296,50 @@ public class ItemModularHandheld extends ModularItem {
         return false;
     }
 
+    public void jabEntity(ItemStack itemStack, int jabLevel, PlayerEntity player, LivingEntity target) {
+        // apply damage
+        float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
+        float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
+                .map(CriticalHitEvent::getDamageModifier)
+                .orElse(1f);
+
+        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * jabLevel / 100f;
+        target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
+
+        // applies enchantment effects on both parties
+        EnchantmentHelper.applyThornEnchantments(target, player);
+        ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
+
+        // tetra item effects
+        applyHitEffects(itemStack, target, player);
+
+        // knocks back the target based on effect level + knockback enchantment level
+        float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+        target.applyKnockback(knockbackFactor * 0.2f,
+                player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
+
+        if (targetModifier > 1) {
+            player.onEnchantmentCritical(target);
+        }
+
+        if (critMultiplier > 1) {
+            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
+            player.onCriticalHit(target);
+        } else {
+            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 1.3f);
+        }
+
+        player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
+    }
+
     public void bashEntity(ItemStack itemStack, int bashingLevel, PlayerEntity player, LivingEntity target) {
         // apply damage
-        double damage = getAbilityBaseDamage(itemStack) + EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
+        float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
+        float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
+                .map(CriticalHitEvent::getDamageModifier)
+                .orElse(1f);
+
+        double damage = (getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier;
         target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
 
         // applies enchantment effects on both parties
@@ -308,9 +362,17 @@ public class ItemModularHandheld extends ModularItem {
             target.addPotionEffect(new EffectInstance(StunEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
         }
 
+        if (targetModifier > 1) {
+            player.onEnchantmentCritical(target);
+        }
+
+        if (critMultiplier > 1) {
+            player.onCriticalHit(target);
+        }
+
         player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
 
-        player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack)) * 20);
+        player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
     }
 
     public void throwItem(PlayerEntity player, ItemStack stack, int riptideLevel, float cooldownBase) {
@@ -675,7 +737,8 @@ public class ItemModularHandheld extends ModularItem {
      * @return
      */
     public double getCooldownBase(ItemStack itemStack) {
-        return 1 / (getAttributeValue(itemStack, Attributes.ATTACK_SPEED) + getCounterWeightBonus(itemStack));
+        // base value for player attack speed is 4
+        return 1 / Math.max(0.1, 4 + getAttributeValue(itemStack, Attributes.ATTACK_SPEED) + getCounterWeightBonus(itemStack));
     }
 
     @Override

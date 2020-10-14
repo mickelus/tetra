@@ -106,6 +106,12 @@ public class ItemEffect {
     public static ItemEffect piercing = get("piercing");
 
     /**
+     * Jab: When held in the offhand, allows use of right-click to attack an entity. Triggers cooldown.
+     * The level of the effect is used as a multiplier for the damage, e.g. level 30 of the effect would result in a 0.3 damage multiplier.
+     */
+    public static ItemEffect jab = get("jab");
+
+    /**
      * Counterweight: Increases the attack speed based on how much integrity is used by all of the items modules.
      * Increases attack speed by 50% if the effect level is equal to the integrity usage, the AS bonus is reduced by 20%
      * for each point they differ. E.g. If the item has counterweight level 1 and uses 4 durability it's attack speed

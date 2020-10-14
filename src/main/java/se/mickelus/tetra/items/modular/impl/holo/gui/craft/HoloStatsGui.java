@@ -45,6 +45,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(GuiStats.blockingReflect);
         bars.add(GuiStats.bashing);
         bars.add(GuiStats.throwable);
+        bars.add(GuiStats.jab);
         bars.add(GuiStats.quickslot);
         bars.add(GuiStats.potionStorage);
         bars.add(GuiStats.storage);

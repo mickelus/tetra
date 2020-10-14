@@ -108,6 +108,11 @@ public class GuiStats {
             0, 300, false, throwableGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("tetra.stats.throwable.tooltip", throwableGetter));
 
+    public static final IStatGetter jabGetter = new StatGetterEffectLevel(ItemEffect.jab, 1);
+    public static final GuiStatBar jab = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.jab"),
+            0, 300, false, jabGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("tetra.stats.jab.tooltip", jabGetter));
+
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),
                 0, QuickslotInventory.maxSize, true, quickslotGetter, LabelGetterBasic.integerLabel,
