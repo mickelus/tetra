@@ -21,12 +21,14 @@ public class ForgedBlockCommon {
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
+            .setRequiresTool()
             .hardnessAndResistance(12F, 2400.0F);
 
     public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterial)
             .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
+            .setRequiresTool()
             .notSolid()
             .setOpaque(ForgedBlockCommon::notSolid)
             .setSuffocates(ForgedBlockCommon::notSolid)
