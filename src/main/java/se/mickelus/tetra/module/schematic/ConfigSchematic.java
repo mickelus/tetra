@@ -410,10 +410,10 @@ public class ConfigSchematic extends BaseSchematic {
                     ItemStack itemStack = targetStack.copy();
                     applyOutcome(outcome, itemStack, false, slot, null);
 
-                    return new OutcomePreview(key, category, glyph, itemStack, definition.displayType, outcome.requiredTools,
+                    return new OutcomePreview(outcome.moduleKey, key, category, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
                 })
-                .filter(Filter.distinct(preview -> preview.key))
+                .filter(Filter.distinct(preview -> preview.variantKey))
                 .toArray(OutcomePreview[]::new);
     }
 }
