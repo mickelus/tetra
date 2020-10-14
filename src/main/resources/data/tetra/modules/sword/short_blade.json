@@ -50,11 +50,14 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "key": "short_blade/",
             "attributes": {
                 "generic.attack_speed": -1,
                 "generic.attack_damage": -0.5
+            },
+            "effects": {
+                "jab": 130
             },
             "durability": -20,
             "extract": {
@@ -63,6 +66,9 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.1
+                },
+                "secondaryEffects": {
+                    "jab": -8
                 },
                 "tools": {
                     "cut": [0.7, 1]

@@ -7,7 +7,7 @@
     "displayType": "major",
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "moduleKey": "sword/basic_blade",
             "moduleVariant": "basic_blade/"
         }

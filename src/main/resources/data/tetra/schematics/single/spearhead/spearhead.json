@@ -11,7 +11,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "moduleKey": "single/spearhead",
             "moduleVariant": "spearhead/"
         }

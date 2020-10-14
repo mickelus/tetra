@@ -1,0 +1,30 @@
+{
+    "key": "wither_bone",
+    "category": "bone",
+    "primary": "6.5",
+    "secondary": "4",
+    "tertiary": "6",
+    "durability": "958",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "182",
+    "toolLevel": "3",
+    "toolEfficiency": "8",
+    "tints": {
+        "glyph": "4c4854",
+        "texture": "27252b"
+    },
+    "textures": [
+        "bone",
+        "crude"
+    ],
+    "material": {
+        "tag": "forge:bones/wither"
+    },
+    "effects": {
+        "unstable": 10
+    },
+    "requiredTools": {
+        "hammer": 4
+    }
+}

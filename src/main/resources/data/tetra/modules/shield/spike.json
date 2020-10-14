@@ -4,7 +4,7 @@
     "slots": ["shield/boss"],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:misc/bone"],
+            "materials": ["tetra:metal/", "tetra:bone/"],
             "key": "spike/",
             "attributes": {
                 "tetra:ability_cooldown": 0.3

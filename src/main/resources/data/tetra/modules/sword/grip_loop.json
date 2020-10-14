@@ -4,7 +4,7 @@
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:bone/"],
             "key": "grip_loop/",
             "durability": 10,
             "integrity": -1,

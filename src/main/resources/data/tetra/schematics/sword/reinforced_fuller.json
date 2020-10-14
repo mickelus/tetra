@@ -11,7 +11,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:misc/bone", "tetra:misc/forged_beam"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/forged_beam"],
             "moduleKey": "sword/reinforced_fuller",
             "moduleVariant": "reinforced_fuller/"
         }

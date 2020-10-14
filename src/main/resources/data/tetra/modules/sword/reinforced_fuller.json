@@ -4,7 +4,7 @@
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:wood/", "tetra:misc/bone", "tetra:misc/forged_beam"],
+            "materials": ["tetra:metal/", "tetra:wood/", "tetra:bone/", "tetra:misc/forged_beam"],
             "key": "reinforced_fuller/",
             "attributes": {
                 "generic.attack_speed": -0.1

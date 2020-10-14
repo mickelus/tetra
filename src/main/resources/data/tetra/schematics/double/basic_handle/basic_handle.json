@@ -12,7 +12,7 @@
         {
             "materials": [
                 "tetra:wood/", "tetra:metal/",
-                "tetra:misc/bone", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+                "tetra:bone/", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
             ],
             "moduleKey": "double/basic_handle",
             "moduleVariant": "basic_handle/"

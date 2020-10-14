@@ -16,6 +16,7 @@
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "countFactor": 2,
             "moduleKey": "double/basic_axe",
             "moduleVariant": "basic_axe/"
         }

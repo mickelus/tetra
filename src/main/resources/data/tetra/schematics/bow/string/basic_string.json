@@ -10,7 +10,7 @@
     "outcomes": [
         {
             "materials": ["tetra:fibre/"],
-            "countFactor": 2,
+            "countFactor": 1.5,
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/"
         },

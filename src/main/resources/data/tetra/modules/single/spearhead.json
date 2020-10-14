@@ -29,7 +29,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "key": "spearhead/",
             "attributes": {
                 "generic.attack_speed": -1.5

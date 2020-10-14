@@ -23,7 +23,7 @@
             }
         },
         {
-            "materials": ["tetra:misc/bone"],
+            "materials": ["tetra:bone/"],
             "key": "forefinger_ring/",
             "effects": {
                 "quickStrike": 3

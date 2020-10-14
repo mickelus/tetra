@@ -14,7 +14,7 @@
             "materials": [
                 "tetra:wood/",
                 "tetra:metal/",
-                "tetra:misc/bone"
+                "tetra:bone/"
             ],
             "moduleKey": "sword/forefinger_ring",
             "moduleVariant": "forefinger_ring/"

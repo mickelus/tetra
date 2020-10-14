@@ -1,27 +1,28 @@
 {
-    "key": "vine",
+    "key": "hemp",
     "category": "fibre",
     "primary": "5",
-    "secondary": "1.6",
+    "secondary": "1",
     "tertiary": "3",
-    "durability": "180",
+    "durability": "380",
     "integrityCost": "1",
     "integrityGain": "4",
-    "magicCapacity": "86",
+    "magicCapacity": "98",
     "toolLevel": "0",
     "toolEfficiency": "0",
     "tints": {
-        "glyph": "vine_glyph",
-        "texture": "vine"
+        "glyph": "947d6c",
+        "texture": "947d6c"
     },
     "textures": [
         "crude",
         "default"
     ],
     "material": {
-        "item": "minecraft:vine"
+        "tag": "forge:fibre_hemp",
+        "count": 2
     },
     "requiredTools": {
-        "cut": 1
+        "cut": 2
     }
 }

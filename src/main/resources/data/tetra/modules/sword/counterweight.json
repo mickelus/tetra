@@ -4,7 +4,7 @@
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:misc/bone", "tetra:stone/", "tetra:metal/"],
+            "materials": ["tetra:wood/", "tetra:bone/", "tetra:stone/", "tetra:metal/"],
             "key": "counterweight/",
             "durability": 15,
             "integrity": -1,

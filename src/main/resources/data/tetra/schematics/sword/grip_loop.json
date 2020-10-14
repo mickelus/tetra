@@ -11,7 +11,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:misc/bone"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:bone/"],
             "moduleKey": "sword/grip_loop",
             "moduleVariant": "grip_loop/"
         }
