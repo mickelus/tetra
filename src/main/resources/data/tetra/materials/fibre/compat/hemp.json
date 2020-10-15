@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "tag": "forge:fibre_hemp",
+        "tag": "forge:fiber_hemp",
         "count": 2
     },
     "requiredTools": {
