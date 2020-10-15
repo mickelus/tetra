@@ -34,7 +34,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ScannerOverlayGui extends GuiRoot {
-
     private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
 
     private ScannerBarGui scanner;
@@ -119,7 +118,8 @@ public class ScannerOverlayGui extends GuiRoot {
 
     @SubscribeEvent
     public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        sound.reset();
+        mc.getSoundHandler().stop(sound);
+        sound = new ScannerSound(mc);
     }
 
     @SubscribeEvent

@@ -35,11 +35,6 @@ public class ScannerSound extends TickableSound {
         activeCounter = 2;
     }
 
-    public void reset() {
-        mc.getSoundHandler().stop(this);
-        hasStarted = false;
-    }
-
     @Override
     public boolean canBeSilent() {
         return true;
