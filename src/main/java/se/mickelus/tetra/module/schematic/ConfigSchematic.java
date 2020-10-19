@@ -223,16 +223,6 @@ public class ConfigSchematic extends BaseSchematic {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        float durabilityFactor = 0;
-        if (consumeMaterials && upgradedStack.isDamageable()) {
-            durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
-        }
-
-        float honingFactor = CastOptional.cast(upgradedStack.getItem(), ModularItem.class)
-                .map(item -> 1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack))
-                .map(factor -> Math.min(Math.max(factor, 0), 1))
-                .orElse(0f);
-
         if (definition.materialSlotCount > 0) {
             for (int i = 0; i < materials.length; i++) {
                 final int index = i;
@@ -257,18 +247,6 @@ public class ConfigSchematic extends BaseSchematic {
             }
         }
 
-        if (consumeMaterials) {
-            if (definition.hone) {
-                ModularItem.removeHoneable(upgradedStack);
-            } else if (ConfigHandler.moduleProgression.get() && !ModularItem.isHoneable(upgradedStack)) {
-                CastOptional.cast(upgradedStack.getItem(), ModularItem.class)
-                        .ifPresent(item -> item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack))));
-            }
-
-            if (upgradedStack.isDamageable()) {
-                upgradedStack.setDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
-            }
-        }
         return upgradedStack;
     }
 

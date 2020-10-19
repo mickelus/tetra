@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -24,6 +25,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
@@ -266,6 +268,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void craft(PlayerEntity player) {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = targetStack;
+        ModularItem item = CastOptional.cast(upgradedStack.getItem(), ModularItem.class).orElse(null);
 
         BlockState blockState = getBlockState();
 
@@ -274,18 +277,33 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
 
-        if (currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
+        if (item != null && currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
             float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
             boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
 
+            // store durability and honing factor so that it can be restored after the schematic is applied
+            double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;
+            double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningBase(upgradedStack), 0, 1);
+
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
-            if (upgradedStack.getItem() instanceof ModularItem) {
-                ((ModularItem) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
-            }
+
+            item.assemble(upgradedStack, world, severity);
 
             for (Map.Entry<ToolType, Integer> entry : currentSchematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
                 upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, world, pos, blockState, true);
+            }
+
+            // remove or restore honing progression
+            if (currentSchematic.isHoning()) {
+                ModularItem.removeHoneable(upgradedStack);
+            } else if (ConfigHandler.moduleProgression.get() && !ModularItem.isHoneable(upgradedStack)) {
+                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
+            }
+
+            // restore durability damage
+            if (upgradedStack.isDamageable()) {
+                    upgradedStack.setDamage((int) Math.ceil(durabilityFactor * upgradedStack.getMaxDamage()));
             }
 
             int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);

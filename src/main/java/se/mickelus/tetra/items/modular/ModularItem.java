@@ -829,14 +829,14 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     public void tweak(ItemStack itemStack, String slot, Map<String, Integer> tweaks) {
         ItemModule module = getModuleFromSlot(itemStack, slot);
-        float durabilityFactor = 0;
+        double durabilityFactor = 0;
 
         if (module == null || !module.isTweakable(itemStack)) {
             return;
         }
 
         if (itemStack.isDamageable()) {
-            durabilityFactor = itemStack.getDamage() * 1f / itemStack.getMaxDamage();
+            durabilityFactor = itemStack.getDamage() * 1d / itemStack.getMaxDamage();
         }
 
         tweaks.forEach((tweakKey, step) -> {
@@ -846,8 +846,8 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         });
 
         if (itemStack.isDamageable()) {
-            itemStack.setDamage((int) (durabilityFactor * itemStack.getMaxDamage()
-                    - (durabilityFactor * durabilityFactor * module.getDurability(itemStack))));
+            itemStack.setDamage((int) Math.ceil((durabilityFactor * itemStack.getMaxDamage()
+                    - (durabilityFactor * durabilityFactor * module.getDurability(itemStack)))));
         }
 
         updateIdentifier(itemStack);
