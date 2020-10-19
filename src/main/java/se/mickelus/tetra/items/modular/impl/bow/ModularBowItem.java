@@ -200,7 +200,8 @@ public class ModularBowItem extends ModularItem {
 
                     world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
                             SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS,
-                            1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + projectileVelocity * 0.5F);
+                            0.8F + projectileVelocity * 0.2f,
+                            1.9f + random.nextFloat() * 0.2F - projectileVelocity * 0.8F);
 
                     if (!infiniteAmmo && !player.abilities.isCreativeMode) {
                         ammoStack.shrink(1);
