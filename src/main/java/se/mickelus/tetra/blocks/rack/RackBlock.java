@@ -111,7 +111,7 @@ public class RackBlock extends TetraWaterloggedBlock {
             TileEntityOptional.from(world, pos, RackTile.class)
                     .ifPresent(tile -> tile.slotInteract(slot, player, hand));
 
-            return ActionResultType.SUCCESS;
+            return ActionResultType.func_233537_a_(world.isRemote);
         }
 
         return ActionResultType.PASS;
