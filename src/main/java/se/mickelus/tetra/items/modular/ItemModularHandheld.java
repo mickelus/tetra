@@ -37,6 +37,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
@@ -203,20 +204,23 @@ public class ItemModularHandheld extends ModularItem {
 
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
-            for (ToolType tool: getToolDataCached(itemStack).getValues()) {
-                BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItem(), tool);
-                if (block != null) {
-                    SoundEvent sound = Optional.ofNullable(getUseSound(tool))
-                            .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
+            ToolData toolData = getToolDataCached(itemStack);
+            for (ToolType tool: toolData.getValues()) {
+                if (toolData.getLevel(tool) > 0) {
+                    BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItem(), tool);
+                    if (block != null) {
+                        SoundEvent sound = Optional.ofNullable(getUseSound(tool))
+                                .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
 
-                    world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    if (!world.isRemote) {
-                        world.setBlockState(pos, block, 11);
-                        applyDamage(blockDestroyDamage, context.getItem(), player);
-                        applyUsageEffects(player, itemStack, 2);
+                        world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        if (!world.isRemote) {
+                            world.setBlockState(pos, block, 11);
+                            applyDamage(blockDestroyDamage, context.getItem(), player);
+                            applyUsageEffects(player, itemStack, 2);
+                        }
+
+                        return ActionResultType.func_233537_a_(world.isRemote);
                     }
-
-                    return ActionResultType.func_233537_a_(world.isRemote);
                 }
             }
 
