@@ -23,6 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
@@ -139,10 +140,12 @@ public class OutcomeMaterial {
                 jsonObject.remove("count");
 
                 if (jsonObject.has("item")) {
-                    Item item = JSONUtils.getItem(jsonObject, "item");
-                    material.itemStack = new ItemStack(item, material.count);
+                    try {
+                        Item item = JSONUtils.getItem(jsonObject, "item");
+                        material.itemStack = new ItemStack(item, material.count);
+                    } catch (JsonSyntaxException e) {}
 
-                    if (jsonObject.has("nbt")) {
+                    if (material.itemStack != null && jsonObject.has("nbt")) {
                         try {
                             CompoundNBT compoundnbt = JsonToNBT.getTagFromJson(JSONUtils.getString(jsonObject.get("nbt"), "nbt"));
                             material.itemStack.setTag(compoundnbt);
@@ -150,6 +153,7 @@ public class OutcomeMaterial {
                             throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
                         }
                     }
+
                 } else if (jsonObject.has("tag")) {
                     material.tagLocation = new ResourceLocation(JSONUtils.getString(jsonObject, "tag"));
                 }
@@ -157,7 +161,7 @@ public class OutcomeMaterial {
                 if (!jsonObject.has("type") && jsonObject.has("tag")) {
                     material.predicate = deserializeTagPredicate(element);
                 } else {
-                    material.predicate = ItemPredicate.deserialize(element);
+                    material.predicate = ItemPredicateDeserializer.deserialize(element);
                 }
             }
             return material;
