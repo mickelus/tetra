@@ -31,6 +31,7 @@ import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -302,8 +303,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             }
 
             // restore durability damage
-            if (upgradedStack.isDamageable()) {
+            // todo: hacky check if repair schematic
+            if (upgradedStack.isDamageable() && !(currentSchematic instanceof RepairSchematic) ) {
+                if (durabilityFactor > 0 && willReplace && currentSlot.equals(item.getRepairSlot(upgradedStack))) {
+                    item.repair(upgradedStack);
+                } else {
                     upgradedStack.setDamage((int) Math.ceil(durabilityFactor * upgradedStack.getMaxDamage()));
+                }
             }
 
             int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);

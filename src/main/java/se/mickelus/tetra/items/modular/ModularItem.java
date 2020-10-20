@@ -595,6 +595,13 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         return Optional.empty();
     }
 
+    public String[] getRepairCycleNames(ItemStack itemStack) {
+        return getAllModules(itemStack).stream()
+                .filter(module -> !module.getRepairDefinitions(itemStack).isEmpty())
+                .map(module -> module.getName(itemStack))
+                .toArray(String[]::new);
+    }
+
     public String getRepairModuleName(ItemStack itemStack) {
         return getRepairModule(itemStack)
                 .map(module -> module.getName(itemStack))

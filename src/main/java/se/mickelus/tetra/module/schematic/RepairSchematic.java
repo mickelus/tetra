@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -11,10 +12,8 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RepairSchematic extends BaseSchematic {
@@ -52,14 +51,20 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
-        if (itemStack != null) {
-            return CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                    .map(item -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix,
-                            item.getRepairModuleName(itemStack)))
-                    .orElse(I18n.format(localizationPrefix + key + descriptionSuffix));
-        }
-
-        return I18n.format(localizationPrefix + key + descriptionSuffix);
+        return Optional.ofNullable(itemStack)
+                .flatMap(stack -> CastOptional.cast(itemStack.getItem(), ModularItem.class))
+                .map(item -> {
+                    String[] cycle = item.getRepairCycleNames(itemStack);
+                    String currentTarget = item.getRepairModuleName(itemStack);
+                    if (currentTarget != null) {
+                        return Arrays.stream(cycle)
+                                .map(module -> currentTarget.equals(module) ? TextFormatting.WHITE + module + TextFormatting.RESET : module)
+                                .collect(Collectors.joining(", "));
+                    }
+                    return null;
+                })
+                .map(cycle -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix, cycle))
+                .orElseGet(() -> I18n.format(localizationPrefix + key + descriptionSuffix));
     }
 
     @Override
