@@ -591,7 +591,7 @@
 
   "tetra/schematic/repair.name": "Repair",
   "tetra/schematic/repair.description": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.",
-  "tetra/schematic/repair.description_details": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n\n§7Module: §f%s",
+  "tetra/schematic/repair.description_details": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n \n §7Repair cycle:\n%s",
   "tetra/schematic/repair.slot1": "Material",
 
   "tetra/schematic/remove.name": "Remove module",

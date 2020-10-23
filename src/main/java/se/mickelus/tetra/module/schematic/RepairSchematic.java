@@ -8,6 +8,7 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -54,11 +55,14 @@ public class RepairSchematic extends BaseSchematic {
         return Optional.ofNullable(itemStack)
                 .flatMap(stack -> CastOptional.cast(itemStack.getItem(), ModularItem.class))
                 .map(item -> {
-                    String[] cycle = item.getRepairCycleNames(itemStack);
-                    String currentTarget = item.getRepairModuleName(itemStack);
+                    ItemModule[] cycle = item.getRepairCycle(itemStack);
+                    ItemModule currentTarget = item.getRepairModule(itemStack).orElse(null);
                     if (currentTarget != null) {
                         return Arrays.stream(cycle)
-                                .map(module -> currentTarget.equals(module) ? TextFormatting.WHITE + module + TextFormatting.RESET : module)
+                                .map(module -> {
+                                    String name = module.getName(itemStack);
+                                    return currentTarget.equals(module) ? TextFormatting.WHITE + name + TextFormatting.RESET : name;
+                                })
                                 .collect(Collectors.joining(", "));
                     }
                     return null;

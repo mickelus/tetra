@@ -583,7 +583,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
      * @param itemStack The itemstack for the modular item
      * @return An optional with the module that will be repaired in next repair attempt
      */
-    private Optional<ItemModule> getRepairModule(ItemStack itemStack) {
+    public Optional<ItemModule> getRepairModule(ItemStack itemStack) {
         List<ItemModule> modules = getAllModules(itemStack).stream()
                 .filter(itemModule -> !itemModule.getRepairDefinitions(itemStack).isEmpty())
                 .collect(Collectors.toList());
@@ -595,11 +595,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         return Optional.empty();
     }
 
-    public String[] getRepairCycleNames(ItemStack itemStack) {
+    public ItemModule[] getRepairCycle(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
                 .filter(module -> !module.getRepairDefinitions(itemStack).isEmpty())
-                .map(module -> module.getName(itemStack))
-                .toArray(String[]::new);
+                .toArray(ItemModule[]::new);
     }
 
     public String getRepairModuleName(ItemStack itemStack) {
