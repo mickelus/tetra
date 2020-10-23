@@ -31,18 +31,17 @@
             "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
             "key": "straight_stave/",
             "attributes": {
-                "tetra:draw_speed": 0.95,
-                "tetra:draw_strength": 4
+                "tetra:draw_speed": 1.2
             },
-            "durability": 7,
+            "durability": 171,
             "extract": {
                 "primaryAttributes": {
-                    "tetra:draw_speed": 0.3,
-                    "tetra:draw_strength": 0.5
+                    "tetra:draw_speed": 0.2,
+                    "tetra:draw_strength": 1.2
                 },
                 "tertiaryAttributes": {
                     "tetra:draw_speed": -0.1,
-                    "tetra:draw_strength": 1.2
+                    "tetra:draw_strength": 0.9
                 },
                 "durability": 1,
                 "integrity": -1,

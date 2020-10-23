@@ -89,7 +89,7 @@ public class GuiStatBarTool extends GuiStatBar {
         updateIndicators(player, currentStack, previewStack, slot, improvement);
     }
 
-    private void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    protected void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         int currentStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack) : 0;
         int previewStriking = currentStriking;
 

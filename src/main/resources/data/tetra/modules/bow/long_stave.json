@@ -35,21 +35,20 @@
                 "tetra:draw_strength": 5
             },
             "effects": {
-                "overbowed": [10, 0.5]
+                "overbowed": 70
             },
-            "integrity": -1,
-            "durability": 14,
+            "durability": 171,
             "extract": {
                 "primaryAttributes": {
-                    "tetra:draw_speed": 0.4,
-                    "tetra:draw_strength": 0.6
+                    "tetra:draw_speed": 0.22,
+                    "tetra:draw_strength": 1.4
                 },
                 "tertiaryAttributes": {
-                    "tetra:draw_speed": -0.05,
-                    "tetra:draw_strength": 1.5
+                    "tetra:draw_speed": -0.04,
+                    "tetra:draw_strength": 1.1
                 },
                 "primaryEffects": {
-                    "overbowed": 7
+                    "overbowed": -6
                 },
                 "durability": 1.05,
                 "integrity": -1,

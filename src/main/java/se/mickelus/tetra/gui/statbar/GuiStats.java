@@ -38,8 +38,8 @@ public class GuiStats {
 
     public static final IStatGetter drawStrengthGetter = new StatGetterAttribute(TetraAttributes.drawStrength.get());
     public static final GuiStatBar drawStrength = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.draw_strength"),
-            0, 40, false, drawStrengthGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.draw_strength.tooltip", drawStrengthGetter));
+            0, 40, false, drawStrengthGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDrawStrength(drawStrengthGetter));
 
     public static final IStatGetter drawSpeedGetter = new StatGetterAttribute(TetraAttributes.drawSpeed.get());
     public static final GuiStatBar drawSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.draw_speed"),
@@ -106,12 +106,12 @@ public class GuiStats {
     public static final IStatGetter throwableGetter = new StatGetterEffectEfficiency(ItemEffect.throwable, 100d);
     public static final GuiStatBar throwable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.throwable"),
             0, 300, false, throwableGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterPercentage("tetra.stats.throwable.tooltip", throwableGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.throwable.tooltip", throwableGetter));
 
     public static final IStatGetter jabGetter = new StatGetterEffectLevel(ItemEffect.jab, 1);
     public static final GuiStatBar jab = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.jab"),
             0, 300, false, jabGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterPercentage("tetra.stats.jab.tooltip", jabGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.jab.tooltip", jabGetter));
 
     public static final IStatGetter quickslotGetter = new StatGetterEffectLevel(ItemEffect.quickSlot, 1d);
     public static final GuiStatBar quickslot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.quickslot"),
@@ -141,7 +141,7 @@ public class GuiStats {
     public static final IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
     public static final GuiStatBar sweeping = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.sweeping"),
                 0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterPercentage("tetra.stats.sweeping.tooltip", sweepingGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.sweeping.tooltip", sweepingGetter));
 
     public static final IStatGetter bleedingGetter = new StatGetterEffectLevel(ItemEffect.bleeding, 4);
     public static final GuiStatBar bleeding = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bleeding"),
@@ -151,7 +151,7 @@ public class GuiStats {
     public static final IStatGetter backstabGetter = new StatGetterEffectLevel(ItemEffect.backstab, 25, 25);
     public static final GuiStatBar backstab = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.backstab"),
                 0, 200, false, backstabGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterPercentage("tetra.stats.backstab.tooltip", backstabGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.backstab.tooltip", backstabGetter));
 
     public static final IStatGetter armorPenetrationGetter = new StatGetterEffectLevel(ItemEffect.armorPenetration, 1);
     public static final GuiStatBar armorPenetration = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.armorPenetration"),
@@ -226,7 +226,7 @@ public class GuiStats {
     public static final IStatGetter quickStrikeGetter = new StatGetterEffectLevel(ItemEffect.quickStrike, 5, 20);
     public static final GuiStatBar quickStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.quickStrike"),
                 0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterPercentage("tetra.stats.quickStrike.tooltip", quickStrikeGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.quickStrike.tooltip", quickStrikeGetter));
 
     public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
     public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.counterweight"),
@@ -246,7 +246,7 @@ public class GuiStats {
     public static final IStatGetter enderReverbGetter = new StatGetterEffectEfficiency(ItemEffect.enderReverb, 100);
     public static final GuiStatBar enderReverb = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.enderReverb"),
                 0, 100, false, false, true, enderReverbGetter, LabelGetterBasic.percentageLabelDecimalInverted,
-            new TooltipGetterPercentage("tetra.stats.enderReverb.tooltip", enderReverbGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.enderReverb.tooltip", enderReverbGetter));
 
     public static final IStatGetter criticalGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
     public static final GuiStatBar criticalStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.criticalStrike"),
@@ -268,10 +268,26 @@ public class GuiStats {
             0, 1, false, releaseLatchGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.bow.releaseLatch.tooltip", releaseLatchGetter));
 
-    public static final IStatGetter overbowedGetter = new StatGetterEffectLevel(ItemEffect.overbowed, 1);
+    public static final IStatGetter overbowedGetter = new StatGetterEffectLevel(ItemEffect.overbowed, 0.1);
     public static final GuiStatBar overbowed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bow.overbowed"),
-            0, 100, false, overbowedGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterOverbowed());
+            0, 10, false, overbowedGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.bow.overbowed.tooltip", overbowedGetter));
+
+    public static final IStatGetter multishotGetter = new StatGetterEffectLevel(ItemEffect.multishot, 1);
+    public static final GuiStatBar multishot = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.multishot"),
+            0, 12, true, multishotGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterMultishot());
+
+    public static final IStatGetter zoomGetter = new StatGetterEffectLevel(ItemEffect.zoom, 0.1);
+    public static final GuiStatBar zoom = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.zoom"),
+            0, 10, false, zoomGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.zoom.tooltip", zoomGetter));
+
+    public static final IStatGetter velocityGetter = new StatGetterEffectLevel(ItemEffect.velocity, 1);
+    public static final IStatGetter suspendGetter = new StatGetterEffectLevel(ItemEffect.suspend, 1);
+    public static final GuiStatBar velocity = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.velocity"),
+            0, 200, false, velocityGetter, LabelGetterBasic.percentageLabel, new TooltipGetterVelocity())
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.suspend", 3, suspendGetter, new TooltipGetterNone("tetra.stats.suspend.tooltip")));
 
     public static final IStatGetter magicCapacityGetter = new StatGetterMagicCapacity();
     public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.magicCapacity"),
@@ -281,12 +297,12 @@ public class GuiStats {
     public static final IStatGetter stabilityGetter = new StatGetterStability();
     public static final GuiStatBar stability = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.stability"),
             -100, 100, false, true, false, stabilityGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterPercentage("tetra.stats.stability.tooltip", stabilityGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.stability.tooltip", stabilityGetter));
 
     public static final IStatGetter workableGetter = new StatGetterEffectLevel(ItemEffect.workable, 1);
     public static final GuiStatBar workable = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.workable"),
             0, 100, false, workableGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterPercentage("tetra.stats.workable.tooltip", workableGetter));
+            new TooltipGetterPercentageDecimal("tetra.stats.workable.tooltip", workableGetter));
 
     public static final IStatGetter scannerRangeGetter = new StatGetterEffectLevel(ItemEffect.scannerRange, 1);
     public static final GuiStatBar scannerRange = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.holo.scannerRange"),

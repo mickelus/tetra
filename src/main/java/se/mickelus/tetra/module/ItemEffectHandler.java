@@ -31,6 +31,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.util.RotationHelper;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -166,6 +167,19 @@ public class ItemEffectHandler {
                             }
                         }
                     });
+        }
+
+        if ("arrow".equals(event.getSource().damageType)) {
+            CastOptional.cast(event.getSource().getTrueSource(), LivingEntity.class)
+                    .map(shooter -> Stream.of(shooter.getHeldItemMainhand(), shooter.getHeldItemOffhand()))
+                    .orElseGet(Stream::empty)
+                    .filter(itemStack -> itemStack.getItem() instanceof ModularBowItem)
+                    .findFirst()
+                    .ifPresent(itemStack -> {
+                        ModularBowItem item = (ModularBowItem) itemStack.getItem();
+                        item.tickHoningProgression((LivingEntity) event.getSource().getTrueSource(), itemStack, 2);
+                    });
+
         }
     }
 
@@ -551,9 +565,13 @@ public class ItemEffectHandler {
             if (!itemStack.isEmpty()) {
                 QuiverInventory inventory = new QuiverInventory(itemStack);
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+                int count = CastOptional.cast(event.getBow().getItem(), ModularItem.class)
+                        .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
+                        .orElse(1);
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
-                        player.setHeldItem(Hand.OFF_HAND, inventory.getStackInSlot(i).split(1));
+
+                        player.setHeldItem(Hand.OFF_HAND, inventory.getStackInSlot(i).split(count));
                         player.setActiveHand(event.getHand());
                         inventory.markDirty();
 

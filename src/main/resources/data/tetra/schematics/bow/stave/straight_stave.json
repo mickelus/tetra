@@ -20,13 +20,12 @@
         },
         {
             "materials": ["tetra:wood/"],
-            "toolOffset": 1,
             "moduleKey": "bow/straight_stave",
             "moduleVariant": "straight_stave/"
         },
         {
             "materials": ["tetra:metal/"],
-            "toolOffset": 3,
+            "toolOffset": 2,
             "moduleKey": "bow/straight_stave",
             "moduleVariant": "straight_stave/"
         }

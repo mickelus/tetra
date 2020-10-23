@@ -263,6 +263,11 @@ public class ItemEffect {
     public static ItemEffect flow = get("flow");
 
     public static ItemEffect overbowed = get("overbowed");
+    public static ItemEffect multishot = get("multishot");
+    public static ItemEffect zoom = get("zoom");
+    public static ItemEffect velocity = get("velocity");
+    public static ItemEffect suspend = get("suspend");
+    public static ItemEffect rangeCritical = get("rangeCritical");
 
     public static ItemEffect workable = get("workable");
     public static ItemEffect stabilizing = get("stabilizing");

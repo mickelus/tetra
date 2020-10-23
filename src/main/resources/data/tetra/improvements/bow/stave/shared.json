@@ -6,8 +6,8 @@
         "group": "wrap",
         "integrity": -1,
         "attributes": {
-            "tetra:draw_speed": -0.05,
-            "**tetra:draw_strength": 0.1
+            "tetra:draw_speed": -0.1,
+            "**tetra:draw_strength": 0.09
         },
         "effects": {
             "enderReverb": [-2, -0.1],
@@ -26,7 +26,7 @@
         "group": "wrap",
         "integrity": -1,
         "attributes": {
-            "tetra:draw_speed": -0.1,
+            "tetra:draw_speed": -0.15,
             "**tetra:draw_strength": 0.15
         },
         "effects": {
@@ -46,7 +46,7 @@
         "group": "wrap",
         "integrity": -2,
         "attributes": {
-            "tetra:draw_speed": -0.15,
+            "tetra:draw_speed": -0.2,
             "**tetra:draw_strength": 0.2
         },
         "effects": {

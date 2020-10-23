@@ -4,12 +4,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class TooltipGetterPercentage implements ITooltipGetter {
+public class TooltipGetterPercentageDecimal implements ITooltipGetter {
 
     protected IStatGetter statGetter;
     protected String localizationKey;
 
-    public TooltipGetterPercentage(String localizationKey, IStatGetter statGetter) {
+    public TooltipGetterPercentageDecimal(String localizationKey, IStatGetter statGetter) {
         this.localizationKey = localizationKey;
         this.statGetter = statGetter;
     }
@@ -17,7 +17,7 @@ public class TooltipGetterPercentage implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey, String.format("%.0f%%", statGetter.getValue(player, itemStack)));
+        return I18n.format(localizationKey, String.format("%.1f%%", statGetter.getValue(player, itemStack)));
     }
 
     @Override

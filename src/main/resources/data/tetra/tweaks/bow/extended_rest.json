@@ -1,0 +1,22 @@
+[
+    {
+        "variant": "extended_rest/bolt",
+        "key": "bow/multishot_count",
+        "steps": 3,
+        "properties": {
+            "effects": {
+                "multishot": 1
+            }
+        }
+    },
+    {
+        "variant": "extended_rest/bolt",
+        "key": "bow/multishot_spread",
+        "steps": 9,
+        "properties": {
+            "effects": {
+                "multishot": [0, 1]
+            }
+        }
+    }
+]

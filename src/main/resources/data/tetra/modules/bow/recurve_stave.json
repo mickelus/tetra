@@ -31,20 +31,20 @@
             "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
             "key": "recurve_stave/",
             "attributes": {
-                "tetra:draw_speed": 0.7,
-                "tetra:draw_strength": 2.5
+                "tetra:draw_speed": 0.95
             },
+            "durability": 200,
             "integrity": -1,
             "extract": {
                 "primaryAttributes": {
-                    "tetra:draw_speed": 0.3,
-                    "tetra:draw_strength": 0.5
+                    "tetra:draw_speed": 0.12,
+                    "tetra:draw_strength": 1.16
                 },
                 "tertiaryAttributes": {
-                    "tetra:draw_speed": -0.15,
-                    "tetra:draw_strength": 1.2
+                    "tetra:draw_speed": -0.12,
+                    "tetra:draw_strength": 0.88
                 },
-                "durability": 0.8,
+                "durability": 0.6,
                 "integrity": -1,
                 "magicCapacity": 1,
                 "glyph": {
