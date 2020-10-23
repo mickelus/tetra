@@ -10,11 +10,13 @@
                 },
                 {
                     "type": "item",
-                    "name": "tetra:combustion_chamber"
+                    "name": "tetra:combustion_chamber",
+                    "weight": 2
                 },
                 {
                     "type": "item",
-                    "name": "tetra:planar_stabilizer"
+                    "name": "tetra:planar_stabilizer",
+                    "weight": 2
                 },
                 {
                     "type": "item",
