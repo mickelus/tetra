@@ -1,0 +1,181 @@
+[
+    {
+        "key": "enchantment/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 2.00]
+        },
+        "magicCapacity": -31.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 5.00]
+        },
+        "magicCapacity": -41.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 10.00]
+        },
+        "magicCapacity": -51.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 17.00]
+        },
+        "magicCapacity": -61.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 5,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 26.00]
+        },
+        "magicCapacity": -71.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 6,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 37.00]
+        },
+        "magicCapacity": -81.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 7,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 50.00]
+        },
+        "magicCapacity": -91.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 8,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 65.00]
+        },
+        "magicCapacity": -101.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 9,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 82.00]
+        },
+        "magicCapacity": -111.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 10,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 101.00]
+        },
+        "magicCapacity": -121.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 11,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 122.00]
+        },
+        "magicCapacity": -131.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 12,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 145.00]
+        },
+        "magicCapacity": -141.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 13,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 170.00]
+        },
+        "magicCapacity": -151.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 14,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 197.00]
+        },
+        "magicCapacity": -161.0
+    },
+    {
+        "key": "enchantment/efficiency",
+        "level": 15,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, 226.00]
+        },
+        "magicCapacity": -171.0
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 1,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, -2.00]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 2,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, -5.00]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 3,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, -10.00]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/efficiency",
+        "level": 4,
+        "enchantment": true,
+        "tools": {
+            "hoe": [0, -17.00]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]
