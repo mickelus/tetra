@@ -79,14 +79,17 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
             ResourceLocation modelLocation) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
+        TextureAtlasSprite particle = null;
+
         TransformationMatrix rotationTransform = modelTransform.getRotation();
         ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
         for(int i = 0; i < moduleModels.size(); i++) {
             ModuleModel model = moduleModels.get(i);
-            TextureAtlasSprite tas = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, model.location));
-            builder.addAll(getQuadsForSprite(i, tas, rotationTransform, model.tint));
+            TextureAtlasSprite sprite = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, model.location));
+            builder.addAll(getQuadsForSprite(i, sprite, rotationTransform, model.tint));
+
+            particle = sprite;
         }
-        TextureAtlasSprite particle = spriteGetter.apply(owner.resolveTexture("particle"));
 
         return new BakedPerspectiveModel(builder.build(), particle, transforms, overrides, rotationTransform.isIdentity(), owner.isSideLit(),
                 getCameraTransforms(transformVariant));
