@@ -779,7 +779,7 @@ public class ItemModularHandheld extends ModularItem {
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             ToolType tool = getEffectiveTool(blockState);
-            float speed = (float) (Attributes.ATTACK_SPEED.getDefaultValue() + getAttributeValue(itemStack, Attributes.ATTACK_SPEED));
+            float speed = (float) ((Attributes.ATTACK_SPEED.getDefaultValue() + getAttributeValue(itemStack, Attributes.ATTACK_SPEED)) * 0.5 + 0.5);
 
             if (tool != null) {
                 speed *= getToolEfficiency(itemStack, tool);
