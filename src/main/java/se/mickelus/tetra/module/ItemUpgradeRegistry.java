@@ -2,6 +2,7 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -78,18 +79,31 @@ public class ItemUpgradeRegistry {
                             .filter(module -> module.acceptsImprovement(mapping.improvement))
                             .toArray(ItemModuleMajor[]::new);
                     if (modules.length > 0) {
-                        float level = 1f * entry.getValue() / modules.length / mapping.multiplier;
 
-                        for (int i = 0; i < modules.length; i++) {
-                            if (i == 0) {
-                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
-                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) Math.ceil(level));
-                                }
-                            } else {
-                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
-                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) level);
+                        // since efficiency doesn't stack on double headed items it should be fully applied to a single module instead of being split
+                        if (Enchantments.EFFICIENCY.equals(entry.getKey())) {
+                            float level = 1f * entry.getValue() / mapping.multiplier;
+                            for (ItemModuleMajor module : modules) {
+                                if (module.acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                    module.addImprovement(modularStack, mapping.improvement, (int) level);
+                                    break;
                                 }
                             }
+                        } else {
+                            float level = 1f * entry.getValue() / modules.length / mapping.multiplier;
+
+                            for (int i = 0; i < modules.length; i++) {
+                                if (i == 0) {
+                                    if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
+                                        modules[i].addImprovement(modularStack, mapping.improvement, (int) Math.ceil(level));
+                                    }
+                                } else {
+                                    if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                        modules[i].addImprovement(modularStack, mapping.improvement, (int) level);
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
