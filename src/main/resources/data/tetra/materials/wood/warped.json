@@ -22,7 +22,7 @@
         "item": "minecraft:warped_planks"
     },
     "effects": {
-        "unstable": 10
+        "unstable": 20
     },
     "requiredTools": {
         "axe": 3
