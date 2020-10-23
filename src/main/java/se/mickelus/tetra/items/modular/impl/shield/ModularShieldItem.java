@@ -43,6 +43,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     public ModularShieldItem() {
         super(new Properties()
                 .maxStackSize(1)
+                .isImmuneToFire()
                 .setISTER(() -> ModularShieldISTER::new));
         setRegistryName(unlocalizedName);
 

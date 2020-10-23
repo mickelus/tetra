@@ -50,7 +50,8 @@ public class ModularHolosphereItem extends ModularItem {
     public ModularHolosphereItem() {
         super(new Properties()
                 .maxStackSize(1)
-                .group(TetraItemGroup.instance));
+                .group(TetraItemGroup.instance)
+                .isImmuneToFire());
 
         canHone = false;
 

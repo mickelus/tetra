@@ -34,7 +34,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     public static ModularSingleHeadedItem instance;
 
     public ModularSingleHeadedItem() {
-        super(new Properties().maxStackSize(1));
+        super(new Properties().maxStackSize(1).isImmuneToFire());
         setRegistryName(unlocalizedName);
 
         entityHitDamage = 1;

@@ -64,7 +64,10 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     public static ContainerType<ToolbeltContainer> containerType;
 
     public ModularToolbeltItem() {
-        super(new Properties().maxStackSize(1).group(TetraItemGroup.instance));
+        super(new Properties()
+                .maxStackSize(1)
+                .group(TetraItemGroup.instance)
+                .isImmuneToFire());
 
         canHone = false;
 

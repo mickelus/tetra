@@ -69,7 +69,7 @@ public class ModularBowItem extends ModularItem {
     public static ModularBowItem instance;
 
     public ModularBowItem() {
-        super(new Properties().maxStackSize(1));
+        super(new Properties().maxStackSize(1).isImmuneToFire());
         setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[] { stringKey, staveKey };

@@ -24,7 +24,7 @@ public class ModularBladedItem extends ItemModularHandheld {
     public static ModularBladedItem instance;
 
     public ModularBladedItem() {
-        super(new Item.Properties().maxStackSize(1));
+        super(new Item.Properties().maxStackSize(1).isImmuneToFire());
         setRegistryName(unlocalizedName);
 
         blockDestroyDamage = 2;

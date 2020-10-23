@@ -65,7 +65,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {
-        super(new Item.Properties().maxStackSize(1).group(TetraItemGroup.instance));
+        super(new Item.Properties().maxStackSize(1).group(TetraItemGroup.instance).isImmuneToFire());
         setRegistryName(unlocalizedName);
 
         entityHitDamage = 2;
