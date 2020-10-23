@@ -21,7 +21,7 @@
                 },
                 "durability": 0.2,
                 "glyph": {
-                    "textureX": 80,
+                    "textureX": 128,
                     "textureY": 16
                 },
                 "availableTextures": ["default"],
@@ -44,7 +44,7 @@
             "extract": {
                 "durability": 0.2,
                 "glyph": {
-                    "textureX": 80,
+                    "textureX": 128,
                     "textureY": 16
                 },
                 "availableTextures": ["default"],
@@ -65,7 +65,7 @@
             "integrity": -1,
             "glyph": {
                 "tint": "bolt_glyph",
-                "textureX": 80,
+                "textureX": 128,
                 "textureY": 16
             },
             "models": [

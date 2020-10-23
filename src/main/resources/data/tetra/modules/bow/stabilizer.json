@@ -17,7 +17,7 @@
                 },
                 "durability": 0.2,
                 "glyph": {
-                    "textureX": 80,
+                    "textureX": 112,
                     "textureY": 16
                 },
                 "availableTextures": ["default"],
@@ -39,8 +39,8 @@
             },
             "glyph": {
                 "tint": "bolt_glyph",
-                "textureX": 80,
-                "textureY": 16
+                    "textureX": 112,
+                    "textureY": 16
             },
             "models": [
                 {
