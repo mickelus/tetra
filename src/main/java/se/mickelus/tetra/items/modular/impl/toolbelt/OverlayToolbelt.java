@@ -45,9 +45,9 @@ public class OverlayToolbelt {
         gui = new OverlayGuiToolbelt(mc);
 
         accessBinding = new KeyBinding("tetra.toolbelt.binding.access", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
-                GLFW.GLFW_KEY_V, bindingGroup);
+                GLFW.GLFW_KEY_B, bindingGroup);
         restockBinding = new KeyBinding("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
-                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_V, bindingGroup);
+                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
 
         ClientRegistry.registerKeyBinding(accessBinding);
         ClientRegistry.registerKeyBinding(restockBinding);
