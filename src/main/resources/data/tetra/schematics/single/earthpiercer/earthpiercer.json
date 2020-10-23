@@ -20,10 +20,7 @@
                 "hammer": 1
             },
             "moduleKey": "single/earthpiercer",
-            "moduleVariant": "earthpiercer/earthpiercer",
-            "improvements": {
-                "arrested": 0
-            }
+            "moduleVariant": "earthpiercer/earthpiercer"
         }
     ]
 }

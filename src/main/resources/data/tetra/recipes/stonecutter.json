@@ -13,7 +13,6 @@
         "nbt": {
             "sword/blade": "sword/stonecutter",
             "sword/stonecutter_material": "stonecutter/stonecutter",
-            "sword/blade:arrested": 0,
             "sword/hilt": "sword/basic_hilt",
             "sword/basic_hilt_material": "basic_hilt/stick"
         }

@@ -18,7 +18,6 @@
         "nbt": {
             "single/head": "single/earthpiercer",
             "single/earthpiercer_material": "earthpiercer/earthpiercer",
-            "single/head:arrested": 0,
             "single/handle": "single/basic_handle",
             "single/basic_handle_material": "basic_handle/stick"
         }

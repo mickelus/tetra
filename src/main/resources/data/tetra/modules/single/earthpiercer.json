@@ -41,13 +41,10 @@
             "magicCapacity": 48,
             "attributes": {
                 "generic.attack_damage": 2,
-                "generic.attack_speed": -0.4
+                "generic.attack_speed": -0.8
             },
             "tools": {
-                "pickaxe": [
-                    3,
-                    1
-                ]
+                "pickaxe": [3, 6]
             },
             "glyph": {
                 "textureX": 224,

@@ -21,10 +21,7 @@
                 "hammer": 1
             },
             "moduleKey": "sword/stonecutter",
-            "moduleVariant": "stonecutter/stonecutter",
-            "improvements": {
-                "arrested": 0
-            }
+            "moduleVariant": "stonecutter/stonecutter"
         }
     ]
 }
