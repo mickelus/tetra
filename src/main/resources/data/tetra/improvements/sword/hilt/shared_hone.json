@@ -3,7 +3,7 @@
         "key": "hilt_hone/damage",
         "level": 1,
         "attributes": {
-            "**generic.attack_damage": 1.05
+            "**generic.attack_damage": 0.05
         }
     },
     {
@@ -11,7 +11,7 @@
         "level": 2,
         "integrity": -1,
         "attributes": {
-            "**generic.attack_damage": 1.1
+            "**generic.attack_damage": 0.1
         }
     },
     {
@@ -19,7 +19,7 @@
         "level": 3,
         "integrity": -1,
         "attributes": {
-            "**generic.attack_damage": 1.15
+            "**generic.attack_damage": 0.15
         }
     },
     {
@@ -27,7 +27,7 @@
         "level": 4,
         "integrity": -2,
         "attributes": {
-            "**generic.attack_damage": 1.2
+            "**generic.attack_damage": 0.2
         }
     },
     {
@@ -35,7 +35,7 @@
         "level": 5,
         "integrity": -2,
         "attributes": {
-            "**generic.attack_damage": 1.25
+            "**generic.attack_damage": 0.25
         }
     },
     {
