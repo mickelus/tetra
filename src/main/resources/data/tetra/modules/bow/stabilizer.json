@@ -13,7 +13,7 @@
             "durability": 10,
             "extract": {
                 "tertiaryEffects": {
-                    "velocity": 8
+                    "velocity": 6
                 },
                 "durability": 0.2,
                 "glyph": {

@@ -1521,7 +1521,7 @@
   "tetra.variant.straight_stave/stick": "Makeshift straight stave",
 
   "tetra/schematic/bow/stave/long_stave.name": "Long stave",
-  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r greatly increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
   "tetra/schematic/bow/stave/long_stave.slot1": "Material",
 
   "tetra.module.bow/long_stave.item_name": "Longbow",

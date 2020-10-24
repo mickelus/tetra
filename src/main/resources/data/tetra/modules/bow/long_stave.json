@@ -32,20 +32,20 @@
             "key": "long_stave/",
             "attributes": {
                 "tetra:draw_speed": 1.6,
-                "tetra:draw_strength": 5
+                "tetra:draw_strength": 4.5
             },
             "effects": {
-                "overbowed": 70
+                "overbowed": 60
             },
             "durability": 171,
             "extract": {
                 "primaryAttributes": {
                     "tetra:draw_speed": 0.22,
-                    "tetra:draw_strength": 1.4
+                    "tetra:draw_strength": 1.45
                 },
                 "tertiaryAttributes": {
                     "tetra:draw_speed": -0.04,
-                    "tetra:draw_strength": 1.1
+                    "tetra:draw_strength": 0.8
                 },
                 "primaryEffects": {
                     "overbowed": -6
