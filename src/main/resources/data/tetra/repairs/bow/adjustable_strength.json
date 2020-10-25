@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 2
+    },
+    "requiredTools": {
+        "hammer": 5
+    },
+    "moduleKey": "bow/adjustable_strength",
+    "moduleVariant": "adjustable_strength/bolt"
+}

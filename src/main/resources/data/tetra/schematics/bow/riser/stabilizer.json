@@ -18,6 +18,9 @@
                 "item": "tetra:planar_stabilizer",
                 "count": 2
             },
+            "requiredTools": {
+                "hammer": 5
+            },
             "moduleKey": "bow/stabilizer",
             "moduleVariant": "stabilizer/linear"
         }
