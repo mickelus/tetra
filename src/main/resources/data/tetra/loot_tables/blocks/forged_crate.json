@@ -31,86 +31,43 @@
         },
         {
             "name": "forged/crate_break_content",
-            "rolls": {
-                "min": 0,
-                "max": 2
-            },
+            "rolls": 1,
             "entries": [
                 {
                     "type": "item",
                     "name": "tetra:forged_mesh",
-                    "weight": 1,
-                    "conditions": [
-                        {
-                            "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.5,
-                            "fortuneMultiplier": 0.05
-                        }
-                    ]
+                    "weight": 1
                 },
                 {
                     "type": "item",
                     "name": "tetra:forged_beam",
-                    "weight": 1,
-                    "conditions": [
-                        {
-                            "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.5,
-                            "fortuneMultiplier": 0.05
-                        }
-                    ]
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:quick_latch",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_bolt",
+                    "weight": 3
                 },
                 {
                     "type": "item",
                     "name": "tetra:vent_plate",
-                    "weight": 1,
-                    "conditions": [
-                        {
-                            "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.5,
-                            "fortuneMultiplier": 0.05
-                        }
-                    ]
+                    "weight": 1
                 },
                 {
                     "type": "item",
                     "name": "tetra:magmatic_cell",
                     "weight": 1,
-                    "conditions": [
-                        {
-                            "condition": "tetra:random_chance_with_fortune",
-                            "chance": 0.4,
-                            "fortuneMultiplier": 0.05
-                        }
-                    ],
                     "functions": [
                         {
                             "function": "set_damage",
                             "damage": {
                                 "min": 0,
                                 "max": 1
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "item",
-                    "name": "tetra:metal_scrap",
-                    "weight": 15,
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 1,
-                                "max": 5
-                            }
-                        },
-                        {
-                            "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
-                            "formula": "uniform_bonus_count",
-                            "parameters": {
-                                "bonusMultiplier": 1
                             }
                         }
                     ]
