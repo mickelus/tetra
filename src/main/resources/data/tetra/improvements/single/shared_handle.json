@@ -20,7 +20,7 @@
             "fierySelf": [-1, -0.03]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap_alt",
+            "location": "tetra:items/module/single/handle/improvements/wrap_alt",
             "tint": "string"
         }]
     },
@@ -39,7 +39,7 @@
             "fierySelf": [-1, -0.04]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap_alt",
+            "location": "tetra:items/module/single/handle/improvements/wrap_alt",
             "tint": "string"
         }]
     },
@@ -58,7 +58,7 @@
             "fierySelf": [-1, -0.05]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap_alt",
+            "location": "tetra:items/module/single/handle/improvements/wrap_alt",
             "tint": "string"
         }]
     },
@@ -76,7 +76,7 @@
             "fierySelf": [-1, -0.05]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "leather"
         }]
     },
@@ -94,7 +94,7 @@
             "fierySelf": [-1, -0.07]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "leather"
         }]
     },
@@ -112,7 +112,7 @@
             "fierySelf": [-1, -0.09]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "leather"
         }]
     },
@@ -130,7 +130,7 @@
             "fierySelf": [-2, -0.033]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "hide"
         }]
     },
@@ -148,7 +148,7 @@
             "fierySelf": [-2, -0.046]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "hide"
         }]
     },
@@ -166,7 +166,7 @@
             "fierySelf": [-2, -0.06]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "hide"
         }]
     },
@@ -185,7 +185,7 @@
             "fierySelf": [-1, -0.033]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "vine"
         }]
     },
@@ -204,7 +204,7 @@
             "fierySelf": [-1, -0.036]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "vine"
         }]
     },
@@ -223,7 +223,7 @@
             "fierySelf": [-1, -0.04]
         },
         "models": [{
-            "location": "tetra:items/module/single/handle/improvements/improvements/wrap",
+            "location": "tetra:items/module/single/handle/improvements/wrap",
             "tint": "vine"
         }]
     }
