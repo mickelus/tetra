@@ -1187,7 +1187,7 @@
 
   "tetra.module.single/light_handle.name": "Light handle",
   "tetra.module.single/light_handle.description": "A lighter handle that provides less durability but allows the item to be thrown. Handles are the primary source of integrity.",
-  "tetra.module.single/basic_handle.material_name": "Light %s handle",
+  "tetra.module.single/light_handle.material_name": "Light %s handle",
 
   "tetra.variant.light_handle/stick": "Flimsy light handle",
 
@@ -1223,15 +1223,15 @@
   "tetra/schematic/single/handle/wrap_handle_hone_2.description": "Further improve the handle wrap, increasing damage and speed, and reducing negative effects.",
 
   "tetra/schematic/single/handle/hone_speed_1.name": "Hone: Speed I",
-  "tetra/schematic/single/handle/hone_speed_1.description": "Hone the handle to increase the overall swing speed by 4%%.",
+  "tetra/schematic/single/handle/hone_speed_1.description": "Hone the handle to increase the swing speed.",
   "tetra/schematic/single/handle/hone_speed_2.name": "Hone: Speed II",
-  "tetra/schematic/single/handle/hone_speed_2.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 4%% to 9%%.",
+  "tetra/schematic/single/handle/hone_speed_2.description": "Further hone the swing speed improvement for this module, increasing the speed bonus.",
   "tetra/schematic/single/handle/hone_speed_3.name": "Hone: Speed III",
-  "tetra/schematic/single/handle/hone_speed_3.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 9%% to 13%%.",
+  "tetra/schematic/single/handle/hone_speed_3.description": "Further hone the swing speed improvement for this module, increasing the speed bonus.",
   "tetra/schematic/single/handle/hone_speed_4.name": "Hone: Speed IV",
-  "tetra/schematic/single/handle/hone_speed_4.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 13%% to 18%%.",
+  "tetra/schematic/single/handle/hone_speed_4.description": "Further hone the swing speed improvement for this module, increasing the speed bonus.",
   "tetra/schematic/single/handle/hone_speed_5.name": "Hone: Speed V",
-  "tetra/schematic/single/handle/hone_speed_5.description": "Further hone the swing speed improvement for this module, increasing the speed bonus from 18%% to 22%%.",
+  "tetra/schematic/single/handle/hone_speed_5.description": "Further hone the swing speed improvement for this module, increasing the speed bonus.",
 
   "tetra/schematic/single/socket.name": "Socket",
   "tetra/schematic/single/socket.description": "Attach a gem where the head meets the handle. Different gems provide different effects.",
