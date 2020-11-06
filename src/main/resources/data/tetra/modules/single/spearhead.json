@@ -50,7 +50,7 @@
                     "textureX": 208,
                     "textureY": 32
                 },
-                "availableTextures": ["metal", "shiny", "grainy", "crude"],
+                "availableTextures": ["metal", "shiny", "crude"],
                 "models": [{ "location": "tetra:items/module/single/head/spearhead/" }]
             }
         }
