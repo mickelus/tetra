@@ -4,8 +4,10 @@
         "key": "bow/adjustable_strength",
         "steps": 5,
         "properties": {
-            "**tetra:draw_speed": 0.1,
-            "**tetra:draw_strength": 0.1
+            "attributes": {
+                "**tetra:draw_speed": 0.1,
+                "**tetra:draw_strength": 0.1
+            }
         }
     }
 ]
