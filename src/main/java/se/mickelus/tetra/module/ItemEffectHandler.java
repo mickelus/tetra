@@ -567,6 +567,7 @@ public class ItemEffectHandler {
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
                 int count = CastOptional.cast(event.getBow().getItem(), ModularItem.class)
                         .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
+                        .filter(level -> level > 0)
                         .orElse(1);
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
