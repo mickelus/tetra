@@ -493,9 +493,9 @@ public class ItemModularHandheld extends ModularItem {
             double reach = attacker.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
 
             // range values set up to mimic vanilla behaviour
-            attacker.world.getEntitiesWithinAABB(LivingEntity.class,
-                    target.getBoundingBox().grow(range, 0.25d, range)).stream()
+            attacker.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(range, 0.25d, range)).stream()
                     .filter(entity -> entity != attacker)
+                    .filter(entity -> entity != target)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .filter(entity -> attacker.getDistanceSq(entity) < (range + reach) * (range + reach))
                     .forEach(entity -> {
