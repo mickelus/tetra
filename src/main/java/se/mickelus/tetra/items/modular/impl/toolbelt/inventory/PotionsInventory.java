@@ -35,7 +35,8 @@ public class PotionsInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the inventory
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemStackTagsEqual(storedStack, itemStack)
+            if (ItemStack.areItemsEqual(storedStack, itemStack)
+                    && ItemStack.areItemStackTagsEqual(storedStack, itemStack)
                     && storedStack.getCount() < 64) {
 
                 int moveCount = Math.min(itemStack.getCount(), 64 - storedStack.getCount());
