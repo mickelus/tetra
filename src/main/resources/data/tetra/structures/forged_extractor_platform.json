@@ -4,7 +4,7 @@
         {
             "offset": [4, 12, 2],
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_large", "tetra:forged_extractor_large_powered"]
+            "features": ["tetra:forged_extractor_large_powered"]
         }
     ]
 

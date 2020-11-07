@@ -5,25 +5,41 @@
             "offset": [4, 5, 4],
             "facing": "EAST",
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+            "features": [
+                "tetra:forged_extractor_small",
+                "tetra:forged_extractor_small_powered",
+                "tetra:forged_extractor_small_powered"
+            ]
         },
         {
             "offset": [4, 5, 6],
             "facing": "EAST",
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+            "features": [
+                "tetra:forged_extractor_small",
+                "tetra:forged_extractor_small_powered",
+                "tetra:forged_extractor_small_powered"
+            ]
         },
         {
             "offset": [16, 5, 4],
             "facing": "WEST",
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+            "features": [
+                "tetra:forged_extractor_small",
+                "tetra:forged_extractor_small_powered",
+                "tetra:forged_extractor_small_powered"
+            ]
         },
         {
             "offset": [16, 5, 6],
             "facing": "WEST",
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_small", "tetra:forged_extractor_small_powered"]
+            "features": [
+                "tetra:forged_extractor_small",
+                "tetra:forged_extractor_small_powered",
+                "tetra:forged_extractor_small_powered"
+            ]
         },
         {
             "offset": [10, 6, 8],

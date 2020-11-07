@@ -19,7 +19,7 @@ description="Tetra revolves around modular items and attempts to blend it togeth
 [[dependencies.tetra]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.3,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
