@@ -54,7 +54,7 @@
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "key": "basic_blade/",
             "attributes": {
-                "generic.attack_speed": -2
+                "generic.attack_speed": -1.9
             },
             "effects": {
                 "sweeping": 1
