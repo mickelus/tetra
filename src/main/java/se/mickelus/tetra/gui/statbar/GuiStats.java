@@ -9,7 +9,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 public class GuiStats {
@@ -26,10 +26,15 @@ public class GuiStats {
             0, 20, false, attackDamageNormalizedGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.attack_damage_normalized.tooltip", attackDamageNormalizedGetter));
 
+    public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
+    private static final ITooltipGetter counterweightTooltip = new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter);
+    public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.counterweight"),
+            0, 12, true, counterweightGetter, LabelGetterBasic.integerLabel, counterweightTooltip);
+
     public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
     public static final GuiStatBar attackSpeed = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed"),
-                0, 4, false, attackSpeedGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterAttackSpeed(attackSpeedGetter));
+                0, 4, false, attackSpeedGetter, LabelGetterBasic.decimalLabel, new TooltipGetterAttackSpeed(attackSpeedGetter))
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.counterweight", 5, counterweightGetter, counterweightTooltip));
 
     public static final IStatGetter attackSpeedGetterNormalized = new StatGetterAttribute(Attributes.ATTACK_SPEED, true, true);
     public static final GuiStatBar attackSpeedNormalized = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.speed_normalized"),
@@ -141,11 +146,13 @@ public class GuiStats {
     public static final IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
     public static final GuiStatBar sweeping = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.sweeping"),
                 0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterPercentageDecimal("tetra.stats.sweeping.tooltip", sweepingGetter));
+            new TooltipGetterSweeping(sweepingGetter))
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.truesweep", 4,
+                    new StatGetterEffectLevel(ItemEffect.truesweep, 1), new TooltipGetterNone("tetra.stats.truesweep.tooltip")));
 
     public static final IStatGetter bleedingGetter = new StatGetterEffectLevel(ItemEffect.bleeding, 4);
     public static final GuiStatBar bleeding = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.bleeding"),
-                0, 12, false, bleedingGetter, LabelGetterBasic.integerLabel,
+                0, 20, false, bleedingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.bleeding.tooltip", bleedingGetter));
 
     public static final IStatGetter backstabGetter = new StatGetterEffectLevel(ItemEffect.backstab, 25, 25);
@@ -227,11 +234,6 @@ public class GuiStats {
     public static final GuiStatBar quickStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.quickStrike"),
                 0, 100, false, quickStrikeGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterPercentageDecimal("tetra.stats.quickStrike.tooltip", quickStrikeGetter));
-
-    public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
-    public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.counterweight"),
-            0, 12, true, counterweightGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter));
 
     public static final IStatGetter softStrikeGetter = new StatGetterEffectLevel(ItemEffect.softStrike, 1);
     public static final GuiStatBar softStrike = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.softStrike"),
@@ -331,6 +333,5 @@ public class GuiStats {
 //        ItemEffect.sweepingStrike
 //        ItemEffect.flattening
 //        ItemEffect.tilling
-//        ItemEffect.counterweight
 //        ItemEffect.denailing
 }

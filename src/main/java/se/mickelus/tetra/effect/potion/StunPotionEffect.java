@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effects;
+package se.mickelus.tetra.effect.potion;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -9,9 +9,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.math.vector.Vector3d;
 
-public class StunEffect extends Effect {
-    public static StunEffect instance;
-    public StunEffect() {
+public class StunPotionEffect extends Effect {
+    public static StunPotionEffect instance;
+    public StunPotionEffect() {
         super(EffectType.HARMFUL, 0xeeeeee);
 
         setRegistryName("stun");

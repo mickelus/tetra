@@ -1,4 +1,4 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.effect;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,6 +61,7 @@ public class ItemEffect {
      * todo: apply additional effects to sweeped targets at high levels
      */
     public static ItemEffect sweeping = get("sweeping");
+    public static ItemEffect truesweep = get("truesweep");
 
     /**
      * Striking: Hitting a block instantly breaks it and triggers attack cooldown. Only applies if the corresponding tool level is high enough to

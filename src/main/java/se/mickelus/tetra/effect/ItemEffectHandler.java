@@ -1,18 +1,18 @@
-package se.mickelus.tetra.module;
+package se.mickelus.tetra.effect;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
-import net.minecraft.network.play.server.SPlaySoundEventPacket;
+import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -20,9 +20,12 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.GameType;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
@@ -31,11 +34,10 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
+import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.util.RotationHelper;
-import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.effects.EarthboundEffect;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
@@ -43,82 +45,45 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ItemEffectHandler {
 
-    private Cache<UUID, Integer> strikeCache;
-
     public static ItemEffectHandler instance;
 
-    private static final BlockPos[] sweep1 = new BlockPos[] {
-            new BlockPos(-2, 0, 0),
-            new BlockPos(-1, 0, 0),
-            new BlockPos(0, 0, 0),
-            new BlockPos(1, 0, 0),
-            new BlockPos(2, 0, 0),
-            new BlockPos(-1, 0, 1),
-            new BlockPos(0, 0, 1),
-            new BlockPos(1, 0, 1),
-            new BlockPos(-3, 0, -1),
-            new BlockPos(-2, 0, -1),
-            new BlockPos(-1, 0, -1),
-            new BlockPos(0, 0, -1),
-            new BlockPos(3, 0, -1),
-            new BlockPos(-3, 0, -2),
-            new BlockPos(-2, 0, -2),
-            new BlockPos(-1, 0, -2),
-            new BlockPos(-1, 1, 0),
-            new BlockPos(0, 1, 0),
-            new BlockPos(-2, 1, -1),
-            new BlockPos(-1, 1, -1),
-            new BlockPos(-1, -1, 0),
-            new BlockPos(0, -1, 0),
-            new BlockPos(-2, -1, -1),
-            new BlockPos(-1, -1, -1),
-    };
-
-    private static final BlockPos[] sweep2 = new BlockPos[] {
-            new BlockPos(-2, 0, 0),
-            new BlockPos(-1, 0, 0),
-            new BlockPos(0, 0, 0),
-            new BlockPos(1, 0, 0),
-            new BlockPos(2, 0, 0),
-            new BlockPos(3, 0, 0),
-            new BlockPos(-1, 0, 1),
-            new BlockPos(0, 0, 1),
-            new BlockPos(1, 0, 1),
-            new BlockPos(2, 0, 1),
-            new BlockPos(-2, 0, -1),
-            new BlockPos(-1, 0, -1),
-            new BlockPos(0, 0, -1),
-            new BlockPos(4, 0, -1),
-            new BlockPos(-1, 1, 0),
-            new BlockPos(0, 1, 0),
-            new BlockPos(1, 1, 0),
-            new BlockPos(-1, -1, 0),
-            new BlockPos(0, -1, 0),
-            new BlockPos(1, -1, 0),
-    };
-
     public ItemEffectHandler() {
-        strikeCache = CacheBuilder.newBuilder()
-                .maximumSize(100)
-                .expireAfterWrite(1, TimeUnit.MINUTES)
-                .build();
-
         instance = this;
     }
 
-    private int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
+    public static void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+        int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
+        if (bleedingLevel > 0) {
+            if (!CreatureAttribute.UNDEAD.equals(target.getCreatureAttribute())
+                    && attacker.getRNG().nextFloat() < 0.3f) {
+                target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel));
+            }
+        }
+
+        // todo: only trigger if target is standing on stone/earth/sand/gravel
+        int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
+        if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getPosY()  / 128 ))) {
+            target.addPotionEffect(new EffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
+
+            if (target.world instanceof ServerWorld) {
+                BlockState blockState = target.world.getBlockState(new BlockPos(target.getPosX(), target.getPosY() - 1, target.getPosZ()));
+                ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
+                        target.getPosX(), target.getPosY() + 0.1, target.getPosZ(),
+                        16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
+            }
+        }
+    }
+
+    private static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         ModularItem item = (ModularItem) itemStack.getItem();
         return item.getEffectLevel(itemStack, effect);
     }
 
-    private double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+    private static double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
         ModularItem item = (ModularItem) itemStack.getItem();
         return item.getEffectEfficiency(itemStack, effect);
     }
@@ -158,8 +123,8 @@ public class ItemEffectHandler {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRNG().nextFloat() * 100) {
                                 attacker.attackEntityFrom(new EntityDamageSource("thorns", blocker).setIsThornsDamage(),
                                         (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack, ItemEffect.blockingReflect)));
-                                item.applyHitEffects(itemStack, attacker, blocker);
-                                ItemModularHandheld.applyEnchantmentHitEffects(itemStack, attacker, blocker);
+                                applyHitEffects(itemStack, attacker, blocker);
+                                EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
 
                                 float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
                                 attacker.applyKnockback(knockbackFactor * 0.5f,
@@ -245,7 +210,7 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        Optional.ofNullable(event.getEntityLiving().getActivePotionEffect(EarthboundEffect.instance))
+        Optional.ofNullable(event.getEntityLiving().getActivePotionEffect(EarthboundPotionEffect.instance))
                 .ifPresent(effect -> event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().mul(1, 0.5, 1)));
     }
 
@@ -278,6 +243,20 @@ public class ItemEffectHandler {
                 });
     }
 
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onClickInput(InputEvent.ClickInputEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (event.isAttack()
+                && !event.isCanceled()
+                && mc.objectMouseOver != null
+                && RayTraceResult.Type.MISS.equals(Minecraft.getInstance().objectMouseOver.getType())) {
+            if (getEffectLevel(mc.player.getHeldItemMainhand(), ItemEffect.truesweep) > 0) {
+                SweepingEffect.triggerTruesweep();
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Optional.of(event.getItemStack())
@@ -285,95 +264,47 @@ public class ItemEffectHandler {
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                 .ifPresent(itemStack -> {
                     ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                    int strikingLevel = 0;
                     BlockPos pos = event.getPos();
                     World world = event.getWorld();
                     BlockState blockState = world.getBlockState(pos);
                     PlayerEntity breakingPlayer = event.getPlayer();
-                    ToolType tool = null;
 
-                    // essentially checks if the item is effective in for each tool type, and checks if it can strike for that type
-                    if (ItemModularHandheld.isToolEffective(ToolType.AXE, blockState)) {
-                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingAxe);
-                        if (strikingLevel > 0) {
-                            tool = ToolType.AXE;
-                        }
-                    }
-
-                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.PICKAXE, blockState)) {
-                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
-                        if (strikingLevel > 0) {
-                            tool = ToolType.PICKAXE;
-                        }
-                    }
-
-                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolTypes.cut, blockState)) {
-                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingCut);
-                        if (strikingLevel > 0) {
-                            tool = ToolTypes.cut;
-                        }
-                    }
-
-                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.SHOVEL, blockState)) {
-                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingShovel);
-                        if (strikingLevel > 0) {
-                            tool = ToolType.SHOVEL;
-                        }
-                    }
-
-                    if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.HOE, blockState)) {
-                        strikingLevel = getEffectLevel(itemStack, ItemEffect.strikingHoe);
-                        if (strikingLevel > 0) {
-                            tool = ToolType.HOE;
-                        }
-                    }
-
-                    if (strikingLevel > 0) {
-                        int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweepingStrike);
-                        if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {
-                            if (sweepingLevel > 0) {
-                                breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
-                            } else {
-                                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
-                                if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                                        || itemStack.canHarvestBlock(blockState)) {
-                                    breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
-                                }
-                            }
-
-                            item.applyUsageEffects(breakingPlayer, itemStack, 1);
-                            item.applyDamage(item.getBlockDestroyDamage(), itemStack, breakingPlayer);
-                        }
+                    boolean didStrike = StrikingEffect.causeEffect(breakingPlayer, itemStack, item, world, pos, blockState);
+                    if (didStrike) {
                         event.setCanceled(true);
-                        breakingPlayer.resetCooldown();
                     }
 
                     if (!event.getWorld().isRemote) {
                         int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
                         if (critLevel > 0) {
-                            if (critBlock(world, breakingPlayer, pos, blockState, itemStack, tool, critLevel)) {
+                            if (critBlock(world, breakingPlayer, pos, blockState, itemStack, critLevel)) {
                                 event.setCanceled(true);
                             }
+                        }
+
+                        if (breakingPlayer.getCooledAttackStrength(0.5f) > 0.9 && getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
+                            SweepingEffect.truesweep(itemStack, breakingPlayer);
                         }
                     }
                 });
     }
 
-    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack,
-            ToolType tool, int critLevel) {
+    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
         if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
                 && blockState.getBlockHardness(world, pos) > -1
                 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
+
+            ToolType tool = blockState.getHarvestTool();
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
 
             if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
-                breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
+                EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                 itemStack.damageItem(2, breakingPlayer, t -> {});
 
                 ((ModularItem) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
 
                 if (breakingPlayer instanceof ServerPlayerEntity) {
-                    sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
+                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
                 }
 
                 if (world instanceof ServerWorld) {
@@ -415,146 +346,6 @@ public class ItemEffectHandler {
                 }
             });
         }
-    }
-
-    /**
-     * Break a block in the world, as a player. Based on how players break blocks in vanilla.
-     * @param world the world in which to break blocks
-     * @param breakingPlayer the player which is breaking the blocks
-     * @param toolStack the itemstack used to break the blocks
-     * @param pos the position which to break blocks around
-     * @param blockState the state of the block that is to broken
-     * @param harvest true if the player is ment to harvest the block, false if it should just magically disappear
-     * @return True if the player was allowed to break the block, otherwise false
-     */
-    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
-            boolean harvest) {
-        if (!world.isRemote) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
-            GameType gameType = serverPlayer.interactionManager.getGameType();
-
-            int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
-
-            if (exp != -1) {
-                boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
-                        && !breakingPlayer.blockActionRestricted(world, pos, gameType)
-                        && (!harvest || blockState.canHarvestBlock(world, pos, breakingPlayer))
-                        && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
-
-                if (canRemove) {
-                    blockState.getBlock().onPlayerDestroy(world, pos, blockState);
-
-                    if (harvest) {
-                        blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
-
-                        if (exp > 0) {
-                            blockState.getBlock().dropXpOnBlockBreak(serverWorld, pos, exp);
-                        }
-                    }
-                }
-                return canRemove;
-            }
-
-            return false;
-        } else {
-            return blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest,
-                    world.getFluidState(pos));
-        }
-    }
-
-    /**
-     * Breaks several blocks around the given blockpos.
-     * @param world the world in which to break blocks
-     * @param breakingPlayer the player which is breaking the blocks
-     * @param toolStack the itemstack used to break the blocks
-     * @param originPos the position which to break blocks around
-     * @param tool the type of tool used to break the center block, the tool required to break nearby blocks has to
-     *             match this
-     * @param sweepingLevel the level of the sweeping effect on the toolStack
-     */
-    private void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
-            int sweepingLevel) {
-        if (world.isRemote) {
-            return;
-        }
-
-        Direction facing = breakingPlayer.getHorizontalFacing();
-        final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
-        final boolean alternate = strikeCounter % 2 == 0;
-
-        float efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
-                .map(item -> item.getToolEfficiency(toolStack, tool))
-                .orElse(0f);
-
-        breakingPlayer.spawnSweepParticles();
-
-        List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
-                .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
-                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.rotationPitch))
-                .map(pos -> RotationHelper.rotateCardinal(pos, facing))
-                .map(originPos::add)
-                .collect(Collectors.toList());
-
-        for (BlockPos pos : positions) {
-            BlockState blockState = world.getBlockState(pos);
-
-            // make sure that only blocks which require the same tool are broken
-            if (ItemModularHandheld.isToolEffective(tool, blockState)) {
-
-                // check that the tool level is high enough and break the block
-                int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
-                if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                        || toolStack.canHarvestBlock(blockState)) {
-
-                    // the break event has to be sent the player separately as it's sent to the others inside Block.onBlockHarvested
-                    if (breakingPlayer instanceof ServerPlayerEntity) {
-                        sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                    }
-
-                    // adds a fixed amount to make blocks like grass still "consume" some efficiency
-                    efficiency -= blockState.getBlockHardness(world, pos) + 0.5;
-
-                    breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
-                } else {
-                    break;
-                }
-            } else if (blockState.isSolid()) {
-                efficiency -= blockState.getBlockHardness(world, pos);
-            }
-
-            if (efficiency <= 0) {
-                break;
-            }
-        }
-    }
-
-    /**
-     * Sends an event to a specific player.
-     * @param player the player the event will be sent to
-     * @param type an integer representation of the event
-     * @param pos the position in which the event takes place
-     * @param data an integer representation of event data (e.g. Block.getStateId)
-     */
-    public static void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
-        player.connection.sendPacket(new SPlaySoundEventPacket(type, pos, data, false));
-    }
-
-    /**
-     * Gets and increments counter for recurrent strike made by the given entity. Expires after a minute.
-     * @param entityId The ID of the responsible entity
-     * @return The number of recurrent strikes
-     */
-    private int getStrikeCounter(UUID entityId) {
-        int counter = 0;
-        try {
-            counter = strikeCache.get(entityId, () -> 0);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        strikeCache.put(entityId, counter + 1);
-
-        return counter;
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

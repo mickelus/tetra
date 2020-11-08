@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effects;
+package se.mickelus.tetra.effect.potion;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -16,12 +16,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
-public class EarthboundEffect extends Effect {
-    public static EarthboundEffect instance;
+public class EarthboundPotionEffect extends Effect {
+    public static EarthboundPotionEffect instance;
 
     public static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/potions.png");
 
-    public EarthboundEffect() {
+    public EarthboundPotionEffect() {
         super(EffectType.HARMFUL, 0x006600);
         setRegistryName("earthbound");
 

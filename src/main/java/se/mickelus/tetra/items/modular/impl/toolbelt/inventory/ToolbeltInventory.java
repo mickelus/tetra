@@ -17,7 +17,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.Arrays;
 import java.util.Collection;

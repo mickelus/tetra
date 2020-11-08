@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.lang.reflect.Type;
 import java.util.Collection;

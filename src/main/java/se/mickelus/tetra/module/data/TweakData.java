@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ToolType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 public class TweakData {

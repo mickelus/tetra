@@ -3,13 +3,9 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.mgui.gui.GuiAlignment;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 public class GuiStatBarBlockingDuration extends GuiStatBar {
     private static final IStatGetter durationGetter = new StatGetterEffectLevel(ItemEffect.blocking, 1);

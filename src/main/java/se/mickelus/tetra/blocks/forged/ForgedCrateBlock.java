@@ -30,8 +30,9 @@ import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -122,7 +123,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
             world.setBlockState(pos, blockState.with(propIntegrity, integrity - progress));
         } else {
-            boolean didBreak = ItemEffectHandler.breakBlock(world, player, itemStack, pos, blockState, false);
+            boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false);
             if (didBreak && world instanceof ServerWorld) {
                 ResourceLocation lootTable = ToolTypes.hammer.equals(toolType) ? hammerbonusLootTable : pryBonusLootTable;
 

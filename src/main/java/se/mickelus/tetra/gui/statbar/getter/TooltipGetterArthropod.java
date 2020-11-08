@@ -4,7 +4,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.module.ItemEffect;
 
 public class TooltipGetterArthropod implements ITooltipGetter {
 

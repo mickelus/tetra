@@ -9,11 +9,7 @@
         "type": "tetra:modular_item",
         "improvements": {
             "!blade/tempered": -1
-        },
-        "modules": [
-            ["sword/short_blade"],
-            ["sword/basic_blade"]
-        ]
+        }
     },
     "outcomes": [
         {

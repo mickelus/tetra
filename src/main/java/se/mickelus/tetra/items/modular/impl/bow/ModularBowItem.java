@@ -33,7 +33,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;

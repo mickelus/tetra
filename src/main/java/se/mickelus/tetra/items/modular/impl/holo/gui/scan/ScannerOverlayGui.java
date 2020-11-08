@@ -25,7 +25,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.Nullable;
 import java.util.Objects;

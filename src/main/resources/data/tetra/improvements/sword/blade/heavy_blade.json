@@ -49,7 +49,7 @@
         "level": 1,
         "integrity": -1,
         "effects": {
-            "bleeding": 9
+            "bleeding": 1
         },
         "models": [{
             "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",

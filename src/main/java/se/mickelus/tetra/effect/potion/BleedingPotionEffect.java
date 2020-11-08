@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effects;
+package se.mickelus.tetra.effect.potion;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
@@ -6,9 +6,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.DamageSource;
 
-public class BleedingEffect extends Effect {
-    public static BleedingEffect instance;
-    public BleedingEffect() {
+public class BleedingPotionEffect extends Effect {
+    public static BleedingPotionEffect instance;
+    public BleedingPotionEffect() {
         super(EffectType.HARMFUL, 0x880000);
 
         setRegistryName("bleeding");

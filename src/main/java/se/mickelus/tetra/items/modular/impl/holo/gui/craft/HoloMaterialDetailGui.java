@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.ToolType;
@@ -13,7 +12,7 @@ import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.LabelGetterBasic;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.TierData;
 import se.mickelus.tetra.properties.PropertyHelper;

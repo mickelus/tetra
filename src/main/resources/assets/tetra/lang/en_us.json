@@ -125,7 +125,7 @@
   "tetra.stats.ability_damage.tooltip": "Abilities using this item has a base damage value of §e%s",
 
   "tetra.stats.bleeding": "Bleeding",
-  "tetra.stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds",
+  "tetra.stats.bleeding.tooltip": "Hitting entities has a 30%% chance to cause them to bleed for §e%s§r damage over 2 seconds, not effective against undead",
 
   "tetra.stats.backstab": "Backstab",
   "tetra.stats.backstab.tooltip": "Hitting entities from behind cause critical hits that deal §e%s§r bonus damage",
@@ -175,7 +175,11 @@
   "tetra.stats.arthropod.tooltip": "Deals §e%s§r bonus damage when attacking an arthropod and applies slowness IV for 1 to §e%s§r seconds",
 
   "tetra.stats.sweeping": "Sweeping",
-  "tetra.stats.sweeping.tooltip": "Attacking an entity also hits all adjacent enemies for §e%s§r weapon damage",
+  "tetra.stats.sweeping.tooltip": "Attacking an entity also hits all adjacent enemies within a §e%s§r block radius for §e%s§r weapon damage",
+
+  "tetra.stats.truesweep": "Truesweep",
+  "tetra.stats.truesweep.tooltip": "Entities hit by a sweep are affected by enchantments and item effects. Swinging triggers the sweeping effect even if it does not hit an entity.",
+  "tetra.stats.truesweep.tooltip_extended": "Enchantments include both bonus damage from enchantments like smite and effects from enchantments like fire aspect. Item effects refers to effects like bleeding or critical strike.",
 
   "tetra.stats.unbreaking": "Unbreaking",
   "tetra.stats.unbreaking.tooltip": "Has a chance to not take durability damage on use\n \n§7Unbreaking level: §e%s§7\nAvoid chance: §e%s%%",
@@ -685,9 +689,9 @@
   "tetra/schematic/sword/shared_blade/serrated_1.name": "Serrate",
   "tetra/schematic/sword/shared_blade/serrated_1.description": "Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.",
   "tetra/schematic/sword/shared_blade/serrated_2.name": "Hone: Serrated II",
-  "tetra/schematic/sword/shared_blade/serrated_2.description": "Hone the serrated improvement, increases the damage dealt to 8.",
+  "tetra/schematic/sword/shared_blade/serrated_2.description": "Hone the serrated improvement, increases the damage dealt.",
   "tetra/schematic/sword/shared_blade/serrated_3.name": "Hone: Serrated III",
-  "tetra/schematic/sword/shared_blade/serrated_3.description": "Further hone the serrated improvement, increases the damage dealt to 16.",
+  "tetra/schematic/sword/shared_blade/serrated_3.description": "Further hone the serrated improvement, increases the damage dealt.",
 
   "tetra/schematic/sword/shared_blade/tempered_1.name": "Temper",
   "tetra/schematic/sword/shared_blade/tempered_1.description": "Temper the point of the blade, greatly increasing its hardness. Causes some of the damage dealt to ignore armor.",
@@ -832,17 +836,17 @@
 
   "tetra.module.sword/short_blade.item_name": "Shortblade",
   "tetra.module.sword/short_blade.name": "Shortblade",
-  "tetra.module.sword/short_blade.description": "A blade that's shorter and lighter than the common blade, allows for a faster swing rate but deals slightly less damage per swing.",
+  "tetra.module.sword/short_blade.description": "A light and short blade that can be used for crafting and for offhand attacks.",
   "tetra.module.sword/short_blade.material_name": "%s shortblade",
   "tetra.module.sword/short_blade.prefix": "%s",
 
   "tetra/schematic/sword/heavy_blade.name": "Heavy blade",
-  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade.\n \nMaterial §fhardness§r increases §fdamage§r and improves the §fsweeping§r effect.\nMaterial §fdensity§r increases §fdamage§r, but decreases §fattack speed§r.",
+  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade that always sweeps on fully charged swings.\n \nMaterial §fhardness§r increases §fdamage§r and improves §fsweep damage§r.\nMaterial §fdensity§r increases §fdamage§r, but decreases §fattack speed§r.",
   "tetra/schematic/sword/heavy_blade.slot1": "Blade material",
 
   "tetra.module.sword/heavy_blade.item_name": "Greatsword",
   "tetra.module.sword/heavy_blade.name": "Heavy blade",
-  "tetra.module.sword/heavy_blade.description": "A large and hefty blade that sacrifices attack speed for increased damage. Has a powerful sweeping attack on fully charged attacks.",
+  "tetra.module.sword/heavy_blade.description": "A large and hefty blade that sacrifices attack speed for increased damage, always sweeps on fully charged swings.",
   "tetra.module.sword/heavy_blade.material_name": "Heavy %s blade",
   "tetra.module.sword/heavy_blade.prefix": "%s",
 
@@ -1106,7 +1110,7 @@
   "tetra.improvement.basic_pickaxe/puncturing.description": "Attacks partially ignore armor",
 
   "tetra/schematic/double/butt/butt.name": "Tool butt",
-  "tetra/schematic/double/butt/butt.description": "Used as the back side of a single sided tool, typically yields faster swing speed than a double sided tool. Can sometimes be used for hammering if crafted from a sturdy material.",
+  "tetra/schematic/double/butt/butt.description": "Used as the back side of a single sided tool, typically yields faster swing speed than a double sided tool.",
   "tetra/schematic/double/butt/butt.slot1": "Head material",
 
   "tetra.module.double/butt.name": "Tool butt",

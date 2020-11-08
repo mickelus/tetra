@@ -24,10 +24,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -37,17 +34,19 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import se.mickelus.tetra.effect.EffectHelper;
+import se.mickelus.tetra.effect.SweepingEffect;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.effects.BleedingEffect;
-import se.mickelus.tetra.effects.EarthboundEffect;
-import se.mickelus.tetra.effects.StunEffect;
+import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
+import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -135,59 +134,22 @@ public class ItemModularHandheld extends ModularItem {
         applyDamage(entityHitDamage, itemStack, attacker);
 
         if (!isBroken(itemStack)) {
-            applyHitEffects(itemStack, target, attacker);
+            float attackStrength = CastOptional.cast(attacker, PlayerEntity.class)
+                    .map(EffectHelper::getCooledAttackStrength)
+                    .orElse(1f);
+
+            if (attackStrength > 0.9) {
+                int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
+                if (sweepingLevel > 0) {
+                    SweepingEffect.sweepAttack(itemStack, target, attacker, sweepingLevel);
+                }
+            }
+
+            ItemEffectHandler.applyHitEffects(itemStack, target, attacker);
             applyUsageEffects(attacker, itemStack, 1);
         }
 
         return true;
-    }
-
-    public void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-        int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
-        if (sweepingLevel > 0) {
-            sweepAttack(itemStack, target, attacker, sweepingLevel);
-        }
-
-        int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
-        if (bleedingLevel > 0) {
-            if (!CreatureAttribute.UNDEAD.equals(target.getCreatureAttribute())
-                    && attacker.getRNG().nextFloat() < 0.3f) {
-                target.addPotionEffect(new EffectInstance(BleedingEffect.instance, 40, bleedingLevel));
-            }
-        }
-
-        // todo: only trigger if target is standing on stone/earth/sand/gravel
-        int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
-        if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getPosY()  / 128 ))) {
-            target.addPotionEffect(new EffectInstance(EarthboundEffect.instance, earthbindLevel * 20, 0, false, true));
-
-            if (target.world instanceof ServerWorld) {
-                BlockState blockState = target.world.getBlockState(new BlockPos(target.getPosX(), target.getPosY() - 1, target.getPosZ()));
-                ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState),
-                        target.getPosX(), target.getPosY() + 0.1, target.getPosZ(),
-                        16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
-            }
-        }
-    }
-
-    /**
-     * Variant on {@link EnchantmentHelper#applyArthropodEnchantments} that allows control over the held itemstack
-     * @param itemStack
-     * @param target
-     * @param attacker
-     */
-    public static void applyEnchantmentHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-        EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> {
-            enchantment.onEntityDamaged(attacker, target, level);
-        });
-
-        if (attacker != null) {
-            for (ItemStack equipment: attacker.getEquipmentAndArmor()) {
-                EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> {
-                    enchantment.onEntityDamaged(attacker, target, level);
-                });
-            }
-        }
     }
 
     @Override
@@ -312,10 +274,10 @@ public class ItemModularHandheld extends ModularItem {
 
         // applies enchantment effects on both parties
         EnchantmentHelper.applyThornEnchantments(target, player);
-        ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
+        EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
 
         // tetra item effects
-        applyHitEffects(itemStack, target, player);
+        ItemEffectHandler.applyHitEffects(itemStack, target, player);
 
         // knocks back the target based on effect level + knockback enchantment level
         float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
@@ -348,10 +310,10 @@ public class ItemModularHandheld extends ModularItem {
 
         // applies enchantment effects on both parties
         EnchantmentHelper.applyThornEnchantments(target, player);
-        ItemModularHandheld.applyEnchantmentHitEffects(itemStack, target, player);
+        EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
 
         // tetra item effects
-        applyHitEffects(itemStack, target, player);
+        ItemEffectHandler.applyHitEffects(itemStack, target, player);
 
         // knocks back the target based on effect level + knockback enchantment level
         int knockbackFactor = bashingLevel
@@ -363,7 +325,7 @@ public class ItemModularHandheld extends ModularItem {
         // stuns the target if bash efficiency is > 0
         double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
         if (stunDuration > 0) {
-            target.addPotionEffect(new EffectInstance(StunEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
+            target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
         }
 
         if (targetModifier > 1) {
@@ -459,7 +421,7 @@ public class ItemModularHandheld extends ModularItem {
 
         BlockState blockState = world.getBlockState(pos);
         if (canDenail(blockState)) {
-            boolean success = ItemEffectHandler.breakBlock(world, player, player.getHeldItem(hand), pos, blockState, true);
+            boolean success = EffectHelper.breakBlock(world, player, player.getHeldItem(hand), pos, blockState, true);
             if (success) {
                 player.resetCooldown();
                 return true;
@@ -471,49 +433,6 @@ public class ItemModularHandheld extends ModularItem {
 
     public static boolean canDenail(BlockState blockState) {
         return blockState.getBlock().getTags().contains(nailedTag);
-    }
-
-    /**
-     * Perfoms a sweeping attack, dealing damage and playing effects similar to vanilla swords.
-     * @param itemStack the itemstack used for the attack
-     * @param target the attacking entity
-     * @param attacker the attacked entity
-     * @param sweepingLevel the level of the sweeping effect of the itemstack
-     */
-    private void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel) {
-        float cooldown = 1;
-        if (attacker instanceof PlayerEntity) {
-            cooldown = ItemModularHandheld.getCooledAttackStrength(itemStack);
-        }
-
-        if (cooldown > 0.9) {
-            float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
-            float knockback = sweepingLevel > 4 ? (getEnchantmentLevelFromImprovements(itemStack, Enchantments.KNOCKBACK) + 1) * 0.5f : 0.5f;
-            double range = 1 + getEffectEfficiency(itemStack, ItemEffect.sweeping);
-            double reach = attacker.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-
-            // range values set up to mimic vanilla behaviour
-            attacker.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(range, 0.25d, range)).stream()
-                    .filter(entity -> entity != attacker)
-                    .filter(entity -> entity != target)
-                    .filter(entity -> !attacker.isOnSameTeam(entity))
-                    .filter(entity -> attacker.getDistanceSq(entity) < (range + reach) * (range + reach))
-                    .forEach(entity -> {
-                        entity.applyKnockback(knockback,
-                                MathHelper.sin(attacker.rotationYaw * 0.017453292f),
-                                -MathHelper.cos(attacker.rotationYaw * 0.017453292f));
-                        if (attacker instanceof PlayerEntity) {
-                            entity.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) attacker), damage);
-                        } else {
-                            entity.attackEntityFrom(DamageSource.causeIndirectDamage(attacker, entity), damage);
-                        }
-                    });
-
-            attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(),
-                    SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
-
-            CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::spawnSweepParticles);
-        }
     }
 
     /**
@@ -678,16 +597,8 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
-        setCooledAttackStrength(stack, player.getCooledAttackStrength(0.5f));
+        EffectHelper.setCooledAttackStrength(player, player.getCooledAttackStrength(0.5f));
         return false;
-    }
-
-    public void setCooledAttackStrength(ItemStack itemStack, float strength) {
-        NBTHelper.getTag(itemStack).putFloat(cooledStrengthKey, strength);
-    }
-
-    public static float getCooledAttackStrength(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getFloat(cooledStrengthKey);
     }
 
     @Override
@@ -776,7 +687,6 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(state.getHarvestLevel(), 0);
-
     }
 
     @Override

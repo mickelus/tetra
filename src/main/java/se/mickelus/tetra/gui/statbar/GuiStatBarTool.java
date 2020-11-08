@@ -11,7 +11,7 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
 public class GuiStatBarTool extends GuiStatBar {

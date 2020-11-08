@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.Collection;
 import java.util.List;

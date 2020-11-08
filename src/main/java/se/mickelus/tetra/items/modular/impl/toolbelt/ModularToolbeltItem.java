@@ -32,15 +32,13 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
-import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.data.TierData;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ModularToolbeltItem extends ModularItem implements INamedContainerProvider {
     public final static String unlocalizedName = "modular_toolbelt";

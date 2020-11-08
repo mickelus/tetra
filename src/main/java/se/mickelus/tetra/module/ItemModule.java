@@ -4,7 +4,6 @@ import java.util.*;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -15,6 +14,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;

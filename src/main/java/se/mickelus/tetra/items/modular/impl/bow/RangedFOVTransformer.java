@@ -6,7 +6,7 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
 public class RangedFOVTransformer {

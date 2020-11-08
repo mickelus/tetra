@@ -36,10 +36,11 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-import se.mickelus.tetra.module.ItemEffect;
-import se.mickelus.tetra.module.ItemEffectHandler;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -192,7 +193,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
                 if (destroySpeed > blockState.getBlockHardness(world, pos)) {
                     if (shooter instanceof ServerPlayerEntity) {
-                        ItemEffectHandler.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
+                        EffectHelper.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
                     }
 
                     CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
@@ -216,7 +217,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         ItemStack currentItem = shooter.getHeldItemMainhand();
 
         shooter.setHeldItem(Hand.MAIN_HAND, thrownStack);
-        ItemEffectHandler.breakBlock(world, shooter, thrownStack, pos, blockState, true);
+        EffectHelper.breakBlock(world, shooter, thrownStack, pos, blockState, true);
         shooter.setHeldItem(Hand.MAIN_HAND, currentItem);
     }
 
@@ -260,7 +261,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             if (target.attackEntityFrom(damagesource, (float) damage)) {
                 if (shooter instanceof LivingEntity) {
                     EnchantmentHelper.applyThornEnchantments(targetLivingEntity, shooter);
-                    ItemModularHandheld.applyEnchantmentHitEffects(getArrowStack(), targetLivingEntity, (LivingEntity) shooter);
+                    EffectHelper.applyEnchantmentHitEffects(getArrowStack(), targetLivingEntity, (LivingEntity) shooter);
                 }
 
                 arrowHit(targetLivingEntity);
@@ -271,10 +272,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.getPosition();
             if (world.canSeeSky(blockpos)) {
-                LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
-                lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(blockpos));
-                lightningboltentity.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity) shooter : null);
-                this.world.addEntity(lightningboltentity);
+                LightningBoltEntity lightning = EntityType.LIGHTNING_BOLT.create(this.world);
+                lightning.moveForced(Vector3d.copyCenteredHorizontally(blockpos));
+                lightning.setCaster(shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity) shooter : null);
+                this.world.addEntity(lightning);
                 soundevent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 f1 = 5.0F;
             }
@@ -282,8 +283,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
 
         if (target instanceof LivingEntity && shooter instanceof LivingEntity) {
-            CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                    .ifPresent(item -> item.applyHitEffects(thrownStack, (LivingEntity) target, (LivingEntity) shooter));
+            ItemEffectHandler.applyHitEffects(thrownStack, (LivingEntity) target, (LivingEntity) shooter);
         }
 
         if (shooter instanceof LivingEntity) {

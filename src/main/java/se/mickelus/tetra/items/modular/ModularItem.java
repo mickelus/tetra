@@ -50,7 +50,7 @@ import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;

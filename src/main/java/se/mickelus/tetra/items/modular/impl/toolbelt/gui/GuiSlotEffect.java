@@ -1,14 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

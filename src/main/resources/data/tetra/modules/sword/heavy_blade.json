@@ -53,10 +53,11 @@
             "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/"],
             "key": "heavy_blade/",
             "attributes": {
-                "generic.attack_speed": -1.2
+                "generic.attack_speed": -1.7
             },
             "effects": {
-                "sweeping": 2
+                "sweeping": [2, 1],
+                "truesweep": 1
             },
             "tools": {
                 "cut": [1, 3]
@@ -68,7 +69,7 @@
                 },
                 "secondaryAttributes": {
                     "generic.attack_damage": 0.4,
-                    "generic.attack_speed": -0.2
+                    "generic.attack_speed": -0.15
                 },
                 "primaryEffects": {
                     "sweeping": 0.3

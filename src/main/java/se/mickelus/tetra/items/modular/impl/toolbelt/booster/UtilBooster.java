@@ -13,7 +13,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 public class UtilBooster {
 

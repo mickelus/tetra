@@ -58,9 +58,12 @@ import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
-import se.mickelus.tetra.effects.BleedingEffect;
-import se.mickelus.tetra.effects.EarthboundEffect;
-import se.mickelus.tetra.effects.StunEffect;
+import se.mickelus.tetra.effect.SweepingEffect;
+import se.mickelus.tetra.effect.TruesweepPacket;
+import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
+import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
+import se.mickelus.tetra.effect.ItemEffectHandler;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
@@ -241,6 +244,7 @@ public class TetraMod {
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
         packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
+        packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
 
         WorkbenchTile.init(packetHandler);
 
@@ -311,9 +315,9 @@ public class TetraMod {
 
         @SubscribeEvent
         public static void registerEffects(final RegistryEvent.Register<Effect> event) {
-            event.getRegistry().register(new BleedingEffect());
-            event.getRegistry().register(new EarthboundEffect());
-            event.getRegistry().register(new StunEffect());
+            event.getRegistry().register(new BleedingPotionEffect());
+            event.getRegistry().register(new EarthboundPotionEffect());
+            event.getRegistry().register(new StunPotionEffect());
         }
 
         @SubscribeEvent

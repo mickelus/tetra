@@ -20,7 +20,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 
