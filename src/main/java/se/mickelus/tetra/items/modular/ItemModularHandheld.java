@@ -766,13 +766,17 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public boolean canHarvestBlock(ItemStack stack, BlockState state) {
-        if (getHarvestLevel(stack, state.getHarvestTool(), null, state) >= state.getHarvestLevel()) {
+        if (!state.getRequiresTool()) {
             return true;
-        } else if (state.getHarvestTool() != ToolTypes.cut && cuttingHarvestBlocks.contains(state.getBlock())) {
-            return getHarvestLevel(stack, ToolTypes.cut, null, null) >= 0;
         }
 
-        return false;
+        ToolType requiredTool = state.getHarvestTool();
+        if (requiredTool == null) {
+            requiredTool = getEffectiveTool(state);
+        }
+
+        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(state.getHarvestLevel(), 0);
+
     }
 
     @Override
