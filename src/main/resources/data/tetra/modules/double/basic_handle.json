@@ -43,6 +43,7 @@
                 "generic.attack_speed": -0.35
             },
             "durability": 7,
+            "integrity": 1,
             "extract": {
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.1
