@@ -68,7 +68,7 @@ public class ItemModularHandheld extends ModularItem {
     private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK);
 
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
-    private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB);
+    private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANTS, Material.TALL_PLANTS, Material.CORAL, Material.GOURD, Material.WEB, Material.BAMBOO);
     private static final Set<ITag.INamedTag<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
 
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
@@ -795,9 +795,15 @@ public class ItemModularHandheld extends ModularItem {
                         .orElse(0f);
             }
 
-            // todo: need a better way to handle how swords break cobwebs faster
-            if (ToolTypes.cut.equals(tool) && blockState.getBlock().equals(Blocks.COBWEB)) {
-                speed *= 10;
+            // todo: need a better way to handle how swords break stuff faster
+            if (getToolLevel(itemStack, ToolTypes.cut) > 0) {
+                if (blockState.getBlock().equals(Blocks.COBWEB)) {
+                    speed *= 10;
+                }
+
+                if (blockState.getBlock().equals(Blocks.BAMBOO)) {
+                    speed = 30; // makes swords instamine bamboo
+                }
             }
 
             if (speed < 1) {
