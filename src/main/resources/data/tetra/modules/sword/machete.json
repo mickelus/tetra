@@ -56,7 +56,7 @@
                 "generic.attack_speed": -1.8
             },
             "effects": {
-                "sweeping": 1,
+                "sweeping": [1, 1],
                 "strikingCut": 1,
                 "sweepingStrike": 1
             },
