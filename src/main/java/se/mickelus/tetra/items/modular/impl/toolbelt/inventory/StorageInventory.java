@@ -24,6 +24,10 @@ public class StorageInventory extends ToolbeltInventory {
 
     @Override
     public boolean storeItemInInventory(ItemStack itemStack) {
+        if (!isItemValid(itemStack)) {
+            return false;
+        }
+
         List<Collection<ItemEffect>> effects = getSlotEffects();
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {

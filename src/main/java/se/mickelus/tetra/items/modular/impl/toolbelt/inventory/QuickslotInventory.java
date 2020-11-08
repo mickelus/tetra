@@ -89,6 +89,10 @@ public class QuickslotInventory extends ToolbeltInventory {
 
     @Override
     public boolean storeItemInInventory(ItemStack itemStack) {
+        if (!isItemValid(itemStack)) {
+            return false;
+        }
+
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
