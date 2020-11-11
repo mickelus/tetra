@@ -36,15 +36,17 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
-import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ItemEffectHandler {
@@ -249,6 +251,7 @@ public class ItemEffectHandler {
         Minecraft mc = Minecraft.getInstance();
         if (event.isAttack()
                 && !event.isCanceled()
+                && mc.player.getHeldItemMainhand().getItem() instanceof ModularItem
                 && mc.objectMouseOver != null
                 && RayTraceResult.Type.MISS.equals(Minecraft.getInstance().objectMouseOver.getType())) {
             if (getEffectLevel(mc.player.getHeldItemMainhand(), ItemEffect.truesweep) > 0) {
