@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
@@ -120,7 +121,7 @@ public class BlockInteraction {
             }
         }
 
-        AxisAlignedBB boundingBox = blockState.getShape(world, pos).getBoundingBox();
+        AxisAlignedBB boundingBox = blockState.getShape(world, pos, ISelectionContext.forEntity(player)).getBoundingBox();
         double hitU = 16 * getHitU(rayTrace.getFace(), boundingBox,
                 rayTrace.getHitVec().x - pos.getX(),
                 rayTrace.getHitVec().y - pos.getY(),

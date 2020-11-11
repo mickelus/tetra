@@ -3,9 +3,11 @@ package se.mickelus.tetra.blocks.salvage;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawHighlightEvent;
@@ -13,6 +15,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 public class InteractiveBlockOverlay {
+
+    private Minecraft mc;
 
     private InteractiveBlockOverlayGui gui;
 
@@ -24,6 +28,8 @@ public class InteractiveBlockOverlay {
 
     public InteractiveBlockOverlay() {
         gui = new InteractiveBlockOverlayGui();
+
+        mc = Minecraft.getInstance();
     }
 
     public static void markDirty() {
@@ -36,7 +42,7 @@ public class InteractiveBlockOverlay {
             BlockRayTraceResult rayTrace = (BlockRayTraceResult) event.getTarget();
 
             World world = Minecraft.getInstance().world;
-            VoxelShape shape = world.getBlockState(rayTrace.getPos()).getShape(Minecraft.getInstance().world, rayTrace.getPos());
+            VoxelShape shape = world.getBlockState(rayTrace.getPos()).getShape(Minecraft.getInstance().world, rayTrace.getPos(), ISelectionContext.forEntity(mc.player));
 
             BlockPos blockPos = rayTrace.getPos();
             Direction face = rayTrace.getFace();

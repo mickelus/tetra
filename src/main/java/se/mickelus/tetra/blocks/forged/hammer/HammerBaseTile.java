@@ -2,6 +2,8 @@ package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ByteNBT;
@@ -14,12 +16,17 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -143,6 +150,10 @@ public class HammerBaseTile extends TileEntity {
         }
     }
 
+    public float getJamChance() {
+        return 0.4f - 0.2f * getEffectLevel(HammerEffect.reliable);
+    }
+
     private void applyConsumeEffect() {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.facingProp);
         Vector3d pos = Vector3d.copyCentered(getPos());
@@ -187,6 +198,13 @@ public class HammerBaseTile extends TileEntity {
                             .limit(count)
                             .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
                 }
+            }
+
+            if (world.rand.nextFloat() < getJamChance()) {
+                TileEntityOptional.from(world, getPos().down(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
+                world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(getPos()).grow(10, 5, 10))
+                        .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
+                world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.PLAYERS, 0.8f, 0.5f);
             }
         }
     }

@@ -539,6 +539,10 @@
   "item.tetra.planar_stabilizer.description": "Can be attached to a forge hammer, causes major modules crafted with the hammer to slightly improve the stats of the item",
   "tetra.salvage_planar_stabilizer_action.label": "Salvage",
 
+  "item.tetra.lubricant_dispenser": "Lubricant Dispenser",
+  "item.tetra.lubricant_dispenser.description": "Can be attached to a forge hammer, reduces the chance for the hammer to jam by 50%%",
+  "tetra.salvage_lubricant_dispenser_action.label": "Salvage",
+
   "item.tetra.stonecutter": "Stonecutter",
   "tetra.salvage_stonecutter_action.label": "Salvage",
 
@@ -1957,6 +1961,10 @@
   "tetra.advancements.spelunking.geode_open.description": "Upgrade a mallet and use it to break open a geode at a workbench",
   "tetra.advancements.spelunking.hammer_fix.title": "Dust Off",
   "tetra.advancements.spelunking.hammer_fix.description": "Fix up a forge hammer by attaching two charged thermal cells and two upgrades",
+  "tetra.advancements.spelunking.hammer_jam.title": "Required Maintenance",
+  "tetra.advancements.spelunking.hammer_jam.description": "Experience a forge hammer head jam, the hammer will not be usable until the head is un-jammed",
+  "tetra.advancements.spelunking.hammer_unjam.title": "Maintenance Acquired",
+  "tetra.advancements.spelunking.hammer_unjam.description": "Smack a jammed hammer head with a handheld hammer of at least tier 4 to get the forge hammer back into a working state",
   "tetra.advancements.spelunking.hammer_power.title": "Overdrive",
   "tetra.advancements.spelunking.hammer_power.description": "Attach a combustion chamber to a forge hammer to increase it's hammer tier by 1",
   "tetra.advancements.spelunking.hammer_craft.title": "Magmatic Press Channel",

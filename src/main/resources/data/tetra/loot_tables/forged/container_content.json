@@ -10,6 +10,10 @@
                 },
                 {
                     "type": "item",
+                    "name": "tetra:lubricant_dispenser"
+                },
+                {
+                    "type": "item",
                     "name": "tetra:combustion_chamber",
                     "weight": 2
                 },

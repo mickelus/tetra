@@ -58,7 +58,6 @@ import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
-import se.mickelus.tetra.effect.SweepingEffect;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
@@ -188,6 +187,7 @@ public class TetraMod {
                 new InsulatedPlateItem(),
                 new CombustionChamberItem(),
                 new PlanarStabilizerItem(),
+                new LubricantDispenser(),
                 new ModularHolosphereItem(),
                 new EarthpiercerItem(),
                 new DragonSinewItem()

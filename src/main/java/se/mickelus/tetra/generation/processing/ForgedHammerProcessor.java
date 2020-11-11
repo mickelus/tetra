@@ -41,10 +41,11 @@ public class ForgedHammerProcessor extends StructureProcessor {
 
             HammerBaseTile.writeCells(newCompound, cell1, cell2);
 
-            HammerEffect[] effects =  HammerEffect.values();
             HammerEffect module = HammerEffect.efficient;
             if (random.nextFloat() < 0.1) {
-                module = effects[1 + random.nextInt(effects.length - 1)];
+                module = HammerEffect.reliable;
+            } else if (random.nextFloat() < 0.1) {
+                module = random.nextBoolean() ? HammerEffect.precise : HammerEffect.power;
             }
 
             if (random.nextBoolean()) {
