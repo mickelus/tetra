@@ -1,0 +1,19 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": [
+            "tetra:chainmail_boots",
+            "tetra:chainmail_chestplate",
+            "tetra:chainmail_helmet",
+            "tetra:chainmail_leggings"
+        ]
+    },
+    "criteria": {
+        "got_mesh": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{ "item": "tetra:forged_mesh" }]
+            }
+        }
+    }
+}

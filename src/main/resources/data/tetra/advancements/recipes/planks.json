@@ -1,0 +1,14 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": ["tetra:hammer_modular", "tetra:rack"]
+    },
+    "criteria": {
+        "got_wood": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{ "tag": "minecraft:planks" }]
+            }
+        }
+    }
+}
