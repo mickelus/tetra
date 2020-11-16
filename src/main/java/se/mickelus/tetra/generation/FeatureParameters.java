@@ -39,10 +39,8 @@ public class FeatureParameters {
 
     /**
      * A list of biome categories that this feature can generate in. Biomes have a category and if that type matches any of the types
-     * in this list then the feature is allowed to generate in the biome. Mods may add additional types, but the following types are
-     * possible in vanilla:
-     * hot, cold, sparse, dense, wet, dry, savanna, coniferous, jungle, spooky, dead, lush, nether, end, mushroom, void, magical,
-     * rare, ocean, river, water, mesa, forest, plains, mountain, hills, swamp, sandy, snowy, wasteland, beach
+     * in this list then the feature is allowed to generate in the biome. The following values are available:
+     * none, taiga, extreme_hills, jungle, mesa, plains, savanna, icy, the_end, beach, forest, ocean, desert, river, swamp, mushroom, nether
      *
      * Optional, but can only generate as child feature if not present.
      *
