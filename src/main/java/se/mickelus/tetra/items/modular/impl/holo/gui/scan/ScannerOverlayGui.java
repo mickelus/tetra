@@ -125,8 +125,9 @@ public class ScannerOverlayGui extends GuiRoot {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         World world = mc.world;
+        PlayerEntity player = mc.player;
 
-        if (world == null || TickEvent.Phase.START != event.phase) {
+        if (world == null || player == null || TickEvent.Phase.START != event.phase) {
             return;
         }
 
@@ -138,7 +139,6 @@ public class ScannerOverlayGui extends GuiRoot {
         }
 
         if (active && ticks % 2 == 0) {
-            PlayerEntity player = mc.player;
 
             int offset = (int) (ticks / 2) % (int) (horizontalSpread * 2 * cooldown);
             if (offset < horizontalSpread * 2) {
