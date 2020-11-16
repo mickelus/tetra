@@ -18,7 +18,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.data.DataManager;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;

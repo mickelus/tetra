@@ -58,7 +58,7 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
         }
 
         cellAunpowered = new ModelRenderer(128, 64, 48, 0);
-        cellAunpowered.addBox(5.5f, -19, -10f, 5, 3, 5, 0);
+        cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
         cellAunpowered.rotateAngleX = (float) -Math.PI / 2f;
         cellApowered = new ModelRenderer(128, 64, 48, 8);
         cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
