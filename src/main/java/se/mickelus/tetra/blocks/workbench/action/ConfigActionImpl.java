@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,8 +11,10 @@ import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.LootTable;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -24,9 +27,9 @@ import java.util.Map;
 public class ConfigActionImpl extends ConfigAction {
 
     private static final LootParameterSet lootParameters = new LootParameterSet.Builder()
-            .required(LootParameters.TOOL)
-            .required(LootParameters.THIS_ENTITY)
             .required(LootParameters.field_237457_g_)
+            .optional(LootParameters.TOOL)
+            .optional(LootParameters.THIS_ENTITY)
             .build();
 
     @Override
@@ -56,7 +59,7 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public void perform(PlayerEntity player, ItemStack targetStack, WorkbenchTile workbench) {
-        if (!player.world.isRemote) {
+        if (player != null && !player.world.isRemote) {
             ServerWorld world = (ServerWorld) player.world;
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
             ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
@@ -99,6 +102,32 @@ public class ConfigActionImpl extends ConfigAction {
 
             targetStack.setCount(targetStack.getCount() - 1);
             workbench.markDirty();
+        } else if (!workbench.getWorld().isRemote) {
+            ServerWorld world = (ServerWorld) workbench.getWorld();
+            LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+
+            LootContext context = new LootContext.Builder(world)
+                    .withParameter(LootParameters.field_237457_g_, Vector3d.copyCenteredWithVerticalOffset(workbench.getPos(), 1.1f))
+                    .build(lootParameters);
+
+            table.generate(context).forEach(itemStack -> Block.spawnAsEntity(world, workbench.getPos().up(), itemStack));
+
+            BlockPos pos = workbench.getPos();
+            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS,
+                    1.0F, 1.5f + (float) Math.random() * 0.5f);
+
+            world.spawnParticle(new ItemParticleData(ParticleTypes.ITEM, targetStack),
+                    pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
+                    4, 0, 0, 0,
+                    0.1f);
+
+            targetStack.setCount(targetStack.getCount() - 1);
+            workbench.markDirty();
         }
+    }
+
+    @Override
+    public boolean allowInWorldInteraction() {
+        return inWorld;
     }
 }

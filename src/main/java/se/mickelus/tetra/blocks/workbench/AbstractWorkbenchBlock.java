@@ -8,6 +8,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -19,19 +20,30 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public abstract class AbstractWorkbenchBlock extends TetraBlock {
+public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInteractiveBlock {
     public AbstractWorkbenchBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ActionResultType interactionResult = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+        if (interactionResult != ActionResultType.PASS || hand == Hand.OFF_HAND) {
+            return interactionResult;
+        }
+
         if (!world.isRemote) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
                     .ifPresent(te -> NetworkHooks.openGui((ServerPlayerEntity) player, te, pos));
@@ -118,6 +130,17 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock {
         }
 
         return null;
+    }
+
+    @Override
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+        if (face == Direction.UP) {
+            return TileEntityOptional.from(world, pos, WorkbenchTile.class)
+                    .map(WorkbenchTile::getInteractions)
+                    .orElse(new BlockInteraction[0]);
+        }
+
+        return new BlockInteraction[0];
     }
 
     @Override

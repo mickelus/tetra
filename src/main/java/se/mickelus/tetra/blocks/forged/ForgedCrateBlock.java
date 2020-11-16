@@ -104,8 +104,12 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
         return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), ToolTypes.pry, 0, 2);
     }
 
-    private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand,
+    private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand,
             ItemStack itemStack, ToolType toolType, int min, int multiplier) {
+
+        if (player == null) {
+            return false;
+        }
 
         int integrity = blockState.get(propIntegrity);
 

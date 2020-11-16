@@ -28,7 +28,7 @@ public class InteractiveOutlineGui extends GuiElement {
 
         this.blockInteraction = blockInteraction;
 
-        opacity = 0.3f;
+        opacity = 0.5f;
 
         topLeft = new GuiTexture(-2, -2, 4, 4, 0, 0, texture);
         addChild(topLeft);

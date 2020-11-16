@@ -103,12 +103,11 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (!world.isRemote) {
             ServerWorld serverWorld = (ServerWorld) world;
-
-            BlockInteraction.getLoot(boltLootTable, player, hand, serverWorld, blockState).forEach(itemStack -> {
-                if (!player.inventory.addItemStackToInventory(itemStack)) {
-                    player.dropItem(itemStack, false);
-                }
-            });
+            if (player != null) {
+                BlockInteraction.dropLoot(ventLootTable, player, hand, serverWorld, blockState);
+            } else {
+                BlockInteraction.dropLoot(ventLootTable, serverWorld, pos, blockState);
+            }
 
             serverWorld.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
         }
@@ -116,7 +115,7 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
         return true;
     }
 
-    private static boolean breakBeam(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    private static boolean breakBeam(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
         List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.get(propX));
 
         if (connectedVents.stream().anyMatch(blockPos -> !world.getBlockState(blockPos).get(propBroken))) {
@@ -133,11 +132,11 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (!world.isRemote) {
             ServerWorld serverWorld = (ServerWorld) world;
-            BlockInteraction.getLoot(ventLootTable, player, hand, serverWorld, blockState).forEach(itemStack -> {
-                if (!player.inventory.addItemStackToInventory(itemStack)) {
-                    player.dropItem(itemStack, false);
-                }
-            });
+            if (player != null) {
+                BlockInteraction.dropLoot(ventLootTable, player, hand, serverWorld, blockState);
+            } else {
+                BlockInteraction.dropLoot(ventLootTable, serverWorld, pos, blockState);
+            }
         }
 
         return true;

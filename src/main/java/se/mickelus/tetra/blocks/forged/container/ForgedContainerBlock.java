@@ -126,7 +126,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    private static boolean breakLock(World world, BlockPos pos, PlayerEntity player, int index, Hand hand) {
+    private static boolean breakLock(World world, BlockPos pos, @Nullable PlayerEntity player, int index, @Nullable Hand hand) {
         ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index, hand);

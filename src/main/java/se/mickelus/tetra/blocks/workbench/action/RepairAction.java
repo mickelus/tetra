@@ -9,6 +9,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,8 +25,8 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public boolean canPerformOn(PlayerEntity player, ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ModularItem) {
+    public boolean canPerformOn(@Nullable PlayerEntity player, ItemStack itemStack) {
+        if (player != null && itemStack.getItem() instanceof ModularItem) {
             UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, itemStack);
             return Arrays.stream(schematics)
                     .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))

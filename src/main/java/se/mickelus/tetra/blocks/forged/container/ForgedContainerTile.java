@@ -31,6 +31,7 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 public class ForgedContainerTile extends TileEntity implements INamedContainerProvider {
@@ -78,7 +79,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         return super.getCapability(cap, side);
     }
 
-    public void open(PlayerEntity player) {
+    public void open(@Nullable PlayerEntity player) {
         if (lidIntegrity > 0) {
             lidIntegrity--;
             markDirty();
@@ -91,9 +92,9 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                     worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 1.3f);
                 }
 
-                if (!player.isPotionActive(Effects.STRENGTH)) {
-                    player.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 200, 5));
-                }
+                Optional.ofNullable(player)
+                        .filter(p -> !p.isPotionActive(Effects.STRENGTH))
+                        .ifPresent(p -> p.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 200, 5)));
             } else if (lidIntegrity == 0) { // start lid open animation on the client
                 openTime = System.currentTimeMillis();
             }
@@ -174,7 +175,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                 .toArray(Boolean[]::new);
     }
 
-    public void breakLock(PlayerEntity player, int index, Hand hand) {
+    public void breakLock(@Nullable PlayerEntity player, int index, @Nullable Hand hand) {
         if (lockIntegrity[index] > 0) {
             lockIntegrity[index]--;
 
@@ -185,7 +186,11 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
             }
 
             if (!world.isRemote && lockIntegrity[index] == 0) {
-                BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerWorld) world, getBlockState());
+                if (player != null) {
+                    BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerWorld) world, getBlockState());
+                } else {
+                    BlockInteraction.dropLoot(lockLootTable, (ServerWorld) world, getPos(), getBlockState());
+                }
             }
         }
 

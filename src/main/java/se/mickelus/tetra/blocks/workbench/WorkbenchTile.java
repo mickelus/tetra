@@ -27,6 +27,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
@@ -82,6 +83,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         });
     }
 
+    private ActionInteraction interaction;
+
     public WorkbenchTile() {
         super(type);
         changeListeners = new HashMap<>();
@@ -114,6 +117,10 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     currentSlot = null;
 
                     emptyMaterialSlots();
+                }
+
+                if (slot == 0) {
+                    interaction = ActionInteraction.create(WorkbenchTile.this);
                 }
 
                 markDirty();
@@ -174,6 +181,34 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     });
 
                     action.perform(player, targetStack, this);
+                    markDirty();
+                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+                });
+    }
+
+    /**
+     * Perform an action that's not triggered by a player
+     * @param actionKey
+     */
+    public void performAction(String actionKey) {
+        BlockState blockState = world.getBlockState(getPos());
+        ItemStack targetStack = getTargetItemStack();
+
+        Arrays.stream(actions)
+                .filter(action -> action.getKey().equals(actionKey))
+                .findFirst()
+                .filter(action -> action.canPerformOn(null, targetStack))
+                .filter(action -> checkActionTools(action, targetStack))
+                .ifPresent(action -> {
+                    action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
+                            CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                                    .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, null,
+                                            requiredTool, requiredLevel, true));
+                    });
+
+                    action.perform(null, targetStack, this);
+                    markDirty();
+                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
                 });
     }
 
@@ -182,6 +217,21 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .allMatch(requirement ->
                         PropertyHelper.getCombinedToolLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
                         >= requirement.getValue());
+    }
+
+    private boolean checkActionTools(WorkbenchAction action, ItemStack itemStack) {
+        return action.getRequiredTools(itemStack).entrySet().stream()
+                .allMatch(requirement ->
+                        PropertyHelper.getBlockToolLevel(getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                                >= requirement.getValue());
+    }
+
+    public BlockInteraction[] getInteractions() {
+        if (interaction != null) {
+            return new BlockInteraction[] { interaction };
+        }
+
+        return new BlockInteraction[0];
     }
 
     public UpgradeSchematic getCurrentSchematic() {
@@ -424,6 +474,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         if (compound.contains(currentSlotKey)) {
             currentSlot = compound.getString(currentSlotKey);
         }
+
+        interaction = ActionInteraction.create(this);
 
         // todo : due to the null check perhaps this is not the right place to do this
         if (world != null && world.isRemote) {

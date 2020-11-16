@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +12,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -20,19 +20,26 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.stream.Stream;
 
-public class HammerBaseTile extends TileEntity {
+public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static TileEntityType<HammerBaseTile> type;
@@ -45,6 +52,9 @@ public class HammerBaseTile extends TileEntity {
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
     private ItemStack[] slots;
+
+    private static final String redstoneKey = "rs";
+    private int redstonePower = 0;
 
     public HammerBaseTile() {
         super(type);
@@ -134,13 +144,18 @@ public class HammerBaseTile extends TileEntity {
     }
 
     public void consumeFuel() {
-        int fuelUsage = fuelUsage();
+        if (!world.isRemote) {
+            int fuelUsage = fuelUsage();
 
-        for (int i = 0; i < slots.length; i++) {
-            consumeFuel(i, fuelUsage);
+            for (int i = 0; i < slots.length; i++) {
+                consumeFuel(i, fuelUsage);
+            }
+
+            applyConsumeEffect();
+
+            markDirty();
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
         }
-
-        applyConsumeEffect();
     }
 
     public void consumeFuel(int index, int amount) {
@@ -151,9 +166,58 @@ public class HammerBaseTile extends TileEntity {
     }
 
     public float getJamChance() {
-        return 0.4f - 0.2f * getEffectLevel(HammerEffect.reliable);
+        return 0.3f - 0.15f * getEffectLevel(HammerEffect.reliable);
     }
 
+    public void updateRedstonePower() {
+        redstonePower = 0;
+        for(Direction direction : Direction.values()) {
+            redstonePower += world.getRedstonePower(pos.offset(direction), direction);
+        }
+        markDirty();
+    }
+
+    private int tickrate() {
+        // one powered side = 40 tickrate, two powered sides = 20 tickrate
+        return redstonePower != 0 ? (int) Math.max(600f / redstonePower, 10) : 20;
+    }
+
+    @Override
+    public void tick() {
+        if (redstonePower > 0 && world.getGameTime() % tickrate() == 0 && world.isBlockPowered(pos) && isFunctional()) {
+            BlockPos targetPos = pos.down(2);
+            BlockState targetState = world.getBlockState(targetPos);
+
+            HammerHeadTile head = TileEntityOptional.from(world, pos.down(), HammerHeadTile.class).orElse(null);
+
+            if (head == null || head.isJammed()) {
+                return;
+            }
+
+            CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
+                    .map(block -> block.getPotentialInteractions(world, targetPos, targetState, Direction.UP, Collections.singletonList(ToolTypes.hammer)))
+                    .map(Arrays::stream)
+                    .orElseGet(Stream::empty)
+                    .filter(interaction -> ToolTypes.hammer.equals(interaction.requiredTool))
+                    .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
+                    .findFirst()
+                    .ifPresent(interaction -> {
+                        interaction.applyOutcome(world, targetPos, targetState, null, null, Direction.UP);
+                        if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
+                            if (!world.isRemote) {
+                                consumeFuel();
+                            } else {
+                                head.activate();
+                                world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 0.3f, (float) (0.5 + Math.random() * 0.2));
+                            }
+                        }
+                    }); // todo: check that all interactions work with nullable player
+        }
+    }
+
+    /**
+     * Applies effects in the world when the hammer is used. Should only be called serverside as it contains random elements
+     */
     private void applyConsumeEffect() {
         Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.facingProp);
         Vector3d pos = Vector3d.copyCentered(getPos());
@@ -161,51 +225,49 @@ public class HammerBaseTile extends TileEntity {
         Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
         pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
 
-        if (!world.isRemote) {
-            if (hasEffect(HammerEffect.power)) {
-                spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
-            }
+        if (hasEffect(HammerEffect.power)) {
+            spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+        }
 
-            if (hasEffect(HammerEffect.power)) {
-                spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
-                int count = world.rand.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
+        if (hasEffect(HammerEffect.power)) {
+            spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            int count = world.rand.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
 
-                if (count > 2) {
-                    // particles cell 1
-                    spawnParticle(ParticleTypes.LAVA, pos, 2, 0.06f);
-                    spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 2, 0f);
+            if (count > 2) {
+                // particles cell 1
+                spawnParticle(ParticleTypes.LAVA, pos, 2, 0.06f);
+                spawnParticle(ParticleTypes.LARGE_SMOKE, pos, 2, 0f);
 
-                    // particles cell 2
-                    spawnParticle(ParticleTypes.LAVA, oppositePos, 2, 0.06f);
-                    spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
+                // particles cell 2
+                spawnParticle(ParticleTypes.LAVA, oppositePos, 2, 0.06f);
+                spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
 
-                    // gather flammable blocks
-                    LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
-                    for (int x = -3; x < 3; x++) {
-                        for (int y = -3; y < 2; y++) {
-                            for (int z = -3; z < 3; z++) {
-                                BlockPos firePos = getPos().add(x, y, z);
-                                if (world.isAirBlock(firePos)) {
-                                    flammableBlocks.add(firePos);
-                                }
+                // gather flammable blocks
+                LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
+                for (int x = -3; x < 3; x++) {
+                    for (int y = -3; y < 2; y++) {
+                        for (int z = -3; z < 3; z++) {
+                            BlockPos firePos = getPos().add(x, y, z);
+                            if (world.isAirBlock(firePos)) {
+                                flammableBlocks.add(firePos);
                             }
                         }
                     }
-
-                    // set blocks on fire
-                    Collections.shuffle(flammableBlocks);
-                    flammableBlocks.stream()
-                            .limit(count)
-                            .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
                 }
-            }
 
-            if (world.rand.nextFloat() < getJamChance()) {
-                TileEntityOptional.from(world, getPos().down(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
-                world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(getPos()).grow(10, 5, 10))
-                        .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
-                world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.PLAYERS, 0.8f, 0.5f);
+                // set blocks on fire
+                Collections.shuffle(flammableBlocks);
+                flammableBlocks.stream()
+                        .limit(count)
+                        .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
             }
+        }
+
+        if (world.rand.nextFloat() < getJamChance()) {
+            TileEntityOptional.from(world, getPos().down(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
+            world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(getPos()).grow(10, 5, 10))
+                    .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
+            world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.PLAYERS, 0.8f, 0.5f);
         }
     }
 
@@ -320,6 +382,8 @@ public class HammerBaseTile extends TileEntity {
                 moduleB = HammerEffect.values()[data];
             }
         }
+
+        redstonePower = compound.getInt(redstoneKey);
     }
 
     @Override
@@ -329,6 +393,8 @@ public class HammerBaseTile extends TileEntity {
         writeCells(compound, slots);
 
         writeModules(compound, moduleA, moduleB);
+
+        compound.putInt(redstoneKey, redstonePower);
 
         return compound;
     }

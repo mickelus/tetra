@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import com.google.common.base.Predicates;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
@@ -29,9 +31,11 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -98,7 +102,7 @@ public class BlockInteraction {
                 && (alwaysReveal || availableTools.contains(requiredTool));
     }
 
-    public void applyOutcome(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    public void applyOutcome(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
@@ -106,20 +110,6 @@ public class BlockInteraction {
             BlockRayTraceResult rayTrace) {
         ItemStack heldStack = player.getHeldItem(hand);
         Collection<ToolType> availableTools = PropertyHelper.getItemTools(heldStack);
-
-        if (Hand.MAIN_HAND == hand) {
-            if (player.getCooledAttackStrength(0) < 0.8) {
-                if (player.getHeldItemOffhand().isEmpty()) {
-                    player.resetCooldown();
-                    return ActionResultType.FAIL;
-                }
-                return ActionResultType.PASS;
-            }
-        } else {
-            if (player.getCooldownTracker().hasCooldown(heldStack.getItem())) {
-                return ActionResultType.FAIL;
-            }
-        }
 
         AxisAlignedBB boundingBox = blockState.getShape(world, pos, ISelectionContext.forEntity(player)).getBoundingBox();
         double hitU = 16 * getHitU(rayTrace.getFace(), boundingBox,
@@ -140,6 +130,20 @@ public class BlockInteraction {
                 .orElse(null);
 
         if (possibleInteraction != null) {
+            if (Hand.MAIN_HAND == hand) {
+                if (player.getCooledAttackStrength(0) < 0.8) {
+                    if (player.getHeldItemOffhand().isEmpty()) {
+                        player.resetCooldown();
+                        return ActionResultType.FAIL;
+                    }
+                    return ActionResultType.PASS;
+                }
+            } else {
+                if (player.getCooldownTracker().hasCooldown(heldStack.getItem())) {
+                    return ActionResultType.FAIL;
+                }
+            }
+
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getFace());
 
             if (availableTools.contains(possibleInteraction.requiredTool) && heldStack.isDamageable()) {
@@ -243,6 +247,25 @@ public class BlockInteraction {
         return 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BlockInteraction that = (BlockInteraction) o;
+        return requiredLevel == that.requiredLevel &&
+                Float.compare(that.minX, minX) == 0 &&
+                Float.compare(that.minY, minY) == 0 &&
+                Float.compare(that.maxX, maxX) == 0 &&
+                Float.compare(that.maxY, maxY) == 0 &&
+                Objects.equals(requiredTool, that.requiredTool) &&
+                face == that.face;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requiredTool, requiredLevel, face, minX, minY, maxX, maxY);
+    }
+
     public static List<ItemStack> getLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world,
             BlockState blockState) {
         LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
@@ -252,18 +275,34 @@ public class BlockInteraction {
                 .withParameter(LootParameters.THIS_ENTITY, player)
                 .withParameter(LootParameters.BLOCK_STATE, blockState)
                 .withParameter(LootParameters.TOOL, player.getHeldItem(hand))
-                .withParameter(LootParameters.THIS_ENTITY, player)
                 .withParameter(LootParameters.field_237457_g_, player.getPositionVec())
                 .build(LootParameterSets.BLOCK);
 
         return table.generate(context);
     }
 
-    public static void dropLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world, BlockState blockState) {
+    public static List<ItemStack> getLoot(ResourceLocation lootTable, ServerWorld world, BlockPos pos, BlockState blockState) {
+        LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+
+        LootContext context = new LootContext.Builder(world)
+                .withParameter(LootParameters.BLOCK_STATE, blockState)
+                .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
+                .withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos))
+                .build(LootParameterSets.BLOCK);
+
+        return table.generate(context);
+    }
+
+    public static void dropLoot(ResourceLocation lootTable, @Nullable PlayerEntity player, @Nullable Hand hand, ServerWorld world, BlockState blockState) {
         getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
             if (!player.inventory.addItemStackToInventory(itemStack)) {
                 player.dropItem(itemStack, false);
             }
+        });
+    }
+    public static void dropLoot(ResourceLocation lootTable, ServerWorld world, BlockPos pos, BlockState blockState) {
+        getLoot(lootTable, world, pos, blockState).forEach(itemStack -> {
+            Block.spawnAsEntity(world, pos, itemStack);
         });
     }
 }

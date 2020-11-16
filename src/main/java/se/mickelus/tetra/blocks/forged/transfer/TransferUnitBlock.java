@@ -93,6 +93,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
         if (!world.isRemote) {
             BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+            if (player != null) {
+                BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+            } else {
+                BlockInteraction.dropLoot(plateLootTable, (ServerWorld) world, pos, blockState);
+            }
         }
 
         world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
@@ -108,7 +113,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
         EnumTransferConfig config = EnumTransferConfig.getNextConfiguration(blockState.get(configProp));
 
         world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);

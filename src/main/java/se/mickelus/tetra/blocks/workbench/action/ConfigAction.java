@@ -40,4 +40,9 @@ public abstract class ConfigAction implements WorkbenchAction {
      * The loot table that rewards will be picked from when the action is performed.
      */
     public ResourceLocation lootTable;
+
+    /**
+     * Denotes if this action should be available using in world interaction
+     */
+    public boolean inWorld = true;
 }

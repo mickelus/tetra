@@ -24,6 +24,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -119,14 +120,14 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
                 .orElse(0);
     }
 
-    public static boolean removeModule(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace, boolean isA) {
+    public static boolean removeModule(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace, boolean isA) {
         ItemStack moduleStack = TileEntityOptional.from(world, pos, HammerBaseTile.class)
                 .map(te -> te.removeModule(isA))
                 .map(ItemStack::new)
                 .orElse(null);
 
         if (moduleStack != null && !world.isRemote) {
-            if (player.inventory.addItemStackToInventory(moduleStack)) {
+            if (player != null && player.inventory.addItemStackToInventory(moduleStack)) {
                 player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
             } else {
                 spawnAsEntity(world, pos.offset(hitFace), moduleStack);
@@ -291,6 +292,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        TileEntityOptional.from(world, currentPos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
         if (Direction.DOWN.equals(facing) && !HammerHeadBlock.instance.equals(facingState.getBlock())) {
             return Blocks.AIR.getDefaultState();
         }
@@ -314,6 +316,11 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
 
         // returning null here stops the block from being placed
         return null;
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+        TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
     }
 
     @Override

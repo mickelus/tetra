@@ -35,7 +35,7 @@ public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
 
         IBakedModel model = blockRenderer.getBlockModelShapes().getModel(HammerHeadBlock.instance.getDefaultState());
 
-        double offset = MathHelper.clamp((1d * System.currentTimeMillis() - tile.getActivationTime()) / animationDuration, 0, 1) - 0.125;
+        double offset = MathHelper.clamp((1d * System.currentTimeMillis() - tile.getActivationTime()) / animationDuration, 0, 0.875);
 
         offset = Math.min(offset, MathHelper.clamp(0.25 + (1d * System.currentTimeMillis() - tile.getUnjamTime()) / unjamDuration, 0, 1) - 0.125);
 

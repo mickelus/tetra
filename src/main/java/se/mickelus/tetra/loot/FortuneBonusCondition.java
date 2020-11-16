@@ -41,7 +41,10 @@ public class FortuneBonusCondition implements ILootCondition {
                 }
             }
         } else {
-            fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, context.get(LootParameters.TOOL));
+            ItemStack tool = context.get(LootParameters.TOOL);
+            if (tool != null) {
+                fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, context.get(LootParameters.TOOL));
+            }
         }
 
         return context.getRandom().nextFloat() < this.chance + fortuneLevel * this.fortuneMultiplier;

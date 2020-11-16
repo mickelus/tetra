@@ -21,6 +21,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.GuiTextureOffset;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -253,6 +254,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         if (slotChanged || targetItemChanged) {
             actionList.updateActions(currentTarget, tileEntity.getAvailableActions(viewingPlayer), viewingPlayer,
                     action -> tileEntity.performAction(viewingPlayer, action.getKey()));
+
+            // block overlay needs refresh as some actions have in world interactions
+            InteractiveBlockOverlay.markDirty();
         }
 
         if (targetItemChanged || previewChanged || schematicChanged || slotChanged || materialsChanged) {

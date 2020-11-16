@@ -136,7 +136,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
-            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 1f, (float) (0.5 + Math.random() * 0.1));
+            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 0.5f, (float) (0.5 + Math.random() * 0.2));
         }
 
         return upgradedStack;
@@ -163,7 +163,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
-            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 3f, (float) (0.5 + Math.random() * 0.1));
+            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 0.5f, (float) (0.5 + Math.random() * 0.2));
         }
         return upgradedStack;
     }
