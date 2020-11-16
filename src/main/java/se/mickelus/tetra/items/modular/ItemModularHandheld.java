@@ -163,6 +163,9 @@ public class ItemModularHandheld extends ModularItem {
 
         BlockState blockState = world.getBlockState(pos);
 
+        if (isBroken(itemStack)) {
+            return ActionResultType.PASS;
+        }
 
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
@@ -222,7 +225,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
-        if (!player.getCooldownTracker().hasCooldown(this)) {
+        if (!player.getCooldownTracker().hasCooldown(this) && !isBroken(itemStack)) {
             if (getUseDuration(itemStack) == 0 || player.isCrouching()) {
                 int bashingLevel = getEffectLevel(itemStack, ItemEffect.bashing);
                 if (bashingLevel > 0) {
@@ -246,7 +249,7 @@ public class ItemModularHandheld extends ModularItem {
             }
         }
 
-        return ActionResultType.FAIL;
+        return ActionResultType.PASS;
     }
 
     public boolean itemInteractionForEntitySecondary(ItemStack itemStack, PlayerEntity player, LivingEntity target, Hand hand) {
