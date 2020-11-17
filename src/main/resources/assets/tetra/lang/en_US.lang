@@ -1936,6 +1936,7 @@ toolbelt.blocked=Inventory full, make space first
 toolbelt.binding.group=Tetra toolbelt
 toolbelt.binding.access=Quick access
 toolbelt.binding.restock=Restock
+toolbelt.binding.boost=Boost
 
 toolbelt.effect.tooltip.quick.quickAccess=A suitable tool can be quickly drawn from this slot
 toolbelt.effect.tooltip.quiver.quickAccess=Arrows can be drawn straight from this slot
@@ -2090,11 +2091,11 @@ quiver/hide=Hide quiver
 ###############################
 
 booster_schema.name=Booster
-booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
+booster_schema.description=Attach a booster unit, which grants the ability to jump long distances or even fly for shorter periods of time. §oUses gunpowder from toolbelt inventories as fuel.
 booster_schema.slot1=Material
 
 toolbelt/booster.name=Booster
-toolbelt/booster.description=A booster unit which grants the ability to jump long distances or even fly for shorter periods of time. Activate by crouching before a jump, or by jumping mid air or while flying with an elytra. §oUses gunpowder from toolbelt inventories as fuel.
+toolbelt/booster.description=A booster unit which grants the ability to jump long distances or even fly for shorter periods of time. §oUses gunpowder from toolbelt inventories as fuel.
 
 booster/iron=Booster unit
 
