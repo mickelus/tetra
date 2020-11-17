@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPlaySoundEventPacket;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
@@ -49,7 +50,10 @@ public class EffectHelper {
     }
 
     /**
-     * Break a block in the world, as a player. Based on how players break blocks in vanilla.
+     * Break a block in the world, as a player.
+     * Based on how players break blocks in vanilla {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock}, but allows
+     * control over the used itemstack and without causing damage and honing progression for the used itemstack
+     *
      * @param world the world in which to break blocks
      * @param breakingPlayer the player which is breaking the blocks
      * @param toolStack the itemstack used to break the blocks
@@ -67,6 +71,8 @@ public class EffectHelper {
 
             int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
 
+            TileEntity tileEntity = world.getTileEntity(pos);
+
             if (exp != -1) {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
                         && !breakingPlayer.blockActionRestricted(world, pos, gameType)
@@ -77,7 +83,7 @@ public class EffectHelper {
                     blockState.getBlock().onPlayerDestroy(world, pos, blockState);
 
                     if (harvest) {
-                        blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, world.getTileEntity(pos), toolStack);
+                        blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, tileEntity, toolStack);
 
                         if (exp > 0) {
                             blockState.getBlock().dropXpOnBlockBreak(serverWorld, pos, exp);
