@@ -32,7 +32,7 @@
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
             "key": "spearhead/",
             "attributes": {
-                "generic.attack_speed": -1.5
+                "generic.attack_speed": -0.9
             },
             "durability": -20,
             "extract": {
