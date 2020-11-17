@@ -40,6 +40,7 @@ public class UpdateBoosterPacket extends AbstractPacket {
         ItemStack itemStack = UtilToolbelt.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
+            player.jump();
             UtilBooster.setActive(NBTHelper.getTag(itemStack), active, charged);
 
             UtilToolbelt.updateBauble(player);
