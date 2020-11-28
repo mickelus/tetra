@@ -128,7 +128,11 @@ public class AttributeHelper {
      * @return
      */
     public static double getMergedAmount(Collection<AttributeModifier> modifiers) {
-        return getAdditionAmount(modifiers) * getMultiplyAmount(modifiers);
+        return getMergedAmount(modifiers, 0);
+    }
+
+    public static double getMergedAmount(Collection<AttributeModifier> modifiers, double base) {
+        return (getAdditionAmount(modifiers) + base) * getMultiplyAmount(modifiers);
     }
 
     public static double getAdditionAmount(Collection<AttributeModifier> modifiers) {

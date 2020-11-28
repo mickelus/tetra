@@ -656,7 +656,7 @@ public class ItemModularHandheld extends ModularItem {
      */
     public double getCooldownBase(ItemStack itemStack) {
         // base value for player attack speed is 4
-        return 1 / Math.max(0.1, 4 + getAttributeValue(itemStack, Attributes.ATTACK_SPEED) + getCounterWeightBonus(itemStack));
+        return 1 / Math.max(0.1, getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) + getCounterWeightBonus(itemStack));
     }
 
     @Override
@@ -696,7 +696,7 @@ public class ItemModularHandheld extends ModularItem {
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             ToolType tool = getEffectiveTool(blockState);
-            float speed = (float) ((Attributes.ATTACK_SPEED.getDefaultValue() + getAttributeValue(itemStack, Attributes.ATTACK_SPEED)) * 0.5 + 0.5);
+            float speed = (float) (getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) * 0.5 + 0.5);
 
             if (tool != null) {
                 speed *= getToolEfficiency(itemStack, tool);

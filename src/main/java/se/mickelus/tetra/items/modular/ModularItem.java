@@ -920,6 +920,14 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(attribute));
     }
 
+    public double getAttributeValue(ItemStack itemStack, Attribute attribute, double base) {
+        if (isBroken(itemStack)) {
+            return 0;
+        }
+
+        return AttributeHelper.getMergedAmount(getAttributeModifiersCached(itemStack).get(attribute), base);
+    }
+
     public ToolData getToolData(ItemStack itemStack) {
         logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
         return Stream.concat(
