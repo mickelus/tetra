@@ -472,6 +472,49 @@
                             }
                         }
                     ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "forge:ingots/osmium",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "forge:nuggets/osmium",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
                 }
             ]
         }
