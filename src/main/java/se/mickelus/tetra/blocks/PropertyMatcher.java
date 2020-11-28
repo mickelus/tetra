@@ -18,8 +18,11 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class PropertyMatcher implements Predicate<BlockState> {
+    public static final PropertyMatcher any = new PropertyMatcher();
+
     private Block block = null;
     private final Map< Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
+
     @Override
     public boolean test(BlockState blockState) {
         if (block != null && block != blockState.getBlock()) {

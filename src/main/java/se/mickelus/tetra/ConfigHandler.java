@@ -58,6 +58,8 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue enableStonecutter;
 
+    public static ForgeConfigSpec.BooleanValue enableExtractor;
+
     static {
         // misc config
         builder.push("misc");
@@ -181,11 +183,15 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_shield_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-
         enableStonecutter = builder
                 .comment("Enable the stonecutter module for swords, the stonecutter has to be removed from loot tables if this is disabled")
                 .worldRestart()
                 .define("stonecutter", true);
+
+        enableExtractor = builder
+                .comment("Enable the extractor bedrock functionality")
+                .worldRestart()
+                .define("extractor", true);
 
         builder.pop();
 

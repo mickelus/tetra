@@ -16,17 +16,16 @@ import se.mickelus.tetra.ToolTypes;
 public class ForgedBlockCommon {
 
     public static final Material forgedMaterial = new Material(MaterialColor.IRON, false, true, true, true, false, false, PushReaction.BLOCK);
+    public static final Material forgedMaterialNotSolid = new Material(MaterialColor.IRON, false, false, true, false, false, false, PushReaction.BLOCK);
 
     public static final Block.Properties propertiesSolid = Block.Properties.create(forgedMaterial, MaterialColor.GRAY)
-            .sound(SoundType.METAL)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
             .setRequiresTool()
             .sound(SoundType.NETHERITE)
             .hardnessAndResistance(12F, 2400.0F);
 
-    public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterial, MaterialColor.GRAY)
-            .sound(SoundType.METAL)
+    public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterialNotSolid, MaterialColor.GRAY)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
             .setRequiresTool()

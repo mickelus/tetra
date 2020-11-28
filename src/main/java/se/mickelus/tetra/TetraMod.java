@@ -40,6 +40,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.chthonic.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
@@ -167,7 +168,10 @@ public class TetraMod {
                 new CoreExtractorPistonBlock(),
                 new CoreExtractorPipeBlock(),
                 new SeepingBedrockBlock(),
-                new RackBlock()
+                new RackBlock(),
+                new ChthonicExtractorBlock(),
+                new FracturedBedrockBlock(),
+                new DepletedBedrockBlock()
         };
 
         items = new Item[] {
@@ -389,6 +393,14 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(ChthonicExtractorTile::new, ChthonicExtractorBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, ChthonicExtractorBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(FracturedBedrockTile::new, FracturedBedrockBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, FracturedBedrockBlock.unlocalizedName));
 
             event.getRegistry().register(TileEntityType.Builder.create(RackTile::new, RackBlock.instance)
                     .build(null)

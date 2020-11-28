@@ -170,11 +170,14 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     }
 
     public void updateRedstonePower() {
-        redstonePower = 0;
-        for(Direction direction : Direction.values()) {
-            redstonePower += world.getRedstonePower(pos.offset(direction), direction);
+        if (world != null) {
+            redstonePower = 0;
+            for(Direction direction : Direction.values()) {
+                redstonePower += world.getRedstonePower(pos.offset(direction), direction);
+            }
+
+            markDirty();
         }
-        markDirty();
     }
 
     private int tickrate() {

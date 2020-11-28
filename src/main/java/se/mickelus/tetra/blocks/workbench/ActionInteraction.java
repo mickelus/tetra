@@ -25,6 +25,8 @@ public class ActionInteraction extends BlockInteraction {
         super(requiredType, requiredLevel, Direction.UP, 5, 11, 5, 11, InteractionOutcome.EMPTY);
 
         this.actionKey = actionKey;
+
+        applyUsageEffects = false;
     }
 
     public static ActionInteraction create(WorkbenchTile tile) {
@@ -47,13 +49,15 @@ public class ActionInteraction extends BlockInteraction {
 
     @Override
     public void applyOutcome(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
-        CastOptional.cast(world.getTileEntity(pos), WorkbenchTile.class)
-                .ifPresent(tile -> {
-                    if (player != null) {
-                        tile.performAction(player, actionKey);
-                    } else {
-                        tile.performAction(actionKey);
-                    }
-                });
+        if (!world.isRemote) {
+            CastOptional.cast(world.getTileEntity(pos), WorkbenchTile.class)
+                    .ifPresent(tile -> {
+                        if (player != null) {
+                            tile.performAction(player, actionKey);
+                        } else {
+                            tile.performAction(actionKey);
+                        }
+                    });
+        }
     }
 }

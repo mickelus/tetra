@@ -56,6 +56,9 @@ public class BlockInteraction {
 
     public InteractionOutcome outcome;
 
+    // if this interaction should apply tool usage effects (honing, reverb, self fiery etc)
+    protected boolean applyUsageEffects = true;
+
     public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
             float minX, float maxX, float minY, float maxY, InteractionOutcome outcome) {
 
@@ -148,7 +151,12 @@ public class BlockInteraction {
 
             if (availableTools.contains(possibleInteraction.requiredTool) && heldStack.isDamageable()) {
                 if (heldStack.getItem() instanceof ModularItem) {
-                    ((ModularItem) heldStack.getItem()).applyDamage(2, heldStack, player);
+                    ModularItem item = (ModularItem) heldStack.getItem();
+
+                    item.applyDamage(2, heldStack, player);
+                    if (possibleInteraction.applyUsageEffects) {
+                        item.applyUsageEffects(player, heldStack, possibleInteraction.requiredLevel * 2);
+                    }
                 } else {
                     heldStack.damageItem(2, player, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
                 }

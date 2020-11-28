@@ -510,6 +510,13 @@
 
   "block.multiblock_hint.1x2x1": "§8[§71x2x1 multiblock§8]",
 
+  "block.tetra.fractured_bedrock": "Fractured Bedrock",
+  "block.tetra.depleted_bedrock": "Fractured Bedrock (depleted)",
+  
+  "block.tetra.chthonic_extractor": "Chthonic Extractor",
+  "block.tetra.chthonic_extractor.description": "Hammer into bedrock to extract minerals from below",
+  "block.tetra.chthonic_extractor.description_extended": " * Several extractors can be hammered into the same fracture, increases the yield\n * Increased yield when placed on top of seeping bedrock\n * Slightly increased yield in biomes inhabited by husks, strays or witches, such as cold, desert or swamp biomes",
+
   "item.tetra.forged_bolt": "Bolt",
   "tetra.salvage_bolt_action.label": "Salvage",
 
