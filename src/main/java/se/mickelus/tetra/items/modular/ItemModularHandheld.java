@@ -802,7 +802,7 @@ public class ItemModularHandheld extends ModularItem {
         if (consumeResources) {
             applyDamage(toolLevel, providerStack, player);
 
-            applyUsageEffects(player, providerStack, 5 + toolLevel * 3);
+            applyUsageEffects(player, providerStack, 4 + toolLevel * 3);
         }
 
         return super.onCraftConsume(providerStack, targetStack, player, tool, toolLevel, consumeResources);
