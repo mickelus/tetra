@@ -31,7 +31,12 @@ public class RackTile extends TileEntity {
     private static final String inventoryKey = "inv";
 
     public static final int inventorySize = 2;
-    private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(inventorySize));
+    private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(inventorySize) {
+        protected void onContentsChanged(int slot) {
+            markDirty();
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+        }
+    });
 
     public RackTile() {
         super(type);
