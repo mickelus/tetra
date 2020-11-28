@@ -60,6 +60,8 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue enableExtractor;
 
+    public static ForgeConfigSpec.BooleanValue enableLookTrigger;
+
     static {
         // misc config
         builder.push("misc");
@@ -91,6 +93,11 @@ public class ConfigHandler {
         magicCapacityMultiplier = builder
                 .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
                 .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
+
+        enableLookTrigger = builder
+                .comment("Enable the look advancement trigger, used for some advancements. ")
+                .worldRestart()
+                .define("look_trigger", true);
 
         builder.pop();
 

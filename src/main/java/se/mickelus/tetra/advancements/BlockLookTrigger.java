@@ -40,15 +40,16 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
         if (TickEvent.Phase.START == event.phase && event.player.ticksExisted % 20 == 0 && !event.player.world.isRemote) {
             event.player.world.getProfiler().startSection("lookTrigger");
             Vector3d playerPosition = event.player.getEyePosition(0);
-            Vector3d lookingPosition = playerPosition.add(event.player.getLookVec()
-                    .scale(event.player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue()));
+
+            float lookDistance = 5; // event.player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue()
+            Vector3d lookingPosition = event.player.getLookVec().scale(lookDistance).add(playerPosition);
 
             BlockRayTraceResult result = event.player.world.rayTraceBlocks(new RayTraceContext(playerPosition, lookingPosition,
                     RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, event.player));
 
 
             if (!RayTraceResult.Type.MISS.equals(result.getType())) {
-                BlockState currentState = event.player.world.getBlockState(new BlockPos(result.getHitVec()));
+                BlockState currentState = event.player.world.getBlockState(new BlockPos(result.getPos()));
 
                 if (!currentState.equals(stateCache.getIfPresent(event.player.getUniqueID()))) {
                     trigger((ServerPlayerEntity) event.player, currentState);
