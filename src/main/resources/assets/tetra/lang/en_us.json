@@ -1635,6 +1635,16 @@
   "tetra.module.bow/extended_rest.material_name": "%s rest extension",
   "tetra.variant.extended_rest/bolt": "Adjustable rest",
 
+  "tetra.tweak.bow/multishot_count.label": "Count",
+  "tetra.tweak.bow/multishot_count.tooltip": "Adjust the number of fired projectiles",
+  "tetra.tweak.bow/multishot_count.left": "1",
+  "tetra.tweak.bow/multishot_count.right": "7",
+
+  "tetra.tweak.bow/multishot_spread.label": "Spread",
+  "tetra.tweak.bow/multishot_spread.tooltip": "Adjust the spread of fired projectiles",
+  "tetra.tweak.bow/multishot_spread.left": "1",
+  "tetra.tweak.bow/multishot_spread.right": "19",
+
   "tetra/schematic/bow/riser/sights.name": "Sights",
   "tetra/schematic/bow/riser/sights.description": "Sights crafted from the provided material, allows one to see further while aiming or while holding [shift]. \n \nMaterial §fhardness§r increases §fzoom amount§r.",
   "tetra/schematic/bow/riser/sights.slot1": "Material",
