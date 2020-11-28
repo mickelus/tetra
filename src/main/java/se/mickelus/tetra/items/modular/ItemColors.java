@@ -24,7 +24,7 @@ public class ItemColors {
     public static int warped_glyph       = define(0x287067, "warped_glyph");
     public static int cobblestone        = define(0xffffff, "cobblestone");
     public static int cobblestone_glyph  = define(0x9a9a9a, "cobblestone_glyph");
-    public static int stone              = define(0xaaaaaa, "stone");
+    public static int stone              = define(0xffffff, "stone");
     public static int stone_glyph        = define(0x9a9a9a, "stone_glyph");
     public static int granite            = define(0xd38b70, "granite");
     public static int granite_glyph      = define(0x8a6658, "granite_glyph");
