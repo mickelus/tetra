@@ -19,7 +19,7 @@
         "wooden"
     ],
     "material": {
-        "item": "naturesaura:ancient_wood"
+        "item": "naturesaura:ancient_planks"
     },
     "improvements": {
         "naturesaura_aura_mending_innate": 1
