@@ -300,7 +300,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     public int getDrawDuration(ItemStack itemStack) {
-        return (int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get()));
+        return Math.max((int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())), 1);
     }
 
     /**
