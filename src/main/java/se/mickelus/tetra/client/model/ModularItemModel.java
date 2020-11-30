@@ -266,8 +266,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                     consumer.put(e, offX, offY, offZ, 0f);
                     break;
                 case UV:
-                    if(format.getElements().get(e).getIndex() == 0)
-                    {
+                    if(format.getElements().get(e).getIndex() == 0) {
                         consumer.put(e, u, v, 0f, 1f);
                         break;
                     }

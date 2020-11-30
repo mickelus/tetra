@@ -68,6 +68,19 @@
             ]
         },
         {
+            "name": "forged/container_extractors",
+            "rolls": {
+                "min": 0,
+                "max": 5
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:chthonic_extractor"
+                }
+            ]
+        },
+        {
             "name": "forged/container_content",
             "rolls": {
                 "min": 4,
