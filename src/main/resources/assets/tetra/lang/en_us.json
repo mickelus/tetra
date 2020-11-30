@@ -1964,6 +1964,8 @@
   "tetra.advancements.spelunking.scanner.description": "Use a workbench to upgrade the holosphere with a scanner, the scanner makes it easier to find ancient ruins",
   "tetra.advancements.spelunking.containers.title": "\"Salvage\"",
   "tetra.advancements.spelunking.containers.description": "Hit the highlighted areas on crates and containers with the correct tools to break them open",
+  "tetra.advancements.spelunking.chthonic_extractor.title": "Deep Extraction",
+  "tetra.advancements.spelunking.chthonic_extractor.description": "Find a chthonic extractor in a crate or a container",
   "tetra.advancements.spelunking.earthpiercer.title": "Planetary Piercing",
   "tetra.advancements.spelunking.earthpiercer.description": "Find an earthpiercer in a container and attach it to a handle, the earthpiercer can break several blocks in a line",
   "tetra.advancements.spelunking.stonecutter.title": "Like Butter",
