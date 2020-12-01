@@ -14,7 +14,7 @@ public class ScannerSound extends TickableSound {
     private boolean hasStarted;
 
     public ScannerSound(Minecraft mc) {
-        super(TetraSounds.scannerLoop, SoundCategory.PLAYERS);
+        super(TetraSounds.scannerLoop, SoundCategory.BLOCKS);
 
         this.mc = mc;
 
@@ -43,7 +43,7 @@ public class ScannerSound extends TickableSound {
     @Override
     public void tick() {
         if (activeCounter > 0) {
-            volume = Math.min(volume + 0.03f, 0.6f);
+            volume = Math.min(volume + 0.03f, 0.5f);
 
             activeCounter--;
         } else {
