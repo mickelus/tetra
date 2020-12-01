@@ -137,6 +137,7 @@
             "tools": {
                 "hammer": 3
             },
+            "integrity": -1,
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 0.5
@@ -200,6 +201,7 @@
             "tools": {
                 "hammer": 5
             },
+            "integrity": -1,
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 0.5
