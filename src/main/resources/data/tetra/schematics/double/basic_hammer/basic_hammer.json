@@ -17,7 +17,17 @@
         {
             "materials": [
                 "tetra:wood/oak",
+                "tetra:stone/stone",
                 "tetra:stone/diorite",
+                "tetra:stone/andesite",
+                "tetra:stone/granite"
+            ],
+            "countFactor": 2,
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        },
+        {
+            "materials": [
                 "tetra:metal/iron",
                 "tetra:stone/blackstone"
             ],

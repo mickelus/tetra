@@ -30,7 +30,7 @@ public class ItemColors {
     public static int granite_glyph      = define(0x8a6658, "granite_glyph");
     public static int diorite            = define(0xffffff, "diorite");
     public static int diorite_glyph      = define(0xa1a1a3, "diorite_glyph");
-    public static int andesite           = define(0xaaaaae, "andesite");
+    public static int andesite           = define(0xaabbcc, "andesite");
     public static int andesite_glyph     = define(0x79797a, "andesite_glyph");
     public static int blackstone         = define(0x626262, "blackstone");
     public static int blackstone_glyph   = define(0x303030, "blackstone_glyph");

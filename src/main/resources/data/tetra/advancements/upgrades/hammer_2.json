@@ -14,19 +14,65 @@
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
-        "head_left": {
+        "diorite_left": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "slot": "double/head_left",
                 "variant": "basic_hammer/diorite"
             }
         },
-        "head_right": {
+        "diorite_right": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "slot": "double/head_right",
                 "variant": "basic_hammer/diorite"
             }
+        },
+        "andesite_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/andesite"
+            }
+        },
+        "andesite_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/andesite"
+            }
+        },
+        "granite_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/granite"
+            }
+        },
+        "granite_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/granite"
+            }
+        },
+        "stone_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/stone"
+            }
+        },
+        "stone_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/stone"
+            }
         }
-    }
+    },
+    "requirements": [
+        ["diorite_left", "andesite_left", "granite_left", "stone_left"],
+        ["diorite_right", "andesite_right", "granite_right", "stone_right"]
+    ]
 }

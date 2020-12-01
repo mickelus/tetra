@@ -65,7 +65,39 @@
             }
         },
         {
-            "materials": ["tetra:stone/diorite"],
+            "materials": ["tetra:stone/stone"],
+            "key": "basic_hammer/",
+            "attributes": {
+                "generic.attack_speed": -1.1
+            },
+            "tools": {
+                "hammer": 1
+            },
+            "models": [{
+                "location": "tetra:items/module/double/head/basic_hammer/stone",
+                "tint": "aaaaaa"
+            }],
+            "extract": {
+                "primaryAttributes": {
+                    "generic.attack_damage": 0.5
+                },
+                "secondaryAttributes": {
+                    "generic.attack_damage": 1,
+                    "generic.attack_speed": -0.08
+                },
+                "tools": {
+                    "hammer": [0, 0.8333]
+                },
+                "durability": 0.55,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 64
+                }
+            }
+        },
+        {
+            "materials": ["tetra:stone/diorite", "tetra:stone/andesite", "tetra:stone/granite"],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
