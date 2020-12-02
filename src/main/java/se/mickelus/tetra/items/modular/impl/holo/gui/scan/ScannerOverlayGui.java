@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +37,8 @@ import java.util.stream.Stream;
 public class ScannerOverlayGui extends GuiRoot {
     private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
 
+    public static ScannerOverlayGui instance;
+
     private ScannerBarGui scanner;
 
     BlockPos upHighlight;
@@ -48,8 +51,11 @@ public class ScannerOverlayGui extends GuiRoot {
 
     private int ticks;
 
+    private int snooze = -1;
+    private static final int snoozeLength = 6000; // 5 min
+
     // stats
-    boolean active;
+    boolean available;
     int horizontalSpread = 44;
     int verticalSpread = 3;
     float cooldown = 1.2f;
@@ -68,6 +74,38 @@ public class ScannerOverlayGui extends GuiRoot {
 
         if (ConfigHandler.development.get()) {
             MinecraftForge.EVENT_BUS.register(new ScannerDebugRenderer(this));
+        }
+
+        instance = this;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void toggleSnooze() {
+        if (isSnoozed()) {
+            snooze = -1;
+        } else {
+            snooze = ticks + snoozeLength;
+        }
+    }
+
+    public boolean isSnoozed() {
+        return ticks < snooze;
+    }
+
+    public String getStatus() {
+        if (isSnoozed()) {
+            int seconds = Math.round((snooze - ticks) / 20f);
+
+            if (seconds > 60) {
+                return I18n.format("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
+            }
+
+            return I18n.format("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
+        } else {
+            return I18n.format("tetra.holo.scan.active");
         }
     }
 
@@ -91,9 +129,9 @@ public class ScannerOverlayGui extends GuiRoot {
 
             scanner.setHorizontalSpread(horizontalSpread);
 
-            active = range > 0;
+            available = range > 0;
         } else {
-            active = false;
+            available = false;
         }
     }
 
@@ -138,8 +176,15 @@ public class ScannerOverlayGui extends GuiRoot {
             updateStats();
         }
 
-        if (active && ticks % 2 == 0) {
+        if (available && ticks % 20 == 0) {
+            if (isSnoozed()) {
+                scanner.setStatus(getStatus());
+            } else {
+                scanner.setStatus(null);
+            }
+        }
 
+        if (available && ticks % 2 == 0 && !isSnoozed()) {
             int offset = (int) (ticks / 2) % (int) (horizontalSpread * 2 * cooldown);
             if (offset < horizontalSpread * 2) {
                 int yawOffset = (int) ((-horizontalSpread + offset) * ScannerBarGui.getDegreesPerUnit());

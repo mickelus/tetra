@@ -30,11 +30,9 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 public class ModularHolosphereItem extends ModularItem {
-    // todo 1.16: rename
     private static final String unlocalizedName = "holo";
 
     public final static String coreKey = "holo/core";
@@ -75,7 +73,6 @@ public class ModularHolosphereItem extends ModularItem {
     public void clientInit() {
         super.clientInit();
 
-//        MinecraftForge.EVENT_BUS.register(new BlockHighlightRenderer());
         MinecraftForge.EVENT_BUS.register(new ScannerOverlayGui());
     }
 
@@ -95,6 +92,15 @@ public class ModularHolosphereItem extends ModularItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").mergeStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(" "));
+
+        if (ScannerOverlayGui.instance != null && ScannerOverlayGui.instance.isAvailable()) {
+            tooltip.add(new TranslationTextComponent("tetra.holo.scan.status", ScannerOverlayGui.instance.getStatus())
+                    .mergeStyle(TextFormatting.GRAY));
+
+            tooltip.add(new StringTextComponent(" "));
+            tooltip.add(new TranslationTextComponent("tetra.holo.scan.snooze"));
+        }
+
         tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2"));
 
         super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -103,7 +109,11 @@ public class ModularHolosphereItem extends ModularItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (world.isRemote) {
-            showGui();
+            if (player.isCrouching() && ScannerOverlayGui.instance.isAvailable()) {
+                ScannerOverlayGui.instance.toggleSnooze();
+            } else {
+                showGui();
+            }
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));

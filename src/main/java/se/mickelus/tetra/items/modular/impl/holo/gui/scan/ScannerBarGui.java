@@ -1,10 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import net.minecraft.client.Minecraft;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
-import se.mickelus.mgui.gui.GuiTexture;
+import net.minecraft.client.resources.I18n;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -28,12 +26,25 @@ public class ScannerBarGui extends GuiElement {
 
     private static final int unitWidth = 6;
 
+    private boolean hasStatus;
+    private GuiString statusLabel;
+    private KeyframeAnimation statusInAnimation;
+    private KeyframeAnimation statusOutAnimation;
+
     public ScannerBarGui(int x, int y, int horizontalSpread) {
         super(x, y, horizontalSpread * unitWidth, 9);
 
         this.horizontalSpread = horizontalSpread;
 
-        setup();
+        statusLabel = new GuiStringOutline(-2, 0, "");
+        statusLabel.setAttachment(GuiAttachment.middleCenter);
+        statusLabel.setOpacity(0);
+        addChild(statusLabel);
+        statusInAnimation = new KeyframeAnimation(200, statusLabel)
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateX(-2, 0));
+        statusOutAnimation = new KeyframeAnimation(300, statusLabel)
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateX(0, 2));
+
 
         showAnimation = new KeyframeAnimation(300, this)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y, y - 4));
@@ -41,6 +52,8 @@ public class ScannerBarGui extends GuiElement {
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 4, y))
                 .withDelay(200)
                 .onStop(complete -> this.isVisible = false);
+
+        setup();
     }
 
     private void setup() {
@@ -115,6 +128,8 @@ public class ScannerBarGui extends GuiElement {
                     new KeyframeAnimation(100, centerHighlight).applyTo(new Applier.Opacity(0.9f)),
                     new KeyframeAnimation(1000, centerHighlight).applyTo(new Applier.Opacity(0)));
         }
+
+        addChild(statusLabel);
     }
 
     public static double getDegreesPerUnit() {
@@ -128,6 +143,22 @@ public class ScannerBarGui extends GuiElement {
             clearChildren();
             setup();
         }
+    }
+
+    public void setStatus(String status) {
+        if ((status != null) != hasStatus) {
+            hasStatus = status != null;
+
+            if (hasStatus) {
+                statusOutAnimation.stop();
+                statusInAnimation.start();
+            } else {
+                statusInAnimation.stop();
+                statusOutAnimation.start();
+            }
+        }
+
+        statusLabel.setString(status);
     }
 
     protected void show() {

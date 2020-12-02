@@ -7,7 +7,7 @@
   "tetra.attribute.ability_cooldown.name": "Ability cooldown",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
-  "item.tetra.holo.tooltip2": "§8[§7right click§8] §7use",
+  "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
   "tetra.holo.craft.breadcrumb.root": "Craft",
   "tetra.holo.craft.breadcrumb.materials": "Materials",
   "tetra.holo.craft.materials": "Materials",
@@ -45,6 +45,11 @@
 
   "tetra.holo.craft.materials.stat_effect": "eff",
   "tetra.holo.craft.materials.stat_effect.tooltip": "Modules crafted from this material will provide the §e%s§r effect:",
+
+  "tetra.holo.scan.status": "§8status: §r%s",
+  "tetra.holo.scan.active": "active",
+  "tetra.holo.scan.snoozed": "§8snooze §r%s§8:§r%s",
+  "tetra.holo.scan.snooze": "§7[§8shift + rmb§7] §8snooze scanner",
 
   "tetra.workbench.slot_detail.details_tab": "Details",
   "tetra.workbench.slot_detail.craft_tab": "Craft",
