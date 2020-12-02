@@ -15,7 +15,10 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -259,6 +262,8 @@ public class TetraMod {
 
         DestabilizationEffect.init();
         SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
+
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(MOD_ID, FeatureEntry.key), FeatureEntry.configuredInstance);
     }
 
     @SubscribeEvent
@@ -317,7 +322,7 @@ public class TetraMod {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-            event.getRegistry().register(new FeatureEntry());
+            event.getRegistry().register(FeatureEntry.instance);
         }
 
         @SubscribeEvent

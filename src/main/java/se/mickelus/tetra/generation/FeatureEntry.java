@@ -17,6 +17,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.IntegrityProcessor;
@@ -47,8 +48,8 @@ import java.util.stream.Collectors;
 
 public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference> {
     public static final String key = "feature";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + key)
-    public static FeatureEntry instance;
+    public static FeatureEntry instance = new FeatureEntry();
+    public static ConfiguredFeature<?, ?> configuredInstance = instance.withConfiguration(NoFeatureConfig.field_236559_b_);
 
     private TemplateManager templateManager;
     private Registry<Biome> biomeRegistry;
@@ -78,7 +79,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     }
 
     public void registerFeatures(BiomeLoadingEvent event) {
-        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, withConfiguration(NoFeatureConfig.field_236559_b_));
+        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
 
 //        DataManager.featureData.getData().values().stream()
 //                .filter(params -> params.biomes.length > 0)
