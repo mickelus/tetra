@@ -20,6 +20,9 @@
             "material": {
                 "item": "minecraft:leather"
             },
+            "requiredTools": {
+                "cut": 1
+            },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap1/leather"
         },
@@ -28,7 +31,7 @@
                 "item": "minecraft:iron_ingot"
             },
             "requiredTools": {
-                "hammer": 2
+                "hammer": 3
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap1/iron"

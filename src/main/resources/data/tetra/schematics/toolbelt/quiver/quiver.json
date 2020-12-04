@@ -32,6 +32,9 @@
                 "item": "minecraft:leather",
                 "count": 3
             },
+            "requiredTools": {
+                "cut": 3
+            },
             "moduleKey": "toolbelt/quiver",
             "moduleVariant": "quiver/leather"
         },
@@ -40,6 +43,9 @@
                 "tag": "minecraft:wool",
                 "count": 2
             },
+            "requiredTools": {
+                "cut": 1
+            },
             "moduleKey": "toolbelt/quiver",
             "moduleVariant": "quiver/wool"
         },
@@ -47,6 +53,9 @@
             "material": {
                 "item": "minecraft:rabbit_hide",
                 "count": 7
+            },
+            "requiredTools": {
+                "cut": 2
             },
             "moduleKey": "toolbelt/quiver",
             "moduleVariant": "quiver/hide"

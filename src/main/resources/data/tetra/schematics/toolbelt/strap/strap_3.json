@@ -21,6 +21,9 @@
                 "item": "minecraft:leather",
                 "count": 3
             },
+            "requiredTools": {
+                "cut": 3
+            },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap3/leather"
         },
@@ -30,7 +33,7 @@
                 "count": 3
             },
             "requiredTools": {
-                "hammer": 3
+                "hammer": 5
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap3/iron"
