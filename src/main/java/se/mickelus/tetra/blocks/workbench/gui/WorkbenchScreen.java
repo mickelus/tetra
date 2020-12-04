@@ -38,8 +38,6 @@ import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
-    private static final ResourceLocation inventoryTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
-
     private PlayerEntity viewingPlayer;
 
     private final WorkbenchTile tileEntity;
@@ -83,7 +81,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
         defaultGui = new GuiElement(0, 0, xSize, ySize);
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, GuiTextures.workbench));
-        defaultGui.addChild(new GuiTexture(72, 153, 179, 106, inventoryTexture));
+        defaultGui.addChild(new GuiTexture(72, 153, 179, 106, GuiTextures.playerInventory));
 
         moduleList = new GuiModuleList(164, 49, this::selectSlot, this::updateSlotHoverPreview);
         defaultGui.addChild(moduleList);

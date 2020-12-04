@@ -80,6 +80,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     @Override
     public void init(PacketHandler packetHandler) {
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
+        packetHandler.registerPacket(OpenToolbeltItemPacket.class, OpenToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
@@ -133,6 +134,10 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         ItemStack itemStack = player.getHeldItemMainhand();
         if (!this.equals(itemStack.getItem())) {
             itemStack = player.getHeldItemOffhand();
+        }
+
+        if (!this.equals(itemStack.getItem())) {
+            itemStack = ToolbeltHelper.findToolbelt(player);
         }
 
         return new ToolbeltContainer(windowId, inventory, itemStack, player);

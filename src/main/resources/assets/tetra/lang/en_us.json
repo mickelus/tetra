@@ -1356,6 +1356,7 @@
   "tetra.toolbelt.binding.group": "Tetra toolbelt",
   "tetra.toolbelt.binding.access": "Quick access",
   "tetra.toolbelt.binding.restock": "Restock",
+  "tetra.toolbelt.binding.open": "Open",
 
   "tetra.toolbelt.effect.tooltip.quick.quickAccess": "A suitable tool can be quickly drawn from this slot",
   "tetra.toolbelt.effect.tooltip.quiver.quickAccess": "Arrows can be drawn straight from this slot",

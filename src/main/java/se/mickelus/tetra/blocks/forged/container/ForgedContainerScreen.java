@@ -17,13 +17,13 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTabVerticalGroup;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.stream.IntStream;
 
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContainer> {
     private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
-    private static final ResourceLocation playerInventoryTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
 
     private final ForgedContainerTile tileEntity;
     private final ForgedContainerContainer container;
@@ -45,7 +45,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
         guiRoot = new GuiElement(0, 0, xSize, ySize);
         guiRoot.addChild(new GuiTexture(0, -13, 179, 128, containerTexture));
-        guiRoot.addChild(new GuiTexture(0, 103, 179, 106, playerInventoryTexture));
+        guiRoot.addChild(new GuiTexture(0, 103, 179, 106, GuiTextures.playerInventory));
 
         compartmentButtons = new GuiTabVerticalGroup(10, 26, this::changeCompartment,
                 IntStream.range(1, ForgedContainerTile.compartmentCount + 1)

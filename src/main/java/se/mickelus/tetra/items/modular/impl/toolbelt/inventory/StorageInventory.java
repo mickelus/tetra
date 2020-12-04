@@ -12,7 +12,7 @@ import java.util.List;
 public class StorageInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "storageInventory";
-    public static int maxSize = 30; // 24;
+    public static int maxSize = 36; // 24;
 
     public StorageInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.storage);
@@ -55,5 +55,15 @@ public class StorageInventory extends ToolbeltInventory {
             }
         }
         return false;
+    }
+
+    public static int getColumns(int slotCount) {
+        for (int i = 12; i >= 5; i--) {
+            if (slotCount % i == 0) {
+                return i;
+            }
+
+        }
+        return 9;
     }
 }

@@ -31,6 +31,7 @@ public class OverlayToolbelt {
 
     public KeyBinding accessBinding;
     public KeyBinding restockBinding;
+    public KeyBinding openBinding;
 
     private long openTime = -1;
 
@@ -48,9 +49,12 @@ public class OverlayToolbelt {
                 GLFW.GLFW_KEY_B, bindingGroup);
         restockBinding = new KeyBinding("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
                 InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
+        openBinding = new KeyBinding("tetra.toolbelt.binding.open", KeyConflictContext.IN_GAME, KeyModifier.ALT,
+                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
 
         ClientRegistry.registerKeyBinding(accessBinding);
         ClientRegistry.registerKeyBinding(restockBinding);
+        ClientRegistry.registerKeyBinding(openBinding);
 
         instance = this;
     }
@@ -59,6 +63,8 @@ public class OverlayToolbelt {
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (restockBinding.isKeyDown()) {
             equipToolbeltItem(ToolbeltSlotType.quickslot, -1, Hand.OFF_HAND);
+        } else if (openBinding.isKeyDown()) {
+            openToolbelt();
         } else if (accessBinding.isKeyDown() && mc.isGameFocused() && !isActive) {
             showView();
         }
@@ -123,6 +129,19 @@ public class OverlayToolbelt {
                 equipToolbeltItem(ToolbeltSlotType.quickslot, index, Hand.MAIN_HAND);
             }
         }
+    }
+
+    /**
+     * Requests the server to open the toolbelt container UI
+     * @return true if the player has a toolbelt
+     */
+    private boolean openToolbelt() {
+        ItemStack itemStack = ToolbeltHelper.findToolbelt(mc.player);
+        if (!itemStack.isEmpty()) {
+            PacketHandler.sendToServer(new OpenToolbeltItemPacket());
+        }
+
+        return !itemStack.isEmpty();
     }
 
     private boolean updateGuiData() {

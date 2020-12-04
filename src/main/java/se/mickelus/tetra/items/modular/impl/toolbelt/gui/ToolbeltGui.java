@@ -9,10 +9,12 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 
@@ -25,15 +27,14 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
 
     private static ToolbeltGui instance;
 
-    private static final ResourceLocation playerInventoryTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
-
     private GuiElement defaultGui;
+    private GuiElement keybindGui;
 
     public ToolbeltGui(ToolbeltContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
         this.xSize = 179;
-        this.ySize = 176;
+        this.ySize = 240;
 
         int numQuickslots = container.getQuickslotInventory().getSizeInventory();
         int numStorageSlots = container.getStorageInventory().getSizeInventory();
@@ -44,29 +45,44 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
         defaultGui = new GuiElement(0, 0, xSize, ySize);
 
         // inventory background
-        defaultGui.addChild(new GuiTexture(0, 103, 179, 106, playerInventoryTexture));
+        defaultGui.addChild(new GuiTexture(0, 129, 179, 91, GuiTextures.playerInventory));
 
-        if (numPotionSlots > 0) {
-            defaultGui.addChild(new GuiPotionsBackdrop(0, 55 - 30 * offset, numPotionSlots, container.getPotionInventory().getSlotEffects()));
-            offset++;
+        if (numStorageSlots > 0) {
+            GuiStorageBackdrop storageBackdrop = new GuiStorageBackdrop(0, 130 - offset, numStorageSlots, container.getStorageInventory().getSlotEffects());
+            defaultGui.addChild(storageBackdrop);
+            offset += storageBackdrop.getHeight() + 2;
         }
 
         if (numQuiverSlots > 0) {
-            defaultGui.addChild(new GuiQuiverBackdrop(0, 55 - 30 * offset, numQuiverSlots, container.getQuiverInventory().getSlotEffects()));
-            offset++;
+            GuiQuiverBackdrop quiverBackdrop = new GuiQuiverBackdrop(0, 130 - offset, numQuiverSlots, container.getQuiverInventory().getSlotEffects());
+            defaultGui.addChild(quiverBackdrop);
+            offset += quiverBackdrop.getHeight() + 2;
+        }
+
+        if (numPotionSlots > 0) {
+            GuiPotionsBackdrop potionsBackdrop = new GuiPotionsBackdrop(0, 130 - offset, numPotionSlots, container.getPotionInventory().getSlotEffects());
+            defaultGui.addChild(potionsBackdrop);
+            offset += potionsBackdrop.getHeight() + 2;
         }
 
         if (numQuickslots > 0 ) {
-            defaultGui.addChild(new GuiQuickSlotBackdrop(0, 55 - 30 * offset, numQuickslots, container.getQuickslotInventory().getSlotEffects()));
-            offset++;
+            GuiQuickSlotBackdrop quickSlotBackdrop = new GuiQuickSlotBackdrop(0, 130 - offset, numQuickslots, container.getQuickslotInventory().getSlotEffects());
+            defaultGui.addChild(quickSlotBackdrop);
+            offset += quickSlotBackdrop.getHeight() + 2;
         }
 
-        if (numStorageSlots > 0) {
-            defaultGui.addChild(new GuiStorageBackdrop(0, 55 - 30 * offset, numStorageSlots, container.getStorageInventory().getSlotEffects()));
-        }
 
-        defaultGui.addChild(new GuiKeybinding(166, 85, OverlayToolbelt.instance.accessBinding));
-        defaultGui.addChild(new GuiKeybinding(166, 100, OverlayToolbelt.instance.restockBinding));
+        keybindGui = new GuiElement(0, 0, 3840, 23);
+        keybindGui.addChild(new GuiRect(0, 0, 3840, 23, 0xcc000000).setAttachment(GuiAttachment.bottomCenter));
+        keybindGui.addChild(new GuiRect(0, -21, 3840, 1, GuiColors.mutedStrong).setAttachment(GuiAttachment.bottomCenter));
+        GuiHorizontalLayoutGroup keybindGroup = new GuiHorizontalLayoutGroup(0, -5, 11, 8);
+        keybindGroup.setAttachment(GuiAttachment.bottomCenter);
+        keybindGui.addChild(keybindGroup);
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.accessBinding, GuiAttachment.topRight));
+        keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.restockBinding, GuiAttachment.topRight));
+        keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.openBinding, GuiAttachment.topRight));
 
         instance = this;
     }
@@ -85,6 +101,8 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
+        keybindGui.setWidth(width);
+        keybindGui.draw(matrixStack, 0, height - keybindGui.getHeight(), width, height, mouseX, mouseY, 1);
         defaultGui.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 

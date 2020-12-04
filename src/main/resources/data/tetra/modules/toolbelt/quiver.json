@@ -42,7 +42,7 @@
             "key": "quiver/hide",
             "integrity": 0,
             "effects": {
-                "quiverSlot": 4
+                "quiverSlot": 2
             },
             "glyph": {
                 "tint": "fefefe",

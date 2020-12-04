@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import net.minecraft.client.resources.I18n;
+import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -53,12 +54,17 @@ public class GuiSlotEffect extends GuiElement {
     }
 
     public static Collection<GuiElement> getEffectsForInventory(SlotType slotType, Collection<Collection<ItemEffect>> inventoryEffects) {
+        return getEffectsForInventory(slotType, inventoryEffects, Integer.MAX_VALUE);
+    }
+
+    public static Collection<GuiElement> getEffectsForInventory(SlotType slotType, Collection<Collection<ItemEffect>> inventoryEffects, int columns) {
 
         // todo: this feels dirty :I
         AtomicInteger i = new AtomicInteger(0);
         return inventoryEffects.stream()
                 .map(slotEffects -> {
-                    GuiElement group = new GuiElement(i.getAndIncrement() * 17, 1, 16, 8);
+                    GuiElement group = new GuiElement((i.get() % columns) * 17, -19 - (i.getAndIncrement() / columns) * 17, 16, 8);
+                    group.setAttachment(GuiAttachment.bottomLeft);
                     getEffectsForSlot(slotType, slotEffects).forEach(group::addChild);
                     return group;
                 })

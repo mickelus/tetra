@@ -12,7 +12,7 @@ public class GuiQuickSlotBackdrop extends GuiElement {
     public GuiQuickSlotBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {
         super(x, y, numSlots * 17 - 9, 28);
 
-        setAttachmentPoint(GuiAttachment.topCenter);
+        setAttachmentPoint(GuiAttachment.bottomCenter);
         setAttachmentAnchor(GuiAttachment.topCenter);
 
         // background rects

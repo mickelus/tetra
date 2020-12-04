@@ -130,7 +130,7 @@ public class GuiStats {
 
     public static final IStatGetter storageGetter = new StatGetterEffectLevel(ItemEffect.storageSlot, 1d);
     public static final GuiStatBar storage = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.toolbelt.storage"),
-                0, StorageInventory.maxSize, true, storageGetter, LabelGetterBasic.integerLabel,
+                0, StorageInventory.maxSize, false, storageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.storage.tooltip", storageGetter));
 
     public static final IStatGetter quiverGetter = new StatGetterEffectLevel(ItemEffect.quiverSlot, 1d);
