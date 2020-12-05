@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -20,7 +19,6 @@ import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.GuiTextureOffset;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -46,7 +44,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private GuiElement defaultGui;
 
     private GuiModuleList moduleList;
-    private GuiStatGroup statGroup;
+    private WorkbenchStatsGui statGroup;
     private GuiIntegrityBar integrityBar;
     private GuiActionList actionList;
 
@@ -86,7 +84,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         moduleList = new GuiModuleList(164, 49, this::selectSlot, this::updateSlotHoverPreview);
         defaultGui.addChild(moduleList);
 
-        statGroup = new GuiStatGroup(60, 0);
+        statGroup = new WorkbenchStatsGui(60, 0);
         defaultGui.addChild(statGroup);
 
         integrityBar = new GuiIntegrityBar(160, 90);

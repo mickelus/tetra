@@ -14,83 +14,87 @@ import se.mickelus.tetra.gui.statbar.GuiStatBase;
 import se.mickelus.tetra.gui.statbar.GuiStats;
 import se.mickelus.tetra.items.modular.ModularItem;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
 
-public class GuiStatGroup extends GuiElement {
+public class WorkbenchStatsGui extends GuiElement {
 
-    private List<GuiStatBase> bars;
+    private static final List<GuiStatBase> bars = new LinkedList<>(Arrays.asList(
+            GuiStats.attackDamage,
+            GuiStats.attackSpeed,
+            GuiStats.drawStrength,
+            GuiStats.drawSpeed,
+            GuiStats.abilityDamage,
+            GuiStats.abilityCooldown,
+            GuiStats.reach,
+            GuiStats.durability,
+            GuiStats.armor,
+            GuiStats.toughness,
+            GuiStats.blocking,
+            GuiStats.bashing,
+            GuiStats.throwable,
+            GuiStats.jab,
+            GuiStats.quickslot,
+            GuiStats.potionStorage,
+            GuiStats.storage,
+            GuiStats.quiver,
+            GuiStats.booster,
+            GuiStats.sweeping,
+            GuiStats.bleeding,
+            GuiStats.backstab,
+            GuiStats.armorPenetration,
+            GuiStats.unarmoredDamage,
+            GuiStats.knockback,
+            GuiStats.looting,
+            GuiStats.fiery,
+            GuiStats.smite,
+            GuiStats.arthropod,
+            GuiStats.unbreaking,
+            GuiStats.mending,
+            GuiStats.silkTouch,
+            GuiStats.fortune,
+            GuiStats.infinity,
+            GuiStats.flame,
+            GuiStats.punch,
+            GuiStats.quickStrike,
+            GuiStats.softStrike,
+            GuiStats.fierySelf,
+            GuiStats.enderReverb,
+            GuiStats.criticalStrike,
+            GuiStats.earthbind,
+            GuiStats.releaseLatch,
+            GuiStats.overbowed,
+            GuiStats.multishot,
+            GuiStats.zoom,
+            GuiStats.velocity,
+            GuiStats.scannerRange,
+            GuiStats.scannerHorizontalSpread,
+            GuiStats.scannerVerticalSpread,
+            GuiStats.intuit,
+            GuiStats.workable,
+            GuiStats.stability,
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.hammer),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.AXE),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.PICKAXE),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.SHOVEL),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.cut),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.pry),
+            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.HOE)
+    ));
     private GuiElement barGroup;
 
-    public GuiStatGroup(int x, int y) {
+    public WorkbenchStatsGui(int x, int y) {
         super(x, y, 200, 52);
-
-        bars = new LinkedList<>();
 
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
+    }
 
-        bars.add(GuiStats.attackDamage);
-        bars.add(GuiStats.attackSpeed);
-        bars.add(GuiStats.drawStrength);
-        bars.add(GuiStats.drawSpeed);
-        bars.add(GuiStats.abilityDamage);
-        bars.add(GuiStats.abilityCooldown);
-        bars.add(GuiStats.reach);
-        bars.add(GuiStats.durability);
-        bars.add(GuiStats.armor);
-        bars.add(GuiStats.toughness);
-        bars.add(GuiStats.blocking);
-        bars.add(GuiStats.bashing);
-        bars.add(GuiStats.throwable);
-        bars.add(GuiStats.jab);
-        bars.add(GuiStats.quickslot);
-        bars.add(GuiStats.potionStorage);
-        bars.add(GuiStats.storage);
-        bars.add(GuiStats.quiver);
-        bars.add(GuiStats.booster);
-        bars.add(GuiStats.sweeping);
-        bars.add(GuiStats.bleeding);
-        bars.add(GuiStats.backstab);
-        bars.add(GuiStats.armorPenetration);
-        bars.add(GuiStats.unarmoredDamage);
-        bars.add(GuiStats.knockback);
-        bars.add(GuiStats.looting);
-        bars.add(GuiStats.fiery);
-        bars.add(GuiStats.smite);
-        bars.add(GuiStats.arthropod);
-        bars.add(GuiStats.unbreaking);
-        bars.add(GuiStats.mending);
-        bars.add(GuiStats.silkTouch);
-        bars.add(GuiStats.fortune);
-        bars.add(GuiStats.infinity);
-        bars.add(GuiStats.flame);
-        bars.add(GuiStats.punch);
-        bars.add(GuiStats.quickStrike);
-        bars.add(GuiStats.softStrike);
-        bars.add(GuiStats.fierySelf);
-        bars.add(GuiStats.enderReverb);
-        bars.add(GuiStats.criticalStrike);
-        bars.add(GuiStats.earthbind);
-        bars.add(GuiStats.releaseLatch);
-        bars.add(GuiStats.overbowed);
-        bars.add(GuiStats.multishot);
-        bars.add(GuiStats.zoom);
-        bars.add(GuiStats.velocity);
-        bars.add(GuiStats.scannerRange);
-        bars.add(GuiStats.scannerHorizontalSpread);
-        bars.add(GuiStats.scannerVerticalSpread);
-        bars.add(GuiStats.intuit);
-        bars.add(GuiStats.workable);
-        bars.add(GuiStats.stability);
-
-        Stream.of(ToolTypes.hammer, ToolType.AXE, ToolType.PICKAXE, ToolType.SHOVEL, ToolTypes.cut, ToolTypes.pry, ToolType.HOE)
-                .map(tool -> new GuiStatBarTool(0, 0, GuiStats.barLength, tool))
-                .forEach(bars::add);
-
-        bars.forEach(bar -> bar.setAttachmentAnchor(GuiAttachment.bottomCenter));
+    public static void addBar(GuiStatBase statBar) {
+        bars.add(statBar);
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, PlayerEntity player) {
@@ -128,6 +132,7 @@ public class GuiStatGroup extends GuiElement {
         int count = barGroup.getNumChildren();
 
         bar.setY(-17 * ((count % 6) / 2) - 3);
+        bar.setAttachmentAnchor(GuiAttachment.bottomCenter);
 
         int xOffset = 3 + (count / 6) * (GuiStats.barLength + 3);
         if (count % 2 == 0) {
