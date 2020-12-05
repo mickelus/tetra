@@ -20,11 +20,8 @@ public class GuiStatBarTool extends GuiStatBar {
     private GuiTool icon;
     private IStatGetter levelGetter;
 
-    private GuiTexture strikingIndicator;
-    private IStatGetter strikingGetter;
-
-    private GuiTexture sweepingIndicator;
-    private IStatGetter sweepingGetter;
+    private GuiStatIndicator strikingIndicator;
+    private GuiStatIndicator sweepingIndicator;
 
     private boolean efficiencyVisibility;
 
@@ -46,24 +43,25 @@ public class GuiStatBarTool extends GuiStatBar {
         icon = new GuiTool(-3, -3, toolType);
         addChild(icon);
 
+        sweepingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.sweeping", 1,
+                new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1), new TooltipGetterNone("tetra.stats.tool.sweeping.tooltip"));
+
         if (toolType == ToolType.AXE) {
-            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingAxe, 1);
+            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
+                    new StatGetterEffectLevel(ItemEffect.strikingAxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         } else if (toolType == ToolType.PICKAXE) {
-            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1);
+            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
+                    new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         } else if (toolType == ToolTypes.cut) {
-            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingCut, 1);
+            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
+                    new StatGetterEffectLevel(ItemEffect.strikingCut, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         } else if (toolType == ToolType.SHOVEL) {
-            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingShovel, 1);
+            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
+                    new StatGetterEffectLevel(ItemEffect.strikingShovel, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         } else if (toolType == ToolType.HOE) {
-            strikingGetter = new StatGetterEffectLevel(ItemEffect.strikingHoe, 1);
+            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
+                    new StatGetterEffectLevel(ItemEffect.strikingHoe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         }
-
-        strikingIndicator = new GuiTexture(16, -1, 7, 7, 206, 0, GuiTextures.workbench);
-        addChild(strikingIndicator);
-
-        sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1);
-        sweepingIndicator = new GuiTexture(16, -1, 7, 7, 213, 0, GuiTextures.workbench);
-        addChild(sweepingIndicator);
     }
 
     @Override
@@ -85,49 +83,18 @@ public class GuiStatBarTool extends GuiStatBar {
         }
 
         icon.update(level, color);
-
-        updateIndicators(player, currentStack, previewStack, slot, improvement);
     }
 
     protected void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        int currentStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack) : 0;
-        int previewStriking = currentStriking;
+        indicatorGroup.clearChildren();
 
-        int currentSweeping = (int) sweepingGetter.getValue(player, currentStack);
-        int previewSweeping = currentSweeping;
-
-        if (!previewStack.isEmpty()) {
-            previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, previewStack) : 0;
-            previewSweeping = (int) sweepingGetter.getValue(player, previewStack);
-        } else if (slot != null) {
-            if (improvement != null) {
-                previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot, improvement) : 0;
-                previewSweeping = (int) sweepingGetter.getValue(player, currentStack, slot, improvement);
+        if (strikingIndicator != null && strikingIndicator.update(player, currentStack, previewStack, slot, improvement)) {
+            if (sweepingIndicator.update(player, currentStack, previewStack, slot, improvement)) {
+                indicatorGroup.addChild(sweepingIndicator);
             } else {
-                previewStriking = strikingGetter != null ? (int) strikingGetter.getValue(player, currentStack, slot) : 0;
-                previewSweeping = (int) sweepingGetter.getValue(player, currentStack, slot);
+                indicatorGroup.addChild(strikingIndicator);
             }
-            currentStriking -= previewStriking;
-            currentSweeping -= previewSweeping;
         }
-
-        if (currentStriking > 0 || previewStriking > 0) {
-            if (currentSweeping > 0 || previewSweeping > 0) {
-                strikingIndicator.setVisible(false);
-                sweepingIndicator.setVisible(true);
-
-                sweepingIndicator.setColor(getDiffColor(currentSweeping, previewSweeping));
-            } else {
-                strikingIndicator.setVisible(true);
-                sweepingIndicator.setVisible(false);
-
-                strikingIndicator.setColor(getDiffColor(currentStriking, previewStriking));
-            }
-        } else {
-            strikingIndicator.setVisible(false);
-            sweepingIndicator.setVisible(false);
-        }
-
     }
 
     @Override
@@ -137,20 +104,15 @@ public class GuiStatBarTool extends GuiStatBar {
         if (GuiAlignment.left.equals(alignment)) {
             bar.setX(16);
             icon.setX(-3);
-
-            strikingIndicator.setX(16);
-            sweepingIndicator.setX(16);
         } else {
             bar.setX(0);
             icon.setX(0);
-
-            strikingIndicator.setX(-16);
-            sweepingIndicator.setX(-16);
         }
 
-        strikingIndicator.setAttachment(alignment.toAttachment());
-        sweepingIndicator.setAttachment(alignment.toAttachment());
         icon.setAttachment(alignment.toAttachment());
+
+        int offset = icon.getWidth() + 2;
+        indicatorGroup.setX(GuiAlignment.right.equals(alignment) ? -offset : offset);
     }
 
     @Override
