@@ -206,13 +206,17 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                     .findFirst()
                     .ifPresent(interaction -> {
                         interaction.applyOutcome(world, targetPos, targetState, null, null, Direction.UP);
+
+                        // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
                         if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
                             if (!world.isRemote) {
                                 consumeFuel();
                             } else {
                                 head.activate();
-                                world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 0.3f, (float) (0.5 + Math.random() * 0.2));
+                                world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
                             }
+                        } else {
+                            head.activate();
                         }
                     }); // todo: check that all interactions work with nullable player
         }
@@ -270,7 +274,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             TileEntityOptional.from(world, getPos().down(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
             world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(getPos()).grow(10, 5, 10))
                     .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
-            world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.PLAYERS, 0.8f, 0.5f);
+            world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 0.8f, 0.5f);
         }
     }
 
