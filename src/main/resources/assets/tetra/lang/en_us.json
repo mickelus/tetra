@@ -48,7 +48,7 @@
 
   "tetra.holo.scan.status": "§8status: §r%s",
   "tetra.holo.scan.active": "active",
-  "tetra.holo.scan.snoozed": "§8snooze §r%s§8:§r%s",
+  "tetra.holo.scan.snoozed": "§8snooze §r%s:%s",
   "tetra.holo.scan.snooze": "§7[§8shift + rmb§7] §8snooze scanner",
 
   "tetra.workbench.slot_detail.details_tab": "Details",

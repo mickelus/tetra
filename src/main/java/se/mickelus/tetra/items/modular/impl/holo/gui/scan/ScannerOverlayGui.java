@@ -4,10 +4,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -86,8 +88,10 @@ public class ScannerOverlayGui extends GuiRoot {
     public void toggleSnooze() {
         if (isSnoozed()) {
             snooze = -1;
+            mc.getSoundHandler().play(SimpleSound.master(SoundEvents.BLOCK_GRINDSTONE_USE, 2f, 0.3f));
         } else {
             snooze = ticks + snoozeLength;
+            mc.getSoundHandler().play(SimpleSound.master(SoundEvents.BLOCK_GRINDSTONE_USE, 1.6f, 0.3f));
         }
     }
 
