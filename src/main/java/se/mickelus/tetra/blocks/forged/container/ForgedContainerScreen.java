@@ -16,7 +16,7 @@ import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.gui.GuiTabVerticalGroup;
+import se.mickelus.tetra.gui.VerticalTabGroupGui;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.stream.IntStream;
@@ -32,7 +32,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
     private final AnimationChain slotTransition;
 
-    private final GuiTabVerticalGroup compartmentButtons;
+    private final VerticalTabGroupGui compartmentButtons;
 
     public ForgedContainerScreen(ForgedContainerContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
@@ -47,9 +47,9 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
         guiRoot.addChild(new GuiTexture(0, -13, 179, 128, containerTexture));
         guiRoot.addChild(new GuiTexture(0, 103, 179, 106, GuiTextures.playerInventory));
 
-        compartmentButtons = new GuiTabVerticalGroup(10, 26, this::changeCompartment,
-                IntStream.range(1, ForgedContainerTile.compartmentCount + 1)
-                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment", i))
+        compartmentButtons = new VerticalTabGroupGui(10, 26, this::changeCompartment, containerTexture, 0, 128,
+                IntStream.range(0, ForgedContainerTile.compartmentCount)
+                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment_" + i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
 

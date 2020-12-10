@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +13,9 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.gui.VerticalTabGroupGui;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -25,12 +28,19 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class GuiSlotDetail extends GuiElement {
+    private static final char[] keybindings = new char[] { 'a', 's', 'd'};
+    private static final String[] labels = new String[] {
+            "tetra.workbench.slot_detail.details_tab",
+            "tetra.workbench.slot_detail.craft_tab",
+            "tetra.workbench.slot_detail.tweak_tab"
+    };
 
     private int tab = 1;
 
-    private GuiSlotTabGroup tabGroup;
+    private VerticalTabGroupGui tabGroup;
 
     private GuiModuleDetails moduleDetails;
 
@@ -54,7 +64,10 @@ public class GuiSlotDetail extends GuiElement {
 
         addChild(new GuiRect(1, 6, 2, 49, 0));
 
-        tabGroup = new GuiSlotTabGroup(1, 6, this::changeTab);
+        tabGroup = new VerticalTabGroupGui(1, 6, this::changeTab, GuiTextures.workbench, 128, 32,
+                IntStream.range(0, 3)
+                        .mapToObj(i -> I18n.format(labels[i]))
+                        .toArray(String[]::new));
         tabGroup.setHasContent(1, true);
         addChild(tabGroup);
 

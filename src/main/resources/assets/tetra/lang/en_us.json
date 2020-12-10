@@ -512,7 +512,9 @@
   "block.tetra.forged_crate": "Forged Crate",
 
   "block.tetra.forged_container": "Forged Container",
-  "tetra.forged_container.compartment": "Compartment %s",
+  "tetra.forged_container.compartment_0": "FRST",
+  "tetra.forged_container.compartment_1": "SCND",
+  "tetra.forged_container.compartment_2": "THRD",
 
   "block.tetra.hammer_base": "Forge Hammer",
   "block.tetra.hammer_head.name": "Hammer Head",
