@@ -95,9 +95,9 @@ public class EnchantmentProvider implements IDataProvider {
 //        setupEnchantment(Enchantments.BINDING_CURSE);
 
         // crossbows
-//        setupEnchantment(Enchantments.MULTISHOT);
-//        setupEnchantment(Enchantments.QUICK_CHARGE);
-//        setupEnchantment(Enchantments.PIERCING);
+        setupEnchantment(Enchantments.MULTISHOT);
+        setupEnchantment(Enchantments.QUICK_CHARGE);
+        setupEnchantment(Enchantments.PIERCING);
 
         // fishing rods
 //        setupEnchantment(Enchantments.LUCK_OF_THE_SEA);

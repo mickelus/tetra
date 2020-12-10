@@ -110,5 +110,19 @@
     "maxLevel": 1,
     "probability": 0.04,
     "improvementKey": "enchantment/punch"
+  },
+  {
+    "destabilizationKey": "destabilized/quick_charge",
+    "minLevel": 1,
+    "maxLevel": 2,
+    "probability": 0.04,
+    "improvementKey": "enchantment/quick_charge"
+  },
+  {
+    "destabilizationKey": "destabilized/piercing",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "probability": 0.04,
+    "improvementKey": "enchantment/piercing"
   }
 ]
