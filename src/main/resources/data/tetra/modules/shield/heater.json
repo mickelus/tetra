@@ -37,10 +37,10 @@
             "key": "heater/",
             "attributes": {
                 "tetra:ability_damage": 1,
-                "tetra:ability_cooldown": 3.5
+                "tetra:ability_cooldown": 2
             },
             "effects": {
-                "blocking": 1.5
+                "blocking": 2.5
             },
             "durability": -20,
             "extract": {
@@ -49,16 +49,16 @@
                 },
                 "secondaryAttributes": {
                     "tetra:ability_damage": 0.2,
-                    "tetra:ability_cooldown": 0.4
+                    "tetra:ability_cooldown": 0.3
                 },
                 "primaryEffects": {
-                    "blocking": 0.2
+                    "blocking": 0.3
                 },
                 "secondaryEffects": {
                     "blocking": -0.2
                 },
                 "tertiaryEffects": {
-                    "blocking": 0.2
+                    "blocking": 0.3
                 },
                 "durability": 1.1,
                 "integrity": -1,

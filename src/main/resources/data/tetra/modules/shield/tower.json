@@ -37,7 +37,7 @@
             "key": "tower/",
             "attributes": {
                 "tetra:ability_damage": 5,
-                "tetra:ability_cooldown": 8
+                "tetra:ability_cooldown": 5
             },
             "effects": {
                 "blocking": 16
@@ -49,7 +49,7 @@
                 },
                 "secondaryAttributes": {
                     "tetra:ability_damage": 0.3,
-                    "tetra:ability_cooldown": 0.3
+                    "tetra:ability_cooldown": 0.35
                 },
                 "tertiaryAttributes": {
                     "tetra:ability_cooldown": -0.2

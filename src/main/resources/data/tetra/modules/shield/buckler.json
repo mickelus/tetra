@@ -37,7 +37,7 @@
             "key": "buckler/",
             "attributes": {
                 "tetra:ability_damage": 1,
-                "tetra:ability_cooldown": 2.5,
+                "tetra:ability_cooldown": 1,
                 "generic.armor_toughness": 0.5
             },
             "durability": -20,
@@ -48,7 +48,7 @@
                 },
                 "secondaryAttributes": {
                     "tetra:ability_damage": 0.1,
-                    "tetra:ability_cooldown": 0.3,
+                    "tetra:ability_cooldown": 0.15,
                     "generic.armor_toughness": 0.3
                 },
                 "tertiaryAttributes": {
