@@ -221,6 +221,7 @@
 
   "tetra.stats.counterweight": "Counterweight",
   "tetra.stats.counterweight.tooltip": "Increases the attack speed by §e0.15§r if the item has a total integrity use of §e%s§r, the bonus is reduced by §e0.05§r for each point of difference in integrity use.",
+  "tetra.stats.counterweight.indicator_tooltip": "Current bonus: §e%s\n \n§7Increases the attack speed by 0.15 if the item has a total integrity use of §e%s§r, the bonus is reduced by 0.05 for each point of difference in integrity use.",
 
   "tetra.stats.softStrike": "Soft strike",
   "tetra.stats.softStrike.tooltip": "Items crafted using this tool gains increased durability",
