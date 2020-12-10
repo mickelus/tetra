@@ -92,7 +92,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
         if (!world.isRemote) {
-            BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
             if (player != null) {
                 BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
             } else {
