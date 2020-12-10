@@ -198,20 +198,23 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                         EffectHelper.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
                     }
 
+                    item.applyBreakEffects(thrownStack, world, blockState, pos, (PlayerEntity) shooter);
+
+                    hitBlocks++;
                     boolean piercingHarvest = getEffectLevel(ItemEffect.piercingHarvest) > 0;
-                    if (piercingHarvest && hitBlocks + 1 < getEffectLevel(ItemEffect.piercing)) {
-                        if (getMotion().lengthSquared() > 1) {
-                            setMotion(getMotion().normalize().scale(0.7f));
-                        }
+                    if (piercingHarvest && hitBlocks < getEffectLevel(ItemEffect.piercing)) {
+                        setMotion(getMotion().normalize().scale(0.8f));
+
                     } else {
                         dealtDamage = true;
                         super.onImpact(rayTraceResult);
                     }
 
-                    item.applyBreakEffects(thrownStack, world, blockState, pos, (PlayerEntity) shooter);
-
                     breakBlock((PlayerEntity) shooter, pos, blockState);
-                    hitBlocks++;
+
+                    if (piercingHarvest && hitBlocks < getEffectLevel(ItemEffect.piercing)) {
+                        hitAdditional();
+                    }
 
                     return;
                 }
@@ -219,6 +222,22 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         }
 
         super.onImpact(rayTraceResult);
+    }
+
+    /**
+     * A thrown tool that travel faster than 1 block per tick and can break several blocks, needs to break several blocks per tick or it will stop.
+     * This is called recursively
+     */
+    private void hitAdditional() {
+        Vector3d position = getPositionVec();
+        Vector3d target = position.add(getMotion());
+        RayTraceResult rayTraceResult = world.rayTraceBlocks(
+                new RayTraceContext(position, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+
+        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK
+                && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+            onImpact(rayTraceResult);
+        }
     }
 
     /**
