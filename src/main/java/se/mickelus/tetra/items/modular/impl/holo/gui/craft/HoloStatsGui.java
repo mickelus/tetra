@@ -37,6 +37,7 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.blockingReflect,
             GuiStats.bashing,
             GuiStats.throwable,
+            GuiStats.piercing,
             GuiStats.jab,
             GuiStats.quickslot,
             GuiStats.potionStorage,

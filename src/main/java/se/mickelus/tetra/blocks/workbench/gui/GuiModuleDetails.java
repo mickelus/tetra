@@ -74,7 +74,7 @@ public class GuiModuleDetails extends GuiElement {
         glyph.clearChildren();
         if (module != null) {
             title.setString(module.getName(itemStack));
-            description.setString(module.getDescription(itemStack));
+            description.setString(TextFormatting.GRAY + module.getDescription(itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
 
             GlyphData glyphData = module.getVariantData(itemStack).glyph;
 

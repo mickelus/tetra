@@ -107,6 +107,12 @@ public class ItemEffect {
     public static ItemEffect piercing = get("piercing");
 
     /**
+     * Piercing harvest: Allows items with the piercing effect to break several blocks (in a line) at a time, thrown items that can break blocks
+     * can break several blocks. The number of broken blocks depends on the level of the piercing effect.
+     */
+    public static ItemEffect piercingHarvest = get("piercingHarvest");
+
+    /**
      * Jab: When held in the offhand, allows use of right-click to attack an entity. Triggers cooldown.
      * The level of the effect is used as a multiplier for the damage, e.g. level 30 of the effect would result in a 0.3 damage multiplier.
      */

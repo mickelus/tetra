@@ -1,30 +1,28 @@
 {
     "replace": true,
-    "localizationKey": "double/shared_head/hone_pickaxe_efficiency_1",
-    "slots": [
-        "single/head"
-    ],
+    "localizationKey": "double/shared_head/hone_speed_5",
+    "slots": ["single/head"],
     "materialSlotCount": 0,
     "hone": true,
     "rarity": "hone",
     "displayType": "major",
     "glyph": {
-        "textureX": 176
+        "textureX": 16,
+        "textureY": 240
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["single/earthpiercer"]],
         "improvements": {
-            "!head_hone/pickaxe_efficiency": -1
+            "head_hone/speed": 4
         }
     },
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 2
+                "hammer": 3
             },
             "improvements": {
-                "head_hone/pickaxe_efficiency": 1
+                "head_hone/speed": 5
             }
         }
     ]

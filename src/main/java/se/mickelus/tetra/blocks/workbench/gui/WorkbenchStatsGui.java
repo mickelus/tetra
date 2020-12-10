@@ -36,6 +36,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.blocking,
             GuiStats.bashing,
             GuiStats.throwable,
+            GuiStats.piercing,
             GuiStats.jab,
             GuiStats.quickslot,
             GuiStats.potionStorage,

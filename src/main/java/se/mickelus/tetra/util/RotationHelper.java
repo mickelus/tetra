@@ -41,7 +41,7 @@ public class RotationHelper {
         return new BlockPos(x, y, z);
     }
 
-    public static BlockPos rotateCardinal(BlockPos pos, Direction facing) {
+    public static BlockPos rotateDirection(BlockPos pos, Direction facing) {
         switch (facing) {
             default:
             case SOUTH:

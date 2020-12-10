@@ -155,6 +155,12 @@
   "tetra.stats.throwable": "Throwable",
   "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
 
+  "tetra.stats.piercing": "Piercing",
+  "tetra.stats.piercing.tooltip": "Can pierce up to §e%s§r entities when thrown",
+
+  "tetra.stats.piercing_harvest": "Piercing harvest",
+  "tetra.stats.piercing_harvest.tooltip": "Breaks additional blocks when thrown or when breaking a block",
+
   "tetra.stats.jab": "Jab",
   "tetra.stats.jab.tooltip": "Can be used to attack entities using right-click when held in the offhand, dealing §e%s§r damage and applying on-hit effects. Triggers a cooldown equal to the item's attack.",
 
@@ -911,7 +917,7 @@
   "tetra.improvement.head_hone/durability.description": "Increases durability",
 
   "tetra/schematic/double/shared_head/hone_speed_1.name": "Hone: Speed I",
-  "tetra/schematic/double/shared_head/hone_speed_1.description": "Hone the module to increase the overall swing speed by 0.03.",
+  "tetra/schematic/double/shared_head/hone_speed_1.description": "Hone the module to increase the overall swing speed.",
   "tetra/schematic/double/shared_head/hone_speed_2.name": "Hone: Speed II",
   "tetra/schematic/double/shared_head/hone_speed_2.description": "Further hone the swing speed improvement for this module.",
   "tetra/schematic/double/shared_head/hone_speed_3.name": "Hone: Speed III",
@@ -1289,9 +1295,9 @@
   "tetra.tweak.single_tweak/binding_bolt.left": "Loose",
   "tetra.tweak.single_tweak/binding_bolt.right": "Tight",
 
-  "tetra/schematic/single/basic_shovel/basic_shovel.name": "Shovel head",
-  "tetra/schematic/single/basic_shovel/basic_shovel.description": "Forge a shovel head from the given material. The shovel can primarily be used to dig into the earth, but it's also useful for making dirt paths.",
-  "tetra/schematic/single/basic_shovel/basic_shovel.slot1": "Head material",
+  "tetra/schematic/single/head/basic_shovel/basic_shovel.name": "Shovel head",
+  "tetra/schematic/single/head/basic_shovel/basic_shovel.description": "Forge a shovel head from the given material. The shovel can primarily be used to dig into the earth, but it's also useful for making dirt paths.",
+  "tetra/schematic/single/head/basic_shovel/basic_shovel.slot1": "Head material",
 
   "tetra.module.single/basic_shovel.item_name": "Shovel",
   "tetra.module.single/basic_shovel.name": "Shovel head",
@@ -1299,9 +1305,9 @@
   "tetra.module.single/basic_shovel.material_name": "%s shovel",
   "tetra.module.single/basic_shovel.prefix": "%s",
 
-  "tetra/schematic/single/spearhead/spearhead.name": "Spearhead",
-  "tetra/schematic/single/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.\n \nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly increases §fdamage§r and slightly decreases §fattack speed§r.",
-  "tetra/schematic/single/spearhead/spearhead.slot1": "Head material",
+  "tetra/schematic/single/head/spearhead/spearhead.name": "Spearhead",
+  "tetra/schematic/single/head/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.\n \nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly increases §fdamage§r and slightly decreases §fattack speed§r.",
+  "tetra/schematic/single/head/spearhead/spearhead.slot1": "Head material",
 
   "tetra.module.single/spearhead.item_name": "Spear",
   "tetra.module.single/spearhead.name": "Spearhead",
@@ -1314,23 +1320,23 @@
   "tetra.module.single/trident.description": "A trident head. The knowledge of how one is made has been lost to time",
   "tetra.variant.trident/trident": "Trident",
 
-  "tetra/schematic/single/spearhead/serrated_1.name": "Serrate",
-  "tetra/schematic/single/spearhead/serrated_1.description": "Serrate the head. Attacks have a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.",
-  "tetra/schematic/single/spearhead/serrated_2.name": "Hone: Serrated II",
-  "tetra/schematic/single/spearhead/serrated_2.description": "Hone the serrated improvement, increases the damage dealt to 8.",
-  "tetra/schematic/single/spearhead/serrated_3.name": "Hone: Serrated III",
-  "tetra/schematic/single/spearhead/serrated_3.description": "Further hone the serrated improvement, increases the damage dealt to 16.",
+  "tetra/schematic/single/head/spearhead/serrated_1.name": "Serrate",
+  "tetra/schematic/single/head/spearhead/serrated_1.description": "Serrate the head. Attacks have a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.",
+  "tetra/schematic/single/head/spearhead/serrated_2.name": "Hone: Serrated II",
+  "tetra/schematic/single/head/spearhead/serrated_2.description": "Hone the serrated improvement, increases the damage dealt to 8.",
+  "tetra/schematic/single/head/spearhead/serrated_3.name": "Hone: Serrated III",
+  "tetra/schematic/single/head/spearhead/serrated_3.description": "Further hone the serrated improvement, increases the damage dealt to 16.",
 
   "tetra.improvement.spearhead/serrated.name": "Serrated",
   "tetra.improvement.spearhead/serrated.prefix": "Serrated",
   "tetra.improvement.spearhead/serrated.description": "Attacks may inflict bleed",
 
-  "tetra/schematic/single/spearhead/tempered_1.name": "Temper",
-  "tetra/schematic/single/spearhead/tempered_1.description": "Temper the the blade, greatly increasing its hardness. Causes some of the damage dealt to ignore armor.",
-  "tetra/schematic/single/spearhead/tempered_2.name": "Hone: Tempered II",
-  "tetra/schematic/single/spearhead/tempered_2.description": "Hone the tempered improvement, increases the amount of damage that penetrates armor to 3.",
-  "tetra/schematic/single/spearhead/tempered_3.name": "Hone: Tempered III",
-  "tetra/schematic/single/spearhead/tempered_3.description": "Further hone the serrated improvement, increases the amount of damage that penetrates armor to 5.",
+  "tetra/schematic/single/head/spearhead/tempered_1.name": "Temper",
+  "tetra/schematic/single/head/spearhead/tempered_1.description": "Temper the the blade, greatly increasing its hardness. Causes some of the damage dealt to ignore armor.",
+  "tetra/schematic/single/head/spearhead/tempered_2.name": "Hone: Tempered II",
+  "tetra/schematic/single/head/spearhead/tempered_2.description": "Hone the tempered improvement, increases the amount of damage that penetrates armor to 3.",
+  "tetra/schematic/single/head/spearhead/tempered_3.name": "Hone: Tempered III",
+  "tetra/schematic/single/head/spearhead/tempered_3.description": "Further hone the serrated improvement, increases the amount of damage that penetrates armor to 5.",
 
   "tetra.improvement.spearhead/tempered.name": "Tempered",
   "tetra.improvement.spearhead/tempered.prefix": "Tempered",
@@ -1339,14 +1345,26 @@
   "tetra.improvement.spearhead_hone/damage.name": "Hone: Damage",
   "tetra.improvement.spearhead_hone/damage.description": "Increases damage dealt",
 
-  "tetra/schematic/single/earthpiercer/earthpiercer.name": "Earthpiercer",
-  "tetra/schematic/single/earthpiercer/earthpiercer.description": "Replace the current head with the earthpiercer, a heavy tool head that resembles a spearhead. It's unwieldy but it easily cuts through stone.",
-  "tetra/schematic/single/earthpiercer/earthpiercer.slot1": "Earthpiercer",
+  "tetra/schematic/single/head/earthpiercer/earthpiercer.name": "Earthpiercer",
+  "tetra/schematic/single/head/earthpiercer/earthpiercer.description": "Replace the current head with the earthpiercer, a heavy tool head that resembles a spearhead. It is slow but is capable of breaking several blocks at a time.\n\nThe piercing effect is improved slightly when the earthpiercer is combined with a basic or long handle.",
+  "tetra/schematic/single/head/earthpiercer/earthpiercer.slot1": "Earthpiercer",
 
   "tetra.module.single/earthpiercer.item_name": "Earthpiercer",
   "tetra.module.single/earthpiercer.name": "Earthpiercer",
-  "tetra.module.single/earthpiercer.description": "A heavy tool head that resembles a spearhead. It's unwieldy but it easily cuts through stone.",
+  "tetra.module.single/earthpiercer.description": "A heavy tool head that resembles a spearhead. It is slow but is capable of breaking several blocks at a time.\n\nThe piercing effect is improved slightly when the earthpiercer is combined with a basic or long handle.",
   "tetra.variant.earthpiercer/earthpiercer": "Earthpiercer",
+
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_1.name": "Hone: Piercing I",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_1.description": "Hone the earthpiercer to increase the piercing effect.",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_2.name": "Hone: Piercing II",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_2.description": "Hone the earthpiercer to further increase the piercing effect.",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_3.name": "Hone: Piercing III",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_3.description": "Hone the earthpiercer to further increase the piercing effect.",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_4.name": "Hone: Piercing IV",
+  "tetra/schematic/single/head/earthpiercer/hone_piercing_4.description": "Hone the earthpiercer to further increase the piercing effect.",
+
+  "tetra.improvement.head_hone/piercing.name": "Hone: Piercing",
+  "tetra.improvement.head_hone/piercing.description": "Improves the piercing effect",
 
   "tetra.slot.toolbelt/slot1": "",
   "tetra.slot.toolbelt/slot2": "",

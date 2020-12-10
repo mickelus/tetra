@@ -10,10 +10,7 @@
         "tetra:enchantment/fortune",
         "tetra:enchantment/vanishing_curse",
         "tetra:enchantment/apotheosis_depth_miner",
-        "tetra:enchantment/cyclic_excavate",
         "tetra:enchantment/enchantable_ore_eater",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ensorcellation_excavating",
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_reinforced_tip",
         "tetra:enchantment/ma-enchants_stone_mending",
@@ -26,9 +23,8 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:single/earthpiercer",
-        "tetra:single/earthpiercer_compat",
-        "tetra:single/earthpiercer_hone",
+        "tetra:single/head/earthpiercer/",
+        "tetra:single/head/shared/",
         "tetra:single/shared_head_compat",
         "tetra:single/shared_head_hone",
         "tetra:shared/"
@@ -41,10 +37,14 @@
             "magicCapacity": 48,
             "attributes": {
                 "generic.attack_damage": 2,
-                "generic.attack_speed": -0.8
+                "generic.attack_speed": -1.95
             },
             "tools": {
-                "pickaxe": [3, 6]
+                "pickaxe": [3, 5]
+            },
+            "effects": {
+                "piercing": 2,
+                "piercingHarvest": 1
             },
             "glyph": {
                 "textureX": 224,

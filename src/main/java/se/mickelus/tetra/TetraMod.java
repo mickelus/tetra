@@ -124,6 +124,7 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(new DataManager());
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
         MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());
+        MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
 
         if (ConfigHandler.enableLookTrigger.get()) {
             MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
