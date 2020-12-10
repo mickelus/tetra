@@ -113,6 +113,11 @@ public class GuiStats {
             0, 300, false, throwableGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentageDecimal("tetra.stats.throwable.tooltip", throwableGetter));
 
+    public static final IStatGetter ricochetGetter = new StatGetterEffectLevel(ItemEffect.ricochet, 1);
+    public static final GuiStatBar ricochet = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.ricochet"),
+            0, 12, true, ricochetGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.ricochet.tooltip", ricochetGetter));
+
     public static final IStatGetter piercingGetter = new StatGetterEffectLevel(ItemEffect.piercing, 1);
     public static final GuiStatBar piercing = new GuiStatBar(0, 0, barLength, I18n.format("tetra.stats.piercing"),
             0, 12, true, piercingGetter, LabelGetterBasic.integerLabel,

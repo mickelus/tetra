@@ -155,6 +155,9 @@
   "tetra.stats.throwable": "Throwable",
   "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
 
+  "tetra.stats.ricochet": "Ricochet",
+  "tetra.stats.ricochet.tooltip": "Will ricochet to §e%s§r nearby enemies when thrown",
+
   "tetra.stats.piercing": "Piercing",
   "tetra.stats.piercing.tooltip": "Can pierce up to §e%s§r entities when thrown",
 
@@ -1902,13 +1905,13 @@
   "tetra.improvement.shield/banner.description": "Covered in a banner",
 
   "tetra/schematic/shield/plate/ricochet_1.name": "Hone: Ricochet",
-  "tetra/schematic/shield/plate/ricochet_1.description": "Improve the trim to allow the shield to hit an additional nearby enemy when thrown.",
+  "tetra/schematic/shield/plate/ricochet_1.description": "Improve the trim to allow the shield to hit one additional nearby enemy when thrown.",
   "tetra/schematic/shield/plate/ricochet_2.name": "Hone: Ricochet",
   "tetra/schematic/shield/plate/ricochet_2.description": "Improve the trim to allow the shield to hit two additional nearby enemies when thrown.",
   "tetra/schematic/shield/plate/ricochet_3.name": "Hone: Ricochet",
   "tetra/schematic/shield/plate/ricochet_3.description": "Improve the trim to allow the shield to hit three additional nearby enemies when thrown.",
   "tetra.improvement.shield/ricochet.name": "Ricochet",
-  "tetra.improvement.shield/ricochet.description": "Allows the shield to hit additional nearby enemies when thrown.",
+  "tetra.improvement.shield/ricochet.description": "Allows the shield to hit additional nearby enemies when thrown",
 
   "tetra/schematic/shield/plate/hone_speed_1.name": "Hone: Speed I",
   "tetra/schematic/shield/plate/hone_speed_1.description": "Hone the plate to reduce the base cooldown by a relative amount.",

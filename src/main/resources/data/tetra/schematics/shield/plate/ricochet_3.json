@@ -14,7 +14,7 @@
     "requirement": {
         "type": "tetra:modular_item",
         "improvements": {
-            "plate/ricochet": 2
+            "shield/ricochet": 2
         }
     },
     "outcomes": [
@@ -23,7 +23,7 @@
                 "hammer": 4
             },
             "improvements": {
-                "plate/ricochet": 3
+                "shield/ricochet": 3
             }
         }
     ]
