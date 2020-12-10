@@ -40,10 +40,10 @@
             "magicCapacity": 48,
             "attributes": {
                 "generic.attack_damage": 3,
-                "generic.attack_speed": -2.6
+                "generic.attack_speed": -2.8
             },
             "tools": {
-                "pickaxe": [3, 15]
+                "pickaxe": [3, 8]
             },
             "effects": {
                 "strikingPickaxe": 1,

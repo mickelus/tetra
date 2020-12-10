@@ -11,6 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -186,14 +187,20 @@ public class StrikingEffect {
 
         breakingPlayer.spawnSweepParticles();
 
+        int[] delays = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
+                .map(BlockPos::getX)
+                .mapToInt(x -> x + 3)
+                .toArray();
+
         List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
                 .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.rotationPitch))
-                .map(pos -> RotationHelper.rotateCardinal(pos, facing))
+                .map(pos -> RotationHelper.rotateDirection(pos, facing))
                 .map(originPos::add)
                 .collect(Collectors.toList());
 
-        for (BlockPos pos : positions) {
+        for (int i = 0; i < positions.size(); i++) {
+            BlockPos pos = positions.get(i);
             BlockState blockState = world.getBlockState(pos);
 
             // make sure that only blocks which require the same tool are broken
@@ -204,15 +211,10 @@ public class StrikingEffect {
                 if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
                         || toolStack.canHarvestBlock(blockState)) {
 
-                    // the break event has to be sent the player separately as it's sent to the others inside Block.onBlockHarvested
-                    if (breakingPlayer instanceof ServerPlayerEntity) {
-                        EffectHelper.sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                    }
-
                     // adds a fixed amount to make blocks like grass still "consume" some efficiency
                     efficiency -= blockState.getBlockHardness(world, pos) + 0.5;
 
-                    EffectHelper.breakBlock(world, breakingPlayer, toolStack, pos, blockState, true);
+                    enqueueBlockBreak(world, breakingPlayer, toolStack, pos, blockState, tool, toolLevel, delays[i]);
                 } else {
                     break;
                 }
@@ -224,6 +226,19 @@ public class StrikingEffect {
                 break;
             }
         }
+    }
+
+    private static void enqueueBlockBreak(World world, PlayerEntity player, ItemStack itemStack, BlockPos pos, BlockState blockState, ToolType tool,
+            int toolLevel, int delay) {
+        ServerScheduler.schedule(delay, () -> {
+            if (((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
+                    || itemStack.canHarvestBlock(blockState))
+                    && ItemModularHandheld.isToolEffective(tool, blockState)) {
+                if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
+                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getStateId(blockState));
+                }
+            }
+        });
     }
 
 }
