@@ -603,6 +603,11 @@
   "item.tetra.modular.settle_full_null.label": "Fully settled",
   "item.tetra.modular.settle_full_null.description": "The simplicity of this module makes it easy to fit into place and it does not need to settle any further",
 
+  "item.tetra.modular.hone_progress.label": "Hone",
+  "item.tetra.modular.hone_progress.description": "Progression towards honing this item\n \n§7Progress: §e%s§7/§e%s\n \n§7Requirement base: §e%s\n§7Integrity use: §e+%s",
+  "item.tetra.modular.hone_progress.description_workable": "\n§7Workable: §e%s",
+  "item.tetra.modular.hone_progress.description_extended": "Progress increase as the item is used, once complete one of the item's major modules can be honed to slightly increase one of its stats. The base requirement and the integrity penalty varies slightly depending on the type of the item (e.g. sword, bow, or double headed tool). Items have to be modified or repaired in a workbench for honing progression to work (if the hone progress bar is visible then it's working).",
+
   "tetra.improvement.settled.name": "Settled",
   "tetra.improvement.settled.description": "Due to extended use this module has settled into place, it provides additional integrity",
   "tetra.settled.toast": "A module has settled!",

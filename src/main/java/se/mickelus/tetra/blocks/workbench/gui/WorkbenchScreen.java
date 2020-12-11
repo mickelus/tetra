@@ -22,6 +22,7 @@ import se.mickelus.mgui.gui.GuiTextureOffset;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.gui.HoneProgressGui;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -46,6 +47,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private GuiModuleList moduleList;
     private WorkbenchStatsGui statGroup;
     private GuiIntegrityBar integrityBar;
+    private HoneProgressGui honeBar;
     private GuiActionList actionList;
 
     private final GuiInventoryInfo inventoryInfo;
@@ -68,12 +70,6 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         this.xSize = 320;
         this.ySize = 240;
 
-
-        this.titleX = -width;
-        this.titleY = -height;
-        this.playerInventoryTitleX = -width;
-        this.playerInventoryTitleY = -height;
-
         this.tileEntity = container.getTileEntity();
         this.container = container;
 
@@ -87,8 +83,13 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         statGroup = new WorkbenchStatsGui(60, 0);
         defaultGui.addChild(statGroup);
 
-        integrityBar = new GuiIntegrityBar(160, 90);
+        integrityBar = new GuiIntegrityBar(0, 90);
+        integrityBar.setAttachmentAnchor(GuiAttachment.topCenter);
         defaultGui.addChild(integrityBar);
+
+        honeBar = new HoneProgressGui(0, 90);
+        honeBar.setAttachmentAnchor(GuiAttachment.topCenter);
+        defaultGui.addChild(honeBar);
 
         inventoryInfo = new GuiInventoryInfo(84, 164, Minecraft.getInstance().player);
         defaultGui.addChild(inventoryInfo);
@@ -330,14 +331,18 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private void updateItemDisplay(ItemStack itemStack, ItemStack previewStack) {
         moduleList.update(itemStack, previewStack, selectedSlot);
         statGroup.update(itemStack, previewStack, null, null, viewingPlayer);
-        integrityBar.setItemStack(itemStack, previewStack);
         slotDetail.updatePreview(currentSchematic, selectedSlot, itemStack, previewStack);
+
+        integrityBar.setItemStack(itemStack, previewStack);
+        honeBar.update(itemStack, tileEntity.isTargetPlaceholder());
+        honeBar.setX(Math.max(integrityBar.getWidth() / 2 + 8, 35));
     }
 
     private void itemShowAnimation() {
         moduleList.showAnimation();
         statGroup.showAnimation();
         integrityBar.showAnimation();
+        honeBar.showAnimation();
         actionList.showAnimation();
     }
 

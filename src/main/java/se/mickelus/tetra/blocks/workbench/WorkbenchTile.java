@@ -295,6 +295,14 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .orElse(ItemStack.EMPTY);
     }
 
+    public boolean isTargetPlaceholder() {
+        return handler
+                .map(handler -> handler.getStackInSlot(0))
+                .map(stack -> ItemUpgradeRegistry.instance.getReplacement(stack))
+                .map(placeholder -> !placeholder.isEmpty())
+                .orElse(false);
+    }
+
     public ItemStack[] getMaterials() {
         return handler.map(handler -> {
             ItemStack[] result = new ItemStack[inventorySlots - 1];
@@ -334,7 +342,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             // store durability and honing factor so that it can be restored after the schematic is applied
             double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;
-            double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningBase(upgradedStack), 0, 1);
+            double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
@@ -349,7 +357,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             if (currentSchematic.isHoning()) {
                 ModularItem.removeHoneable(upgradedStack);
             } else if (ConfigHandler.moduleProgression.get() && !ModularItem.isHoneable(upgradedStack)) {
-                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
+                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
             }
 
             // restore durability damage

@@ -2,12 +2,14 @@ package se.mickelus.tetra.gui.statbar;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.gui.GuiColors;
 
 public class GuiBar extends GuiElement {
 
     protected static final int increaseColorBar = 0x8855ff55;
     protected static final int decreaseColorBar = 0x88ff5555;
     protected int diffColor;
+    protected int color = GuiColors.normal;
 
     protected double min;
     protected double max;
@@ -35,8 +37,14 @@ public class GuiBar extends GuiElement {
         this.invertedDiff = invertedDiff;
     }
 
-    public void setAlignment(GuiAlignment alignment) {
+    public GuiBar setAlignment(GuiAlignment alignment) {
         this.alignment = alignment;
+        return this;
+    }
+
+    public GuiBar setColor(int color) {
+        this.color = color;
+        return this;
     }
 
     public void setMin(double min) {
@@ -67,14 +75,14 @@ public class GuiBar extends GuiElement {
 
     @Override
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawRect(matrixStack, refX + x, refY + y + 6,refX + x + width, refY + y + 6 + height, 0xffffff, 0.14f * opacity);
+        drawRect(matrixStack, refX + x, refY + y + 6,refX + x + width, refY + y + 6 + height, color, 0.14f * opacity);
 
         if (alignment == GuiAlignment.right) {
-            drawRect(matrixStack, refX + x + width - barLength, refY + y + 6,refX + x + width, refY + y + 6 + height,0xffffffff, opacity);
+            drawRect(matrixStack, refX + x + width - barLength, refY + y + 6,refX + x + width, refY + y + 6 + height,color, opacity);
             drawRect(matrixStack, refX + x + width - barLength - diffLength, refY + y + 6,refX + x + width - barLength, refY + y + 6 + height,
                     diffColor, 1);
         } else {
-            drawRect(matrixStack, refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + height,0xffffffff, opacity);
+            drawRect(matrixStack, refX + x, refY + y + 6,refX + x + barLength, refY + y + 6 + height,color, opacity);
             drawRect(matrixStack, refX + x + barLength, refY + y + 6,refX + x + barLength + diffLength, refY + y + 6 + height,
                     diffColor, 1);
         }

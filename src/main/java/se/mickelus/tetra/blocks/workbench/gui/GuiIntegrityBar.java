@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GuiIntegrityBar extends GuiElement {
 
-    private static final int segmentWidth = 8;
+    private int segmentWidth = 8;
     private static final int segmentHeight = 2;
     private static final int segmentOffset = 6;
 
@@ -62,6 +62,12 @@ public class GuiIntegrityBar extends GuiElement {
                 label.setString(TextFormatting.RED + I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
             } else {
                 label.setString(I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
+            }
+
+            if (integrityGain > 7) {
+                segmentWidth = Math.max(64 / integrityGain - 1, 1);
+            } else {
+                segmentWidth = 8;
             }
 
             width = integrityGain * ( segmentWidth + 1);

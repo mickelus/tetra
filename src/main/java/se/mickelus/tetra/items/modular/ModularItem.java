@@ -319,7 +319,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
             if (tag.contains(honeProgressKey)) {
                 honingProgress = tag.getInt(honeProgressKey);
             } else {
-                honingProgress = getHoningBase(itemStack);
+                honingProgress = getHoningLimit(itemStack);
             }
 
             honingProgress -= multiplier;
@@ -343,16 +343,24 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
             return tag.getInt(honeProgressKey);
         }
 
-        return getHoningBase(itemStack);
+        return getHoningLimit(itemStack);
     }
 
     public void setHoningProgress(ItemStack itemStack, int progress) {
         NBTHelper.getTag(itemStack).putInt(honeProgressKey, progress);
     }
 
-    public int getHoningBase(ItemStack itemStack) {
+    public int getHoningLimit(ItemStack itemStack) {
         float workableFactor = (100f - getEffectLevel(itemStack, ItemEffect.workable)) / 100;
         return (int) Math.max((honeBase + honeIntegrityMultiplier * getIntegrityCost(itemStack)) * workableFactor, 1);
+    }
+
+    public int getHoningBase() {
+        return honeBase;
+    }
+
+    public int getHoningIntegrityPenalty(ItemStack itemStack) {
+        return honeIntegrityMultiplier * getIntegrityCost(itemStack);
     }
 
     public int getHonedCount(ItemStack itemStack) {
@@ -542,7 +550,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                             .append(new TranslationTextComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormatting(TextFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
-                    int base = getHoningBase(itemStack);
+                    int base = getHoningLimit(itemStack);
                     String percentage = String.format("%.0f", 100f * (base - progress) / base);
                     tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.DARK_AQUA)
                             .append(new TranslationTextComponent("tetra.hone.progress", base - progress, base, percentage).mergeStyle(TextFormatting.GRAY)));

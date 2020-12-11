@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -112,7 +113,7 @@ public class RemoveSchematic extends BaseSchematic {
             durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
         }
 
-        float honingFactor = Math.min(Math.max(1f * item.getHoningProgress(upgradedStack) / item.getHoningBase(upgradedStack), 0), 1);
+        float honingFactor = MathHelper.clamp(1f * item.getHoningProgress(upgradedStack) / item.getHoningLimit(upgradedStack), 0, 1);
 
         ItemModule previousModule = item.getModuleFromSlot(upgradedStack, slot);
         if (previousModule != null) {
@@ -124,7 +125,7 @@ public class RemoveSchematic extends BaseSchematic {
 
         if (consumeMaterials) {
             if (ConfigHandler.moduleProgression.get() && ModularItem.isHoneable(upgradedStack)) {
-                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningBase(upgradedStack)));
+                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
             }
 
             if (upgradedStack.isDamageable()) {
