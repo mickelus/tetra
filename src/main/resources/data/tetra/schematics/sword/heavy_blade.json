@@ -1,8 +1,6 @@
 {
     "replace": true,
-    "slots": [
-        "sword/blade"
-    ],
+    "slots": ["sword/blade"],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -11,6 +9,7 @@
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/"],
+            "countFactor": 3,
             "moduleKey": "sword/heavy_blade",
             "moduleVariant": "heavy_blade/"
         }
