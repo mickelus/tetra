@@ -63,6 +63,14 @@
   "tetra.workbench.schematic_detail.craft": "Craft",
   "tetra.workbench.schematic_detail.back": "back",
   "tetra.workbench.schematic_detail.experience": "This action requires %d experience levels",
+  "tetra.workbench.schematic_detail.destabilize_tooltip": "This module is magically unstable, performing this action may cause its enchantments to destabilize into negative effects",
+  "tetra.workbench.schematic_detail.repair_tooltip": "Replaces the next module in the repair cycle, the item will be §efully repaired",
+  "tetra.workbench.schematic_detail.no_material_tooltip":"This schematic require materials to craft",
+  "tetra.workbench.schematic_detail.material_count_tooltip": "Insufficient amount of material provided",
+  "tetra.workbench.schematic_detail.material_tooltip":"The provided material cannot be used for this schematic",
+  "tetra.workbench.schematic_detail.integrity_tooltip": "Crafting this would exceed the item's integrity capacity",
+  "tetra.workbench.schematic_detail.tools_tooltip":"You do not have the tools required for this",
+  "tetra.workbench.schematic_detail.level_tooltip": "Crafting this requires more experience levels than what you currently have",
 
   "tetra.workbench.schematic_list.temporary": "Made available by an item in your inventory",
 
@@ -315,7 +323,7 @@
   "tetra.stats.tool.striking": "Striking",
   "tetra.stats.tool.striking.tooltip": "Instantly harvests hit blocks, limited by swing speed",
   "tetra.stats.tool.sweeping": "Sweeping",
-  "tetra.stats.tool.sweeping.tooltip": "Instantly harvests several blocks on hit, limited by swing speed. Block hardness and tool efficiency affect the number of harvested blocks.",
+  "tetra.stats.tool.sweeping.tooltip": "Instantly harvests several blocks on hit, limited by swing speed. Block hardness and tool efficiency affects the number of harvested blocks.",
 
   "tetra.stats.integrity": "Integrity",
   "tetra.stats.integrity.tooltip_positive": "This module provides §e%s§r integrity",
@@ -606,7 +614,7 @@
   "item.tetra.modular.hone_progress.label": "Hone",
   "item.tetra.modular.hone_progress.description": "Progression towards honing this item\n \n§7Progress: §e%s§7/§e%s\n \n§7Requirement base: §e%s\n§7Integrity use: §e+%s",
   "item.tetra.modular.hone_progress.description_workable": "\n§7Workable: §e%s",
-  "item.tetra.modular.hone_progress.description_extended": "Progress increase as the item is used, once complete one of the item's major modules can be honed to slightly increase one of its stats. The base requirement and the integrity penalty varies slightly depending on the type of the item (e.g. sword, bow, or double headed tool). Items have to be modified or repaired in a workbench for honing progression to work (if the hone progress bar is visible then it's working).",
+  "item.tetra.modular.hone_progress.description_extended": "Progress increase as the item is used, once complete one of the item's major modules can be honed to slightly increase one of its stats. The base requirement and the integrity penalty varies slightly depending on the type of the item (e.g. sword, bow, or double headed tool). An item has to be modified or repaired in a workbench for the honing progression to start (if the hone progress bar is visible then it's working).",
 
   "tetra.improvement.settled.name": "Settled",
   "tetra.improvement.settled.description": "Due to extended use this module has settled into place, it provides additional integrity",
@@ -630,7 +638,7 @@
 
   "tetra/schematic/repair.name": "Repair",
   "tetra/schematic/repair.description": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.",
-  "tetra/schematic/repair.description_details": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n \n §7Repair cycle:\n%s",
+  "tetra/schematic/repair.description_details": "Patch up damaged and worn modules. Cycles through the modules of the item, repairing one module at a time.\n \n§7Repair cycle:\n %s",
   "tetra/schematic/repair.slot1": "Material",
 
   "tetra/schematic/remove.name": "Remove module",

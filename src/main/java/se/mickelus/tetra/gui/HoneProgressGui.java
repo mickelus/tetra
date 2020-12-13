@@ -15,8 +15,6 @@ import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.statbar.GuiBar;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.schematic.SchematicRarity;
 
 import java.util.Collections;
 import java.util.List;
@@ -74,9 +72,9 @@ public class HoneProgressGui extends GuiElement {
                 valueString.setColor(GuiColors.normal);
                 bar.setColor(GuiColors.normal);
             } else {
-                labelString.setColor(SchematicRarity.hone.tint);
-                valueString.setColor(SchematicRarity.hone.tint);
-                bar.setColor(SchematicRarity.hone.tint);
+                labelString.setColor(GuiColors.hone);
+                valueString.setColor(GuiColors.hone);
+                bar.setColor(GuiColors.hone);
             }
         }
     }

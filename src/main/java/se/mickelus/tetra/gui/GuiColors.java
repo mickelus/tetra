@@ -17,6 +17,9 @@ public class GuiColors {
     public static final int positive = 0x55ff55;
 
     public static final int scanner = 0xf25a30;
+    public static final int hone = 0xceceff;
+    public static final int temporarySchematic = 0xffdfaa;
+    public static final int destabilized = 0xee5599;
 
     public static final int separator = normal;
 }

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
@@ -22,7 +23,7 @@ public class GuiSchematicDetail extends GuiElement {
     private GuiString title;
     private GuiTextSmall description;
 
-    private GuiButton craftButton;
+    private CraftButtonGui craftButton;
 
     private GuiString[] slotNames;
     private GuiString[] slotQuantities;
@@ -78,10 +79,10 @@ public class GuiSchematicDetail extends GuiElement {
         toolRequirementList = new ToolRequirementListGui(80, 39);
         addChild(toolRequirementList);
 
-        experienceIndicator = new GuiExperience(170, 42, "tetra.workbench.schematic_detail.experience");
+        experienceIndicator = new GuiExperience(192, 42, "tetra.workbench.schematic_detail.experience");
         addChild(experienceIndicator);
 
-        craftButton = new GuiButton(138, 44, 30, 8, I18n.format("tetra.workbench.schematic_detail.craft"), craftListener);
+        craftButton = new CraftButtonGui(140, 40, craftListener);
         addChild(craftButton);
     }
 
@@ -121,7 +122,6 @@ public class GuiSchematicDetail extends GuiElement {
         if (schematic.getType() == SchematicType.improvement) {
             glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
         }
-
 
         for (int i = 0; i < schematic.getNumMaterialSlots(); i++) {
             slotNames[i].setString(schematic.getSlotName(itemStack, i));
@@ -174,7 +174,8 @@ public class GuiSchematicDetail extends GuiElement {
         toolRequirementList.updateAvailableTools(availableTools);
     }
 
-    public void toggleButton(boolean enabled) {
-        craftButton.setEnabled(enabled);
+    public void updateButton(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot,
+            Map<ToolType, Integer> availableTools) {
+        craftButton.update(schematic, player, itemStack, materials, slot, availableTools);
     }
 }

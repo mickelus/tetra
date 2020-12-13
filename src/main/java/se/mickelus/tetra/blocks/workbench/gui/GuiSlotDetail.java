@@ -13,7 +13,6 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.VerticalTabGroupGui;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -136,7 +135,7 @@ public class GuiSlotDetail extends GuiElement {
                     player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
             schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack,
                     currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
-            schematicDetail.toggleButton(currentSchematic.canApplyUpgrade(player, itemStack, materials, selectedSlot, availableTools));
+            schematicDetail.updateButton(currentSchematic, player, itemStack, materials, selectedSlot, availableTools);
 
             tab = 1;
         }
@@ -157,13 +156,8 @@ public class GuiSlotDetail extends GuiElement {
     public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
         schematicDetail.updateAvailableTools(availableTools);
 
-        schematicDetail.toggleButton(
-                tileEntity.getCurrentSchematic().canApplyUpgrade(
-                        player,
-                        tileEntity.getTargetItemStack(),
-                        tileEntity.getMaterials(),
-                        tileEntity.getCurrentSlot(),
-                        availableTools));
+        schematicDetail.updateButton(tileEntity.getCurrentSchematic(), player, tileEntity.getTargetItemStack(), tileEntity.getMaterials(),
+                tileEntity.getCurrentSlot(), availableTools);
     }
 
     public void updatePreview(UpgradeSchematic schematic, String slot, ItemStack itemStack, ItemStack previewStack) {
