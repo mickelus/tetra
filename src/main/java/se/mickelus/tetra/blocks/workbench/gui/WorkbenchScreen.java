@@ -64,6 +64,8 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private boolean hadItem = false;
 
+    private boolean isDirty = false;
+
     public WorkbenchScreen(WorkbenchContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
@@ -89,6 +91,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
         honeBar = new HoneProgressGui(0, 90);
         honeBar.setAttachmentAnchor(GuiAttachment.topCenter);
+        honeBar.setVisible(false);
         defaultGui.addChild(honeBar);
 
         inventoryInfo = new GuiInventoryInfo(84, 164, Minecraft.getInstance().player);
@@ -107,7 +110,11 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
                 this::applyTweaks);
         defaultGui.addChild(slotDetail);
 
-        tileEntity.addChangeListener("gui.workbench", this::onTileEntityChange);
+        /* There's some interaction between vanilla containers and forge item handlers that cause adding to a stack to call onContentsChanged
+         * (and this by extent) twice before the content actually changes, which cause the UI to update incorrectly. Dirty marking fixes that issue
+         * but might cause long delays if the client is laggy?
+         */
+        tileEntity.addChangeListener("gui.workbench", () -> isDirty = true);
 
         currentMaterials = new ItemStack[WorkbenchTile.inventorySlots];
         Arrays.fill(currentMaterials, ItemStack.EMPTY);
@@ -314,7 +321,10 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         inventoryInfo.update(tileEntity.getCurrentSchematic(), tileEntity.getCurrentSlot(), currentTarget);
 
         World world = tileEntity.getWorld();
-        if (world != null && world.getGameTime() % 20 == 0) {
+        if (isDirty) {
+            onTileEntityChange();
+            isDirty = false;
+        } else if (world != null && world.getGameTime() % 20 == 0) {
             BlockPos pos = tileEntity.getPos();
             Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
