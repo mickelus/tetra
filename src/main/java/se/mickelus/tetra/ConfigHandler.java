@@ -156,7 +156,7 @@ public class ConfigHandler {
 
         honedoubleIntegrityMultiplier = builder
                 .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
-                .defineInRange("hone_double_integrity_multiplier", 70, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_double_integrity_multiplier", 75, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
 

@@ -52,8 +52,10 @@ public class HoneProgressGui extends GuiElement {
             float factor = MathHelper.clamp(1f * progress / limit, 0, 1);
             float workableFactor = -item.getEffectLevel(itemStack, ItemEffect.workable);
 
+            String factorString = String.format("%.0f%%", (100f * factor));
+
             String tooltipBase = I18n.format("item.tetra.modular.hone_progress.description",
-                    progress, limit, item.getHoningBase(), item.getHoningIntegrityPenalty(itemStack));
+                    progress, limit, factorString, item.getHoningBase(), item.getHoningIntegrityPenalty(itemStack));
 
             if (workableFactor < 0) {
                 tooltipBase += I18n.format("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));
@@ -63,7 +65,7 @@ public class HoneProgressGui extends GuiElement {
             extendedTooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expanded.getString()
                     + "\n" + TextFormatting.GRAY.toString() + I18n.format("item.tetra.modular.hone_progress.description_extended"));
 
-            valueString.setString(String.format("%.0f%%", (100f * factor)));
+            valueString.setString(factorString);
 
             bar.setValue(factor, factor);
 
