@@ -16,11 +16,19 @@
     "outcomes": [
         {
             "materials": [
-                "tetra:wood/oak",
+                "tetra:wood/",
                 "tetra:stone/stone",
                 "tetra:stone/diorite",
                 "tetra:stone/andesite",
                 "tetra:stone/granite"
+            ],
+            "toolFactor": 0,
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        },
+        {
+            "materials": [
+                "tetra:metal/iron"
             ],
             "countFactor": 2,
             "moduleKey": "double/basic_hammer",
@@ -28,17 +36,14 @@
         },
         {
             "materials": [
-                "tetra:metal/iron",
                 "tetra:stone/blackstone"
             ],
-            "countFactor": 2,
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/"
         },
         {
             "material": {
-                "item": "minecraft:obsidian",
-                "count": 2
+                "item": "minecraft:obsidian"
             },
             "requiredTools": {
                 "hammer": 6

@@ -37,14 +37,11 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/oak"],
+            "materials": ["tetra:wood/"],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_hammer/log"
-            }],
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 0.5
@@ -61,7 +58,11 @@
                 "magicCapacity": 1,
                 "glyph": {
                     "textureX": 64
-                }
+                },
+                "availableTextures": ["log"],
+                "models": [{
+                    "location": "tetra:items/module/double/head/basic_hammer/"
+                }]
             }
         },
         {

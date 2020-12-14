@@ -95,8 +95,8 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (isInGroup(group)) {
-            items.add(setupHammerStack("log", "stick"));
-            items.add(setupHammerStack("diorite", "stick"));
+            items.add(setupHammerStack("oak", "stick"));
+            items.add(setupHammerStack("stone", "stick"));
             items.add(setupHammerStack("iron", "spruce"));
             items.add(setupHammerStack("blackstone", "spruce"));
             items.add(setupHammerStack("obsidian", "iron"));

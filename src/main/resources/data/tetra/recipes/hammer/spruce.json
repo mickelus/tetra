@@ -7,7 +7,7 @@
     ],
     "key": {
         "#": {
-            "tag": "minecraft:planks"
+            "item": "minecraft:spruce_planks"
         },
         "/": {
             "tag": "forge:rods/wooden"
@@ -17,9 +17,9 @@
         "item": "tetra:modular_double",
         "nbt": {
             "double/head_left": "double/basic_hammer_left",
-            "double/basic_hammer_left_material": "basic_hammer/log",
+            "double/basic_hammer_left_material": "basic_hammer/spruce",
             "double/head_right": "double/basic_hammer_right",
-            "double/basic_hammer_right_material": "basic_hammer/log",
+            "double/basic_hammer_right_material": "basic_hammer/spruce",
             "double/handle": "double/basic_handle",
             "double/basic_handle_material": "basic_handle/stick"
         }

@@ -1,0 +1,19 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": [
+            "tetra:hammer/andesite",
+            "tetra:hammer/diorite",
+            "tetra:hammer/granite",
+            "tetra:hammer/stone"
+        ]
+    },
+    "criteria": {
+        "hammer": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "after": "tetra:workbench"
+            }
+        }
+    }
+}
