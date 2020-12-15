@@ -1067,8 +1067,12 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
      */
     @Override
     public boolean hasEffect(@Nonnull ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack))
-                .anyMatch(improvement -> improvement.enchantment);
+        if (ConfigHandler.enableGlint.get()) {
+            return Arrays.stream(getImprovements(itemStack))
+                    .anyMatch(improvement -> improvement.enchantment);
+        }
+
+        return false;
     }
 
     @Override

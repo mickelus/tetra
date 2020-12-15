@@ -56,6 +56,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableSingle;
     public static ForgeConfigSpec.BooleanValue enableShield;
 
+    public static ForgeConfigSpec.BooleanValue enableGlint;
+
     public static ForgeConfigSpec.BooleanValue enableStonecutter;
 
     public static ForgeConfigSpec.BooleanValue enableExtractor;
@@ -80,6 +82,10 @@ public class ConfigHandler {
                 .comment("Enable modular shields")
                 .worldRestart()
                 .define("shield", true);
+
+        enableGlint = builder
+                .comment("Enables the enchantment glint rendering on modular items")
+                .define("glint", true);
 
         development = builder
                 .comment("Enables commands & data reloading functionality useful for development, has a negative impact on performance")
