@@ -578,12 +578,14 @@
   "tetra.salvage_lubricant_dispenser_action.label": "Salvage",
 
   "item.tetra.stonecutter": "Stonecutter",
+  "item.tetra.stonecutter.description": "Combine with a stick in a crafting table or use as a sword blade in a workbench to craft a powerful mining tool",
   "tetra.salvage_stonecutter_action.label": "Salvage",
 
   "item.tetra.earthpiercer": "Earthpiercer",
+  "item.tetra.earthpiercer.description": "Combine with two stick in a crafting table or use as a head for a single headed tool in a workbench to craft a powerful mining tool",
   "tetra.salvage_earthpiercer_action.label": "Salvage",
 
-  "item.tetra.forged_unsettling": "Nauseating vibrations emanates from this artifact, it seems to have been made to be fitted onto a handle",
+  "item.tetra.forged_unsettling": "This artifact hums violently",
   "item.tetra.forged_description": "Found in structures deep underground in cold or mountainous biomes",
 
   "item.tetra.tooltip_reveal": "Reveals related upgrade schematics while in the inventory",

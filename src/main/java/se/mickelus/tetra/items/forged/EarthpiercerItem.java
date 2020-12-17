@@ -5,6 +5,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,7 +38,7 @@ public class EarthpiercerItem extends TetraItem {
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(Tooltips.reveal);
+            tooltip.add(new TranslationTextComponent("item.tetra.earthpiercer.description").mergeStyle(TextFormatting.GRAY));
             tooltip.add(new StringTextComponent(" "));
             tooltip.add(ForgedBlockCommon.locationTooltip);
         } else {

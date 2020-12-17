@@ -96,6 +96,7 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
+import se.mickelus.tetra.trades.TradeHandler;
 
 import java.util.Arrays;
 
@@ -120,6 +121,7 @@ public class TetraMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
+        MinecraftForge.EVENT_BUS.register(new TradeHandler());
         MinecraftForge.EVENT_BUS.register(new DisenchantmentHandler());
         MinecraftForge.EVENT_BUS.register(new DataManager());
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
