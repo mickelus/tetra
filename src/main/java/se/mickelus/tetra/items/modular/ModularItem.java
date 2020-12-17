@@ -100,10 +100,6 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     public static final UUID attackDamageModifier = Item.ATTACK_DAMAGE_MODIFIER;
     public static final UUID attackSpeedModifier = Item.ATTACK_SPEED_MODIFIER;
 
-    public static final float repairLevelFactor = 0.05f;
-    public static final float cleanseLevelFactor = 0.1f;
-    public static final float enchantLevelFactor = 0.1f;
-
     private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
@@ -820,23 +816,34 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                     .forEach(module -> {
                         int instability = -module.getMagicCapacity(itemStack);
 
-                        for (DestabilizationEffect effect: DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack))) {
-                            int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
-                            int newLevel;
+                        if (instability > 0) {
+                            float destabilizationChance = module.getDestabilizationChance(itemStack, probabilityMultiplier);
+                            DestabilizationEffect[] possibleEffects =
+                                    DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack));
 
-                            if (currentEffectLevel >= 0) {
-                                newLevel = currentEffectLevel + 1;
-                            } else if (effect.minLevel == effect.maxLevel) {
-                                newLevel = effect.minLevel;
-                            } else {
-                                newLevel = effect.minLevel + world.rand.nextInt(effect.maxLevel - effect.minLevel);
-                            }
+                            do {
+                                if (destabilizationChance > world.rand.nextFloat()) {
+                                    DestabilizationEffect effect = possibleEffects[world.rand.nextInt(possibleEffects.length)];
+                                    int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
+                                    int newLevel;
 
-                            if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)
-                                    && effect.probability * instability * probabilityMultiplier > world.rand.nextFloat()) {
-                                module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
-                            }
+                                    if (currentEffectLevel >= 0) {
+                                        newLevel = currentEffectLevel + 1;
+                                    } else if (effect.minLevel == effect.maxLevel) {
+                                        newLevel = effect.minLevel;
+                                    } else {
+                                        newLevel = effect.minLevel + world.rand.nextInt(effect.maxLevel - effect.minLevel);
+                                    }
+
+                                    if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)) {
+                                        module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
+                                    }
+                                }
+
+                                destabilizationChance--;
+                            } while (destabilizationChance > 1);
                         }
+
                     });
         }
     }

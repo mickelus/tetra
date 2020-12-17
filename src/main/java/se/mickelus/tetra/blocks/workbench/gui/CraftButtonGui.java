@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;
@@ -14,9 +15,9 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CraftButtonGui extends GuiClickable {
     private final GuiStringOutline label;
@@ -46,7 +47,7 @@ public class CraftButtonGui extends GuiClickable {
         return enabled && super.onMouseClick(x, y, button);
     }
 
-    public void update(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot,
+    public void update(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolType, Integer> availableTools) {
         enabled = schematic.canApplyUpgrade(player, itemStack, materials, slot, availableTools);
         tooltip = null;
@@ -56,15 +57,15 @@ public class CraftButtonGui extends GuiClickable {
             backdropColor = GuiColors.normal;
 
             if (!schematic.willReplace(itemStack, materials, slot)) {
-                boolean canDestabilize = CastOptional.cast(itemStack.getItem(), ModularItem.class)
-                        .map(item -> item.getModuleFromSlot(itemStack, slot))
-                        .map(module -> module.getMagicCapacity(itemStack))
-                        .map(cap -> cap < 0)
-                        .orElse(false);
+                float severity = schematic.getSeverity(itemStack, materials, slot);
+                Map<String, Float> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity);
 
-                if (canDestabilize) {
+                if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip = I18n.format("tetra.workbench.schematic_detail.destabilize_tooltip");
+                    tooltip = TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_detail.destabilize_tooltip");
+                    tooltip += destabilizationChance.entrySet().stream()
+                            .map(entry -> String.format("\n  %s%s: %s%.0f%%", TextFormatting.WHITE, entry.getKey(), TextFormatting.YELLOW, entry.getValue() * 100))
+                            .collect(Collectors.joining());
                 }
             } else {
                 boolean willRepair = CastOptional.cast(itemStack.getItem(), ModularItem.class)
@@ -105,6 +106,16 @@ public class CraftButtonGui extends GuiClickable {
         }
 
         updateColors();
+    }
+
+    private Map<String, Float> getDestabilizationChance(ItemStack itemStack, float severity) {
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getMajorModules(itemStack))
+                .map(Arrays::stream)
+                .orElseGet(Stream::empty)
+                .filter(Objects::nonNull)
+                .filter(module -> module.getMagicCapacity(itemStack) < 0)
+                .collect(Collectors.toMap(module -> module.getName(itemStack), module -> module.getDestabilizationChance(itemStack, severity)));
     }
 
     private boolean hasEmptyMaterial(UpgradeSchematic schematic, ItemStack[] materials) {

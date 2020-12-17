@@ -1,7 +1,6 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -10,7 +9,6 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.gui.statbar.GuiBar;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
@@ -48,15 +46,18 @@ public class GuiMagicUsage extends GuiElement {
             int max = getGain(itemStack, slot);
             int diffMax = getGain(previewStack, slot) - max;
 
+            int risk = Math.round(getDestabilizeChance(previewStack, slot) * 100);
+            int xpCost = getExperienceCost(previewStack, slot);
+
             bar.setMax(Math.max(max + diffMax, max));
 
             tooltip = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue),
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
                     " ",
                     Tooltips.expand.getString());
 
             tooltipExtended = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue),
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
                     " ",
                     Tooltips.expanded.getString(),
                     I18n.format("item.tetra.modular.magic_capacity.description_extended"));
@@ -77,14 +78,16 @@ public class GuiMagicUsage extends GuiElement {
             int value = getCost(itemStack, slot);
             int max = getGain(itemStack, slot);
 
-            tooltip = Collections.singletonList(I18n.format("item.tetra.modular.magic_capacity.description", max, value));
+            int risk = Math.round(getDestabilizeChance(itemStack, slot) * 100);
+            int xpCost = getExperienceCost(itemStack, slot);
+
             tooltip = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value),
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
                     " ",
                     Tooltips.expand.getString());
 
             tooltipExtended = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value),
+                    I18n.format("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
                     " ",
                     Tooltips.expanded.getString(),
                     I18n.format("item.tetra.modular.magic_capacity.description_extended"));
@@ -106,6 +109,20 @@ public class GuiMagicUsage extends GuiElement {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getMagicCapacityCost(itemStack))
+                .orElse(0);
+    }
+
+    private static float getDestabilizeChance(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getDestabilizationChance(itemStack, 1))
+                .orElse(0f);
+    }
+
+    private static int getExperienceCost(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getRepairExperienceCost(itemStack))
                 .orElse(0);
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +35,8 @@ public abstract class ItemModule implements IToolProvider {
     protected final String variantTagKey;
 
     protected Priority renderLayer = Priority.BASE;
+
+    public static final float repairLevelFactor = 10;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotTagKey = slotKey;
@@ -220,6 +223,14 @@ public abstract class ItemModule implements IToolProvider {
         return 0;
     }
 
+    public float getDestabilizationChance(ItemStack itemStack, float probabilityMultiplier) {
+        return getDestabilizationChance(-getMagicCapacity(itemStack), getMagicCapacityGain(itemStack), probabilityMultiplier);
+    }
+
+    public float getDestabilizationChance(int instability, int capacity, float probabilityMultiplier) {
+        return Math.max(probabilityMultiplier *  instability / capacity, 0);
+    }
+
     public int getDurability(ItemStack itemStack) {
         return getProperties(itemStack).durability;
     }
@@ -255,6 +266,14 @@ public abstract class ItemModule implements IToolProvider {
     public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolType tool) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
                 .map(definition -> definition.requiredTools.getLevel(tool))
+                .orElse(0);
+    }
+
+    public int getRepairExperienceCost(ItemStack itemStack) {
+        return Optional.of(getDestabilizationChance(itemStack, 1))
+                .map(capacity -> capacity * repairLevelFactor)
+                .map(MathHelper::ceil)
+                .map(capacity -> Math.max(0, capacity))
                 .orElse(0);
     }
 

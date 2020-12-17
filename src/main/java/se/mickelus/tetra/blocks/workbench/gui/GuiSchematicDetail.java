@@ -174,8 +174,8 @@ public class GuiSchematicDetail extends GuiElement {
         toolRequirementList.updateAvailableTools(availableTools);
     }
 
-    public void updateButton(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot,
+    public void updateButton(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolType, Integer> availableTools) {
-        craftButton.update(schematic, player, itemStack, materials, slot, availableTools);
+        craftButton.update(schematic, player, itemStack, previewStack, materials, slot, availableTools);
     }
 }

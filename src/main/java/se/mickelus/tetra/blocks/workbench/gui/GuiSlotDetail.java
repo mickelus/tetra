@@ -130,12 +130,12 @@ public class GuiSlotDetail extends GuiElement {
             Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
 
+            ItemStack previewStack = currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player);
 
             schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools,
                     player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
-            schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack,
-                    currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
-            schematicDetail.updateButton(currentSchematic, player, itemStack, materials, selectedSlot, availableTools);
+            schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack, previewStack);
+            schematicDetail.updateButton(currentSchematic, player, itemStack, previewStack, materials, selectedSlot, availableTools);
 
             tab = 1;
         }
@@ -156,7 +156,10 @@ public class GuiSlotDetail extends GuiElement {
     public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
         schematicDetail.updateAvailableTools(availableTools);
 
-        schematicDetail.updateButton(tileEntity.getCurrentSchematic(), player, tileEntity.getTargetItemStack(), tileEntity.getMaterials(),
+        ItemStack currentStack = tileEntity.getTargetItemStack().copy();
+        UpgradeSchematic currentSchematic = tileEntity.getCurrentSchematic();
+        ItemStack previewStack = currentSchematic.applyUpgrade(currentStack, tileEntity.getMaterials(), false, tileEntity.getCurrentSlot(), player);
+        schematicDetail.updateButton(tileEntity.getCurrentSchematic(), player, currentStack, previewStack, tileEntity.getMaterials(),
                 tileEntity.getCurrentSlot(), availableTools);
     }
 
