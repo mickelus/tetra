@@ -673,10 +673,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     public int getRepairRequiredExperience(ItemStack itemStack) {
         return getRepairModule(itemStack)
-                .map(module -> -module.getMagicCapacity(itemStack))
-                .map(capacity -> capacity * repairLevelFactor)
-                .map(MathHelper::ceil)
-                .map(capacity -> Math.max(0, capacity))
+                .map(module -> module.getRepairExperienceCost(itemStack))
                 .orElse(0);
     }
 

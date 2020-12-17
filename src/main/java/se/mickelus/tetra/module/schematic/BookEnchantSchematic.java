@@ -173,9 +173,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                         }
                     }
 
-                    int capacityPenalty = Math.max(0, MathHelper.ceil(-module.getMagicCapacity(targetStack) * ModularItem.enchantLevelFactor));
-
-                    return cost + capacityPenalty;
+                    return cost;
                 })
                 .orElse(0);
     }
