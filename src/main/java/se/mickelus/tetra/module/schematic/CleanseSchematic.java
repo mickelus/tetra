@@ -150,16 +150,7 @@ public class CleanseSchematic implements UpgradeSchematic {
                 .mapToInt(improvement -> improvement.level + 1)
                 .sum();
 
-        cost += CastOptional.cast(targetStack.getItem(), ModularItem.class)
-                .map(item -> item.getModuleFromSlot(targetStack, slot))
-                .filter(module -> module instanceof ItemModuleMajor)
-                .map(module -> (ItemModuleMajor) module)
-                .map(module -> -module.getMagicCapacity(targetStack))
-                .map(capacity -> capacity * ModularItem.cleanseLevelFactor)
-                .map(MathHelper::ceil)
-                .map(capacity -> Math.max(3, capacity))
-                .orElse(3);
-
+        cost += 3;
 
         return cost;
     }

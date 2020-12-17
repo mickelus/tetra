@@ -104,7 +104,7 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
-        if (index == 0 && itemStack.getItem() instanceof ModularItem) {
+        if (index == 0) {
             return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                     .map(item -> item.getRepairDefinitions(itemStack))
                     .map(Collection::stream)
@@ -153,29 +153,23 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
-        if (targetStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredToolLevels(targetStack, materials[0]);
-        }
-        return Collections.emptyMap();
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+                .map(item -> item.getRepairRequiredToolLevels(targetStack, materials[0]))
+                .orElseGet(Collections::emptyMap);
     }
 
     @Override
     public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolType toolType) {
-        if (targetStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredToolLevel(targetStack, materials[0], toolType);
-        }
-        return 0;
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+                .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolType))
+                .orElse(0);
     }
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        if (targetStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) targetStack.getItem();
-            return item.getRepairRequiredExperience(targetStack);
-        }
-        return 0;
+        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        .map(item -> item.getRepairRequiredExperience(targetStack))
+                .orElse(0);
     }
 
     @Override
