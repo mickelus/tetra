@@ -28,4 +28,12 @@ public class TooltipGetterTool implements ITooltipGetter {
                 (int) levelGetter.getValue(player, itemStack),
                 String.format("%.2f", efficiencyGetter.getValue(player, itemStack)));
     }
+
+    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+        return true;
+    }
+
+    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+        return I18n.format("tetra.stats.tool.tooltip_extended");
+    }
 }
