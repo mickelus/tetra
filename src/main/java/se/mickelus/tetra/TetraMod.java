@@ -16,9 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -79,6 +77,7 @@ import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
@@ -147,8 +146,9 @@ public class TetraMod {
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_module"), MultiSlotModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_major_module"), BasicMajorModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotMajorModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
 
         new TetraItemGroup();
@@ -209,6 +209,10 @@ public class TetraMod {
 
         if (ConfigHandler.enableBow.get()) {
             items = ArrayUtils.addAll(items, new ModularBowItem());
+        }
+
+        if (ConfigHandler.enableCrossbow.get()) {
+            items = ArrayUtils.addAll(items, new ModularCrossbowItem());
         }
 
         if (ConfigHandler.enableSingle.get()) {
@@ -426,6 +430,14 @@ public class TetraMod {
                             .size(0.5F, 0.5F)
                             .build(ThrownModularItemEntity.unlocalizedName)
                             .setRegistryName(MOD_ID, ThrownModularItemEntity.unlocalizedName)
+            );
+
+            event.getRegistry().registerAll(
+                    EntityType.Builder.<ExtractorProjectileEntity>create(ExtractorProjectileEntity::new, EntityClassification.MISC)
+                            .setCustomClientFactory(ExtractorProjectileEntity::new)
+                            .size(0.5F, 0.5F)
+                            .build(ExtractorProjectileEntity.unlocalizedName)
+                            .setRegistryName(MOD_ID, ExtractorProjectileEntity.unlocalizedName)
             );
         }
     }

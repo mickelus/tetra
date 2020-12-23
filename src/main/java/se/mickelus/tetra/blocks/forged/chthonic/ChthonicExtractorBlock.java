@@ -28,6 +28,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -90,6 +91,11 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         setRegistryName(unlocalizedName);
 
         hasItem = true;
+    }
+
+    @Override
+    public void clientInit() {
+        RenderingRegistry.registerEntityRenderingHandler(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
     }
 
     @Override

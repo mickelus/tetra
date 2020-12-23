@@ -12,13 +12,13 @@ import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
 
-public class MultiSlotModule extends ItemModule {
+public class MultiSlotMajorModule extends ItemModuleMajor {
 
     protected String slotSuffix;
 
     protected String unlocalizedName;
 
-    public MultiSlotModule(ResourceLocation identifier, ModuleData data) {
+    public MultiSlotMajorModule(ResourceLocation identifier, ModuleData data) {
         super(data.slots[0], identifier.getPath());
 
         slotSuffix = data.slotSuffixes[0];
@@ -29,6 +29,24 @@ public class MultiSlotModule extends ItemModule {
         renderLayer = data.renderLayer;
 
         variantData = data.variants;
+
+        if (data.improvements.length > 0) {
+            improvements = Arrays.stream(data.improvements)
+                    .map(rl -> rl.getPath().endsWith("/")
+                            ? DataManager.improvementData.getDataIn(rl)
+                            : Optional.ofNullable(DataManager.improvementData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                    .flatMap(Collection::stream)
+                    .filter(Objects::nonNull)
+                    .flatMap(Arrays::stream)
+                    .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
+                    .toArray(ImprovementData[]::new);
+
+            settleMax = Arrays.stream(improvements)
+                    .filter(improvement -> improvement.key.equals(settleImprovement))
+                    .mapToInt(ImprovementData::getLevel)
+                    .max()
+                    .orElse(0);
+        }
 
         if (data.tweakKey != null) {
             TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
@@ -43,6 +61,13 @@ public class MultiSlotModule extends ItemModule {
     @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
+    }
+
+    @Override
+    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
+        return Arrays.stream(super.getImprovementModels(itemStack, tint))
+                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
+                .toArray(ModuleModel[]::new);
     }
 
     @Override

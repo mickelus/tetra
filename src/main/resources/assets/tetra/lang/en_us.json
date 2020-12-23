@@ -1707,6 +1707,52 @@
   "tetra.module.bow/stabilizer.material_name": "%s stabilizer",
   "tetra.variant.stabilizer/linear": "Linear stabilizer",
 
+  "tetra.slot.crossbow/stave": "Stave",
+  "tetra.slot.crossbow/stock": "Stock",
+  "tetra.slot.crossbow/string": "Bowstring",
+  "tetra.slot.crossbow/attachment_0": "Attachment",
+  "tetra.slot.crossbow/attachment_1": "Attachment",
+
+  "item.tetra.crossbow.wip": "The crossbow is still work in progress, several modules and enchantments are missing",
+
+  "tetra/schematic/crossbow/string/basic_string.name": "Basic String",
+  "tetra/schematic/crossbow/string/basic_string.description": "Replaces the bowstring with a new string crafted from the given materials.\n \nProvides integrity based on the material.\nMaterial §fdensity§r slightly increases §fdraw time§r.",
+  "tetra/schematic/crossbow/string/basic_string.slot1": "Material",
+
+  "tetra.module.crossbow/basic_string.name": "Basic string",
+  "tetra.module.crossbow/basic_string.description": "A basic bowstring. The bowstring is the primary source of integrity for crossbows.",
+  "tetra.module.crossbow/basic_string.material_name": "%s bowstring",
+
+  "tetra/schematic/crossbow/stave/basic_stave.name": "Basic stave",
+  "tetra/schematic/crossbow/stave/basic_stave.description": "Replaces the stave with a one crafted from the given materials.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/crossbow/stave/basic_stave.slot1": "Material",
+
+  "tetra.module.crossbow/basic_stave.item_name": "Crossbow",
+  "tetra.module.crossbow/basic_stave.name": "Straight stave",
+  "tetra.module.crossbow/basic_stave.description": "A basic stave. The stave primarily decide the draw strength of the crossbow.",
+  "tetra.module.crossbow/basic_stave.material_name": "%s stave",
+
+  "tetra.variant.basic_stave/stick": "Makeshift stave",
+
+  "tetra/schematic/crossbow/stock/basic_stock.name": "Basic stock",
+  "tetra/schematic/crossbow/stock/basic_stock.description": "Replaces the stock with a one crafted from the given materials.\n \nProvides integrity based on the material, at a reduced rate.\nMaterial §fdensity§r increases §fdraw time§r.",
+  "tetra/schematic/crossbow/stock/basic_stock.slot1": "Material",
+
+  "tetra.module.crossbow/basic_stock.item_name": "Crossbow",
+  "tetra.module.crossbow/basic_stock.name": "Basic stock",
+  "tetra.module.crossbow/basic_stock.description": "A basic stock. The stock provides some integrity and hosts several of the mechanical parts of the crossbows.",
+  "tetra.module.crossbow/basic_stock.material_name": "%s stock",
+
+  "tetra.variant.basic_stock/stick": "Shoddy stock",
+
+  "tetra/schematic/crossbow/attachment/stirrup.name": "Stirrup",
+  "tetra/schematic/crossbow/attachment/stirrup.description": "Attach a stirrup at the front of the crossbow. The stirrup allows the use of one's feet when drawing the crossbow, slightly improving draw time.\n \nMaterial §fhardness§r slightly decreases §fdraw time§r.\nMaterial §fdensity§r slightly increases §fdraw time§r.",
+  "tetra/schematic/crossbow/attachment/stirrup.slot1": "Material",
+
+  "tetra.module.crossbow/stirrup.name": "Stirrup",
+  "tetra.module.crossbow/stirrup.description": "A stirrup attached at the front of the crossbow which allows the use of one's feet when drawing the crossbow. Slightly increases draw speed.",
+  "tetra.module.crossbow/stirrup.material_name": "%s stirrup",
+
   "tetra.slot.shield/plate": "Plate",
   "tetra.slot.shield/grip": "Grip",
   "tetra.slot.shield/boss": "Boss",

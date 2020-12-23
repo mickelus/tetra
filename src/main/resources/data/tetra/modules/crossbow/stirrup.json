@@ -1,0 +1,36 @@
+{
+    "replace": true,
+    "slots": ["crossbow/attachment_0", "crossbow/attachment_1"],
+    "type": "tetra:basic_module",
+    "variants": [
+        {
+            "materials": ["tetra:metal/"],
+            "key": "stirrup/",
+            "integrity": -1,
+            "durability": 12,
+            "attributes": {
+                "tetra:draw_speed": -0.05
+            },
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:draw_speed": -0.02
+                },
+                "secondaryAttributes": {
+                    "tetra:draw_speed": 0.01
+                },
+                "durability": 0.05,
+                "glyph": {
+                    "textureX": 138,
+                    "textureY": 16
+                },
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/crossbow/attachment/stirrup/",
+                        "type": "static"
+                    }
+                ]
+            }
+        }
+    ]
+}

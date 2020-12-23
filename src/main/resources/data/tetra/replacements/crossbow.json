@@ -1,0 +1,29 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:crossbow"
+        },
+        "item": "tetra:modular_crossbow",
+        "modules": {
+            "crossbow/stave": [
+                "crossbow/basic_stave",
+                "basic_stave/stick"
+            ],
+            "crossbow/stock": [
+                "crossbow/basic_stock",
+                "basic_stock/stick"
+            ],
+            "crossbow/string": [
+                "crossbow/basic_string",
+                "basic_string/string"
+            ],
+            "crossbow/attachment_1": [
+                "crossbow/stirrup",
+                "stirrup/iron"
+            ]
+        },
+        "improvements": {
+            "crossbow/stock:trigger/simple": 1
+        }
+    }
+]

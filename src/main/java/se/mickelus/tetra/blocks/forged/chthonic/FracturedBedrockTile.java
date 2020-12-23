@@ -22,6 +22,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.WorldEntitySpawner;
@@ -52,7 +53,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     private float spawnRatio = 0.5f;
     private int spawnYLimit = 4;
 
-    private static final Set<Material> breakMaterials = Sets.newHashSet(Material.ROCK, Material.CLAY, Material.EARTH);
+    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.ROCK, Material.CLAY, Material.EARTH);
 
     private static final String luckKey = "luck";
     private int luck = 0;
@@ -200,8 +201,11 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
         return movePos.toImmutable();
     }
 
-    private boolean breakBlock(BlockPos pos, BlockState blockState) {
-        if (world instanceof ServerWorld && !blockState.isAir(world, pos) && blockState.getBlockHardness(world, pos) > -1) {
+    public static boolean breakBlock(World world, BlockPos pos, BlockState blockState) {
+        if (world instanceof ServerWorld
+                && !blockState.isAir(world, pos)
+                && breakMaterials.contains(blockState.getMaterial())
+                && blockState.getBlockHardness(world, pos) > -1) {
             TileEntity tile = blockState.hasTileEntity() ? world.getTileEntity(pos) : null;
             LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world)
                     .withRandom(world.rand)
@@ -309,9 +313,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
                 if (hitPos != null) {
                     BlockState blockState = world.getBlockState(hitPos);
 
-                    if (breakMaterials.contains(blockState.getMaterial())) {
-                        breakBlock(hitPos, blockState);
-                    }
+                    breakBlock(world, hitPos, blockState);
 
                     BlockPos spawnPos = traceDown(hitPos);
                     BlockState spawnState = world.getBlockState(spawnPos);
@@ -324,8 +326,8 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
                         } else {
                             spawnMob(spawnPos);
                         }
-                    } else if (breakMaterials.contains(spawnState.getMaterial())) {
-                        breakBlock(spawnPos, spawnState);
+                    } else {
+                        breakBlock(world, spawnPos, spawnState);
                     }
                 }
             }

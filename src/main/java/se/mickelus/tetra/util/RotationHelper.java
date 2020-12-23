@@ -4,6 +4,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3i;
 
 public class RotationHelper {
     public static Rotation rotationFromFacing(Direction facing) {
@@ -53,5 +54,9 @@ public class RotationHelper {
             case EAST:
                 return new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
         }
+    }
+
+    public static Vector3i shiftAxis(Vector3i pos) {
+        return new Vector3i(pos.getY(), pos.getZ(), pos.getX());
     }
 }

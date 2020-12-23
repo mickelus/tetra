@@ -1,0 +1,11 @@
+[
+    {
+        "key": "trigger/simple",
+        "durability": 3,
+        "group": "trigger",
+        "integrity": -1,
+        "attributes": {
+            "tetra:draw_speed": -0.1
+        }
+    }
+]

@@ -11,6 +11,7 @@ import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -53,6 +54,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec.IntValue honeShieldIntegrityMultiplier;
 
     public static ForgeConfigSpec.BooleanValue enableBow;
+    public static ForgeConfigSpec.BooleanValue enableCrossbow;
     public static ForgeConfigSpec.BooleanValue enableSingle;
     public static ForgeConfigSpec.BooleanValue enableShield;
 
@@ -72,6 +74,11 @@ public class ConfigHandler {
                 .comment("Enable modular bows")
                 .worldRestart()
                 .define("bow", true);
+
+        enableCrossbow = builder
+                .comment("Enable modular crossbows")
+                .worldRestart()
+                .define("crossbow", true);
 
         enableSingle = builder
                 .comment("Enable modular single headed implements")
@@ -180,6 +187,14 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_bow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
+        honeCrossbowBase = builder
+                .comment("The base value for number of uses required before a crossbow can be honed")
+                .defineInRange("hone_crossbow_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeCrossbowIntegrityMultiplier = builder
+                .comment("Integrity multiplier for crossbow honing, a value of 2 would cause a crossbow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .defineInRange("hone_crossbow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
         honeSingleBase = builder
                 .comment("The base value for number of uses required before a single headed implement can be honed")
                 .defineInRange("hone_single_headed_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -239,6 +254,10 @@ public class ConfigHandler {
             ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
         }
 
+        if (ModularCrossbowItem.instance != null) {
+            ModularCrossbowItem.instance.updateConfig(honeCrossbowBase.get(), honeCrossbowIntegrityMultiplier.get());
+        }
+
         if (ModularSingleHeadedItem.instance != null) {
             ModularSingleHeadedItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
         }
@@ -259,6 +278,10 @@ public class ConfigHandler {
 
         if (ModularBowItem.instance != null) {
             ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
+        }
+
+        if (ModularCrossbowItem.instance != null) {
+            ModularCrossbowItem.instance.updateConfig(honeCrossbowBase.get(), honeCrossbowIntegrityMultiplier.get());
         }
 
         if (ModularSingleHeadedItem.instance != null) {

@@ -1,0 +1,17 @@
+{
+    "replace": true,
+    "slots": ["crossbow/attachment_0"],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 138,
+        "textureY": 16
+    },
+    "displayType": "minor",
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "moduleKey": "crossbow/stirrup",
+            "moduleVariant": "stirrup/"
+        }
+    ]
+}
