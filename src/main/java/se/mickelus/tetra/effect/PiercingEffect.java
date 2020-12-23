@@ -73,10 +73,11 @@ public class PiercingEffect {
             BlockState offsetState = world.getBlockState(pos);
             ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
+            float blockHardness = offsetState.getBlockHardness(world, pos);
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);
-            if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState))
-                    || itemStack.canHarvestBlock(offsetState))
-                    && offsetState.getBlockHardness(world, pos) <= refHardness
+            if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState)) || itemStack.canHarvestBlock(offsetState))
+                    && blockHardness != -1
+                    && blockHardness <= refHardness
                     && ItemModularHandheld.isToolEffective(refTool, offsetState)) {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
                     EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getStateId(offsetState));

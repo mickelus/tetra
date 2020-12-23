@@ -123,7 +123,7 @@ public class StrikingEffect {
 
         if (strikingLevel > 0) {
             int sweepingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.sweepingStrike);
-            if (breakingPlayer.getCooledAttackStrength(0) > 0.9) {
+            if (breakingPlayer.getCooledAttackStrength(0) > 0.9 && blockState.getBlockHardness(world, pos) != -1) {
                 if (sweepingLevel > 0) {
                     breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
                 } else {
@@ -202,9 +202,10 @@ public class StrikingEffect {
         for (int i = 0; i < positions.size(); i++) {
             BlockPos pos = positions.get(i);
             BlockState blockState = world.getBlockState(pos);
+            float blockHardness = blockState.getBlockHardness(world, pos);
 
             // make sure that only blocks which require the same tool are broken
-            if (ItemModularHandheld.isToolEffective(tool, blockState)) {
+            if (ItemModularHandheld.isToolEffective(tool, blockState) && blockHardness != -1) {
 
                 // check that the tool level is high enough and break the block
                 int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
@@ -212,14 +213,14 @@ public class StrikingEffect {
                         || toolStack.canHarvestBlock(blockState)) {
 
                     // adds a fixed amount to make blocks like grass still "consume" some efficiency
-                    efficiency -= blockState.getBlockHardness(world, pos) + 0.5;
+                    efficiency -= blockHardness + 0.5;
 
                     enqueueBlockBreak(world, breakingPlayer, toolStack, pos, blockState, tool, toolLevel, delays[i]);
                 } else {
                     break;
                 }
             } else if (blockState.isSolid()) {
-                efficiency -= blockState.getBlockHardness(world, pos);
+                efficiency -= Math.abs(blockHardness);
             }
 
             if (efficiency <= 0) {
