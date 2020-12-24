@@ -253,7 +253,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
             spawnInfo = world.getBiome(pos).getMobSpawnInfo();
         }
 
-        if (getPos().distanceSq(pos) > 36 && world.getRandom().nextFloat() >= spawnInfo.getCreatureSpawnProbability()) {
+        if (getPos().distanceSq(pos) < 42 && world.getRandom().nextFloat() >= spawnInfo.getCreatureSpawnProbability() / 5) {
             return;
         }
 
