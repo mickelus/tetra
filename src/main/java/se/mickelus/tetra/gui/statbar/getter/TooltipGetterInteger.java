@@ -26,9 +26,9 @@ public class TooltipGetterInteger implements ITooltipGetter {
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         if (absolute) {
-            return I18n.format(localizationKey, (int) Math.abs(statGetter.getValue(player, itemStack)));
+            return I18n.format(localizationKey, Math.round(Math.abs(statGetter.getValue(player, itemStack))));
         }
-        return I18n.format(localizationKey, (int) statGetter.getValue(player, itemStack));
+        return I18n.format(localizationKey, Math.round(statGetter.getValue(player, itemStack)));
     }
 
     @Override

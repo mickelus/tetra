@@ -114,6 +114,12 @@ public class ItemModularHandheld extends ModularItem {
             if (getEffectLevel(itemStack, ItemEffect.piercingHarvest) > 0) {
                 PiercingEffect.pierceBlocks(this, itemStack, getEffectLevel(itemStack, ItemEffect.piercing), world, state, pos, entity);
             }
+
+
+            int extractorLevel = getEffectLevel(itemStack, ItemEffect.extractor);
+            if (extractorLevel > 0) {
+                ExtractorEffect.breakBlocks(this, itemStack, extractorLevel, world, state, pos, entity);
+            }
         }
 
         return true;

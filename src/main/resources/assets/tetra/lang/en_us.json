@@ -323,9 +323,11 @@
   "tetra.stats.tool.tooltip_extended": "A higher tier is required for harvesting tougher blocks and for crafting with tougher materials. Efficiency determines how fast this item can break blocks.",
 
   "tetra.stats.tool.striking": "Striking",
-  "tetra.stats.tool.striking.tooltip": "Instantly harvests hit blocks, limited by swing speed",
+  "tetra.stats.tool.striking.tooltip": "Instantly breaks hit blocks, limited by swing speed",
   "tetra.stats.tool.sweeping": "Sweeping",
-  "tetra.stats.tool.sweeping.tooltip": "Instantly harvests several blocks on hit, limited by swing speed. Block hardness and tool efficiency affects the number of harvested blocks.",
+  "tetra.stats.tool.sweeping.tooltip": "Instantly breaks several blocks on hit, limited by swing speed. Block hardness and tool efficiency affects the number of broken blocks.",
+  "tetra.stats.tool.extractor": "Extractor",
+  "tetra.stats.tool.extractor.tooltip": "Breaks §e%s§7 blocks in a 3x3 radius when breaking a block. The item takes extra durability damage based on the potency of this effect.",
 
   "tetra.stats.integrity": "Integrity",
   "tetra.stats.integrity.tooltip_positive": "This module provides §e%s§r integrity",
@@ -1163,6 +1165,28 @@
   "tetra.module.double/butt.name": "Tool butt",
   "tetra.module.double/butt.description": "The back side of a single sided tool, typically yields faster swing speed than a double sided head.",
   "tetra.module.double/butt.material_name": "%s butt",
+
+  "tetra/schematic/double/extractor/extractor.name": "Extractor",
+  "tetra/schematic/double/extractor/extractor.description": "Repurpose a chthonic extractor to allow the tool to break several blocks at a time.",
+  "tetra/schematic/double/extractor/extractor.slot1": "Extractor",
+
+  "tetra.module.double/extractor.name": "Tool butt",
+  "tetra.module.double/extractor.description": "A repurposed chthonic extractor, allows the tool to break several blocks at a time.",
+  "tetra.variant.extractor/extractor": "Extractor",
+
+  "tetra/schematic/double/extractor/hone_extractor_1.name": "Hone: Potency I",
+  "tetra/schematic/double/extractor/hone_extractor_1.description": "Hone the potency of the extractor effect, increasing the amount of blocks it breaks.",
+  "tetra/schematic/double/extractor/hone_extractor_2.name": "Hone: Potency II",
+  "tetra/schematic/double/extractor/hone_extractor_2.description": "Further hone the potency of the extractor effect, increasing the amount of blocks it breaks.",
+  "tetra/schematic/double/extractor/hone_extractor_3.name": "Hone: Potency III",
+  "tetra/schematic/double/extractor/hone_extractor_3.description": "Further hone the potency of the extractor effect, increasing the amount of blocks it breaks.",
+  "tetra/schematic/double/extractor/hone_extractor_4.name": "Hone: Potency IV",
+  "tetra/schematic/double/extractor/hone_extractor_4.description": "Further hone the potency of the extractor effect, increasing the amount of blocks it breaks.",
+  "tetra/schematic/double/extractor/hone_extractor_5.name": "Hone: Potency V",
+  "tetra/schematic/double/extractor/hone_extractor_5.description": "Further hone the potency of the extractor effect, increasing the amount of blocks it breaks.",
+
+  "tetra.improvement.extractor_hone/potency.name": "Hone: Potency",
+  "tetra.improvement.extractor_hone/potency.description": "Increases the amount of blocks broken by the extractor effect",
 
   "tetra/schematic/double/basic_hammer/basic_hammer.name": "Hammer head",
   "tetra/schematic/double/basic_hammer/basic_hammer.description": "Craft a hammer head which can be used for crafting modular items, and for salvaging.\nThe §fhammer efficiency§r is based on the material. Material §fhardness§r increases §fdamage§r. Material §fdensity§r increases §fdamage§r but decreases §fattack speed§r.\nDouble hammer heads provide an additional §fhammer tier§r.",

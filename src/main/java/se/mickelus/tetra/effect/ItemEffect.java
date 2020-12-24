@@ -79,6 +79,12 @@ public class ItemEffect {
      */
     public static ItemEffect sweepingStrike = get("sweepingStrike");
 
+
+    /**
+     * Extractor: Harvesting a block breaks several adjacent blocks, direction/shape based on the hit face. Breaks 4.5 block per effect level.
+     */
+    public static ItemEffect extractor = get("extractor");
+
     /**
      * Unbreaking: Reduces the chance that the item will take durability damage. There is a 100 / ( level + 1 ) % chance
      * that the item will take damage. Uses the same mechanic as the vanilla does for the unbreaking enchantment.

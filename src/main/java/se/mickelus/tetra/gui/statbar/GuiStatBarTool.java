@@ -20,9 +20,6 @@ public class GuiStatBarTool extends GuiStatBar {
     private GuiTool icon;
     private IStatGetter levelGetter;
 
-    private GuiStatIndicator strikingIndicator;
-    private GuiStatIndicator sweepingIndicator;
-
     private boolean efficiencyVisibility;
 
     public GuiStatBarTool(int x, int y, int width, ToolType toolType) {
@@ -43,25 +40,11 @@ public class GuiStatBarTool extends GuiStatBar {
         icon = new GuiTool(-3, -3, toolType);
         addChild(icon);
 
-        sweepingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.sweeping", 1,
-                new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1), new TooltipGetterNone("tetra.stats.tool.sweeping.tooltip"));
-
-        if (toolType == ToolType.AXE) {
-            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
-                    new StatGetterEffectLevel(ItemEffect.strikingAxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.PICKAXE) {
-            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
-                    new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolTypes.cut) {
-            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
-                    new StatGetterEffectLevel(ItemEffect.strikingCut, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.SHOVEL) {
-            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
-                    new StatGetterEffectLevel(ItemEffect.strikingShovel, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.HOE) {
-            strikingIndicator = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
-                    new StatGetterEffectLevel(ItemEffect.strikingHoe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        }
+        StatGetterEffectLevel extractorGetter = new StatGetterEffectLevel(ItemEffect.extractor, 4.5);
+        setIndicators(
+                new StrikingStatIndicatorGui(toolType),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.extractor", 7, extractorGetter,
+                        new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)));
     }
 
     @Override
@@ -83,18 +66,6 @@ public class GuiStatBarTool extends GuiStatBar {
         }
 
         icon.update(level, color);
-    }
-
-    protected void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        indicatorGroup.clearChildren();
-
-        if (strikingIndicator != null && strikingIndicator.update(player, currentStack, previewStack, slot, improvement)) {
-            if (sweepingIndicator.update(player, currentStack, previewStack, slot, improvement)) {
-                indicatorGroup.addChild(sweepingIndicator);
-            } else {
-                indicatorGroup.addChild(strikingIndicator);
-            }
-        }
     }
 
     @Override
