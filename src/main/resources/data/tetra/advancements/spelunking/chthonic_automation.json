@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:hammer_base"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_automation.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_automation.description"
+        }
+    },
+    "parent": "tetra:spelunking/chthonic_hammer",
+    "criteria": {
+        "automation": {
+            "trigger": "impossible"
+        }
+    }
+}

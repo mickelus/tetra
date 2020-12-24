@@ -230,6 +230,7 @@ public class ModularCrossbowItem extends ModularItem {
 
     protected void fireProjectiles(ItemStack itemStack, World world, LivingEntity entity) {
         if (entity instanceof PlayerEntity && !world.isRemote) {
+            ItemStack advancementCopy = itemStack.copy();
             PlayerEntity player = (PlayerEntity) entity;
             int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot), 1);
             List<ItemStack> list = takeProjectiles(itemStack, count);
@@ -251,7 +252,7 @@ public class ModularCrossbowItem extends ModularItem {
                         SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1, 1);
 
                 if (player instanceof ServerPlayerEntity) {
-                    CriteriaTriggers.SHOT_CROSSBOW.test((ServerPlayerEntity) player, itemStack);
+                    CriteriaTriggers.SHOT_CROSSBOW.test((ServerPlayerEntity) player, advancementCopy);
 
                     player.addStat(Stats.ITEM_USED.get(this));
                 }

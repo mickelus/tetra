@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:water_bucket"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_cooldown.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_cooldown.description"
+        }
+    },
+    "parent": "tetra:spelunking/chthonic_crossbow",
+    "criteria": {
+        "cooldown": {
+            "trigger": "impossible"
+        }
+    }
+}
