@@ -229,8 +229,8 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         UpgradeSchematic newSchematic = tileEntity.getCurrentSchematic();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (newTarget.getItem() instanceof ModularItem && currentSchematic != null) {
-            newPreview = buildPreviewStack(currentSchematic, newTarget, selectedSlot, tileEntity.getMaterials());
+        if (newTarget.getItem() instanceof ModularItem && newSchematic != null) {
+            newPreview = buildPreviewStack(newSchematic, newTarget, currentSlot, tileEntity.getMaterials());
         }
 
         boolean targetItemChanged = !ItemStack.areItemStacksEqual(currentTarget, newTarget);
@@ -392,9 +392,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         if (schematic.isMaterialsValid(targetStack, slot, materials)) {
             ItemStack result = schematic.applyUpgrade(targetStack, materials, false, tileEntity.getCurrentSlot(), null);
 
-            boolean willReplace = currentSchematic.willReplace(targetStack, materials, slot);
+            boolean willReplace = schematic.willReplace(targetStack, materials, slot);
 
-            for (Map.Entry<ToolType, Integer> entry : currentSchematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
+            for (Map.Entry<ToolType, Integer> entry : schematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
                         tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), false);
             }
