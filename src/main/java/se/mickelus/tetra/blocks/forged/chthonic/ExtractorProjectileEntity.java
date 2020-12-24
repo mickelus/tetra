@@ -91,7 +91,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     protected void onImpact(RayTraceResult rayTraceResult) {
         if (!world.isRemote
                 && rayTraceResult.getType() == RayTraceResult.Type.BLOCK
-                && getMotion().lengthSquared() > 1) {
+                && getMotion().lengthSquared() > 0.95) {
             ServerPlayerEntity shooter = CastOptional.cast(func_234616_v_(), ServerPlayerEntity.class).orElse(null);
             BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getPos();
 

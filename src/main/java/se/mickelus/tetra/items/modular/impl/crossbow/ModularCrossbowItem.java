@@ -271,7 +271,7 @@ public class ModularCrossbowItem extends ModularItem {
                 projectileEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
             }
 
-            projectileEntity.func_234612_a_(player, player.rotationPitch, (float) yaw, 0.0F, projectileVelocity * 1F, 1.0F);
+            projectileEntity.func_234612_a_(player, player.rotationPitch, (float) yaw, 0.0F, projectileVelocity, 1.0F);
             world.addEntity(projectileEntity);
         } else if (ammoStack.getItem() instanceof FireworkRocketItem) {
             FireworkRocketEntity projectile = new FireworkRocketEntity(world, ammoStack, player, player.getPosX(),
