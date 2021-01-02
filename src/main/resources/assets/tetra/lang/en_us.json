@@ -239,6 +239,7 @@
   "tetra.stats.fierySelf.tooltip": "Using the item has a chance to set the wielder on fire, occurs less frequent in cold biomes\n \n§7Base chance: §e%s\n§7Fire duration: §e%s",
 
   "tetra.stats.enderReverb": "Reverb",
+  "tetra.stats.enderReverb.tooltip_short": "Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder",
   "tetra.stats.enderReverb.tooltip": "Using the item angers nearby endermen and nearby ender teleportation has a chance to also teleport the wielder\n \n§7Base chance: §e%s§7",
 
   "tetra.stats.toolbelt.quickslot": "Quickslots",
@@ -2071,7 +2072,7 @@
   "tetra.variant.spike/bone": "Bone spike",
 
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
-  "tetra.advancements.story.more_upgrades.description": "Craft a mallet from two sticks and two planks\n \n§8§oTetra begins",
+  "tetra.advancements.story.more_upgrades.description": "Craft a wooden hammer from two sticks and two planks\n \n§8§oTetra begins",
 
   "tetra.advancements.spelunking.root.title": "Spelunking",
   "tetra.advancements.spelunking.root.description": "Delve deep underground",
