@@ -68,13 +68,17 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             if (isA) {
                 if (moduleA == null) {
                     moduleA = newModule;
-                    markDirty();
+
+                    sync();
+
                     return true;
                 }
             } else {
                 if (moduleB == null) {
                     moduleB = newModule;
-                    markDirty();
+
+                    sync();
+
                     return true;
                 }
             }
@@ -88,7 +92,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             if (moduleA != null) {
                 Item item = moduleA.getItem();
                 moduleA = null;
-                markDirty();
+
+                sync();
 
                 return item;
             }
@@ -96,7 +101,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             if (moduleB != null) {
                 Item item = moduleB.getItem();
                 moduleB = null;
-                markDirty();
+
+                sync();
 
                 return item;
             }
@@ -153,8 +159,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
             applyConsumeEffect();
 
-            markDirty();
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+            sync();
         }
     }
 
@@ -176,7 +181,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                 redstonePower += world.getRedstonePower(pos.offset(direction), direction);
             }
 
-            markDirty();
+            sync();
         }
     }
 
@@ -218,7 +223,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                         } else {
                             head.activate();
                         }
-                    }); // todo: check that all interactions work with nullable player
+                    });
         }
     }
 
@@ -307,6 +312,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             ItemStack itemStack = slots[index];
             slots[index] = null;
 
+            sync();
+
             return itemStack;
         }
 
@@ -324,6 +331,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
         if (itemStack.getItem() instanceof ItemCellMagmatic
                 && index >= 0 && index < slots.length && slots[index] == null) {
             slots[index] = itemStack;
+
+            sync();
 
             return true;
         }
@@ -363,6 +372,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     @Override
     public void read(BlockState blockState, CompoundNBT compound) {
         super.read(blockState, compound);
+
+        slots = new ItemStack[2];
         if (compound.contains(slotsKey)) {
             ListNBT tagList = compound.getList(slotsKey, 10);
 
@@ -376,6 +387,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             }
         }
 
+        moduleA = null;
         if (compound.contains(moduleAKey)) {
             byte data = compound.getByte(moduleAKey);
             if (data < HammerEffect.values().length) {
@@ -383,6 +395,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
             }
         }
 
+        moduleB = null;
         if (compound.contains(moduleBKey)) {
             byte data = compound.getByte(moduleBKey);
             if (data < HammerEffect.values().length) {
@@ -391,6 +404,11 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
         }
 
         redstonePower = compound.getInt(redstoneKey);
+    }
+
+    private void sync() {
+        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+        markDirty();
     }
 
     @Override

@@ -124,6 +124,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 }
 
                 markDirty();
+                world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             }
 
             @Override
@@ -518,6 +519,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 transferStackToPlayer(player, i);
             }
             markDirty();
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
         });
     }
 
