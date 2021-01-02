@@ -9,6 +9,7 @@ version="${file.jarVersion}"
 displayName="Tetra"
 authors="Mickelus"
 description="Tetra revolves around modular items and attempts to blend it together with other concepts such as adventure and technology."
+credits="red1854th: korean localization"
 
 [[dependencies.tetra]] #optional
     modId="forge"
