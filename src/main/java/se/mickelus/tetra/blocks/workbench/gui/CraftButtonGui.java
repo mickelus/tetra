@@ -58,14 +58,12 @@ public class CraftButtonGui extends GuiClickable {
 
             if (!schematic.willReplace(itemStack, materials, slot)) {
                 float severity = schematic.getSeverity(itemStack, materials, slot);
-                Map<String, Float> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity);
+                List<String> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity);
 
                 if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip = TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_detail.destabilize_tooltip");
-                    tooltip += destabilizationChance.entrySet().stream()
-                            .map(entry -> String.format("\n  %s%s: %s%.0f%%", TextFormatting.WHITE, entry.getKey(), TextFormatting.YELLOW, entry.getValue() * 100))
-                            .collect(Collectors.joining());
+                    tooltip = TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
+                    tooltip += String.join("\n", destabilizationChance);
                 }
             } else {
                 boolean willRepair = CastOptional.cast(itemStack.getItem(), ModularItem.class)
@@ -108,14 +106,16 @@ public class CraftButtonGui extends GuiClickable {
         updateColors();
     }
 
-    private Map<String, Float> getDestabilizationChance(ItemStack itemStack, float severity) {
+    private List<String> getDestabilizationChance(ItemStack itemStack, float severity) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getMajorModules(itemStack))
                 .map(Arrays::stream)
                 .orElseGet(Stream::empty)
                 .filter(Objects::nonNull)
                 .filter(module -> module.getMagicCapacity(itemStack) < 0)
-                .collect(Collectors.toMap(module -> module.getName(itemStack), module -> module.getDestabilizationChance(itemStack, severity)));
+                .map(module -> String.format("  %s%s: %s%.0f%%", TextFormatting.WHITE, module.getName(itemStack), TextFormatting.YELLOW,
+                        module.getDestabilizationChance(itemStack, severity) * 100))
+                .collect(Collectors.toList());
     }
 
     private boolean hasEmptyMaterial(UpgradeSchematic schematic, ItemStack[] materials) {
