@@ -260,7 +260,7 @@
   "tetra.forged_container.compartment": "Compartment %s",
 
   "block.tetra.hammer_base": "Forge hammer",
-  "block.tetra.hammer_head.name": "Hammer head",
+  "block.tetra.hammer_head": "Hammer head",
 
   "block.tetra.forged_workbench": "Forged workbench",
 
