@@ -547,7 +547,7 @@
   "tetra.forged_container.compartment_2": "THRD",
 
   "block.tetra.hammer_base": "Forge Hammer",
-  "block.tetra.hammer_head.name": "Hammer Head",
+  "block.tetra.hammer_head": "Hammer Head",
 
   "block.tetra.forged_workbench": "Forged Workbench",
 
