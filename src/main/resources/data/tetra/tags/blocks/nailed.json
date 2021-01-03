@@ -17,6 +17,7 @@
         "#forge:fences/wooden",
         "#forge:chests/wooden",
         "tetra:basic_workbench",
+        "minecraft:crafting_table",
         "minecraft:bookshelf",
         "minecraft:trapped_chest",
         "minecraft:ladder",
