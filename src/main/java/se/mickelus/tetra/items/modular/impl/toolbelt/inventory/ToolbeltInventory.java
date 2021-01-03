@@ -228,7 +228,8 @@ public class ToolbeltInventory implements IInventory {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemStackTagsEqual(itemStack, storedStack)
+            if (ItemStack.areItemsEqual(itemStack, storedStack)
+                    && ItemStack.areItemStackTagsEqual(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

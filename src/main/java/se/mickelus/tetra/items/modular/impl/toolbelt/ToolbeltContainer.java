@@ -119,7 +119,7 @@ public class ToolbeltContainer extends Container {
             Slot slot = this.inventorySlots.get(i);
             if (slot.isItemValid(incomingStack)) {
                 ItemStack slotStack = slot.getStack();
-                if (ItemStack.areItemStackTagsEqual(slotStack, incomingStack)) {
+                if (ItemStack.areItemsEqual(slotStack, incomingStack) && ItemStack.areItemStackTagsEqual(slotStack, incomingStack)) {
                     if (slotStack.getCount() + incomingStack.getCount() < slot.getItemStackLimit(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);
@@ -163,7 +163,8 @@ public class ToolbeltContainer extends Container {
                     if (slot.getStack().isEmpty()) {
                         slot.putStack(player.inventory.getItemStack());
                         player.inventory.setItemStack(ItemStack.EMPTY);
-                    } else if (ItemStack.areItemStackTagsEqual(slot.getStack(), player.inventory.getItemStack())) {
+                    } else if (ItemStack.areItemsEqual(slot.getStack(), player.inventory.getItemStack())
+                            && ItemStack.areItemStackTagsEqual(slot.getStack(), player.inventory.getItemStack())) {
                         int moveAmount = Math.min(player.inventory.getItemStack().getCount(), slot.getSlotStackLimit() - slot.getStack().getCount());
                         slot.getStack().grow(moveAmount);
                         player.inventory.getItemStack().shrink(moveAmount);
