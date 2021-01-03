@@ -34,10 +34,10 @@ archivesBaseName = "tetra"
 repositories {
     mavenLocal()
     maven { url = "https://maven.theillusivec4.top/" }
-//    maven {
-//        name = "CurseForge"
-//        url = "https://minecraft.curseforge.com/api/maven/"
-//    }
+    maven {
+        name = 'patchouli/botania'
+        url = 'http://maven.blamejared.com/'
+    }
 }
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -102,6 +102,10 @@ dependencies {
     }
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+
+    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
+//    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
+//    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
 //    compile fg.deobf("curse.maven:apotheosis:2906078")
 //    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")

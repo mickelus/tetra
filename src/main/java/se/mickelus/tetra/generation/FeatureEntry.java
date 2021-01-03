@@ -74,7 +74,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     }
 
     public void setup(MinecraftServer server) {
-        templateManager = server.func_240792_aT_();
+        templateManager = server.getTemplateManager();
         biomeRegistry = server.func_244267_aX().getRegistry(Registry.BIOME_KEY);
     }
 
@@ -135,7 +135,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
 
     @Override
-    public boolean func_241855_a(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
+    public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
         Biome biome = world.getBiome(pos);
         ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
 

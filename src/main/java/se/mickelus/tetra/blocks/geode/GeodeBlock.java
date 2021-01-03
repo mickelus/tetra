@@ -48,10 +48,10 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
-            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.field_241882_a, getDefaultState(), size);
+            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, getDefaultState(), size);
             configuredFeature = Feature.ORE.withConfiguration(config)
-                    .func_242733_d(maxHeight)
-                    .func_242728_a()
+                    .range(maxHeight)
+                    .square()
                     .func_242732_c(density);
         }
     }

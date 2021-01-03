@@ -145,6 +145,22 @@
             "effects": {
                 "intuit": 2
             }
+        },
+        {
+            "key": "double_socket/mana_rune",
+            "integrity": -1,
+            "glyph": {
+                "tint": "c16bc8",
+                "textureX": 80,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/double/binding/socket/pristine",
+                "tint": "9a3aa8"
+            }],
+            "effects": {
+                "manaRepair": [1, 0.0025]
+            }
         }
     ]
 }

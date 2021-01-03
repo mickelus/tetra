@@ -13,9 +13,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.properties.IToolProvider;
@@ -123,7 +123,7 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
-        if (IntegrationHelper.isCuriosLoaded) {
+        if (CuriosCompat.isLoaded) {
             Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
             if (maybeToolbelt.isPresent()) {
                 return maybeToolbelt.get().right;

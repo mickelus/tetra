@@ -35,3 +35,9 @@ credits="red1854th: korean localization"
     versionRange="[4,)"
     ordering="AFTER"
     side="BOTH"
+[[dependencies.tetra]]
+    modId="botania"
+    mandatory=false
+    versionRange="[1.16,)"
+    ordering="AFTER"
+    side="BOTH"

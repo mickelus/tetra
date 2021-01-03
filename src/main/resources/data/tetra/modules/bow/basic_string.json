@@ -24,7 +24,7 @@
         "tetra:enchantment/cursed_obedience",
         "tetra:bow/string/shared",
         "tetra:bow/string/shared_hone",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {

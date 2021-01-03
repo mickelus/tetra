@@ -14,6 +14,7 @@ public class LabelGetterBasic implements ILabelGetter {
     protected boolean inverted;
 
     public static final ILabelGetter integerLabel = new LabelGetterBasic("%.0f", "%+.0f");
+    public static final ILabelGetter integerLabelInverted = new LabelGetterBasic("%.0f", "%+.0f", true);
     public static final ILabelGetter decimalLabel = new LabelGetterBasic("%.02f", "%+.02f");
     public static final ILabelGetter singleDecimalLabel = new LabelGetterBasic("%.01f", "%+.01f");
     public static final ILabelGetter decimalLabelInverted = new LabelGetterBasic("%.02f", "%+.02f", true);

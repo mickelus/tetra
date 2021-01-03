@@ -14,9 +14,7 @@ import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 public class HoloStatsGui extends GuiElement {
