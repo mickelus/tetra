@@ -58,6 +58,7 @@ public class RackTile extends TileEntity {
             if (slotStack.isEmpty()) {
                 ItemStack remainder = handler.insertItem(slot, heldStack.copy(), false);
                 playerEntity.setHeldItem(hand, remainder);
+                playerEntity.playSound(SoundEvents.BLOCK_WOOD_PLACE, 0.5f, 0.7f);
             } else {
                 ItemStack extractedStack = handler.extractItem(slot, handler.getSlotLimit(slot), false);
                 if (playerEntity.inventory.addItemStackToInventory(extractedStack)) {

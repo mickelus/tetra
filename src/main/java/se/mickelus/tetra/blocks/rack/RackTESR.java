@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Direction;
@@ -17,6 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 @OnlyIn(Dist.CLIENT)
@@ -67,6 +69,9 @@ public class RackTESR extends TileEntityRenderer<RackTile> {
             } else if (itemStack.getItem() instanceof ModularBladedItem || itemStack.getItem() instanceof SwordItem) {
                 matrixStack.translate(0, -0.2, 0);
                 matrixStack.rotate(Vector3f.ZP.rotationDegrees(135.0F));
+            } else if (itemStack.getItem() instanceof ModularCrossbowItem || itemStack.getItem() instanceof CrossbowItem) {
+                matrixStack.translate(0, -0.2, 0);
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(225.0F));
             } else if (model.isGui3d()) {
                 matrixStack.rotate(Vector3f.ZP.rotationDegrees(-45.0F));
             } else {
