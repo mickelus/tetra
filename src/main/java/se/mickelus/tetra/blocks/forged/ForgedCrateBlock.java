@@ -32,7 +32,6 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -64,8 +63,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
                     ForgedCrateBlock::attemptBreakHammer),
     };
 
-    public static final ResourceLocation pryBonusLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/forged_crate_pry_bonus");
-    public static final ResourceLocation hammerbonusLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/forged_crate_hammer_bonus");
+    public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
 
     private static final VoxelShape shape = makeCuboidShape(1, 0, 1, 15, 14, 15);
     private static final VoxelShape[] shapesNormal = new VoxelShape[4];
@@ -129,12 +127,9 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
         } else {
             boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false);
             if (didBreak && world instanceof ServerWorld) {
-                ResourceLocation lootTable = ToolTypes.hammer.equals(toolType) ? hammerbonusLootTable : pryBonusLootTable;
-
-                BlockInteraction.getLoot(lootTable, player, hand, (ServerWorld) world, blockState)
+                BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerWorld) world, blockState)
                         .forEach(lootStack -> spawnAsEntity(world, pos, lootStack));
             }
-
         }
 
         return true;
