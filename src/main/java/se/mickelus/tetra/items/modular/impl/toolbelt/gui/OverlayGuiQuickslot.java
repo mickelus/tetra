@@ -8,6 +8,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.HandSide;
 import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringOutline;
@@ -109,6 +110,8 @@ public class OverlayGuiQuickslot extends GuiElement {
     }
 
     public Hand getHand() {
-        return hitRight.hasFocus() ? Hand.MAIN_HAND : Hand.OFF_HAND;
+        return (Minecraft.getInstance().player.getPrimaryHand() == HandSide.RIGHT) == hitRight.hasFocus()
+                ? Hand.MAIN_HAND
+                : Hand.OFF_HAND;
     }
 }
