@@ -5,6 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -21,12 +23,13 @@ import vazkii.botania.api.mana.ManaItemHandler;
 public class ManaRepair {
     public static ItemEffect effect = ItemEffect.get("manaRepair");
 
-    public static final IStatGetter statGetter = new ManaRepairStatGetter();
-    public static final GuiStatBar statBar = new GuiStatBar(0, 0, GuiStats.barLength, I18n.format("tetra.stats.manaRepair"),
-            0, 400, false, false, true, statGetter, LabelGetterBasic.integerLabelInverted,
-            new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", statGetter));
-
+    @OnlyIn(Dist.CLIENT)
     public static void clientInit() {
+        IStatGetter statGetter = new ManaRepairStatGetter();
+        GuiStatBar statBar = new GuiStatBar(0, 0, GuiStats.barLength, I18n.format("tetra.stats.manaRepair"),
+                0, 400, false, false, true, statGetter, LabelGetterBasic.integerLabelInverted,
+                new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", statGetter));
+
         WorkbenchStatsGui.addBar(statBar);
         HoloStatsGui.addBar(statBar);
     }
