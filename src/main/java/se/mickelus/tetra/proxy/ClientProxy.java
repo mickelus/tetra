@@ -14,6 +14,7 @@ import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
+import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
@@ -41,6 +42,8 @@ public class ClientProxy implements IProxy {
         if (ConfigHandler.development.get()) {
             ClientRegistry.bindTileEntityRenderer(TileEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
         }
+
+        BotaniaCompat.clientInit();
     }
 
     @Override

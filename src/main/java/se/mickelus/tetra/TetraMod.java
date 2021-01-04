@@ -163,8 +163,6 @@ public class TetraMod {
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
-        BotaniaCompat.init();
-
         blocks = new Block[]{
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),

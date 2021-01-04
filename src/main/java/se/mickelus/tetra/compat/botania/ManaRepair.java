@@ -26,7 +26,7 @@ public class ManaRepair {
             0, 400, false, false, true, statGetter, LabelGetterBasic.integerLabelInverted,
             new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", statGetter));
 
-    public static void init() {
+    public static void clientInit() {
         WorkbenchStatsGui.addBar(statBar);
         HoloStatsGui.addBar(statBar);
     }

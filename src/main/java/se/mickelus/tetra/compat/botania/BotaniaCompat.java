@@ -6,9 +6,9 @@ public class BotaniaCompat {
     public static final String modId = "botania";
     public static final Boolean isLoaded = ModList.get().isLoaded(modId);
 
-    public static void init() {
+    public static void clientInit() {
         if (isLoaded) {
-            ManaRepair.init();
+            ManaRepair.clientInit();
         }
     }
 }
