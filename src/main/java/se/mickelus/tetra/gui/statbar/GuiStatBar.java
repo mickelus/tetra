@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui.statbar;
 
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -27,6 +28,7 @@ public class GuiStatBar extends GuiStatBase {
     protected double min;
     protected double max;
 
+    protected String labelKey;
     protected GuiString labelString;
     protected GuiString valueString;
     protected GuiBar bar;
@@ -45,20 +47,22 @@ public class GuiStatBar extends GuiStatBase {
     protected ILabelGetter labelGetter;
     protected ITooltipGetter tooltipGetter;
 
-    public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented,
+    public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented,
             IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
-        this(x, y, barLength, label, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
+        this(x, y, barLength, labelKey, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
     }
 
-    public GuiStatBar(int x, int y, int barLength, String label, double min, double max, boolean segmented, boolean split,
+    public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
             boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         super(x, y, barLength, 12);
 
         this.min = min;
         this.max = max;
 
-        labelString = new GuiStringSmall(0, 0, label);
-        valueString = new GuiStringSmall(0, 0, label);
+        this.labelKey = labelKey;
+
+        labelString = new GuiStringSmall(0, 0, "");
+        valueString = new GuiStringSmall(0, 0, "");
 
         if (segmented) {
             bar = new GuiBarSegmented(0, 0, barLength + 1, min, max, inverted);
@@ -109,6 +113,8 @@ public class GuiStatBar extends GuiStatBase {
     public void update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         double value;
         double diffValue;
+
+        labelString.setString(I18n.format(labelKey));
 
         if (!previewStack.isEmpty()) {
             value = statGetter.getValue(player, currentStack);

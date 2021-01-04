@@ -26,7 +26,7 @@ public class ManaRepair {
     @OnlyIn(Dist.CLIENT)
     public static void clientInit() {
         IStatGetter statGetter = new ManaRepairStatGetter();
-        GuiStatBar statBar = new GuiStatBar(0, 0, GuiStats.barLength, I18n.format("tetra.stats.manaRepair"),
+        GuiStatBar statBar = new GuiStatBar(0, 0, GuiStats.barLength, "tetra.stats.manaRepair",
                 0, 400, false, false, true, statGetter, LabelGetterBasic.integerLabelInverted,
                 new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", statGetter));
 
