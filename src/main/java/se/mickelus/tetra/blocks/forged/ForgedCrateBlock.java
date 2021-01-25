@@ -78,7 +78,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     public ForgedCrateBlock() {
         super(Properties.create(ForgedBlockCommon.forgedMaterial)
                 .sound(SoundType.METAL)
-                .hardnessAndResistance(7));
+                .hardnessAndResistance(5));
 
         setRegistryName(unlocalizedName);
 
