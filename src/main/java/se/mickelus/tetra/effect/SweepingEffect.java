@@ -41,7 +41,7 @@ public class SweepingEffect {
                 .filter(entity -> entity != attacker)
                 .filter(entity -> entity != target)
                 .filter(entity -> !attacker.isOnSameTeam(entity))
-                .filter(entity -> attacker.getDistanceSq(entity) < (range + reach) * (range + reach))
+                .filter(entity -> attacker.getDistanceSq(entity) < range * range)
                 .forEach(entity -> {
                     entity.applyKnockback(knockback,
                             MathHelper.sin(attacker.rotationYaw * (float) Math.PI / 180F),
