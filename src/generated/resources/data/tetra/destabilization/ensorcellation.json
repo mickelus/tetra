@@ -32,14 +32,6 @@
     "improvementKey": "enchantment/ensorcellation_frost_rebuke"
   },
   {
-    "destabilizationKey": "destabilized/ensorcellation_exp_boost",
-    "minLevel": 1,
-    "maxLevel": 2,
-    "requiredMod": "ensorcellation",
-    "probability": 0.04,
-    "improvementKey": "enchantment/ensorcellation_exp_boost"
-  },
-  {
     "destabilizationKey": "destabilized/ensorcellation_gourmand",
     "minLevel": 1,
     "maxLevel": 1,
