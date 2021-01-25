@@ -176,12 +176,15 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
     public void updateRedstonePower() {
         if (world != null) {
-            redstonePower = 0;
+            int updatedPower = 0;
             for(Direction direction : Direction.values()) {
-                redstonePower += world.getRedstonePower(pos.offset(direction), direction);
+                updatedPower += world.getRedstonePower(pos.offset(direction), direction);
             }
 
-            sync();
+            if (updatedPower != redstonePower){
+                redstonePower = updatedPower;
+                sync();
+            }
         }
     }
 
