@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -128,6 +129,12 @@ public class EffectHelper {
                     enchantment.onEntityDamaged(attacker, target, level);
                 });
             }
+        }
+
+        // fire aspect has to be applied separately :o
+        int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
+        if (fireAspectLevel > 0) {
+            target.setFire(fireAspectLevel * 4);
         }
     }
 }
