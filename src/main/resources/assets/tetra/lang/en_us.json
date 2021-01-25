@@ -2250,6 +2250,7 @@
   "tetra.improvement.enchantment/knockback.name": "Knockback",
   "tetra.improvement.destabilized/knockback.name": "§5Destabilized: Knockback",
   "tetra.improvement.destabilized/knockback.description": "Reduces the effect of the Knockback enchantment",
+  "tetra.improvement.enchantment/mending.name": "Mending",
   "tetra.improvement.enchantment/fire_aspect.name": "Fire Aspect",
   "tetra.improvement.destabilized/fire_aspect.name": "§5Destabilized: Fire Aspect",
   "tetra.improvement.destabilized/fire_aspect.description": "Reduces the effect of the Fire Aspect enchantment",
