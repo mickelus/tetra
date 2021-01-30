@@ -120,6 +120,8 @@ public class ItemModularHandheld extends ModularItem {
             if (extractorLevel > 0) {
                 ExtractorEffect.breakBlocks(this, itemStack, extractorLevel, world, state, pos, entity);
             }
+
+            CritEffect.onBlockBreak(entity);
         }
 
         return true;

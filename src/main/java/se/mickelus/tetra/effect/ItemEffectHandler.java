@@ -1,6 +1,5 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -9,7 +8,6 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.particles.BlockParticleData;
@@ -26,15 +24,16 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
+import se.mickelus.tetra.effect.potion.MiningSpeedPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -219,8 +218,6 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onCriticalHit(CriticalHitEvent event) {
         Optional.ofNullable(event.getEntityLiving())
-                .filter(entity -> entity instanceof PlayerEntity)
-                .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
@@ -237,10 +234,7 @@ public class ItemEffectHandler {
 
                     int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
                     if (critLevel > 0) {
-                        if (event.getEntityLiving().getRNG().nextFloat() < critLevel * 0.01) {
-                            event.setDamageModifier(Math.max((float) getEffectEfficiency(itemStack, ItemEffect.criticalStrike), event.getDamageModifier()));
-                            event.setResult(Event.Result.ALLOW);
-                        }
+                        CritEffect.critEntity(event, itemStack, critLevel);
                     }
                 });
     }
@@ -275,12 +269,13 @@ public class ItemEffectHandler {
                     boolean didStrike = StrikingEffect.causeEffect(breakingPlayer, itemStack, item, world, pos, blockState);
                     if (didStrike) {
                         event.setCanceled(true);
+                        return;
                     }
 
                     if (!event.getWorld().isRemote) {
                         int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
                         if (critLevel > 0) {
-                            if (critBlock(world, breakingPlayer, pos, blockState, itemStack, critLevel)) {
+                            if (CritEffect.critBlock(world, breakingPlayer, pos, blockState, itemStack, critLevel)) {
                                 event.setCanceled(true);
                             }
                         }
@@ -290,43 +285,6 @@ public class ItemEffectHandler {
                         }
                     }
                 });
-    }
-
-    private boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
-        if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
-                && blockState.getBlockHardness(world, pos) > -1
-                && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
-
-            ToolType tool = blockState.getHarvestTool();
-            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
-
-            if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
-                EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
-                itemStack.damageItem(2, breakingPlayer, t -> {});
-
-                ((ModularItem) itemStack.getItem()).tickProgression(breakingPlayer, itemStack, 1);
-
-                if (breakingPlayer instanceof ServerPlayerEntity) {
-                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                }
-
-                if (world instanceof ServerWorld) {
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.CRIT,
-                            pos.getX() + 0.5, // world.rand.nextGaussian(),
-                            pos.getY() + 0.5, // world.rand.nextGaussian(),
-                            pos.getZ() + 0.5, // world.rand.nextGaussian(),
-                            12,
-                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
-                            0.3D + world.rand.nextDouble() * 0.3D,
-                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
-                            0.3);
-                }
-
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @SubscribeEvent

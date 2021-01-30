@@ -7,11 +7,13 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
@@ -23,7 +25,7 @@ import se.mickelus.tetra.util.RotationHelper;
 import java.util.Optional;
 
 public class ExtractorEffect {
-    public static void breakBlocks(ModularItem item, ItemStack itemStack, int effectLevel, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public static void breakBlocks(ModularItem item, ItemStack itemStack, int effectLevel, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
         PlayerEntity player = CastOptional.cast(entity, PlayerEntity.class).orElse(null);
 
         if (effectLevel > 0) {
@@ -42,6 +44,13 @@ public class ExtractorEffect {
 
             float refHardness = state.getBlockHardness(world, pos);
             ToolType refTool = ItemModularHandheld.getEffectiveTool(state);
+
+            double critMultiplier = CritEffect.rollMultiplier(entity.getRNG(), item, itemStack);
+            if (critMultiplier != 1) {
+                effectLevel *= critMultiplier;
+                world.spawnParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+            }
+
 
             if (refTool != null && item.getToolLevel(itemStack, refTool) > 0) {
                 breakRecursive(world, player, item, itemStack, direction, pos, refHardness, refTool, effectLevel);

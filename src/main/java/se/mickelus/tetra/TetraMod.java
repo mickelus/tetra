@@ -57,7 +57,6 @@ import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
-import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
@@ -65,6 +64,7 @@ import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
+import se.mickelus.tetra.effect.potion.MiningSpeedPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
@@ -341,6 +341,7 @@ public class TetraMod {
             event.getRegistry().register(new BleedingPotionEffect());
             event.getRegistry().register(new EarthboundPotionEffect());
             event.getRegistry().register(new StunPotionEffect());
+//            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 
         @SubscribeEvent
