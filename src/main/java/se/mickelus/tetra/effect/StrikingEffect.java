@@ -7,9 +7,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.ToolTypes;
@@ -181,9 +183,19 @@ public class StrikingEffect {
         final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
         final boolean alternate = strikeCounter % 2 == 0;
 
-        float efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
+        double efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
                 .map(item -> item.getToolEfficiency(toolStack, tool))
                 .orElse(0f);
+
+        double critMultiplier = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
+                .map(item -> CritEffect.rollMultiplier(breakingPlayer.getRNG(), item, toolStack))
+                .orElse(1d);
+
+        if (critMultiplier != 1) {
+            efficiency *= critMultiplier;
+            ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
+                    originPos.getX() + .5f, originPos.getY() + .5f, originPos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+        }
 
         breakingPlayer.spawnSweepParticles();
 

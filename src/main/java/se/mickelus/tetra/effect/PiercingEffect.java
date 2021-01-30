@@ -7,15 +7,15 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
-import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
@@ -26,10 +26,16 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.Optional;
 
 public class PiercingEffect {
-    public static void pierceBlocks(ModularItem item, ItemStack itemStack, int pierceAmount, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public static void pierceBlocks(ModularItem item, ItemStack itemStack, int pierceAmount, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
         PlayerEntity player = CastOptional.cast(entity, PlayerEntity.class).orElse(null);
 
         if (pierceAmount > 0) {
+            double critMultiplier = CritEffect.rollMultiplier(entity.getRNG(), item, itemStack);
+            if (critMultiplier != 1) {
+                pierceAmount *= critMultiplier;
+                world.spawnParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+            }
+
             Vector3d entityPosition = entity.getEyePosition(0);
             double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.REACH_DISTANCE.get()))
                     .map(ModifiableAttributeInstance::getValue)

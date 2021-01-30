@@ -19,6 +19,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.effect.CritEffect;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -75,8 +77,16 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         thrownStack = thrownStackIn.copy();
         dataManager.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyaltyModifier(thrownStackIn));
 
+
         CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).ifPresent(item -> {
-            setPierceLevel((byte) getEffectLevel(ItemEffect.piercing));
+            double critModifier = CritEffect.rollMultiplier(thrower.getRNG(), item, thrownStack);
+            setPierceLevel((byte) Math.round(getEffectLevel(ItemEffect.piercing) * critModifier));
+
+            if (critModifier != 1d && world instanceof ServerWorld) {
+                Vector3d pos = thrower.getEyePosition(0).add(thrower.getLookVec());
+                ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
+                        pos.getX(), pos.getY(), pos.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
+            }
         });
 
         if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
@@ -201,10 +211,9 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                     item.applyBreakEffects(thrownStack, world, blockState, pos, (PlayerEntity) shooter);
 
                     hitBlocks++;
-                    boolean piercingHarvest = getEffectLevel(ItemEffect.piercingHarvest) > 0;
-                    if (piercingHarvest && hitBlocks < getEffectLevel(ItemEffect.piercing)) {
+                    boolean canPierce = getEffectLevel(ItemEffect.piercingHarvest) > 0 && hitBlocks < getPierceLevel();
+                    if (canPierce) {
                         setMotion(getMotion().normalize().scale(0.8f));
-
                     } else {
                         dealtDamage = true;
                         super.onImpact(rayTraceResult);
@@ -212,7 +221,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
 
                     breakBlock((PlayerEntity) shooter, pos, blockState);
 
-                    if (piercingHarvest && hitBlocks < getEffectLevel(ItemEffect.piercing)) {
+                    if (canPierce) {
                         hitAdditional();
                     }
 
@@ -289,6 +298,12 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             LivingEntity targetLivingEntity = (LivingEntity)target;
             damage += EnchantmentHelper.getModifierForCreature(thrownStack, targetLivingEntity.getCreatureAttribute());
 
+            double critModifier = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
+                    .map(item -> CritEffect.rollMultiplier(targetLivingEntity.getRNG(), item, thrownStack))
+                    .orElse(1d);
+
+            damage *= critModifier;
+
             if (target.attackEntityFrom(damagesource, (float) damage)) {
                 if (shooter instanceof LivingEntity) {
                     EnchantmentHelper.applyThornEnchantments(targetLivingEntity, shooter);
@@ -296,6 +311,12 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
                 }
 
                 arrowHit(targetLivingEntity);
+
+                if (critModifier != 1d && world instanceof ServerWorld) {
+                    Vector3d hitVec = raytrace.getHitVec();
+                    ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
+                            hitVec.getX(), hitVec.getY(), hitVec.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
+                }
             }
         }
 

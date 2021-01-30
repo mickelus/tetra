@@ -277,7 +277,8 @@
   "tetra.stats.suspend.tooltip": "Projectiles have §e100%%§r increased initial velocity and ignores gravity when fired from a fully drawn bow",
 
   "tetra.stats.criticalStrike": "Crit",
-  "tetra.stats.criticalStrike.tooltip": "Has a chance to critically hit when hitting entities or breaking blocks.\n \n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n \n§7This effect cannot occur for blocks that are exceptionally hard",
+  "tetra.stats.criticalStrike.tooltip": "Has a chance to critically hit when hitting entities or breaking blocks.\n \n§e%s§7 chance to deal §e%s §7damage\n§e%s§7 chance to instantly break blocks\n§e%s§7 chance to make effects §e%s §7effective",
+  "tetra.stats.criticalStrike.tooltip_extended": "Only blocks that take less than 1.5 seconds to break have a chance to instantly break (block hardness < tool efficiency)\n \n§7Effects capable of critical hits: piercing, sweeping harvest, extractor",
 
   "tetra.stats.holo_speed": "Cooldown",
   "tetra.stats.holo_speed.tooltip": "§e%sx§r cooldown multiplier for abilities and usages",
