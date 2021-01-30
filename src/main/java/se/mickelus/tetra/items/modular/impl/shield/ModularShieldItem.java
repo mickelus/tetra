@@ -104,6 +104,11 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
+    public double getAbilityBaseDamage(ItemStack itemStack) {
+        return getAttributeValue(itemStack, TetraAttributes.abilityDamage.get());
+    }
+
+    @Override
     public double getCooldownBase(ItemStack itemStack) {
         return getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get());
     }
