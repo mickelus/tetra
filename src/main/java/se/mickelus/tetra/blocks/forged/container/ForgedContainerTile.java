@@ -62,19 +62,18 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         lockIntegrity = new int[lockCount];
     }
 
-    public ForgedContainerTile getOrDelegate() {
+    public Optional<ForgedContainerTile> getOrDelegate() {
         if (world != null && getBlockState().getBlock() instanceof ForgedContainerBlock && isFlipped()) {
-            return TileEntityOptional.from(world, pos.offset(getFacing().rotateYCCW()), ForgedContainerTile.class)
-                    .orElse(null);
+            return TileEntityOptional.from(world, pos.offset(getFacing().rotateYCCW()), ForgedContainerTile.class);
         }
-        return this;
+        return Optional.of(this);
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return getOrDelegate().handler.cast();
+            return getOrDelegate().map(primary -> primary.handler.<T>cast()).orElseGet(LazyOptional::empty);
         }
         return super.getCapability(cap, side);
     }
