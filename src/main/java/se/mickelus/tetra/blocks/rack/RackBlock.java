@@ -219,7 +219,7 @@ public class RackBlock extends TetraWaterloggedBlock {
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
 
-        if (optional.isPresent()) {
+        if (optional.isPresent() && player != null) {
             IInventory inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
@@ -244,7 +244,7 @@ public class RackBlock extends TetraWaterloggedBlock {
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
 
-        if (optional.isPresent()) {
+        if (optional.isPresent() && player != null) {
             IInventory inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
