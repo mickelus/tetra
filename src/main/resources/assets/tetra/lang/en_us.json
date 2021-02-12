@@ -97,7 +97,8 @@
   "tetra.stats.level_suffix": "level",
 
   "tetra.stats.reach": "Reach",
-  "tetra.stats.reach.tooltip": "This item can hit blocks & entities up to §e%s§r blocks away",
+  "tetra.stats.reach.tooltip": "This item can reach blocks up to §e%s§r blocks away, and entities up to §e%s§r blocks away",
+  "tetra.stats.reach.tooltip_blocks": "This item can reach blocks up to §e%s§r blocks away, does not affect the distance at which entities can be hit",
 
   "tetra.stats.reach_normalized": "Reach",
   "tetra.stats.reach_normalized.tooltip": "Changes how far this item can reach by §e%s§r blocks",

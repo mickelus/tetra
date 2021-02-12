@@ -19,6 +19,7 @@ import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
+import se.mickelus.tetra.properties.ReachEntityFix;
 
 import java.util.Arrays;
 
@@ -44,6 +45,8 @@ public class ClientProxy implements IProxy {
         }
 
         BotaniaCompat.clientInit();
+
+        MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
     }
 
     @Override

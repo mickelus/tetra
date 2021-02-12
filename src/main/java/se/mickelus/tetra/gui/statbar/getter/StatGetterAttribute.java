@@ -21,6 +21,8 @@ public class StatGetterAttribute implements IStatGetter {
     private boolean ignoreBase = false;
     private boolean ignoreBonuses = false;
 
+    private double offset = 0;
+
     public StatGetterAttribute(Attribute attribute) {
         this.attribute = attribute;
     }
@@ -31,6 +33,10 @@ public class StatGetterAttribute implements IStatGetter {
         this.ignoreBase = ignoreBase;
     }
 
+    public StatGetterAttribute withOffset(double offset) {
+        this.offset = offset;
+        return this;
+    }
 
     public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses) {
         this(attribute);
@@ -43,7 +49,7 @@ public class StatGetterAttribute implements IStatGetter {
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
         double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
                 .map(ModifiableAttributeInstance::getBaseValue)
-                .orElse(0d);
+                .orElse(0d) - offset;
         return getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue;
     }
 
@@ -56,7 +62,7 @@ public class StatGetterAttribute implements IStatGetter {
                 .map(item -> ignoreBonuses ? item.getModuleAttributes(itemStack) : item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(modifiers -> (AttributeHelper.getAdditionAmount(modifiers) + baseValue) * AttributeHelper.getMultiplyAmount(modifiers))
-                .orElse(baseValue);
+                .orElse(baseValue) + offset;
     }
 
     @Override

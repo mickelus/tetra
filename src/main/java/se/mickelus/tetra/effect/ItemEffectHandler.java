@@ -247,10 +247,9 @@ public class ItemEffectHandler {
                 && !event.isCanceled()
                 && mc.player.getHeldItemMainhand().getItem() instanceof ModularItem
                 && mc.objectMouseOver != null
-                && RayTraceResult.Type.MISS.equals(Minecraft.getInstance().objectMouseOver.getType())) {
-            if (getEffectLevel(mc.player.getHeldItemMainhand(), ItemEffect.truesweep) > 0) {
-                SweepingEffect.triggerTruesweep();
-            }
+                && RayTraceResult.Type.MISS.equals(mc.objectMouseOver.getType())
+                && getEffectLevel(mc.player.getHeldItemMainhand(), ItemEffect.truesweep) > 0) {
+            SweepingEffect.triggerTruesweep();
         }
     }
 

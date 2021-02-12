@@ -65,6 +65,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableExtractor;
 
     public static ForgeConfigSpec.BooleanValue enableLookTrigger;
+    public static ForgeConfigSpec.BooleanValue enableReach;
 
     static {
         // misc config
@@ -111,6 +112,11 @@ public class ConfigHandler {
                 .comment("Enable the look advancement trigger, used for some advancements. ")
                 .worldRestart()
                 .define("look_trigger", true);
+
+        enableReach = builder
+                .comment("Allow the reach attribute to modify the distance at which players can hit entities")
+                .worldRestart()
+                .define("entity_reach", true);
 
         builder.pop();
 

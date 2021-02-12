@@ -70,10 +70,10 @@ public class GuiStats {
             abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ability_speed_normalized.tooltip", abilityCooldownGetter));
 
-    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get());
+    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get()).withOffset(-0.5);
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, "tetra.stats.reach",
             0, 20, false, reachGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.reach.tooltip", reachGetter));
+            new TooltipGetterReach(reachGetter));
 
     public static final IStatGetter reachGetterNormalized = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), true);
     public static final GuiStatBar reachNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.reach_normalized",
