@@ -56,7 +56,7 @@
                 "generic.attack_speed": -1.7
             },
             "effects": {
-                "sweeping": [2, 1],
+                "sweeping": [2, 0.5],
                 "truesweep": 1
             },
             "tools": {

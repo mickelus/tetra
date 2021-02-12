@@ -12,7 +12,7 @@
                 "forge:reach_distance": 1.5
             },
             "effects": {
-                "sweeping": [0, 2]
+                "sweeping": [0, 1]
             },
             "extract": {
                 "durability": 0.08,
