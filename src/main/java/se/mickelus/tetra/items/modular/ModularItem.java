@@ -364,6 +364,10 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         return NBTHelper.getTag(itemStack).getInt(honeCountKey);
     }
 
+    public boolean canGainHoneProgress() {
+        return canHone;
+    }
+
     public static boolean isHoneable(ItemStack itemStack) {
         return NBTHelper.getTag(itemStack).contains(honeAvailableKey);
     }

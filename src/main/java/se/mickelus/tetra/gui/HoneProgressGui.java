@@ -11,6 +11,7 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.statbar.GuiBar;
@@ -43,7 +44,11 @@ public class HoneProgressGui extends GuiElement {
     }
 
     public void update(ItemStack itemStack, boolean isPlaceholder) {
-        boolean shouldShow = !isPlaceholder && itemStack.getItem() instanceof ModularItem;
+        boolean shouldShow = !isPlaceholder
+                && itemStack.getItem() instanceof ModularItem
+                && ConfigHandler.moduleProgression.get()
+                && ((ModularItem) itemStack.getItem()).canGainHoneProgress();
+
         setVisible(shouldShow);
         if (shouldShow) {
             ModularItem item = (ModularItem) itemStack.getItem();
