@@ -718,7 +718,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
     public String getIdentifier(ItemStack itemStack) {
         if (itemStack.hasTag()) {
-            return NBTHelper.getTag(itemStack).getString(identifierKey);
+            return itemStack.getTag().getString(identifierKey);
         }
 
         return "INVALID-" + getRegistryName();
