@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 3
+    },
+    "requiredTools": {
+        "hammer": 5
+    },
+    "moduleKey": "single/binding",
+    "moduleVariant": "single_binding/bolt"
+}
