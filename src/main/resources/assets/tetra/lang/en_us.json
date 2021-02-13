@@ -1286,6 +1286,7 @@
   "tetra.module.single/light_handle.description": "A lighter handle that provides less durability but allows the item to be thrown. Handles are the primary source of integrity.",
   "tetra.module.single/light_handle.material_name": "Light %s handle",
 
+  "tetra.variant.light_handle/prismarine": "Prismarine light handle",
   "tetra.variant.light_handle/stick": "Flimsy light handle",
 
   "tetra/schematic/single/handle/long_handle.name": "Long handle",
@@ -1358,6 +1359,8 @@
   "tetra.module.single/binding.description": "Tightly bound fibre strengthen the head's attachment to the handle.",
   "tetra.module.single/binding.material_name": "%s binding",
 
+  "tetra.variant.single_binding/prismarine": "Prismarine binding",
+  "tetra.variant.single_binding/prismarine.description": "A strange prismarine clasp, the clasp strengthens the the head's attachment to the handle.",
   "tetra.variant.single_binding/bolt": "Bolted",
   "tetra.variant.single_binding/bolt.description": "An adjustable bolt attaches the tool head to the handle.",
 
