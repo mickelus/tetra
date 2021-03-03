@@ -711,6 +711,9 @@
   "tetra.improvement.quality.name": "Good Quality",
   "tetra.improvement.quality.description": "This module is of good quality, it provides a small boost to damage and harvest efficiency",
 
+  "tetra.improvement.gilded_material.name": "Gilded",
+  "tetra.improvement.gilded_material.description": "Slightly increases magical stability",
+
   "tetra.hone.progress": "§8Hone: §7%s§8/§7%s§8 (§7%s%%§8)",
   "tetra.hone.available": "Honing available",
 

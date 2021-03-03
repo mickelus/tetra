@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:blackstone"
+        "tag": "forge:blackstone"
     },
     "requiredTools": {
         "hammer": 3

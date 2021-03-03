@@ -1,13 +1,22 @@
 {
-    "locked": false,
-    "material": {
-        "item": "minecraft:gilded_blackstone"
-    },
-    "effects": {
-        "tetra:apply_improvements": {
+    "conditions": [
+        {
+            "type": "tetra:craft_type",
+            "craft": "module"
+        },
+        {
+            "type": "tetra:material",
+            "material": {
+                "item": "minecraft:gilded_blackstone"
+            }
+        }
+    ],
+    "outcomes": [
+        {
+            "type": "tetra:apply_improvements",
             "improvements": {
                 "gilded_material": 0
             }
         }
-    }
+    ]
 }
