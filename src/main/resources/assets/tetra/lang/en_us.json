@@ -714,6 +714,9 @@
   "tetra.improvement.gilded_material.name": "Gilded",
   "tetra.improvement.gilded_material.description": "Slightly increases magical stability",
 
+  "tetra.improvement.crying.name": "Crying",
+  "tetra.improvement.crying.description": "Slightly decreases magical stability",
+
   "tetra.hone.progress": "§8Hone: §7%s§8/§7%s§8 (§7%s%%§8)",
   "tetra.hone.available": "Honing available",
 

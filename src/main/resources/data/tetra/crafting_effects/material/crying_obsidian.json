@@ -1,13 +1,26 @@
 {
-    "locked": false,
-    "material": {
-        "item": "minecraft:gilded_blackstone"
-    },
-    "effects": {
-        "tetra:apply_improvements": {
+    "conditions": [
+        {
+            "type": "tetra:craft_type",
+            "craft": "module"
+        },
+        {
+            "type": "tetra:material",
+            "material": {
+                "item": "minecraft:crying_obsidian"
+            }
+        }
+    ],
+    "outcomes": [
+        {
+            "type": "tetra:remove_improvements",
+            "improvements": ["arrested"]
+        },
+        {
+            "type": "tetra:apply_improvements",
             "improvements": {
                 "crying": 0
             }
         }
-    }
+    ]
 }

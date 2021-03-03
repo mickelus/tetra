@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:obsidian"
+        "tag": "forge:obsidian"
     },
     "improvements": {
         "arrested": 0
