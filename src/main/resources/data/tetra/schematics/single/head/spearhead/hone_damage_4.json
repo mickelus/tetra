@@ -1,5 +1,6 @@
 {
     "replace": true,
+    "localizationKey": "sword/shared_blade/hone_damage_4",
     "slots": [
         "single/head"
     ],
