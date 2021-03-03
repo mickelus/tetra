@@ -67,6 +67,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableLookTrigger;
     public static ForgeConfigSpec.BooleanValue enableReach;
 
+    public static ForgeConfigSpec.BooleanValue enableScrolls;
+
     static {
         // misc config
         builder.push("misc");
@@ -75,11 +77,6 @@ public class ConfigHandler {
                 .comment("Enable modular bows")
                 .worldRestart()
                 .define("bow", true);
-
-        enableCrossbow = builder
-                .comment("Enable modular crossbows")
-                .worldRestart()
-                .define("crossbow", true);
 
         enableSingle = builder
                 .comment("Enable modular single headed implements")
@@ -177,14 +174,6 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_double_integrity_multiplier", 75, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-        builder.pop();
-
-
-        // experimental config
-        builder
-                .comment("Toggles & config for experimental features")
-                .push("experimental");
-
         honeBowBase = builder
                 .comment("The base value for number of uses required before a bow can be honed")
                 .defineInRange("hone_bow_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -192,6 +181,14 @@ public class ConfigHandler {
         honeBowIntegrityMultiplier = builder
                 .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_bow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeShieldBase = builder
+                .comment("The base value for number of uses required before a shield can be honed")
+                .defineInRange("hone_shield_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        honeShieldIntegrityMultiplier = builder
+                .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .defineInRange("hone_shield_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeCrossbowBase = builder
                 .comment("The base value for number of uses required before a crossbow can be honed")
@@ -209,13 +206,12 @@ public class ConfigHandler {
                 .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-        honeShieldBase = builder
-                .comment("The base value for number of uses required before a shield can be honed")
-                .defineInRange("hone_shield_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        builder.pop();
 
-        honeShieldIntegrityMultiplier = builder
-                .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as many uses before it can be honed")
-                .defineInRange("hone_shield_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        // experimental config
+        builder
+                .comment("Toggles & config for experimental features")
+                .push("experimental");
 
         enableStonecutter = builder
                 .comment("Enable the stonecutter module for swords, the stonecutter has to be removed from loot tables if this is disabled")
@@ -226,6 +222,16 @@ public class ConfigHandler {
                 .comment("Enable the extractor bedrock functionality")
                 .worldRestart()
                 .define("extractor", true);
+
+        enableScrolls = builder
+                .comment("Add scrolls to the creative menu")
+                .worldRestart()
+                .define("scrolls", false);
+
+        enableCrossbow = builder
+                .comment("Enable modular crossbows")
+                .worldRestart()
+                .define("crossbow", true);
 
         builder.pop();
 

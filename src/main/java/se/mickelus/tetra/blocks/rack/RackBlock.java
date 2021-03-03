@@ -210,8 +210,8 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean improvement, PlayerEntity player,
-            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
+            PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
         Optional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))

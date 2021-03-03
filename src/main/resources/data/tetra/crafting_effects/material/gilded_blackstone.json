@@ -1,0 +1,13 @@
+{
+    "locked": false,
+    "material": {
+        "item": "minecraft:gilded_blackstone"
+    },
+    "effects": {
+        "tetra:apply_improvements": {
+            "improvements": {
+                "gilded_material": 0
+            }
+        }
+    }
+}

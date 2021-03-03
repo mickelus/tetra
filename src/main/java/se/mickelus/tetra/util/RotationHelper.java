@@ -1,9 +1,12 @@
 package se.mickelus.tetra.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3i;
 
 public class RotationHelper {
@@ -54,6 +57,19 @@ public class RotationHelper {
             case EAST:
                 return new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
         }
+    }
+
+    // todo: there has to be a less hacky way?
+    public static VoxelShape rotateDirection(VoxelShape shape, Direction facing) {
+        VoxelShape[] temp = new VoxelShape[] { shape.withOffset(-0.5, 0, -0.5), VoxelShapes.empty() };
+
+        for (int i = 0; i < facing.getHorizontalIndex(); i++) {
+            temp[0].forEachBox((x1, y1, z1, x2, y2, z2) -> temp[1] = VoxelShapes.or(temp[1], VoxelShapes.create(-z1, y1, x1, -z2, y2, x2)));
+            temp[0] = temp[1];
+            temp[1] = VoxelShapes.empty();
+        }
+
+        return temp[0].withOffset(0.5, 0, 0.5);
     }
 
     public static Vector3i shiftAxis(Vector3i pos) {

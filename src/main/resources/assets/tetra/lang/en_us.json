@@ -529,6 +529,62 @@
 
   "item.tetra.dragon_sinew": "Dragon Sinew",
 
+  "item.tetra.scroll.gem_expertise.prefix": "Treatise",
+  "item.tetra.scroll.gem_expertise.name": "Gemstone expertise",
+  "item.tetra.scroll.gem_expertise.description": "Major modules crafted from materials classified as gemstone provide additional damage and efficiency",
+
+  "item.tetra.scroll.metal_expertise.prefix": "Treatise",
+  "item.tetra.scroll.metal_expertise.name": "Metal expertise",
+  "item.tetra.scroll.metal_expertise.description": "Major modules crafted from materials classified as metal provide additional damage and efficiency",
+
+  "item.tetra.scroll.wood_expertise.prefix": "Treatise",
+  "item.tetra.scroll.wood_expertise.name": "Wood expertise",
+  "item.tetra.scroll.wood_expertise.description": "Major modules crafted from materials classified as wood provide additional damage and efficiency",
+
+  "item.tetra.scroll.stone_expertise.prefix": "Treatise",
+  "item.tetra.scroll.stone_expertise.name": "Stone expertise",
+  "item.tetra.scroll.stone_expertise.description": "Major modules crafted from materials classified as stone provide additional damage and efficiency",
+
+  "item.tetra.scroll.fibre_expertise.prefix": "Treatise",
+  "item.tetra.scroll.fibre_expertise.name": "Fibre expertise",
+  "item.tetra.scroll.fibre_expertise.description": "Major modules crafted from materials classified as fibre provide additional damage and efficiency",
+
+  "item.tetra.scroll.skin_expertise.prefix": "Treatise",
+  "item.tetra.scroll.skin_expertise.name": "Skin expertise",
+  "item.tetra.scroll.skin_expertise.description": "Major modules crafted from materials classified as skin provide additional damage and efficiency",
+
+  "item.tetra.scroll.bone_expertise.prefix": "Treatise",
+  "item.tetra.scroll.bone_expertise.name": "Bone expertise",
+  "item.tetra.scroll.bone_expertise.description": "Major modules crafted from materials classified as bone provide additional damage and efficiency",
+
+  "item.tetra.scroll.fabric_expertise.prefix": "Treatise",
+  "item.tetra.scroll.fabric_expertise.name": "Fabric expertise",
+  "item.tetra.scroll.fabric_expertise.description": "Major modules crafted from materials classified as fabric provide additional damage and efficiency",
+
+  "item.tetra.scroll.scale_expertise.prefix": "Treatise",
+  "item.tetra.scroll.scale_expertise.name": "Scale expertise",
+  "item.tetra.scroll.scale_expertise.description": "Major modules crafted from materials classified as scale provide additional damage and efficiency",
+
+  "item.tetra.scroll.hammer_efficiency.prefix": "Treatise",
+  "item.tetra.scroll.hammer_efficiency.name": "Hammer efficiency",
+  "item.tetra.scroll.hammer_efficiency.description": "Using a hammer to craft or repair has a 25%% chance to use less materials",
+
+  "item.tetra.scroll.axe_efficiency.prefix": "Treatise",
+  "item.tetra.scroll.axe_efficiency.name": "Axe efficiency",
+  "item.tetra.scroll.axe_efficiency.description": "Using a axe to craft or repair has a 25%% chance to use less materials",
+
+  "item.tetra.scroll.cut_efficiency.prefix": "Treatise",
+  "item.tetra.scroll.cut_efficiency.name": "Cut efficiency",
+  "item.tetra.scroll.cut_efficiency.description": "Using a cutting implement to craft or repair has a 25%% chance to use less materials",
+
+  "item.tetra.scroll.effects": "Crafting Effect",
+  "item.tetra.scroll.effects.description": "Provides some form of effect when tool parts are crafted or modified in a nearby workbench",
+  "item.tetra.scroll.schematics": "Schematic",
+  "item.tetra.scroll.schematics.description": "Unlocks additional crafting schematics for a nearby workbench",
+  "item.tetra.scroll.intricate": "Intricate",
+  "item.tetra.scroll.intricate.description": "Has to be placed directly on top of a workbench to function",
+  "item.tetra.scroll.range.description": "The scroll has to be placed within a 5x5x5 area (centered two block above the workbench) to function",
+
   "item.tetra.magmatic_cell": "Thermal Cell",
   "item.tetra.magmatic_cell.charge": "Charge: %s",
   "item.tetra.magmatic_cell.charge_full": "§aFull",
@@ -590,7 +646,7 @@
   "tetra.salvage_vent_plate_action.label": "Salvage",
 
   "item.tetra.combustion_chamber": "Combustion Chamber",
-  "item.tetra.combustion_chamber.description": "Can be attached to a forge hammer to increase its hammer tier by 1",
+  "item.tetra.combustion_chamber.description": "Can be attached to a forge hammer to increase its hammer tier by 1, but using the hammer may set nearby blocks on fire",
   "tetra.salvage_combustion_chamber_action.label": "Salvage",
 
   "item.tetra.planar_stabilizer": "Planar Stabilizer",

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tetra:items/scroll_blue",
+    "layer1": "tetra:items/scroll_binding"
+  }
+}

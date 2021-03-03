@@ -14,6 +14,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -32,6 +33,7 @@ import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
+import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
@@ -345,14 +347,17 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;
             double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
+            Map<ToolType, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
+
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
+            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, world, pos, blockState, true);
 
-            item.assemble(upgradedStack, world, severity);
-
-            for (Map.Entry<ToolType, Integer> entry : currentSchematic.getRequiredToolLevels(targetStack, materials).entrySet()) {
+            for (Map.Entry<ToolType, Integer> entry : tools.entrySet()) {
                 upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, world, pos, blockState, true);
             }
+
+            item.assemble(upgradedStack, world, severity);
 
             // remove or restore honing progression
             if (currentSchematic.isHoning()) {
@@ -414,6 +419,20 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         }
 
         return upgradedStack;
+    }
+
+    public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, PlayerEntity player,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolType, Integer> tools, World world, BlockPos pos, BlockState blockState,
+            boolean consumeResources) {
+        ItemStack result = upgradedStack.copy();
+        ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
+                .map(block -> block.getCraftingEffects(world, pos, blockState))
+                .orElse(new ResourceLocation[0]);
+        Arrays.stream(CraftingEffectRegistry.getEffects(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, pos, blockState))
+                .forEach(craftingEffect -> craftingEffect.applyOutcomes(result, slot, isReplacing, player, preMaterials, postMaterials, tools, world,
+                        pos, blockState, consumeResources));
+
+        return result;
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {

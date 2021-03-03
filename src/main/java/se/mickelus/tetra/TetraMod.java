@@ -53,18 +53,26 @@ import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.blocks.rack.RackTile;
+import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
+import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
+import se.mickelus.tetra.craftingeffect.condition.CraftTypeCondition;
+import se.mickelus.tetra.craftingeffect.condition.LockedCondition;
+import se.mickelus.tetra.craftingeffect.condition.MaterialCondition;
+import se.mickelus.tetra.craftingeffect.condition.ToolCondition;
+import se.mickelus.tetra.craftingeffect.outcome.ApplyImprovementOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
-import se.mickelus.tetra.effect.potion.MiningSpeedPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
@@ -75,6 +83,7 @@ import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
+import se.mickelus.tetra.items.modular.MaterialItemPredicate;
 import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
@@ -138,8 +147,19 @@ public class TetraMod {
         ConfigHandler.setup();
 
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+        ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
 
         Registry.register(Registry.LOOT_CONDITION_TYPE, FortuneBonusCondition.identifier, FortuneBonusCondition.type);
+
+        new CraftingEffectRegistry();
+        CraftingEffectRegistry.registerConditionType("tetra:craft_type", CraftTypeCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:locked", LockedCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
+
+        CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:remove_improvements", RemoveImprovementOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
 
         new RepairRegistry();
 
@@ -163,6 +183,8 @@ public class TetraMod {
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
+        ScrollBlock scrollRolled = new RolledScrollBlock();
+
         blocks = new Block[]{
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
@@ -184,7 +206,10 @@ public class TetraMod {
                 new RackBlock(),
                 new ChthonicExtractorBlock(),
                 new FracturedBedrockBlock(),
-                new DepletedBedrockBlock()
+                new DepletedBedrockBlock(),
+                scrollRolled,
+                new WallScrollBlock(),
+                new OpenScrollBlock()
         };
 
         items = new Item[] {
@@ -207,7 +232,8 @@ public class TetraMod {
                 new LubricantDispenser(),
                 new ModularHolosphereItem(),
                 new EarthpiercerItem(),
-                new DragonSinewItem()
+                new DragonSinewItem(),
+                new ScrollItem(scrollRolled)
 //                new ReverberatingPearlItem()
         };
 
@@ -301,6 +327,7 @@ public class TetraMod {
 
             event.addSprite(ForgedContainerRenderer.material.getTextureLocation());
             event.addSprite(HammerBaseRenderer.material.getTextureLocation());
+            event.addSprite(ScrollRenderer.material.getTextureLocation());
         }
     }
 
@@ -425,6 +452,11 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(RackTile::new, RackBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, RackBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(ScrollTile::new,
+                    OpenScrollBlock.instance, WallScrollBlock.instance, RolledScrollBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, ScrollTile.unlocalizedName));
         }
 
         @SubscribeEvent

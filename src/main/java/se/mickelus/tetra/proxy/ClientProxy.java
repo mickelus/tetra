@@ -11,6 +11,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
+import se.mickelus.tetra.blocks.scroll.ScrollItem;
+import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
+import se.mickelus.tetra.blocks.scroll.ScrollTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
@@ -39,6 +42,8 @@ public class ClientProxy implements IProxy {
         // these are registered here as there are multiple instances of workbench blocks
         ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
         ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
+        ClientRegistry.bindTileEntityRenderer(ScrollTile.type, ScrollRenderer::new);
+
 
         if (ConfigHandler.development.get()) {
             ClientRegistry.bindTileEntityRenderer(TileEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
@@ -52,6 +57,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void postInit() {
         MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
+        ScrollItem.clientPostInit();
     }
 
     @Override

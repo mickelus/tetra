@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tetra:items/scroll",
+    "layer1": "tetra:items/scroll_binding"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "tetra:scroll_mat": 1
+      },
+      "model": "tetra:item/scroll_blue"
+    },
+    {
+      "predicate": {
+        "tetra:scroll_mat": 2
+      },
+      "model": "tetra:item/scroll_dark"
+    }
+  ]
+}

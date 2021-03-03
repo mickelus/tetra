@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -60,7 +61,7 @@ public interface ITetraBlock {
                 .collect(Collectors.toMap(Function.identity(), toolType -> getToolLevel(world, pos, blockState, toolType)));
     }
 
-    default ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean improvement,
+    default ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
             PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
@@ -68,5 +69,21 @@ public interface ITetraBlock {
     default ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
+    }
+
+    default boolean canUnlockSchematics(World world, BlockPos pos, BlockPos targetPos) {
+        return false;
+    }
+
+    default ResourceLocation[] getSchematics(World world, BlockPos pos, BlockState blockState) {
+        return new ResourceLocation[0];
+    }
+
+    default boolean canUnlockCraftingEffects(World world, BlockPos pos, BlockPos targetPos) {
+        return false;
+    }
+
+    default ResourceLocation[] getCraftingEffects(World world, BlockPos pos, BlockState blockState) {
+        return new ResourceLocation[0];
     }
 }
