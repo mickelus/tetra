@@ -43,7 +43,7 @@
         },
         {
             "material": {
-                "item": "minecraft:obsidian"
+                "tag": "forge:obsidian"
             },
             "requiredTools": {
                 "hammer": 6
