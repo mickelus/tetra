@@ -2,7 +2,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
@@ -18,7 +17,7 @@ public class PotionsInventory extends ToolbeltInventory {
 
         predicate = ToolbeltInventory.potionPredicate;
 
-        readFromNBT(NBTHelper.getTag(stack));
+        readFromNBT(stack.getOrCreateTag());
     }
 
     @Override

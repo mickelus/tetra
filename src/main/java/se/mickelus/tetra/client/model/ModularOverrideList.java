@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.IModelConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.ModuleModel;
 
@@ -59,10 +58,10 @@ public class ModularOverrideList extends ItemOverrideList {
     @Nullable
     @Override
     public IBakedModel getOverrideModel(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
-        CompoundNBT baseTag = NBTHelper.getTag(stack);
+        CompoundNBT baseTag = stack.getTag();
         IBakedModel result = originalModel;
 
-        if(!baseTag.isEmpty()) {
+        if(baseTag != null && !baseTag.isEmpty()) {
             CacheKey key = getCacheKey(stack, entity, originalModel);
 
             try {

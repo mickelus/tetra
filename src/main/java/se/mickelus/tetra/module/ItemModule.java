@@ -20,7 +20,6 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 
@@ -57,14 +56,14 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public void addModule(ItemStack targetStack, String variantKey, PlayerEntity player) {
-        CompoundNBT tag = NBTHelper.getTag(targetStack);
+        CompoundNBT tag = targetStack.getOrCreateTag();
 
         tag.putString(slotTagKey, moduleKey);
         tag.putString(this.variantTagKey, variantKey);
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
-        CompoundNBT tag = NBTHelper.getTag(targetStack);
+        CompoundNBT tag = targetStack.getOrCreateTag();
 
         tag.remove(slotTagKey);
         tag.remove(variantTagKey);
@@ -79,16 +78,17 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public VariantData getVariantData(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variantKey = tag.getString(variantTagKey);
-
-        return getVariantData(variantKey);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getString(variantTagKey))
+                .map(key -> getVariantData(key))
+                .orElseGet(this::getDefaultData);
     }
 
     public VariantData getVariantData(String variantKey) {
         return Arrays.stream(variantData)
                 .filter(moduleData -> moduleData.key.equals(variantKey))
-                .findAny().orElseGet(this::getDefaultData);
+                .findAny()
+                .orElseGet(this::getDefaultData);
     }
 
     public ItemProperties getProperties(ItemStack itemStack) {
@@ -278,17 +278,23 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public boolean isTweakable(ItemStack itemStack) {
-        String variant = NBTHelper.getTag(itemStack).getString(this.variantTagKey);
-        return Arrays.stream(tweaks)
-                .anyMatch(data -> variant.equals(data.variant));
+        if (itemStack.hasTag()) {
+            String variant = itemStack.getTag().getString(variantTagKey);
+            return Arrays.stream(tweaks)
+                    .anyMatch(data -> variant.equals(data.variant));
+        }
+
+        return false;
     }
 
     public TweakData[] getTweaks(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variant = tag.getString(this.variantTagKey);
-        return Arrays.stream(tweaks)
-                .filter(tweak -> variant.equals(tweak.variant))
-                .toArray(TweakData[]::new);
+        if (itemStack.hasTag()) {
+            String variant = itemStack.getTag().getString(variantTagKey);
+            return Arrays.stream(tweaks)
+                    .filter(tweak -> variant.equals(tweak.variant))
+                    .toArray(TweakData[]::new);
+        }
+        return new TweakData[0];
     }
 
     public boolean hasTweak(ItemStack itemStack, String tweakKey) {
@@ -298,11 +304,14 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
-        return Math.max(Math.min(NBTHelper.getTag(itemStack).getInt(slotTagKey + ":" + tweak.key), tweak.steps), -tweak.steps);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(slotTagKey + ":" + tweak.key))
+                .map(step -> MathHelper.clamp(step, -tweak.steps,  tweak.steps))
+                .orElse(0);
     }
 
     public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
-        NBTHelper.getTag(itemStack).putInt(slotTagKey + ":" + tweakKey, step);
+        itemStack.getOrCreateTag().putInt(slotTagKey + ":" + tweakKey, step);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {

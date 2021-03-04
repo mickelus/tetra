@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -19,7 +18,7 @@ public class StorageInventory extends ToolbeltInventory {
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.storage);
 
-        readFromNBT(NBTHelper.getTag(stack));
+        readFromNBT(stack.getOrCreateTag());
     }
 
     @Override

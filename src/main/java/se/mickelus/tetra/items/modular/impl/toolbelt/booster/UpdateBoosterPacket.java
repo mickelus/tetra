@@ -3,7 +3,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -40,7 +39,7 @@ public class UpdateBoosterPacket extends AbstractPacket {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
-            UtilBooster.setActive(NBTHelper.getTag(itemStack), active, charged);
+            UtilBooster.setActive(itemStack.getTag(), active, charged);
 
             // UtilToolbelt.updateBauble(player);
         }

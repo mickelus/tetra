@@ -24,7 +24,6 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.NBTHelper;
 
 import java.util.Optional;
 
@@ -77,7 +76,7 @@ public class ModularShieldItem extends ItemModularHandheld {
         if (equals(replacement.getItem())) {
             Optional.ofNullable(original.getChildTag("BlockEntityTag"))
                     .ifPresent(tag -> {
-                        NBTHelper.getTag(replacement).put("BlockEntityTag", tag);
+                        replacement.getOrCreateTag().put("BlockEntityTag", tag);
 
                         CastOptional.cast(getModuleFromSlot(replacement, plateKey), ItemModuleMajor.class)
                                 .filter(module -> module.acceptsImprovement(bannerImprovementKey))

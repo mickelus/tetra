@@ -30,14 +30,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -46,7 +43,6 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -402,6 +398,13 @@ public class ModularCrossbowItem extends ModularItem {
         compoundnbt.putBoolean("Charged", chargedIn);
     }
 
+    private ListNBT getProjectilesNBT(ItemStack itemStack) {
+        if (itemStack.hasTag()) {
+            return getProjectilesNBT(itemStack.getTag());
+        }
+        return new ListNBT();
+    }
+
     private ListNBT getProjectilesNBT(CompoundNBT nbt) {
         if (nbt.contains("ChargedProjectiles", 9)) {
             return nbt.getList("ChargedProjectiles", 10);
@@ -421,7 +424,7 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     private ItemStack getFirstProjectile(ItemStack itemStack) {
-        ListNBT projectiles = getProjectilesNBT(NBTHelper.getTag(itemStack));
+        ListNBT projectiles = getProjectilesNBT(itemStack);
         if (projectiles.size() > 0) {
             return ItemStack.read(projectiles.getCompound(0));
         }
@@ -431,7 +434,7 @@ public class ModularCrossbowItem extends ModularItem {
 
     private List<ItemStack> getProjectiles(ItemStack itemStack) {
         List<ItemStack> result = Lists.newArrayList();
-        ListNBT projectileTags = getProjectilesNBT(NBTHelper.getTag(itemStack));
+        ListNBT projectileTags = getProjectilesNBT(itemStack);
 
         for(int i = 0; i < projectileTags.size(); ++i) {
             CompoundNBT stackNbt = projectileTags.getCompound(i);
@@ -442,7 +445,7 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     private List<ItemStack> takeProjectiles(ItemStack itemStack, int count) {
-        ListNBT nbtList = getProjectilesNBT(NBTHelper.getTag(itemStack));
+        ListNBT nbtList = getProjectilesNBT(itemStack);
         int size = Math.min(nbtList.size(), count);
         List<ItemStack> result = new ArrayList<>(size);
 

@@ -47,7 +47,6 @@ import se.mickelus.tetra.compat.botania.ManaRepair;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.TetraItem;
@@ -128,15 +127,15 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public String getDataCacheKey(ItemStack itemStack) {
-        return Optional.of(getIdentifier(itemStack))
+        return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> NBTHelper.getTag(itemStack).toString());
+                .orElseGet(() -> "INVALID-" + getRegistryName());
     }
 
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        return Optional.of(getIdentifier(itemStack))
+        return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> NBTHelper.getTag(itemStack).toString());
+                .orElseGet(() -> "INVALID-" + getRegistryName());
     }
 
     public void clearCaches() {
@@ -170,7 +169,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     protected Collection<ItemModule> getAllModules(ItemStack stack) {
-        CompoundNBT stackTag = NBTHelper.getTag(stack);
+        CompoundNBT stackTag = stack.getTag();
 
         if (stackTag != null) {
             return Stream.concat(Arrays.stream(majorModuleKeys),Arrays.stream(minorModuleKeys))
@@ -186,30 +185,32 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     @Override
     public ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
-        CompoundNBT stackTag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getTag();
 
-        for (int i = 0; i < majorModuleKeys.length; i++) {
-            String moduleName = stackTag.getString(majorModuleKeys[i]);
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
-            if (module instanceof ItemModuleMajor) {
-                modules[i] = (ItemModuleMajor) module;
+        if (tag != null) {
+            for (int i = 0; i < majorModuleKeys.length; i++) {
+                String moduleName = tag.getString(majorModuleKeys[i]);
+                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
+                if (module instanceof ItemModuleMajor) {
+                    modules[i] = (ItemModuleMajor) module;
+                }
             }
         }
-
         return modules;
     }
 
     @Override
     public ItemModule[] getMinorModules(ItemStack itemStack) {
         ItemModule[] modules = new ItemModule[minorModuleKeys.length];
-        CompoundNBT stackTag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getTag();
 
-        for (int i = 0; i < minorModuleKeys.length; i++) {
-            String moduleName = stackTag.getString(minorModuleKeys[i]);
-            ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
-            modules[i] = module;
+        if (tag != null) {
+            for (int i = 0; i < minorModuleKeys.length; i++) {
+                String moduleName = tag.getString(minorModuleKeys[i]);
+                ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleName);
+                modules[i] = module;
+            }
         }
-
         return modules;
     }
 
@@ -277,19 +278,22 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
      * @param moduleVariant
      */
     public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(moduleVariantKey, moduleVariant);
     }
 
     public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(module + "_material", moduleVariant);
     }
 
     public ItemModule getModuleFromSlot(ItemStack itemStack, String slot) {
-        return ItemUpgradeRegistry.instance.getModule(NBTHelper.getTag(itemStack).getString(slot));
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getString(slot))
+                .map(ItemUpgradeRegistry.instance::getModule)
+                .orElse(null);
     }
 
     public void tickProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
@@ -310,7 +314,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
         }
 
         // todo: store this in a separate data structure?
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getOrCreateTag();
         if (!isHoneable(itemStack)) {
             int honingProgress;
             if (tag.contains(honeProgressKey)) {
@@ -334,17 +338,14 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public int getHoningProgress(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-
-        if (tag.contains(honeProgressKey)) {
-            return tag.getInt(honeProgressKey);
-        }
-
-        return getHoningLimit(itemStack);
+        return Optional.ofNullable(itemStack.getTag())
+                .filter(tag -> tag.contains(honeProgressKey))
+                .map(tag -> tag.getInt(honeProgressKey))
+                .orElseGet(() -> getHoningLimit(itemStack));
     }
 
     public void setHoningProgress(ItemStack itemStack, int progress) {
-        NBTHelper.getTag(itemStack).putInt(honeProgressKey, progress);
+        itemStack.getOrCreateTag().putInt(honeProgressKey, progress);
     }
 
     public int getHoningLimit(ItemStack itemStack) {
@@ -361,7 +362,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public int getHonedCount(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInt(honeCountKey);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(honeCountKey))
+                .orElse(0);
     }
 
     public boolean canGainHoneProgress() {
@@ -369,18 +372,25 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public static boolean isHoneable(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).contains(honeAvailableKey);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.contains(honeAvailableKey))
+                .orElse(false);
     }
 
     public static int getHoningSeed(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInt(honeCountKey) + 1;
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(honeCountKey))
+                .orElse(0);
     }
 
     public static void removeHoneable(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        tag.remove(honeAvailableKey);
-        tag.remove(honeProgressKey);
-        tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
+        CompoundNBT tag = itemStack.getTag();
+
+        if (tag != null) {
+            tag.remove(honeAvailableKey);
+            tag.remove(honeProgressKey);
+            tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
+        }
     }
 
     protected void causeFierySelfEffect(LivingEntity entity, ItemStack itemStack, double multiplier) {
@@ -693,11 +703,13 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
      * @return
      */
     private int getRepairCount(ItemStack itemStack) {
-        return NBTHelper.getTag(itemStack).getInt(repairCountKey);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(repairCountKey))
+                .orElse(0);
     }
 
     private void incrementRepairCount(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getOrCreateTag();
         tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1);
     }
 
@@ -713,15 +725,20 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     }
 
     public static void updateIdentifier(ItemStack itemStack) {
-        NBTHelper.getTag(itemStack).putString(identifierKey, UUID.randomUUID().toString());
+        updateIdentifier(itemStack.getOrCreateTag());
     }
 
+    public static void updateIdentifier(CompoundNBT nbt) {
+        nbt.putString(identifierKey, UUID.randomUUID().toString());
+    }
+
+    @Nullable
     public String getIdentifier(ItemStack itemStack) {
         if (itemStack.hasTag()) {
             return itemStack.getTag().getString(identifierKey);
         }
 
-        return "INVALID-" + getRegistryName();
+        return null;
     }
 
     /**
@@ -739,7 +756,7 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
 
         applyDestabilizationEffects(itemStack, world, severity);
 
-        CompoundNBT nbt = NBTHelper.getTag(itemStack);
+        CompoundNBT nbt = itemStack.getOrCreateTag();
 
         // this stops the tooltip renderer from showing enchantments
         nbt.putInt("HideFlags", 1);

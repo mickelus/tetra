@@ -6,7 +6,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 
 public class OverlayBooster {
@@ -29,7 +28,7 @@ public class OverlayBooster {
 
         ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
         if (UtilBooster.canBoost(itemStack)) {
-            fuelPercent = UtilBooster.getFuelPercent(NBTHelper.getTag(itemStack));
+            fuelPercent = UtilBooster.getFuelPercent(itemStack.getTag());
         }
 
         gui.setFuel(fuelPercent);

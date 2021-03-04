@@ -2,19 +2,16 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Streams;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.improvement.SettlePacket;
@@ -22,8 +19,6 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class ItemModuleMajor extends ItemModule {
 
@@ -47,7 +42,7 @@ public abstract class ItemModuleMajor extends ItemModule {
             return;
         }
 
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
+        CompoundNBT tag = itemStack.getOrCreateTag();
         int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
         if (settleLevel < settleMaxCount && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
@@ -72,12 +67,10 @@ public abstract class ItemModuleMajor extends ItemModule {
      * @return
      */
     public int getSettleProgress(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        if (tag.contains(settleProgressKey)) {
-            return tag.getInt(settleProgressKey);
-        }
-
-        return getSettleLimit(itemStack);
+        return Optional.ofNullable(itemStack.getTag())
+                .filter(tag -> tag.contains(settleProgressKey))
+                .map(tag -> tag.getInt(settleProgressKey))
+                .orElseGet(() -> getSettleLimit(itemStack));
     }
 
     /**
@@ -111,33 +104,42 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     protected void clearProgression(ItemStack itemStack) {
-        NBTHelper.getTag(itemStack).remove(String.format(settleProgressKey, getSlot()));
+        if (itemStack.hasTag()) {
+            itemStack.getTag().remove(String.format(settleProgressKey, getSlot()));
+        }
     }
 
     public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        if (tag.contains(slotTagKey + ":" + improvementKey)) {
-            return tag.getInt(slotTagKey + ":" + improvementKey);
-        }
-        return -1;
+        return Optional.ofNullable(itemStack.getTag())
+                .filter(tag -> tag.contains(slotTagKey + ":" + improvementKey))
+                .map(tag -> tag.getInt(slotTagKey + ":" + improvementKey))
+                .orElse(-1);
     }
 
     public ImprovementData getImprovement(ItemStack itemStack, String improvementKey) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        return Arrays.stream(improvements)
-                .filter(improvement -> improvementKey.equals(improvement.key))
-                .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
-                .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
-                .findAny()
-                .orElse(null);
+        if (itemStack.hasTag()) {
+            CompoundNBT tag = itemStack.getTag();
+            return Arrays.stream(improvements)
+                    .filter(improvement -> improvementKey.equals(improvement.key))
+                    .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
+                    .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
+                    .findAny()
+                    .orElse(null);
+        }
+
+        return null;
     }
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        return Arrays.stream(improvements)
-            .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
-            .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
-            .toArray(ImprovementData[]::new);
+        if (itemStack.hasTag()) {
+            CompoundNBT tag = itemStack.getTag();
+            return Arrays.stream(improvements)
+                    .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
+                    .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
+                    .toArray(ImprovementData[]::new);
+        }
+
+        return new ImprovementData[0];
     }
 
     public boolean acceptsImprovement(String improvementKey) {
@@ -154,7 +156,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public void addImprovement(ItemStack itemStack, String improvementKey, int level) {
         removeCollidingImprovements(itemStack, improvementKey, level);
-        NBTHelper.getTag(itemStack).putInt(slotTagKey + ":" + improvementKey, level);
+        itemStack.getOrCreateTag().putInt(slotTagKey + ":" + improvementKey, level);
     }
 
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
@@ -181,7 +183,9 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
-        NBTHelper.getTag(itemStack).remove(slot + ":" + improvement);
+        if (itemStack.hasTag()) {
+            itemStack.getTag().remove(slot + ":" + improvement);
+        }
     }
 
     public void removeEnchantments(ItemStack itemStack) {
@@ -203,26 +207,32 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     @Override
     public TweakData[] getTweaks(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variant = tag.getString(this.variantTagKey);
-        String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
-                .map(improvement -> improvement.key)
-                .toArray(String[]::new);
-        return Arrays.stream(tweaks)
-                .filter(tweak -> variant.equals(tweak.variant) || ArrayUtils.contains(improvementKeys, tweak.improvement))
-                .toArray(TweakData[]::new);
+        if (itemStack.hasTag()) {
+            String variant = itemStack.getTag().getString(this.variantTagKey);
+            String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
+                    .map(improvement -> improvement.key)
+                    .toArray(String[]::new);
+
+            return Arrays.stream(tweaks)
+                    .filter(tweak -> variant.equals(tweak.variant) || ArrayUtils.contains(improvementKeys, tweak.improvement))
+                    .toArray(TweakData[]::new);
+        }
+
+        return new TweakData[0];
     }
 
     @Override
     public ItemStack[] removeModule(ItemStack targetStack) {
         ItemStack[] salvage = super.removeModule(targetStack);
 
-        CompoundNBT tag = NBTHelper.getTag(targetStack);
-        Arrays.stream(improvements)
-            .map(improvement -> slotTagKey + ":" + improvement.key)
-            .forEach(tag::remove);
+        if (targetStack.hasTag()) {
+            CompoundNBT tag = targetStack.getTag();
+            Arrays.stream(improvements)
+                    .map(improvement -> slotTagKey + ":" + improvement.key)
+                    .forEach(tag::remove);
 
-        clearProgression(targetStack);
+            clearProgression(targetStack);
+        }
 
         return salvage;
     }

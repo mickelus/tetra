@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
@@ -17,8 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
@@ -31,16 +28,12 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
-import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -94,8 +87,8 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public boolean isDamageable() {
-        return true;
+    public boolean isDamageable(ItemStack stack) {
+        return stack.hasTag();
     }
 
     @Override

@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
@@ -25,7 +24,7 @@ public class QuickslotInventory extends ToolbeltInventory {
 
         inventoryShadows = NonNullList.withSize(maxSize, ItemStack.EMPTY);
 
-        readFromNBT(NBTHelper.getTag(stack));
+        readFromNBT(stack.getOrCreateTag());
     }
 
 
@@ -75,7 +74,7 @@ public class QuickslotInventory extends ToolbeltInventory {
             }
         }
 
-        writeToNBT(NBTHelper.getTag(toolbeltItemStack));
+        writeToNBT(toolbeltItemStack.getOrCreateTag());
     }
 
     private int getShadowIndex(ItemStack itemStack) {

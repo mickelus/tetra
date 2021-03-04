@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.util.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 
 public class TickHandlerBooster {
@@ -21,7 +20,7 @@ public class TickHandlerBooster {
     }
 
     public void tickItem(PlayerEntity player, ItemStack stack, int level) {
-        CompoundNBT tag = NBTHelper.getTag(stack);
+        CompoundNBT tag = stack.getOrCreateTag();
         boolean charged = tag.getBoolean(UtilBooster.chargedKey);
         if (!player.isInWater() && player.getRidingEntity() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
             if (charged) {
