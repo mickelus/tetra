@@ -13,6 +13,7 @@
     "result": {
         "item": "tetra:modular_toolbelt",
         "nbt": {
+            "id": "f2b91d9b-711d-47a8-b901-523a26839a5b",
             "toolbelt/slot1": "toolbelt/strap_slot1",
             "toolbelt/strap_slot1_material": "strap1/rope",
             "toolbelt/belt": "toolbelt/belt",

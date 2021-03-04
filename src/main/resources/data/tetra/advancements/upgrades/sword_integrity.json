@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_sword",
-            "nbt": "{\"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/gold\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\", \"sword/guard\": \"sword/binding\",\"sword/binding_material\": \"sword_binding/leather\", \"sword/pommel\": \"sword/counterweight\",\"sword/counterweight_material\": \"counterweight/iron\", \"sword/blade:blade/tempered\": 1}"
+            "nbt": "{\"id\": \"upgrades/sword_integrity\", \"sword/blade\": \"sword/basic_blade\",\"sword/basic_blade_material\": \"basic_blade/gold\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/iron\", \"sword/guard\": \"sword/binding\",\"sword/binding_material\": \"sword_binding/leather\", \"sword/pommel\": \"sword/counterweight\",\"sword/counterweight_material\": \"counterweight/iron\", \"sword/blade:blade/tempered\": 1}"
         },
         "title": {
             "translate": "tetra.advancements.upgrades.sword_integrity.title"

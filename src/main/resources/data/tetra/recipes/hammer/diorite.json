@@ -16,6 +16,7 @@
     "result": {
         "item": "tetra:modular_double",
         "nbt": {
+            "id": "03f82617-6e49-4351-ba56-a3a0f2166412",
             "double/head_left": "double/basic_hammer_left",
             "double/basic_hammer_left_material": "basic_hammer/diorite",
             "double/head_right": "double/basic_hammer_right",

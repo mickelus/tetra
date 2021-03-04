@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_bow",
-            "nbt": "{\"bow/stave\": \"bow/straight_stave\",\"bow/straight_stave_material\": \"straight_stave/stick\",\"bow/string\": \"bow/basic_string\",\"bow/basic_string_material\": \"basic_string/string\"}"
+            "nbt": "{\"id\": \"upgrades/bow_upgrade\", \"bow/stave\": \"bow/straight_stave\",\"bow/straight_stave_material\": \"straight_stave/stick\",\"bow/string\": \"bow/basic_string\",\"bow/basic_string_material\": \"basic_string/string\"}"
         },
         "title": {
             "translate": "tetra.advancements.upgrades.bow_upgrade.title"

@@ -16,6 +16,7 @@
     "result": {
         "item": "tetra:modular_single",
         "nbt": {
+            "id": "a6fba635-4540-4c6e-8719-b097e9a49cf4",
             "single/head": "single/earthpiercer",
             "single/earthpiercer_material": "earthpiercer/earthpiercer",
             "single/handle": "single/basic_handle",

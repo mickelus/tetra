@@ -129,13 +129,13 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     public String getDataCacheKey(ItemStack itemStack) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> "INVALID-" + getRegistryName());
+                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getRegistryName());
     }
 
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> "INVALID-" + getRegistryName());
+                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getRegistryName());
     }
 
     public void clearCaches() {

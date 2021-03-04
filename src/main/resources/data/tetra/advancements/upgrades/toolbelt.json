@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_toolbelt",
-            "nbt": "{\"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
+            "nbt": "{\"id\": \"upgrades/toolbelt\", \"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/rope\"}"
         },
         "title": {
             "translate": "tetra.advancements.upgrades.toolbelt.title"

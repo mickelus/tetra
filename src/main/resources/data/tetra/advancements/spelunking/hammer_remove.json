@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/claw_left\",\"double/claw_left_material\": \"claw/iron\",\"double/head_right\": \"double/butt_right\",\"double/butt_right_material\": \"butt/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+            "nbt": "{\"id\": \"spelunking/hammer_remove\", \"double/head_left\": \"double/claw_left\",\"double/claw_left_material\": \"claw/iron\",\"double/head_right\": \"double/butt_right\",\"double/butt_right_material\": \"butt/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.hammer_remove.title"

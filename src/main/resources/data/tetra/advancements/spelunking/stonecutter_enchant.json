@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "minecraft:enchanted_book",
-            "nbt": "{\"StoredEnchantments\": [{lvl: 1, id: \"minecraft:efficiency\"}]}"
+            "nbt": "{\"id\": \"spelunking/stonecutter_enchant\", \"StoredEnchantments\": [{lvl: 1, id: \"minecraft:efficiency\"}]}"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.stonecutter_enchant.title"

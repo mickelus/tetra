@@ -16,6 +16,7 @@
     "result": {
         "item": "tetra:modular_double",
         "nbt": {
+            "id": "78b6924d-3506-43be-a1e7-9ae990c38570",
             "double/head_left": "double/basic_hammer_left",
             "double/basic_hammer_left_material": "basic_hammer/stone",
             "double/head_right": "double/basic_hammer_right",

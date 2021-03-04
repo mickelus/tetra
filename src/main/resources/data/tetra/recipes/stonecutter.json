@@ -11,6 +11,7 @@
     "result": {
         "item": "tetra:modular_sword",
         "nbt": {
+            "id": "5fc9fae8-6c21-4cb0-a465-f039ee94c800",
             "sword/blade": "sword/stonecutter",
             "sword/stonecutter_material": "stonecutter/stonecutter",
             "sword/hilt": "sword/basic_hilt",

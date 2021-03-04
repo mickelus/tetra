@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/oak\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/oak\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+            "nbt": "{\"id\": \"story/more_upgrades\", \"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/oak\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/oak\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": {
             "translate": "tetra.advancements.story.more_upgrades.title"
