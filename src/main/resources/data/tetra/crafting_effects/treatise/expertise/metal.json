@@ -1,4 +1,5 @@
 {
+    "replace": true,
     "conditions": [
         {
             "type": "tetra:locked",
@@ -12,7 +13,7 @@
             "type": "tetra:material",
             "material": {
                 "type": "tetra:material",
-                "category": "gem"
+                "category": "metal"
             }
         }
     ],

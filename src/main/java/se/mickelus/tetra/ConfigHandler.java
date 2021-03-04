@@ -224,9 +224,9 @@ public class ConfigHandler {
                 .define("extractor", true);
 
         enableScrolls = builder
-                .comment("Add scrolls to the creative menu")
+                .comment("Enable secret experimental feature")
                 .worldRestart()
-                .define("scrolls", false);
+                .define("secret", false);
 
         enableCrossbow = builder
                 .comment("Enable modular crossbows")

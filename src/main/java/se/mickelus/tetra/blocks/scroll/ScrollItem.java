@@ -35,7 +35,7 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class ScrollItem extends BlockItem implements IItemColor {
+public class ScrollItem extends BlockItem {
     static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollItem instance;
@@ -48,7 +48,7 @@ public class ScrollItem extends BlockItem implements IItemColor {
 
     @OnlyIn(Dist.CLIENT)
     public static void clientPostInit() {
-        Minecraft.getInstance().getItemColors().register(instance, instance);
+        Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
         ItemModelsProperties.registerProperty(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
                 (itemStack, world, livingEntity) -> getData(itemStack).material);
     }
@@ -97,15 +97,6 @@ public class ScrollItem extends BlockItem implements IItemColor {
                 .filter(data -> data.length > 0)
                 .map(data -> data[0])
                 .orElseGet(ScrollData::new);
-    }
-
-
-    @Override
-    public int getColor(ItemStack itemStack, int tintIndex) {
-        if (tintIndex == 1) {
-            return getData(itemStack).ribbon;
-        }
-        return 0xffffff;
     }
 
     @Override
