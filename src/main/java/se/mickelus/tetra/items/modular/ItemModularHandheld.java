@@ -1,7 +1,12 @@
 package se.mickelus.tetra.items.modular;
 
-import com.google.common.collect.*;
-import net.minecraft.block.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.Sets;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,13 +20,18 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -30,18 +40,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import se.mickelus.tetra.effect.*;
-import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
+import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ModularItem {
 
@@ -174,22 +185,25 @@ public class ItemModularHandheld extends ModularItem {
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
             ToolData toolData = getToolDataCached(itemStack);
-            for (ToolType tool: toolData.getValues()) {
-                if (toolData.getLevel(tool) > 0) {
-                    BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItem(), tool);
-                    if (block != null) {
-                        SoundEvent sound = Optional.ofNullable(getUseSound(tool))
-                                .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
+            Collection<ToolType> tools = toolData.getValues().stream()
+                    .filter(tool -> toolData.getLevel(tool) > 0)
+                    .sorted(player.isCrouching() ? Comparator.comparing(ToolType::getName).reversed() : Comparator.comparing(ToolType::getName))
+                    .collect(Collectors.toList());
 
-                        world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                        if (!world.isRemote) {
-                            world.setBlockState(pos, block, 11);
-                            applyDamage(blockDestroyDamage, context.getItem(), player);
-                            applyUsageEffects(player, itemStack, 2);
-                        }
+            for (ToolType tool: tools) {
+                BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItem(), tool);
+                if (block != null) {
+                    SoundEvent sound = Optional.ofNullable(getUseSound(tool))
+                            .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
 
-                        return ActionResultType.func_233537_a_(world.isRemote);
+                    world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    if (!world.isRemote) {
+                        world.setBlockState(pos, block, 11);
+                        applyDamage(blockDestroyDamage, context.getItem(), player);
+                        applyUsageEffects(player, itemStack, 2);
                     }
+
+                    return ActionResultType.func_233537_a_(world.isRemote);
                 }
             }
 
