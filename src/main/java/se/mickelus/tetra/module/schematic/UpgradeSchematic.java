@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.Nullable;
@@ -64,10 +65,11 @@ public interface UpgradeSchematic {
     /**
      * This is a final check if the player should be able to see the schematic in schematic listings, based on the player or its surroundings.
      * @param player The player
+     * @param tile
      * @param targetStack The target itemstack for the schematic
      * @return true if it should be visible, otherwise false
      */
-    public default boolean isVisibleForPlayer(PlayerEntity player, ItemStack targetStack) {
+    public default boolean isVisibleForPlayer(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack) {
         return true;
     }
 

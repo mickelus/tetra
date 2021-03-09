@@ -56,7 +56,7 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
 
                 BlockUseCriterion.trigger((ServerPlayerEntity) player, instance.getDefaultState(), ItemStack.EMPTY);
             }
-            return ActionResultType.SUCCESS;
+            return ActionResultType.func_233537_a_(world.isRemote);
         }
 
         return ActionResultType.PASS;

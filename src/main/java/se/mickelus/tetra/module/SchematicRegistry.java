@@ -8,9 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.data.MaterialVariantData;
-import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.module.schematic.*;
 import se.mickelus.tetra.util.Filter;
 
@@ -133,9 +132,9 @@ public class SchematicRegistry {
         return instance.schematicMap.values();
     }
 
-    public static UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, ItemStack itemStack) {
+    public static UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
         return getAllSchematics().stream()
-                .filter(upgradeSchematic -> playerHasSchematic(player, itemStack, upgradeSchematic))
+                .filter(upgradeSchematic -> playerHasSchematic(player, tile, itemStack, upgradeSchematic))
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
                 .toArray(UpgradeSchematic[]::new);
     }
@@ -146,7 +145,7 @@ public class SchematicRegistry {
                 .toArray(UpgradeSchematic[]::new);
     }
 
-    public static boolean playerHasSchematic(PlayerEntity player, ItemStack targetStack, UpgradeSchematic schematic) {
-        return schematic.isVisibleForPlayer(player, targetStack);
+    public static boolean playerHasSchematic(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
+        return schematic.isVisibleForPlayer(player, tile, targetStack);
     }
 }

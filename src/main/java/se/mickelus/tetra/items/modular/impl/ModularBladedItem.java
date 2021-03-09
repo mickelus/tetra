@@ -1,6 +1,12 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -8,6 +14,8 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+
+import javax.annotation.Nullable;
 
 public class ModularBladedItem extends ItemModularHandheld {
 
@@ -43,5 +51,30 @@ public class ModularBladedItem extends ItemModularHandheld {
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
         this.honeBase = honeBase;
         this.honeIntegrityMultiplier = honeIntegrityMultiplier;
+    }
+
+    @Override
+    public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
+        if (isThrowing(itemStack, entity)) {
+            return super.getModelCacheKey(itemStack, entity) + ":throwing";
+        }
+
+        if (isBlocking(itemStack, entity)) {
+            return super.getModelCacheKey(itemStack, entity) + ":blocking";
+        }
+
+        return super.getModelCacheKey(itemStack, entity);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
+        if (isThrowing(itemStack, entity)) {
+            return "throwing";
+        }
+        if (isBlocking(itemStack, entity)) {
+            return "blocking";
+        }
+        return null;
     }
 }

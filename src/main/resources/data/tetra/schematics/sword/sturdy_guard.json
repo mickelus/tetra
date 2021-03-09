@@ -1,0 +1,19 @@
+{
+    "replace": true,
+    "slots": ["sword/guard"],
+    "locked": true,
+    "rarity": "temporary",
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 147,
+        "textureY": 16
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/", "tetra:scale/", "tetra:bone/"],
+            "moduleKey": "sword/sturdy_guard",
+            "moduleVariant": "sturdy_guard/"
+        }
+    ]
+}

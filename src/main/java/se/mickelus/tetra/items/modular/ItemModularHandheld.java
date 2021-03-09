@@ -471,7 +471,7 @@ public class ItemModularHandheld extends ModularItem {
             return Optional.ofNullable(entity)
                     .filter(e -> e.getItemInUseCount() > 0)
                     .filter(e -> itemStack.equals(e.getActiveItemStack()))
-                    .map( e -> (e.getItemInUseCount()) * 1f / getUseDuration(itemStack))
+                    .map(e -> (e.getItemInUseCount()) * 1f / getUseDuration(itemStack))
                     .orElse(0f);
         }
 
@@ -480,6 +480,13 @@ public class ItemModularHandheld extends ModularItem {
 
     public boolean isThrowing(ItemStack itemStack, @Nullable LivingEntity entity) {
         return UseAction.SPEAR.equals(getUseAction(itemStack)) && Optional.ofNullable(entity)
+                .filter(e -> itemStack.equals(e.getActiveItemStack()))
+                .map(e -> e.getItemInUseCount() > 0)
+                .orElse(false);
+    }
+    public boolean isBlocking(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return UseAction.BLOCK.equals(getUseAction(itemStack)) && Optional.ofNullable(entity)
+                .filter(e -> itemStack.equals(e.getActiveItemStack()))
                 .map(e -> e.getItemInUseCount() > 0)
                 .orElse(false);
     }
@@ -512,10 +519,11 @@ public class ItemModularHandheld extends ModularItem {
     public ItemStack onItemUseFinish(ItemStack itemStack, World world, LivingEntity entity) {
         CastOptional.cast(entity, PlayerEntity.class)
                 .ifPresent(player -> {
-                    double blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
+                    int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
                     if (blockingLevel > 0) {
-                        if (blockingLevel < blockingDurationLimit) {
-                            player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
+                        double blockingCooldown = getEffectEfficiency(itemStack, ItemEffect.blocking);
+                        if (blockingCooldown > 0) {
+                            player.getCooldownTracker().setCooldown(this, (int) Math.round(blockingCooldown * getCooldownBase(itemStack) * 20));
                         }
 
                         if (player.isCrouching() && world.isRemote) {
@@ -529,41 +537,42 @@ public class ItemModularHandheld extends ModularItem {
 
     /**
      * Called when the player stops using/channeling an item, e.g. when throwing a trident.
-     * @param stack
+     * @param itemStack
      * @param world
      * @param entityLiving
      * @param timeLeft
      */
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entityLiving, int timeLeft) {
+    public void onPlayerStoppedUsing(ItemStack itemStack, World world, LivingEntity entityLiving, int timeLeft) {
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;
-            int ticksUsed = this.getUseDuration(stack) - timeLeft;
+            int ticksUsed = this.getUseDuration(itemStack) - timeLeft;
 
-            double cooldownBase = getCooldownBase(stack);
-            int blockingLevel = getEffectLevel(stack, ItemEffect.blocking);
-            int throwingLevel = getEffectLevel(stack, ItemEffect.throwable);
-            int riptideLevel = EnchantmentHelper.getRiptideModifier(stack);
+            double cooldownBase = getCooldownBase(itemStack);
+            int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
+            int throwingLevel = getEffectLevel(itemStack, ItemEffect.throwable);
+            int riptideLevel = EnchantmentHelper.getRiptideModifier(itemStack);
 
             if (blockingLevel > 0) {
-                if (blockingLevel < blockingDurationLimit) {
-                    player.getCooldownTracker().setCooldown(this, (int) Math.round(cooldownBase * 20));
+                double blockingCooldown = getEffectEfficiency(itemStack, ItemEffect.blocking);
+                if (blockingCooldown > 0) {
+                    player.getCooldownTracker().setCooldown(this, (int) Math.round(blockingCooldown * cooldownBase * 20));
                 }
 
                 if (player.isCrouching()) {
                     if (ticksUsed >= 10 && riptideLevel > 0 && player.isWet()) {
                         causeRiptideEffect(player, riptideLevel);
                     } else if (ticksUsed >= 10 && throwingLevel > 0) {
-                        throwItem(player, stack, riptideLevel, (float) cooldownBase);
+                        throwItem(player, itemStack, riptideLevel, (float) cooldownBase);
                     } else if (world.isRemote) {
-                        onPlayerStoppedUsingSecondary(stack, world, entityLiving, timeLeft);
+                        onPlayerStoppedUsingSecondary(itemStack, world, entityLiving, timeLeft);
                     }
                 }
             } else if (ticksUsed >= 10) {
                 if (riptideLevel > 0 && player.isWet()) {
                     causeRiptideEffect(player, riptideLevel);
-                } else if (getEffectLevel(stack, ItemEffect.throwable) > 0) {
-                    throwItem(player, stack, riptideLevel, (float) cooldownBase);
+                } else if (getEffectLevel(itemStack, ItemEffect.throwable) > 0) {
+                    throwItem(player, itemStack, riptideLevel, (float) cooldownBase);
                 }
             }
         }

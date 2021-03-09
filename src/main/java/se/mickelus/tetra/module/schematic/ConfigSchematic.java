@@ -9,6 +9,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
@@ -16,7 +17,6 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.VariantData;
-import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.*;
@@ -157,7 +157,11 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isVisibleForPlayer(PlayerEntity player, ItemStack targetStack) {
+    public boolean isVisibleForPlayer(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack) {
+        if (definition.locked) {
+            return Arrays.stream(tile.getUnlockedSchematics()).anyMatch(rl -> definition.key.equals(rl.getPath()));
+        }
+
         if (definition.materialRevealSlot > -1) {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 4; y++) {

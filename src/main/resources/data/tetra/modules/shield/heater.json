@@ -40,7 +40,7 @@
                 "tetra:ability_cooldown": 2
             },
             "effects": {
-                "blocking": 2.5
+                "blocking": [2.5, 1]
             },
             "durability": -20,
             "extract": {

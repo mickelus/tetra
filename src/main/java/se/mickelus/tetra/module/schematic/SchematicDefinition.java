@@ -100,6 +100,11 @@ public class SchematicDefinition {
     public ItemPredicate requirement = ItemPredicate.ANY;
 
     /**
+     * If true this schematic will only be visible if it is unlocked, either by the workbench or by a nearby block.
+     */
+    public boolean locked = false;
+
+    /**
      * If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
      * provided index.
      */

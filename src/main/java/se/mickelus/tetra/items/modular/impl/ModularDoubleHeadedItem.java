@@ -123,7 +123,9 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         World world = context.getWorld();
         BlockPos pos = context.getPos();
         Hand hand = context.getHand();
-        if (player != null && !player.isCrouching() && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
+        if (player != null
+                && !player.isCrouching()
+                && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
                 && getToolLevel(player.getHeldItem(hand), ToolTypes.hammer) > 0) {
             return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
         }

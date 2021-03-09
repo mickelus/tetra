@@ -25,9 +25,9 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public boolean canPerformOn(@Nullable PlayerEntity player, ItemStack itemStack) {
+    public boolean canPerformOn(@Nullable PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
         if (player != null && itemStack.getItem() instanceof ModularItem) {
-            UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, itemStack);
+            UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tile, itemStack);
             return Arrays.stream(schematics)
                     .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
                     .anyMatch(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic);
@@ -53,7 +53,7 @@ public class RepairAction implements WorkbenchAction {
 
     @Override
     public void perform(PlayerEntity player, ItemStack itemStack, WorkbenchTile workbench) {
-        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, itemStack);
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, workbench, itemStack);
         Arrays.stream(schematics)
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
                 .filter(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic)

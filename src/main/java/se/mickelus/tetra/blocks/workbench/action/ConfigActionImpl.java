@@ -21,7 +21,6 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 
 public class ConfigActionImpl extends ConfigAction {
@@ -38,7 +37,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public boolean canPerformOn(PlayerEntity player, ItemStack itemStack) {
+    public boolean canPerformOn(PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
         return requirement.test(itemStack);
     }
 

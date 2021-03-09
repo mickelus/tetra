@@ -12,7 +12,7 @@ import java.util.Map;
 public interface WorkbenchAction {
 
     public String getKey();
-    public boolean canPerformOn(@Nullable PlayerEntity player, ItemStack itemStack);
+    public boolean canPerformOn(@Nullable PlayerEntity player, WorkbenchTile tile, ItemStack itemStack);
     public Collection<ToolType> getRequiredToolTypes(ItemStack itemStack);
     public int getRequiredToolLevel(ItemStack itemStack, ToolType toolType);
     public Map<ToolType, Integer> getRequiredTools(ItemStack itemStack);

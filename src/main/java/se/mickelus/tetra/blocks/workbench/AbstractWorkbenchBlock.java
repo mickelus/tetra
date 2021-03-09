@@ -74,7 +74,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
     @Override
     public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
-        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+        return BlockPos.getAllInBox(pos.add(-2, 0, -2), pos.add(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
                 .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
@@ -85,7 +85,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
     @Override
     public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
-        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+        return BlockPos.getAllInBox(pos.add(-2, 0, -2), pos.add(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
                 .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
@@ -96,7 +96,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
     private Pair<BlockPos, BlockState> getProvidingBlockstate(World world, BlockPos pos, BlockState blockState, ItemStack targetStack,
             ToolType toolType, int level) {
-        return BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 2, 1))
+        return BlockPos.getAllInBox(pos.add(-2, 0, -2), pos.add(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
                 .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
@@ -131,6 +131,17 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
         }
 
         return null;
+    }
+
+    @Override
+    public ResourceLocation[] getSchematics(World world, BlockPos pos, BlockState blockState) {
+        return BlockPos.getAllInBox(pos.add(-2, 0, -2), pos.add(2, 4, 2))
+                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
+                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canUnlockSchematics(world, pair.getFirst(), pos))
+                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getSchematics(world, pair.getFirst(), blockState))
+                .flatMap(Stream::of)
+                .toArray(ResourceLocation[]::new);
     }
 
     @Override

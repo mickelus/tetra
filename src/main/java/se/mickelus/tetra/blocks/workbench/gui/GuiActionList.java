@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -23,10 +24,10 @@ public class GuiActionList extends GuiElement {
         actionButtons = new GuiActionButton[0];
     }
 
-    public void updateActions(ItemStack targetStack, WorkbenchAction[] actions, PlayerEntity player,
-            Consumer<WorkbenchAction> clickHandler) {
+    public void updateActions(ItemStack targetStack, WorkbenchAction[] actions, PlayerEntity player, Consumer<WorkbenchAction> clickHandler,
+            WorkbenchTile tile) {
         WorkbenchAction[] availableActions = Arrays.stream(actions)
-                .filter(action -> action.canPerformOn(player, targetStack))
+                .filter(action -> action.canPerformOn(player, tile, targetStack))
                 .toArray(WorkbenchAction[]::new);
 
         actionButtons = new GuiActionButton[availableActions.length];

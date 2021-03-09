@@ -169,7 +169,7 @@ public class GuiSlotDetail extends GuiElement {
 
     private void updateSchematicList(PlayerEntity player, WorkbenchTile tileEntity, String selectedSlot) {
         ItemStack targetStack = tileEntity.getTargetItemStack();
-        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, targetStack);
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tileEntity, targetStack);
         schematics = Arrays.stream(schematics)
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(selectedSlot, targetStack))
                 .sorted(Comparator.comparing(UpgradeSchematic::getRarity).thenComparing(UpgradeSchematic::getType).thenComparing(UpgradeSchematic::getKey))

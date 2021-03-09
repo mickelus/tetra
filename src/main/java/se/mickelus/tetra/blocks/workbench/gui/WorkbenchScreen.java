@@ -257,7 +257,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
         if (slotChanged || targetItemChanged) {
             actionList.updateActions(currentTarget, tileEntity.getAvailableActions(viewingPlayer), viewingPlayer,
-                    action -> tileEntity.performAction(viewingPlayer, action.getKey()));
+                    action -> tileEntity.performAction(viewingPlayer, action.getKey()), tileEntity);
 
             // block overlay needs refresh as some actions have in world interactions
             InteractiveBlockOverlay.markDirty();

@@ -57,17 +57,25 @@ public class ScrollItem extends BlockItem {
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (isInGroup(group) && ConfigHandler.enableScrolls.get()) {
             items.add(setupTreatise("gem_expertise", false,     0, 0x2bffee, 14, 13, 14, 15));
-            items.add(setupTreatise("metal_expertise", false,   0, 0xffffff, 4, 6, 5, 6));
+            items.add(setupTreatise("metal_expertise", false,   0, 0xffffff, 4, 6, 6, 5));
             items.add(setupTreatise("wood_expertise", false,    0, 0xbf934b, 2, 1, 2, 1));
             items.add(setupTreatise("stone_expertise", false,   0, 0x9a9a9a, 2));
-            items.add(setupTreatise("fibre_expertise", false,   0, 0xa88054, 5, 10, 4, 11));
+            items.add(setupTreatise("fibre_expertise", false,   0, 0xa88054, 5, 10, 11, 4));
             items.add(setupTreatise("skin_expertise", false,    0, 0xbf6930, 0, 1, 1, 1));
             items.add(setupTreatise("bone_expertise", false,    0, 0xfff193, 12, 14, 12, 14));
-            items.add(setupTreatise("fabric_expertise", false,  0, 0xff3333, 5, 3, 4, 6));
+            items.add(setupTreatise("fabric_expertise", false,  0, 0xff3333, 5, 3, 6, 4));
             items.add(setupTreatise("scale_expertise", false,   0, 0x75a03e, 6, 7, 6, 8));
-            items.add(setupTreatise("hammer_efficiency", false, 1, 0xff6666, 6, 7, 6, 11));
-            items.add(setupTreatise("axe_efficiency", false,    1, 0x66ff66, 0, 1, 3, 3));
-            items.add(setupTreatise("cut_efficiency", false,    1, 0x6666ff, 4, 0, 5, 3));
+            items.add(setupTreatise("hammer_efficiency", false, 0, 0xff6666, 6, 7, 6, 11));
+            items.add(setupTreatise("axe_efficiency", false,    0, 0x66ff66, 0, 1, 3, 3));
+            items.add(setupTreatise("cut_efficiency", false,    0, 0x6666ff, 4, 0, 3, 5));
+
+            items.add(setupSchematic("sword/sturdy_guard", false, 1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/throwing_knife", false, 1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/howling_blade", false, 1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("single/points_end", false, 0, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("hone_gild", false, 2, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("arcane_repair", false, 0, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("double/warforge", false, 2, 0x6666aa, 4, 1, 0, 5));
         }
     }
 

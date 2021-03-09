@@ -153,6 +153,7 @@
   "tetra.stats.blocking": "Block",
   "tetra.stats.blocking.tooltip": "Holding down right-click will block incoming attacks and projectiles",
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
+  "tetra.stats.blocking_duration_cooldown.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds.\n \n§7Cooldown: §e%sx§r (§e%ss§r)",
   "tetra.stats.blocking.tooltip_extended": "If this item has a secondary ability available then that ability can be used by pressing shift + right-click, or by holding shift as right-click is released (this will trigger a 50%% longer cooldown).",
 
   "tetra.stats.blocking_reflect": "Reflect",
@@ -577,6 +578,27 @@
   "item.tetra.scroll.cut_efficiency.name": "Cut efficiency",
   "item.tetra.scroll.cut_efficiency.description": "Using a cutting implement to craft or repair has a 25%% chance to use less materials",
 
+  "item.tetra.scroll.sword/sturdy_guard.prefix": "Schematic",
+  "item.tetra.scroll.sword/sturdy_guard.name": "Sturdy guard",
+  "item.tetra.scroll.sword/sturdy_guard.description": "A variant of a once common, but long since forgotten technique for making sword guards. Can block incoming attacks and projectiles when timed properly.",
+  "item.tetra.scroll.sword/throwing_knife.prefix": "Schematic",
+  "item.tetra.scroll.sword/throwing_knife.name": "Throwing knife",
+  "item.tetra.scroll.sword/throwing_knife.description": "Describes how to make a light and well balanced sword blades that are suited for throwing",
+  "item.tetra.scroll.sword/howling_blade.prefix": "Schematic",
+  "item.tetra.scroll.sword/howling_blade.name": "Howling blade",
+  "item.tetra.scroll.sword/howling_blade.description": "Peculiar diagrams and texts describe how to modify the fuller of a sword so that when swung, the sword will create a turbulent field around the wielder that's capable of deflecting projectiles",
+  "item.tetra.scroll.single/points_end.prefix": "Schematic",
+  "item.tetra.scroll.single/points_end.name": "Point's End",
+  "item.tetra.scroll.single/points_end.description": "Schematics for an intricate spearhead that's capable of drawing power from several types of spherical objects",
+  "item.tetra.scroll.hone_gild.prefix": "Hone",
+  "item.tetra.scroll.hone_gild.name": "Gilding",
+  "item.tetra.scroll.hone_gild.description": "",
+  "item.tetra.scroll.arcane_repair.name": "Arcane Repair",
+  "item.tetra.scroll.arcane_repair.description": "",
+  "item.tetra.scroll.double/warforge.prefix": "Schematic",
+  "item.tetra.scroll.double/warforge.name": "Warforge",
+  "item.tetra.scroll.double/warforge.description": "Describes how double headed tools may be modified to be much more usable in combat",
+
   "item.tetra.scroll.effects": "Crafting Effect",
   "item.tetra.scroll.effects.description": "Provides some form of effect when tool parts are crafted or modified in a nearby workbench",
   "item.tetra.scroll.schematics": "Schematic",
@@ -882,7 +904,7 @@
   "tetra.variant.makeshift_guard/oak": "Wooden makeshift guard",
 
   "tetra/schematic/sword/wide_guard.name": "Wide guard",
-  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the mainhand or offhand.\n \nMaterial §fhardness§r and §fflexibility§r increase the armor amount.",
+  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the mainhand or offhand.\n \nMaterial §fhardness§r and §fflexibility§r increases the armor amount.",
   "tetra/schematic/sword/wide_guard.slot1": "Guard material",
 
   "tetra.module.sword/wide_guard.name": "Wide guard",
@@ -891,6 +913,14 @@
 
   "tetra.variant.wide_guard/oak": "Wooden wide guard",
   "tetra.variant.wide_guard/vent_plate": "Repurposed plate guard",
+
+  "tetra/schematic/sword/sturdy_guard.name": "Sturdy guard",
+  "tetra/schematic/sword/sturdy_guard.description": "Craft a sturdy guard which can block incoming attacks if timed correctly.\n \nMaterial §fhardness§r increases the block duration.\nMaterial §fdensity§r decreases the block duration.",
+  "tetra/schematic/sword/sturdy_guard.slot1": "Guard material",
+
+  "tetra.module.sword/sturdy_guard.name": "Sturdy guard",
+  "tetra.module.sword/sturdy_guard.description": "A sturdy guard which can block incoming attacks if timed correctly.",
+  "tetra.module.sword/sturdy_guard.material_name": "Sturdy %s guard",
 
   "tetra/schematic/sword/socket.name": "Socket",
   "tetra/schematic/sword/socket.description": "Socket a gem into the sword, providing different effects depending on the gem.",

@@ -142,7 +142,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public WorkbenchAction[] getAvailableActions(PlayerEntity player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
-                .filter(action -> action.canPerformOn(player, itemStack))
+                .filter(action -> action.canPerformOn(player, this, itemStack))
                 .toArray(WorkbenchAction[]::new);
     }
 
@@ -158,7 +158,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
-                .filter(action -> action.canPerformOn(player, targetStack))
+                .filter(action -> action.canPerformOn(player, this, targetStack))
                 .filter(action -> checkActionTools(player, action, targetStack))
                 .ifPresent(action -> {
                     action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
@@ -200,7 +200,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
-                .filter(action -> action.canPerformOn(null, targetStack))
+                .filter(action -> action.canPerformOn(null, this, targetStack))
                 .filter(action -> checkActionTools(action, targetStack))
                 .ifPresent(action -> {
                     action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
@@ -433,6 +433,12 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                         pos, blockState, consumeResources));
 
         return result;
+    }
+
+    public ResourceLocation[] getUnlockedSchematics() {
+        return CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                .map(block -> block.getSchematics(world, pos, getBlockState()))
+                .orElse(new ResourceLocation[0]);
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
