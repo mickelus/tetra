@@ -220,7 +220,7 @@ public class ModularBowItem extends ModularItem {
                                 projectile.setPierceLevel((byte) piercingLevel);
                             }
 
-                            if (suspendLevel > 0 && drawProgress > 20) {
+                            if (suspendLevel > 0 && drawProgress >= 20) {
                                 projectile.setNoGravity(true);
                             }
 
@@ -229,11 +229,10 @@ public class ModularBowItem extends ModularItem {
                                 projectile.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                             }
 
-                            if (suspendLevel > 0 && drawProgress > 20) {
+                            if (suspendLevel > 0 && drawProgress >= 20) {
                                 Vector3d projDir = projectile.getMotion().normalize();
                                 Vector3d projPos = projectile.getPositionVec();
                                 for (int j = 0; j < 4; j++) {
-                                    Vector3d direction = projDir.scale(j);
                                     Vector3d pos = projPos.add(projDir.scale(2 + j * 2));
                                     ((ServerWorld)entity.world).spawnParticle(ParticleTypes.END_ROD,
                                             pos.getX(), pos.getY(), pos.getZ(), 1,
@@ -245,10 +244,13 @@ public class ModularBowItem extends ModularItem {
                         }
 
 
-                        itemStack.damageItem(1, player, (p_220009_1_) -> {
-                            p_220009_1_.sendBreakAnimation(player.getActiveHand());
-                        });
-                        applyUsageEffects(entity, itemStack, 1);
+                        applyDamage(1, itemStack, player);
+                        applyNegativeUsageEffects(entity, itemStack, 1);
+
+                        // max draw at 20, has to be drawn at least 3/4th for positive effects
+                        if (drawProgress > 15) {
+                            applyPositiveUsageEffects(entity, itemStack, 1);
+                        }
                     }
 
                     float pitchBase = projectileVelocity;
@@ -364,6 +366,10 @@ public class ModularBowItem extends ModularItem {
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack bowStack = player.getHeldItem(hand);
         boolean hasAmmo = !player.findAmmo(vanillaBow).isEmpty();
+
+        if (isBroken(bowStack)) {
+            return ActionResult.resultPass(bowStack);
+        }
 
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;

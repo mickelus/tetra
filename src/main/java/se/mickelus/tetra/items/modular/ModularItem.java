@@ -469,8 +469,15 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
      * @param multiplier A multiplier representing the effort and effect yielded from the use
      */
     public void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        tickProgression(entity, itemStack, (int) multiplier);
+        applyPositiveUsageEffects(entity, itemStack, multiplier);
+        applyNegativeUsageEffects(entity, itemStack, multiplier);
+    }
 
+    public void applyPositiveUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
+        tickProgression(entity, itemStack, (int) multiplier);
+    }
+
+    public void applyNegativeUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
         causeHauntEffect(entity, itemStack, multiplier);
         causeFierySelfEffect(entity, itemStack, multiplier);
         causeEnderReverbEffect(entity, itemStack, multiplier);
