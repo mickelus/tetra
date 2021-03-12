@@ -40,7 +40,6 @@
                 "tetra:ability_cooldown": 1,
                 "generic.armor_toughness": 0.5
             },
-            "durability": -20,
             "extract": {
                 "primaryAttributes": {
                     "tetra:ability_damage": 0.4,
@@ -54,7 +53,7 @@
                 "tertiaryAttributes": {
                     "generic.armor_toughness": 0.2
                 },
-                "durability": 0.9,
+                "durability": 0.8,
                 "integrity": -1,
                 "magicCapacity": 1,
                 "glyph": {

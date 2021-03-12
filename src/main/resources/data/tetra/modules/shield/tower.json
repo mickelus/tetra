@@ -42,7 +42,7 @@
             "effects": {
                 "blocking": 16
             },
-            "durability": -20,
+            "durability": 98,
             "extract": {
                 "primaryAttributes": {
                     "tetra:ability_damage": 0.6
@@ -54,7 +54,7 @@
                 "tertiaryAttributes": {
                     "tetra:ability_cooldown": -0.2
                 },
-                "durability": 0.9,
+                "durability": 0.8,
                 "integrity": -1,
                 "magicCapacity": 1,
                 "glyph": {

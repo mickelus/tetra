@@ -38,7 +38,7 @@
             "attributes": {
                 "tetra:ability_cooldown": 1
             },
-            "durability": 22,
+            "durability": 49,
             "extract": {
                 "secondaryAttributes": {
                     "tetra:ability_cooldown": 0.3
