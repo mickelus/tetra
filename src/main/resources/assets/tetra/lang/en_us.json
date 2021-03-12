@@ -1041,6 +1041,16 @@
   "tetra.improvement.stonecutter_hone/tier.name": "Hone: Mine Tier",
   "tetra.improvement.stonecutter_hone/tier.description": "Increases mining tier by 1",
 
+  "tetra/schematic/sword/throwing_knife.name": "Throwing knife",
+  "tetra/schematic/sword/throwing_knife.description": "Craft a well-balanced blade that is suitable for throwing.\n \nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r, at a reduced rate.\nMaterial §fdensity§r slightly increases §fthrowing damage§r.",
+  "tetra/schematic/sword/throwing_knife.slot1": "Blade material",
+
+  "tetra.module.sword/throwing_knife.item_name": "Throwing knife",
+  "tetra.module.sword/throwing_knife.name": "Throwing knife",
+  "tetra.module.sword/throwing_knife.description": "A well-balanced blade that is suitable for throwing.",
+  "tetra.module.sword/throwing_knife.material_name": "%s throwing knife",
+  "tetra.module.sword/throwing_knife.prefix": "%s",
+
   "tetra/schematic/double/shared_head/hone_durability_1.name": "Hone: Durability I",
   "tetra/schematic/double/shared_head/hone_durability_1.description": "Hone the module to increase the durability it provides.",
   "tetra/schematic/double/shared_head/hone_durability_2.name": "Hone: Durability II",

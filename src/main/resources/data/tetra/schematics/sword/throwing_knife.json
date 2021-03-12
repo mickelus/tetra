@@ -1,0 +1,18 @@
+{
+    "replace": true,
+    "locked": true,
+    "slots": ["sword/blade"],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 160,
+        "textureY": 48
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "moduleKey": "sword/throwing_knife",
+            "moduleVariant": "throwing_knife/"
+        }
+    ]
+}
