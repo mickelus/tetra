@@ -69,9 +69,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 onItemSelect(null);
                 break;
             case 1:
-                if (showingMaterials) {
-                    onMaterialsSelect();
-                } else {
+                if (!showingMaterials) {
                     onItemSelect(item);
                 }
                 break;
