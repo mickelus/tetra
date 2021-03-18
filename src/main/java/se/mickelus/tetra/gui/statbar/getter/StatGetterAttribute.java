@@ -49,7 +49,7 @@ public class StatGetterAttribute implements IStatGetter {
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
         double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
                 .map(ModifiableAttributeInstance::getBaseValue)
-                .orElse(0d) - offset;
+                .orElse(0d) + offset;
         return getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue;
     }
 
