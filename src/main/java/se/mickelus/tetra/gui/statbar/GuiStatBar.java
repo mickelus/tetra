@@ -114,7 +114,10 @@ public class GuiStatBar extends GuiStatBase {
         double value;
         double diffValue;
 
-        labelString.setString(I18n.format(labelKey));
+        if (labelKey != null) {
+            labelString.setString(I18n.format(labelKey));
+        }
+        labelString.setVisible(labelKey != null);
 
         if (!previewStack.isEmpty()) {
             value = statGetter.getValue(player, currentStack);
