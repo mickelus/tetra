@@ -19,12 +19,8 @@
     "requirement": {
         "type": "tetra:modular_item",
         "modules": [
-            [
-                "double/basic_pickaxe_right"
-            ],
-            [
-                "double/basic_pickaxe_left"
-            ]
+            ["double/basic_pickaxe_right"],
+            ["double/basic_pickaxe_left"]
         ],
         "improvements": {
             "!head_hone/pickaxe_efficiency": -1

@@ -159,7 +159,7 @@ public class ConfigSchematic extends BaseSchematic {
     @Override
     public boolean isVisibleForPlayer(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack) {
         if (definition.locked) {
-            return Arrays.stream(tile.getUnlockedSchematics()).anyMatch(rl -> definition.key.equals(rl.getPath()));
+            return Arrays.stream(tile.getUnlockedSchematics()).anyMatch(rl -> definition.key.startsWith(rl.getPath()));
         }
 
         if (definition.materialRevealSlot > -1) {

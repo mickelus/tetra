@@ -34,6 +34,7 @@ import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ScrollItem extends BlockItem {
     static final String identifier = "scroll_rolled";
@@ -71,16 +72,22 @@ public class ScrollItem extends BlockItem {
 
             items.add(setupSchematic("sword/sturdy_guard", false,   1, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("sword/throwing_knife", false, 1, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("sword/howling", false,  1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/howling", false,        1, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("single/points_end", false,    0, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("hone_gild", true,             2, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("arcane_repair", true,         0, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("double/warforge", false,      2, 0x6666aa, 4, 1, 0, 5));
+
+            items.add(setupSchematic("hone_gild", new String[] { "shared/hone_gild_" }, true, 2, 0xbfa12a, 12, 14, 12, 15));
         }
     }
 
     private ItemStack setupSchematic(String key, boolean isIntricate, int material, int tint, Integer ... glyphs) {
-        ScrollData data = new ScrollData(key, isIntricate, material, tint, Arrays.asList(glyphs), ImmutableList.of(new ResourceLocation(TetraMod.MOD_ID, key)),
+        return setupSchematic(key, new String[] { key }, isIntricate, material, tint, glyphs);
+    }
+
+    private ItemStack setupSchematic(String key, String[] schematics, boolean isIntricate, int material, int tint, Integer ... glyphs) {
+        ScrollData data = new ScrollData(key, isIntricate, material, tint, Arrays.asList(glyphs),
+                Arrays.stream(schematics).map(s -> new ResourceLocation(TetraMod.MOD_ID, s)).collect(Collectors.toList()),
                 Collections.emptyList());
 
         ItemStack itemStack = new ItemStack(ScrollItem.instance);
