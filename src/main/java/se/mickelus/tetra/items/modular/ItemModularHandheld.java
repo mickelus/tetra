@@ -42,6 +42,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -157,6 +158,11 @@ public class ItemModularHandheld extends ModularItem {
                 int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
                 if (sweepingLevel > 0) {
                     SweepingEffect.sweepAttack(itemStack, target, attacker, sweepingLevel);
+                }
+
+                int howlingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.howling);
+                if (howlingLevel > 0) {
+                    HowlingEffect.trigger(itemStack, attacker, howlingLevel);
                 }
             }
 

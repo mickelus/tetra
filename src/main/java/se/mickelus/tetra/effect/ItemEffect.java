@@ -22,6 +22,13 @@ public class ItemEffect {
     //////////////////////////////////////////////////////////////
 
     /**
+     * Howling: Swinging the item grants a stacking potion effect that grants (per stack) 12.5% chance to deflect projectile, slow movement speed by -5%
+     * and 2.5% chance to send the projectile directly back to where it came from. Effect level determines stacks gained per swing, efficiency
+     * determines duration.
+     */
+    public static ItemEffect howling = get("howling");
+
+    /**
      * Bleeding: When hitting living entities there is a 30% chance to cause the entity to bleed for 2 seconds. Bleeding
      * entities take damage 2 times per second, the damage taken is equal to the level of the bleeding effect.
      * todo: make effect efficiency affect duration

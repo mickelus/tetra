@@ -33,15 +33,6 @@ public class EarthboundPotionEffect extends Effect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, MatrixStack matrixStack, int x, int y, float z) {
-        gui.getMinecraft().getTextureManager().bindTexture(texture);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.enableBlend();
-        gui.blit(matrixStack, x + 8, y + 8, 0, 0, 16, 16);
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
     public void renderHUDEffect(EffectInstance effect, AbstractGui gui, MatrixStack matrixStack, int x, int y, float z, float alpha) {
         Minecraft.getInstance().getTextureManager().bindTexture(texture);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);

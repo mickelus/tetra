@@ -6,6 +6,9 @@
   "tetra.attribute.ability_damage.name": "Ability damage",
   "tetra.attribute.ability_cooldown.name": "Ability cooldown",
 
+  "effect.tetra.earthbound": "Earthbound",
+  "effect.tetra.howling": "Howling",
+
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
   "tetra.holo.craft.breadcrumb.root": "Craft",
@@ -182,6 +185,9 @@
 
   "tetra.stats.unarmoredDamage": "Severing",
   "tetra.stats.unarmoredDamage.tooltip": "Deals §e%s§r bonus damage when attacking entities with no armor",
+
+  "tetra.stats.howling": "Howling",
+  "tetra.stats.howling.tooltip": "Swinging this item will envelop the wielder in howling winds which may deflect incoming projectiles.\n \n§7Each swing adds §e%s§7 stack(s) of the effect with a §e%s§7 second duration. Each stack grants:\n* §e12.5%%§7 chance to deflect\n* §e-5%%§7 movement speed\n* §e2.5%%§7 chance for a deflected projectile to go back to where it came from.",
 
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
@@ -583,13 +589,13 @@
   "item.tetra.scroll.sword/sturdy_guard.description": "A variant of a once common, but long since forgotten technique for making sword guards. Can block incoming attacks and projectiles when timed properly.",
   "item.tetra.scroll.sword/throwing_knife.prefix": "Schematic",
   "item.tetra.scroll.sword/throwing_knife.name": "Throwing knife",
-  "item.tetra.scroll.sword/throwing_knife.description": "Describes how to make a light and well balanced sword blades that are suited for throwing",
-  "item.tetra.scroll.sword/howling_blade.prefix": "Schematic",
-  "item.tetra.scroll.sword/howling_blade.name": "Howling blade",
-  "item.tetra.scroll.sword/howling_blade.description": "Peculiar diagrams and texts describe how to modify the fuller of a sword so that when swung, the sword will create a turbulent field around the wielder that's capable of deflecting projectiles",
+  "item.tetra.scroll.sword/throwing_knife.description": "Describes how to make light and well balanced sword blades that are suited for throwing",
+  "item.tetra.scroll.sword/howling.prefix": "Schematic",
+  "item.tetra.scroll.sword/howling.name": "Howling blade",
+  "item.tetra.scroll.sword/howling.description": "Peculiar diagrams and texts describe how to modify the fuller of a sword so that when swung, the sword will create a turbulent field around the wielder that's capable of deflecting projectiles",
   "item.tetra.scroll.single/points_end.prefix": "Schematic",
   "item.tetra.scroll.single/points_end.name": "Point's End",
-  "item.tetra.scroll.single/points_end.description": "Schematics for an intricate spearhead that's capable of drawing power from several types of spherical objects",
+  "item.tetra.scroll.single/points_end.description": "Schematics for a spearhead that's capable of drawing power from several types of spherical objects",
   "item.tetra.scroll.hone_gild.prefix": "Hone",
   "item.tetra.scroll.hone_gild.name": "Gilding",
   "item.tetra.scroll.hone_gild.description": "",
@@ -597,7 +603,7 @@
   "item.tetra.scroll.arcane_repair.description": "",
   "item.tetra.scroll.double/warforge.prefix": "Schematic",
   "item.tetra.scroll.double/warforge.name": "Warforge",
-  "item.tetra.scroll.double/warforge.description": "Describes how double headed tools may be modified to be much more usable in combat",
+  "item.tetra.scroll.double/warforge.description": "Plans on how to modify double headed tools to be much more effective in combat",
 
   "item.tetra.scroll.effects": "Crafting Effect",
   "item.tetra.scroll.effects.description": "Provides some form of effect when tool parts are crafted or modified in a nearby workbench",
@@ -960,6 +966,14 @@
 
   "tetra.variant.reinforced_fuller/oak": "Wood reinforced fuller",
   "tetra.variant.reinforced_fuller/forged_beam": "Beam reinforced fuller",
+
+  "tetra/schematic/sword/howling.name": "Howling blade",
+  "tetra/schematic/sword/howling.description": "Craft a set of fuller attachments that will cause howling winds to envelop the wielder when the sword is swung, the winds will occasionally deflect incoming projectiles.\n \nMaterial §fhardness§r increase §fstacks§r gained per swing.\nMaterial §fflexibility§r increases the §fduration§r.",
+  "tetra/schematic/sword/howling.slot1": "Material",
+
+  "tetra.module.sword/howling.name": "Howlers",
+  "tetra.module.sword/howling.description": "A fuller attachment that causes howling winds to envelop the wielder, the winds occasionally deflects incoming projectiles.",
+  "tetra.module.sword/howling.material_name": "%s howler",
 
   "tetra/schematic/sword/binding.name": "Binding",
   "tetra/schematic/sword/binding.description": "Tighten the binding between the hilt and the blade by wrapping it with rope or straps, or by using completely different materials and methods.",

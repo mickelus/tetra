@@ -69,13 +69,13 @@ public class ScrollItem extends BlockItem {
             items.add(setupTreatise("axe_efficiency", false,    0, 0x66ff66, 0, 1, 3, 3));
             items.add(setupTreatise("cut_efficiency", false,    0, 0x6666ff, 4, 0, 3, 5));
 
-            items.add(setupSchematic("sword/sturdy_guard", false, 1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/sturdy_guard", false,   1, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("sword/throwing_knife", false, 1, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("sword/howling_blade", false, 1, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("single/points_end", false, 0, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("hone_gild", false, 2, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("arcane_repair", false, 0, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("double/warforge", false, 2, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/howling", false,  1, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("single/points_end", false,    0, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("hone_gild", true,             2, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("arcane_repair", true,         0, 0x6666aa, 4, 1, 0, 5));
+            items.add(setupSchematic("double/warforge", false,      2, 0x6666aa, 4, 1, 0, 5));
         }
     }
 

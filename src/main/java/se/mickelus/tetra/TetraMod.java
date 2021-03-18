@@ -70,10 +70,12 @@ import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
+import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
+import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
@@ -292,6 +294,7 @@ public class TetraMod {
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
         packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
         packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
+        packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
 
         WorkbenchTile.init(packetHandler);
 
@@ -368,6 +371,7 @@ public class TetraMod {
             event.getRegistry().register(new BleedingPotionEffect());
             event.getRegistry().register(new EarthboundPotionEffect());
             event.getRegistry().register(new StunPotionEffect());
+            event.getRegistry().register(new HowlingPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 

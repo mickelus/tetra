@@ -1,0 +1,17 @@
+{
+    "replace": true,
+    "locked": true,
+    "slots": ["sword/fuller"],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 72,
+        "textureY": 16
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:misc/vent_plate"],
+            "moduleKey": "sword/howling",
+            "moduleVariant": "howling/"
+        }
+    ]}

@@ -15,25 +15,22 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
-import se.mickelus.tetra.effect.potion.MiningSpeedPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -104,7 +101,6 @@ public class ItemEffectHandler {
                 });
     }
 
-
     @SubscribeEvent
     public void onLivingAttack(LivingAttackEvent event) {
         if (!event.getSource().isUnblockable() && event.getEntityLiving().isActiveItemStackBlocking()) {
@@ -147,6 +143,11 @@ public class ItemEffectHandler {
                     });
 
         }
+    }
+
+    @SubscribeEvent
+    public void onLivingAttack(ProjectileImpactEvent.Arrow event) {
+        HowlingEffect.deflectProjectile(event, event.getArrow(), event.getRayTraceResult());
     }
 
     @SubscribeEvent
@@ -243,13 +244,18 @@ public class ItemEffectHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onClickInput(InputEvent.ClickInputEvent event) {
         Minecraft mc = Minecraft.getInstance();
+        ItemStack itemStack = mc.player.getHeldItemMainhand();
         if (event.isAttack()
                 && !event.isCanceled()
-                && mc.player.getHeldItemMainhand().getItem() instanceof ModularItem
+                && itemStack.getItem() instanceof ItemModularHandheld
                 && mc.objectMouseOver != null
-                && RayTraceResult.Type.MISS.equals(mc.objectMouseOver.getType())
-                && getEffectLevel(mc.player.getHeldItemMainhand(), ItemEffect.truesweep) > 0) {
-            SweepingEffect.triggerTruesweep();
+                && RayTraceResult.Type.MISS.equals(mc.objectMouseOver.getType())) {
+            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
+                SweepingEffect.triggerTruesweep();
+            }
+            if (getEffectLevel(itemStack, ItemEffect.howling) > 0) {
+                HowlingEffect.sendPacket();
+            }
         }
     }
 
@@ -279,8 +285,16 @@ public class ItemEffectHandler {
                             }
                         }
 
-                        if (breakingPlayer.getCooledAttackStrength(0.5f) > 0.9 && getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
-                            SweepingEffect.truesweep(itemStack, breakingPlayer);
+
+                        if (breakingPlayer.getCooledAttackStrength(0.5f) > 0.9f) {
+                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
+                                SweepingEffect.truesweep(itemStack, breakingPlayer);
+                            }
+
+                            int howlingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.howling);
+                            if (howlingLevel > 0) {
+                                HowlingEffect.trigger(itemStack, breakingPlayer, howlingLevel);
+                            }
                         }
                     }
                 });

@@ -181,6 +181,10 @@ public class GuiStats {
                 0, 10, false, unarmoredDamageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.unarmoredDamage.tooltip", unarmoredDamageGetter));
 
+    public static final IStatGetter howlingGetter = new StatGetterEffectLevel(ItemEffect.howling, 1);
+    public static final GuiStatBar howling = new GuiStatBar(0, 0, barLength, "tetra.stats.howling",
+            0, 8, false, howlingGetter, LabelGetterBasic.integerLabel, new TooltipGetterHowling());
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
