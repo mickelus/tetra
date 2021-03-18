@@ -17,20 +17,28 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class CritEffect {
-    private static final Cache<UUID, Boolean> critBlockCache = CacheBuilder.newBuilder()
-            .maximumSize(100)
+    private static final Cache<UUID, BlockPos> critBlockCache = CacheBuilder.newBuilder()
+            .maximumSize(50)
             .expireAfterWrite(10, TimeUnit.SECONDS)
             .build();
 
     public static boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
+        BlockPos recentCritPos = critBlockCache.getIfPresent(breakingPlayer.getUniqueID());
+
+        // this avoids some log spam from when the client attempts to abort breaking of a critted block
+        if (pos.equals(recentCritPos)) {
+            return true;
+        }
+
         if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
-                && critBlockCache.getIfPresent(breakingPlayer.getUniqueID()) == null
+                && recentCritPos == null
                 && blockState.getBlockHardness(world, pos) > -1
                 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
 
@@ -41,11 +49,10 @@ public class CritEffect {
                 EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                 itemStack.getItem().onBlockDestroyed(itemStack, world, blockState, pos, breakingPlayer);
 
-                critBlockCache.put(breakingPlayer.getUniqueID(), true);
+                critBlockCache.put(breakingPlayer.getUniqueID(), pos);
 
-                if (breakingPlayer instanceof ServerPlayerEntity) {
-                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) breakingPlayer, 2001, pos, Block.getStateId(blockState));
-                }
+                CastOptional.cast(breakingPlayer, ServerPlayerEntity.class)
+                        .ifPresent(serverPlayer -> EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getStateId(blockState)));
 
                 if (world instanceof ServerWorld) {
                     ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
