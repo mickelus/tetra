@@ -5,19 +5,24 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
+import net.minecraftforge.fml.network.NetworkHooks;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -66,6 +71,19 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (arrangement == Arrangement.open) {
+            BlockState offsetState = world.getBlockState(pos.down());
+
+            if (offsetState.getBlock()  instanceof AbstractWorkbenchBlock) {
+                return offsetState.onBlockActivated(world, player, hand, new BlockRayTraceResult(Vector3d.ZERO, Direction.UP, pos.down(), true));
+            }
+        }
+
+        return super.onBlockActivated(state, world, pos, player, hand, hit);
+    }
+
+    @Override
     public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
         Direction facing = Direction.UP;
         if (getArrangement() == Arrangement.wall) {
@@ -83,8 +101,15 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return stateIn.isValidPosition(worldIn, currentPos) ? stateIn : Blocks.AIR.getDefaultState();
+    public BlockState updatePostPlacement(BlockState blockState, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (!blockState.isValidPosition(world, currentPos)) {
+            if (!world.isRemote() && world.getWorldInfo().getGameRulesInstance().getBoolean(GameRules.DO_TILE_DROPS) && world instanceof World) {
+                dropScrolls((World) world, currentPos);
+            }
+            return Blocks.AIR.getDefaultState();
+        }
+
+        return blockState;
     }
 
     @Override
