@@ -127,20 +127,20 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
     }
 
     protected void drawLabel(String label, float x, float y, float z, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-            matrixStackIn.push();
-            matrixStackIn.translate(x, y, z);
-            matrixStackIn.translate(0.5D, 0.9f, 0.5D);
+        matrixStackIn.push();
+        matrixStackIn.translate(x, y, z);
+        matrixStackIn.translate(0.5D, 0.9f, 0.5D);
 
-            matrixStackIn.rotate(renderDispatcher.renderInfo.getRotation());
-            matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
-            Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
-            float f1 = Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.25F);
-            int j = (int)(f1 * 255.0F) << 24;
-            FontRenderer fontrenderer = renderDispatcher.fontRenderer;
-            float f2 = (float)(-fontrenderer.getStringWidth(label) / 2);
-            fontrenderer.drawString(matrixStackIn, label, f2, 0, 553648127);
-            fontrenderer.func_238411_a_(label, f2, 0, -1, true, matrix4f, bufferIn, false, j, packedLightIn, false);
+        matrixStackIn.rotate(renderDispatcher.renderInfo.getRotation());
+        matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
+        Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
+        float f1 = Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.25F);
+        int j = (int) (f1 * 255.0F) << 24;
+        FontRenderer fontrenderer = renderDispatcher.fontRenderer;
+        float f2 = (float) (-fontrenderer.getStringWidth(label) / 2);
+        fontrenderer.drawString(matrixStackIn, label, f2, 0, 553648127);
+        fontrenderer.func_238411_a_(label, f2, 0, -1, true, matrix4f, bufferIn, false, j, packedLightIn, false);
 
-            matrixStackIn.pop();
+        matrixStackIn.pop();
     }
 }

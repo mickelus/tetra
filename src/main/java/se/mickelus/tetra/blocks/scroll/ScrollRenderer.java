@@ -2,6 +2,8 @@ package se.mickelus.tetra.blocks.scroll;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -9,13 +11,21 @@ import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ColorHelper;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.rack.RackBlock;
+import se.mickelus.tetra.util.RotationHelper;
 
 public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
     public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
@@ -59,7 +69,6 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
         transparent = new ModelRenderer(128, 64, 0, 0);
         transparent.addBox("face", 2, 1, 0.075f, 6, 13, 0, 0, -6, 51);
-//        transparent.addBox("face", 2, 1, 0.1f, 6, 13, 0, 0, 20, 32);
 
         wallGlyphs = new QuadRenderer[2][];
         for (int i = 0; i < wallGlyphs.length; i++) {
@@ -84,18 +93,20 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
     @Override
     public void render(ScrollTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        IVertexBuilder vertexBuilder = material.getBuffer(buffer, RenderType::getEntityCutout);
+        IVertexBuilder vertexBuilder = material.getBuffer(buffer, rl -> RenderType.getCutoutMipped());
 
+        ScrollData[] scrolls = tile.getScrolls();
+        ScrollBlock.Arrangement arrangement = ((ScrollBlock) tile.getBlockState().getBlock()).getArrangement();
         Direction direction = tile.getBlockState().get(RackBlock.facingProp);
+
         matrixStack.push();
         matrixStack.translate(0.5, 0, 0.5);
         matrixStack.rotate(direction.getRotation());
         matrixStack.rotate(Vector3f.XN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
 
-        ScrollData[] scrolls = tile.getScrolls();
 
-        switch (((ScrollBlock) tile.getBlockState().getBlock()).getArrangement()) {
+        switch (arrangement) {
             case rolled:
                 renderRolled(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
                 break;
@@ -108,6 +119,26 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
         }
 
         matrixStack.pop();
+
+        if (shouldDrawLabel(scrolls, tile.getPos())) {
+            matrixStack.push();
+            matrixStack.translate(0.5, 0, 0.5);
+            if (arrangement == ScrollBlock.Arrangement.wall) {
+                matrixStack.rotate(direction.getOpposite().getRotation());
+                matrixStack.rotate(Vector3f.XN.rotationDegrees(90));
+                matrixStack.translate(0, 0.55, 0.4);
+                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
+            } else if (arrangement == ScrollBlock.Arrangement.open) {
+                double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getRenderViewEntity().getEyePosition(partialTicks),
+                        Vector3d.copyCentered(tile.getPos()));
+                Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
+                rotation.multiply(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
+                matrixStack.rotate(rotation);
+                matrixStack.translate(0, 0.4f, 0.45);
+                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
+            }
+            matrixStack.pop();
+        }
     }
 
     private void renderRolled(ScrollData[] scrolls, MatrixStack matrixStack, int combinedLight, int combinedOverlay, IVertexBuilder vertexBuilder) {
@@ -144,7 +175,6 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
         float red = ColorHelper.PackedColor.getRed(color) / 255f;
         float green = ColorHelper.PackedColor.getGreen(color) / 255f;
         float blue = ColorHelper.PackedColor.getBlue(color) / 255f;
-
 
         wallModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
         for (int i = 0; i < wallGlyphs.length; i++) {
@@ -207,5 +237,23 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
             return MathHelper.clamp(data[index].material, 0, 2);
         }
         return 0;
+    }
+
+    private boolean shouldDrawLabel(ScrollData[] scrolls, BlockPos pos) {
+        RayTraceResult mouseover = Minecraft.getInstance().objectMouseOver;
+        return scrolls != null && scrolls.length > 0
+                && mouseover != null && mouseover.getType() == RayTraceResult.Type.BLOCK
+                && pos.equals(((BlockRayTraceResult) mouseover).getPos());
+    }
+
+    private void drawLabel(ScrollData scroll, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
+        String label = I18n.format("item.tetra.scroll." + scroll.key + ".name");
+
+        matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
+        Matrix4f matrix4f = matrixStack.getLast().getMatrix();
+        int opacity = (int) (Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.5f) * 255.0f) << 24;
+        FontRenderer fontrenderer = renderDispatcher.fontRenderer;
+        float x = -fontrenderer.getStringWidth(label) / 2f;
+        fontrenderer.func_238411_a_(label, x, 0, -1, false, matrix4f, buffer, false, opacity, packedLight, false);
     }
 }

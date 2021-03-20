@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 
 public class RotationHelper {
@@ -74,5 +75,15 @@ public class RotationHelper {
 
     public static Vector3i shiftAxis(Vector3i pos) {
         return new Vector3i(pos.getY(), pos.getZ(), pos.getX());
+    }
+
+    /**
+     * Returns the horizontal angle between two points, in radians (is that how you say it?)
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double getHorizontalAngle(Vector3d a, Vector3d b) {
+        return MathHelper.atan2(a.x - b.x, a.z - b.z);
     }
 }

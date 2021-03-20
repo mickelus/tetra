@@ -73,7 +73,6 @@ public class ScrollItem extends BlockItem {
             items.add(setupSchematic("sword/sturdy_guard", false,   1, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("sword/throwing_knife", false, 1, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("sword/howling", false,        1, 0x6666aa, 4, 1, 0, 5));
-            items.add(setupSchematic("single/points_end", false,    0, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("arcane_repair", true,         0, 0x6666aa, 4, 1, 0, 5));
             items.add(setupSchematic("double/warforge", false,      2, 0x6666aa, 4, 1, 0, 5));
 
