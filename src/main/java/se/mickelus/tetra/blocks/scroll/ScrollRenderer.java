@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -93,7 +94,7 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
     @Override
     public void render(ScrollTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        IVertexBuilder vertexBuilder = material.getBuffer(buffer, rl -> RenderType.getCutoutMipped());
+        IVertexBuilder vertexBuilder = material.getBuffer(buffer, rl -> RenderType.getEntityCutout(rl));
 
         ScrollData[] scrolls = tile.getScrolls();
         ScrollBlock.Arrangement arrangement = ((ScrollBlock) tile.getBlockState().getBlock()).getArrangement();
@@ -134,7 +135,7 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
                 Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
                 rotation.multiply(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
                 matrixStack.rotate(rotation);
-                matrixStack.translate(0, 0.4f, 0.45);
+                matrixStack.translate(0, 0.4f, 0.4);
                 drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
             }
             matrixStack.pop();
@@ -251,9 +252,14 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
         matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
         Matrix4f matrix4f = matrixStack.getLast().getMatrix();
-        int opacity = (int) (Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.5f) * 255.0f) << 24;
         FontRenderer fontrenderer = renderDispatcher.fontRenderer;
         float x = -fontrenderer.getStringWidth(label) / 2f;
-        fontrenderer.func_238411_a_(label, x, 0, -1, false, matrix4f, buffer, false, opacity, packedLight, false);
+        fontrenderer.func_238411_a_(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.func_238411_a_(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.func_238411_a_(label, x, -1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.func_238411_a_(label, x, 1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+
+        matrixStack.translate(0, 0, -0.0125f);
+        fontrenderer.func_238411_a_(label, x, 0, -1, false, matrix4f, buffer, false, 0, packedLight, false);
     }
 }
