@@ -32,6 +32,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -40,6 +41,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
@@ -92,6 +94,11 @@ public class ModularCrossbowItem extends ModularItem {
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
         RemoveSchematic.registerRemoveSchematics(this);
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("crossbow/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

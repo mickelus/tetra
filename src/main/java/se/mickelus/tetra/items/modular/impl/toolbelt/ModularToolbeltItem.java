@@ -23,6 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -88,6 +89,8 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         ToolbeltInventory.initializePredicates();
 
         RemoveSchematic.registerRemoveSchematics(this);
+
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
     }
 
     @Override

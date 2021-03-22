@@ -90,7 +90,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double"));
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double/"));
     }
 
     @Override

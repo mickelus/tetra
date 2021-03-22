@@ -10,10 +10,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 
@@ -46,6 +48,11 @@ public class ModularBladedItem extends ItemModularHandheld {
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
         RemoveSchematic.registerRemoveSchematics(this);
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("sword/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

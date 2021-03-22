@@ -1,0 +1,16 @@
+[
+    {
+        "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
+        "sameVariant": true,
+        "tools": {
+            "pickaxe": 1
+        }
+    },
+    {
+        "modules": ["double/basic_hammer", "double/basic_hammer"],
+        "sameVariant": true,
+        "tools": {
+            "hammer": 1
+        }
+    }
+]

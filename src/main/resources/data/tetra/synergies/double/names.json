@@ -4,13 +4,6 @@
         "name": "double/axe_hammer"
     },
     {
-        "modules": ["double/basic_axe", "double/basic_axe"],
-        "name": "double/axe_axe",
-        "attributes": {
-            "**generic.attack_damage": 0.2
-        }
-    },
-    {
         "modules": ["double/basic_axe", "double/basic_pickaxe"],
         "name": "double/axe_pickaxe"
     },
@@ -33,19 +26,5 @@
     {
         "modules": ["double/claw", "double/basic_axe"],
         "name": "double/claw_axe"
-    },
-    {
-        "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
-        "sameVariant": true,
-        "tools": {
-            "pickaxe": 1
-        }
-    },
-    {
-        "modules": ["double/basic_hammer", "double/basic_hammer"],
-        "sameVariant": true,
-        "tools": {
-            "hammer": 1
-        }
     }
 ]

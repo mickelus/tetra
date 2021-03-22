@@ -122,7 +122,9 @@ public class DataManager {
      * @return An array of synergy data
      */
     public SynergyData[] getSynergyData(String path) {
-        SynergyData[] data = synergyData.getData(new ResourceLocation(TetraMod.MOD_ID, path));
+        SynergyData[] data = synergyData.getDataIn(new ResourceLocation(TetraMod.MOD_ID, path)).stream()
+                .flatMap(Arrays::stream)
+                .toArray(SynergyData[]::new);
         for (SynergyData entry : data) {
             Arrays.sort(entry.moduleVariants);
             Arrays.sort(entry.modules);

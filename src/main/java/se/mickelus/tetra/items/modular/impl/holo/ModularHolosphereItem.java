@@ -65,7 +65,7 @@ public class ModularHolosphereItem extends ModularItem {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
-        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo"));
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
         RemoveSchematic.registerRemoveSchematics(this);
     }
 
