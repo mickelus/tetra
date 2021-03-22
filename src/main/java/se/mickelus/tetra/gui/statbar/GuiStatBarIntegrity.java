@@ -33,9 +33,11 @@ public class GuiStatBarIntegrity extends GuiStatBase {
         super(x, y, GuiStats.barLength, 12);
 
         labelString = new GuiStringSmall(0, 0, I18n.format("tetra.stats.integrity"));
+        addChild(labelString);
 
         valueString = new GuiStringSmall(0, 0, "");
         valueString.setAttachment(GuiAttachment.topRight);
+        addChild(valueString);
 
         barNegative = new GuiBarSegmented(-1, 0, 27, 0, max, true);
         barNegative.setAlignment(GuiAlignment.right);
@@ -45,8 +47,6 @@ public class GuiStatBarIntegrity extends GuiStatBase {
         barPositive.setAttachment(GuiAttachment.topRight);
         addChild(barPositive);
 
-        addChild(labelString);
-        addChild(valueString);
 
         addChild(new GuiRect(29, 5, 1, 3, GuiColors.muted));
 
@@ -85,6 +85,8 @@ public class GuiStatBarIntegrity extends GuiStatBase {
         }
 
         updateValue(value, diffValue);
+
+        labelString.setString(I18n.format("tetra.stats.integrity"));
     }
 
     @Override
