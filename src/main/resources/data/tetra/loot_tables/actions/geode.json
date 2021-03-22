@@ -15,8 +15,8 @@
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 4,
-                                        "max": 12
+                                        "min": 8,
+                                        "max": 14
                                     }
                                 },
                                 {
@@ -36,8 +36,8 @@
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 4,
-                                        "max": 12
+                                        "min": 8,
+                                        "max": 14
                                     }
                                 },
                                 {
@@ -58,8 +58,8 @@
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 4,
-                                        "max": 12
+                                        "min": 8,
+                                        "max": 14
                                     }
                                 },
                                 {
@@ -80,8 +80,8 @@
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 4,
-                                        "max": 12
+                                        "min": 8,
+                                        "max": 14
                                     }
                                 },
                                 {
@@ -102,8 +102,8 @@
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 4,
-                                        "max": 12
+                                        "min": 8,
+                                        "max": 14
                                     }
                                 },
                                 {
@@ -228,8 +228,8 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 5
+                                "min": 5,
+                                "max": 10
                             }
                         },
                         {
@@ -250,8 +250,8 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 5
+                                "min": 5,
+                                "max": 10
                             }
                         },
                         {
