@@ -25,10 +25,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:double/sickle",
-        "tetra:double/sickle_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:double/sickle/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

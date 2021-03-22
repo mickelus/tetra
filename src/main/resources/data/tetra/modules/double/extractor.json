@@ -5,6 +5,8 @@
     "slotSuffixes": ["_right"],
     "improvements": [
         "tetra:double/extractor/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

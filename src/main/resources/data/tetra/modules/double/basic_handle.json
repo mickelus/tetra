@@ -27,9 +27,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:double/basic_handle",
-        "tetra:double/basic_handle_compat",
-        "tetra:double/basic_handle_hone",
+        "tetra:double/basic_handle/",
+        "tetra:double/shared_handle/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

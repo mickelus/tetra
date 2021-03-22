@@ -51,11 +51,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:double/basic_axe",
-        "tetra:double/basic_compat",
-        "tetra:double/basic_axe_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:double/axe/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

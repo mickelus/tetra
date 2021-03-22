@@ -31,11 +31,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:double/basic_pickaxe",
-        "tetra:double/basic_pickaxe_compat",
-        "tetra:double/basic_pickaxe_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:double/pickaxe/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

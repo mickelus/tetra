@@ -29,11 +29,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:double/adze",
-        "tetra:double/adze_compat",
-        "tetra:double/adze_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:double/adze/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

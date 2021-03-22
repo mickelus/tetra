@@ -1,0 +1,8 @@
+[
+    {
+        "key": "basic_handle/soot",
+        "models": [{
+            "location": "tetra:items/module/double/handle/basic/improvements/soot"
+        }]
+    }
+]

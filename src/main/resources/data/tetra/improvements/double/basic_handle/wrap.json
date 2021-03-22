@@ -1,11 +1,5 @@
 [
     {
-        "key": "basic_handle/soot",
-        "models": [{
-            "location": "tetra:items/module/double/handle/basic/improvements/soot"
-        }]
-    },
-    {
         "key": "basic_handle/wrap_string",
         "level": 1,
         "durability": 3,

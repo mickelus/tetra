@@ -30,11 +30,9 @@
         "tetra:enchantment/efficiency_hoe",
         "tetra:enchantment/silk_touch",
         "tetra:enchantment/fortune",
-        "tetra:double/hoe",
-        "tetra:double/hoe_compat",
-        "tetra:double/hoe_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:double/hoe/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [

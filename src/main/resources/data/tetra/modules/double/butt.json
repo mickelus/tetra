@@ -24,10 +24,11 @@
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_curse_death",
         "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:double/butt",
-        "tetra:double/butt_hone",
-        "tetra:double/shared_head_compat",
-        "tetra:double/shared_head_hone",
+        "tetra:enchantment/fortune",
+        "tetra:enchantment/unbreaking",
+        "tetra:double/butt/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
         "tetra:shared/"
     ],
     "variants": [
