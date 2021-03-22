@@ -53,7 +53,7 @@ public class GuiStatIndicator extends GuiTexture {
             }
         }
 
-        if (value != 0 || diffValue != 0) {
+        if (value > 0 || diffValue > 0) {
             setColor(getDiffColor(value, diffValue));
             return true;
         }
