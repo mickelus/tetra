@@ -1207,16 +1207,16 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
     protected boolean hasImprovementSynergy(SynergyData synergy, String[] improvements) {
         int improvementMatches = 0;
         for (String improvement : improvements) {
-            if (improvementMatches == synergy.moduleVariants.length) {
+            if (improvementMatches == synergy.improvements.length) {
                 break;
             }
 
-            if (improvement.equals(synergy.moduleVariants[improvementMatches])) {
+            if (improvement.equals(synergy.improvements[improvementMatches])) {
                 improvementMatches++;
             }
         }
 
-        return synergy.moduleVariants.length > 0 && improvementMatches == synergy.moduleVariants.length;
+        return synergy.improvements.length > 0 && improvementMatches == synergy.improvements.length;
     }
 
     protected boolean hasVariantSynergy(SynergyData synergy, String[] variantKeys) {
@@ -1244,16 +1244,13 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                     break;
                 }
 
-                if (module.getUnlocalizedName().equals(synergy.modules[moduleMatches])) {
-                    if (synergy.sameVariant) {
-                        if (variant == null) {
-                            variant = module.getVariantData(itemStack).key;
-                        }
+                String moduleKey = synergy.matchSuffixed ? module.getKey() : module.getUnlocalizedName();
+                if (moduleKey.equals(synergy.modules[moduleMatches])) {
+                    if (variant == null) {
+                        variant = module.getVariantData(itemStack).key;
+                    }
 
-                        if (variant.equals(module.getVariantData(itemStack).key)) {
-                            moduleMatches++;
-                        }
-                    } else {
+                    if (variant.equals(module.getVariantData(itemStack).key)) {
                         moduleMatches++;
                     }
                 }
@@ -1264,18 +1261,9 @@ public abstract class ModularItem extends TetraItem implements IItemModular, ITo
                     break;
                 }
 
-                if (module.getUnlocalizedName().equals(synergy.modules[moduleMatches])) {
-                    if (synergy.sameVariant) {
-                        if (variant == null) {
-                            variant = module.getVariantData(itemStack).key;
-                        }
-
-                        if (variant.equals(module.getVariantData(itemStack).key)) {
-                            moduleMatches++;
-                        }
-                    } else {
-                        moduleMatches++;
-                    }
+                String moduleKey = synergy.matchSuffixed ? module.getKey() : module.getUnlocalizedName();
+                if (moduleKey.equals(synergy.modules[moduleMatches])) {
+                    moduleMatches++;
                 }
             }
         }
