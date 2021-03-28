@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -29,6 +30,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -39,6 +41,7 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -204,6 +207,29 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     @OnlyIn(Dist.CLIENT)
     public GuiModuleOffsets getMinorGuiOffsets() {
         return minorOffsets;
+    }
+
+    @Override
+    public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
+        if (entity != null && itemStack.equals(entity.getActiveItemStack())) {
+            return Optional.ofNullable(getChargeableAbility(itemStack))
+                    .map(ChargedAbilityEffect::getModelTransform)
+                    .map(transform -> super.getModelCacheKey(itemStack, entity) + ":" + transform)
+                    .orElseGet(() -> super.getModelCacheKey(itemStack, entity));
+        }
+
+        return super.getModelCacheKey(itemStack, entity);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
+        ChargedAbilityEffect ability = getChargeableAbility(itemStack);
+        if (entity != null && ability != null && itemStack.equals(entity.getActiveItemStack())) {
+            return ability.getModelTransform();
+        }
+
+        return null;
     }
 }
 

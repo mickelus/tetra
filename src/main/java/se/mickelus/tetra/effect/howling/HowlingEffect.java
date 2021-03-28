@@ -27,7 +27,7 @@ public class HowlingEffect {
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
 
-        player.addPotionEffect(new EffectInstance(HowlingPotionEffect.instance, duration, Math.min(currentAmplifier + effectLevel, 11), true, false));
+        player.addPotionEffect(new EffectInstance(HowlingPotionEffect.instance, duration, Math.min(currentAmplifier + effectLevel, 11), false, false));
     }
 
     public static void deflectProjectile(ProjectileImpactEvent event, ProjectileEntity projectile, RayTraceResult rayTraceResult) {

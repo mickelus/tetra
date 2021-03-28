@@ -153,6 +153,18 @@ public class ItemEffect {
     public static ItemEffect softStrike = get("softStrike");
 
     /**
+     * Gives attacks a chance to apply the severed effect to targets which reduces maximum health and attack damage.
+     * Proc chance is equal to the effect level. Effect stacks up to effect efficiency.
+     */
+    public static ItemEffect severing = get("severing");
+
+    /**
+     * Charged right-click ability that deals damage based on targets missing health and the number of negative effects they're affected by.
+     * Effect level determines bonus damage from missing health & efficiency determines bonus damage from negative effects
+     */
+    public static ItemEffect execute = get("execute");
+
+    /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
      * plank slabs, bookshelves, doors etc.
      * todo: move to ability once implemented

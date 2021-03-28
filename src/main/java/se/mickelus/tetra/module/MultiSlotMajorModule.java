@@ -65,9 +65,7 @@ public class MultiSlotMajorModule extends ItemModuleMajor {
 
     @Override
     protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
-        return Arrays.stream(super.getImprovementModels(itemStack, tint))
-                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
-                .toArray(ModuleModel[]::new);
+        return super.getImprovementModels(itemStack, tint);
     }
 
     @Override

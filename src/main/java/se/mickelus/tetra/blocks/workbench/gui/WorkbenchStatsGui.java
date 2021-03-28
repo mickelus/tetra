@@ -51,6 +51,8 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.unarmoredDamage,
             GuiStats.howling,
             GuiStats.knockback,
+            GuiStats.execute,
+            GuiStats.severing,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,

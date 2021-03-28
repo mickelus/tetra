@@ -185,6 +185,17 @@ public class GuiStats {
     public static final GuiStatBar howling = new GuiStatBar(0, 0, barLength, "tetra.stats.howling",
             0, 8, false, howlingGetter, LabelGetterBasic.integerLabel, new TooltipGetterHowling());
 
+    public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
+    public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
+            0, 5, false, executeGetter, LabelGetterBasic.percentageLabelDecimal, new TooltipGetterExecute());
+
+    public static final IStatGetter severingGetter = new StatGetterEffectLevel(ItemEffect.severing, 1);
+    public static final GuiStatBar severing = new GuiStatBar(0, 0, barLength, "tetra.stats.severing",
+            0, 100, false, severingGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.severing.tooltip",
+                    new IStatGetter[] { severingGetter, new StatGetterEffectEfficiency(ItemEffect.severing, 1) },
+                    new StatFormat[] { StatFormat.noDecimal, StatFormat.noDecimal }));
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,

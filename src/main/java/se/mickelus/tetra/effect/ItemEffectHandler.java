@@ -62,6 +62,11 @@ public class ItemEffectHandler {
             }
         }
 
+        int severLevel = getEffectLevel(itemStack, ItemEffect.severing);
+        if (severLevel > 0) {
+            SeveringEffect.perform(itemStack, severLevel, attacker, target);
+        }
+
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
         if (earthbindLevel > 0 && attacker.getRNG().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getPosY()  / 128 ))) {

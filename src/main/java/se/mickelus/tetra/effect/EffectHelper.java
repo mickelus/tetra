@@ -2,7 +2,12 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MainWindow;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.DisplayEffectsScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -10,16 +15,22 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPlaySoundEventPacket;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class EffectHelper {
     private static final Cache<UUID, Float> cooledAttackStrengthCache = CacheBuilder.newBuilder()
@@ -135,6 +146,21 @@ public class EffectHelper {
         int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
         if (fireAspectLevel > 0) {
             target.setFire(fireAspectLevel * 4);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderInventoryEffectTooltip(DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, Supplier<ITextComponent> tooltip) {
+        Minecraft mc = Minecraft.getInstance();
+        MainWindow window = mc.getMainWindow();
+
+        int width = window.getScaledWidth();
+        int height = window.getScaledHeight();
+        int mouseX = (int) (mc.mouseHelper.getMouseX() * width / window.getWidth());
+        int mouseY = (int) (mc.mouseHelper.getMouseY() * height / window.getHeight());
+
+        if (x < mouseX && mouseX < x + 120 && y < mouseY && mouseY < y + 32) {
+            gui.renderTooltip(mStack, tooltip.get(), mouseX, mouseY);
         }
     }
 }

@@ -8,6 +8,9 @@
 
   "effect.tetra.earthbound": "Earthbound",
   "effect.tetra.howling": "Howling",
+  "effect.tetra.howling.tooltip": "Enveloped in howling winds, grants:\n* §e%s%%§7 movement speed\n* §e%s%%§7 chance to deflect incoming projectiles\n* §e%s%%§7 chance for a deflected projectile to go back to where it came from",
+  "effect.tetra.severed": "Severed",
+  "effect.tetra.severed.tooltip": "Reduces max health by §e%s%%§r and attack damage by §e%s%%§r",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
@@ -188,6 +191,13 @@
 
   "tetra.stats.howling": "Howling",
   "tetra.stats.howling.tooltip": "Swinging this item will envelop the wielder in howling winds which may deflect incoming projectiles.\n \n§7Each swing adds §e%s§7 stack(s) of the effect with a §e%s§7 second duration. Each stack grants:\n* §e12.5%%§7 chance to deflect\n* §e-5%%§7 movement speed\n* §e2.5%%§7 chance for a deflected projectile to go back to where it came from.",
+
+  "tetra.stats.execute": "Execute",
+  "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e%s§r base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.execute.tooltip_extended": "Base damage is based on the attack damage of the item, charge time and cooldown is based on the swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
+
+  "tetra.stats.severing": "Severing",
+  "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
 
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
@@ -589,7 +599,7 @@
   "item.tetra.scroll.sword/sturdy_guard.description": "A variant of a once common, but long since forgotten technique for making sword guards. Can block incoming attacks and projectiles when timed properly.",
   "item.tetra.scroll.sword/throwing_knife.prefix": "Schematic",
   "item.tetra.scroll.sword/throwing_knife.name": "Throwing knife",
-  "item.tetra.scroll.sword/throwing_knife.description": "Describes how to make light and well balanced sword blades that are suited for throwing",
+  "item.tetra.scroll.sword/throwing_knife.description": "Describes how to make light and well balanced sword blades that can be thrown",
   "item.tetra.scroll.sword/howling.prefix": "Schematic",
   "item.tetra.scroll.sword/howling.name": "Howling blade",
   "item.tetra.scroll.sword/howling.description": "Peculiar diagrams and texts describe how to modify the fuller of a sword so that when swung, the sword will create a turbulent field around the wielder that's capable of deflecting projectiles",
@@ -599,9 +609,9 @@
   "item.tetra.scroll.hone_gild.prefix": "Hone",
   "item.tetra.scroll.hone_gild.name": "Gild",
   "item.tetra.scroll.hone_gild.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
-  "item.tetra.scroll.double/warforge.prefix": "Schematic",
-  "item.tetra.scroll.double/warforge.name": "Warforge",
-  "item.tetra.scroll.double/warforge.description": "Contains various plans on how to modify different types of double headed tools to be much more effective in combat",
+  "item.tetra.scroll.double/shared_head/warforge.prefix": "Schematic",
+  "item.tetra.scroll.double/shared_head/warforge.name": "Tools of War",
+  "item.tetra.scroll.double/shared_head/warforge.description": "Contains various plans on how to modify different types of double headed tools to be much more effective in combat",
 
   "item.tetra.scroll.effects": "Crafting Effect",
   "item.tetra.scroll.effects.description": "Provides some form of effect when tool parts are crafted or modified in a nearby workbench",
@@ -1198,6 +1208,7 @@
   "tetra.synergy.double/adze_axe": "Cutter mattock",
   "tetra.synergy.double/claw_hammer": "Claw hammer",
   "tetra.synergy.double/claw_axe": "Carpenter's axe",
+  "tetra.synergy.double/battleaxe": "Battleaxe",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
   "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n \nMaterial §fdensity§r slightly decreases §fattack speed§r.",

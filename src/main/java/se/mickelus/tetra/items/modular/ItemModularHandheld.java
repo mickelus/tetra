@@ -28,10 +28,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -85,6 +82,10 @@ public class ItemModularHandheld extends ModularItem {
 
     // if the blocking level exceeds this value the item has an infinite blocking duration
     public static final int blockingDurationLimit = 16;
+
+    static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
+            ExecuteEffect.instance,
+    };
 
     public ItemModularHandheld(Properties properties) {
         super(properties);
@@ -289,14 +290,22 @@ public class ItemModularHandheld extends ModularItem {
         return false;
     }
 
-    public void jabEntity(ItemStack itemStack, int jabLevel, PlayerEntity player, LivingEntity target) {
-        // apply damage
+    /**
+     * Helper for hitting entities with abilities
+     * @param itemStack
+     * @param player
+     * @param target
+     * @param damageMultiplier
+     * @return true if was crit, otherwise false
+     */
+    public boolean hitEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, double damageMultiplier,
+            float knockbackBase, float knockbackMultiplier) {
         float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
                 .map(CriticalHitEvent::getDamageModifier)
                 .orElse(1f);
 
-        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * jabLevel / 100f;
+        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier;
         target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
 
         // applies enchantment effects on both parties
@@ -307,8 +316,8 @@ public class ItemModularHandheld extends ModularItem {
         ItemEffectHandler.applyHitEffects(itemStack, target, player);
 
         // knocks back the target based on effect level + knockback enchantment level
-        float knockbackFactor = 0.5f + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
-        target.applyKnockback(knockbackFactor * 0.2f,
+        float knockbackFactor = knockbackBase + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+        target.applyKnockback(knockbackFactor * knockbackMultiplier,
                 player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
 
         if (targetModifier > 1) {
@@ -316,8 +325,17 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (critMultiplier > 1) {
-            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
             player.onCriticalHit(target);
+        }
+
+        return critMultiplier > 1;
+    }
+
+    public void jabEntity(ItemStack itemStack, int jabLevel, PlayerEntity player, LivingEntity target) {
+        boolean wasCrit = hitEntity(itemStack, player, target, jabLevel / 100f, 0.5f, 0.2f);
+
+        if (wasCrit) {
+            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
         } else {
             player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 1.3f);
         }
@@ -326,41 +344,12 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void bashEntity(ItemStack itemStack, int bashingLevel, PlayerEntity player, LivingEntity target) {
-        // apply damage
-        float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
-        float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageModifier)
-                .orElse(1f);
-
-        double damage = (getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier;
-        target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
-
-        // applies enchantment effects on both parties
-        EnchantmentHelper.applyThornEnchantments(target, player);
-        EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
-
-        // tetra item effects
-        ItemEffectHandler.applyHitEffects(itemStack, target, player);
-
-        // knocks back the target based on effect level + knockback enchantment level
-        int knockbackFactor = bashingLevel
-                + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack)
-                + (player.isSprinting() ? 1 : 0);
-        target.applyKnockback(knockbackFactor * 0.5f,
-                player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
+        hitEntity(itemStack, player, target, 1, bashingLevel + (player.isSprinting() ? 1 : 0), 0.5f);
 
         // stuns the target if bash efficiency is > 0
         double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
         if (stunDuration > 0) {
             target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
-        }
-
-        if (targetModifier > 1) {
-            player.onEnchantmentCritical(target);
-        }
-
-        if (critMultiplier > 1) {
-            player.onCriticalHit(target);
         }
 
         player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
@@ -476,6 +465,11 @@ public class ItemModularHandheld extends ModularItem {
             return UseAction.SPEAR;
         }
 
+        ChargedAbilityEffect ability = getChargeableAbility(stack);
+        if (ability != null) {
+            return ability.getPose();
+        }
+
         return super.getUseAction(stack);
     }
 
@@ -528,7 +522,8 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptideModifier(itemStack) > 0) {
+                || EnchantmentHelper.getRiptideModifier(itemStack) > 0
+                || Arrays.stream(abilities).anyMatch(ability -> ability.isAvailable(this, itemStack))) {
             return 72000;
         }
 
@@ -588,13 +583,61 @@ public class ItemModularHandheld extends ModularItem {
                         onPlayerStoppedUsingSecondary(itemStack, world, entityLiving, timeLeft);
                     }
                 }
-            } else if (ticksUsed >= 10) {
-                if (riptideLevel > 0 && player.isWet()) {
+            } else {
+                if (riptideLevel > 0 && ticksUsed >= 10 && player.isWet()) {
                     causeRiptideEffect(player, riptideLevel);
-                } else if (getEffectLevel(itemStack, ItemEffect.throwable) > 0) {
+                } else if (throwingLevel > 0 && ticksUsed >= 10) {
                     throwItem(player, itemStack, riptideLevel, (float) cooldownBase);
                 }
+
+                if (world.isRemote) {
+                    triggerChargedAbility(itemStack, world, entityLiving, ticksUsed);
+                }
             }
+        }
+    }
+
+    public ChargedAbilityEffect getChargeableAbility(ItemStack itemStack) {
+        return Arrays.stream(abilities)
+                .filter(ability -> ability.canCharge(this, itemStack))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void triggerChargedAbility(ItemStack itemStack, World world, LivingEntity entity, int ticksUsed) {
+        if (entity instanceof PlayerEntity) {
+            LivingEntity target = Optional.ofNullable(Minecraft.getInstance().objectMouseOver)
+                    .filter(rayTraceResult -> rayTraceResult.getType() == RayTraceResult.Type.ENTITY)
+                    .map(rayTraceResult -> ((EntityRayTraceResult) rayTraceResult).getEntity())
+                    .flatMap(hitEntity -> CastOptional.cast(hitEntity, LivingEntity.class))
+                    .orElse(null);
+
+            BlockPos targetPos = Optional.ofNullable(Minecraft.getInstance().objectMouseOver)
+                    .filter(rayTraceResult -> rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+                    .map(rayTraceResult -> ((BlockRayTraceResult) rayTraceResult).getPos())
+                    .orElse(null);
+
+            Hand activeHand = entity.getActiveHand();
+
+            PacketHandler.sendToServer(new ChargedAbilityPacket(target, targetPos, activeHand, ticksUsed));
+
+            handleChargedAbility((PlayerEntity) entity, activeHand, target, targetPos, ticksUsed);
+        }
+    }
+
+    public static void handleChargedAbility(PlayerEntity player, Hand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int ticksUsed) {
+        ItemStack activeStack = player.getHeldItem(hand);
+
+        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
+            ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
+
+            Arrays.stream(abilities)
+                    .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
+                    .findFirst()
+                    .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, ticksUsed));
+
+            player.resetActiveHand();
         }
     }
 

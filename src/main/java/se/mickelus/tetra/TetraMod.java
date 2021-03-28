@@ -70,12 +70,14 @@ import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
+import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
+import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
@@ -84,10 +86,7 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
-import se.mickelus.tetra.items.modular.ItemPredicateModular;
-import se.mickelus.tetra.items.modular.MaterialItemPredicate;
-import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
-import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
+import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
@@ -293,6 +292,7 @@ public class TetraMod {
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
         packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
+        packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
         packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
         packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
 
@@ -372,6 +372,7 @@ public class TetraMod {
             event.getRegistry().register(new EarthboundPotionEffect());
             event.getRegistry().register(new StunPotionEffect());
             event.getRegistry().register(new HowlingPotionEffect());
+            event.getRegistry().register(new SeveredPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 
