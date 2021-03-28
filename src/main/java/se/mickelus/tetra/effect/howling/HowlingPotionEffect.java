@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect.howling;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.DisplayEffectsScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -11,9 +12,11 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.effect.EffectHelper;
 
 public class HowlingPotionEffect extends Effect {
     public static HowlingPotionEffect instance;
@@ -44,5 +47,14 @@ public class HowlingPotionEffect extends Effect {
     @Override
     public boolean isReady(int duration, int amplifier) {
         return duration % 10 == 0;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, float z) {
+        int amp = effect.getAmplifier() + 1;
+        EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
+                new StringTextComponent(I18n.format("effect.tetra.howling.tooltip",
+                        String.format("%d", amp * -5), String.format("%.01f", Math.min(amp * 12.5, 100)), String.format("%.01f", amp * 2.5))));
     }
 }
