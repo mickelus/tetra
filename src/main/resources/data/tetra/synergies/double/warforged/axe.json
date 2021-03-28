@@ -1,0 +1,19 @@
+[
+    {
+        "modules": ["double/basic_axe_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/battleaxe",
+        "effects": {
+            "execute": [10, 5]
+        }
+    },
+    {
+        "modules": ["double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityHealthBonus": 1
+        }
+    }
+]
