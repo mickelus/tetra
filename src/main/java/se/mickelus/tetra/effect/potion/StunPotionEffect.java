@@ -1,13 +1,14 @@
 package se.mickelus.tetra.effect.potion;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 
 public class StunPotionEffect extends Effect {
     public static StunPotionEffect instance;
@@ -24,12 +25,17 @@ public class StunPotionEffect extends Effect {
 
     @Override
     public void performEffect(LivingEntity entity, int amplifier) {
-        Vector3d pos = entity.getEyePosition(0);
-        double time = System.currentTimeMillis() / 1000d * Math.PI;
-        double xOffset = Math.cos(time) * 0.4;
-        double zOffset = Math.sin(time) * 0.4;
-        entity.getEntityWorld().addParticle(ParticleTypes.ENTITY_EFFECT, pos.x + xOffset, pos.y + 0.1, pos.z + zOffset, 255, 255, 255);
-        entity.getEntityWorld().addParticle(ParticleTypes.ENTITY_EFFECT, pos.x - xOffset, pos.y + 0.4, pos.z - zOffset, 128, 128, 128);
+        if (!entity.getEntityWorld().isRemote) {
+            Vector3d pos = entity.getEyePosition(0);
+            double time = System.currentTimeMillis() / 1000d * Math.PI;
+            double xOffset = Math.cos(time) * 0.4;
+            double zOffset = Math.sin(time) * 0.4;
+
+            ((ServerWorld) entity.getEntityWorld()).spawnParticle(ParticleTypes.ENTITY_EFFECT, pos.x + xOffset, pos.y + 0.1, pos.z + zOffset,
+                    1, 0, 0, 0, 0);
+            ((ServerWorld) entity.getEntityWorld()).spawnParticle(ParticleTypes.ENTITY_EFFECT, pos.x - xOffset, pos.y + 0.4, pos.z - zOffset,
+                    1, 0, 0, 0, 0);
+        }
     }
 
     @Override
