@@ -33,6 +33,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
+import se.mickelus.tetra.items.modular.ChargedAbilityPacket;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
@@ -248,6 +249,11 @@ public class ModularBowItem extends ModularItem {
                             }
 
                             world.addEntity(projectile);
+
+                            // vanilla velocity sync breaks when velocity is >3.9 on any axis
+                            if (projectileVelocity * 3 > 4) {
+                                PacketHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.getPosition(), 512, world.getDimensionKey());
+                            }
                         }
 
 

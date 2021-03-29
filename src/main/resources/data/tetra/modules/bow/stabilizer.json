@@ -7,7 +7,7 @@
             "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
             "key": "stabilizer/",
             "effects": {
-                "velocity": 35
+                "velocity": 15
             },
             "integrity": -1,
             "durability": 10,
@@ -34,7 +34,7 @@
             "durability": 40,
             "integrity": -1,
             "effects": {
-                "velocity": 30,
+                "velocity": 20,
                 "suspend": 1
             },
             "glyph": {

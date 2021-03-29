@@ -91,6 +91,7 @@ import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -295,6 +296,7 @@ public class TetraMod {
         packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
         packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
         packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
+        packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
 
         WorkbenchTile.init(packetHandler);
 
