@@ -21,7 +21,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     public static final ExecuteEffect instance = new ExecuteEffect();
 
     ExecuteEffect() {
-        super(20, 0.5f, ItemEffect.execute, TargetRequirement.entity, UseAction.SPEAR, "raised");
+        super(20, 0.5f, 40, 8, ItemEffect.execute, TargetRequirement.entity, UseAction.SPEAR, "raised");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         double damageMultiplier = (1 + missingHealth + harmfulCount * 0.1);
         item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.5f, 0.2f);
 
-        attacker.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
+        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
 
         Random rand = target.getRNG();
         CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
@@ -44,8 +44,9 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                         target.getPosX(), target.getPosY() + target.getHeight() * 0.1, target.getPosZ(), 5 + (int) (damageMultiplier * 10),
                         rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
 
-        attacker.swingArm(hand);
-        attacker.getCooldownTracker().setCooldown(item, (int) Math.round(item.getCooldownBase(itemStack) * 20 * 1.5));
+        attacker.addExhaustion(0.05f);
+        attacker.swing(hand, false);
+        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);

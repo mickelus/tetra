@@ -70,7 +70,6 @@ import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
-import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;

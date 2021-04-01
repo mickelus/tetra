@@ -199,6 +199,9 @@
   "tetra.stats.severing": "Severing",
   "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
 
+  "tetra.stats.lunge": "Lunge",
+  "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§r attack damage and reduces the ability cooldown by §e20%%§r.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
 

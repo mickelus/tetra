@@ -85,6 +85,7 @@ public class ItemModularHandheld extends ModularItem {
 
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
             ExecuteEffect.instance,
+            LungeEffect.instance,
     };
 
     public ItemModularHandheld(Properties properties) {
@@ -700,7 +701,8 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public double getAbilityBaseDamage(ItemStack itemStack) {
-        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE);
+        // +1 so that this equals the base damage of the item, including the players base attack damage
+        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE) + 1;
     }
 
     @Override

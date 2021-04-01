@@ -53,6 +53,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.knockback,
             GuiStats.execute,
             GuiStats.severing,
+            GuiStats.lunge,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,

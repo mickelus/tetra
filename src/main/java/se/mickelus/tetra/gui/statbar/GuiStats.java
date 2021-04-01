@@ -3,7 +3,9 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
+import se.mickelus.tetra.effect.ExecuteEffect;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.LungeEffect;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -187,14 +189,27 @@ public class GuiStats {
 
     public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
     public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
-            0, 5, false, executeGetter, LabelGetterBasic.percentageLabelDecimal, new TooltipGetterExecute());
+            0, 5, false, executeGetter, LabelGetterBasic.percentageLabelDecimal,
+            new TooltipGetterMultiValue("tetra.stats.execute.tooltip",
+                    withStats(new StatGetterAbilityDamage(), executeGetter,
+                            new StatGetterEffectEfficiency(ItemEffect.execute, 1), new StatGetterAbilityChargeTime(ExecuteEffect.instance),
+                            new StatGetterAbilityCooldown(ExecuteEffect.instance)),
+                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal )));
 
     public static final IStatGetter severingGetter = new StatGetterEffectLevel(ItemEffect.severing, 1);
     public static final GuiStatBar severing = new GuiStatBar(0, 0, barLength, "tetra.stats.severing",
             0, 100, false, severingGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterMultiValue("tetra.stats.severing.tooltip",
-                    new IStatGetter[] { severingGetter, new StatGetterEffectEfficiency(ItemEffect.severing, 1) },
-                    new StatFormat[] { StatFormat.noDecimal, StatFormat.noDecimal }));
+                    withStats(severingGetter, new StatGetterEffectEfficiency(ItemEffect.severing, 1)),
+                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal)));
+
+    public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
+    public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",
+            0, 200, false, lungeGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.lunge.tooltip",
+                    withStats(lungeGetter, multiply(lungeGetter, new StatGetterAbilityDamage(0, 0.01)),
+                            new StatGetterAbilityChargeTime(LungeEffect.instance), new StatGetterAbilityCooldown(LungeEffect.instance)),
+                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
@@ -349,6 +364,21 @@ public class GuiStats {
 
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
 
+    static IStatGetter sum(IStatGetter ... statGetters) {
+        return new StatGetterSum(statGetters);
+    }
+
+    static IStatGetter multiply(IStatGetter ... statGetters) {
+        return new StatGetterMultiply(statGetters);
+    }
+
+    static IStatGetter[] withStats(IStatGetter ... statGetters) {
+        return statGetters;
+    }
+
+    static StatFormat[] withFormat(StatFormat ... statGetters) {
+        return statGetters;
+    }
 
 
 // todo: remaining effects

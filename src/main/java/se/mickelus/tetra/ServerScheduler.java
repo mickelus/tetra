@@ -17,7 +17,7 @@ public class ServerScheduler {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.ServerTickEvent event) {
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) {
             return;
         }

@@ -158,11 +158,20 @@ public class ItemEffect {
      */
     public static ItemEffect severing = get("severing");
 
+    public static ItemEffect abilityHealthBonus = get("abilityHealthBonus");
+    public static ItemEffect abilityOffhandMod = get("abilityOffhandMod");
+
     /**
      * Charged right-click ability that deals damage based on targets missing health and the number of negative effects they're affected by.
      * Effect level determines bonus damage from missing health & efficiency determines bonus damage from negative effects
      */
     public static ItemEffect execute = get("execute");
+
+    /**
+     * Charged right-click ability that launches the player forward. If the player lunges into another entity it deals a % (equal to the effect level)
+     * of attack damage and reduces the cooldown by 20%
+     */
+    public static ItemEffect lunge = get("lunge");
 
     /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include

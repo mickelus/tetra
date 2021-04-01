@@ -13,23 +13,34 @@ import javax.annotation.Nullable;
 public abstract class ChargedAbilityEffect {
     protected int chargeTimeFlat;
     protected double chargeTimeSpeedMultiplier;
+
+    protected int cooldownFlat;
+    protected double cooldownSpeedMultiplier;
+
     protected ItemEffect effect;
     protected TargetRequirement target;
 
     protected String modelTransform;
-    protected UseAction pose = UseAction.NONE;
+    protected UseAction useAction;
 
-    ChargedAbilityEffect(int chargeTimeFlat, double chargeTimeSpeedMultiplier, ItemEffect effect, TargetRequirement target) {
+    public ChargedAbilityEffect(int chargeTimeFlat, double chargeTimeSpeedMultiplier, int cooldownFlat, double cooldownSpeedMultiplier,
+            ItemEffect effect, TargetRequirement target, UseAction useAction) {
         this.chargeTimeFlat = chargeTimeFlat;
         this.chargeTimeSpeedMultiplier = chargeTimeSpeedMultiplier;
+
+        this.cooldownFlat = cooldownFlat;
+        this.cooldownSpeedMultiplier = cooldownSpeedMultiplier;
+
         this.effect = effect;
         this.target = target;
+
+        this.useAction = useAction;
     }
 
-    ChargedAbilityEffect(int chargeTimeFlat, double chargeTimeSpeedMultiplier, ItemEffect effect, TargetRequirement target, UseAction pose, String modelTransform) {
-        this(chargeTimeFlat, chargeTimeSpeedMultiplier, effect, target);
+    public ChargedAbilityEffect(int chargeTimeFlat, double chargeTimeSpeedMultiplier, int cooldownFlat, double cooldownSpeedMultiplier,
+            ItemEffect effect, TargetRequirement target, UseAction pose, String modelTransform) {
+        this(chargeTimeFlat, chargeTimeSpeedMultiplier, cooldownFlat, cooldownSpeedMultiplier, effect, target, pose);
 
-        this.pose = pose;
         this.modelTransform = modelTransform;
     }
 
@@ -42,7 +53,11 @@ public abstract class ChargedAbilityEffect {
     }
 
     public int getChargeTime(ItemModularHandheld item, ItemStack itemStack) {
-        return chargeTimeFlat + (chargeTimeSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * chargeTimeSpeedMultiplier) : 0);
+        return chargeTimeFlat + (chargeTimeSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * chargeTimeSpeedMultiplier) : 0);
+    }
+
+    public int getCooldown(ItemModularHandheld item, ItemStack itemStack) {
+        return cooldownFlat + (cooldownSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * cooldownSpeedMultiplier) : 0);
     }
 
     public boolean canPerform(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int chargedTicks) {
@@ -86,14 +101,14 @@ public abstract class ChargedAbilityEffect {
     }
 
     public UseAction getPose() {
-        return pose;
+        return useAction;
     }
 
     public String getModelTransform() {
         return modelTransform;
     }
 
-    enum TargetRequirement {
+    public enum TargetRequirement {
         entity,
         block,
         either,

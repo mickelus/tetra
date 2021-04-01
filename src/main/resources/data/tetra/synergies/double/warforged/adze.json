@@ -1,0 +1,19 @@
+[
+    {
+        "modules": ["double/adze_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/battleaxe",
+        "effects": {
+            "lunge": 110
+        }
+    },
+    {
+        "modules": ["double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOffhandMod": 1
+        }
+    }
+]

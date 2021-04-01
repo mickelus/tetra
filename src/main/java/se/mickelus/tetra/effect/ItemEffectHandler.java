@@ -21,6 +21,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
@@ -111,7 +112,7 @@ public class ItemEffectHandler {
         if (!event.getSource().isUnblockable() && event.getEntityLiving().isActiveItemStackBlocking()) {
             Optional.ofNullable(event.getEntityLiving())
                     .map(LivingEntity::getActiveItemStack)
-                    .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
+                    .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                     .ifPresent(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         LivingEntity blocker = event.getEntityLiving();
@@ -151,7 +152,12 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onLivingAttack(ProjectileImpactEvent.Arrow event) {
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        LungeEffect.onPlayerTick(event.player);
+    }
+
+    @SubscribeEvent
+    public void onProjectileImpact(ProjectileImpactEvent.Arrow event) {
         HowlingEffect.deflectProjectile(event, event.getArrow(), event.getRayTraceResult());
     }
 
