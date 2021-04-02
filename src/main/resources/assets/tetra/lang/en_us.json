@@ -111,6 +111,7 @@
 
   "tetra.stats.durability": "Durability",
   "tetra.stats.durability.tooltip": "This item has §e%s§r durability",
+  "tetra.stats.durability.tooltip_extended": "§7Items typically take 1 or 2 durability damage when used, when the durability reaches 0 the item breaks and it has to be repaired in a workbench before it can be used again",
 
   "tetra.stats.speed": "Speed",
   "tetra.stats.speed.tooltip": "Affects how fast this item can be swung\n \n§e%s §7seconds between swings\n§ex%s§7 harvest efficiency multiplier",
@@ -132,7 +133,8 @@
   "tetra.stats.speed_normalized.tooltip": "Changes attack speed by §e%s",
 
   "tetra.stats.attack_damage": "Damage",
-  "tetra.stats.attack_damage.tooltip": "Deals §e%s §rdamage",
+  "tetra.stats.attack_damage.tooltip": "Attacking an entity with this item deals §e%s §rdamage",
+  "tetra.stats.attack_damage.tooltip_extended": "The damage caused by item abilities is often based on the attack damage of the item",
 
   "tetra.stats.attack_damage_normalized": "Damage",
   "tetra.stats.attack_damage_normalized.tooltip": "Changes attack damage by §e%s",
@@ -200,7 +202,10 @@
   "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
 
   "tetra.stats.lunge": "Lunge",
-  "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§r attack damage and reduces the ability cooldown by §e20%%§r.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§f attack damage and reduces the ability cooldown by §e20%%§f.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+
+  "tetra.stats.slam": "Slam",
+  "tetra.stats.slam.tooltip": "Hold right-click to charge up a powerful slam.\n \nSlam the ground to send out a shockwave from the point of impact, entities hit by the shockwave take §e%s%% (%s)§r attack damage.\n \nDirectly slam an entity to deal §e%s%% (%s)§r attack damage and cause heavy knockback, this triggers a §e50%%§r longer cooldown.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
 
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
@@ -1212,6 +1217,8 @@
   "tetra.synergy.double/claw_hammer": "Claw hammer",
   "tetra.synergy.double/claw_axe": "Carpenter's axe",
   "tetra.synergy.double/battleaxe": "Battleaxe",
+  "tetra.synergy.double/battleadze": "Battleadze",
+  "tetra.synergy.double/warhammer": "Warhammer",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
   "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n \nMaterial §fdensity§r slightly decreases §fattack speed§r.",
@@ -2249,7 +2256,7 @@
   "tetra.advancements.story.more_upgrades.title": "Basic Tinkering",
   "tetra.advancements.story.more_upgrades.description": "Craft a wooden hammer from two sticks and two planks\n \n§8§oTetra begins",
 
-  "tetra.advancements.spelunking.root.title": "Spelunking",
+  "tetra.advancements.spelunking.root.title": "Spelunking (§7Tetra§r)",
   "tetra.advancements.spelunking.root.description": "Delve deep underground",
   "tetra.advancements.spelunking.ancient_ruins.title" : "Long Gone",
   "tetra.advancements.spelunking.ancient_ruins.description": "Find ancient ruins deep down in cold or mountainous biomes",
@@ -2306,7 +2313,7 @@
   "tetra.advancements.spelunking.use_bolt.title": "Tweaked to Perfection",
   "tetra.advancements.spelunking.use_bolt.description": "Use a bolt to bind a tool or a sword, then use the tweak tab in a workbench to change the stats of the item",
 
-  "tetra.advancements.upgrades.root.title": "Basic Tinkering",
+  "tetra.advancements.upgrades.root.title": "Basic Tinkering (§7Tetra§r)",
   "tetra.advancements.upgrades.root.description": "Craft a mallet from two sticks and two planks\n \nItem Reward: Holosphere",
   "tetra.advancements.upgrades.bow_upgrade.title": "Archer's Adjustments",
   "tetra.advancements.upgrades.bow_upgrade.description": "Upgrade a bow in a workbench",
@@ -2341,7 +2348,7 @@
   "tetra.advancements.upgrades.toolbelt_upgraded.title": "Shulker Inlays",
   "tetra.advancements.upgrades.toolbelt_upgraded.description": "Fully upgrade a toolbelt",
   "tetra.advancements.upgrades.tool_upgrade.title": "Getting Another Upgrade",
-  "tetra.advancements.upgrades.tool_upgrade.description": "Place a vanilla tool such as a pickaxe, axe or a hoe in a workbench and upgrade it",
+  "tetra.advancements.upgrades.tool_upgrade.description": "Place a vanilla tool such as a pickaxe, an axe or a hoe in a workbench and upgrade it",
   "tetra.advancements.upgrades.workbench.title": "Bench mk II",
   "tetra.advancements.upgrades.workbench.description": "Upgrade a crafting table by right-clicking it with a mallet",
   "tetra.advancements.upgrades.rack.title": "Within Reach",

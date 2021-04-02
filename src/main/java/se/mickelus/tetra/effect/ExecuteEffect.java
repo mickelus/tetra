@@ -10,6 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -25,7 +26,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
+    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         target.applyKnockback(0.5f, target.getPosX() - attacker.getPosX(), target.getPosZ() - attacker.getPosZ());
         long harmfulCount = target.getActivePotionEffects().stream()
                 .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
@@ -41,8 +42,8 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         Random rand = target.getRNG();
         CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
                 world.spawnParticle(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
-                        target.getPosX(), target.getPosY() + target.getHeight() * 0.1, target.getPosZ(), 5 + (int) (damageMultiplier * 10),
-                        rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
+                        hitVec.x, hitVec.y, hitVec.z, 5 + (int) (damageMultiplier * 10),
+                        rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);

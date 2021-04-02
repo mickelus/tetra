@@ -86,7 +86,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
         for (int i = buttons.size(); i < items.length; i++) {
             String label = !"".equals(items[i]) ? items[i] : I18n.format("tetra.holo.craft.slot");
 
-            addbutton(i, label);
+            addButton(i, label);
         }
 
         // update width based on number of buttons
@@ -96,7 +96,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
         }
     }
 
-    private void addbutton(int index, String label) {
+    private void addButton(int index, String label) {
         int xOffset = 0;
 
         if (!buttons.isEmpty()) {

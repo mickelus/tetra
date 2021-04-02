@@ -50,6 +50,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ModularItem {
@@ -86,6 +87,7 @@ public class ItemModularHandheld extends ModularItem {
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
             ExecuteEffect.instance,
             LungeEffect.instance,
+            SlamEffect.instance
     };
 
     public ItemModularHandheld(Properties properties) {
@@ -608,26 +610,33 @@ public class ItemModularHandheld extends ModularItem {
     @OnlyIn(Dist.CLIENT)
     public void triggerChargedAbility(ItemStack itemStack, World world, LivingEntity entity, int ticksUsed) {
         if (entity instanceof PlayerEntity) {
-            LivingEntity target = Optional.ofNullable(Minecraft.getInstance().objectMouseOver)
+            RayTraceResult rayTrace = Minecraft.getInstance().objectMouseOver;
+
+            LivingEntity target = Optional.ofNullable(rayTrace)
                     .filter(rayTraceResult -> rayTraceResult.getType() == RayTraceResult.Type.ENTITY)
                     .map(rayTraceResult -> ((EntityRayTraceResult) rayTraceResult).getEntity())
                     .flatMap(hitEntity -> CastOptional.cast(hitEntity, LivingEntity.class))
                     .orElse(null);
 
-            BlockPos targetPos = Optional.ofNullable(Minecraft.getInstance().objectMouseOver)
+            BlockPos targetPos = Optional.ofNullable(rayTrace)
                     .filter(rayTraceResult -> rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
                     .map(rayTraceResult -> ((BlockRayTraceResult) rayTraceResult).getPos())
                     .orElse(null);
 
+            Vector3d hitVec = Optional.ofNullable(rayTrace)
+                    .map(RayTraceResult::getHitVec)
+                    .orElse(null);
+
             Hand activeHand = entity.getActiveHand();
 
-            PacketHandler.sendToServer(new ChargedAbilityPacket(target, targetPos, activeHand, ticksUsed));
+            PacketHandler.sendToServer(new ChargedAbilityPacket(target, targetPos, hitVec, activeHand, ticksUsed));
 
-            handleChargedAbility((PlayerEntity) entity, activeHand, target, targetPos, ticksUsed);
+            handleChargedAbility((PlayerEntity) entity, activeHand, target, targetPos, hitVec, ticksUsed);
         }
     }
 
-    public static void handleChargedAbility(PlayerEntity player, Hand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int ticksUsed) {
+    public static void handleChargedAbility(PlayerEntity player, Hand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos,
+            @Nullable Vector3d hitVec, int ticksUsed) {
         ItemStack activeStack = player.getHeldItem(hand);
 
         if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
@@ -636,7 +645,7 @@ public class ItemModularHandheld extends ModularItem {
             Arrays.stream(abilities)
                     .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
                     .findFirst()
-                    .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, ticksUsed));
+                    .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, hitVec, ticksUsed));
 
             player.resetActiveHand();
         }

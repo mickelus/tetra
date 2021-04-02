@@ -37,7 +37,8 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int chargedTicks) {
+    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack,
+            @Nullable LivingEntity target, @Nullable BlockPos targetPos,@Nullable Vector3d hitVec, int chargedTicks) {
         if (attacker.isOnGround()) {
             float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             Vector3d lookVector = attacker.getLookVec();

@@ -40,6 +40,6 @@ public class ChargedAbilityOverlay {
     }
 
     private float getProgress(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
-        return (itemStack.getUseDuration() - player.getItemInUseCount()) * 1f / ability.getChargeTime(item, itemStack);
+        return ability != null ? (itemStack.getUseDuration() - player.getItemInUseCount()) * 1f / ability.getChargeTime(item, itemStack) : 0;
     }
 }

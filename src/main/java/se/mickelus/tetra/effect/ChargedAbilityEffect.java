@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
@@ -78,21 +79,23 @@ public abstract class ChargedAbilityEffect {
         return true;
     }
 
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int chargedTicks) {
+    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack,
+            @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
+        // hitvec should only be null if there is no target pos or entity
         if (target != null) {
-            perform(attacker, hand, item, itemStack, target, chargedTicks);
+            perform(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
         } else if (targetPos != null) {
-            perform(attacker, hand, item, itemStack, targetPos, chargedTicks);
+            perform(attacker, hand, item, itemStack, targetPos, hitVec, chargedTicks);
         } else {
             perform(attacker, hand, item, itemStack, chargedTicks);
         }
     }
 
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
+    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
 
     }
 
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, int chargedTicks) {
+    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vector3d hitVec, int chargedTicks) {
 
     }
 

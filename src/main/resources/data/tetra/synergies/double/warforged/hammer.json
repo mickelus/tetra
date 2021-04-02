@@ -1,19 +1,19 @@
 [
     {
-        "modules": ["double/adze_left"],
+        "modules": ["double/basic_hammer_left"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
-        "name": "double/battleadze",
+        "name": "double/warhammer",
         "effects": {
-            "lunge": 110
+            "slam": 50
         }
     },
     {
-        "modules": ["double/adze_right"],
+        "modules": ["double/basic_hammer_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityOffhandMod": 1
+            "abilityStun": 1
         }
     }
 ]

@@ -174,6 +174,12 @@ public class ItemEffect {
     public static ItemEffect lunge = get("lunge");
 
     /**
+     * Charged right-click ability that can be used to either slam the ground to damage entities in a cone for 1% (per effect level) attack damage,
+     * or to directly slam an entity to deal 1.5% (per effect level) attack damage and cause heavy knockback
+     */
+    public static ItemEffect slam = get("slam");
+
+    /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
      * plank slabs, bookshelves, doors etc.
      * todo: move to ability once implemented

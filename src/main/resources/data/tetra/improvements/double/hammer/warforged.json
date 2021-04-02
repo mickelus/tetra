@@ -1,0 +1,13 @@
+[
+    {
+        "key": "double/warforged",
+        "integrity": -2,
+        "effects": {
+            "stun": 30
+        },
+        "models": [{
+            "location": "tetra:items/module/double/head/basic_hammer/warforged",
+            "tint": "inherit"
+        }]
+    }
+]

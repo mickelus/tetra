@@ -211,6 +211,16 @@ public class GuiStats {
                             new StatGetterAbilityChargeTime(LungeEffect.instance), new StatGetterAbilityCooldown(LungeEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
+    public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
+    public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);
+    public static final GuiStatBar slam = new GuiStatBar(0, 0, barLength, "tetra.stats.slam",
+            0, 200, false, slamGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.slam.tooltip",
+                    withStats(slamGetter, multiply(slamGetter, new StatGetterAbilityDamage(0, 0.01)),
+                            slamEntityGetter, multiply(slamEntityGetter, new StatGetterAbilityDamage(0, 0.01)),
+                            new StatGetterAbilityChargeTime(LungeEffect.instance), new StatGetterAbilityCooldown(LungeEffect.instance)),
+                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
