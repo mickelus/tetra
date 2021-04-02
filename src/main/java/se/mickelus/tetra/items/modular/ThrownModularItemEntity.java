@@ -266,9 +266,15 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     @Override
     protected void onEntityHit(EntityRayTraceResult raytrace) {
         Entity target = raytrace.getEntity();
+        Entity shooter = func_234616_v_();
+        PlayerEntity playerShooter = CastOptional.cast(shooter, PlayerEntity.class).orElse(null);
+
+        DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
+        SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
 
         int pierceLevel = getEffectLevel(ItemEffect.piercing);
         int ricochetLevel = getEffectLevel(ItemEffect.ricochet);
+
         if (pierceLevel > 0 || ricochetLevel > 0) {
             if (hitEntities == null) {
                 hitEntities = new IntOpenHashSet(5);
@@ -287,32 +293,34 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             dealtDamage = true;
         }
 
-        Entity shooter = func_234616_v_();
-        DamageSource damagesource = DamageSource.causeTridentDamage(this, (shooter == null ? this : shooter));
-        SoundEvent soundevent = SoundEvents.ITEM_TRIDENT_HIT;
-        double damage = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                .map(item -> item.getAbilityBaseDamage(thrownStack) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable))
-                .orElse(8d);
+        ItemStack heldTemp = null;
+        if (playerShooter != null) {
+             heldTemp = playerShooter.getHeldItemMainhand();
+            playerShooter.setHeldItem(Hand.MAIN_HAND, thrownStack);
+        }
 
-        if (target instanceof LivingEntity) {
-            LivingEntity targetLivingEntity = (LivingEntity)target;
+        if (target instanceof LivingEntity && thrownStack.getItem() instanceof ItemModularHandheld) {
+            LivingEntity targetLivingEntity = (LivingEntity) target;
+            ItemModularHandheld item = (ItemModularHandheld) thrownStack.getItem();
+
+            double critModifier = CritEffect.rollMultiplier(targetLivingEntity.getRNG(), item, thrownStack);
+            double damage = item.getAbilityBaseDamage(thrownStack) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
+
             damage += EnchantmentHelper.getModifierForCreature(thrownStack, targetLivingEntity.getCreatureAttribute());
-
-            double critModifier = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                    .map(item -> CritEffect.rollMultiplier(targetLivingEntity.getRNG(), item, thrownStack))
-                    .orElse(1d);
-
             damage *= critModifier;
 
             if (target.attackEntityFrom(damagesource, (float) damage)) {
                 if (shooter instanceof LivingEntity) {
                     EnchantmentHelper.applyThornEnchantments(targetLivingEntity, shooter);
                     EffectHelper.applyEnchantmentHitEffects(getArrowStack(), targetLivingEntity, (LivingEntity) shooter);
+                    ItemEffectHandler.applyHitEffects(thrownStack, targetLivingEntity, (LivingEntity) shooter);
+
+                    item.tickProgression((LivingEntity) shooter, thrownStack, 1);
                 }
 
                 arrowHit(targetLivingEntity);
 
-                if (critModifier != 1d && world instanceof ServerWorld) {
+                if (critModifier != 1d && !world.isRemote) {
                     Vector3d hitVec = raytrace.getHitVec();
                     ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
                             hitVec.getX(), hitVec.getY(), hitVec.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
@@ -321,7 +329,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
         }
 
         float f1 = 1.0F;
-        if (world instanceof ServerWorld && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
+        if (!world.isRemote && world.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.getPosition();
             if (world.canSeeSky(blockpos)) {
                 LightningBoltEntity lightning = EntityType.LIGHTNING_BOLT.create(this.world);
@@ -333,14 +341,8 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             }
         }
 
-
-        if (target instanceof LivingEntity && shooter instanceof LivingEntity) {
-            ItemEffectHandler.applyHitEffects(thrownStack, (LivingEntity) target, (LivingEntity) shooter);
-        }
-
-        if (shooter instanceof LivingEntity) {
-            CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class)
-                    .ifPresent(item -> item.tickProgression((LivingEntity) shooter, thrownStack, 1));
+        if (playerShooter != null) {
+            playerShooter.setHeldItem(Hand.MAIN_HAND, heldTemp);
         }
 
         playSound(soundevent, f1, 1.0F);
