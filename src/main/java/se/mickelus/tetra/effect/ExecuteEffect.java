@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -27,15 +28,17 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        target.applyKnockback(0.5f, target.getPosX() - attacker.getPosX(), target.getPosZ() - attacker.getPosZ());
         long harmfulCount = target.getActivePotionEffects().stream()
                 .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
-                .count();
+                .mapToInt(EffectInstance::getAmplifier)
+                .map(amp -> amp + 1)
+                .sum();
 
         float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
+        double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
-        double damageMultiplier = (1 + missingHealth + harmfulCount * 0.1);
-        item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.5f, 0.2f);
+        double damageMultiplier = (1 + missingHealth + harmfulCount * efficiency / 100);
+        item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
 
