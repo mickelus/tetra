@@ -168,10 +168,12 @@ public class ItemModularHandheld extends ModularItem {
                 if (howlingLevel > 0) {
                     HowlingEffect.trigger(itemStack, attacker, howlingLevel);
                 }
+
+                ItemEffectHandler.applyHitEffects(itemStack, target, attacker);
+                applyPositiveUsageEffects(attacker, itemStack, 1);
             }
 
-            ItemEffectHandler.applyHitEffects(itemStack, target, attacker);
-            applyUsageEffects(attacker, itemStack, 1);
+            applyNegativeUsageEffects(attacker, itemStack, 1);
         }
 
         return true;
