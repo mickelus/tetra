@@ -49,17 +49,16 @@ public class ItemEffect {
     public static ItemEffect armorPenetration = get("armorPenetration");
 
     /**
-     * Armor penetration: Hitting entities will always deal damage regardless of the targets armor. The minimum damage
+     * Crushing: Hitting entities will always deal damage regardless of the targets armor. The minimum damage
      * dealt equals the level of the effect.
-     * todo: make the minimum damage not able to exceed the items actual damage
      */
+    public static ItemEffect crushing = get("crushing");
 
     /**
-     * Unarmored bonus damage: Deals bonus damage when attacking entities with 0 armor. Bonus damage dealt equals the
+     * Skewering: Deals bonus damage when attacking entities with an armor value lower than the effect efficiency. Bonus damage dealt equals the
      * level of the effect.
-     * todo: use effect efficiency for armor threshold
      */
-    public static ItemEffect unarmoredDamage = get("unarmoredDamage");
+    public static ItemEffect skewering = get("skewering");
 
     /**
      * Sweeping: Attacking an entity also hits all enemies adjacent to the target, similar to the vanilla sweeping edge
@@ -69,9 +68,12 @@ public class ItemEffect {
      *   effect level
      * - the sweeping effect only triggers if attack cooldown is 0.9 or above
      * - the effect efficiency affects the area in which entities are hit, ( 1 + efficiency ) blocks
-     * todo: apply additional effects to sweeped targets at high levels
      */
     public static ItemEffect sweeping = get("sweeping");
+
+    /**
+     * Truesweep: Hitting entities with a sweep will also apply item & enchantment effects
+     */
     public static ItemEffect truesweep = get("truesweep");
 
     /**
@@ -161,6 +163,11 @@ public class ItemEffect {
      * Proc chance is equal to the effect level. Effect stacks up to effect efficiency.
      */
     public static ItemEffect severing = get("severing");
+
+    /**
+     * Gives attacks a 1% (per effect level) chance to stun the target, effect efficiency determines the duration
+     */
+    public static ItemEffect stun = get("stun");
 
     public static ItemEffect abilityHealthBonus = get("abilityHealthBonus");
     public static ItemEffect abilityOffhandMod = get("abilityOffhandMod");

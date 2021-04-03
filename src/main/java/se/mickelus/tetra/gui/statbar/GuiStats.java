@@ -175,13 +175,20 @@ public class GuiStats {
 
     public static final IStatGetter armorPenetrationGetter = new StatGetterEffectLevel(ItemEffect.armorPenetration, 1);
     public static final GuiStatBar armorPenetration = new GuiStatBar(0, 0, barLength, "tetra.stats.armorPenetration",
-
-    public static final IStatGetter unarmoredDamageGetter = new StatGetterEffectLevel(ItemEffect.unarmoredDamage, 1);
-    public static final GuiStatBar unarmoredDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.unarmoredDamage",
-                0, 10, false, unarmoredDamageGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.unarmoredDamage.tooltip", unarmoredDamageGetter));
                 0, 100, false, armorPenetrationGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentage("tetra.stats.armorPenetration.tooltip", armorPenetrationGetter));
+
+    public static final IStatGetter crushingGetter = new StatGetterEffectLevel(ItemEffect.crushing, 1);
+    public static final GuiStatBar crushing = new GuiStatBar(0, 0, barLength, "tetra.stats.crushing",
+            0, 10, false, crushingGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.crushing.tooltip", crushingGetter));
+
+    public static final IStatGetter skeweringGetter = new StatGetterEffectLevel(ItemEffect.skewering, 1);
+    public static final GuiStatBar skewering = new GuiStatBar(0, 0, barLength, "tetra.stats.skewering",
+                0, 10, false, skeweringGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterMultiValue("tetra.stats.skewering.tooltip",
+                    withStats(skeweringGetter, new StatGetterEffectEfficiency(ItemEffect.skewering, 1)),
+                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal)));
 
     public static final IStatGetter howlingGetter = new StatGetterEffectLevel(ItemEffect.howling, 1);
     public static final GuiStatBar howling = new GuiStatBar(0, 0, barLength, "tetra.stats.howling",
@@ -202,6 +209,13 @@ public class GuiStats {
             new TooltipGetterMultiValue("tetra.stats.severing.tooltip",
                     withStats(severingGetter, new StatGetterEffectEfficiency(ItemEffect.severing, 1)),
                     withFormat(StatFormat.noDecimal, StatFormat.noDecimal)));
+
+    public static final IStatGetter stunGetter = new StatGetterEffectLevel(ItemEffect.stun, 1);
+    public static final GuiStatBar stun = new GuiStatBar(0, 0, barLength, "tetra.stats.stun",
+            0, 100, false, stunGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.stun.tooltip",
+                    withStats(stunGetter, new StatGetterEffectEfficiency(ItemEffect.stun, 1)),
+                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal)));
 
     public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
     public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",

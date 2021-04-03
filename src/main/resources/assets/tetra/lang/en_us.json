@@ -188,8 +188,14 @@
   "tetra.stats.armorPenetration": "Penetrating",
   "tetra.stats.armorPenetration.tooltip": "Attacks ignore §e%s§r of the target's armor",
 
-  "tetra.stats.unarmoredDamage": "Severing",
-  "tetra.stats.unarmoredDamage.tooltip": "Deals §e%s§r bonus damage when attacking entities with no armor",
+  "tetra.stats.crushing": "Crushing",
+  "tetra.stats.crushing.tooltip": "Attacks will always deal at least §e%s§r damage regardless of the target's armor",
+
+  "tetra.stats.skewering": "Skewering",
+  "tetra.stats.skewering.tooltip": "Deals §e%s§r bonus damage when attacking entities with less than §e%s§r armor",
+
+  "tetra.stats.stun": "Stun",
+  "tetra.stats.stun.tooltip": "Attacks have a §e%s%%§r chance to stun the target for §e%s§r seconds",
 
   "tetra.stats.howling": "Howling",
   "tetra.stats.howling.tooltip": "Swinging this item will envelop the wielder in howling winds which may deflect incoming projectiles.\n \n§7Each swing adds §e%s§7 stack(s) of the effect with a §e%s§7 second duration. Each stack grants:\n* §e12.5%%§7 chance to deflect\n* §e-5%%§7 movement speed\n* §e2.5%%§7 chance for a deflected projectile to go back to where it came from.",

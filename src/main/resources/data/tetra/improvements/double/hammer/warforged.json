@@ -3,7 +3,7 @@
         "key": "double/warforged",
         "integrity": -2,
         "effects": {
-            "stun": 30
+            "crushing": 4
         },
         "models": [{
             "location": "tetra:items/module/double/head/basic_hammer/warforged",

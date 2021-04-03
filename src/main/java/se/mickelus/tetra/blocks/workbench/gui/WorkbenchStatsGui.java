@@ -17,7 +17,6 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 public class WorkbenchStatsGui extends GuiElement {
@@ -48,11 +47,12 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.bleeding,
             GuiStats.backstab,
             GuiStats.armorPenetration,
-            GuiStats.unarmoredDamage,
+            GuiStats.skewering,
             GuiStats.howling,
             GuiStats.knockback,
             GuiStats.execute,
             GuiStats.severing,
+            GuiStats.stun,
             GuiStats.lunge,
             GuiStats.slam,
             GuiStats.looting,

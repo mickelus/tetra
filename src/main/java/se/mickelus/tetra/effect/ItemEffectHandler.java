@@ -80,6 +80,11 @@ public class ItemEffectHandler {
                         16, 0, target.world.rand.nextGaussian() * 0.2, 0, 0.1);
             }
         }
+
+        int stunLevel = getEffectLevel(itemStack, ItemEffect.stun);
+        if (stunLevel > 0) {
+            StunEffect.perform(itemStack, stunLevel, attacker, target);
+        }
     }
 
     private static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
@@ -213,14 +218,14 @@ public class ItemEffectHandler {
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
                 .ifPresent(itemStack -> {
-                    int penetratingLevel = getEffectLevel(itemStack, ItemEffect.armorPenetration);
-                    if (penetratingLevel > 0 && event.getAmount() < penetratingLevel) {
-                        event.setAmount(penetratingLevel);
+                    int crushingLevel = getEffectLevel(itemStack, ItemEffect.crushing);
+                    if (crushingLevel > 0) {
+                        CrushingEffect.onLivingDamage(event, crushingLevel);
                     }
 
-                    int unarmoredBonusLevel = getEffectLevel(itemStack, ItemEffect.unarmoredDamage);
-                    if (unarmoredBonusLevel > 0 && event.getEntityLiving().getTotalArmorValue() == 0) {
-                        event.setAmount(event.getAmount()  + unarmoredBonusLevel);
+                    int skeweringLevel = getEffectLevel(itemStack, ItemEffect.skewering);
+                    if (skeweringLevel > 0) {
+                        SkeweringEffect.onLivingDamage(event, skeweringLevel, itemStack);
                     }
                 });
 
