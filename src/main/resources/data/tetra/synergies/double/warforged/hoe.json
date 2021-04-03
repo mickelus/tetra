@@ -1,0 +1,19 @@
+[
+    {
+        "modules": ["double/hoe_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/guisarme",
+        "effects": {
+            "overpower": 110
+        }
+    },
+    {
+        "modules": ["double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilitySaturated": 1
+        }
+    }
+]

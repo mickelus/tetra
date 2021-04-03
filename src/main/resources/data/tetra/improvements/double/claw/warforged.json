@@ -2,11 +2,11 @@
     {
         "key": "double/warforged",
         "integrity": -2,
-        "attributes": {
-            "generic.attack_damage": 4
+        "effects": {
+            "armorPenetration": 35
         },
         "models": [{
-            "location": "tetra:items/module/double/head/adze/warforged",
+            "location": "tetra:items/module/double/head/claw/warforged",
             "tint": "inherit"
         }]
     }

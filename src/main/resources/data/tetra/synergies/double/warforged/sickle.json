@@ -1,0 +1,19 @@
+[
+    {
+        "modules": ["double/basic_hammer_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/warhammer",
+        "effects": {
+            "slam": 50
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityPerformance": 1
+        }
+    }
+]

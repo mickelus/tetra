@@ -3,10 +3,10 @@
         "key": "double/warforged",
         "integrity": -2,
         "attributes": {
-            "generic.attack_damage": 4
+            "**generic.attack_damage": 1.3
         },
         "models": [{
-            "location": "tetra:items/module/double/head/adze/warforged",
+            "location": "tetra:items/module/double/head/hoe/warforged",
             "tint": "inherit"
         }]
     }

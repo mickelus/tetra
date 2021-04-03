@@ -1,0 +1,10 @@
+[
+    {
+        "modules": ["double/butt_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilitySpeed": 1
+        }
+    }
+]

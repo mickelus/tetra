@@ -1,0 +1,13 @@
+[
+    {
+        "key": "double/warforged",
+        "integrity": -2,
+        "effects": {
+            "sweeping": 1,
+            "truesweep": 1
+        },
+        "models": [{
+            "location": "tetra:items/module/double/head/extractor/warforged"
+        }]
+    }
+]
