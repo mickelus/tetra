@@ -175,13 +175,13 @@ public class GuiStats {
 
     public static final IStatGetter armorPenetrationGetter = new StatGetterEffectLevel(ItemEffect.armorPenetration, 1);
     public static final GuiStatBar armorPenetration = new GuiStatBar(0, 0, barLength, "tetra.stats.armorPenetration",
-                0, 10, false, armorPenetrationGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.armorPenetration.tooltip", armorPenetrationGetter));
 
     public static final IStatGetter unarmoredDamageGetter = new StatGetterEffectLevel(ItemEffect.unarmoredDamage, 1);
     public static final GuiStatBar unarmoredDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.unarmoredDamage",
                 0, 10, false, unarmoredDamageGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.unarmoredDamage.tooltip", unarmoredDamageGetter));
+                0, 100, false, armorPenetrationGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterPercentage("tetra.stats.armorPenetration.tooltip", armorPenetrationGetter));
 
     public static final IStatGetter howlingGetter = new StatGetterEffectLevel(ItemEffect.howling, 1);
     public static final GuiStatBar howling = new GuiStatBar(0, 0, barLength, "tetra.stats.howling",

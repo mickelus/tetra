@@ -44,11 +44,15 @@ public class ItemEffect {
     public static ItemEffect backstab = get("backstab");
 
     /**
+     * Armor penetration: Attacks ignore 1% (per effect level) of the targets armor
+     */
+    public static ItemEffect armorPenetration = get("armorPenetration");
+
+    /**
      * Armor penetration: Hitting entities will always deal damage regardless of the targets armor. The minimum damage
      * dealt equals the level of the effect.
      * todo: make the minimum damage not able to exceed the items actual damage
      */
-    public static ItemEffect armorPenetration = get("armorPenetration");
 
     /**
      * Unarmored bonus damage: Deals bonus damage when attacking entities with 0 armor. Bonus damage dealt equals the

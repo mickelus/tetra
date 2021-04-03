@@ -179,6 +179,11 @@ public class ItemEffectHandler {
                             event.setAmount(multiplier * maxDamage);
                         }
                     }
+
+                    int armorPenetrationLevel = getEffectLevel(itemStack, ItemEffect.armorPenetration);
+                    if (armorPenetrationLevel > 0) {
+                        ArmorPenetrationEffect.onLivingHurt(event, armorPenetrationLevel);
+                    }
                 });
 
         if (!event.getSource().isUnblockable()) {
@@ -218,6 +223,8 @@ public class ItemEffectHandler {
                         event.setAmount(event.getAmount()  + unarmoredBonusLevel);
                     }
                 });
+
+        ArmorPenetrationEffect.onLivingDamage(event);
     }
 
 

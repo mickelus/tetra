@@ -186,7 +186,7 @@
   "tetra.stats.jab.tooltip": "Can be used to attack entities using right-click when held in the offhand, dealing §e%s§r damage and applying on-hit effects. Triggers a cooldown equal to the item's attack.",
 
   "tetra.stats.armorPenetration": "Penetrating",
-  "tetra.stats.armorPenetration.tooltip": "Hitting an entity will always deal at least §e%s§r damage regardless of the targets armor",
+  "tetra.stats.armorPenetration.tooltip": "Attacks ignore §e%s§r of the target's armor",
 
   "tetra.stats.unarmoredDamage": "Severing",
   "tetra.stats.unarmoredDamage.tooltip": "Deals §e%s§r bonus damage when attacking entities with no armor",
