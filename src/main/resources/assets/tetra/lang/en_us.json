@@ -11,6 +11,8 @@
   "effect.tetra.howling.tooltip": "Enveloped in howling winds, grants:\n* §e%s%%§7 movement speed\n* §e%s%%§7 chance to deflect incoming projectiles\n* §e%s%%§7 chance for a deflected projectile to go back to where it came from",
   "effect.tetra.severed": "Severed",
   "effect.tetra.severed.tooltip": "Reduces max health by §e%s%%§r and attack damage by §e%s%%§r",
+  "effect.tetra.punctured": "Punctured",
+  "effect.tetra.punctured.tooltip": "Reduces armor by §e%s%% (%s)",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
@@ -213,6 +215,9 @@
   "tetra.stats.slam": "Slam",
   "tetra.stats.slam.tooltip": "Hold right-click to charge up a powerful slam.\n \nSlam the ground to send out a shockwave from the point of impact, entities hit by the shockwave take §e%s%% (%s)§r attack damage.\n \nDirectly slam an entity to deal §e%s%% (%s)§r attack damage and cause heavy knockback, this triggers a §e50%%§r longer cooldown.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
 
+  "tetra.stats.puncture": "Puncture",
+  "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor or that has already been punctured will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increase the cooldown by §e1§7 second.\n \n§7Charge time: §e%s§8 seconds\n§7Base cooldown: §e%s§8 seconds",
+
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",
 
@@ -220,7 +225,7 @@
   "tetra.stats.looting.tooltip": "Increases drops from killing entities",
 
   "tetra.stats.fiery": "Fiery",
-  "tetra.stats.fiery.tooltip": "Hitting an entity sets it on fire for §e%s§r seconds",
+  "tetra.stats.fiery.tooltip": "Hitting an entity sets it on fire for §e%s§f seconds",
 
   "tetra.stats.smite": "Smite",
   "tetra.stats.smite.tooltip": "Deals §e%s§r bonus damage when attacking undead entities",
@@ -1225,6 +1230,8 @@
   "tetra.synergy.double/battleaxe": "Battleaxe",
   "tetra.synergy.double/battleadze": "Battleadze",
   "tetra.synergy.double/warhammer": "Warhammer",
+  "tetra.synergy.double/war_pick": "War pick",
+  "tetra.synergy.double/guisarme": "Guisarme",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
   "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n \nMaterial §fdensity§r slightly decreases §fattack speed§r.",

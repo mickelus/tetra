@@ -87,7 +87,8 @@ public class ItemModularHandheld extends ModularItem {
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
             ExecuteEffect.instance,
             LungeEffect.instance,
-            SlamEffect.instance
+            SlamEffect.instance,
+            PunctureEffect.instance
     };
 
     public ItemModularHandheld(Properties properties) {

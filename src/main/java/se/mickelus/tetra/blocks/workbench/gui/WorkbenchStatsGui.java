@@ -55,6 +55,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.stun,
             GuiStats.lunge,
             GuiStats.slam,
+            GuiStats.puncture,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,

@@ -73,11 +73,8 @@ import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
-import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
-import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
+import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
-import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
-import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
@@ -374,6 +371,7 @@ public class TetraMod {
             event.getRegistry().register(new StunPotionEffect());
             event.getRegistry().register(new HowlingPotionEffect());
             event.getRegistry().register(new SeveredPotionEffect());
+            event.getRegistry().register(new PuncturedPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 

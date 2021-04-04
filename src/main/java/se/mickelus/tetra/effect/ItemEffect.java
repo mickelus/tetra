@@ -191,6 +191,12 @@ public class ItemEffect {
     public static ItemEffect slam = get("slam");
 
     /**
+     * Charged right-click ability that applies a 1 (per effect efficiency) second long 10% (per level of effect) armor reduction debuff if the targets
+     * armor is above 5 or is not affected by the puncture effect already, otherwise inflict a 6 second long bleed.
+     */
+    public static ItemEffect puncture = get("puncture");
+
+    /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
      * plank slabs, bookshelves, doors etc.
      * todo: move to ability once implemented

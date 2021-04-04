@@ -3,9 +3,7 @@ package se.mickelus.tetra.gui.statbar;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
-import se.mickelus.tetra.effect.ExecuteEffect;
-import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.effect.LungeEffect;
+import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.statbar.getter.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -201,7 +199,7 @@ public class GuiStats {
                     withStats(new StatGetterAbilityDamage(), executeGetter,
                             new StatGetterEffectEfficiency(ItemEffect.execute, 1), new StatGetterAbilityChargeTime(ExecuteEffect.instance),
                             new StatGetterAbilityCooldown(ExecuteEffect.instance)),
-                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal )));
+                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
     public static final IStatGetter severingGetter = new StatGetterEffectLevel(ItemEffect.severing, 1);
     public static final GuiStatBar severing = new GuiStatBar(0, 0, barLength, "tetra.stats.severing",
@@ -232,8 +230,16 @@ public class GuiStats {
             new TooltipGetterMultiValue("tetra.stats.slam.tooltip",
                     withStats(slamGetter, multiply(slamGetter, new StatGetterAbilityDamage(0, 0.01)),
                             slamEntityGetter, multiply(slamEntityGetter, new StatGetterAbilityDamage(0, 0.01)),
-                            new StatGetterAbilityChargeTime(LungeEffect.instance), new StatGetterAbilityCooldown(LungeEffect.instance)),
+                            new StatGetterAbilityChargeTime(SlamEffect.instance), new StatGetterAbilityCooldown(SlamEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
+
+    public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 10);
+    public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",
+            0, 200, false, punctureGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.puncture.tooltip",
+                    withStats(new StatGetterAbilityDamage(0, 1), punctureGetter, new StatGetterEffectEfficiency(ItemEffect.puncture, 1),
+                            new StatGetterAbilityChargeTime(PunctureEffect.instance), new StatGetterAbilityCooldown(PunctureEffect.instance)),
+                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",

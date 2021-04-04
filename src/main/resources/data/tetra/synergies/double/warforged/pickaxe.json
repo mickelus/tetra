@@ -1,15 +1,15 @@
 [
     {
-        "modules": ["double/basic_hammer_left"],
+        "modules": ["double/basic_pickaxe_left"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
-        "name": "double/warhammer",
+        "name": "double/war_pick",
         "effects": {
-            "slam": 50
+            "puncture": [4, 30]
         }
     },
     {
-        "modules": ["double/basic_hammer_right"],
+        "modules": ["double/basic_pickaxe_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
