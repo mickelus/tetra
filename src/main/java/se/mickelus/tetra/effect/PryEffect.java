@@ -26,16 +26,20 @@ public class PryEffect {
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
 
-        target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
-                currentAmplifier + effectLevel, false, false));
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
 
-        item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
+        if (result != AbilityUseResult.fail) {
+            target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
+                    currentAmplifier + effectLevel, false, false));
+
+            if (!target.getEntityWorld().isRemote) {
+                ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target);
+            }
+        }
+
 
         target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
 
-        if (!target.getEntityWorld().isRemote) {
-            ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target);
-        }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);

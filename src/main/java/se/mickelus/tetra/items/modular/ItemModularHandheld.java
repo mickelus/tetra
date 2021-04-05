@@ -88,7 +88,8 @@ public class ItemModularHandheld extends ModularItem {
             ExecuteEffect.instance,
             LungeEffect.instance,
             SlamEffect.instance,
-            PunctureEffect.instance
+            PunctureEffect.instance,
+            OverpowerEffect.instance
     };
 
     public ItemModularHandheld(Properties properties) {
@@ -310,7 +311,7 @@ public class ItemModularHandheld extends ModularItem {
      * @param damageMultiplier
      * @return true if was crit, otherwise false
      */
-    public boolean hitEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, double damageMultiplier,
+    public AbilityUseResult hitEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, double damageMultiplier,
             float knockbackBase, float knockbackMultiplier) {
         float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
@@ -318,35 +319,41 @@ public class ItemModularHandheld extends ModularItem {
                 .orElse(1f);
 
         double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier;
-        target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
 
-        // applies enchantment effects on both parties
-        EnchantmentHelper.applyThornEnchantments(target, player);
-        EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
+        boolean success = target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
+        if (success) {
+            // applies enchantment effects on both parties
+            EnchantmentHelper.applyThornEnchantments(target, player);
+            EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
 
-        // tetra item effects
-        ItemEffectHandler.applyHitEffects(itemStack, target, player);
+            // tetra item effects
+            ItemEffectHandler.applyHitEffects(itemStack, target, player);
 
-        // knocks back the target based on effect level + knockback enchantment level
-        float knockbackFactor = knockbackBase + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
-        target.applyKnockback(knockbackFactor * knockbackMultiplier,
-                player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
+            // knocks back the target based on effect level + knockback enchantment level
+            float knockbackFactor = knockbackBase + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+            target.applyKnockback(knockbackFactor * knockbackMultiplier,
+                    player.getPosX() - target.getPosX(), player.getPosZ() - target.getPosZ());
 
-        if (targetModifier > 1) {
-            player.onEnchantmentCritical(target);
+            if (targetModifier > 1) {
+                player.onEnchantmentCritical(target);
+                return AbilityUseResult.magicCrit;
+            }
+
+            if (critMultiplier > 1) {
+                player.onCriticalHit(target);
+                return AbilityUseResult.crit;
+            }
+
+            return AbilityUseResult.hit;
         }
 
-        if (critMultiplier > 1) {
-            player.onCriticalHit(target);
-        }
-
-        return critMultiplier > 1;
+        return AbilityUseResult.fail;
     }
 
     public void jabEntity(ItemStack itemStack, int jabLevel, PlayerEntity player, LivingEntity target) {
-        boolean wasCrit = hitEntity(itemStack, player, target, jabLevel / 100f, 0.5f, 0.2f);
+        AbilityUseResult result = hitEntity(itemStack, player, target, jabLevel / 100f, 0.5f, 0.2f);
 
-        if (wasCrit) {
+        if (result == AbilityUseResult.crit) {
             player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
         } else {
             player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 1.3f);
@@ -356,15 +363,19 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void bashEntity(ItemStack itemStack, int bashingLevel, PlayerEntity player, LivingEntity target) {
-        hitEntity(itemStack, player, target, 1, bashingLevel + (player.isSprinting() ? 1 : 0), 0.5f);
+        AbilityUseResult result = hitEntity(itemStack, player, target, 1, bashingLevel + (player.isSprinting() ? 1 : 0), 0.5f);
 
-        // stuns the target if bash efficiency is > 0
-        double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
-        if (stunDuration > 0) {
-            target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
+        if (result != AbilityUseResult.fail) {
+            // stuns the target if bash efficiency is > 0
+            double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
+            if (stunDuration > 0) {
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
+            }
+
+            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
+        } else {
+            player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
         }
-
-        player.getEntityWorld().playSound(player, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.7f);
 
         player.getCooldownTracker().setCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
     }

@@ -38,21 +38,25 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
         double damageMultiplier = (1 + missingHealth + harmfulCount * efficiency / 100);
-        item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
-        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
+        if (result != AbilityUseResult.fail) {
+            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
 
-        Random rand = target.getRNG();
-        CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
-                world.spawnParticle(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
-                        hitVec.x, hitVec.y, hitVec.z, 5 + (int) (damageMultiplier * 10),
-                        rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
+            Random rand = target.getRNG();
+            CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
+                    world.spawnParticle(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
+                            hitVec.x, hitVec.y, hitVec.z, 5 + (int) (damageMultiplier * 10),
+                            rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
+        } else {
+            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+        }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
-        item.tickProgression(attacker, itemStack, 2);
+        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
     }
 }

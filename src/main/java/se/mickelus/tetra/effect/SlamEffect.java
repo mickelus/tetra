@@ -37,21 +37,26 @@ public class SlamEffect extends ChargedAbilityEffect {
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5;
-        item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
-        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
-        Random rand = target.getRNG();
-        CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
-                world.spawnParticle(ParticleTypes.CRIT,
-                        hitVec.x, hitVec.y, hitVec.z, 10,
-                        rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
+        if (result != AbilityUseResult.fail) {
+            Random rand = target.getRNG();
+            CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
+                    world.spawnParticle(ParticleTypes.CRIT,
+                            hitVec.x, hitVec.y, hitVec.z, 10,
+                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
+
+            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+        } else {
+            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
+        }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
 
-        item.tickProgression(attacker, itemStack, 2);
+        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
     }
 
@@ -150,11 +155,11 @@ public class SlamEffect extends ChargedAbilityEffect {
     private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin) {
         ServerScheduler.schedule(target.getPosition().manhattanDistance(new BlockPos(origin)) - 3, () -> {
             double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
-            boolean wasCrit = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
+            AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
             target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
 
-            if (wasCrit) {
+            if (result == AbilityUseResult.crit) {
                 Random rand = target.getRNG();
                 CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
                         world.spawnParticle(ParticleTypes.CRIT,
