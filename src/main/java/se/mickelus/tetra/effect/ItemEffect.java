@@ -196,6 +196,13 @@ public class ItemEffect {
      */
     public static ItemEffect puncture = get("puncture");
 
+
+    /**
+     * Right-click ability that applies a 1 (per effect efficiency) second long 1 (per level of effect) armor reduction debuff to the target, the effect
+     * stacks.
+     */
+    public static ItemEffect pry = get("pry");
+
     /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
      * plank slabs, bookshelves, doors etc.

@@ -1,0 +1,18 @@
+[
+    {
+        "modules": ["double/claw_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "pry": [1, 12]
+        }
+    },
+    {
+        "modules": ["double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 1
+        }
+    }
+]

@@ -13,6 +13,8 @@
   "effect.tetra.severed.tooltip": "Reduces max health by §e%s%%§r and attack damage by §e%s%%§r",
   "effect.tetra.punctured": "Punctured",
   "effect.tetra.punctured.tooltip": "Reduces armor by §e%s%% (%s)",
+  "effect.tetra.pried": "Pried",
+  "effect.tetra.pried.tooltip": "Reduces armor by §e%s",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
@@ -204,19 +206,27 @@
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e%s§r base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
-  "tetra.stats.execute.tooltip_extended": "Base damage is based on the attack damage of the item, charge time and cooldown is based on the swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
+  "tetra.stats.execute.tooltip_extended": "Base damage is based on the attack damage of the item, charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.severing": "Severing",
   "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
+  "tetra.stats.severing.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.lunge": "Lunge",
   "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§f attack damage and reduces the ability cooldown by §e20%%§f.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.lunge.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.slam": "Slam",
   "tetra.stats.slam.tooltip": "Hold right-click to charge up a powerful slam.\n \nSlam the ground to send out a shockwave from the point of impact, entities hit by the shockwave take §e%s%% (%s)§r attack damage.\n \nDirectly slam an entity to deal §e%s%% (%s)§r attack damage and cause heavy knockback, this triggers a §e50%%§r longer cooldown.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.slam.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.puncture": "Puncture",
-  "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor or that has already been punctured will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increase the cooldown by §e1§7 second.\n \n§7Charge time: §e%s§8 seconds\n§7Base cooldown: §e%s§8 seconds",
+  "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor or that has already been punctured will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increase the cooldown by §e1§7 second.\n \n§7Charge time: §e%s§7 seconds\n§7Base cooldown: §e%s§7 seconds",
+  "tetra.stats.puncture.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
+
+  "tetra.stats.pry_armor": "Pry",
+  "tetra.stats.pry_armor.tooltip": "Right-click an entity to deal §e50%% (%s)§f attack damage and reduces the target's armor by §e%s§f for §e%s§f seconds, the armor reduction effect stacks.\n \n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.pry_armor.tooltip_extended": "Cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack. The duration of the armor reduction effect is refreshed every time it is applied.",
 
   "tetra.stats.knockback": "Knockback",
   "tetra.stats.knockback.tooltip": "Increases how far hit entities are knocked back by a factor of §e%s",

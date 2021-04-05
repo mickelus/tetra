@@ -267,6 +267,12 @@ public class ItemModularHandheld extends ModularItem {
                     return ActionResultType.func_233537_a_(player.world.isRemote);
                 }
 
+                int pryLevel = getEffectLevel(itemStack, ItemEffect.pry);
+                if (pryLevel > 0) {
+                    PryEffect.perform(player, hand, this, itemStack, pryLevel, target);
+                    return ActionResultType.func_233537_a_(player.world.isRemote);
+                }
+
                 if (Hand.OFF_HAND.equals(hand)) {
                     int jabLevel = getEffectLevel(itemStack, ItemEffect.jab);
                     if (jabLevel > 0) {

@@ -1,7 +1,10 @@
 package se.mickelus.tetra.gui.statbar;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.statbar.getter.*;
@@ -241,6 +244,14 @@ public class GuiStats {
                             new StatGetterAbilityChargeTime(PunctureEffect.instance), new StatGetterAbilityCooldown(PunctureEffect.instance)),
                     withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
+    public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
+    public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",
+            0, 10, false, pryGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterMultiValue("tetra.stats.pry_armor.tooltip",
+                    withStats(new StatGetterAbilityDamage(0, 0.5), pryGetter, new StatGetterEffectEfficiency(ItemEffect.pry, 1),
+                            new StatGetterCooldown(PryEffect.flatCooldown, PryEffect.cooldownSpeedMultiplier)),
+                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)));
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
@@ -396,6 +407,9 @@ public class GuiStats {
 
     static IStatGetter sum(IStatGetter ... statGetters) {
         return new StatGetterSum(statGetters);
+    }
+    static IStatGetter sum(double offset, IStatGetter ... statGetters) {
+        return new StatGetterSum(offset, statGetters);
     }
 
     static IStatGetter multiply(IStatGetter ... statGetters) {
