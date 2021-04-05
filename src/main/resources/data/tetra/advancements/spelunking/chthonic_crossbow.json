@@ -13,14 +13,19 @@
     },
     "parent": "tetra:spelunking/chthonic_extractor",
     "criteria": {
-        "shot_crossbow": {
+        "unused": {
             "trigger": "minecraft:shot_crossbow",
             "conditions": {
-                "unused": {
+                "item": {
                     "item": "tetra:modular_crossbow",
                     "nbt": "{ChargedProjectiles: [{id: \"tetra:chthonic_extractor\"}]}"
-                },
-                "used": {
+                }
+            }
+        },
+        "used": {
+            "trigger": "minecraft:shot_crossbow",
+            "conditions": {
+                "item": {
                     "item": "tetra:modular_crossbow",
                     "nbt": "{ChargedProjectiles: [{id: \"tetra:chthonic_extractor_used\"}]}"
                 }
