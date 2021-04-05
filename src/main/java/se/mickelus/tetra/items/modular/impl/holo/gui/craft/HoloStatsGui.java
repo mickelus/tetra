@@ -57,6 +57,7 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.slam,
             GuiStats.puncture,
             GuiStats.pry,
+            GuiStats.overpower,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,

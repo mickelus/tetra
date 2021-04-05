@@ -196,12 +196,17 @@ public class ItemEffect {
      */
     public static ItemEffect puncture = get("puncture");
 
-
     /**
      * Right-click ability that applies a 1 (per effect efficiency) second long 1 (per level of effect) armor reduction debuff to the target, the effect
      * stacks.
      */
     public static ItemEffect pry = get("pry");
+
+    /**
+     * Charged right-click ability that deals 1% (per effect level) attack damage, applies almost no knockback, and exhausts (AS, MS, breakspeed reduction)
+     * the target and the attacker for 1 (per effect efficiency) seconds.
+     */
+    public static ItemEffect overpower = get("overpower");
 
     /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include

@@ -15,6 +15,8 @@
   "effect.tetra.punctured.tooltip": "Reduces armor by §e%s%% (%s)",
   "effect.tetra.pried": "Pried",
   "effect.tetra.pried.tooltip": "Reduces armor by §e%s",
+  "effect.tetra.exhausted": "Exhausted",
+  "effect.tetra.exhausted.tooltip": "Reduces movement speed by §e%s%%§r, and reduces attack speed and mining speed by §e%s%%",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
@@ -224,7 +226,11 @@
   "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor or that has already been punctured will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increase the cooldown by §e1§7 second.\n \n§7Charge time: §e%s§7 seconds\n§7Base cooldown: §e%s§7 seconds",
   "tetra.stats.puncture.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
-  "tetra.stats.pry_armor": "Pry",
+  "tetra.stats.overpower": "Overpower",
+  "tetra.stats.overpower.tooltip": "Hold right-click to charge up an attack that deals §e%s%% (%s)§f attack damage but barely causes any knockback.\n \n§7Applies §e2§7 stacks of §eExhausted§7 on the target and §e1§7 stack on the attacker. Each stack reduces movement speed by §e10%%§7 and attack speed and harvest speed by §e5%%§7. The attacker gets §eExhausted§7 even if the attack fails.\n \n§7Exhausted duration: §e%s§7 seconds\n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.overpower.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
+
+  "tetra.stats.pry_armor": "Pry arm.",
   "tetra.stats.pry_armor.tooltip": "Right-click an entity to deal §e50%% (%s)§f attack damage and reduces the target's armor by §e%s§f for §e%s§f seconds, the armor reduction effect stacks.\n \n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.pry_armor.tooltip_extended": "Cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack. The duration of the armor reduction effect is refreshed every time it is applied.",
 

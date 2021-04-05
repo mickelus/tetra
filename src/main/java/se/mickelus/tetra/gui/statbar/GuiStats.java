@@ -252,6 +252,15 @@ public class GuiStats {
                             new StatGetterCooldown(PryEffect.flatCooldown, PryEffect.cooldownSpeedMultiplier)),
                     withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)));
 
+    public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
+    public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",
+            0, 300, false, overpowerGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.overpower.tooltip",
+                    withStats(overpowerGetter, multiply(overpowerGetter, new StatGetterAbilityDamage(0, 0.01)),
+                            new StatGetterEffectEfficiency(ItemEffect.overpower, 1),
+                            new StatGetterAbilityChargeTime(OverpowerEffect.instance), new StatGetterAbilityCooldown(OverpowerEffect.instance)),
+                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
