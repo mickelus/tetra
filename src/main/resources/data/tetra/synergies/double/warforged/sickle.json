@@ -1,15 +1,15 @@
 [
     {
-        "modules": ["double/basic_hammer_left"],
+        "modules": ["double/sickle_left"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
-        "name": "double/warhammer",
+        "name": "double/warsickle",
         "effects": {
-            "slam": 50
+            "reap": [75, 3]
         }
     },
     {
-        "modules": ["double/basic_hammer_right"],
+        "modules": ["double/sickle_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {

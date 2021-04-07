@@ -261,6 +261,15 @@ public class GuiStats {
                             new StatGetterAbilityChargeTime(OverpowerEffect.instance), new StatGetterAbilityCooldown(OverpowerEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
 
+    public static final IStatGetter reapGetter = new StatGetterEffectLevel(ItemEffect.reap, 1);
+    public static final GuiStatBar reap = new GuiStatBar(0, 0, barLength, "tetra.stats.reap",
+            0, 200, false, reapGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterMultiValue("tetra.stats.reap.tooltip",
+                    withStats(reapGetter, multiply(reapGetter, new StatGetterAbilityDamage(0, 0.01)),
+                            new StatGetterEffectEfficiency(ItemEffect.reap, 1),
+                            new StatGetterAbilityChargeTime(ReapEffect.instance), new StatGetterAbilityCooldown(ReapEffect.instance)),
+                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)));
+
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,

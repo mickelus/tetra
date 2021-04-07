@@ -209,6 +209,12 @@ public class ItemEffect {
     public static ItemEffect overpower = get("overpower");
 
     /**
+     * Charged right-click ability that deals 1% (per effect level) attack damage to all entities in an area (based on effect efficiency). The attacker
+     * gains a beneficial effect based on how many entities that are killed by the attack, the effect depends on the ability modifier.
+     */
+    public static ItemEffect reap = get("reap");
+
+    /**
      * De-nailing: Allows the player to instantly break plank based blocks by using right-click. Plank blocks include
      * plank slabs, bookshelves, doors etc.
      * todo: move to ability once implemented

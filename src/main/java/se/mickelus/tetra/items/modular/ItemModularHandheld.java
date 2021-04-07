@@ -89,7 +89,8 @@ public class ItemModularHandheld extends ModularItem {
             LungeEffect.instance,
             SlamEffect.instance,
             PunctureEffect.instance,
-            OverpowerEffect.instance
+            OverpowerEffect.instance,
+            ReapEffect.instance
     };
 
     public ItemModularHandheld(Properties properties) {
