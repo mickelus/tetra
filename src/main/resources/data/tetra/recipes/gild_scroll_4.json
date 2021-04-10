@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "type": "tetra:scroll",
+                "key": "hone_gild_3",
+            "schematics": [""],
+            "intricate": true,
+            "material": 2,
+            "ribbon": "deb243"
+        },
+        {
+            "type": "tetra:scroll",
+                "key": "hone_gild_3",
+            "schematics": [""],
+            "intricate": true,
+            "material": 2,
+            "ribbon": "deb243"
+        }
+    ],
+    "result": {
+        "item": "tetra:scroll_rolled",
+        "count": 1,
+        "nbt": {
+            "BlockEntityTag": {
+                "data": [{
+                    "key": "hone_gild_4",
+                    "schematics": ["tetra:shared/hone_gild_1", "tetra:shared/hone_gild_2", "tetra:shared/hone_gild_3", "tetra:shared/hone_gild_4"],
+                    "intricate": true,
+                    "material": 2,
+                    "ribbon": "e8b32c",
+                    "glyphs": [12,13,14,13]
+                }]
+            }
+        }
+    }
+}

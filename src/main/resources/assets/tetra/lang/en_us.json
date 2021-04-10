@@ -207,8 +207,8 @@
   "tetra.stats.howling.tooltip": "Swinging this item will envelop the wielder in howling winds which may deflect incoming projectiles.\n \n§7Each swing adds §e%s§7 stack(s) of the effect with a §e%s§7 second duration. Each stack grants:\n* §e12.5%%§7 chance to deflect\n* §e-5%%§7 movement speed\n* §e2.5%%§7 chance for a deflected projectile to go back to where it came from.",
 
   "tetra.stats.execute": "Execute",
-  "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e%s§r base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
-  "tetra.stats.execute.tooltip_extended": "Base damage is based on the attack damage of the item, charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
+  "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.severing": "Severing",
   "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
@@ -623,15 +623,18 @@
 
   "item.tetra.scroll.hammer_efficiency.prefix": "Treatise",
   "item.tetra.scroll.hammer_efficiency.name": "Hammer efficiency",
-  "item.tetra.scroll.hammer_efficiency.description": "Using a hammer to craft or repair has a 25%% chance to use less materials",
+  "item.tetra.scroll.hammer_efficiency.description": "Crafting or repairing modules using a hammer may sometimes use up fewer materials",
+  "item.tetra.scroll.hammer_efficiency.description_extended": "Provides a 25%% chance to reduce material usage by 1, total material usage cannot be reduced below 1",
 
   "item.tetra.scroll.axe_efficiency.prefix": "Treatise",
   "item.tetra.scroll.axe_efficiency.name": "Axe efficiency",
-  "item.tetra.scroll.axe_efficiency.description": "Using a axe to craft or repair has a 25%% chance to use less materials",
+  "item.tetra.scroll.axe_efficiency.description": "Crafting or repairing modules using an axe may sometimes use up fewer materials",
+  "item.tetra.scroll.axe_efficiency.description_extended": "Provides a 25%% chance to reduce material usage by 1, total material usage cannot be reduced below 1",
 
   "item.tetra.scroll.cut_efficiency.prefix": "Treatise",
   "item.tetra.scroll.cut_efficiency.name": "Cut efficiency",
-  "item.tetra.scroll.cut_efficiency.description": "Using a cutting implement to craft or repair has a 25%% chance to use less materials",
+  "item.tetra.scroll.cut_efficiency.description": "Crafting or repairing modules using a cutting implement may sometimes use up fewer materials",
+  "item.tetra.scroll.cut_efficiency.description_extended": "Provides a 25%% chance to reduce material usage by 1, total material usage cannot be reduced below 1",
 
   "item.tetra.scroll.sword/sturdy_guard.prefix": "Schematic",
   "item.tetra.scroll.sword/sturdy_guard.name": "Sturdy guard",
@@ -645,12 +648,71 @@
   "item.tetra.scroll.single/points_end.prefix": "Schematic",
   "item.tetra.scroll.single/points_end.name": "Point's End",
   "item.tetra.scroll.single/points_end.description": "Schematics for a spearhead that's capable of drawing power from several types of spherical objects",
-  "item.tetra.scroll.hone_gild.prefix": "Hone",
-  "item.tetra.scroll.hone_gild.name": "Gild",
-  "item.tetra.scroll.hone_gild.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
-  "item.tetra.scroll.double/shared_head/warforge.prefix": "Schematic",
-  "item.tetra.scroll.double/shared_head/warforge.name": "Tools of War",
-  "item.tetra.scroll.double/shared_head/warforge.description": "Contains various plans on how to modify different types of double headed tools to be much more effective in combat",
+
+  "item.tetra.scroll.hone_gild_1.prefix": "Hone",
+  "item.tetra.scroll.hone_gild_1.name": "Gild I",
+  "item.tetra.scroll.hone_gild_1.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
+  "item.tetra.scroll.hone_gild_1.description_extended": "The enchantments on this scroll are somewhat faded, it allows modules to be gilded up to level I. Combine two Gild I scrolls in the crafting grid to create a Gild II scroll.",
+
+  "item.tetra.scroll.hone_gild_2.prefix": "Hone",
+  "item.tetra.scroll.hone_gild_2.name": "Gild II",
+  "item.tetra.scroll.hone_gild_2.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
+  "item.tetra.scroll.hone_gild_2.description_extended": "The enchantments on this scroll have been partially restored, it allows modules to be gilded up to level II. Combine two Gild II scrolls in the crafting grid to create a Gild III scroll",
+
+  "item.tetra.scroll.hone_gild_3.prefix": "Hone",
+  "item.tetra.scroll.hone_gild_3.name": "Gild III",
+  "item.tetra.scroll.hone_gild_3.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
+  "item.tetra.scroll.hone_gild_3.description_extended": "The enchantments on this scroll have been partially restored, it allows modules to be gilded up to level III. Combine two Gild III scrolls in the crafting grid to create a Gild IV scroll",
+
+  "item.tetra.scroll.hone_gild_4.prefix": "Hone",
+  "item.tetra.scroll.hone_gild_4.name": "Gild IV",
+  "item.tetra.scroll.hone_gild_4.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
+  "item.tetra.scroll.hone_gild_4.description_extended": "The enchantments on this scroll have been partially restored, it allows modules to be gilded up to level IV. Combine two Gild IV scrolls in the crafting grid to create a Gild V scroll",
+
+  "item.tetra.scroll.hone_gild_5.prefix": "Hone",
+  "item.tetra.scroll.hone_gild_5.name": "Gild V",
+  "item.tetra.scroll.hone_gild_5.description": "An enchanted scroll that makes it possible to hone the magic capacity of a module",
+  "item.tetra.scroll.hone_gild_5.description_extended": "The enchantments on this scroll have been fully restored, it allows modules to be gilded up to level V",
+
+  "item.tetra.scroll.double/basic_axe/warforge.prefix": "Tools of War, Chapter 1",
+  "item.tetra.scroll.double/basic_axe/warforge.name": "Battleaxes",
+  "item.tetra.scroll.double/basic_axe/warforge.description": "Contains various plans on how to make axes effective in combat, allows axes to be improved in a workbench",
+  "item.tetra.scroll.double/basic_axe/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/basic_hammer/warforge.prefix": "Tools of War, Chapter 2",
+  "item.tetra.scroll.double/basic_hammer/warforge.name": "Warhammers",
+  "item.tetra.scroll.double/basic_hammer/warforge.description": "Contains various plans on how to make hammers effective in combat, allows hammers to be improved in a workbench",
+  "item.tetra.scroll.double/basic_hammer/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/basic_pickaxe/warforge.prefix": "Tools of War, Chapter 3",
+  "item.tetra.scroll.double/basic_pickaxe/warforge.name": "War-picks",
+  "item.tetra.scroll.double/basic_pickaxe/warforge.description": "Contains various plans on how to make pickaxes effective in combat, allows pickaxes to be improved in a workbench",
+  "item.tetra.scroll.double/basic_pickaxe/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/butt/warforge.prefix": "Tools of War, Chapter 4",
+  "item.tetra.scroll.double/butt/warforge.name": "Blunt ends",
+  "item.tetra.scroll.double/butt/warforge.description": "Contains various plans on how to leverage a tool's butt to make the item more effective in combat, allows tool butts to be improved in a workbench",
+  "item.tetra.scroll.double/butt/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/claw/warforge.prefix": "Tools of War, Chapter 5",
+  "item.tetra.scroll.double/claw/warforge.name": "Claws",
+  "item.tetra.scroll.double/claw/warforge.description": "Contains various plans on how to make claws effective in combat, allows claws to be improved in a workbench",
+  "item.tetra.scroll.double/claw/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/hoe/warforge.prefix": "Tools of War, Chapter 6",
+  "item.tetra.scroll.double/hoe/warforge.name": "Guisarmes",
+  "item.tetra.scroll.double/hoe/warforge.description": "Contains various plans on how to make hoes effective in combat, allows hoes to be improved in a workbench",
+  "item.tetra.scroll.double/hoe/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/sickle/warforge.prefix": "Tools of War, Chapter 7",
+  "item.tetra.scroll.double/sickle/warforge.name": "Warsickles",
+  "item.tetra.scroll.double/sickle/warforge.description": "Contains various plans on how to make sickles effective in combat, allows sickles to be improved in a workbench",
+  "item.tetra.scroll.double/sickle/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
+
+  "item.tetra.scroll.double/adze/warforge.prefix": "Tools of War, Chapter 8",
+  "item.tetra.scroll.double/adze/warforge.name": "Battleadzes",
+  "item.tetra.scroll.double/adze/warforge.description": "Contains various plans on how to make adzes more effective in combat, allows adzes to be improved in a workbench",
+  "item.tetra.scroll.double/adze/warforge.description_extended": "§7[§8shift + rmb§7]§8 read more",
 
   "item.tetra.scroll.effects": "Crafting Effect",
   "item.tetra.scroll.effects.description": "Provides some form of effect when tool parts are crafted or modified in a nearby workbench",

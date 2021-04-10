@@ -1,12 +1,8 @@
 package se.mickelus.tetra.blocks.scroll;
 
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTDynamicOps;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
@@ -14,14 +10,12 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ScrollTile extends TileEntity {
     public static final String unlocalizedName = "scroll";
@@ -42,7 +36,7 @@ public class ScrollTile extends TileEntity {
 
     public boolean addScroll(ItemStack itemStack) {
         if (scrolls.length < 6) {
-            scrolls = ArrayUtils.add(scrolls, ScrollItem.getData(itemStack));
+            scrolls = ArrayUtils.add(scrolls, ScrollData.read(itemStack));
             markDirty();
             return true;
         }

@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +24,9 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -59,6 +62,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
+import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.CraftTypeCondition;
 import se.mickelus.tetra.craftingeffect.condition.LockedCondition;
@@ -70,11 +74,11 @@ import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
-import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.TruesweepPacket;
-import se.mickelus.tetra.effect.potion.*;
+import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
+import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
@@ -95,6 +99,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
+import se.mickelus.tetra.loot.ReplaceTableModifier;
+import se.mickelus.tetra.loot.ScrollDataFunction;
 import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
@@ -362,6 +368,11 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
             event.getRegistry().register(FeatureEntry.instance);
+        }
+
+        @SubscribeEvent
+        public static void registerRecipeSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
+            CraftingHelper.register(new ResourceLocation(MOD_ID, "scroll"), ScrollIngredient.Serializer.INSTANCE);
         }
 
         @SubscribeEvent

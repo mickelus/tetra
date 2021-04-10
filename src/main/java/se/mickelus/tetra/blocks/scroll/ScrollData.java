@@ -1,9 +1,13 @@
 package se.mickelus.tetra.blocks.scroll;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTDynamicOps;
@@ -17,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ScrollData {
+public class ScrollData {
     public String key;
     public boolean isIntricate;
     public int material = 0;
@@ -31,9 +35,9 @@ class ScrollData {
             Codec.BOOL.fieldOf("intricate").forGetter(i -> i.isIntricate),
             Codec.INT.fieldOf("material").forGetter(i -> i.material),
             HexCodec.instance.fieldOf("ribbon").forGetter(i -> i.ribbon),
-            Codec.INT.listOf().fieldOf("glyphs").forGetter(i -> i.glyphs),
-            ResourceLocation.CODEC.listOf().fieldOf("schematics").forGetter(i -> i.schematics),
-            ResourceLocation.CODEC.listOf().fieldOf("craftingEffects").forGetter(i -> i.craftingEffects)
+            Codec.INT.listOf().optionalFieldOf("glyphs", Collections.emptyList()).forGetter(i -> i.glyphs),
+            ResourceLocation.CODEC.listOf().optionalFieldOf("schematics", Collections.emptyList()).forGetter(i -> i.schematics),
+            ResourceLocation.CODEC.listOf().optionalFieldOf("effects", Collections.emptyList()).forGetter(i -> i.craftingEffects)
     ).apply(instance, ScrollData::new));
 
     public ScrollData() {
@@ -57,6 +61,28 @@ class ScrollData {
         }
     }
 
+    public static ScrollData read(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+                .map(ScrollData::read)
+                .filter(data -> data.length > 0)
+                .map(data -> data[0])
+                .orElseGet(ScrollData::new);
+    }
+
+    public void write(ItemStack itemStack) {
+        itemStack.setTagInfo("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundNBT()));
+    }
+
+    public static ScrollData[] read(CompoundNBT tag) {
+        return tag.getList("data", Constants.NBT.TAG_COMPOUND).stream()
+                .map(nbt -> ScrollData.codec.decode(NBTDynamicOps.INSTANCE, nbt))
+                .map(DataResult::result)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Pair::getFirst)
+                .toArray(ScrollData[]::new);
+    }
+
     public static CompoundNBT write(ScrollData[] data, CompoundNBT tag) {
         ListNBT list = Arrays.stream(data)
                 .map(scroll -> ScrollData.codec.encodeStart(NBTDynamicOps.INSTANCE, scroll))
@@ -68,13 +94,16 @@ class ScrollData {
         return tag;
     }
 
-    public static ScrollData[] read(CompoundNBT tag) {
-        return tag.getList("data", Constants.NBT.TAG_COMPOUND).stream()
-                .map(nbt -> ScrollData.codec.decode(NBTDynamicOps.INSTANCE, nbt))
-                .map(DataResult::result)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+    public static ScrollData read(JsonObject json) {
+        return Optional.of(ScrollData.codec.decode(JsonOps.INSTANCE, json))
+                .flatMap(DataResult::result)
                 .map(Pair::getFirst)
-                .toArray(ScrollData[]::new);
+                .orElse(null);
+    }
+
+    public JsonElement write(JsonObject json) {
+        return Optional.of(ScrollData.codec.encode(this, JsonOps.INSTANCE, json))
+                .flatMap(DataResult::result)
+                .orElse(null);
     }
 }
