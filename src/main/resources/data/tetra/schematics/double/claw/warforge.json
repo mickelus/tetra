@@ -1,0 +1,26 @@
+{
+    "replace": true,
+    "locked": true,
+    "slots": ["double/head_left", "double/head_right"],
+    "keySuffixes": ["_left", "_right"],
+    "materialSlotCount": 0,
+    "rarity": "temporary",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 144
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [["double/claw_right"], ["double/claw_left"]]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 4
+            },
+            "improvements": {
+                "double/warforged": 0
+            }
+        }
+    ]
+}

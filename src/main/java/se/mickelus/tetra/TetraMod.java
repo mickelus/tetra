@@ -154,6 +154,7 @@ public class TetraMod {
         ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
 
         Registry.register(Registry.LOOT_CONDITION_TYPE, FortuneBonusCondition.identifier, FortuneBonusCondition.type);
+        Registry.register(Registry.LOOT_FUNCTION_TYPE, ScrollDataFunction.identifier, ScrollDataFunction.type);
 
         new CraftingEffectRegistry();
         CraftingEffectRegistry.registerConditionType("tetra:craft_type", CraftTypeCondition.class);
@@ -368,6 +369,11 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
             event.getRegistry().register(FeatureEntry.instance);
+        }
+
+        @SubscribeEvent
+        public static void registerModifierSerializers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+            event.getRegistry().register(new ReplaceTableModifier.Serializer().setRegistryName(new ResourceLocation(MOD_ID,"replace_table")));
         }
 
         @SubscribeEvent
