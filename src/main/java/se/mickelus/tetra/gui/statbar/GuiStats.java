@@ -1,10 +1,7 @@
 package se.mickelus.tetra.gui.statbar;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.statbar.getter.*;
@@ -215,15 +212,9 @@ public class GuiStats {
     public static GuiStatIndicator abilitySpeedIndicatorInstant = new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,
             abilitySpeedGetter, new TooltipGetterPercentage("tetra.stats.ability_speed_bonus_instant.tooltip", abilitySpeedGetter));
 
-    public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
-    public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
-            0, 5, false, executeGetter, LabelGetterBasic.percentageLabelDecimal,
-            new TooltipGetterMultiValue("tetra.stats.execute.tooltip",
-                    withStats(new StatGetterAbilityDamage(), executeGetter,
-                            new StatGetterEffectEfficiency(ItemEffect.execute, 1), new StatGetterAbilityChargeTime(ExecuteEffect.instance),
-                            new StatGetterAbilityCooldown(ExecuteEffect.instance)),
-                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicator);
+
+    public static final IStatGetter abilityDefensiveGetter = new StatGetterEffectLevel(ItemEffect.abilityDefensive, 1);
+    public static final IStatGetter abilityDefEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityDefensive, 1);
 
     public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
     public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",
@@ -232,7 +223,28 @@ public class GuiStats {
                     withStats(lungeGetter, multiply(lungeGetter, new StatGetterAbilityDamage(0, 0.01)),
                             new StatGetterAbilityChargeTime(LungeEffect.instance), new StatGetterAbilityCooldown(LungeEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicator);
+            .setIndicators(
+                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterNone("tetra.stats.lunge_defensive.tooltip"))
+                    );
+
+    public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
+    public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
+            0, 5, false, executeGetter, LabelGetterBasic.percentageLabelDecimal,
+            new TooltipGetterMultiValue("tetra.stats.execute.tooltip",
+                    withStats(new StatGetterAbilityDamage(), executeGetter,
+                            new StatGetterEffectEfficiency(ItemEffect.execute, 1), new StatGetterAbilityChargeTime(ExecuteEffect.instance),
+                            new StatGetterAbilityCooldown(ExecuteEffect.instance)),
+                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
+            .setIndicators(
+                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterMultiValue("tetra.stats.execute_defensive.tooltip",
+                            withStats(abilityDefensiveGetter, multiply(abilityDefensiveGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                    abilityDefEffGetter, multiply(abilityDefEffGetter, new StatGetterAbilityDamage(0, 0.01))),
+                            withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
+            );
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);

@@ -20,6 +20,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -199,6 +200,7 @@ public class GuiStatBar extends GuiStatBase {
         String tooltip = tooltipGetter.getTooltipBase(player, itemStack);
 
         tooltip += getActiveIndicators().stream()
+                .filter(indicator -> indicator.isActive(player, itemStack))
                 .map(indicator -> TextFormatting.YELLOW + indicator.getLabel() + "\n" + TextFormatting.GRAY + indicator.getTooltipBase(player, itemStack))
                 .map(string -> "\n \n" + string)
                 .collect(Collectors.joining())
@@ -221,19 +223,22 @@ public class GuiStatBar extends GuiStatBase {
         String tooltip = getCombinedTooltipBase(player, itemStack);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
-            tooltip += "\n \n" + Tooltips.expanded.getString();
+            tooltip += "\n \n" + Tooltips.expanded.getString() + "\n";
 
+            List<String> extendedTooltip = new LinkedList<>();
             if (tooltipGetter.hasExtendedTooltip(player, itemStack)) {
-                tooltip += "\n" + TextFormatting.GRAY + tooltipGetter.getTooltipExtension(player, itemStack)
-                        .replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString());
+                extendedTooltip.add(TextFormatting.GRAY + tooltipGetter.getTooltipExtension(player, itemStack)
+                        .replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
             }
 
-            tooltip += getActiveIndicators().stream()
+            getActiveIndicators().stream()
                     .filter(indicator -> indicator.hasExtendedTooltip(player, itemStack))
                     .map(indicator -> TextFormatting.GRAY + indicator.getTooltipExtension(player, itemStack))
                     .map(string -> string.replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()))
                     .map(string -> "\n" + string)
-                    .collect(Collectors.joining());
+                    .forEach(extendedTooltip::add);
+
+            tooltip += String.join("\n \n", extendedTooltip);
         }
 
         return tooltip;

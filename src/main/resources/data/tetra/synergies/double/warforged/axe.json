@@ -15,5 +15,13 @@
         "effects": {
             "abilityHealthBonus": 1
         }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [69, 50]
+        }
     }
 ]

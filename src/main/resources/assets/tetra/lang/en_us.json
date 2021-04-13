@@ -211,12 +211,17 @@
 
   "tetra.stats.ability_speed_bonus_instant.tooltip": "Reduces cooldown by §e%s§r",
 
+  "tetra.stats.ability_defensive": "Defensive Stance",
+  "tetra.stats.lunge_defensive.tooltip": "Dodge backwards when used in the offhand",
+  "tetra.stats.execute_defensive.tooltip": "Deal §e%s%% (%s)§r attack damage and apply §e1§r stack of Severed to the target when used in the offhand. Deal §e%s%% (%s)§r additional damage and apply §e1§r additional stack of Severed if the target is at full health.",
+  "tetra.stats.execute_defensive.tooltip_extended": "Each stack of Severed reduces the target's max health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, can stack up to §e3§r times",
+
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.severing": "Severing",
-  "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
+  "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's max health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
   "tetra.stats.severing.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.lunge": "Lunge",

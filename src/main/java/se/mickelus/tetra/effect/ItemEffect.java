@@ -170,7 +170,7 @@ public class ItemEffect {
     public static ItemEffect stun = get("stun");
 
     public static ItemEffect abilityHealthBonus = get("abilityHealthBonus");
-    public static ItemEffect abilityOffhand = get("abilityOffhand");
+    public static ItemEffect abilityDefensive = get("abilityDefensive");
     public static ItemEffect abilitySpeed = get("abilitySpeed");
 
     /**

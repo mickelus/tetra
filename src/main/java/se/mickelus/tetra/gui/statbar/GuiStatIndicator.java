@@ -61,6 +61,10 @@ public class GuiStatIndicator extends GuiTexture {
         return false;
     }
 
+    public boolean isActive(PlayerEntity player, ItemStack itemStack) {
+        return statGetter.getValue(player, itemStack) > 0;
+    }
+
     protected int getDiffColor(double value, double diffValue) {
         if (diffValue > 0 && value <= 0) {
             return GuiColors.positive;

@@ -67,6 +67,10 @@ public abstract class ChargedAbilityEffect {
         return (100 - item.getEffectLevel(itemStack, ItemEffect.abilitySpeed)) / 100f;
     }
 
+    public boolean isDefensive(ItemModularHandheld item, ItemStack itemStack, Hand hand) {
+        return hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0;
+    }
+
     public boolean canPerform(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int chargedTicks) {
         return isAvailable(item, itemStack) && chargedTicks >= getChargeTime(item, itemStack) && hasRequiredTarget(target, targetPos);
     }

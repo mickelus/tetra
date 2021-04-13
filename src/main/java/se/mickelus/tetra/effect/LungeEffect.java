@@ -43,8 +43,10 @@ public class LungeEffect extends ChargedAbilityEffect {
             float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             Vector3d lookVector = attacker.getLookVec();
 
-            if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityOffhand) > 0) {
+            if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
+            } else {
+                activeCache.put(getIdentifier(attacker), itemStack);
             }
 
             // current velocity projected onto the look vector
@@ -64,7 +66,6 @@ public class LungeEffect extends ChargedAbilityEffect {
             attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,
                     SoundCategory.PLAYERS, 1, 1.3f);
 
-            activeCache.put(getIdentifier(attacker), itemStack);
         }
     }
 
