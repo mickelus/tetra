@@ -3,7 +3,7 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -61,7 +61,7 @@ public abstract class BasicSchematic extends BaseSchematic {
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack) {
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
         ItemModule previousModule = item.getModuleFromSlot(itemStack, module.getSlot());
         if (previousModule != null) {
             previousModule.removeModule(itemStack);

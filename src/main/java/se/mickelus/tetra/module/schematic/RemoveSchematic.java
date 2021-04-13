@@ -9,7 +9,8 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -27,17 +28,17 @@ public class RemoveSchematic extends BaseSchematic {
 
     private String key = "remove";
 
-    private ModularItem item;
+    private IModularItem item;
     private String slot;
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
-    public RemoveSchematic(ModularItem item, String slot) {
+    public RemoveSchematic(IModularItem item, String slot) {
         this.item = item;
         this.slot = slot;
     }
 
-    public static void registerRemoveSchematics(ModularItem item) {
+    public static void registerRemoveSchematics(IModularItem item) {
         Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
                 .filter(slot -> !item.isModuleRequired(slot))
                 .forEach(slot -> {
@@ -48,7 +49,7 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public String getKey() {
-        return key + "/" + item.getRegistryName().getPath() + "/" + slot;
+        return key + "/" + item.getItem().getRegistryName().getPath() + "/" + slot;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class RemoveSchematic extends BaseSchematic {
     @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
 
 
         float durabilityFactor = 0;
@@ -124,7 +125,7 @@ public class RemoveSchematic extends BaseSchematic {
         }
 
         if (consumeMaterials) {
-            if (ConfigHandler.moduleProgression.get() && ModularItem.isHoneable(upgradedStack)) {
+            if (ConfigHandler.moduleProgression.get() && IModularItem.isHoneable(upgradedStack)) {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
             }
 

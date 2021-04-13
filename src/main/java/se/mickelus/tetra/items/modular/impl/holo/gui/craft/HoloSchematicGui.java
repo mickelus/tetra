@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
@@ -26,7 +26,7 @@ public class HoloSchematicGui extends GuiElement {
 
     }
 
-    public void update(ModularItem item, String slot, UpgradeSchematic schematic) {
+    public void update(IModularItem item, String slot, UpgradeSchematic schematic) {
         list.update(item, slot, schematic);
 
         this.slot = slot;

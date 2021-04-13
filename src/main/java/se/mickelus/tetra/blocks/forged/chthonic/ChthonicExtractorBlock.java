@@ -41,7 +41,8 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -132,8 +133,8 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         if (ConfigHandler.enableExtractor.get()) {
             int amount = Optional.ofNullable(playerEntity)
                     .map(player -> player.getHeldItem(hand))
-                    .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
-                    .map(itemStack -> ((ModularItem) itemStack.getItem()).getToolEfficiency(itemStack, ToolTypes.hammer))
+                    .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
+                    .map(itemStack -> ((IToolProvider) itemStack.getItem()).getToolEfficiency(itemStack, ToolTypes.hammer))
                     .map(Math::round)
                     .orElse(4);
 

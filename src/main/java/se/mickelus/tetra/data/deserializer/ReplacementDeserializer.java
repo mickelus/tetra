@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -43,7 +43,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         }
         replacement.itemStack = new ItemStack(item);
 
-        if (item instanceof ModularItem) {
+        if (item instanceof IModularItem) {
             for (Map.Entry<String, JsonElement> moduleDefinition: JSONUtils.getJsonObject(jsonObject, "modules").entrySet()) {
                 String moduleKey = moduleDefinition.getValue().getAsJsonArray().get(0).getAsString();
                 String moduleVariant = moduleDefinition.getValue().getAsJsonArray().get(1).getAsString();

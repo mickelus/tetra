@@ -171,7 +171,7 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
     }
 
     private int getEffectLevel(ItemEffect effect) {
-        return CastOptional.cast(thrownStack.getItem(), ModularItem.class)
+        return CastOptional.cast(thrownStack.getItem(), IModularItem.class)
                 .map(item -> item.getEffectLevel(thrownStack, effect))
                 .orElse(-1);
     }

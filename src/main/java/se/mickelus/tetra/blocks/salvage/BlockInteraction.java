@@ -28,7 +28,7 @@ import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -150,8 +150,8 @@ public class BlockInteraction {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getFace());
 
             if (availableTools.contains(possibleInteraction.requiredTool) && heldStack.isDamageable()) {
-                if (heldStack.getItem() instanceof ModularItem) {
-                    ModularItem item = (ModularItem) heldStack.getItem();
+                if (heldStack.getItem() instanceof IModularItem) {
+                    IModularItem item = (IModularItem) heldStack.getItem();
 
                     item.applyDamage(2, heldStack, player);
                     if (possibleInteraction.applyUsageEffects) {

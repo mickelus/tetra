@@ -8,7 +8,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.util.CastOptional;
@@ -49,8 +49,8 @@ public class GuiSynergyIndicator extends GuiElement {
         tooltip = new ArrayList<>();
         tooltip.add(TextFormatting.GRAY + I18n.format("item.tetra.modular.synergy_indicator.header"));
 
-        if (itemStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) itemStack.getItem();
+        if (itemStack.getItem() instanceof IModularItem) {
+            IModularItem item = (IModularItem) itemStack.getItem();
 
             Set<SynergyData> activeSynergies = Arrays.stream(item.getSynergyData(itemStack))
                     .collect(Collectors.toSet());
@@ -84,7 +84,7 @@ public class GuiSynergyIndicator extends GuiElement {
     }
 
     public void update(ItemStack itemStack, String slot) {
-        CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .ifPresent(module -> update(itemStack, module));
     }

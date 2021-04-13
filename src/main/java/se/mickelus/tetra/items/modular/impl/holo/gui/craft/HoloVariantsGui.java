@@ -5,7 +5,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
@@ -38,11 +38,11 @@ public class HoloVariantsGui extends GuiElement {
         this.onVariantSelect = onVariantSelect;
     }
 
-    public void update(ModularItem item, String slot, UpgradeSchematic schematic) {
+    public void update(IModularItem item, String slot, UpgradeSchematic schematic) {
         groups.clearChildren();
 
         boolean isDevelopment = ConfigHandler.development.get();
-        Map<String, List<OutcomePreview>> result = Arrays.stream(schematic.getPreviews(new ItemStack(item), slot))
+        Map<String, List<OutcomePreview>> result = Arrays.stream(schematic.getPreviews(new ItemStack(item.getItem()), slot))
                 .filter(preview -> isDevelopment || preview.materials.length != 0)
                 .collect(Collectors.groupingBy(preview -> preview.category, LinkedHashMap::new, Collectors.toList()));
 

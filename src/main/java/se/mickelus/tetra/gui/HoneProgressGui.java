@@ -15,7 +15,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.statbar.GuiBar;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,13 +45,13 @@ public class HoneProgressGui extends GuiElement {
 
     public void update(ItemStack itemStack, boolean isPlaceholder) {
         boolean shouldShow = !isPlaceholder
-                && itemStack.getItem() instanceof ModularItem
+                && itemStack.getItem() instanceof IModularItem
                 && ConfigHandler.moduleProgression.get()
-                && ((ModularItem) itemStack.getItem()).canGainHoneProgress();
+                && ((IModularItem) itemStack.getItem()).canGainHoneProgress();
 
         setVisible(shouldShow);
         if (shouldShow) {
-            ModularItem item = (ModularItem) itemStack.getItem();
+            IModularItem item = (IModularItem) itemStack.getItem();
             int limit = item.getHoningLimit(itemStack);
             int progress = limit - item.getHoningProgress(itemStack);
             float factor = MathHelper.clamp(1f * progress / limit, 0, 1);
@@ -60,7 +60,7 @@ public class HoneProgressGui extends GuiElement {
             String factorString = String.format("%.0f%%", (100f * factor));
 
             String tooltipBase = I18n.format("item.tetra.modular.hone_progress.description",
-                    progress, limit, factorString, item.getHoningBase(), item.getHoningIntegrityPenalty(itemStack));
+                    progress, limit, factorString, item.getHoneBase(), item.getHoningIntegrityPenalty(itemStack));
 
             if (workableFactor < 0) {
                 tooltipBase += I18n.format("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));

@@ -23,9 +23,10 @@ import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.HoneProgressGui;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -207,13 +208,13 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
     private void previewTweaks(Map<String, Integer> tweakMap) {
         ItemStack previewStack = currentTarget.copy();
-        CastOptional.cast(previewStack.getItem(), ModularItem.class)
+        CastOptional.cast(previewStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(previewStack, selectedSlot))
                 .ifPresent(module -> tweakMap.forEach((tweakKey, step) -> {
                     if (module.hasTweak(previewStack, tweakKey)) {
                         module.setTweakStep(previewStack, tweakKey, step);
                     }
-                    ModularItem.updateIdentifier(previewStack);
+                    IModularItem.updateIdentifier(previewStack);
                 }));
 
         statGroup.update(currentTarget, previewStack, null, null, viewingPlayer);
@@ -229,7 +230,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         UpgradeSchematic newSchematic = tileEntity.getCurrentSchematic();
         String currentSlot = tileEntity.getCurrentSlot();
 
-        if (newTarget.getItem() instanceof ModularItem && newSchematic != null) {
+        if (newTarget.getItem() instanceof IModularItem && newSchematic != null) {
             newPreview = buildPreviewStack(newSchematic, newTarget, currentSlot, tileEntity.getMaterials());
         }
 
@@ -266,7 +267,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         if (targetItemChanged || previewChanged || schematicChanged || slotChanged || materialsChanged) {
             updateItemDisplay(currentTarget, currentPreview);
 
-            if (currentTarget.getItem() instanceof ModularItem) {
+            if (currentTarget.getItem() instanceof IModularItem) {
                 slotDetail.onTileEntityChange(viewingPlayer, tileEntity, currentTarget, selectedSlot, currentSchematic);
             }
         }
@@ -288,7 +289,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             if (currentSchematic == null && selectedSlot == null) {
                 actionList.setVisible(true);
                 slotDetail.setVisible(false);
-            } else if (currentTarget.getItem() instanceof ModularItem) {
+            } else if (currentTarget.getItem() instanceof IModularItem) {
                 actionList.setVisible(false);
                 slotDetail.setVisible(selectedSlot != null);
             }
@@ -372,7 +373,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
         }
 
-        if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof ModularItem) {
+        if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof IModularItem) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
                 ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getStack()});
@@ -404,7 +405,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             result = WorkbenchTile.applyCraftingBonusEffects(result, slot, willReplace, viewingPlayer, materials, materials, tools,
                     tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), false);
 
-            ModularItem.updateIdentifier(result);
+            IModularItem.updateIdentifier(result);
             return result;
         }
         return ItemStack.EMPTY;

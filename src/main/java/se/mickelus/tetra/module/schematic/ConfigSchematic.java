@@ -10,7 +10,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -135,7 +136,7 @@ public class ConfigSchematic extends BaseSchematic {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !ModularItem.isHoneable(itemStack))) {
+        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !IModularItem.isHoneable(itemStack))) {
             return false;
         }
 
@@ -320,7 +321,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     protected ItemModule removePreviousModule(final ItemStack itemStack, String slot) {
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
         ItemModule previousModule = item.getModuleFromSlot(itemStack, slot);
         if (previousModule != null) {
             previousModule.removeModule(itemStack);

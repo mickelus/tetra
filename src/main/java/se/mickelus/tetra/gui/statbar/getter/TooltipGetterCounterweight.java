@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 public class TooltipGetterCounterweight implements ITooltipGetter {
@@ -16,6 +17,6 @@ public class TooltipGetterCounterweight implements ITooltipGetter {
         int level = (int) levelGetter.getValue(player, itemStack);
         return I18n.format("tetra.stats.counterweight.indicator_tooltip",
                 String.format("%.2f", ItemModularHandheld.getCounterWeightBonus((int) levelGetter.getValue(player, itemStack),
-                        ItemModularHandheld.getIntegrityCost(itemStack))), level);
+                        IModularItem.getIntegrityCost(itemStack))), level);
     }
 }

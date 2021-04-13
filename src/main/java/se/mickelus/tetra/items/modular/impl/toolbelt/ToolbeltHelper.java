@@ -17,7 +17,7 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -206,7 +206,7 @@ public class ToolbeltHelper {
                     }
 
                     if (ItemModularHandheld.canDenail(blockState)) {
-                        boolean itemCanDenail = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                        boolean itemCanDenail = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.denailing) > 0)
                                 .orElse(false);
                         if (itemCanDenail) {

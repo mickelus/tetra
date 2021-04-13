@@ -199,7 +199,7 @@ public class ItemModularHandheld extends ModularItem {
 
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
-            ToolData toolData = getToolDataCached(itemStack);
+            ToolData toolData = getToolData(itemStack);
             Collection<ToolType> tools = toolData.getValues().stream()
                     .filter(tool -> toolData.getLevel(tool) > 0)
                     .sorted(player.isCrouching() ? Comparator.comparing(ToolType::getName).reversed() : Comparator.comparing(ToolType::getName))
@@ -750,7 +750,7 @@ public class ItemModularHandheld extends ModularItem {
     public double getCounterWeightBonus(ItemStack itemStack) {
         int counterWeightLevel = getEffectLevel(itemStack, ItemEffect.counterweight);
         if (counterWeightLevel > 0) {
-            int integrityCost = getIntegrityCost(itemStack);
+            int integrityCost = IModularItem.getIntegrityCost(itemStack);
 
             return getCounterWeightBonus(counterWeightLevel, integrityCost);
         }

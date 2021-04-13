@@ -13,7 +13,7 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -71,7 +71,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
-        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, itemSlot))
                 .flatMap (mod -> CastOptional.cast(mod, ItemModuleMajor.class))
                 .orElse(null);
@@ -92,12 +92,12 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isApplicableForItem(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ModularItem;
+        return itemStack.getItem() instanceof IModularItem;
     }
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .map(module -> module.getMagicCapacityGain(targetStack) > 0)
                 .orElse(false);
@@ -118,7 +118,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .filter(mod -> mod instanceof ItemModuleMajor)
                 .map(mod -> (ItemModuleMajor) mod)
@@ -159,7 +159,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
                 .map(module -> {

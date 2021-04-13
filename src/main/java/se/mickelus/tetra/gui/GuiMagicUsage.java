@@ -10,7 +10,7 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.gui.statbar.GuiBar;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
@@ -99,28 +99,28 @@ public class GuiMagicUsage extends GuiElement {
     }
 
     private static int getGain(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getMagicCapacityGain(itemStack))
                 .orElse(0);
     }
 
     private static int getCost(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getMagicCapacityCost(itemStack))
                 .orElse(0);
     }
 
     private static float getDestabilizeChance(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getDestabilizationChance(itemStack, 1))
                 .orElse(0f);
     }
 
     private static int getExperienceCost(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getRepairExperienceCost(itemStack))
                 .orElse(0);

@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -52,12 +52,12 @@ public class EffectHelper {
 
 
     public static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
         return item.getEffectLevel(itemStack, effect);
     }
 
     public static double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
         return item.getEffectEfficiency(itemStack, effect);
     }
 

@@ -25,8 +25,10 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
@@ -112,8 +114,8 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
 
     private ItemStack createStack(String beltMaterial) {
         ItemStack itemStack = new ItemStack(this);
-        putModuleInSlot(itemStack, beltKey, "toolbelt/belt", "toolbelt/belt_material", beltMaterial);
-        putModuleInSlot(itemStack, slot1Key, "toolbelt/strap_slot1", "toolbelt/strap_slot1_material", "strap1/leather");
+        IModularItem.putModuleInSlot(itemStack, beltKey, "toolbelt/belt", "toolbelt/belt_material", beltMaterial);
+        IModularItem.putModuleInSlot(itemStack, slot1Key, "toolbelt/strap_slot1", "toolbelt/strap_slot1_material", "strap1/leather");
         return itemStack;
     }
 

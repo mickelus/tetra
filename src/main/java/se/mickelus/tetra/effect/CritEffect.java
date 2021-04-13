@@ -16,7 +16,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Random;
@@ -91,7 +91,7 @@ public class CritEffect {
      * @param itemStack
      * @return returns 1 if the item cannot crit or if the didn't result in a crit, otherwise the crit multiplier (efficiency) for the item
      */
-    public static double rollMultiplier(Random random, ModularItem item, ItemStack itemStack) {
+    public static double rollMultiplier(Random random, IModularItem item, ItemStack itemStack) {
         int critLevel = item.getEffectLevel(itemStack, ItemEffect.criticalStrike);
         if (critLevel > 0 && random.nextFloat() < critLevel * 0.01) {
             return item.getEffectEfficiency(itemStack, ItemEffect.criticalStrike);

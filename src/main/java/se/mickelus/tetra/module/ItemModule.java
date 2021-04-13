@@ -16,7 +16,7 @@ import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
@@ -206,7 +206,7 @@ public abstract class ItemModule implements IToolProvider {
     public int getMagicCapacityGain(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
         if (magicCapacity > 0 ) {
-            float stabilityMultiplier = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+            float stabilityMultiplier = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                     .map(item -> item.getStabilityModifier(itemStack))
                     .orElse(1f);
 
@@ -387,6 +387,11 @@ public abstract class ItemModule implements IToolProvider {
                 .map(tweak -> tweak.getEffectData(getTweakStep(itemStack, tweak)))
                 .filter(Objects::nonNull)
                 .reduce(getVariantData(itemStack).effects, EffectData::merge);
+    }
+
+    @Override
+    public boolean canProvideTools(ItemStack itemStack) {
+        return true;
     }
 
     @Override

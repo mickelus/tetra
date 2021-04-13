@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Collections;
@@ -95,7 +95,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     }
 
     protected double getSlotValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
                         return statGetter.getValue(player, itemStack, slot, improvement);

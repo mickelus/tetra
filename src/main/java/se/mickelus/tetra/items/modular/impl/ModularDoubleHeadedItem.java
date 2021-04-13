@@ -33,6 +33,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ToolData;
@@ -111,11 +112,11 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     private ItemStack setupHammerStack(String headMaterial, String handleMaterial) {
         ItemStack itemStack = new ItemStack(this);
 
-        putModuleInSlot(itemStack, headLeftKey, "double/basic_hammer_left", "double/basic_hammer_left_material", "basic_hammer/" + headMaterial);
-        putModuleInSlot(itemStack, headRightKey, "double/basic_hammer_right", "double/basic_hammer_right_material", "basic_hammer/" + headMaterial);
-        putModuleInSlot(itemStack, handleKey, "double/basic_handle", "double/basic_handle_material", "basic_handle/" + handleMaterial);
+        IModularItem.putModuleInSlot(itemStack, headLeftKey, "double/basic_hammer_left", "double/basic_hammer_left_material", "basic_hammer/" + headMaterial);
+        IModularItem.putModuleInSlot(itemStack, headRightKey, "double/basic_hammer_right", "double/basic_hammer_right_material", "basic_hammer/" + headMaterial);
+        IModularItem.putModuleInSlot(itemStack, handleKey, "double/basic_handle", "double/basic_handle_material", "basic_handle/" + handleMaterial);
 
-        updateIdentifier(itemStack);
+        IModularItem.updateIdentifier(itemStack);
 
         return itemStack;
     }
@@ -136,7 +137,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     }
 
     @Override
-    protected String getDisplayNamePrefixes(ItemStack itemStack) {
+    public String getDisplayNamePrefixes(ItemStack itemStack) {
         String modulePrefix = Optional.ofNullable(getModuleFromSlot(itemStack, headLeftKey))
                 .map(module -> module.getItemPrefix(itemStack))
                 .map(prefix -> prefix + " ")
@@ -179,7 +180,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     // overridden to not stack the tool level/efficiency attribute between heads
     @Override
-    public ToolData getToolData(ItemStack itemStack) {
+    public ToolData getToolDataRaw(ItemStack itemStack) {
         logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
         ToolData result = ToolData.retainMax(Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
                 .filter(Objects::nonNull)

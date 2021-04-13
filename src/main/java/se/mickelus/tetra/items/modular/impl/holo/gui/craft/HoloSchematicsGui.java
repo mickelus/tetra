@@ -4,7 +4,7 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiSchematicListItem;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
@@ -40,7 +40,7 @@ public class HoloSchematicsGui extends GuiElement {
                 .onStop(complete -> this.isVisible = false);
     }
 
-    public void update(ModularItem item, String slot) {
+    public void update(IModularItem item, String slot) {
         int offset = 0;
         int pageLines = 8;
         UpgradeSchematic[] schematics = Arrays.stream(SchematicRegistry.getSchematics(slot))

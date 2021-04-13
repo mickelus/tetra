@@ -31,7 +31,7 @@ import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -111,7 +111,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
         int integrity = blockState.get(propIntegrity);
 
-        int progress = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        int progress = CastOptional.cast(itemStack.getItem(), IToolProvider.class)
                 .map(item -> item.getToolLevel(itemStack, toolType))
                 .map(level -> ( level - min ) * multiplier)
                 .orElse(1);

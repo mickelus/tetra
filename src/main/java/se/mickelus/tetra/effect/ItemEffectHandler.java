@@ -36,7 +36,7 @@ import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
@@ -90,13 +90,11 @@ public class ItemEffectHandler {
     }
 
     private static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        ModularItem item = (ModularItem) itemStack.getItem();
-        return item.getEffectLevel(itemStack, effect);
+        return EffectHelper.getEffectLevel(itemStack, effect);
     }
 
     private static double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        ModularItem item = (ModularItem) itemStack.getItem();
-        return item.getEffectEfficiency(itemStack, effect);
+        return EffectHelper.getEffectEfficiency(itemStack, effect);
     }
 
     @SubscribeEvent(priority=EventPriority.LOW)
@@ -104,12 +102,12 @@ public class ItemEffectHandler {
         Optional.ofNullable(event.getAttackingPlayer())
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .ifPresent(itemStack -> {
                     int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
                     int xp = event.getDroppedExperience();
                     if (intuitLevel > 0 && xp > 0) {
-                        ((ModularItem) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
+                        ((IModularItem) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
                     }
                 });
     }
@@ -174,7 +172,7 @@ public class ItemEffectHandler {
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .ifPresent(itemStack -> {
                     int quickStrikeLevel = getEffectLevel(itemStack, ItemEffect.quickStrike);
                     if (quickStrikeLevel > 0) {
@@ -218,7 +216,7 @@ public class ItemEffectHandler {
                 .filter(entity -> entity instanceof PlayerEntity)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getHeldItemMainhand)
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .ifPresent(itemStack -> {
                     int crushingLevel = getEffectLevel(itemStack, ItemEffect.crushing);
                     if (crushingLevel > 0) {
@@ -246,7 +244,7 @@ public class ItemEffectHandler {
         Optional.ofNullable(event.getEntityLiving())
                 .map(LivingEntity::getHeldItemMainhand)
                 .filter(itemStack -> !itemStack.isEmpty())
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .ifPresent(itemStack -> {
                     int backstabLevel = getEffectLevel(itemStack, ItemEffect.backstab);
                     if (backstabLevel > 0 && event.getTarget() instanceof LivingEntity) {
@@ -360,7 +358,7 @@ public class ItemEffectHandler {
             if (!itemStack.isEmpty()) {
                 QuiverInventory inventory = new QuiverInventory(itemStack);
                 List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
-                int count = CastOptional.cast(event.getBow().getItem(), ModularItem.class)
+                int count = CastOptional.cast(event.getBow().getItem(), IModularItem.class)
                         .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
                         .filter(level -> level > 0)
                         .orElse(1);

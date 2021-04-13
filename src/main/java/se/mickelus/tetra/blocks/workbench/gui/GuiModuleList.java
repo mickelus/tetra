@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
@@ -31,8 +31,8 @@ public class GuiModuleList extends GuiElement {
 
     public void update(ItemStack itemStack, ItemStack previewStack, String focusSlot) {
         clearChildren();
-        if (!itemStack.isEmpty() && itemStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) itemStack.getItem();
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem) {
+            IModularItem item = (IModularItem) itemStack.getItem();
 
             updateMajorModules(item, itemStack, previewStack);
             updateMinorModules(item, itemStack, previewStack);
@@ -64,7 +64,7 @@ public class GuiModuleList extends GuiElement {
         }
     }
 
-    private void updateMajorModules(ModularItem item, ItemStack itemStack, ItemStack previewStack) {
+    private void updateMajorModules(IModularItem item, ItemStack itemStack, ItemStack previewStack) {
         String[] majorModuleNames = item.getMajorModuleNames();
         String[] majorModuleKeys = item.getMajorModuleKeys();
         ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
@@ -92,7 +92,7 @@ public class GuiModuleList extends GuiElement {
         }
     }
 
-    private void updateMinorModules(ModularItem item, ItemStack itemStack, ItemStack previewStack) {
+    private void updateMinorModules(IModularItem item, ItemStack itemStack, ItemStack previewStack) {
         String[] minorModuleNames = item.getMinorModuleNames();
         String[] minorModuleKeys = item.getMinorModuleKeys();
         ItemModule[] minorModules = item.getMinorModules(itemStack);

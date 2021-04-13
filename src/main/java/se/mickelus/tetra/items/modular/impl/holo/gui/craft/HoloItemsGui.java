@@ -1,22 +1,19 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
-import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
-import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 public class HoloItemsGui extends GuiElement {
@@ -28,7 +25,7 @@ public class HoloItemsGui extends GuiElement {
     private KeyframeAnimation openAnimation;
     private KeyframeAnimation backAnimation;
 
-    public HoloItemsGui(int x, int y, int width, int height, Consumer<ModularItem> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
+    public HoloItemsGui(int x, int y, int width, int height, Consumer<IModularItem> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
         super(x, y, width, height);
 
 
@@ -109,7 +106,7 @@ public class HoloItemsGui extends GuiElement {
         backAnimation.start();
     }
 
-    public void changeItem(Item item) {
+    public void changeItem(IModularItem item) {
         getChildren(HoloItemGui.class).forEach(child -> child.onItemSelected(item));
         materialsButton.setVisible(item == null);
 

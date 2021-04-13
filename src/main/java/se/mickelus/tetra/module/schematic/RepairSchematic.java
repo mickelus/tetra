@@ -2,12 +2,13 @@ package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
@@ -26,23 +27,23 @@ public class RepairSchematic extends BaseSchematic {
 
     private String key = "repair";
 
-    private ModularItem item;
+    private IModularItem item;
 
     private GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
-    public RepairSchematic(ModularItem item) {
+    public RepairSchematic(IModularItem item) {
         this.item = item;
     }
 
     public String getSlot(ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getRepairSlot(itemStack))
                 .orElse(null);
     }
 
     @Override
     public String getKey() {
-        return key + "/" + item.getRegistryName().getPath();
+        return key + "/" + item.getItem().getRegistryName().getPath();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class RepairSchematic extends BaseSchematic {
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
         return Optional.ofNullable(itemStack)
-                .flatMap(stack -> CastOptional.cast(itemStack.getItem(), ModularItem.class))
+                .flatMap(stack -> CastOptional.cast(itemStack.getItem(), IModularItem.class))
                 .map(item -> {
                     ItemModule[] cycle = item.getRepairCycle(itemStack);
                     ItemModule currentTarget = item.getRepairModule(itemStack).orElse(null);
@@ -83,7 +84,7 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getRepairDefinitions(itemStack))
                 .map(Collection::stream)
                 .orElse(Stream.empty())
@@ -95,8 +96,8 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        if (index == 0 && itemStack.getItem() instanceof ModularItem) {
-            ModularItem item = (ModularItem) itemStack.getItem();
+        if (index == 0 && itemStack.getItem() instanceof IModularItem) {
+            IModularItem item = (IModularItem) itemStack.getItem();
             return item.getRepairMaterialCount(itemStack, materialStack);
         }
         return 0;
@@ -105,7 +106,7 @@ public class RepairSchematic extends BaseSchematic {
     @Override
     public boolean acceptsMaterial(final ItemStack itemStack, String itemSlot, final int index, final ItemStack materialStack) {
         if (index == 0) {
-            return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+            return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                     .map(item -> item.getRepairDefinitions(itemStack))
                     .map(Collection::stream)
                     .orElse(Stream.empty())
@@ -128,7 +129,7 @@ public class RepairSchematic extends BaseSchematic {
     @Override
     public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
         ItemStack upgradedStack = itemStack.copy();
-        ModularItem item = (ModularItem) upgradedStack.getItem();
+        IModularItem item = (IModularItem) upgradedStack.getItem();
         int quantity = getRequiredQuantity(itemStack, 0, materials[0]);
 
         item.repair(upgradedStack);
@@ -153,21 +154,21 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getRepairRequiredToolLevels(targetStack, materials[0]))
                 .orElseGet(Collections::emptyMap);
     }
 
     @Override
     public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolType toolType) {
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolType))
                 .orElse(0);
     }
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
         .map(item -> item.getRepairRequiredExperience(targetStack))
                 .orElse(0);
     }

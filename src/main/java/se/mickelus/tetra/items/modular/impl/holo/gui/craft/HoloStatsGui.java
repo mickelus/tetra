@@ -10,7 +10,7 @@ import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.statbar.GuiStatBarTool;
 import se.mickelus.tetra.gui.statbar.GuiStatBase;
 import se.mickelus.tetra.gui.statbar.GuiStats;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +109,7 @@ public class HoloStatsGui extends GuiElement {
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, PlayerEntity player) {
-        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ModularItem;
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem;
         setVisible(shouldShow);
         if (shouldShow) {
             barGroup.clearChildren();

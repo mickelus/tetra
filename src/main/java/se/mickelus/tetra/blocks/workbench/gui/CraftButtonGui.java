@@ -11,7 +11,7 @@ import se.mickelus.mgui.gui.GuiStringOutline;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -66,7 +66,7 @@ public class CraftButtonGui extends GuiClickable {
                     tooltip += String.join("\n", destabilizationChance);
                 }
             } else {
-                boolean willRepair = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                boolean willRepair = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                         .map(item -> item.getRepairSlot(itemStack))
                         .map(repairSlot -> repairSlot.equals(slot))
                         .orElse(false);
@@ -107,7 +107,7 @@ public class CraftButtonGui extends GuiClickable {
     }
 
     private List<String> getDestabilizationChance(ItemStack itemStack, float severity) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getMajorModules(itemStack))
                 .map(Arrays::stream)
                 .orElseGet(Stream::empty)

@@ -1,11 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -34,7 +35,7 @@ public class RangedFOVTransformer {
         }
     }
 
-    private float getZoom(ModularItem item, ItemStack itemStack) {
+    private float getZoom(IModularItem item, ItemStack itemStack) {
         return Math.max(1, item.getEffectLevel(itemStack, ItemEffect.zoom) / 10f);
     }
 }

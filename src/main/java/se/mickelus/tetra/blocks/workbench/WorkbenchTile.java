@@ -34,10 +34,12 @@ import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -165,8 +167,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                         // consume player inventory
                         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(requiredTool, requiredLevel, player);
                         if (!providingStack.isEmpty()) {
-                            if (providingStack.getItem() instanceof ModularItem) {
-                                ((ModularItem) providingStack.getItem()).onActionConsume(providingStack,
+                            if (providingStack.getItem() instanceof IToolProvider) {
+                                ((IToolProvider) providingStack.getItem()).onActionConsume(providingStack,
                                         targetStack, player, requiredTool, requiredLevel,true);
                             }
                         } else {
@@ -330,7 +332,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void craft(PlayerEntity player) {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = targetStack;
-        ModularItem item = CastOptional.cast(upgradedStack.getItem(), ModularItem.class).orElse(null);
+        IModularItem item = CastOptional.cast(upgradedStack.getItem(), IModularItem.class).orElse(null);
 
         BlockState blockState = getBlockState();
 
@@ -361,8 +363,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             // remove or restore honing progression
             if (currentSchematic.isHoning()) {
-                ModularItem.removeHoneable(upgradedStack);
-            } else if (ConfigHandler.moduleProgression.get() && !ModularItem.isHoneable(upgradedStack)) {
+                IModularItem.removeHoneable(upgradedStack);
+            } else if (ConfigHandler.moduleProgression.get() && !IModularItem.isHoneable(upgradedStack)) {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
             }
 
@@ -402,8 +404,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             PlayerEntity player, World world, BlockPos pos, BlockState blockState, boolean consumeResources) {
         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
         if (!providingStack.isEmpty()) {
-            if (providingStack.getItem() instanceof ModularItem) {
-                upgradedStack = ((ModularItem) providingStack.getItem()).onCraftConsume(providingStack,
+            if (providingStack.getItem() instanceof IToolProvider) {
+                upgradedStack = ((IToolProvider) providingStack.getItem()).onCraftConsume(providingStack,
                         upgradedStack, player, tool, level,consumeResources);
             }
         } else {
@@ -454,7 +456,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void tweak(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         handler.ifPresent(handler -> {
             ItemStack tweakedStack = getTargetItemStack().copy();
-            CastOptional.cast(tweakedStack.getItem(), ModularItem.class)
+            CastOptional.cast(tweakedStack.getItem(), IModularItem.class)
                     .ifPresent(item -> item.tweak(tweakedStack, slot, tweaks));
 
             handler.setStackInSlot(0, tweakedStack);

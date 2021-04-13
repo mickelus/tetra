@@ -10,7 +10,7 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.statbar.getter.*;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -103,7 +103,7 @@ public class GuiStatBarTool extends GuiStatBar {
     }
 
     protected int getSlotLevel(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
-        return CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
                         return levelGetter.getValue(player, itemStack, slot, improvement);

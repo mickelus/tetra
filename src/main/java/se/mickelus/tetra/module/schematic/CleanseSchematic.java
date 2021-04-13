@@ -9,7 +9,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
@@ -87,7 +87,7 @@ public class CleanseSchematic implements UpgradeSchematic {
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        return CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
@@ -113,7 +113,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
@@ -140,7 +140,7 @@ public class CleanseSchematic implements UpgradeSchematic {
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         String[] destabilizationKeys = DestabilizationEffect.getKeys();
 
-        int cost = CastOptional.cast(targetStack.getItem(), ModularItem.class)
+        int cost = CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)

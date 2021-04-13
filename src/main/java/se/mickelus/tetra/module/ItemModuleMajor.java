@@ -13,7 +13,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.items.modular.ItemColors;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
@@ -160,7 +160,7 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
-        ModularItem item = (ModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
         CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
                 .filter(module -> module.acceptsImprovementLevel(improvement, level))
                 .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
@@ -279,7 +279,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public int getImprovementMagicCapacityGain(ItemStack itemStack) {
         return Math.round(ConfigHandler.magicCapacityMultiplier.get().floatValue()
-                * CastOptional.cast(itemStack.getItem(), ModularItem.class)
+                * CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getStabilityModifier(itemStack))
                 .orElse(1f)
                 * Arrays.stream(getImprovements(itemStack))

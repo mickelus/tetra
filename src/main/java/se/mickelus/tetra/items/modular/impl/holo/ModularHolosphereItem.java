@@ -22,6 +22,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
@@ -81,8 +82,8 @@ public class ModularHolosphereItem extends ModularItem {
         if (isInGroup(group)) {
             ItemStack itemStack = new ItemStack(this);
 
-            putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
-            putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
+            IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
+            IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
 
             items.add(itemStack);
         }

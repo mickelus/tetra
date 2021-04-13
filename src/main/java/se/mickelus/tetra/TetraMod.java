@@ -190,7 +190,7 @@ public class TetraMod {
 
         ScrollBlock scrollRolled = new RolledScrollBlock();
 
-        blocks = new Block[]{
+        blocks = new Block[] {
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
                 new HammerHeadBlock(),

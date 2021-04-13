@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -18,7 +18,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private int depth = 0;
 
     private HoloItemsGui itemsView;
-    private ModularItem item;
+    private IModularItem item;
 
     private HoloSchematicsGui schematicsView;
     private String slot;
@@ -96,7 +96,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         updateBreadcrumb();
     }
 
-    private void onItemSelect(ModularItem item) {
+    private void onItemSelect(IModularItem item) {
         this.item = item;
 
         itemsView.changeItem(item);
@@ -158,7 +158,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         if (item != null) {
             result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));
 
-            result.add(I18n.format("tetra.holo.craft." + item.getRegistryName().getPath()));
+            result.add(I18n.format("tetra.holo.craft." + item.getItem().getRegistryName().getPath()));
 
             if (slot != null) {
                 result.add(getSlotName());

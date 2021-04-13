@@ -18,14 +18,13 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
 
 import java.util.Optional;
 
 public class ExtractorEffect {
-    public static void breakBlocks(ModularItem item, ItemStack itemStack, int effectLevel, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public static void breakBlocks(ItemModularHandheld item, ItemStack itemStack, int effectLevel, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
         PlayerEntity player = CastOptional.cast(entity, PlayerEntity.class).orElse(null);
 
         if (effectLevel > 0) {
@@ -60,7 +59,7 @@ public class ExtractorEffect {
         }
     }
 
-    private static void breakRecursive(World world, PlayerEntity player, ModularItem item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
+    private static void breakRecursive(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
         if (remaining > 0) {
             ServerScheduler.schedule(2, () -> breakInner(world, player, item, itemStack, direction, pos, refHardness, refTool));
         }
@@ -77,7 +76,7 @@ public class ExtractorEffect {
         }
     }
 
-    private static void breakInner(World world, PlayerEntity player, ModularItem item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
+    private static void breakInner(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
         Vector3i axis1 = RotationHelper.shiftAxis(direction.getDirectionVec());
         Vector3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.add(axis1), refHardness, refTool);
@@ -86,7 +85,7 @@ public class ExtractorEffect {
         breakBlock(world, player, item, itemStack, pos.subtract(axis2), refHardness, refTool);
     }
 
-    private static void breakOuter(World world, PlayerEntity player, ModularItem item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
+    private static void breakOuter(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
         Vector3i axis1 = RotationHelper.shiftAxis(direction.getDirectionVec());
         Vector3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.add(axis1).add(axis2), refHardness, refTool);
@@ -96,7 +95,7 @@ public class ExtractorEffect {
     }
 
 
-    private static boolean breakBlock(World world, PlayerEntity player, ModularItem item, ItemStack itemStack, BlockPos pos, float refHardness, ToolType refTool) {
+    private static boolean breakBlock(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, BlockPos pos, float refHardness, ToolType refTool) {
         BlockState offsetState = world.getBlockState(pos);
         ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
@@ -109,8 +108,7 @@ public class ExtractorEffect {
             if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
                 EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getStateId(offsetState));
 
-                CastOptional.cast(item, ItemModularHandheld.class)
-                        .ifPresent(itemHandheld -> itemHandheld.applyBreakEffects(itemStack, world, offsetState, pos, player));
+                item.applyBreakEffects(itemStack, world, offsetState, pos, player);
 
                 return true;
             }

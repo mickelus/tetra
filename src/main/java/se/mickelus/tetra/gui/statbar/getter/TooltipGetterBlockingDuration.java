@@ -3,9 +3,7 @@ package se.mickelus.tetra.gui.statbar.getter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 public class  TooltipGetterBlockingDuration implements ITooltipGetter {

@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
@@ -49,8 +49,8 @@ public class PropertyHelper {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
-                .map(itemStack -> ((ModularItem) itemStack.getItem()).getEffectLevel(itemStack, effect))
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
+                .map(itemStack -> ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, effect))
                 .max(Integer::compare)
                 .orElse(0);
     }
@@ -59,9 +59,9 @@ public class PropertyHelper {
         return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
-                .filter(itemStack -> itemStack.getItem() instanceof ModularItem)
-                .max(Comparator.comparingInt(itemStack -> ((ModularItem) itemStack.getItem()).getEffectLevel(itemStack, effect)))
-                .map(itemStack -> ((ModularItem) itemStack.getItem()).getEffectEfficiency(itemStack, effect))
+                .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
+                .max(Comparator.comparingInt(itemStack -> ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, effect)))
+                .map(itemStack -> ((IModularItem) itemStack.getItem()).getEffectEfficiency(itemStack, effect))
                 .orElse(0d);
     }
 
@@ -169,8 +169,8 @@ public class PropertyHelper {
     public static ItemStack consumeCraftToolInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
             ToolType tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
-        if (itemStack.getItem() instanceof ModularItem) {
-            return ((ModularItem) itemStack.getItem())
+        if (itemStack.getItem() instanceof IToolProvider) {
+            return ((IToolProvider) itemStack.getItem())
                     .onCraftConsume(itemStack, targetStack, player, tool, level, consumeResources);
         }
 
@@ -180,8 +180,8 @@ public class PropertyHelper {
     public static ItemStack consumeActionToolInventory(IInventory inventory, PlayerEntity player, ItemStack targetStack,
             ToolType tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
-        if (itemStack.getItem() instanceof ModularItem) {
-            return ((ModularItem) itemStack.getItem())
+        if (itemStack.getItem() instanceof IToolProvider) {
+            return ((IToolProvider) itemStack.getItem())
                     .onActionConsume(itemStack, targetStack, player, tool, level, consumeResources);
         }
 

@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiRoot;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -142,7 +142,7 @@ public class ScannerOverlayGui extends GuiRoot {
     private void updateGuiVisibility() {
         int scannerRange = Stream.of(mc.player.getHeldItemMainhand(), mc.player.getHeldItemOffhand())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
-                .map(stack -> ((ModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.scannerRange))
+                .map(stack -> ((IModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.scannerRange))
                 .findFirst()
                 .orElse(0);
 

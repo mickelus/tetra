@@ -4,9 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
 
 // todo: doesn't really work for bars since improvement & slot getters only reference the base item

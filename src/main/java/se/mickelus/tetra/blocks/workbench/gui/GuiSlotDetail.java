@@ -17,7 +17,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.VerticalTabGroupGui;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -118,7 +118,7 @@ public class GuiSlotDetail extends GuiElement {
     }
 
     public void onTileEntityChange(PlayerEntity player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchematic currentSchematic) {
-        ItemModule module = CastOptional.cast(itemStack.getItem(), ModularItem.class)
+        ItemModule module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
                 .orElse(null);
 

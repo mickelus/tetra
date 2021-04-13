@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
@@ -19,8 +19,6 @@ import java.util.stream.Stream;
  * Hacky hack, would be cool to have events to hook into this.
  */
 public class DisenchantmentHandler implements IContainerListener {
-
-
     // removal of listener not possible due to that being client only, and there's not really a reason to remove the listener anyway
     @SubscribeEvent
     public void onPlayerContainerOpen(PlayerContainerEvent.Open event) {
@@ -33,9 +31,9 @@ public class DisenchantmentHandler implements IContainerListener {
 
     @Override
     public void sendSlotContents(Container container, int slot, ItemStack itemStack) {
-        if (slot == 2 && itemStack.getItem() instanceof ModularItem) {
+        if (slot == 2 && itemStack.getItem() instanceof IModularItem) {
             ItemStack copy = itemStack.copy();
-            CastOptional.cast(itemStack.getItem(), ModularItem.class)
+            CastOptional.cast(itemStack.getItem(), IModularItem.class)
                     .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
                     .orElseGet(Stream::empty)
                     .filter(Objects::nonNull)

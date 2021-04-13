@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -26,7 +26,7 @@ public class RepairAction implements WorkbenchAction {
 
     @Override
     public boolean canPerformOn(@Nullable PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
-        if (player != null && itemStack.getItem() instanceof ModularItem) {
+        if (player != null && itemStack.getItem() instanceof IModularItem) {
             UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tile, itemStack);
             return Arrays.stream(schematics)
                     .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))

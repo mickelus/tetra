@@ -20,13 +20,12 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
 
 public class PiercingEffect {
-    public static void pierceBlocks(ModularItem item, ItemStack itemStack, int pierceAmount, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
         PlayerEntity player = CastOptional.cast(entity, PlayerEntity.class).orElse(null);
 
         if (pierceAmount > 0) {
@@ -74,7 +73,7 @@ public class PiercingEffect {
         }
     }
 
-    private static void enqueueBlockBreak(World world, PlayerEntity player, ModularItem item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
+    private static void enqueueBlockBreak(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
         ServerScheduler.schedule(1, () -> {
             BlockState offsetState = world.getBlockState(pos);
             ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
@@ -88,8 +87,7 @@ public class PiercingEffect {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
                     EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getStateId(offsetState));
 
-                    CastOptional.cast(item, ItemModularHandheld.class)
-                            .ifPresent(itemHandheld -> itemHandheld.applyBreakEffects(itemStack, world, offsetState, pos, player));
+                    item.applyBreakEffects(itemStack, world, offsetState, pos, player);
 
                     if (remaining > 0) {
                         enqueueBlockBreak(world, player, item, itemStack, direction, pos.offset(direction), refHardness, refTool, remaining - 1);

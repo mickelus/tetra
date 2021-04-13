@@ -11,7 +11,7 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
@@ -109,7 +109,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
 
         if (isMaterialsValid(itemStack, slot, materials)) {
 
-            CastOptional.cast(itemStack.getItem(), ModularItem.class)
+            CastOptional.cast(itemStack.getItem(), IModularItem.class)
                     .map(item -> item.getModuleFromSlot(itemStack, slot))
                     .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
                     .ifPresent(module -> {

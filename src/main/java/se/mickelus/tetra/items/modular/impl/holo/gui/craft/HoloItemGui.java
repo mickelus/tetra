@@ -9,7 +9,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,9 @@ public class HoloItemGui extends GuiClickable {
 
     private final GuiTexture icon;
 
-    private ModularItem item;
+    private IModularItem item;
 
-    public HoloItemGui(int x, int y, ModularItem item, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
+    public HoloItemGui(int x, int y, IModularItem item, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
         super(x, y, 64, 64, onSelect);
 
         selectAnimations = new ArrayList<>();
@@ -53,7 +53,7 @@ public class HoloItemGui extends GuiClickable {
         addChild(icon);
 
         GuiElement labelGroup = new GuiElement(0, 0, 0, 0);
-        String[] labelStrings = I18n.format("tetra.holo.craft." + item.getRegistryName().getPath()).split(" ");
+        String[] labelStrings = I18n.format("tetra.holo.craft." + item.getItem().getRegistryName().getPath()).split(" ");
 
         for (int i = 0; i < labelStrings.length; i++) {
             GuiString labelLine = new GuiStringOutline(0, i * 10, labelStrings[i]);
@@ -118,7 +118,7 @@ public class HoloItemGui extends GuiClickable {
         return super.onMouseClick(x, y, button);
     }
 
-    public void onItemSelected(Item item) {
+    public void onItemSelected(IModularItem item) {
         if (this.item.equals(item)) {
             setVisible(true);
             setSelected(true);
@@ -218,7 +218,7 @@ public class HoloItemGui extends GuiClickable {
         blurAnimations.forEach(GuiAnimation::start);
     }
 
-    private void setupSlots(ModularItem item, Consumer<String> onSlotSelect) {
+    private void setupSlots(IModularItem item, Consumer<String> onSlotSelect) {
         String[] majorModuleNames = item.getMajorModuleNames();
         String[] majorModuleKeys = item.getMajorModuleKeys();
         GuiModuleOffsets majorOffsets = item.getMajorGuiOffsets();
