@@ -10,6 +10,8 @@ import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -20,6 +22,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -36,11 +39,16 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5;
+        double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
         if (result != AbilityUseResult.fail) {
+            int stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
+            if (stunDuration > 0) {
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration));
+            }
+
             Random rand = target.getRNG();
             CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
                     world.spawnParticle(ParticleTypes.CRIT,
@@ -70,12 +78,14 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw);
 
+            double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
+            int slowDuration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
             attacker.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::canBeAttackedWithItem)
                     .filter(entity -> !attacker.equals(entity))
                     .filter(entity -> inRange(hitVec, entity, yaw))
-                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec));
+                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration));
         }
 
         attacker.addExhaustion(0.05f);
@@ -152,12 +162,16 @@ public class SlamEffect extends ChargedAbilityEffect {
         return yawDiff < Math.PI / 6;
     }
 
-    private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin) {
+    private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin,
+            double damageMultiplier, int slowDuration) {
         ServerScheduler.schedule(target.getPosition().manhattanDistance(new BlockPos(origin)) - 3, () -> {
-            double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
             AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
             target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+
+            if (result != AbilityUseResult.fail && slowDuration > 0) {
+                target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, slowDuration, 1, false, true));
+            }
 
             if (result == AbilityUseResult.crit) {
                 Random rand = target.getRNG();

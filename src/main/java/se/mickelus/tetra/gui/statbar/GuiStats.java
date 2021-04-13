@@ -241,9 +241,9 @@ public class GuiStats {
                     abilitySpeedIndicator,
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_defensive.tooltip",
-                            withStats(abilityDefensiveGetter, multiply(abilityDefensiveGetter, new StatGetterAbilityDamage(0, 0.01)),
-                                    abilityDefEffGetter, multiply(abilityDefEffGetter, new StatGetterAbilityDamage(0, 0.01))),
-                            withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
+                                    withStats(abilityDefensiveGetter, multiply(abilityDefensiveGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityDefEffGetter, multiply(abilityDefEffGetter, new StatGetterAbilityDamage(0, 0.01))),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
             );
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
@@ -255,7 +255,12 @@ public class GuiStats {
                             slamEntityGetter, multiply(slamEntityGetter, new StatGetterAbilityDamage(0, 0.01)),
                             new StatGetterAbilityChargeTime(SlamEffect.instance), new StatGetterAbilityCooldown(SlamEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicator);
+            .setIndicators(
+                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_defensive.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), abilityDefEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 10);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

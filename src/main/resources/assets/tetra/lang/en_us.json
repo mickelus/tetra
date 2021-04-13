@@ -215,6 +215,7 @@
   "tetra.stats.lunge_defensive.tooltip": "Dodge backwards when used in the offhand",
   "tetra.stats.execute_defensive.tooltip": "Deal §e%s%% (%s)§r attack damage and apply §e1§r stack of Severed to the target when used in the offhand. Deal §e%s%% (%s)§r additional damage and apply §e1§r additional stack of Severed if the target is at full health.",
   "tetra.stats.execute_defensive.tooltip_extended": "Each stack of Severed reduces the target's max health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, can stack up to §e3§r times",
+  "tetra.stats.slam_defensive.tooltip": "When used in the offhand, stun direct targets for §e%s§r seconds and slow AOE targets by §e30%%§r for §e%s§r seconds",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",

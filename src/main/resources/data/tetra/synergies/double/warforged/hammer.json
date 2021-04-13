@@ -15,5 +15,13 @@
         "effects": {
             "abilityStun": 1
         }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [19, 4]
+        }
     }
 ]
