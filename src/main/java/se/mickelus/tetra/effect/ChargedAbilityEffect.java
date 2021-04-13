@@ -54,11 +54,17 @@ public abstract class ChargedAbilityEffect {
     }
 
     public int getChargeTime(ItemModularHandheld item, ItemStack itemStack) {
-        return chargeTimeFlat + (chargeTimeSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * chargeTimeSpeedMultiplier) : 0);
+        return (int) ((chargeTimeFlat + (chargeTimeSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * chargeTimeSpeedMultiplier) : 0))
+                * getSpeedBonusMultiplier(item, itemStack));
     }
 
     public int getCooldown(ItemModularHandheld item, ItemStack itemStack) {
-        return cooldownFlat + (cooldownSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * cooldownSpeedMultiplier) : 0);
+        return (int) ((cooldownFlat + (cooldownSpeedMultiplier != 0 ? (int) (item.getCooldownBase(itemStack) * 20 * cooldownSpeedMultiplier) : 0))
+                * getSpeedBonusMultiplier(item, itemStack));
+    }
+
+    public float getSpeedBonusMultiplier(ItemModularHandheld item, ItemStack itemStack) {
+        return (100 - item.getEffectLevel(itemStack, ItemEffect.abilitySpeed)) / 100f;
     }
 
     public boolean canPerform(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, int chargedTicks) {

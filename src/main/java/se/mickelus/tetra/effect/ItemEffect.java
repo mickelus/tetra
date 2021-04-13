@@ -170,7 +170,8 @@ public class ItemEffect {
     public static ItemEffect stun = get("stun");
 
     public static ItemEffect abilityHealthBonus = get("abilityHealthBonus");
-    public static ItemEffect abilityOffhandMod = get("abilityOffhandMod");
+    public static ItemEffect abilityOffhand = get("abilityOffhand");
+    public static ItemEffect abilitySpeed = get("abilitySpeed");
 
     /**
      * Charged right-click ability that deals damage based on targets missing health and the number of negative effects they're affected by.

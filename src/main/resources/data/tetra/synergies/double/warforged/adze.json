@@ -13,7 +13,7 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityOffhandMod": 1
+            "abilityOffhand": 1
         }
     }
 ]

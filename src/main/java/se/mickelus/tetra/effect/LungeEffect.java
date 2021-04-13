@@ -43,7 +43,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             Vector3d lookVector = attacker.getLookVec();
 
-            if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityOffhandMod) > 0) {
+            if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityOffhand) > 0) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             }
 

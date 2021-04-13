@@ -4,7 +4,7 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilitySpeed": 1
+            "abilitySpeed": 20
         }
     }
 ]
