@@ -2,16 +2,16 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
-import se.mickelus.tetra.effect.potion.PriedPotionEffect;
-import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
-import se.mickelus.tetra.effect.potion.StunPotionEffect;
+import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.ParticleHelper;
 
@@ -22,6 +22,23 @@ public class PryEffect {
     public static final double cooldownSpeedMultiplier = 3;
 
     public static void perform( PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
+        if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
+            performDefensive(attacker, item, itemStack, target);
+        } else {
+            performRegular(attacker, item, itemStack, effectLevel, target);
+        }
+
+        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
+
+        attacker.addExhaustion(0.05f);
+        attacker.swing(hand, false);
+        attacker.getCooldownTracker().setCooldown(item, (int) (flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * 20);
+
+        item.tickProgression(attacker, itemStack, 2);
+        item.applyDamage(2, itemStack, attacker);
+    }
+
+    public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
         int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
@@ -37,15 +54,25 @@ public class PryEffect {
             }
         }
 
+        return result;
+    }
 
-        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
+    public static AbilityUseResult performDefensive(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
 
+        if (result != AbilityUseResult.fail) {
+            target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
+                    item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) - 1, false, true));
 
-        attacker.addExhaustion(0.05f);
-        attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, (int) (flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * 20);
+            if (!target.getEntityWorld().isRemote) {
+                if (target.hasItemInSlot(EquipmentSlotType.MAINHAND)) {
+                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target, EquipmentSlotType.MAINHAND);
+                } else if (target.hasItemInSlot(EquipmentSlotType.OFFHAND)) {
+                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target, EquipmentSlotType.OFFHAND);
+                }
+            }
+        }
 
-        item.tickProgression(attacker, itemStack, 2);
-        item.applyDamage(2, itemStack, attacker);
+        return result;
     }
 }

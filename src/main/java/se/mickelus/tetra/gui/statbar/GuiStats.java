@@ -226,8 +226,7 @@ public class GuiStats {
             .setIndicators(
                     abilitySpeedIndicator,
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
-                            new TooltipGetterNone("tetra.stats.lunge_defensive.tooltip"))
-                    );
+                            new TooltipGetterNone("tetra.stats.lunge_defensive.tooltip")));
 
     public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
     public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
@@ -243,8 +242,7 @@ public class GuiStats {
                             new TooltipGetterMultiValue("tetra.stats.execute_defensive.tooltip",
                                     withStats(abilityDefensiveGetter, multiply(abilityDefensiveGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityDefEffGetter, multiply(abilityDefEffGetter, new StatGetterAbilityDamage(0, 0.01))),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
-            );
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);
@@ -276,8 +274,7 @@ public class GuiStats {
                             new TooltipGetterMultiValue("tetra.stats.puncture_defensive.tooltip",
                                     withStats(new StatGetterAbilityDamage(0, 0.3),
                                             new StatGetterEffectLevel(ItemEffect.abilityDefensive, 15), abilityDefEffGetter),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
-            );
+                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",
@@ -286,7 +283,12 @@ public class GuiStats {
                     withStats(new StatGetterAbilityDamage(0, 0.5), pryGetter, new StatGetterEffectEfficiency(ItemEffect.pry, 1),
                             new StatGetterCooldown(PryEffect.flatCooldown, PryEffect.cooldownSpeedMultiplier)),
                     withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicatorInstant);
+            .setIndicators(
+                    abilitySpeedIndicatorInstant,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterMultiValue("tetra.stats.pry_defensive.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 4), abilityDefEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",
