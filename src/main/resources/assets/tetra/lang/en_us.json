@@ -216,6 +216,7 @@
   "tetra.stats.execute_defensive.tooltip": "Deal §e%s%% (%s)§r attack damage and apply §e1§r stack of Severed to the target when used in the offhand. Deal §e%s%% (%s)§r additional damage and apply §e1§r additional stack of Severed if the target is at full health.",
   "tetra.stats.execute_defensive.tooltip_extended": "Each stack of Severed reduces the target's max health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, can stack up to §e3§r times",
   "tetra.stats.slam_defensive.tooltip": "Reduces damage dealt by §e30%% (%s)§r but stun direct targets for §e%s§r seconds and slow AOE targets by §e30%%§r for §e%s§r seconds when used in the offhand",
+  "tetra.stats.puncture_defensive.tooltip": "Shove the target away when used in the offhand. Deals §e30%% (%s)§r attack damage and slows the target's movement speed by §e%s%%§r for §e%s§r seconds, punctured targets or targets with less than §e6§7 armor are shoved further",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
@@ -234,7 +235,7 @@
   "tetra.stats.slam.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.puncture": "Puncture",
-  "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor or that has already been punctured will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increase the cooldown by §e1§7 second.\n \n§7Charge time: §e%s§7 seconds\n§7Base cooldown: §e%s§7 seconds",
+  "tetra.stats.puncture.tooltip": "Hold right-click to charge up an attack capable of puncturing armor, the attack deals §e100%% (%s)§f attack damage and reduces the target's armor by §e%s%%§f for §e%s§f seconds.\n \n§7Puncturing a target that has less than §e6§7 armor, or that has already been punctured, will cause it to bleed for §e8§7 damage over §e4§7 seconds instead.\n \n§7The cooldown is increased based on the target's armor, each point of armor increases the cooldown by §e0.5§7 seconds.\n \n§7Charge time: §e%s§7 seconds\n§7Base cooldown: §e%s§7 seconds",
   "tetra.stats.puncture.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.overpower": "Overpower",

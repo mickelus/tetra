@@ -270,7 +270,14 @@ public class GuiStats {
                     withStats(new StatGetterAbilityDamage(0, 1), punctureGetter, new StatGetterEffectEfficiency(ItemEffect.puncture, 1),
                             new StatGetterAbilityChargeTime(PunctureEffect.instance), new StatGetterAbilityCooldown(PunctureEffect.instance)),
                     withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicator);
+            .setIndicators(
+                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterMultiValue("tetra.stats.puncture_defensive.tooltip",
+                                    withStats(new StatGetterAbilityDamage(0, 0.3),
+                                            new StatGetterEffectLevel(ItemEffect.abilityDefensive, 15), abilityDefEffGetter),
+                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
+            );
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",
