@@ -259,8 +259,9 @@ public class GuiStats {
                     abilitySpeedIndicator,
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
                             new TooltipGetterMultiValue("tetra.stats.slam_defensive.tooltip",
-                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), abilityDefEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))));
+                                    withStats(new StatGetterAbilityDamage(0, 0.3),
+                                            new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), abilityDefEffGetter),
+                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 10);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

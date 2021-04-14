@@ -39,12 +39,16 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+        int stunDuration = isDefensive(item, itemStack, hand) ? item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) : 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
+
+        if (stunDuration > 0) {
+            damageMultiplier -= 0.3;
+        }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
 
         if (result != AbilityUseResult.fail) {
-            int stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
             if (stunDuration > 0) {
                 target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration));
             }
@@ -78,8 +82,9 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw);
 
-            double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
-            int slowDuration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
+            int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
+            double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f - (slowDuration > 0 ? 0.3 : 0);
+
             attacker.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::canBeAttackedWithItem)
