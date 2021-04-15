@@ -12,6 +12,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import se.mickelus.tetra.effect.potion.SteeledPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
@@ -32,6 +33,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             double range = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.reap);
 
             AtomicInteger kills = new AtomicInteger();
+            AtomicInteger hits = new AtomicInteger();
             Vector3d targetVec;
             if (target != null) {
                 targetVec = hitVec;
@@ -48,8 +50,12 @@ public class ReapEffect extends ChargedAbilityEffect {
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .forEach(entity -> {
                         AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, damageMultiplier, 0.5f, 0.2f);
-                        if (result != AbilityUseResult.fail && !entity.isAlive()) {
-                            kills.incrementAndGet();
+                        if (result != AbilityUseResult.fail) {
+                            if (!entity.isAlive()) {
+                                kills.incrementAndGet();
+                            }
+
+                            hits.incrementAndGet();
                         }
 
                         if (result == AbilityUseResult.crit) {
@@ -57,9 +63,7 @@ public class ReapEffect extends ChargedAbilityEffect {
                         }
                     });
 
-            if (kills.get() > 0) {
-                attacker.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1200, kills.get(), false, true));
-            }
+            applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack);
 
             attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
@@ -74,5 +78,21 @@ public class ReapEffect extends ChargedAbilityEffect {
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         item.applyDamage(2, itemStack, attacker);
+    }
+
+    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack) {
+        int defensiveLevel = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
+        if (defensiveLevel > 0) {
+            if (hand == Hand.OFF_HAND) {
+                if (hits > 0) {
+                    int duration = defensiveLevel * (1 + kills * 2);
+                    attacker.addPotionEffect(new EffectInstance(SteeledPotionEffect.instance, duration, hits - 1, false, true));
+                }
+            } else if (kills > 0) {
+                int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
+                attacker.addPotionEffect(new EffectInstance(Effects.HASTE, duration, kills - 1, false, true));
+            }
+        }
+
     }
 }

@@ -314,7 +314,13 @@ public class GuiStats {
                             new StatGetterEffectEfficiency(ItemEffect.reap, 1),
                             new StatGetterAbilityChargeTime(ReapEffect.instance), new StatGetterAbilityCooldown(ReapEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
-            .setIndicators(abilitySpeedIndicator);
+            .setIndicators(
+                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_defensive.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.1),
+                                            abilityDefEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",

@@ -58,6 +58,11 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
         return false;
     }
 
+    @Override
+    public boolean isActive(PlayerEntity player, ItemStack itemStack) {
+        return current != null && current.isActive(player, itemStack);
+    }
+
     protected int getDiffColor(double value, double diffValue) {
         return Optional.ofNullable(current)
                 .map(c -> c.getDiffColor(value, diffValue))

@@ -15,5 +15,13 @@
         "effects": {
             "abilityPerformance": 1
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [160, 45]
+        }
     }
 ]

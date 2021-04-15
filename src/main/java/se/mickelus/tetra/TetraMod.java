@@ -391,6 +391,7 @@ public class TetraMod {
             event.getRegistry().register(new PuncturedPotionEffect());
             event.getRegistry().register(new PriedPotionEffect());
             event.getRegistry().register(new ExhaustedPotionEffect());
+            event.getRegistry().register(new SteeledPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 
