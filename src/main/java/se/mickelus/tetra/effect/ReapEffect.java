@@ -90,8 +90,14 @@ public class ReapEffect extends ChargedAbilityEffect {
                 }
             } else if (kills > 0) {
                 int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
-                attacker.addPotionEffect(new EffectInstance(Effects.HASTE, duration, kills - 1, false, true));
+                attacker.addPotionEffect(new EffectInstance(Effects.SPEED, duration, kills - 1, false, true));
             }
+        }
+
+        int speedLevel = item.getEffectLevel(itemStack, ItemEffect.abilitySpeed);
+        if (speedLevel > 0 && kills > 0) {
+            attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
+                    kills - 1, false, true));
         }
 
     }

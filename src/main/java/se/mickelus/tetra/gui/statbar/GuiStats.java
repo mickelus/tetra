@@ -209,8 +209,6 @@ public class GuiStats {
     public static final IStatGetter abilitySpeedGetter = new StatGetterEffectLevel(ItemEffect.abilitySpeed, 1);
     public static GuiStatIndicator abilitySpeedIndicator = new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,
             abilitySpeedGetter, new TooltipGetterPercentage("tetra.stats.ability_speed_bonus.tooltip", abilitySpeedGetter));
-    public static GuiStatIndicator abilitySpeedIndicatorInstant = new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,
-            abilitySpeedGetter, new TooltipGetterPercentage("tetra.stats.ability_speed_bonus_instant.tooltip", abilitySpeedGetter));
 
 
     public static final IStatGetter abilityDefensiveGetter = new StatGetterEffectLevel(ItemEffect.abilityDefensive, 1);
@@ -284,7 +282,8 @@ public class GuiStats {
                             new StatGetterCooldown(PryEffect.flatCooldown, PryEffect.cooldownSpeedMultiplier)),
                     withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal)))
             .setIndicators(
-                    abilitySpeedIndicatorInstant,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,
+                            abilitySpeedGetter, new TooltipGetterPercentage("tetra.stats.pry_speed_bonus.tooltip", abilitySpeedGetter)),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
                             new TooltipGetterMultiValue("tetra.stats.pry_defensive.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 4), abilityDefEffGetter),
@@ -315,7 +314,10 @@ public class GuiStats {
                             new StatGetterAbilityChargeTime(ReapEffect.instance), new StatGetterAbilityCooldown(ReapEffect.instance)),
                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal)))
             .setIndicators(
-                    abilitySpeedIndicator,
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,
+                            abilitySpeedGetter, new TooltipGetterMultiValue("tetra.stats.reap_speed_bonus.tooltip",
+                            withStats(abilitySpeedGetter, new StatGetterEffectEfficiency(ItemEffect.abilitySpeed, 1)),
+                            withFormat(StatFormat.noDecimal, StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
                             new TooltipGetterMultiValue("tetra.stats.reap_defensive.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.1),

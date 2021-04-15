@@ -17,6 +17,14 @@
         }
     },
     {
+        "modules": ["double/sickle_left", "double/butt_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilitySpeed": [0, 30]
+        }
+    },
+    {
         "modules": ["double/sickle_left", "double/adze_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],

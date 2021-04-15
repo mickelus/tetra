@@ -21,6 +21,11 @@ public class PryEffect {
     public static final double flatCooldown = 2;
     public static final double cooldownSpeedMultiplier = 3;
 
+    private static int getCooldown(ItemModularHandheld item, ItemStack itemStack) {
+        float speedBonus = (100 - item.getEffectLevel(itemStack, ItemEffect.abilitySpeed)) / 100f;
+        return (int) ((flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * speedBonus * 20);
+    }
+
     public static void perform( PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
         if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
             performDefensive(attacker, item, itemStack, target);
@@ -32,7 +37,7 @@ public class PryEffect {
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, (int) (flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * 20);
+        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
