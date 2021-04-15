@@ -34,30 +34,43 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
         super.perform(attacker, hand, item, itemStack, target, targetPos, hitVec, chargedTicks);
 
+        boolean isDefensive = isDefensive(item, itemStack, hand);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
-        int attackerAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
-                .map(EffectInstance::getAmplifier)
-                .orElse(-1);
-        attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), attackerAmp + 1, false, true));
+        if (!isDefensive) {
+            int attackerAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+                    .map(EffectInstance::getAmplifier)
+                    .orElse(-1);
+            attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), attackerAmp + 1, false, true));
+        }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+
+        int cooldown = getCooldown(item, itemStack);
+
+        if (isDefensive) {
+            cooldown = (int) (cooldown * (1 + item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) / 100f));
+        }
+
+        attacker.getCooldownTracker().setCooldown(item, cooldown);
     }
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        double level = item.getEffectLevel(itemStack, ItemEffect.overpower);
+        boolean isDefensive = isDefensive(item, itemStack, hand);
+        double damageMultiplier = item.getEffectLevel(itemStack, isDefensive ? ItemEffect.abilityDefensive : ItemEffect.overpower) / 100f;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
-        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, level / 100f, 0.1f, 0.1f);
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
-            int targetAmp = Optional.ofNullable(target.getActivePotionEffect(ExhaustedPotionEffect.instance))
+            int amplifier = Optional.ofNullable(target.getActivePotionEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
-            target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), targetAmp + 2, false, true));
+            amplifier += isDefensive ? 1 : 2;
+
+            target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
 
             target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
         } else {
