@@ -15,5 +15,13 @@
         "effects": {
             "abilityDefensive": 1
         }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [1, 15]
+        }
     }
 ]

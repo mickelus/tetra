@@ -4,21 +4,20 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
-import se.mickelus.mgui.gui.GuiRoot;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.gui.InvertColorGui;
 
 public class ChargedAbilityGui extends GuiRoot {
-
-    private static final int width = 16;
-
+    private final int width = 17;
+    
     private GuiElement container;
-
-    private GuiRect bar;
+    private GuiElement overchargeContainer;
+    private Bar bar;
+    private Bar[] overchargeBars;
 
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
@@ -26,17 +25,22 @@ public class ChargedAbilityGui extends GuiRoot {
     public ChargedAbilityGui(Minecraft mc) {
         super(mc);
 
-        container = new GuiElement(-1, 20, 16, 2)
+        container = new InvertColorGui(-1, 20, width, 2)
                 .setAttachment(GuiAttachment.middleCenter)
                 .setOpacity(0);
         addChild(container);
 
-        container.addChild(new GuiRect(0, 0, 16, 2, GuiColors.normal)
-                .setOpacity(0.2f));
-
-        bar = new GuiRect(0, 0, 0, 2, GuiColors.normal);
-        bar.setOpacity(0.6f);
+        bar = new Bar(0, 0, width, 2);
         container.addChild(bar);
+
+
+        overchargeContainer = new GuiElement(0, 3, width, 2);
+        container.addChild(overchargeContainer);
+        overchargeBars = new Bar[3];
+        for (int i = 0; i < overchargeBars.length; i++) {
+            overchargeBars[i] = new Bar(i * 6, 0, 5, 2);
+            overchargeContainer.addChild(overchargeBars[i]);
+        }
 
         showAnimation = new KeyframeAnimation(60, container)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateX(0));
@@ -46,10 +50,16 @@ public class ChargedAbilityGui extends GuiRoot {
                 .withDelay(1000);
     }
 
-    public void setProgress(float progress) {
+    public void setProgress(float progress, boolean canOvercharge) {
         if (progress > 0) {
-            bar.setWidth(MathHelper.clamp((int) (progress * width), 0, width));
+            bar.setProgress(progress);
 
+            overchargeContainer.setVisible(canOvercharge);
+            if (canOvercharge) {
+                for (int i = 0; i < 3; i++) {
+                    overchargeBars[i].setProgress(progress - i - 1);
+                }
+            }
 
             if (!showAnimation.isActive() && container.getOpacity() < 1) {
                 showAnimation.start();
@@ -73,6 +83,28 @@ public class ChargedAbilityGui extends GuiRoot {
             int mouseY = (int)(mc.mouseHelper.getMouseY() * window.getScaledHeight() / window.getHeight());
 
             this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+        }
+    }
+
+    static class Bar extends GuiElement {
+        private GuiTexture bar;
+        private GuiTexture background;
+
+        public Bar(int x, int y, int width, int height) {
+            super(x, y, width, height);
+
+            bar = new GuiTexture(0, 0, 0, height, 3, 0, GuiTextures.hud);
+            addChild(bar);
+
+            background = new GuiTexture(0, 0, width, height, 3, 2, GuiTextures.hud);
+            background.setAttachment(GuiAttachment.topRight);
+            addChild(background);
+        }
+
+        public void setProgress(float progress) {
+            int barWidth = MathHelper.clamp((int) (progress * width), 0, width);
+            bar.setWidth(barWidth);
+            background.setWidth(Math.max(0, width - barWidth));
         }
     }
 }

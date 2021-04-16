@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LungeEffect extends ChargedAbilityEffect {
 
-    private static Cache<Integer, ItemStack> activeCache = CacheBuilder.newBuilder()
+    private static Cache<Integer, LungeData> activeCache = CacheBuilder.newBuilder()
             .maximumSize(20)
             .expireAfterWrite(5, TimeUnit.SECONDS)
             .build();
@@ -40,13 +40,20 @@ public class LungeEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack,
             @Nullable LivingEntity target, @Nullable BlockPos targetPos,@Nullable Vector3d hitVec, int chargedTicks) {
         if (attacker.isOnGround()) {
-            float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+            float damageMultiplierOffset = 0;
+            float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
             Vector3d lookVector = attacker.getLookVec();
+
+            if (canOvercharge(item, itemStack)) {
+                int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
+                strength += overcharge * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 10f;
+                damageMultiplierOffset += item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) / 100f;
+            }
 
             if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
-                activeCache.put(getIdentifier(attacker), itemStack);
+                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset));
             }
 
             // current velocity projected onto the look vector
@@ -70,8 +77,8 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     public static void onPlayerTick(PlayerEntity player) {
-        ItemStack itemStack = activeCache.getIfPresent(getIdentifier(player));
-        if (itemStack != null && !player.isPassenger()) {
+        LungeData data = activeCache.getIfPresent(getIdentifier(player));
+        if (data != null && !player.isPassenger()) {
             if (!player.isOnGround()) {
                 AxisAlignedBB axisalignedbb = player.getBoundingBox().grow(0.2, 0, 0.2).offset(player.getMotion());
 
@@ -81,14 +88,15 @@ public class LungeEffect extends ChargedAbilityEffect {
                         .filter(Entity::canBeAttackedWithItem)
                         .filter(entity -> !player.equals(entity))
                         .findAny()
-                        .ifPresent(entity -> onEntityImpact(player, entity, itemStack));
+                        .ifPresent(entity -> onEntityImpact(player, entity, data));
             } else {
                 activeCache.invalidate(getIdentifier(player));
             }
         }
     }
 
-    private static void onEntityImpact(PlayerEntity player, LivingEntity target, ItemStack itemStack) {
+    private static void onEntityImpact(PlayerEntity player, LivingEntity target, LungeData data) {
+        ItemStack itemStack = data.itemStack;
         ItemModularHandheld item = CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class).orElse(null);
 
         Vector3d bounceVector = player.getPositionVec().subtract(target.getPositionVec()).normalize().scale(0.1f);
@@ -97,7 +105,7 @@ public class LungeEffect extends ChargedAbilityEffect {
 
         if (!player.world.isRemote) {
             int lungeLevel = item.getEffectLevel(itemStack, ItemEffect.lunge);
-            item.hitEntity(itemStack, player, target, 1 + 0.1 * lungeLevel, 0.5f, 0.5f);
+            item.hitEntity(itemStack, player, target, data.damageMultiplierOffset + lungeLevel / 100f, 0.5f, 0.5f);
             target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
             player.swing(Hand.MAIN_HAND, true);
         }
@@ -112,5 +120,15 @@ public class LungeEffect extends ChargedAbilityEffect {
 
     private static int getIdentifier(PlayerEntity entity) {
         return entity.world.isRemote ? -entity.getEntityId() : entity.getEntityId();
+    }
+
+    static class LungeData {
+        ItemStack itemStack;
+        float damageMultiplierOffset;
+
+        public LungeData(ItemStack itemStack, float damageMultiplierOffset) {
+            this.itemStack = itemStack;
+            this.damageMultiplierOffset = damageMultiplierOffset;
+        }
     }
 }

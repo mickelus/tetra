@@ -11,6 +11,10 @@ public class InvertColorGui extends GuiElement {
         super(x, y, 0, 0);
     }
 
+    public InvertColorGui(int x, int y, int width, int height) {
+        super(x, y, width, height);
+    }
+
     @Override
     protected void drawChildren(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         RenderSystem.enableBlend();

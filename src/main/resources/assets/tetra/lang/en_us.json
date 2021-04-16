@@ -223,6 +223,9 @@
   "tetra.stats.overpower_defensive.tooltip": "Only applies §eExhausted§7 (§e1§r stack) on the target when used in the offhand, but damage dealt is reduced to §e%s%% (%s)§r and the cooldown is increased by §e%s%%",
   "tetra.stats.reap_defensive.tooltip": "Gain §e1§r armor for each enemy hit when used in the offhand, lasts for §e%s§r seconds plus §e%s§r seconds for each enemy killed\n \n§rMainhand use grants §e+20%%§r movement speed per kill for §e%s§r seconds",
 
+  "tetra.stats.ability_overcharge": "Overcharge",
+  "tetra.stats.lunge_overcharge.tooltip": "The lunge can be charged up further, each charge step increases the initial velocity by §e%s%%§r and damage dealt by §e%s%% (%s)",
+
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",

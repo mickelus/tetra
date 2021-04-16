@@ -8,6 +8,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import java.util.Optional;
+
 public class ChargedAbilityOverlay {
     public static ChargedAbilityOverlay instance;
 
@@ -30,11 +32,14 @@ public class ChargedAbilityOverlay {
         }
 
         ItemStack activeStack = mc.player.getActiveItemStack();
+        ItemModularHandheld item = CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class).orElse(null);
+        ChargedAbilityEffect ability = Optional.ofNullable(item).map(i -> i.getChargeableAbility(activeStack)).orElse(null);
 
-        gui.setProgress(
-                CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class)
-                        .map(item -> getProgress(mc.player, item, activeStack, item.getChargeableAbility(activeStack)))
-                        .orElse(0f));
+        if (ability != null) {
+            gui.setProgress(getProgress(mc.player, item, activeStack, ability), ability.canOvercharge(item, activeStack));
+        } else {
+            gui.setProgress(0, false);
+        }
 
         gui.draw(event.getMatrixStack());
     }

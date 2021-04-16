@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -51,6 +52,19 @@ public abstract class ChargedAbilityEffect {
 
     public boolean canCharge(ItemModularHandheld item, ItemStack itemStack) {
         return isAvailable(item, itemStack);
+    }
+
+    public boolean canOvercharge(ItemModularHandheld item, ItemStack itemStack) {
+        return isAvailable(item, itemStack) && item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) > 0;
+    }
+
+    public float getOverchargeProgress(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
+        int chargeTime = getChargeTime(item, itemStack);
+        return MathHelper.clamp(chargedTicks * 1f / chargeTime - 1, 0, 3);
+    }
+
+    public int getOverchargeBonus(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
+        return (int) getOverchargeProgress(item, itemStack, chargedTicks);
     }
 
     public int getChargeTime(ItemModularHandheld item, ItemStack itemStack) {
