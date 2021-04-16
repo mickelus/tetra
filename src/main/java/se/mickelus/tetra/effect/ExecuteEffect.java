@@ -30,24 +30,27 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        AbilityUseResult result;
-        if (isDefensive(item, itemStack, hand)) {
-            result = defensiveExecute(attacker, item, itemStack, target);
-        } else {
-            result = regularExecute(attacker, item, itemStack, target);
-        }
+        if (!target.world.isRemote) {
+            AbilityUseResult result;
+            if (isDefensive(item, itemStack, hand)) {
+                result = defensiveExecute(attacker, item, itemStack, target);
+            } else {
+                result = regularExecute(attacker, item, itemStack, target, chargedTicks);
+            }
 
-        playEffects(result != AbilityUseResult.fail, attacker, target, hitVec);
+            playEffects(result != AbilityUseResult.fail, target, hitVec);
+
+            item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+        }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
-        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private AbilityUseResult regularExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    private AbilityUseResult regularExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
         long harmfulCount = target.getActivePotionEffects().stream()
                 .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
                 .mapToInt(EffectInstance::getAmplifier)
@@ -57,7 +60,13 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
-        double damageMultiplier = (1 + missingHealth + harmfulCount * efficiency / 100);
+        double damageMultiplier = missingHealth + harmfulCount * efficiency / 100;
+
+        if (canOvercharge(item, itemStack)) {
+            damageMultiplier *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+        }
+
+        damageMultiplier += 1;
 
         return item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
     }
@@ -86,9 +95,9 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     }
 
 
-    private void playEffects(boolean isSuccess, PlayerEntity attacker, LivingEntity target, Vector3d hitVec) {
+    private void playEffects(boolean isSuccess, LivingEntity target, Vector3d hitVec) {
         if (isSuccess) {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
 
             Random rand = target.getRNG();
             CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
@@ -96,7 +105,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
         } else {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
         }
     }
 }
