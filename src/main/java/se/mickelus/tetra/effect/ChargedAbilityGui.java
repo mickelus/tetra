@@ -56,8 +56,9 @@ public class ChargedAbilityGui extends GuiRoot {
 
             overchargeContainer.setVisible(canOvercharge);
             if (canOvercharge) {
+                double overchargeProgress = ChargedAbilityEffect.getOverchargeProgress(progress - 1);
                 for (int i = 0; i < 3; i++) {
-                    overchargeBars[i].setProgress(progress - i - 1);
+                    overchargeBars[i].setProgress(overchargeProgress - i);
                 }
             }
 
@@ -101,7 +102,7 @@ public class ChargedAbilityGui extends GuiRoot {
             addChild(background);
         }
 
-        public void setProgress(float progress) {
+        public void setProgress(double progress) {
             int barWidth = MathHelper.clamp((int) (progress * width), 0, width);
             bar.setWidth(barWidth);
             background.setWidth(Math.max(0, width - barWidth));

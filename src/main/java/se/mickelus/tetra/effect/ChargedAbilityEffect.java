@@ -58,13 +58,23 @@ public abstract class ChargedAbilityEffect {
         return isAvailable(item, itemStack) && item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) > 0;
     }
 
-    public float getOverchargeProgress(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
+    public static double getOverchargeProgress(float progress) {
+        if (progress > 1.5) {
+            return 0.75 * progress + 0.875;
+        }
+        if (progress > 0.5) {
+            return progress + 0.5;
+        }
+        return 2 * progress; //Math.log(progress + 1) * 3 - 0.3 * progress;
+    }
+
+    public double getOverchargeProgress(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
         int chargeTime = getChargeTime(item, itemStack);
-        return MathHelper.clamp(chargedTicks * 1f / chargeTime - 1, 0, 3);
+        return getOverchargeProgress(chargedTicks * 1f / chargeTime - 1);
     }
 
     public int getOverchargeBonus(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
-        return (int) getOverchargeProgress(item, itemStack, chargedTicks);
+        return (int) MathHelper.clamp(getOverchargeProgress(item, itemStack, chargedTicks), 0, 3);
     }
 
     public int getChargeTime(ItemModularHandheld item, ItemStack itemStack) {
