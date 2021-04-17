@@ -21,7 +21,7 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityOvercharge": [1, 15]
+            "abilityOvercharge": [10, 15]
         }
     }
 ]

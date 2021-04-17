@@ -46,7 +46,7 @@ public class LungeEffect extends ChargedAbilityEffect {
 
             if (canOvercharge(item, itemStack)) {
                 int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
-                strength += overcharge * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 10f;
+                strength += overcharge * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100f;
                 damageMultiplierOffset += item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) / 100f;
             }
 

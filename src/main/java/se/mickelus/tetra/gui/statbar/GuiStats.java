@@ -230,7 +230,7 @@ public class GuiStats {
                             new TooltipGetterNone("tetra.stats.lunge_defensive.tooltip")),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_overcharge", 10, abilityOverchargeGetter,
                             new TooltipGetterMultiValue("tetra.stats.lunge_overcharge.tooltip",
-                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityOvercharge, 10), abilityOverchargeEffGetter,
+                                    withStats(abilityOverchargeGetter, abilityOverchargeEffGetter,
                                             multiply(abilityOverchargeEffGetter, new StatGetterAbilityDamage(0, 0.01))),
                                     withFormat(StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
 
@@ -268,7 +268,12 @@ public class GuiStats {
                             new TooltipGetterMultiValue("tetra.stats.slam_defensive.tooltip",
                                     withStats(new StatGetterAbilityDamage(0, 0.3),
                                             new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), abilityDefEffGetter),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overcharge", 10, abilityOverchargeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_overcharge.tooltip",
+                                    withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityOverchargeEffGetter, abilityOverchargeGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 10);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

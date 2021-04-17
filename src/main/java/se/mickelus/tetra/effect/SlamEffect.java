@@ -75,33 +75,61 @@ public class SlamEffect extends ChargedAbilityEffect {
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vector3d hitVec, int chargedTicks) {
         if (!attacker.world.isRemote) {
+            int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+            double range = getAoeRange(item, itemStack, overchargeBonus);
+
             Vector3d direction = hitVec.subtract(attacker.getPositionVec()).mul(1, 0, 1).normalize();
             double yaw = MathHelper.atan2(direction.x, direction.z);
-
-            AxisAlignedBB axisalignedbb = new AxisAlignedBB(hitVec, hitVec).grow(10, 4, 10).offset(direction.scale(4));
-
-            spawnGroundParticles(attacker.world, hitVec, direction, yaw);
-
+            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
-            double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f - (slowDuration > 0 ? 0.3 : 0);
 
-            attacker.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb).stream()
+
+
+            double damageMultiplier = getAoeDamageMultiplier(item, itemStack, slowDuration > 0, overchargeBonus);
+            attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::canBeAttackedWithItem)
                     .filter(entity -> !attacker.equals(entity))
-                    .filter(entity -> inRange(hitVec, entity, yaw))
+                    .filter(entity -> inRange(hitVec, entity, yaw, range))
                     .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration));
+
+            spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
         }
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+//        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void spawnGroundParticles(World world, Vector3d origin, Vector3d direction, double yaw) {
+    private double getAoeDamageMultiplier(ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus) {
+        double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
+
+        if (isDefensive) {
+            damageMultiplier -= 0.3;
+        }
+
+        if (overchargeBonus > 0) {
+            damageMultiplier *= 1 + overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+        }
+
+        return damageMultiplier;
+    }
+
+    private double getAoeRange(ItemModularHandheld item, ItemStack itemStack, int overchargeBonus) {
+        double range = 8;
+
+
+        if (overchargeBonus > 0) {
+            range += overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge);
+        }
+
+        return range;
+    }
+
+    private void spawnGroundParticles(World world, Vector3d origin, Vector3d direction, double yaw, double range) {
         Random rand = world.rand;
 
         BlockState originState = world.getBlockState(new BlockPos(origin));
@@ -110,12 +138,13 @@ public class SlamEffect extends ChargedAbilityEffect {
                 8, 0, rand.nextGaussian() * 0.1, 0, 0.1);
         world.playSound(null, new BlockPos(origin), originState.getSoundType().getBreakSound(), SoundCategory.PLAYERS, 1.5f, 0.5f);
 
+        int bound = (int) Math.ceil(range / 2);
 
-        BlockPos center = new BlockPos(origin.add(direction.scale(4)));
+        BlockPos center = new BlockPos(origin.add(direction.scale(range / 2)));
         origin = origin.add(direction.scale(-1));
         BlockPos.Mutable targetPos = new BlockPos.Mutable(0, 0, 0);
-        for (int x = -5; x <= 5; x++) {
-            for (int z = -5; z <= 5; z++) {
+        for (int x = -bound; x <= bound; x++) {
+            for (int z = -bound; z <= bound; z++) {
                 targetPos.setAndOffset(center, x, 0, z);
                 if (compareAngle(origin, targetPos, yaw)) {
                     for (int y = -2; y < 2; y++) {
@@ -126,7 +155,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
                             double distance = targetPos.distanceSq(origin.x, origin.y, origin.z, true);
 
-                            if (distance < 64) {
+                            if (distance < range * range) {
                                 double yOffset = targetState.getShape(world, targetPos).getBoundingBox().maxY;
                                 BlockPos particlePos = targetPos.toImmutable();
 
@@ -148,8 +177,8 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
     }
 
-    private boolean inRange(Vector3d origin, Entity entity, double originYaw) {
-        if (origin.isWithinDistanceOf(entity.getPositionVec(), 8)) {
+    private boolean inRange(Vector3d origin, Entity entity, double originYaw, double range) {
+        if (origin.isWithinDistanceOf(entity.getPositionVec(), range)) {
             Vector3d direction = entity.getPositionVec().subtract(origin);
             double entityYaw = MathHelper.atan2(direction.x, direction.z);
             double yawDiff = Math.abs((originYaw - entityYaw + 3 * Math.PI) % (Math.PI * 2) - Math.PI);
