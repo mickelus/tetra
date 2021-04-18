@@ -35,13 +35,21 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         super.perform(attacker, hand, item, itemStack, target, targetPos, hitVec, chargedTicks);
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
+        int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
         if (!isDefensive) {
             int attackerAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
-            attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), attackerAmp + 1, false, true));
+
+            attackerAmp += 1;
+
+            if (overchargeBonus > 0) {
+                attackerAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
+            }
+
+            attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), attackerAmp, false, true));
         }
 
         attacker.addExhaustion(0.05f);
@@ -59,8 +67,13 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         boolean isDefensive = isDefensive(item, itemStack, hand);
+        int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
         double damageMultiplier = item.getEffectLevel(itemStack, isDefensive ? ItemEffect.abilityDefensive : ItemEffect.overpower) / 100f;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
+
+        if (overchargeBonus > 0) {
+            damageMultiplier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+        }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
@@ -69,6 +82,10 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                     .orElse(-1);
 
             amplifier += isDefensive ? 1 : 2;
+
+            if (overchargeBonus > 0) {
+                amplifier += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
+            }
 
             target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
 

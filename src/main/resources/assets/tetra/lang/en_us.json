@@ -16,7 +16,7 @@
   "effect.tetra.pried": "Pried",
   "effect.tetra.pried.tooltip": "Reduces armor by §e%s",
   "effect.tetra.exhausted": "Exhausted",
-  "effect.tetra.exhausted.tooltip": "Reduces movement speed by §e%s%%§r, and reduces attack speed and mining speed by §e%s%%",
+  "effect.tetra.exhausted.tooltip": "Movement speed reduced by §e%s%%§r, attack speed and mining speed reduced by §e%s%%",
   "effect.tetra.steeled": "Steeled",
   "effect.tetra.steeled.tooltip": "Increases armor by §e%s",
 
@@ -229,6 +229,7 @@
   "tetra.stats.slam_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r, shockwave range by §e%s§r and direct target knockback by §e%s%%",
   "tetra.stats.puncture_overcharge.tooltip": "The ability can be charged up further, each charge step increases armor reduction by §e%s%%§r and bleed duration by §e%s§r seconds",
   "tetra.stats.pry_overcharge.tooltip": "Changes pry into a charged ability that can be charged up further. Each charge step increases damage dealt by §e%s%% (%s)§r and armor reduction by §e%s§r\n \n§7Charge time: §e%s§7 seconds",
+  "tetra.stats.overpower_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r and adds §e%s§r additional stack of §eExhausted§r to both parties",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",

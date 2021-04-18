@@ -23,5 +23,13 @@
         "effects": {
             "abilityDefensive": [59, 30]
         }
+    },
+    {
+        "modules": ["double/hoe_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [15, 1]
+        }
     }
 ]
