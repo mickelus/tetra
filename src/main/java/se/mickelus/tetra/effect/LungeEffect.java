@@ -10,6 +10,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -43,6 +45,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             float damageMultiplierOffset = 0;
             float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
             Vector3d lookVector = attacker.getLookVec();
+            double verticalVelocityFactor = 0.8;
 
             if (canOvercharge(item, itemStack)) {
                 int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
@@ -56,19 +59,24 @@ public class LungeEffect extends ChargedAbilityEffect {
                 activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset));
             }
 
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+            if (momentumLevel > 0) {
+                verticalVelocityFactor = 1.2;
+            }
+
             // current velocity projected onto the look vector
             attacker.setMotion(lookVector.scale(attacker.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
 
             attacker.addVelocity(
                     lookVector.x * strength,
-                    MathHelper.clamp(lookVector.y * strength * 0.8f + 0.3, 0.3, 0.8),
+                    MathHelper.clamp(lookVector.y * strength * verticalVelocityFactor + 0.3, 0.3, verticalVelocityFactor),
                     lookVector.z * strength);
             attacker.velocityChanged = true;
 
             attacker.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
 
             attacker.addExhaustion(0.2f);
-            attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+//            attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
             attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,
                     SoundCategory.PLAYERS, 1, 1.3f);
@@ -103,11 +111,32 @@ public class LungeEffect extends ChargedAbilityEffect {
         player.setMotion(bounceVector);
         player.velocityChanged = true;
 
+        int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+
         if (!player.world.isRemote) {
+            double bonusDamage = 0;
+
+            if (momentumLevel > 0) {
+                bonusDamage = Math.min(momentumLevel, player.fallDistance);
+            }
+
             int lungeLevel = item.getEffectLevel(itemStack, ItemEffect.lunge);
-            item.hitEntity(itemStack, player, target, data.damageMultiplierOffset + lungeLevel / 100f, 0.5f, 0.5f);
+            AbilityUseResult result = item.hitEntity(itemStack, player, target, data.damageMultiplierOffset + lungeLevel / 100f, bonusDamage,
+                    0.5f, 0.5f);
+
+            if (result != AbilityUseResult.fail) {
+                if (momentumLevel > 0) {
+                    int duration = 10 + (int) (Math.min(momentumLevel, player.fallDistance) * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
+                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                }
+            }
+
             target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
             player.swing(Hand.MAIN_HAND, true);
+        }
+
+        if (momentumLevel > 0) {
+            player.fallDistance = Math.max(0, player.fallDistance - momentumLevel);
         }
 
         item.tickProgression(player, itemStack, 2);

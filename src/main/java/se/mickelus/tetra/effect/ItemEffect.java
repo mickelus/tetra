@@ -169,8 +169,9 @@ public class ItemEffect {
      */
     public static ItemEffect stun = get("stun");
 
-    public static ItemEffect abilityOvercharge = get("abilityOvercharge");
     public static ItemEffect abilityDefensive = get("abilityDefensive");
+    public static ItemEffect abilityOvercharge = get("abilityOvercharge");
+    public static ItemEffect abilityMomentum = get("abilityMomentum");
     public static ItemEffect abilitySpeed = get("abilitySpeed");
 
     /**

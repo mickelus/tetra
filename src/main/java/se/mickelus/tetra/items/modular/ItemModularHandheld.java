@@ -307,20 +307,23 @@ public class ItemModularHandheld extends ModularItem {
 
     /**
      * Helper for hitting entities with abilities
-     * @param itemStack
-     * @param player
-     * @param target
-     * @param damageMultiplier
-     * @return true if was crit, otherwise false
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, double damageMultiplier,
+            float knockbackBase, float knockbackMultiplier) {
+        return hitEntity(itemStack, player, target, damageMultiplier, 0, knockbackBase, knockbackMultiplier);
+    }
+
+    /**
+     * Helper for hitting entities with abilities
+     */
+    public AbilityUseResult hitEntity(ItemStack itemStack, PlayerEntity player, LivingEntity target, double damageMultiplier, double damageBonus,
             float knockbackBase, float knockbackMultiplier) {
         float targetModifier = EnchantmentHelper.getModifierForCreature(itemStack, target.getCreatureAttribute());
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
                 .map(CriticalHitEvent::getDamageModifier)
                 .orElse(1f);
 
-        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier;
+        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
 
         boolean success = target.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) damage);
         if (success) {

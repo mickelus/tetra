@@ -234,6 +234,10 @@
   "tetra.stats.overpower_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r and adds §e%s§r additional stack of §eExhausted§r to both parties",
   "tetra.stats.reap_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r, area of effect by §e0.5§r blocks and kill buff duration by §e%s%%\n \n§rEach kill with reap grants §e+1§r attack damage for §e30§r seconds",
 
+  "tetra.stats.ability_momentum": "Momentum",
+  "tetra.stats.lunge_momentum.tooltip": "Allows the lunge to go higher and hit entities are stunned for §e0.5§r seconds. Fall distance increases damage dealt up to §e+%s§r and the stun duration up to §e+%s§r seconds",
+  "tetra.stats.lunge_momentum_extended.tooltip": "Damage increase is at a 1:1 ratio with fall distance, fall damage is reduced for the wielder equal to the amount of damage dealt to the target",
+
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",

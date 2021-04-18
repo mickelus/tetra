@@ -23,5 +23,13 @@
         "effects": {
             "abilityOvercharge": [10, 15]
         }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [10, 0.5]
+        }
     }
 ]
