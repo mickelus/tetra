@@ -12,6 +12,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.SteeledPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -29,8 +30,14 @@ public class ReapEffect extends ChargedAbilityEffect {
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
         if (!attacker.world.isRemote) {
+            int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             double damageMultiplier = EffectHelper.getEffectLevel(itemStack, ItemEffect.reap) / 100d;
             double range = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.reap);
+
+            if (overchargeBonus > 0) {
+                damageMultiplier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+                range += overchargeBonus * 0.5;
+            }
 
             AtomicInteger kills = new AtomicInteger();
             AtomicInteger hits = new AtomicInteger();
@@ -45,11 +52,12 @@ public class ReapEffect extends ChargedAbilityEffect {
             }
 
             AxisAlignedBB aoe = new AxisAlignedBB(targetVec, targetVec);
+            double finalDamageMultiplier = damageMultiplier;
             attacker.world.getEntitiesWithinAABB(LivingEntity.class, aoe.grow(range, 1d, range)).stream()
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .forEach(entity -> {
-                        AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, damageMultiplier, 0.5f, 0.2f);
+                        AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, finalDamageMultiplier, 0.5f, 0.2f);
                         if (result != AbilityUseResult.fail) {
                             if (!entity.isAlive()) {
                                 kills.incrementAndGet();
@@ -63,7 +71,7 @@ public class ReapEffect extends ChargedAbilityEffect {
                         }
                     });
 
-            applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack);
+            applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack, chargedTicks);
 
             attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
@@ -80,7 +88,7 @@ public class ReapEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack) {
+    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
         int defensiveLevel = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
         if (defensiveLevel > 0) {
             if (hand == Hand.OFF_HAND) {
@@ -94,11 +102,23 @@ public class ReapEffect extends ChargedAbilityEffect {
             }
         }
 
-        int speedLevel = item.getEffectLevel(itemStack, ItemEffect.abilitySpeed);
-        if (speedLevel > 0 && kills > 0) {
-            attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
-                    kills - 1, false, true));
+        if (kills > 0) {
+            int overchargeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge);
+            if (overchargeLevel > 0) {
+                double duration = 30 * 20;
+
+                duration *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge);
+
+                attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+            }
+
+            int speedLevel = item.getEffectLevel(itemStack, ItemEffect.abilitySpeed);
+            if (speedLevel > 0) {
+                attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
+                        kills - 1, false, true));
+            }
         }
+
 
     }
 }

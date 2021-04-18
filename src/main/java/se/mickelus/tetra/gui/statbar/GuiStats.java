@@ -353,7 +353,12 @@ public class GuiStats {
                             new TooltipGetterMultiValue("tetra.stats.reap_defensive.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.05), new StatGetterEffectLevel(ItemEffect.abilityDefensive, 0.1),
                                             abilityDefEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overcharge", 10, abilityOverchargeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_overcharge.tooltip",
+                                    withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityOverchargeEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
