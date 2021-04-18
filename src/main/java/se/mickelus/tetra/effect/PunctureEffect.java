@@ -30,7 +30,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
         if (isDefensive(item, itemStack, hand)) {
             result = performDefensive(attacker, hand, item, itemStack, target);
         } else {
-            result = performRegular(attacker, hand, item, itemStack, target);
+            result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
         }
 
         attacker.addExhaustion(0.05f);
@@ -41,18 +41,31 @@ public class PunctureEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    public AbilityUseResult performRegular(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    public AbilityUseResult performRegular(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
         int armor = target.getTotalArmorValue();
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 1, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
+            int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
             if (armor < 6 || isPunctured) {
-                target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, 80, 1, false, false));
+                int duration = 80;
+
+                if (overchargeBonus > 0) {
+                    duration += overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) * 10;
+                }
+
+                target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
             } else {
                 int amplifier = item.getEffectLevel(itemStack, ItemEffect.puncture) - 1;
                 int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.puncture) * 20);
+
+
+                if (overchargeBonus > 0) {
+                    amplifier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge);
+                }
+
                 target.addPotionEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
             }
 

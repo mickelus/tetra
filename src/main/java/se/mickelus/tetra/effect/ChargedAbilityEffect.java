@@ -65,7 +65,8 @@ public abstract class ChargedAbilityEffect {
         if (progress > 0.5) {
             return progress + 0.5;
         }
-        return 2 * progress; //Math.log(progress + 1) * 3 - 0.3 * progress;
+
+        return 2 * progress;
     }
 
     public double getOverchargeProgress(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {

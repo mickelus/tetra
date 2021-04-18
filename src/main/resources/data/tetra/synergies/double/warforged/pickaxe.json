@@ -5,7 +5,7 @@
         "improvements": ["double/warforged"],
         "name": "double/war_pick",
         "effects": {
-            "puncture": [4, 30]
+            "puncture": [8, 30]
         }
     },
     {
@@ -22,6 +22,14 @@
         "improvements": ["double/warforged"],
         "effects": {
             "abilityDefensive": [1, 5]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [1, 1]
         }
     }
 ]

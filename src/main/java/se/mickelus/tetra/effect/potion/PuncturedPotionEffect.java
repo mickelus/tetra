@@ -30,7 +30,7 @@ public class PuncturedPotionEffect extends Effect {
 
         setRegistryName("punctured");
 
-        addAttributesModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributesModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         instance = this;
     }

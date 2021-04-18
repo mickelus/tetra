@@ -275,7 +275,7 @@ public class GuiStats {
                                             abilityOverchargeEffGetter, abilityOverchargeGetter),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))));
 
-    public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 10);
+    public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",
             0, 200, false, punctureGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterMultiValue("tetra.stats.puncture.tooltip",
@@ -288,7 +288,12 @@ public class GuiStats {
                             new TooltipGetterMultiValue("tetra.stats.puncture_defensive.tooltip",
                                     withStats(new StatGetterAbilityDamage(0, 0.3),
                                             new StatGetterEffectLevel(ItemEffect.abilityDefensive, 15), abilityDefEffGetter),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overcharge", 10, abilityOverchargeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.puncture_overcharge.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityOvercharge, 5),
+                                            new StatGetterEffectEfficiency(ItemEffect.abilityOvercharge, 0.5)),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",
