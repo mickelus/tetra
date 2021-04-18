@@ -12,6 +12,7 @@ import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.statbar.GuiStatBar;
 import se.mickelus.tetra.gui.statbar.GuiStats;
+import se.mickelus.tetra.gui.statbar.StatsHelper;
 import se.mickelus.tetra.gui.statbar.getter.IStatGetter;
 import se.mickelus.tetra.gui.statbar.getter.LabelGetterBasic;
 import se.mickelus.tetra.gui.statbar.getter.StatGetterEffectLevel;
@@ -26,7 +27,7 @@ public class ManaRepair {
     @OnlyIn(Dist.CLIENT)
     public static void clientInit() {
         IStatGetter statGetter = new ManaRepairStatGetter();
-        GuiStatBar statBar = new GuiStatBar(0, 0, GuiStats.barLength, "tetra.stats.manaRepair",
+        GuiStatBar statBar = new GuiStatBar(0, 0, StatsHelper.barLength, "tetra.stats.manaRepair",
                 0, 400, false, false, true, statGetter, LabelGetterBasic.integerLabelInverted,
                 new TooltipGetterInteger("tetra.stats.manaRepair.tooltip", statGetter));
 

@@ -7,9 +7,7 @@ import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.gui.statbar.GuiStatBarTool;
-import se.mickelus.tetra.gui.statbar.GuiStatBase;
-import se.mickelus.tetra.gui.statbar.GuiStats;
+import se.mickelus.tetra.gui.statbar.*;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.ArrayList;
@@ -50,15 +48,15 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.skewering,
             GuiStats.howling,
             GuiStats.knockback,
-            GuiStats.execute,
+            AbilityStats.execute,
             GuiStats.severing,
             GuiStats.stun,
-            GuiStats.lunge,
-            GuiStats.slam,
-            GuiStats.puncture,
-            GuiStats.pry,
-            GuiStats.overpower,
-            GuiStats.reap,
+            AbilityStats.lunge,
+            AbilityStats.slam,
+            AbilityStats.puncture,
+            AbilityStats.pry,
+            AbilityStats.overpower,
+            AbilityStats.reap,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,
@@ -86,13 +84,13 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.magicCapacity,
             GuiStats.stability,
             GuiStats.workable,
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.hammer, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.AXE, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.PICKAXE, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.SHOVEL, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.cut, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.pry, true),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.HOE, true)
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.hammer, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.AXE, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.PICKAXE, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.SHOVEL, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.cut, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.pry, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.HOE, true)
     ));
 
     private GuiElement barGroup;
@@ -128,7 +126,7 @@ public class HoloStatsGui extends GuiElement {
         bar.setAttachment(GuiAttachment.topLeft);
         bar.setAlignment(GuiAlignment.left);
 
-        bar.setX((index % 3) * (GuiStats.barLength + 10));
+        bar.setX((index % 3) * (StatsHelper.barLength + 10));
         bar.setY(17 * ((index / 3)));
     }
 

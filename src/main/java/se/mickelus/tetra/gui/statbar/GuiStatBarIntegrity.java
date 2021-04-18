@@ -30,7 +30,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     protected ITooltipGetter tooltipGetterNegative;
 
     public GuiStatBarIntegrity(int x, int y) {
-        super(x, y, GuiStats.barLength, 12);
+        super(x, y, StatsHelper.barLength, 12);
 
         labelString = new GuiStringSmall(0, 0, I18n.format("tetra.stats.integrity"));
         addChild(labelString);

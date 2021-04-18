@@ -9,9 +9,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.gui.statbar.GuiStatBarTool;
-import se.mickelus.tetra.gui.statbar.GuiStatBase;
-import se.mickelus.tetra.gui.statbar.GuiStats;
+import se.mickelus.tetra.gui.statbar.*;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.Arrays;
@@ -50,15 +48,15 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.skewering,
             GuiStats.howling,
             GuiStats.knockback,
-            GuiStats.execute,
+            AbilityStats.execute,
             GuiStats.severing,
             GuiStats.stun,
-            GuiStats.lunge,
-            GuiStats.slam,
-            GuiStats.puncture,
-            GuiStats.pry,
-            GuiStats.overpower,
-            GuiStats.reap,
+            AbilityStats.lunge,
+            AbilityStats.slam,
+            AbilityStats.puncture,
+            AbilityStats.pry,
+            AbilityStats.overpower,
+            AbilityStats.reap,
             GuiStats.looting,
             GuiStats.fiery,
             GuiStats.smite,
@@ -87,13 +85,13 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.intuit,
             GuiStats.workable,
             GuiStats.stability,
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.hammer),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.AXE),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.PICKAXE),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.SHOVEL),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.cut),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolTypes.pry),
-            new GuiStatBarTool(0, 0, GuiStats.barLength, ToolType.HOE)
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.hammer),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.AXE),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.PICKAXE),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.SHOVEL),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.cut),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.pry),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.HOE)
     ));
     private GuiElement barGroup;
 
@@ -145,7 +143,7 @@ public class WorkbenchStatsGui extends GuiElement {
         bar.setY(-17 * ((count % 6) / 2) - 3);
         bar.setAttachmentAnchor(GuiAttachment.bottomCenter);
 
-        int xOffset = 3 + (count / 6) * (GuiStats.barLength + 3);
+        int xOffset = 3 + (count / 6) * (StatsHelper.barLength + 3);
         if (count % 2 == 0) {
             bar.setX(xOffset);
             bar.setAttachmentPoint(GuiAttachment.bottomLeft);
