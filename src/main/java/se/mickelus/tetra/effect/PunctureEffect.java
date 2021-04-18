@@ -53,7 +53,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 int duration = 80;
 
                 if (overchargeBonus > 0) {
-                    duration += overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) * 10;
+                    duration += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) * 10);
                 }
 
                 target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));

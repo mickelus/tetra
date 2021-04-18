@@ -21,16 +21,18 @@ public class PryEffect {
     public static final double flatCooldown = 2;
     public static final double cooldownSpeedMultiplier = 3;
 
+    public static final double damageMultiplier = 0.5;
+
     private static int getCooldown(ItemModularHandheld item, ItemStack itemStack) {
         float speedBonus = (100 - item.getEffectLevel(itemStack, ItemEffect.abilitySpeed)) / 100f;
         return (int) ((flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * speedBonus * 20);
     }
 
-    public static void perform( PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
+    public static void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
         if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
             performDefensive(attacker, item, itemStack, target);
         } else {
-            performRegular(attacker, item, itemStack, effectLevel, target);
+            performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target);
         }
 
         target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
@@ -43,16 +45,17 @@ public class PryEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
+    public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
+            int amplifier, LivingEntity target) {
         int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
 
-        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
             target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
-                    currentAmplifier + effectLevel, false, false));
+                    currentAmplifier + amplifier, false, false));
 
             if (!target.getEntityWorld().isRemote) {
                 ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target);

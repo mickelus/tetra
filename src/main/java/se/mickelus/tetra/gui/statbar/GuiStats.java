@@ -308,7 +308,12 @@ public class GuiStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_defensive", 9, abilityDefensiveGetter,
                             new TooltipGetterMultiValue("tetra.stats.pry_defensive.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityDefensive, 4), abilityDefEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overcharge", 10, abilityOverchargeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.pry_overcharge.tooltip",
+                                    withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityOverchargeEffGetter, new StatGetterAbilityChargeTime(PryChargedEffect.instance)),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",
