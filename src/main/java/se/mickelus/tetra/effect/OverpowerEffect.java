@@ -68,6 +68,8 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+        int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+
         double damageMultiplier = item.getEffectLevel(itemStack, isDefensive ? ItemEffect.abilityDefensive : ItemEffect.overpower) / 100f;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
@@ -77,14 +79,35 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
-            int amplifier = Optional.ofNullable(target.getActivePotionEffect(ExhaustedPotionEffect.instance))
+            int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
-            amplifier += isDefensive ? 1 : 2;
+            int amplifier = currentAmplifier + 2;
+
+            if (isDefensive) {
+                amplifier--;
+            }
 
             if (overchargeBonus > 0) {
                 amplifier += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
+            }
+
+            if (momentumLevel > 0 && currentAmplifier > -1) {
+                double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
+                double velocity = momentumLevel / 100d;
+                velocity += momentumEfficiency * (currentAmplifier + 1);
+
+                velocity += momentumEfficiency * Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+                        .map(EffectInstance::getAmplifier)
+                        .map(amp -> amp + 1)
+                        .orElse(0);
+
+                velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+
+                if (velocity > 0) {
+                    target.addVelocity(0, velocity, 0);
+                }
             }
 
             target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));

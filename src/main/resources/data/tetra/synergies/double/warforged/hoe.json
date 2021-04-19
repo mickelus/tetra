@@ -31,5 +31,13 @@
         "effects": {
             "abilityOvercharge": [15, 1]
         }
+    },
+    {
+        "modules": ["double/hoe_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [30, 0.07]
+        }
     }
 ]

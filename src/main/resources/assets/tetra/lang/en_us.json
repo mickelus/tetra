@@ -231,7 +231,7 @@
   "tetra.stats.slam_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r, shockwave range by §e%s§r and direct target knockback by §e%s%%",
   "tetra.stats.puncture_overcharge.tooltip": "The ability can be charged up further, each charge step increases armor reduction by §e%s%%§r and bleed duration by §e%s§r seconds",
   "tetra.stats.pry_overcharge.tooltip": "Changes pry into a charged ability that can be charged up further. Each charge step increases damage dealt by §e%s%% (%s)§r and armor reduction by §e%s§r\n \n§7Charge time: §e%s§7 seconds",
-  "tetra.stats.overpower_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r and adds §e%s§r additional stack of §eExhausted§r to both parties",
+  "tetra.stats.overpower_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r and adds §e%s§r additional stack of exhausted to both parties",
   "tetra.stats.reap_overcharge.tooltip": "The ability can be charged up further, each charge step increases damage dealt by §e%s%% (%s)§r, area of effect by §e0.5§r blocks and kill buff duration by §e%s%%\n \n§rEach kill with reap grants §e+1§r attack damage for §e30§r seconds",
 
   "tetra.stats.ability_momentum": "Momentum",
@@ -241,6 +241,7 @@
   "tetra.stats.slam_momentum.tooltip": "Targets are stunned and knocked up into the air, single target slam stuns for §e%s§r seconds and ground slam stuns for §e%s§r seconds",
   "tetra.stats.puncture_momentum.tooltip": "Targets not already affected by puncture are knocked into the air, the distance is increased based on the target's armor",
   "tetra.stats.pry_momentum.tooltip": "Stun the target for §e%s§r seconds per pry stack affecting the target",
+  "tetra.stats.overpower_momentum.tooltip": "The target is knocked into the air, the knock-up distance is increased for each exhausted stack on the target but decreased for each exhausted stack on the attacker",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
@@ -263,7 +264,7 @@
   "tetra.stats.puncture.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.overpower": "Overpower",
-  "tetra.stats.overpower.tooltip": "Hold right-click to charge up an attack that deals §e%s%% (%s)§f attack damage but barely causes any knockback.\n \n§7Applies §e2§7 stacks of §eExhausted§7 on the target and §e1§7 stack on the attacker. Each stack reduces movement speed by §e10%%§7 and attack speed and harvest speed by §e5%%§7. The attacker gets §eExhausted§7 even if the attack fails.\n \n§7Exhausted duration: §e%s§7 seconds\n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.overpower.tooltip": "Hold right-click to charge up an attack that deals §e%s%% (%s)§f attack damage but barely causes any knockback.\n \n§7Applies §e2§7 stacks of exhausted on the target and §e1§7 stack on the attacker. Each stack reduces movement speed by §e10%%§7 and attack speed and harvest speed by §e5%%§7. The attacker gets exhausted even if the attack fails.\n \n§7Exhausted duration: §e%s§7 seconds\n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.overpower.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.reap": "Reap",
