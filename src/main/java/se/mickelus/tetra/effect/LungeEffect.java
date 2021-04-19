@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -10,6 +11,8 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -18,6 +21,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -128,6 +132,7 @@ public class LungeEffect extends ChargedAbilityEffect {
                 if (momentumLevel > 0) {
                     int duration = 10 + (int) (Math.min(momentumLevel, player.fallDistance) * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
                     target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                    spawnMomentumParticles(target, bonusDamage);
                 }
             }
 
@@ -145,6 +150,16 @@ public class LungeEffect extends ChargedAbilityEffect {
         player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * 0.7));
 
         activeCache.invalidate(getIdentifier(player));
+    }
+
+    private static void spawnMomentumParticles(LivingEntity target, double bonus) {
+        BlockPos pos = new BlockPos(target.getPosX(), target.getPosY() - 0.2, target.getPosZ());
+        BlockState blockState = target.world.getBlockState(pos);
+
+        if (!blockState.isAir(target.world, pos)) {
+            ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState), target.getPosX(), target.getPosY(),
+                    target.getPosZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
+        }
     }
 
     private static int getIdentifier(PlayerEntity entity) {
