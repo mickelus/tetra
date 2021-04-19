@@ -39,5 +39,13 @@
         "effects": {
             "abilityOvercharge": [10, 0.3]
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [15, 2]
+        }
     }
 ]

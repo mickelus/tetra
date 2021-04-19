@@ -393,6 +393,7 @@ public class TetraMod {
             event.getRegistry().register(new ExhaustedPotionEffect());
             event.getRegistry().register(new SteeledPotionEffect());
             event.getRegistry().register(new SmallStrengthPotionEffect());
+            event.getRegistry().register(new UnwaveringPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 

@@ -179,5 +179,9 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.reap_overcharge.tooltip",
                                     withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityOverchargeEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_momentum.tooltip",
+                                    withStats(abilityMomentumEffGetter, abilityMomentumGetter),
+                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal))));
 }

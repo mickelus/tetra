@@ -14,9 +14,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.SteeledPotionEffect;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
+import se.mickelus.tetra.effect.potion.UnwaveringPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ReapEffect extends ChargedAbilityEffect {
@@ -31,6 +35,9 @@ public class ReapEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
         if (!attacker.world.isRemote) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+            double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
+            Collection<LivingEntity> momentumTargets = new LinkedList<>();
+
             double damageMultiplier = EffectHelper.getEffectLevel(itemStack, ItemEffect.reap) / 100d;
             double range = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.reap);
 
@@ -61,6 +68,8 @@ public class ReapEffect extends ChargedAbilityEffect {
                         if (result != AbilityUseResult.fail) {
                             if (!entity.isAlive()) {
                                 kills.incrementAndGet();
+                            } else if (momentumEfficiency > 0) {
+                                momentumTargets.add(entity);
                             }
 
                             hits.incrementAndGet();
@@ -70,6 +79,11 @@ public class ReapEffect extends ChargedAbilityEffect {
                             attacker.getEntityWorld().playSound(attacker, entity.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
                         }
                     });
+
+            if (momentumEfficiency > 0 && kills.get() > 0) {
+                int stunDuration = (int) (momentumEfficiency * kills.get() * 20);
+                momentumTargets.forEach(entity -> entity.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false)));
+            }
 
             applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack, chargedTicks);
 
@@ -116,6 +130,12 @@ public class ReapEffect extends ChargedAbilityEffect {
             if (speedLevel > 0) {
                 attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
                         kills - 1, false, true));
+            }
+
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+            if (momentumLevel > 0) {
+                attacker.addPotionEffect(new EffectInstance(UnwaveringPotionEffect.instance, momentumLevel * kills * 20,
+                        0, false, true));
             }
         }
 

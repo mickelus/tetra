@@ -21,6 +21,8 @@
   "effect.tetra.steeled.tooltip": "Increases armor by §e%s",
   "effect.tetra.small_strength": "Determined",
   "effect.tetra.small_strength.tooltip": "Increases attack damage by §e%s",
+  "effect.tetra.unwavering": "Unwavering",
+  "effect.tetra.unwavering.tooltip": "Immune to knockback",
 
   "item.tetra.holo.tooltip1": "At a touch the sphere projects diagrams and glyphs onto nothingness",
   "item.tetra.holo.tooltip2": "§7[§8rmb§7] §8use",
@@ -242,6 +244,7 @@
   "tetra.stats.puncture_momentum.tooltip": "Targets not already affected by puncture are knocked into the air, the distance is increased based on the target's armor",
   "tetra.stats.pry_momentum.tooltip": "Stun the target for §e%s§r seconds per pry stack affecting the target",
   "tetra.stats.overpower_momentum.tooltip": "The target is knocked into the air, the knock-up distance is increased for each exhausted stack on the target but decreased for each exhausted stack on the attacker",
+  "tetra.stats.reap_momentum.tooltip": "Surviving targets are stunned for §e%s§r seconds for each entity killed by reap\n \n§rReap grants knockback immunity for §e%s§r seconds per kill",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
