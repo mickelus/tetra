@@ -37,7 +37,7 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityMomentum": [20, 0.2]
+            "abilityMomentum": [10, 0.05]
         }
     }
 ]

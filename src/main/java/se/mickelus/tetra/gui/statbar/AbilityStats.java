@@ -108,9 +108,7 @@ public class AbilityStats {
                                             new StatGetterEffectEfficiency(ItemEffect.abilityOvercharge, 0.5)),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
-                            new TooltipGetterMultiValue("tetra.stats.puncture_momentum.tooltip",
-                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.05), abilityMomentumEffGetter),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal))));
+                            new TooltipGetterNone("tetra.stats.puncture_momentum.tooltip")));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effect;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
@@ -73,8 +74,9 @@ public class PunctureEffect extends ChargedAbilityEffect {
             if (!isPunctured) {
                 int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
                 if (momentumLevel > 0) {
-                    int duration = momentumLevel + (int) (armor * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
-                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                    double velocity = momentumLevel / 100d + item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * armor;
+                    velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+                    target.addVelocity(0, velocity, 0);
                 }
             }
 
