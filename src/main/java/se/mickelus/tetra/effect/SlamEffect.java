@@ -119,7 +119,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
-//        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);

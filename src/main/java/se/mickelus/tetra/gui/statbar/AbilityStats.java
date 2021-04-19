@@ -130,7 +130,11 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.pry_overcharge.tooltip",
                                     withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityOverchargeEffGetter, new StatGetterAbilityChargeTime(PryChargedEffect.instance)),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
+                            new TooltipGetterMultiValue("tetra.stats.pry_momentum.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.05)),
+                                    withFormat(StatFormat.oneDecimal))));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",

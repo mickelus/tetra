@@ -60,6 +60,12 @@ public class PryEffect {
             if (!target.getEntityWorld().isRemote) {
                 ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target);
             }
+
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+            if (momentumLevel > 0 && currentAmplifier > -1) {
+                int duration = momentumLevel * (currentAmplifier + 1);
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+            }
         }
 
         return result;
