@@ -239,6 +239,7 @@
   "tetra.stats.lunge_momentum_extended.tooltip": "Damage increase is at a 1:1 ratio with fall distance, fall damage is reduced for the wielder equal to the amount of damage dealt to the target",
   "tetra.stats.execute_momentum.tooltip": "Stun the target for §e%s§r seconds, the stun duration is increased based on missing health and harmful effects at the same rate as the attack damage",
   "tetra.stats.slam_momentum.tooltip": "Targets are stunned and knocked up into the air, single target slam stuns for §e%s§r seconds and ground slam stuns for §e%s§r seconds",
+  "tetra.stats.puncture_momentum.tooltip": "Targets not already affected by puncture are stunned for §e%s§r seconds, the armor of the target increases the stun duration by §e%s§r seconds per point of armor",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",

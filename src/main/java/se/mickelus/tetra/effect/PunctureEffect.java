@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.PuncturedPotionEffect;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 public class PunctureEffect extends ChargedAbilityEffect {
@@ -67,6 +68,14 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 }
 
                 target.addPotionEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
+            }
+
+            if (!isPunctured) {
+                int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+                if (momentumLevel > 0) {
+                    int duration = momentumLevel + (int) (armor * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
+                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                }
             }
 
             target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
