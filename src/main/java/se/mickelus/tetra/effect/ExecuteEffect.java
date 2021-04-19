@@ -14,6 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
+import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -60,15 +61,25 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
-        double damageMultiplier = missingHealth + harmfulCount * efficiency / 100;
+        double damageMultiplier = 1;
+
+        damageMultiplier += missingHealth + harmfulCount * efficiency / 100;
 
         if (canOvercharge(item, itemStack)) {
             damageMultiplier *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
         }
 
-        damageMultiplier += 1;
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
-        return item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
+        if (result != AbilityUseResult.fail) {
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+            if (momentumLevel > 0) {
+                int duration = (int) (momentumLevel * damageMultiplier * 20);
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+            }
+        }
+
+        return result;
     }
 
     private AbilityUseResult defensiveExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
