@@ -81,7 +81,12 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.slam_overcharge.tooltip",
                                     withStats(abilityOverchargeGetter, multiply(abilityOverchargeGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityOverchargeEffGetter, abilityOverchargeGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_momentum.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.05),
+                                            new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.03333)),
+                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

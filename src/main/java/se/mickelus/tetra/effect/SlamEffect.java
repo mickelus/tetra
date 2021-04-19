@@ -3,6 +3,7 @@ package se.mickelus.tetra.effect;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
@@ -36,21 +37,40 @@ public class SlamEffect extends ChargedAbilityEffect {
         super(10, 1f, 40, 6, ItemEffect.slam, TargetRequirement.either, UseAction.SPEAR, "raised");
     }
 
-
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        int stunDuration = isDefensive(item, itemStack, hand) ? item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) : 0;
+        int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
+        float knockbackMultiplier = 1f;
+        boolean isDefensive = isDefensive(item, itemStack, hand);
 
-        if (stunDuration > 0) {
+        if (isDefensive) {
             damageMultiplier -= 0.3;
+             stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
         }
 
-        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
+        int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+        if (momentumLevel > 0) {
+            stunDuration = momentumLevel;
+        }
+
+        double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
+        if (momentumEfficiency > 0) {
+            knockbackMultiplier = 0.4f;
+        }
+
+
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockbackMultiplier * 0.8f, knockbackMultiplier);
 
         if (result != AbilityUseResult.fail) {
             if (stunDuration > 0) {
-                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration));
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
+            }
+
+            if (momentumEfficiency > 0) {
+                double velocity = momentumEfficiency;
+                velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+                target.addVelocity(0, velocity, 0);
             }
 
             Random rand = target.getRNG();
@@ -82,6 +102,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             double yaw = MathHelper.atan2(direction.x, direction.z);
             AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
+            double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
 
 
 
@@ -91,7 +112,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                     .filter(Entity::canBeAttackedWithItem)
                     .filter(entity -> !attacker.equals(entity))
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
-                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration));
+                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency));
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
         }
@@ -197,14 +218,29 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin,
-            double damageMultiplier, int slowDuration) {
+            double damageMultiplier, int slowDuration, double momentumEfficiency) {
         ServerScheduler.schedule(target.getPosition().manhattanDistance(new BlockPos(origin)) - 3, () -> {
-            AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 1f, 1f);
+            float knockback = momentumEfficiency > 0 ? 0.1f : 0.5f;
 
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+            AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockback, knockback);
 
-            if (result != AbilityUseResult.fail && slowDuration > 0) {
-                target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, slowDuration, 1, false, true));
+            if (momentumEfficiency > 0) {
+                target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_GENERIC_BIG_FALL, SoundCategory.PLAYERS, 1, 0.7f);
+            } else {
+                target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.9f);
+            }
+
+            if (result != AbilityUseResult.fail) {
+                if (slowDuration > 0) {
+                    target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, slowDuration, 1, false, true));
+                }
+
+                if (momentumEfficiency > 0) {
+                    double velocity = momentumEfficiency;
+                    velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+                    target.addVelocity(0, velocity, 0);
+                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, 40, 0, false, false));
+                }
             }
 
             if (result == AbilityUseResult.crit) {

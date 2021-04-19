@@ -9,19 +9,11 @@
         }
     },
     {
-        "modules": ["double/basic_hammer_right"],
-        "matchSuffixed": true,
-        "improvements": ["double/warforged"],
-        "effects": {
-            "abilityStun": 1
-        }
-    },
-    {
         "modules": ["double/basic_hammer_left", "double/adze_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityDefensive": [29, 5]
+            "abilityDefensive": [49, 5]
         }
     },
     {
@@ -30,6 +22,14 @@
         "improvements": ["double/warforged"],
         "effects": {
             "abilityOvercharge": [10, 1.5]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [29, 0.6]
         }
     }
 ]
