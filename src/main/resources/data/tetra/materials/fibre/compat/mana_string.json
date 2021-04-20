@@ -1,4 +1,10 @@
 {
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }
+    ],
     "key": "mana_string",
     "category": "fibre",
     "primary": "5",

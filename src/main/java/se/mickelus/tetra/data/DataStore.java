@@ -1,10 +1,7 @@
 package se.mickelus.tetra.data;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import net.minecraft.client.resources.ReloadListener;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.profiler.IProfiler;
@@ -12,14 +9,15 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.network.PacketHandler;
 
+import javax.annotation.Nullable;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -74,7 +72,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
                 } else {
                     json = JSONUtils.fromJson(gson, reader, JsonElement.class);
                 }
-                if (json != null) {
+                if (shouldLoad(json)) {
                     JsonElement duplicate = map.put(location, json);
                     if (duplicate != null) {
                         throw new IllegalStateException("Duplicate data file ignored with ID " + location);
@@ -185,5 +183,20 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
      */
     public void onReload(Runnable callback) {
         listeners.add(callback);
+    }
+
+    protected boolean shouldLoad(@Nullable JsonElement json) {
+        if (json == null)
+            return false;
+        if (json.isJsonArray()) {
+            JsonArray arr = json.getAsJsonArray();
+            if (arr.size() > 0)
+                json = arr.get(0);
+        }
+
+        if (!json.isJsonObject())
+            return true;
+        JsonObject jsonObject = json.getAsJsonObject();
+        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getJsonArray(jsonObject, "conditions"));
     }
 }
