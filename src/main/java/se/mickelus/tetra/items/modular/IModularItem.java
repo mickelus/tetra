@@ -53,7 +53,6 @@ import java.util.stream.Stream;
 public interface IModularItem {
     Logger logger = LogManager.getLogger();
 
-    @OnlyIn(Dist.CLIENT)
     GuiModuleOffsets[] defaultMajorOffsets = {
             new GuiModuleOffsets(),
             new GuiModuleOffsets(4, 0),
@@ -62,7 +61,6 @@ public interface IModularItem {
             new GuiModuleOffsets(4, 0, 4, 18, -4, 0, -4, 18)
     };
 
-    @OnlyIn(Dist.CLIENT)
     GuiModuleOffsets[] defaultMinorOffsets = {
             new GuiModuleOffsets(),
             new GuiModuleOffsets(-21, 12),
