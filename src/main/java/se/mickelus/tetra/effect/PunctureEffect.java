@@ -25,7 +25,6 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-
         AbilityUseResult result;
         if (isDefensive(item, itemStack, hand)) {
             result = performDefensive(attacker, hand, item, itemStack, target);
@@ -36,6 +35,10 @@ public class PunctureEffect extends ChargedAbilityEffect {
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
+
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
 
         item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
@@ -54,6 +57,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
                 if (overchargeBonus > 0) {
                     duration += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) * 10);
+                }
+
+                double comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
+                if (comboLevel > 0) {
+                    duration += comboLevel * ComboPoints.get(attacker);
                 }
 
                 target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
