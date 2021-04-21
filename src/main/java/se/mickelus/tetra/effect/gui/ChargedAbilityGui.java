@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect;
+package se.mickelus.tetra.effect.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.InvertColorGui;
 
@@ -25,7 +25,7 @@ public class ChargedAbilityGui extends GuiRoot {
     public ChargedAbilityGui(Minecraft mc) {
         super(mc);
 
-        container = new InvertColorGui(-1, 20, width, 2)
+        container = new InvertColorGui(-1, 22, width, 2)
                 .setAttachment(GuiAttachment.middleCenter)
                 .setOpacity(0);
         addChild(container);

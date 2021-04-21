@@ -31,5 +31,13 @@
         "effects": {
             "abilityMomentum": [10, 0.5]
         }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": [25, 10]
+        }
     }
 ]

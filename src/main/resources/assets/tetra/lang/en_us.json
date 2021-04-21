@@ -246,6 +246,22 @@
   "tetra.stats.overpower_momentum.tooltip": "The target is knocked into the air, the knock-up distance is increased for each exhausted stack on the target but decreased for each exhausted stack on the attacker",
   "tetra.stats.reap_momentum.tooltip": "Surviving targets are stunned for §e%s§r seconds for each entity killed by reap\n \n§rReap grants knockback immunity for §e%s§r seconds per kill",
 
+  "tetra.stats.ability_combo": "Combo",
+  "tetra.stats.lunge_combo.tooltip": "Regular attacks grant combo points the charge time is reduced by §e%s%%§r per combo point and hitting an entity reduces the cooldown by an additional §e%s%%§r per combo point",
+  "tetra.stats.lunge_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.execute_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.execute_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.slam_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.slam_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.puncture_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.puncture_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.pry_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.pry_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.overpower_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.overpower_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+  "tetra.stats.reap_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.reap_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
+
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
@@ -255,7 +271,7 @@
   "tetra.stats.severing.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.lunge": "Lunge",
-  "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§f attack damage and reduces the ability cooldown by §e20%%§f.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§f attack damage and reduces the ability cooldown by §e30%%§f.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.lunge.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.slam": "Slam",

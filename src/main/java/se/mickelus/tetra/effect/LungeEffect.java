@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import java.util.concurrent.TimeUnit;
 
 public class LungeEffect extends ChargedAbilityEffect {
-
     private static Cache<Integer, LungeData> activeCache = CacheBuilder.newBuilder()
             .maximumSize(20)
             .expireAfterWrite(5, TimeUnit.SECONDS)
@@ -39,7 +38,16 @@ public class LungeEffect extends ChargedAbilityEffect {
     public static final LungeEffect instance = new LungeEffect();
 
     LungeEffect() {
-        super(5, 0.5f, 40, 6, ItemEffect.lunge, TargetRequirement.none, UseAction.SPEAR, "raised");
+        super(5, 0.5f, 60, 6.5, ItemEffect.lunge, TargetRequirement.none, UseAction.SPEAR, "raised");
+    }
+
+    @Override
+    public int getChargeTime(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack) {
+        if (ComboPoints.canSpend(item, itemStack)) {
+            return (int) (super.getChargeTime(attacker, item, itemStack)
+                    * (1 - item.getEffectLevel(itemStack, ItemEffect.abilityCombo) / 100d * ComboPoints.get(attacker)));
+        }
+        return super.getChargeTime(attacker, item, itemStack);
     }
 
     @Override
@@ -50,6 +58,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
             Vector3d lookVector = attacker.getLookVec();
             double verticalVelocityFactor = 0.8;
+            float hitCooldown = 0.7f;
 
             if (canOvercharge(item, itemStack)) {
                 int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
@@ -57,10 +66,15 @@ public class LungeEffect extends ChargedAbilityEffect {
                 damageMultiplierOffset += item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge) / 100f;
             }
 
+            double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
+            if (comboEfficiency > 0) {
+                hitCooldown -= comboEfficiency * ComboPoints.get(attacker) / 100;
+            }
+
             if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
-                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset));
+                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown));
             }
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
@@ -85,6 +99,10 @@ public class LungeEffect extends ChargedAbilityEffect {
             attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,
                     SoundCategory.PLAYERS, 1, 1.3f);
 
+        }
+
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
         }
     }
 
@@ -147,7 +165,7 @@ public class LungeEffect extends ChargedAbilityEffect {
         item.tickProgression(player, itemStack, 2);
         item.applyDamage(2, itemStack, player);
 
-        player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * 0.7));
+        player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * data.hitCooldown));
 
         activeCache.invalidate(getIdentifier(player));
     }
@@ -169,10 +187,12 @@ public class LungeEffect extends ChargedAbilityEffect {
     static class LungeData {
         ItemStack itemStack;
         float damageMultiplierOffset;
+        float hitCooldown;
 
-        public LungeData(ItemStack itemStack, float damageMultiplierOffset) {
+        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown) {
             this.itemStack = itemStack;
             this.damageMultiplierOffset = damageMultiplierOffset;
+            this.hitCooldown = hitCooldown;
         }
     }
 }

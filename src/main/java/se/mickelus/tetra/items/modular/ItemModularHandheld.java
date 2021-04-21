@@ -39,6 +39,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
@@ -50,7 +51,6 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ItemModularHandheld extends ModularItem {
