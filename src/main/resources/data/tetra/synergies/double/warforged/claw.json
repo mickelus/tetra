@@ -38,5 +38,13 @@
         "effects": {
             "abilityMomentum": 8
         }
+    },
+    {
+        "modules": ["double/claw_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": [5, 25]
+        }
     }
 ]

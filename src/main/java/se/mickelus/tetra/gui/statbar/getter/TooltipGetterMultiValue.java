@@ -18,7 +18,8 @@ public class TooltipGetterMultiValue implements ITooltipGetter {
         this.formatters = formatters;
 
         if (statGetters.length != formatters.length) {
-            throw new RuntimeException("Mismatching length of stat getters and formatters");
+            throw new RuntimeException(String.format("Mismatching length of stat getters and formatters for '%s', gett: %d, form: %d", localizationKey,
+                    statGetters.length, formatters.length));
         }
     }
 

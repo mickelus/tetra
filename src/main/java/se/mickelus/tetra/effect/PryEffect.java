@@ -16,6 +16,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.ParticleHelper;
 
 import java.util.Optional;
+import java.util.Random;
 
 public class PryEffect {
     public static final double flatCooldown = 2;
@@ -41,19 +42,42 @@ public class PryEffect {
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
+
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
     }
 
     public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
             int amplifier, LivingEntity target) {
-        int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
-                .map(EffectInstance::getAmplifier)
-                .orElse(-1);
+        int comboPoints = ComboPoints.get(attacker);
+
+        int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
+        if (comboLevel > 0) {
+            damageMultiplier += comboLevel * comboPoints / 100d;
+        }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
+            int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
+                    .map(EffectInstance::getAmplifier)
+                    .orElse(-1);
+
+            double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
+            if (comboEfficiency > 0 && attacker.getEntityWorld().getRandom().nextFloat() < (comboEfficiency * comboPoints / 100f)) {
+                amplifier++;
+
+                if (!target.getEntityWorld().isRemote) {
+                    Random rand = target.getEntityWorld().getRandom();
+                    ((ServerWorld) target.getEntityWorld()).spawnParticle(ParticleTypes.CRIT,
+                            target.getPosX(), target.getPosY() + target.getHeight() / 2, target.getPosZ(), 10,
+                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
+                }
+            }
+
             target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
                     currentAmplifier + amplifier, false, false));
 

@@ -148,7 +148,12 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
                             new TooltipGetterMultiValue("tetra.stats.pry_momentum.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.05)),
-                                    withFormat(StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
+                            new TooltipGetterMultiValue("tetra.stats.pry_combo.tooltip",
+                                    withStats(abilityComboGetter, multiply(abilityComboGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityComboEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",
