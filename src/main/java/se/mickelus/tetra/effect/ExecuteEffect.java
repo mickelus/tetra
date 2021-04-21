@@ -48,6 +48,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
+
         item.applyDamage(2, itemStack, attacker);
     }
 
@@ -61,9 +65,14 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
-        double damageMultiplier = 1;
+        double damageMultiplier = missingHealth + harmfulCount * efficiency / 100;
 
-        damageMultiplier += missingHealth + harmfulCount * efficiency / 100;
+        double comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
+        if (comboLevel > 0) {
+            damageMultiplier *= 1 + comboLevel * ComboPoints.get(attacker) / 100;
+        }
+
+        damageMultiplier += 1;
 
         if (canOvercharge(item, itemStack)) {
             damageMultiplier *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;

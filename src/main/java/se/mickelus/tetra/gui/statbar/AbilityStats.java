@@ -66,7 +66,11 @@ public class AbilityStats {
                                     withStats(abilityOverchargeGetter), withFormat(StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_momentum.tooltip",
-                                    withStats(abilityMomentumGetter), withFormat(StatFormat.noDecimal))));
+                                    withStats(abilityMomentumGetter), withFormat(StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
+                            new TooltipGetterMultiValue("tetra.stats.execute_combo.tooltip",
+                                    withStats(abilityComboGetter),
+                                    withFormat(StatFormat.noDecimal))));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);
