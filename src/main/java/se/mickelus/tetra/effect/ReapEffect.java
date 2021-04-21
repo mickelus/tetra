@@ -46,6 +46,11 @@ public class ReapEffect extends ChargedAbilityEffect {
                 range += overchargeBonus * 0.5;
             }
 
+            int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
+            if (comboLevel > 0) {
+                damageMultiplier += comboLevel * ComboPoints.get(attacker) / 100d;
+            }
+
             AtomicInteger kills = new AtomicInteger();
             AtomicInteger hits = new AtomicInteger();
             Vector3d targetVec;
@@ -99,6 +104,10 @@ public class ReapEffect extends ChargedAbilityEffect {
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
+
         item.applyDamage(2, itemStack, attacker);
     }
 
@@ -136,6 +145,15 @@ public class ReapEffect extends ChargedAbilityEffect {
             if (momentumLevel > 0) {
                 attacker.addPotionEffect(new EffectInstance(UnwaveringPotionEffect.instance, momentumLevel * kills * 20,
                         0, false, true));
+            }
+
+            double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
+            if (comboEfficiency > 0) {
+                double duration = 15 * 20;
+
+                duration += comboEfficiency * ComboPoints.get(attacker) * 20;
+
+                attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) duration, kills - 1, false, true));
             }
         }
 

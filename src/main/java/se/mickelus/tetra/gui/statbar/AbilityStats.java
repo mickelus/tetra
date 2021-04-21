@@ -209,5 +209,10 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
                             new TooltipGetterMultiValue("tetra.stats.reap_momentum.tooltip",
                                     withStats(abilityMomentumEffGetter, abilityMomentumGetter),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_combo.tooltip",
+                                    withStats(abilityComboGetter, multiply(abilityComboGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityComboEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 }

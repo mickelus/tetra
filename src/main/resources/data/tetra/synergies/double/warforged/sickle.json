@@ -47,5 +47,13 @@
         "effects": {
             "abilityMomentum": [15, 2]
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": [10, 5]
+        }
     }
 ]
