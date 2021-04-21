@@ -257,7 +257,7 @@
   "tetra.stats.puncture_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
   "tetra.stats.pry_combo.tooltip": "Regular attacks grant combo points, pry deals §e+%s%% (%s)§r damage per combo point and has a §e%s%%§r chance per combo point to reduce the target's armor by twice the usual amount",
   "tetra.stats.pry_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
-  "tetra.stats.overpower_combo.tooltip": "Regular attacks grant combo points, ",
+  "tetra.stats.overpower_combo.tooltip": "Regular attacks grant combo points, overpower deals §e+%s%% (%s)§r damage per combo point and has a §e%s%%§r chance per combo point to not exhaust the attacker",
   "tetra.stats.overpower_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
   "tetra.stats.reap_combo.tooltip": "Regular attacks grant combo points, ",
   "tetra.stats.reap_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",

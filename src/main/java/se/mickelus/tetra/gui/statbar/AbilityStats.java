@@ -176,7 +176,12 @@ public class AbilityStats {
                                             abilityOverchargeEffGetter),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_momentum", 11, abilityMomentumGetter,
-                            new TooltipGetterNone("tetra.stats.overpower_momentum.tooltip")));
+                            new TooltipGetterNone("tetra.stats.overpower_momentum.tooltip")),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
+                            new TooltipGetterMultiValue("tetra.stats.overpower_combo.tooltip",
+                                    withStats(abilityComboGetter, multiply(abilityComboGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityComboEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter reapGetter = new StatGetterEffectLevel(ItemEffect.reap, 1);
     public static final GuiStatBar reap = new GuiStatBar(0, 0, barLength, "tetra.stats.reap",

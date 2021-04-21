@@ -5,17 +5,20 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.Random;
 
 public class OverpowerEffect extends ChargedAbilityEffect {
 
@@ -32,20 +35,32 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
-        double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
+        double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
-        if (!isDefensive) {
-            int attackerAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+        if (!attacker.world.isRemote && !isDefensive) {
+            int currentAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
-            attackerAmp += 1;
+            int newAmp = currentAmp + 1;
 
             if (overchargeBonus > 0) {
-                attackerAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
+                currentAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
             }
 
-            attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), attackerAmp, false, true));
+            double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
+            if (comboEfficiency > 0 && attacker.getEntityWorld().getRandom().nextFloat() < (comboEfficiency * ComboPoints.get(attacker) / 100f)) {
+                currentAmp--;
+
+                Random rand = attacker.getEntityWorld().getRandom();
+                ((ServerWorld) attacker.getEntityWorld()).spawnParticle(ParticleTypes.HAPPY_VILLAGER,
+                        attacker.getPosX(), attacker.getPosY() + attacker.getHeight() / 2, attacker.getPosZ(), 10,
+                        rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
+            }
+
+            if (newAmp > currentAmp) {
+                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20), currentAmp, false, true));
+            }
         }
 
         attacker.addExhaustion(0.05f);
@@ -57,6 +72,10 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             cooldown = (int) (cooldown * (1 + item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) / 100f));
         }
 
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
+
         attacker.getCooldownTracker().setCooldown(item, cooldown);
     }
 
@@ -64,13 +83,17 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
-        int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
 
         double damageMultiplier = item.getEffectLevel(itemStack, isDefensive ? ItemEffect.abilityDefensive : ItemEffect.overpower) / 100f;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
         if (overchargeBonus > 0) {
             damageMultiplier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+        }
+
+        int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
+        if (comboLevel > 0) {
+            damageMultiplier += comboLevel * ComboPoints.get(attacker) / 100d;
         }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
@@ -89,6 +112,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 amplifier += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
             }
 
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0 && currentAmplifier > -1) {
                 double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
                 double velocity = momentumLevel / 100d;
