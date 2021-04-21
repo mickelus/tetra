@@ -69,8 +69,7 @@ public class AbilityStats {
                                     withStats(abilityMomentumGetter), withFormat(StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_combo.tooltip",
-                                    withStats(abilityComboGetter),
-                                    withFormat(StatFormat.noDecimal))));
+                                    withStats(abilityComboGetter), withFormat(StatFormat.noDecimal))));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);
@@ -97,7 +96,10 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.slam_momentum.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.05),
                                             new StatGetterEffectLevel(ItemEffect.abilityMomentum, 0.03333)),
-                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.oneDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_combo.tooltip",
+                                    withStats(abilityComboGetter), withFormat(StatFormat.noDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

@@ -31,5 +31,13 @@
         "effects": {
             "abilityMomentum": [29, 0.6]
         }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": 25
+        }
     }
 ]

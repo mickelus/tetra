@@ -36,6 +36,15 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     @Override
+    public int getChargeTime(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack) {
+        if (ComboPoints.canSpend(item, itemStack)) {
+            return (int) (super.getChargeTime(attacker, item, itemStack)
+                    * (1 - item.getEffectLevel(itemStack, ItemEffect.abilityCombo) / 100d * ComboPoints.get(attacker)));
+        }
+        return super.getChargeTime(attacker, item, itemStack);
+    }
+
+    @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
