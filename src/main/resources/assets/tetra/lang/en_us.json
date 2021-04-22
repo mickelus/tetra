@@ -264,9 +264,9 @@
 
   "tetra.stats.ability_revenge": "Revenge",
   "tetra.stats.lunge_revenge.tooltip": "Hitting a revenge target with lunge resets its cooldown",
-  "tetra.stats.lunge_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, using an ability that leverages this resets the status for affected targets. All revenge targets are reset after not being attacked for 30 seconds. Hud indicators appear when looking at a revenge target while wielding an item capable of revenge.",
-  "tetra.stats.execute_revenge.tooltip": "",
-  "tetra.stats.execute_revenge.tooltip_extended": "",
+  "tetra.stats.lunge_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, a hud indicator appears when looking at a revenge target while wielding an item capable of revenge. Using an ability that leverages revenge resets the revenge status for affected targets. All revenge targets are reset after not being attacked for 30 seconds.",
+  "tetra.stats.execute_revenge": "Revel in Pain",
+  "tetra.stats.execute_revenge.tooltip": "Execute deals §e%s%%§r more damage if the wielder is affected by any harmful effect",
   "tetra.stats.slam_revenge.tooltip": "",
   "tetra.stats.slam_revenge.tooltip_extended": "",
   "tetra.stats.puncture_revenge.tooltip": "",

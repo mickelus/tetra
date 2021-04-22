@@ -74,7 +74,10 @@ public class AbilityStats {
                                     withStats(abilityMomentumGetter), withFormat(StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_combo.tooltip",
-                                    withStats(abilityComboGetter), withFormat(StatFormat.noDecimal))));
+                                    withStats(abilityComboGetter), withFormat(StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.execute_revenge", 13, abilityRevengeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.execute_revenge.tooltip",
+                                    withStats(abilityRevengeGetter), withFormat(StatFormat.noDecimal))));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);

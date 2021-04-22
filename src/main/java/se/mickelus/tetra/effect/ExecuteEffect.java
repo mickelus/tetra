@@ -82,6 +82,11 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             damageMultiplier *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
         }
 
+        double revengeMultiplier = getRevengeMultiplier(attacker, item, itemStack);
+        if (revengeMultiplier > 0) {
+            damageMultiplier *= revengeMultiplier;
+        }
+
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
@@ -118,6 +123,15 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         return result;
     }
 
+    private double getRevengeMultiplier(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack) {
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+        if (revengeLevel > 0 && (player.getActivePotionEffects().stream().anyMatch(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
+                || player.isBurning())) {
+            return 1 + revengeLevel / 100d;
+        }
+
+        return 0;
+    }
 
     private void playEffects(boolean isSuccess, LivingEntity target, Vector3d hitVec) {
         if (isSuccess) {
