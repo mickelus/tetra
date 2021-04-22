@@ -135,7 +135,9 @@ public class AbilityStats {
                             new TooltipGetterNone("tetra.stats.puncture_momentum.tooltip")),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
                             new TooltipGetterMultiValue("tetra.stats.puncture_combo.tooltip",
-                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityCombo, 0.05)), withFormat(StatFormat.oneDecimal))));
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityCombo, 0.05)), withFormat(StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.puncture_revenge", 13, abilityRevengeGetter,
+                            new TooltipGetterNone("tetra.stats.puncture_revenge.tooltip")));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",

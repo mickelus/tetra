@@ -52,7 +52,9 @@ public class PunctureEffect extends ChargedAbilityEffect {
         if (result != AbilityUseResult.fail) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
-            if (armor < 6 || isPunctured) {
+            boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getTotalArmorValue();
+
+            if (armor < 6 || isPunctured || reversal) {
                 int duration = 80;
 
                 if (overchargeBonus > 0) {
@@ -65,10 +67,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 }
 
                 target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
-            } else {
+            }
+
+            if (!(armor < 6 || isPunctured) || reversal) {
                 int amplifier = item.getEffectLevel(itemStack, ItemEffect.puncture) - 1;
                 int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.puncture) * 20);
-
 
                 if (overchargeBonus > 0) {
                     amplifier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge);
