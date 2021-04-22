@@ -53,11 +53,18 @@ public class SlamEffect extends ChargedAbilityEffect {
         float knockbackMultiplier = 1f;
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
+        int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
         if (isDefensive) {
             damageMultiplier -= 0.3;
              stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
+        }
+
+        if (overchargeBonus > 0) {
+            double bonus = overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
+            damageMultiplier += bonus;
+            knockbackMultiplier += bonus;
         }
 
         int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
