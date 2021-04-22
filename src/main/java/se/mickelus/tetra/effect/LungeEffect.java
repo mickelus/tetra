@@ -133,7 +133,14 @@ public class LungeEffect extends ChargedAbilityEffect {
         player.setMotion(bounceVector);
         player.velocityChanged = true;
 
+        float cooldownMultiplier = data.hitCooldown;
+
         int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+
+        if (RevengeTracker.canRevenge(player) && RevengeTracker.canRevenge(player, target)) {
+            cooldownMultiplier = 0;
+            RevengeTracker.remove(player, target);
+        }
 
         if (!player.world.isRemote) {
             double bonusDamage = 0;
@@ -165,7 +172,7 @@ public class LungeEffect extends ChargedAbilityEffect {
         item.tickProgression(player, itemStack, 2);
         item.applyDamage(2, itemStack, player);
 
-        player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * data.hitCooldown));
+        player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * cooldownMultiplier));
 
         activeCache.invalidate(getIdentifier(player));
     }

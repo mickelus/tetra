@@ -18,9 +18,8 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
-import se.mickelus.tetra.effect.gui.ChargedAbilityOverlay;
+import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.gui.ComboPointGui;
-import se.mickelus.tetra.effect.gui.ComboPointOverlay;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
@@ -49,8 +48,7 @@ public class ClientProxy implements IProxy {
         ClientRegistry.bindTileEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
         MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
-        MinecraftForge.EVENT_BUS.register(new ChargedAbilityOverlay(Minecraft.getInstance()));
-        MinecraftForge.EVENT_BUS.register(new ComboPointOverlay(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
 
         if (ConfigHandler.development.get()) {
             ClientRegistry.bindTileEntityRenderer(TileEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);

@@ -173,6 +173,7 @@ public class ItemEffect {
     public static ItemEffect abilityOvercharge = get("abilityOvercharge");
     public static ItemEffect abilityMomentum = get("abilityMomentum");
     public static ItemEffect abilityCombo = get("abilityCombo");
+    public static ItemEffect abilityRevenge = get("abilityRevenge");
     public static ItemEffect abilitySpeed = get("abilitySpeed");
 
     /**

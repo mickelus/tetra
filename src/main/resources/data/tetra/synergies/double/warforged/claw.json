@@ -8,14 +8,6 @@
         }
     },
     {
-        "modules": ["double/claw_right"],
-        "matchSuffixed": true,
-        "improvements": ["double/warforged"],
-        "effects": {
-            "abilityRevenge": 1
-        }
-    },
-    {
         "modules": ["double/claw_left", "double/adze_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],

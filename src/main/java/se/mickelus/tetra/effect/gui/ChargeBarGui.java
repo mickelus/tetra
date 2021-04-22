@@ -1,19 +1,22 @@
 package se.mickelus.tetra.effect.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.InvertColorGui;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.util.CastOptional;
 
-public class ChargedAbilityGui extends GuiRoot {
-    private final int width = 17;
-    
+import java.util.Optional;
+
+public class ChargeBarGui extends GuiElement {
     private GuiElement container;
     private GuiElement overchargeContainer;
     private Bar bar;
@@ -22,11 +25,12 @@ public class ChargedAbilityGui extends GuiRoot {
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
 
-    public ChargedAbilityGui(Minecraft mc) {
-        super(mc);
+    public ChargeBarGui() {
+        super(-1, 22, 17, 2);
 
-        container = new InvertColorGui(-1, 22, width, 2)
-                .setAttachment(GuiAttachment.middleCenter)
+        setAttachment(GuiAttachment.middleCenter);
+
+        container = new InvertColorGui(0, 0, width, height)
                 .setOpacity(0);
         addChild(container);
 
@@ -74,17 +78,21 @@ public class ChargedAbilityGui extends GuiRoot {
         }
     }
 
-    public void draw(MatrixStack matrixStack) {
-        if (isVisible()) {
-            MainWindow window = mc.getMainWindow();
-            int width = window.getScaledWidth();
-            int height = window.getScaledHeight();
+    public void update(PlayerEntity player) {
 
-            int mouseX = (int)(mc.mouseHelper.getMouseX() * window.getScaledWidth() / window.getWidth());
-            int mouseY = (int)(mc.mouseHelper.getMouseY() * window.getScaledHeight() / window.getHeight());
+        ItemStack activeStack = player.getActiveItemStack();
+        ItemModularHandheld item = CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class).orElse(null);
+        ChargedAbilityEffect ability = Optional.ofNullable(item).map(i -> i.getChargeableAbility(activeStack)).orElse(null);
 
-            this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+        if (ability != null) {
+            setProgress(getProgress(player, item, activeStack, ability), ability.canOvercharge(item, activeStack));
+        } else {
+            setProgress(0, false);
         }
+    }
+
+    private float getProgress(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
+        return ability != null ? (itemStack.getUseDuration() - player.getItemInUseCount()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
     }
 
     static class Bar extends GuiElement {

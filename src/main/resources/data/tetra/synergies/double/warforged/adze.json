@@ -39,5 +39,13 @@
         "effects": {
             "abilityCombo": [25, 10]
         }
+    },
+    {
+        "modules": ["double/adze_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 1
+        }
     }
 ]

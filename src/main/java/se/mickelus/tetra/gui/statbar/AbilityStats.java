@@ -21,6 +21,9 @@ public class AbilityStats {
     public static final IStatGetter abilityComboGetter = new StatGetterEffectLevel(ItemEffect.abilityCombo, 1);
     public static final IStatGetter abilityComboEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityCombo, 1);
 
+    public static final IStatGetter abilityRevengeGetter = new StatGetterEffectLevel(ItemEffect.abilityRevenge, 1);
+    public static final IStatGetter abilityRevengeEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityRevenge, 1);
+
     public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
     public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",
             0, 200, false, lungeGetter, LabelGetterBasic.percentageLabel,
@@ -44,7 +47,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_combo", 12, abilityComboGetter,
                             new TooltipGetterMultiValue("tetra.stats.lunge_combo.tooltip",
                                     withStats(abilityComboGetter, abilityComboEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
+                            new TooltipGetterNone("tetra.stats.lunge_revenge.tooltip")));
 
     public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
     public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",

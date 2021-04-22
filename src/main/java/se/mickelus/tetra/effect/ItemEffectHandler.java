@@ -158,6 +158,8 @@ public class ItemEffectHandler {
                     });
 
         }
+
+        RevengeTracker.onAttackEntity(event);
     }
 
     @SubscribeEvent

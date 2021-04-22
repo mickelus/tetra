@@ -262,6 +262,23 @@
   "tetra.stats.reap_combo.tooltip": "Regular attacks grant combo points, reap deals §e+%s%% (%s)§r damage per combo point\n \n§rReap grants §e+10%%§r attack & harvest speed per kill for §e15§r seconds, the duration is increased by §e%s§r seconds per combo point",
   "tetra.stats.reap_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
 
+  "tetra.stats.ability_revenge": "Revenge",
+  "tetra.stats.lunge_revenge.tooltip": "Hitting a revenge target with lunge resets its cooldown",
+  "tetra.stats.lunge_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, using an ability that leverages this resets the status for affected targets. All revenge targets are reset after not being attacked for 30 seconds. Hud indicators appear when looking at a revenge target while wielding an item capable of revenge.",
+  "tetra.stats.execute_revenge.tooltip": "",
+  "tetra.stats.execute_revenge.tooltip_extended": "",
+  "tetra.stats.slam_revenge.tooltip": "",
+  "tetra.stats.slam_revenge.tooltip_extended": "",
+  "tetra.stats.puncture_revenge.tooltip": "",
+  "tetra.stats.puncture_revenge.tooltip_extended": "",
+  "tetra.stats.pry_revenge.tooltip": "",
+  "tetra.stats.pry_revenge.tooltip_extended": "",
+  "tetra.stats.overpower_revenge.tooltip": "",
+  "tetra.stats.overpower_revenge.tooltip_extended": "",
+  "tetra.stats.reap_revenge.tooltip": "",
+  "tetra.stats.reap_revenge.tooltip_extended": "",
+
+
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
