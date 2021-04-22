@@ -62,6 +62,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 .map(amp -> amp + 1)
                 .sum();
 
+        if (target.isBurning()) {
+            harmfulCount++;
+        }
+
         float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
