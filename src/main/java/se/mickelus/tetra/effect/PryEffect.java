@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -12,6 +13,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.*;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.ParticleHelper;
 
@@ -46,6 +48,11 @@ public class PryEffect {
             ComboPoints.reset(attacker);
         }
 
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+        if (revengeLevel > 0) {
+            RevengeTracker.removeEnemy(attacker, target);
+        }
+
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
     }
@@ -53,10 +60,15 @@ public class PryEffect {
     public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
             int amplifier, LivingEntity target) {
         int comboPoints = ComboPoints.get(attacker);
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
         int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
         if (comboLevel > 0) {
             damageMultiplier += comboLevel * comboPoints / 100d;
+        }
+
+        if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+            damageMultiplier += revengeLevel / 100d;
         }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
@@ -76,6 +88,10 @@ public class PryEffect {
                             target.getPosX(), target.getPosY() + target.getHeight() / 2, target.getPosZ(), 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
                 }
+            }
+
+            if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+                amplifier++;
             }
 
             target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),

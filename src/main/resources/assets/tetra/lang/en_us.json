@@ -271,12 +271,12 @@
   "tetra.stats.slam_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, a hud indicator appears when looking at a revenge target while wielding an item capable of revenge. Using an ability that leverages revenge resets the revenge status for affected targets. All revenge targets are reset after not being attacked for 30 seconds.",
   "tetra.stats.puncture_revenge": "Reversal",
   "tetra.stats.puncture_revenge.tooltip": "Applies both armor reduction and bleed if the target has more armor than the wielder",
-  "tetra.stats.pry_revenge.tooltip": "",
-  "tetra.stats.pry_revenge.tooltip_extended": "",
   "tetra.stats.overpower_revenge.tooltip": "",
   "tetra.stats.overpower_revenge.tooltip_extended": "",
   "tetra.stats.reap_revenge.tooltip": "",
   "tetra.stats.reap_revenge.tooltip_extended": "",
+  "tetra.stats.pry_revenge.tooltip": "Pry deals §e%s%% (%s)§r more damage and applies twice the armor reduction when used on a revenge target",
+  "tetra.stats.pry_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, a hud indicator appears when looking at a revenge target while wielding an item capable of revenge. Using an ability that leverages revenge resets the revenge status for affected targets. All revenge targets are reset after not being attacked for 30 seconds.",
 
 
   "tetra.stats.execute": "Execute",

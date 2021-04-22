@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 public class PryChargedEffect extends ChargedAbilityEffect {
@@ -38,6 +39,15 @@ public class PryChargedEffect extends ChargedAbilityEffect {
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+
+        if (ComboPoints.canSpend(item, itemStack)) {
+            ComboPoints.reset(attacker);
+        }
+
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+        if (revengeLevel > 0) {
+            RevengeTracker.removeEnemy(attacker, target);
+        }
 
         item.applyDamage(2, itemStack, attacker);
     }
