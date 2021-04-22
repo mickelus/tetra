@@ -47,5 +47,13 @@
         "effects": {
             "abilityCombo": [8, 15]
         }
+    },
+    {
+        "modules": ["double/hoe_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 15
+        }
     }
 ]

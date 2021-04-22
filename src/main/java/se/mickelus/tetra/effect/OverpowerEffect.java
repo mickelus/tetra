@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
@@ -35,6 +36,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
         double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
         if (!attacker.world.isRemote && !isDefensive) {
@@ -45,12 +47,12 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             int newAmp = currentAmp + 1;
 
             if (overchargeBonus > 0) {
-                currentAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
+                newAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
             }
 
             double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
             if (comboEfficiency > 0 && attacker.getEntityWorld().getRandom().nextFloat() < (comboEfficiency * ComboPoints.get(attacker) / 100f)) {
-                currentAmp--;
+                newAmp--;
 
                 Random rand = attacker.getEntityWorld().getRandom();
                 ((ServerWorld) attacker.getEntityWorld()).spawnParticle(ParticleTypes.HAPPY_VILLAGER,
@@ -58,8 +60,12 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                         rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
             }
 
+            if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+                newAmp--;
+            }
+
             if (newAmp > currentAmp) {
-                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20), currentAmp, false, true));
+                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20), newAmp, false, true));
             }
         }
 
@@ -76,6 +82,10 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             ComboPoints.reset(attacker);
         }
 
+        if (revengeLevel > 0) {
+            RevengeTracker.removeEnemy(attacker, target);
+        }
+
         attacker.getCooldownTracker().setCooldown(item, cooldown);
     }
 
@@ -83,6 +93,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
         double damageMultiplier = item.getEffectLevel(itemStack, isDefensive ? ItemEffect.abilityDefensive : ItemEffect.overpower) / 100f;
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
@@ -94,6 +105,10 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
         if (comboLevel > 0) {
             damageMultiplier += comboLevel * ComboPoints.get(attacker) / 100d;
+        }
+
+        if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+            damageMultiplier += revengeLevel / 100d;
         }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);

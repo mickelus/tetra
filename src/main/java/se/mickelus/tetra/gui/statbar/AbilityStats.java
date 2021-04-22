@@ -198,7 +198,11 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.overpower_combo.tooltip",
                                     withStats(abilityComboGetter, multiply(abilityComboGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityComboEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.overpower_revenge.tooltip",
+                                    withStats(abilityRevengeGetter, multiply(abilityRevengeGetter, new StatGetterAbilityDamage(0, 0.01))),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter reapGetter = new StatGetterEffectLevel(ItemEffect.reap, 1);
     public static final GuiStatBar reap = new GuiStatBar(0, 0, barLength, "tetra.stats.reap",
