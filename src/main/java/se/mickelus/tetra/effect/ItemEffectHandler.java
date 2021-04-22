@@ -32,6 +32,7 @@ import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;

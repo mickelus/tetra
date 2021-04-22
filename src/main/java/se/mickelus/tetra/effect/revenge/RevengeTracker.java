@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect;
+package se.mickelus.tetra.effect.revenge;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -43,26 +44,21 @@ public class RevengeTracker {
         return item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0;
     }
 
-    public static boolean canRevenge(Entity attacker, Entity target) {
-        return Optional.ofNullable(cache.getIfPresent(getIdentifier(attacker)))
-                .map(enemies -> enemies.contains(target.getEntityId()))
+    public static boolean canRevenge(Entity entity, Entity enemy) {
+        return Optional.ofNullable(cache.getIfPresent(getIdentifier(entity)))
+                .map(enemies -> enemies.contains(enemy.getEntityId()))
                 .orElse(false);
     }
 
-    public static void remove(Entity attacker, Entity target) {
-        Optional.ofNullable(cache.getIfPresent(getIdentifier(attacker)))
-                .ifPresent(enemies -> enemies.remove(target.getEntityId()));
-    }
-
     public static void onAttackEntity(LivingAttackEvent event) {
-        Entity defender = event.getEntity();
-        if (!event.getEntity().getEntityWorld().isRemote() && EntityType.PLAYER.equals(defender.getType())) {
-            Entity attacker = event.getSource().getTrueSource();
-            if (attacker != null) {
-                addEnemy(attacker, defender);
+        Entity entity = event.getEntity();
+        if (!event.getEntity().getEntityWorld().isRemote() && EntityType.PLAYER.equals(entity.getType())) {
+            Entity enemy = event.getSource().getTrueSource();
+            if (enemy != null) {
+                addEnemy(entity, enemy);
 
-                if (defender instanceof ServerPlayerEntity) {
-                    PacketHandler.sendTo(new RevengeTrackerPacket(attacker), (ServerPlayerEntity) defender);
+                if (entity instanceof ServerPlayerEntity) {
+                    PacketHandler.sendTo(new AddRevengePacket(enemy), (ServerPlayerEntity) entity);
                 } else {
                     logger.warn("Unable to sync revenge state, server entity of type player is of other heritage. This should not happen");
                 }
@@ -70,13 +66,32 @@ public class RevengeTracker {
         }
     }
 
-    public static void addEnemy(Entity attacker, Entity defender) {
-        addEnemy(attacker.getEntityId(), defender);
+    /**
+     * Removes the enemy as a revenge target for the given player, sync to the client of the player
+     * @param entity
+     * @param enemy
+     */
+    public static void removeEnemySynced(ServerPlayerEntity entity, Entity enemy) {
+        removeEnemy(entity, enemy.getEntityId());
+        PacketHandler.sendTo(new RemoveRevengePacket(enemy), entity);
     }
 
-    public static void addEnemy(int attackerId, Entity defender) {
+    public static void removeEnemy(Entity entity, Entity enemy) {
+        removeEnemy(entity, enemy.getEntityId());
+    }
+
+    public static void removeEnemy(Entity entity, int enemyId) {
+        Optional.ofNullable(cache.getIfPresent(getIdentifier(entity)))
+                .ifPresent(enemies -> enemies.remove(enemyId));
+    }
+
+    public static void addEnemy(Entity entity, Entity enemy) {
+        addEnemy(entity, enemy.getEntityId());
+    }
+
+    public static void addEnemy(Entity entity, int enemyId) {
         try {
-            cache.get(getIdentifier(defender), HashSet::new).add(attackerId);
+            cache.get(getIdentifier(entity), HashSet::new).add(enemyId);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.particles.BlockParticleData;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -49,7 +51,9 @@ public class SlamEffect extends ChargedAbilityEffect {
         int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
         float knockbackMultiplier = 1f;
+
         boolean isDefensive = isDefensive(item, itemStack, hand);
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
         if (isDefensive) {
             damageMultiplier -= 0.3;
@@ -80,6 +84,10 @@ public class SlamEffect extends ChargedAbilityEffect {
                 target.addVelocity(0, velocity, 0);
             }
 
+            if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+            }
+
             Random rand = target.getRNG();
             CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
                     world.spawnParticle(ParticleTypes.CRIT,
@@ -94,6 +102,10 @@ public class SlamEffect extends ChargedAbilityEffect {
         attacker.addExhaustion(0.05f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
+
+        if (revengeLevel > 0) {
+            RevengeTracker.removeEnemy(attacker, target);
+        }
 
         item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
@@ -110,8 +122,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
-
-
+            int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
             double damageMultiplier = getAoeDamageMultiplier(item, itemStack, slowDuration > 0, overchargeBonus);
             attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
@@ -119,7 +130,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                     .filter(Entity::canBeAttackedWithItem)
                     .filter(entity -> !attacker.equals(entity))
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
-                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency));
+                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
         }
@@ -225,7 +236,7 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin,
-            double damageMultiplier, int slowDuration, double momentumEfficiency) {
+            double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
         ServerScheduler.schedule(target.getPosition().manhattanDistance(new BlockPos(origin)) - 3, () -> {
             float knockback = momentumEfficiency > 0 ? 0.1f : 0.5f;
 
@@ -247,6 +258,11 @@ public class SlamEffect extends ChargedAbilityEffect {
                     velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                     target.addVelocity(0, velocity, 0);
                     target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, 40, 0, false, false));
+                }
+
+                if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                    RevengeTracker.removeEnemySynced((ServerPlayerEntity) attacker, target);
                 }
             }
 

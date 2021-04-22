@@ -1,18 +1,18 @@
-package se.mickelus.tetra.effect;
+package se.mickelus.tetra.effect.revenge;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import se.mickelus.tetra.network.AbstractPacket;
 
-public class RevengeTrackerPacket extends AbstractPacket {
+public class RemoveRevengePacket extends AbstractPacket {
     private int entityId = -1;
 
-    public RevengeTrackerPacket(Entity attacker) {
+    public RemoveRevengePacket(Entity attacker) {
         this.entityId = attacker.getEntityId();
     }
 
-    public RevengeTrackerPacket() {}
+    public RemoveRevengePacket() {}
 
     @Override
     public void toBytes(PacketBuffer buffer) {
@@ -26,6 +26,6 @@ public class RevengeTrackerPacket extends AbstractPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        RevengeTracker.addEnemy(entityId, player);
+        RevengeTracker.removeEnemy(player, entityId);
     }
 }

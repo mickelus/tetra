@@ -8,7 +8,7 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.effect.RevengeTracker;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.gui.GuiTextures;
 
 public class RevengeGui extends GuiElement {

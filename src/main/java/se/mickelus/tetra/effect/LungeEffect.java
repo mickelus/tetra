@@ -23,6 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -139,7 +140,7 @@ public class LungeEffect extends ChargedAbilityEffect {
 
         if (RevengeTracker.canRevenge(player) && RevengeTracker.canRevenge(player, target)) {
             cooldownMultiplier = 0;
-            RevengeTracker.remove(player, target);
+            RevengeTracker.removeEnemy(player, target);
         }
 
         if (!player.world.isRemote) {
