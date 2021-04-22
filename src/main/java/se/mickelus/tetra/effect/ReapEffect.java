@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
@@ -16,6 +17,7 @@ import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.SteeledPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.potion.UnwaveringPotionEffect;
+import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
@@ -36,7 +38,9 @@ public class ReapEffect extends ChargedAbilityEffect {
         if (!attacker.world.isRemote) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
+            int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
             Collection<LivingEntity> momentumTargets = new LinkedList<>();
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) attacker;
 
             double damageMultiplier = EffectHelper.getEffectLevel(itemStack, ItemEffect.reap) / 100d;
             double range = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.reap);
@@ -52,6 +56,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             }
 
             AtomicInteger kills = new AtomicInteger();
+            AtomicInteger revengeKills = new AtomicInteger();
             AtomicInteger hits = new AtomicInteger();
             Vector3d targetVec;
             if (target != null) {
@@ -69,10 +74,22 @@ public class ReapEffect extends ChargedAbilityEffect {
                     .filter(entity -> entity != attacker)
                     .filter(entity -> !attacker.isOnSameTeam(entity))
                     .forEach(entity -> {
-                        AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, finalDamageMultiplier, 0.5f, 0.2f);
+                        double individualDamageMultiplier = finalDamageMultiplier;
+
+                        boolean canRevenge = revengeLevel > 0 && RevengeTracker.canRevenge(attacker, entity);
+                        if (canRevenge) {
+                            individualDamageMultiplier += revengeLevel / 100d;
+                        }
+
+                        AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, individualDamageMultiplier, 0.5f, 0.2f);
                         if (result != AbilityUseResult.fail) {
                             if (!entity.isAlive()) {
                                 kills.incrementAndGet();
+
+                                if (canRevenge) {
+                                    revengeKills.incrementAndGet();
+                                    RevengeTracker.removeEnemySynced(serverPlayer, entity);
+                                }
                             } else if (momentumEfficiency > 0) {
                                 momentumTargets.add(entity);
                             }
@@ -90,7 +107,7 @@ public class ReapEffect extends ChargedAbilityEffect {
                 momentumTargets.forEach(entity -> entity.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false)));
             }
 
-            applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack, chargedTicks);
+            applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack, chargedTicks, revengeKills.get());
 
             attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
@@ -111,7 +128,7 @@ public class ReapEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {
+    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks, int revengeKills) {
         int defensiveLevel = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
         if (defensiveLevel > 0) {
             if (hand == Hand.OFF_HAND) {
@@ -154,6 +171,14 @@ public class ReapEffect extends ChargedAbilityEffect {
                 duration += comboEfficiency * ComboPoints.get(attacker) * 20;
 
                 attacker.addPotionEffect(new EffectInstance(Effects.HASTE, (int) duration, kills - 1, false, true));
+            }
+
+
+            if (revengeKills > 0) {
+                double duration = 20 * 20;
+                duration += item.getEffectEfficiency(itemStack, ItemEffect.abilityRevenge) * revengeKills * 20;
+
+                attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
             }
         }
 

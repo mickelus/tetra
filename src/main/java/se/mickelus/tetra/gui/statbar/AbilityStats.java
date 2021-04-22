@@ -235,5 +235,10 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.reap_combo.tooltip",
                                     withStats(abilityComboGetter, multiply(abilityComboGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityComboEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_revenge.tooltip",
+                                    withStats(abilityRevengeGetter, multiply(abilityRevengeGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityRevengeEffGetter),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 }

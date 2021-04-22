@@ -55,5 +55,13 @@
         "effects": {
             "abilityCombo": [10, 5]
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": [40, 20]
+        }
     }
 ]
