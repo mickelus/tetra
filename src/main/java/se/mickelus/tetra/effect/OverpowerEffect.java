@@ -69,7 +69,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             }
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
 
         int cooldown = getCooldown(item, itemStack);

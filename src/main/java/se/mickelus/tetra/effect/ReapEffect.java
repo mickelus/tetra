@@ -117,7 +117,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             attacker.spawnSweepParticles();
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 

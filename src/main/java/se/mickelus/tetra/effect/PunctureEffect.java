@@ -32,7 +32,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
             result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
 

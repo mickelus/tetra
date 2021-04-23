@@ -24,6 +24,9 @@ public class AbilityStats {
     public static final IStatGetter abilityRevengeGetter = new StatGetterEffectLevel(ItemEffect.abilityRevenge, 1);
     public static final IStatGetter abilityRevengeEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityRevenge, 1);
 
+    public static final IStatGetter abilityOverextendGetter = new StatGetterEffectLevel(ItemEffect.abilityOverextend, 1);
+    public static final IStatGetter abilityOverextendEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityOverextend, 1);
+
     public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
     public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",
             0, 200, false, lungeGetter, LabelGetterBasic.percentageLabel,

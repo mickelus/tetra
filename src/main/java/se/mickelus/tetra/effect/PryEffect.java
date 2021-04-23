@@ -40,7 +40,7 @@ public class PryEffect {
 
         target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(0.5f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 

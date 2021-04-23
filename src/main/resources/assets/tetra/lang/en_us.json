@@ -262,6 +262,16 @@
   "tetra.stats.reap_combo.tooltip": "Regular attacks grant combo points, reap deals §e+%s%% (%s)§r damage per combo point\n \n§rReap grants §e+10%%§r attack & harvest speed per kill for §e15§r seconds, the duration is increased by §e%s§r seconds per combo point",
   "tetra.stats.reap_combo.tooltip_extended": "This item has to be held in either hand to generate combo points, the combo points are reset when the ability is used or after 30 seconds of not attacking",
 
+  "tetra.stats.ability_overextend": "Overextend",
+  "tetra.stats.lunge_overextend.tooltip": "Lunge deals §e%s%% (%s)§r more damage and has increased range when the food bar is full, but always drains a significant amount of food/saturation on use",
+  "tetra.stats.execute_overextend.tooltip": "Execute drains §e25%%§r of available food and saturation, total damage dealt is increased by §e%s%%§r per point drained",
+  "tetra.stats.execute_overextend.tooltip_extended": "10 points would be drained when fully satiated, 2.5 points would be drained when the food bar is half full",
+  "tetra.stats.slam_overextend.tooltip": "Increases damage by §e%s%% (%s)§r, shockwave range by §e%s§r and direct target knockback by §e%s%% when the food bar is full, but always drains a significant amount of food/saturation on use",
+  "tetra.stats.puncture_overextend.tooltip": "Puncture deals §e%s%% (%s)§r more damage, reduces armor by an additional §e%s%%§r and inflicts §e%s§r seconds longer bleeds when the food bar is full, but always drains a significant amount of food/saturation on use",
+  "tetra.stats.pry_overextend.tooltip": "Pry reduces armor by twice the usual amount when the food bar is full, but always drains a significant amount of food/saturation on use",
+  "tetra.stats.overpower_overextend.tooltip": "Overpower drains a significant amount of food/saturation on use but does not exhaust the wielder as long as the food bar is full",
+  "tetra.stats.reap_overextend.tooltip": "Reap deals double damage to targets below §e%s%%§r health, but always drains a significant amount of food/saturation on use. Food drain is tripled and the wielder gets exhausted unless a target is killed by reap.\n \nReap grants §e+1%%§r max health per kill for §e45§r seconds",
+
   "tetra.stats.ability_revenge": "Revenge",
   "tetra.stats.lunge_revenge.tooltip": "Hitting a revenge target with lunge resets its cooldown",
   "tetra.stats.lunge_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, a hud indicator appears when looking at a revenge target while wielding an item capable of revenge. Using an ability that leverages revenge resets the revenge status for affected targets. All revenge targets are reset after not being attacked for 30 seconds.",

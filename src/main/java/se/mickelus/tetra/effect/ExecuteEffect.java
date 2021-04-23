@@ -44,7 +44,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 

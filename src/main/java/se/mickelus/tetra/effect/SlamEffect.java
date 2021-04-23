@@ -106,7 +106,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
 
@@ -142,7 +142,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
         }
 
-        attacker.addExhaustion(0.05f);
+        attacker.addExhaustion(1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
