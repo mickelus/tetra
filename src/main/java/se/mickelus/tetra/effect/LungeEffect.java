@@ -72,15 +72,22 @@ public class LungeEffect extends ChargedAbilityEffect {
                 hitCooldown -= comboEfficiency * ComboPoints.get(attacker) / 100;
             }
 
+            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
+            if (momentumLevel > 0) {
+                verticalVelocityFactor = 1.2;
+            }
+
+            int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+            if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
+                damageMultiplierOffset += overextendLevel / 100d;
+                strength += item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
+                verticalVelocityFactor += 0.1;
+            }
+
             if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
                 activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown));
-            }
-
-            int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
-            if (momentumLevel > 0) {
-                verticalVelocityFactor = 1.2;
             }
 
             // current velocity projected onto the look vector
@@ -94,7 +101,7 @@ public class LungeEffect extends ChargedAbilityEffect {
 
             attacker.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
 
-            attacker.addExhaustion(0.2f);
+            attacker.addExhaustion(overextendLevel > 0 ? 6f : 1f);
             attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
             attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,

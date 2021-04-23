@@ -52,7 +52,11 @@ public class AbilityStats {
                                     withStats(abilityComboGetter, abilityComboEffGetter),
                                     withFormat(StatFormat.noDecimal, StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
-                            new TooltipGetterNone("tetra.stats.lunge_revenge.tooltip")));
+                            new TooltipGetterNone("tetra.stats.lunge_revenge.tooltip")),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterMultiValue("tetra.stats.lunge_overextend.tooltip",
+                                    withStats(abilityOverextendGetter, multiply(abilityOverextendGetter, new StatGetterAbilityDamage(0, 0.01))),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);
     public static final GuiStatBar execute = new GuiStatBar(0, 0, barLength, "tetra.stats.execute",
