@@ -120,7 +120,12 @@ public class AbilityStats {
                                     withStats(abilityComboGetter), withFormat(StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
                             new TooltipGetterMultiValue("tetra.stats.slam_revenge.tooltip",
-                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityRevenge, 0.05)), withFormat(StatFormat.noDecimal))));
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityRevenge, 0.05)), withFormat(StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_overextend.tooltip",
+                                    withStats(abilityOverextendGetter, multiply(abilityOverextendGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            abilityOverextendEffGetter, abilityOverextendGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

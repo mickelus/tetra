@@ -266,7 +266,7 @@
   "tetra.stats.lunge_overextend.tooltip": "Lunge deals §e%s%% (%s)§r more damage and has increased range when the food bar is full, but always drains a significant amount of food/saturation on use",
   "tetra.stats.execute_overextend.tooltip": "Execute drains §e25%%§r of available food and saturation, total damage dealt is increased by §e%s%%§r per point drained",
   "tetra.stats.execute_overextend.tooltip_extended": "10 points would be drained when fully satiated, 2.5 points would be drained when the food bar is half full",
-  "tetra.stats.slam_overextend.tooltip": "Increases damage by §e%s%% (%s)§r, shockwave range by §e%s§r and direct target knockback by §e%s%% when the food bar is full, but always drains a significant amount of food/saturation on use",
+  "tetra.stats.slam_overextend.tooltip": "Increases damage by §e%s%% (%s)§r, shockwave range by §e%s§r blocks and direct target knockback by §e%s%%§r when the food bar is full, but always drains a significant amount of food/saturation on use",
   "tetra.stats.puncture_overextend.tooltip": "Puncture deals §e%s%% (%s)§r more damage, reduces armor by an additional §e%s%%§r and inflicts §e%s§r seconds longer bleeds when the food bar is full, but always drains a significant amount of food/saturation on use",
   "tetra.stats.pry_overextend.tooltip": "Pry reduces armor by twice the usual amount when the food bar is full, but always drains a significant amount of food/saturation on use",
   "tetra.stats.overpower_overextend.tooltip": "Overpower drains a significant amount of food/saturation on use but does not exhaust the wielder as long as the food bar is full",
@@ -302,7 +302,7 @@
   "tetra.stats.lunge.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.slam": "Slam",
-  "tetra.stats.slam.tooltip": "Hold right-click to charge up a powerful slam.\n \nSlam the ground to send out a shockwave from the point of impact, entities hit by the shockwave take §e%s%% (%s)§r attack damage.\n \nDirectly slam an entity to deal §e%s%% (%s)§r attack damage and cause heavy knockback, this triggers a §e50%%§r longer cooldown.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
+  "tetra.stats.slam.tooltip": "Hold right-click to charge up a powerful slam\n \n§7Slam the ground to send out a shockwave from the point of impact, entities hit by the shockwave take §e%s%% (%s)§7 attack damage.\n \n§7Directly slam an entity to deal §e%s%% (%s)§7 attack damage and cause heavy knockback, this triggers a §e50%%§7 longer cooldown.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.slam.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
 
   "tetra.stats.puncture": "Puncture",
