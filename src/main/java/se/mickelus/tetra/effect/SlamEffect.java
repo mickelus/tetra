@@ -78,7 +78,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        if (overextendLevel > 0) {
+        if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
             damageMultiplier += overextendLevel / 100d;
         }
 
@@ -110,7 +110,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
         }
 
-        attacker.addExhaustion(overextendLevel > 0 ? 6f : 1f);
+        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
 
@@ -132,8 +132,8 @@ public class SlamEffect extends ChargedAbilityEffect {
             double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
 
 
-            double range = getAoeRange(item, itemStack, overchargeBonus);
-            double damageMultiplier = getAoeDamageMultiplier(item, itemStack, slowDuration > 0, overchargeBonus);
+            double range = getAoeRange(attacker, item, itemStack, overchargeBonus);
+            double damageMultiplier = getAoeDamageMultiplier(attacker, item, itemStack, slowDuration > 0, overchargeBonus);
 
             Vector3d direction = hitVec.subtract(attacker.getPositionVec()).mul(1, 0, 1).normalize();
             double yaw = MathHelper.atan2(direction.x, direction.z);
@@ -147,7 +147,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
 
-            attacker.addExhaustion(overextendLevel > 0 ? 6f : 1f);
+            attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
         }
 
         attacker.swing(hand, false);
@@ -157,7 +157,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private double getAoeDamageMultiplier(ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus) {
+    private double getAoeDamageMultiplier(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus) {
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
 
         if (isDefensive) {
@@ -169,14 +169,14 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        if (overextendLevel > 0) {
+        if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
             damageMultiplier += overextendLevel / 100d;
         }
 
         return damageMultiplier;
     }
 
-    private double getAoeRange(ItemModularHandheld item, ItemStack itemStack, int overchargeBonus) {
+    private double getAoeRange(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int overchargeBonus) {
         double range = 8;
 
         if (overchargeBonus > 0) {
@@ -184,7 +184,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
-        if (overextendEfficiency > 0) {
+        if (overextendEfficiency > 0 && !attacker.getFoodStats().needFood()) {
             range += overextendEfficiency;
         }
 

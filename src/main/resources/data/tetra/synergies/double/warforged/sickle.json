@@ -63,5 +63,13 @@
         "effects": {
             "abilityRevenge": [40, 20]
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": 30
+        }
     }
 ]

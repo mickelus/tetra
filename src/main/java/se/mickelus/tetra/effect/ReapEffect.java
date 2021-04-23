@@ -13,10 +13,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
-import se.mickelus.tetra.effect.potion.SteeledPotionEffect;
-import se.mickelus.tetra.effect.potion.StunPotionEffect;
-import se.mickelus.tetra.effect.potion.UnwaveringPotionEffect;
+import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -39,6 +36,8 @@ public class ReapEffect extends ChargedAbilityEffect {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
             int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+            int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+            boolean overextend = overextendLevel > 0 && !attacker.getFoodStats().needFood();
             Collection<LivingEntity> momentumTargets = new LinkedList<>();
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) attacker;
 
@@ -81,6 +80,10 @@ public class ReapEffect extends ChargedAbilityEffect {
                             individualDamageMultiplier += revengeLevel / 100d;
                         }
 
+                        if (overextend && entity.getHealth() / entity.getMaxHealth() >= overextendLevel / 100f) {
+                            individualDamageMultiplier *= 2;
+                        }
+
                         AbilityUseResult result = item.hitEntity(itemStack, attacker, entity, individualDamageMultiplier, 0.5f, 0.2f);
                         if (result != AbilityUseResult.fail) {
                             if (!entity.isAlive()) {
@@ -117,7 +120,8 @@ public class ReapEffect extends ChargedAbilityEffect {
             attacker.spawnSweepParticles();
         }
 
-        attacker.addExhaustion(1f);
+        double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
@@ -179,6 +183,16 @@ public class ReapEffect extends ChargedAbilityEffect {
                 duration += item.getEffectEfficiency(itemStack, ItemEffect.abilityRevenge) * revengeKills * 20;
 
                 attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+            }
+        }
+
+        int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+        if (overextendLevel > 0) {
+            if (kills > 0) {
+                attacker.addPotionEffect(new EffectInstance(SmallHealthPotionEffect.instance, 45 * 20, kills - 1, false, true));
+            } else if (!attacker.getFoodStats().needFood()) {
+                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, 20 * 20, 4, false, true));
+                attacker.addExhaustion(12);
             }
         }
 

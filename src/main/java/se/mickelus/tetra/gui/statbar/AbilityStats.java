@@ -152,7 +152,11 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.puncture_combo.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityCombo, 0.05)), withFormat(StatFormat.oneDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.puncture_revenge", 13, abilityRevengeGetter,
-                            new TooltipGetterNone("tetra.stats.puncture_revenge.tooltip")));
+                            new TooltipGetterNone("tetra.stats.puncture_revenge.tooltip")),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterMultiValue("tetra.stats.puncture_overextend.tooltip",
+                                    withStats(new StatGetterEffectLevel(ItemEffect.abilityOverextend, 5), abilityOverextendEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",
@@ -185,7 +189,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
                             new TooltipGetterMultiValue("tetra.stats.pry_revenge.tooltip",
                                     withStats(abilityRevengeGetter, multiply(abilityRevengeGetter, new StatGetterAbilityDamage(0, 0.01))),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterNone("tetra.stats.pry_overextend.tooltip")));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",
@@ -217,7 +223,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_revenge", 13, abilityRevengeGetter,
                             new TooltipGetterMultiValue("tetra.stats.overpower_revenge.tooltip",
                                     withStats(abilityRevengeGetter, multiply(abilityRevengeGetter, new StatGetterAbilityDamage(0, 0.01))),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterNone("tetra.stats.overpower_overextend.tooltip")));
 
     public static final IStatGetter reapGetter = new StatGetterEffectLevel(ItemEffect.reap, 1);
     public static final GuiStatBar reap = new GuiStatBar(0, 0, barLength, "tetra.stats.reap",
@@ -255,5 +263,8 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.reap_revenge.tooltip",
                                     withStats(abilityRevengeGetter, multiply(abilityRevengeGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityRevengeEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_overextend.tooltip",
+                                    withStats(abilityOverextendGetter), withFormat(StatFormat.noDecimal))));
 }

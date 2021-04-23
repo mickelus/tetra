@@ -37,6 +37,8 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+        boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
+
         double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
         if (!attacker.world.isRemote && !isDefensive) {
@@ -64,12 +66,16 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 newAmp--;
             }
 
+            if (overextended && !attacker.getFoodStats().needFood()) {
+                newAmp = -1;
+            }
+
             if (newAmp > currentAmp) {
                 attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20), newAmp, false, true));
             }
         }
 
-        attacker.addExhaustion(1f);
+        attacker.addExhaustion(overextended ? 6 : 1);
         attacker.swing(hand, false);
 
         int cooldown = getCooldown(item, itemStack);

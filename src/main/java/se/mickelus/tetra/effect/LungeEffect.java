@@ -101,7 +101,7 @@ public class LungeEffect extends ChargedAbilityEffect {
 
             attacker.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
 
-            attacker.addExhaustion(overextendLevel > 0 ? 6f : 1f);
+            attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
             attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
             attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,

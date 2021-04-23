@@ -32,7 +32,8 @@ public class PunctureEffect extends ChargedAbilityEffect {
             result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
         }
 
-        attacker.addExhaustion(1f);
+        boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
+        attacker.addExhaustion(overextended ? 6f : 1f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
 
@@ -51,6 +52,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
+            boolean satiated = !attacker.getFoodStats().needFood();
             boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
             boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getTotalArmorValue();
 
@@ -66,6 +68,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     duration += comboLevel * ComboPoints.get(attacker);
                 }
 
+                double overextendEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
+                if (overextendEfficiency > 0 && satiated) {
+                    duration += overextendEfficiency * 20;
+                }
+
                 target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
             }
 
@@ -75,6 +82,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
                 if (overchargeBonus > 0) {
                     amplifier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge);
+                }
+
+                double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+                if (overextendLevel > 0 && satiated) {
+                    amplifier += overextendLevel;
                 }
 
                 target.addPotionEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));

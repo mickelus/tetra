@@ -40,7 +40,8 @@ public class PryEffect {
 
         target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
 
-        attacker.addExhaustion(0.5f);
+        boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
+        attacker.addExhaustion(overextended ? 6f : 0.5f);
         attacker.swing(hand, false);
         attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
@@ -91,6 +92,11 @@ public class PryEffect {
             }
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+                amplifier++;
+            }
+
+            double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+            if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
                 amplifier++;
             }
 

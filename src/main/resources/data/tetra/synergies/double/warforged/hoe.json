@@ -55,5 +55,13 @@
         "effects": {
             "abilityRevenge": 15
         }
+    },
+    {
+        "modules": ["double/hoe_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": 1
+        }
     }
 ]
