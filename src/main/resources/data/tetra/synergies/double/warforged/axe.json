@@ -45,7 +45,15 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityRevenge": 40
+            "abilityRevenge": 35
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": 6
         }
     }
 ]

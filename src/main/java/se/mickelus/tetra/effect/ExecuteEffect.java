@@ -7,6 +7,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -85,6 +86,14 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         double revengeMultiplier = getRevengeMultiplier(attacker, item, itemStack);
         if (revengeMultiplier > 0) {
             damageMultiplier *= revengeMultiplier;
+        }
+
+        int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+        if (overextendLevel > 0) {
+            FoodStats foodStats = attacker.getFoodStats();
+            float exhaustion = Math.min(40, foodStats.getFoodLevel() + foodStats.getSaturationLevel());
+            damageMultiplier *= overextendLevel * exhaustion * 0.25;
+            attacker.addExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
         }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
