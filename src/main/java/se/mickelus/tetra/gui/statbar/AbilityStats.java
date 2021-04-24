@@ -136,7 +136,12 @@ public class AbilityStats {
                             new TooltipGetterMultiValue("tetra.stats.slam_overextend.tooltip",
                                     withStats(abilityOverextendGetter, multiply(abilityOverextendGetter, new StatGetterAbilityDamage(0, 0.01)),
                                             abilityOverextendEffGetter, abilityOverextendGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
+                            new TooltipGetterMultiValue("tetra.stats.slam_exhilaration.tooltip",
+                                    withStats(abilityExhilarationGetter, multiply(abilityExhilarationGetter, new StatGetterAbilityDamage(0, 0.01)),
+                                            new StatGetterEffectEfficiency(ItemEffect.abilityExhilaration, 20)),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",

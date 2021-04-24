@@ -113,8 +113,8 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 int amplifier = Math.round((1 - missingHealth) / exhilarationLevel * 100) - 1;
                 int duration = (int) (Math.min(200, item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration) * maxHealth) * 20);
 
-                if (amplifier > 0 && duration > 0) {
-                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, false));
+                if (amplifier >= 0 && duration > 0) {
+                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
                 }
             }
         }

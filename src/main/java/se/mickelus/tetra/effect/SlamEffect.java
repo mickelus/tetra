@@ -22,12 +22,15 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SlamEffect extends ChargedAbilityEffect {
 
@@ -50,6 +53,7 @@ public class SlamEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
+        float knockbackBase = (float) item.getEffectEfficiency(itemStack, ItemEffect.slam);
         float knockbackMultiplier = 1f;
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
@@ -82,7 +86,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             damageMultiplier += overextendLevel / 100d;
         }
 
-        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockbackMultiplier * 0.8f, knockbackMultiplier);
+        AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockbackMultiplier * knockbackBase, knockbackMultiplier / 2);
 
         if (result != AbilityUseResult.fail) {
             if (stunDuration > 0) {
@@ -97,6 +101,11 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
                 target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+            }
+
+            double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarationEfficiency > 0) {
+                knockbackExhilaration(attacker, attacker.getPositionVec(), target, target.world.getGameTime() + 200, exhilarationEfficiency);
             }
 
             Random rand = target.getRNG();
@@ -122,6 +131,20 @@ public class SlamEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
+    private void knockbackExhilaration(PlayerEntity attacker, Vector3d origin, LivingEntity target, long timeLimit, double multiplier) {
+        ServerScheduler.schedule(20, () -> {
+            if (target.isOnGround()) {
+                double distance = Math.min(20, origin.distanceTo(target.getPositionVec()));
+                int amplifier = (int) (distance * multiplier) - 1;
+                if (amplifier >= 0) {
+                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
+                }
+            } else if (target.world.getGameTime() < timeLimit) {
+                knockbackExhilaration(attacker, origin, target, timeLimit, multiplier);
+            }
+        });
+    }
+
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vector3d hitVec, int chargedTicks) {
         if (!attacker.world.isRemote) {
@@ -131,19 +154,21 @@ public class SlamEffect extends ChargedAbilityEffect {
             int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
             double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
 
-
             double range = getAoeRange(attacker, item, itemStack, overchargeBonus);
-            double damageMultiplier = getAoeDamageMultiplier(attacker, item, itemStack, slowDuration > 0, overchargeBonus);
 
             Vector3d direction = hitVec.subtract(attacker.getPositionVec()).mul(1, 0, 1).normalize();
             double yaw = MathHelper.atan2(direction.x, direction.z);
             AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
-            attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
+            List<LivingEntity> targets = attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::canBeAttackedWithItem)
                     .filter(entity -> !attacker.equals(entity))
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
-                    .forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
+                    .collect(Collectors.toList());
+
+            double damageMultiplier = getAoeDamageMultiplier(attacker, item, itemStack, slowDuration > 0, overchargeBonus, targets);
+
+            targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
 
@@ -157,7 +182,8 @@ public class SlamEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private double getAoeDamageMultiplier(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus) {
+    private double getAoeDamageMultiplier(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus,
+            List<LivingEntity> targets) {
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
 
         if (isDefensive) {
@@ -171,6 +197,11 @@ public class SlamEffect extends ChargedAbilityEffect {
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
         if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
             damageMultiplier += overextendLevel / 100d;
+        }
+
+        int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+        if (exhilarationLevel > 0) {
+            damageMultiplier += targets.size() * exhilarationLevel / 100d;
         }
 
         return damageMultiplier;
