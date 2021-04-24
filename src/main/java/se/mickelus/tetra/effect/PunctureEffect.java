@@ -25,23 +25,31 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        AbilityUseResult result;
-        if (isDefensive(item, itemStack, hand)) {
-            result = performDefensive(attacker, hand, item, itemStack, target);
-        } else {
-            result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
-        }
+        if (!attacker.world.isRemote) {
+            int armorBefore = target.getTotalArmorValue();
+            AbilityUseResult result;
+            if (isDefensive(item, itemStack, hand)) {
+                result = performDefensive(attacker, hand, item, itemStack, target);
+            } else {
+                result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
+            }
 
-        boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
-        attacker.addExhaustion(overextended ? 6f : 1f);
-        attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
+            boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
+            attacker.addExhaustion(overextended ? 6f : 1f);
+
+            // trigger no cooldown with the exhilaration mod if puncture brought the target's armor below 6
+            if (!(item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration) > 0 && armorBefore >= 6 && target.getTotalArmorValue() < 6)) {
+                attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
+            }
+
+            item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+        }
 
         if (ComboPoints.canSpend(item, itemStack)) {
             ComboPoints.reset(attacker);
         }
 
-        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+        attacker.swing(hand, false);
         item.applyDamage(2, itemStack, attacker);
     }
 
@@ -55,6 +63,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
             boolean satiated = !attacker.getFoodStats().needFood();
             boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
             boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getTotalArmorValue();
+            double cooldownMultiplier = 1;
 
             if (armor < 6 || isPunctured || reversal) {
                 int duration = 80;
@@ -73,6 +82,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     duration += overextendEfficiency * 20;
                 }
 
+                int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+                if (exhilarationLevel > 0 && isPunctured) {
+                    duration += exhilarationLevel;
+                }
+
                 target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
             }
 
@@ -84,7 +98,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     amplifier += overchargeBonus * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge);
                 }
 
-                double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+                int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
                 if (overextendLevel > 0 && satiated) {
                     amplifier += overextendLevel;
                 }
