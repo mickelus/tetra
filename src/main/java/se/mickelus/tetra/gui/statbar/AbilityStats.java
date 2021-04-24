@@ -27,6 +27,9 @@ public class AbilityStats {
     public static final IStatGetter abilityOverextendGetter = new StatGetterEffectLevel(ItemEffect.abilityOverextend, 1);
     public static final IStatGetter abilityOverextendEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityOverextend, 1);
 
+    public static final IStatGetter abilityExhilarationGetter = new StatGetterEffectLevel(ItemEffect.abilityExhilaration, 1);
+    public static final IStatGetter abilityExhilarationEffGetter = new StatGetterEffectEfficiency(ItemEffect.abilityExhilaration, 1);
+
     public static final IStatGetter lungeGetter = new StatGetterEffectLevel(ItemEffect.lunge, 1);
     public static final GuiStatBar lunge = new GuiStatBar(0, 0, barLength, "tetra.stats.lunge",
             0, 200, false, lungeGetter, LabelGetterBasic.percentageLabel,
@@ -56,6 +59,10 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
                             new TooltipGetterMultiValue("tetra.stats.lunge_overextend.tooltip",
                                     withStats(abilityOverextendGetter, multiply(abilityOverextendGetter, new StatGetterAbilityDamage(0, 0.01))),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
+                            new TooltipGetterMultiValue("tetra.stats.lunge_exhilaration.tooltip",
+                                    withStats(abilityExhilarationGetter, multiply(abilityExhilarationGetter, new StatGetterAbilityDamage(0, 0.01))),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter executeGetter = new StatGetterEffectLevel(ItemEffect.execute, 0.1);

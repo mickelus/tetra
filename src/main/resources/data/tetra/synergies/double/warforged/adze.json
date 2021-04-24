@@ -55,5 +55,13 @@
         "effects": {
             "abilityOverextend": [20, 0.5]
         }
+    },
+    {
+        "modules": ["double/adze_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": [20, 0.8]
+        }
     }
 ]

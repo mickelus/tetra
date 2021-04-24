@@ -273,6 +273,11 @@
   "tetra.stats.pry_overextend.tooltip": "Pry reduces armor by twice the usual amount when the food bar is full, but always drains a significant amount of food/saturation on use",
   "tetra.stats.overpower_overextend.tooltip": "Overpower drains a significant amount of food/saturation on use but does not exhaust the wielder as long as the food bar is full",
   "tetra.stats.reap_overextend.tooltip": "Reap deals double damage to targets below §e%s%%§r health as long as the food bar is full, but always drains a significant amount of food/saturation on use. Food drain is tripled and the wielder becomes exhausted unless a target is killed by reap.\n \n§7Reap grants §e+1%%§r max health per kill for §e45§r seconds",
+  "tetra.stats.reap_overextend.tooltip_extended": "The exhausted effect reduces movement speed, attack speed and harvest speed",
+
+  "tetra.stats.ability_exhilaration": "Exhilaration",
+  "tetra.stats.lunge_exhilaration.tooltip": "Lunge deals §e%s%% (%s)§r more damage and has significantly increased range, but exhausts the wielder if it does not hit an entity",
+  "tetra.stats.lunge_exhilaration.tooltip_extended": "The exhausted effect reduces movement speed, attack speed and harvest speed",
 
   "tetra.stats.ability_revenge": "Revenge",
   "tetra.stats.lunge_revenge.tooltip": "Hitting a revenge target with lunge resets its cooldown",

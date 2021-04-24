@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[34,)"
-issueTrackerURL="https://github.com/mickelus/tetra/issues/new"
+issueTrackerURL="https://github.com/mickelus/tetra/issues/new?template=bug_report.md"
 license="MIT"
 
 [[mods]]

@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
+import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -33,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class LungeEffect extends ChargedAbilityEffect {
     private static Cache<Integer, LungeData> activeCache = CacheBuilder.newBuilder()
             .maximumSize(20)
-            .expireAfterWrite(5, TimeUnit.SECONDS)
+            .expireAfterWrite(10, TimeUnit.SECONDS)
             .build();
 
     public static final LungeEffect instance = new LungeEffect();
@@ -60,6 +61,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             Vector3d lookVector = attacker.getLookVec();
             double verticalVelocityFactor = 0.8;
             float hitCooldown = 0.7f;
+            float exhaustDuration = 0;
 
             if (canOvercharge(item, itemStack)) {
                 int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
@@ -84,10 +86,17 @@ public class LungeEffect extends ChargedAbilityEffect {
                 verticalVelocityFactor += 0.1;
             }
 
+            int exhilarateLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarateLevel > 0) {
+                damageMultiplierOffset += exhilarateLevel / 100f;
+                strength += item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
+                exhaustDuration += 15;
+            }
+
             if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
-                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown));
+                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown, exhaustDuration));
             }
 
             // current velocity projected onto the look vector
@@ -129,6 +138,10 @@ public class LungeEffect extends ChargedAbilityEffect {
                         .ifPresent(entity -> onEntityImpact(player, entity, data));
             } else {
                 activeCache.invalidate(getIdentifier(player));
+
+                if (data.exhaustDuration > 0) {
+                    player.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
+                }
             }
         }
     }
@@ -203,11 +216,13 @@ public class LungeEffect extends ChargedAbilityEffect {
         ItemStack itemStack;
         float damageMultiplierOffset;
         float hitCooldown;
+        float exhaustDuration;
 
-        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown) {
+        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown, float exhaustDuration) {
             this.itemStack = itemStack;
             this.damageMultiplierOffset = damageMultiplierOffset;
             this.hitCooldown = hitCooldown;
+            this.exhaustDuration = exhaustDuration;
         }
     }
 }

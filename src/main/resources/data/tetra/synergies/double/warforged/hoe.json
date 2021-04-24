@@ -9,14 +9,6 @@
         }
     },
     {
-        "modules": ["double/hoe_right"],
-        "matchSuffixed": true,
-        "improvements": ["double/warforged"],
-        "effects": {
-            "abilitySaturated": 1
-        }
-    },
-    {
         "modules": ["double/hoe_left", "double/adze_right"],
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
