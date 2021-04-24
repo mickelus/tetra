@@ -21,7 +21,7 @@ public class SmallStrengthPotionEffect extends Effect {
 
         setRegistryName("small_strength");
 
-        addAttributesModifier(Attributes.ARMOR, "fc8d272d-056c-43b4-9d18-f3d7f6cf3983", 1, AttributeModifier.Operation.ADDITION);
+        addAttributesModifier(Attributes.ATTACK_DAMAGE, "fc8d272d-056c-43b4-9d18-f3d7f6cf3983", 1, AttributeModifier.Operation.ADDITION);
 
         instance = this;
     }

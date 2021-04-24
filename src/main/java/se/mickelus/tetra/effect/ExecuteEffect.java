@@ -14,7 +14,9 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
+import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
+import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -103,6 +105,17 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             if (momentumLevel > 0) {
                 int duration = (int) (momentumLevel * damageMultiplier * 20);
                 target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+            }
+
+            int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarationLevel > 0 && !target.isAlive()) {
+                float maxHealth = target.getMaxHealth();
+                int amplifier = Math.round((1 - missingHealth) / exhilarationLevel * 100) - 1;
+                int duration = (int) (Math.min(200, item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration) * maxHealth) * 20);
+
+                if (amplifier > 0 && duration > 0) {
+                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, false));
+                }
             }
         }
 

@@ -94,7 +94,11 @@ public class AbilityStats {
                                     withStats(abilityRevengeGetter), withFormat(StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_overextend.tooltip",
-                                    withStats(abilityOverextendGetter), withFormat(StatFormat.noDecimal))));
+                                    withStats(abilityOverextendGetter), withFormat(StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
+                            new TooltipGetterMultiValue("tetra.stats.execute_exhilaration.tooltip",
+                                    withStats(abilityExhilarationGetter, abilityExhilarationEffGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);
