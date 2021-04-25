@@ -32,18 +32,19 @@ public class PryEffect {
     }
 
     public static void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
-        if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
-            performDefensive(attacker, item, itemStack, target);
-        } else {
-            performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target);
+        if (!attacker.world.isRemote) {
+            if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
+                performDefensive(attacker, item, itemStack, target);
+            } else {
+                performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target);
+            }
+
+            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
+
+            boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
+            attacker.addExhaustion(overextended ? 6f : 0.5f);
+            attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
         }
-
-        target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
-
-        boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
-        attacker.addExhaustion(overextended ? 6f : 0.5f);
-        attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         if (ComboPoints.canSpend(item, itemStack)) {
             ComboPoints.reset(attacker);
@@ -54,6 +55,7 @@ public class PryEffect {
             RevengeTracker.removeEnemy(attacker, target);
         }
 
+        attacker.swing(hand, false);
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
     }
@@ -70,6 +72,16 @@ public class PryEffect {
 
         if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
             damageMultiplier += revengeLevel / 100d;
+        }
+
+        int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+        if (exhilarationLevel > 0) {
+            int amp = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
+                    .map(EffectInstance::getAmplifier)
+                    .orElse(-1) + 1;
+            if (amp > 0) {
+                damageMultiplier += exhilarationLevel * amp / 100d;
+            }
         }
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);

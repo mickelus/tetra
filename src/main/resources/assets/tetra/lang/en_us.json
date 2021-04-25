@@ -281,6 +281,7 @@
   "tetra.stats.execute_exhilaration.tooltip": "If execute kills the target the wielder gains a temporary attack damage increase based on the damage dealt at a rate of §e1§r attack damage per §e%s%%§r of the target's health. The effect duration is based on the target's max health at a rate of §e%s§r seconds per health point up to §e200§r seconds.",
   "tetra.stats.slam_exhilaration.tooltip": "Ground slam deals §e+%s%% (%s)§r damage for each target hit. Single target slam grants an attack damage increase for §e10§r seconds based on how far the target is knocked back, up to §e%s§r damage at a §e20§r block distance.",
   "tetra.stats.puncture_exhilaration.tooltip": "The cooldown of puncture is reset if the armor reduction effect brings the target's armor below §e6§r and the duration of the bleed effect is increased by §e%s§r seconds if the target is affected by the armor reduction effect",
+  "tetra.stats.pry_exhilaration.tooltip": "The damage of pry is increased by §e+%s%% (%s)§r for each pry stack affecting the target",
 
   "tetra.stats.ability_revenge": "Revenge",
   "tetra.stats.lunge_revenge.tooltip": "Hitting a revenge target with lunge resets its cooldown",
