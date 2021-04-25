@@ -292,5 +292,9 @@ public class AbilityStats {
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
                             new TooltipGetterMultiValue("tetra.stats.reap_overextend.tooltip",
-                                    withStats(abilityOverextendGetter), withFormat(StatFormat.noDecimal))));
+                                    withStats(abilityOverextendGetter), withFormat(StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_exhilaration.tooltip",
+                                    withStats(abilityExhilarationEffGetter, abilityExhilarationGetter),
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))));
 }

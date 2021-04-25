@@ -71,5 +71,13 @@
         "effects": {
             "abilityOverextend": 30
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": [1, 40]
+        }
     }
 ]

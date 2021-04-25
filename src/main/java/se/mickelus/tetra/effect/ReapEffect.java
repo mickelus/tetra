@@ -20,6 +20,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ReapEffect extends ChargedAbilityEffect {
@@ -41,6 +42,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             Collection<LivingEntity> momentumTargets = new LinkedList<>();
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) attacker;
 
+            int cooldown = getCooldown(item, itemStack);
             double damageMultiplier = EffectHelper.getEffectLevel(itemStack, ItemEffect.reap) / 100d;
             double range = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.reap);
 
@@ -118,12 +120,17 @@ public class ReapEffect extends ChargedAbilityEffect {
             item.tickProgression(attacker, itemStack, 1 + kills.get());
 
             attacker.spawnSweepParticles();
-        }
 
-        double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+            attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+
+            double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarationEfficiency > 0 && kills.get() > 0) {
+                cooldown = (int) (cooldown * (1 - exhilarationEfficiency / 100d));
+            }
+
+            attacker.getCooldownTracker().setCooldown(item, cooldown);
+        }
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
 
         if (ComboPoints.canSpend(item, itemStack)) {
             ComboPoints.reset(attacker);
@@ -183,6 +190,15 @@ public class ReapEffect extends ChargedAbilityEffect {
                 duration += item.getEffectEfficiency(itemStack, ItemEffect.abilityRevenge) * revengeKills * 20;
 
                 attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+            }
+
+            int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarationLevel > 0) {
+                int currentAmplifier = Optional.ofNullable(attacker.getActivePotionEffect(SmallAbsorbPotionEffect.instance))
+                        .map(EffectInstance::getAmplifier)
+                        .orElse(-1);
+                int amp = Math.max(currentAmplifier, kills - 1);
+                attacker.addPotionEffect(new EffectInstance(SmallAbsorbPotionEffect.instance, 30 * 20, amp, false, true));
             }
         }
 
