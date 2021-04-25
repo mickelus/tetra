@@ -13,6 +13,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
+import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -149,6 +150,13 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 if (velocity > 0) {
                     target.addVelocity(0, velocity, 0);
                 }
+            }
+
+
+            int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
+            if (exhilarationLevel > 0 && !target.isAlive()) {
+                ServerScheduler.schedule(0, () -> attacker.removePotionEffect(ExhaustedPotionEffect.instance));
+
             }
 
             target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
