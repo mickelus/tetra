@@ -75,6 +75,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
+import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
@@ -304,6 +305,7 @@ public class TetraMod {
         packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
         packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
         packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
+        packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
 
         WorkbenchTile.init(packetHandler);
 

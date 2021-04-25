@@ -2,12 +2,14 @@
     {
         "key": "double/warforged",
         "integrity": -2,
+        "attributes": {
+            "generic.attack_speed": 0.7
+        },
         "effects": {
             "sweeping": 1,
-            "truesweep": 1
+            "truesweep": 1,
+            "extractor": -1
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/extractor/warforged"
-        }]
+        "models": [{"location": "tetra:items/module/double/head/extractor/warforged"}]
     }
 ]

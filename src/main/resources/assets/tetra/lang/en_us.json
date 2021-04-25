@@ -303,6 +303,9 @@
   "tetra.stats.reap_revenge.tooltip": "Reap deals §e%s%% (%s)§r more damage to revenge targets\n \n§rReap grants §e+1§r attack damage per kill for §e20§r seconds, the duration is increased by §e%s§r seconds per killed revenge target",
   "tetra.stats.reap_revenge.tooltip_extended": "Entities that have recently attacked you are considered to be revenge targets, a hud indicator appears when looking at a revenge target while wielding an item capable of revenge. Using an ability that leverages revenge resets the revenge status for affected targets. All revenge targets are reset after not being attacked for 30 seconds.",
 
+  "tetra.stats.ability_echo": "Echo",
+  "tetra.stats.lunge_echo.tooltip": "Lunge can be used §e%s§r additional times while midair to extend the distance or change direction",
+  "tetra.stats.lunge_echo.tooltip_extended": "Hold shift/crouch to dodge backwards midair, use space/jump instead of right-click for increased upward motion",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",

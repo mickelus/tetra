@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.CreatureAttribute;
@@ -286,6 +287,19 @@ public class ItemEffectHandler {
             if (getEffectLevel(itemStack, ItemEffect.howling) > 0) {
                 HowlingEffect.sendPacket();
             }
+        }
+
+        if (event.isUseItem()) {
+            LungeEffect.onRightClick(mc.player);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+        KeyBinding jumpKey = Minecraft.getInstance().gameSettings.keyBindJump;
+        if (jumpKey.matchesKey(event.getKey(), event.getScanCode()) && jumpKey.isKeyDown()) {
+            LungeEffect.onJump(Minecraft.getInstance().player);
         }
     }
 

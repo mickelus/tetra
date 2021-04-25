@@ -175,8 +175,9 @@ public class ItemEffect {
     public static ItemEffect abilityCombo = get("abilityCombo");
     public static ItemEffect abilityRevenge = get("abilityRevenge");
     public static ItemEffect abilityOverextend = get("abilityOverextend");
-    public static ItemEffect abilitySpeed = get("abilitySpeed");
     public static ItemEffect abilityExhilaration = get("abilityExhilaration");
+    public static ItemEffect abilitySpeed = get("abilitySpeed");
+    public static ItemEffect abilityEcho = get("abilityEcho");
 
     /**
      * Charged right-click ability that deals damage based on targets missing health and the number of negative effects they're affected by.

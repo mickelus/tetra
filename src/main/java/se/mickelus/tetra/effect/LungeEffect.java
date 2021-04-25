@@ -3,6 +3,7 @@ package se.mickelus.tetra.effect;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -22,10 +23,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
@@ -34,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class LungeEffect extends ChargedAbilityEffect {
     private static Cache<Integer, LungeData> activeCache = CacheBuilder.newBuilder()
             .maximumSize(20)
-            .expireAfterWrite(10, TimeUnit.SECONDS)
+            .expireAfterWrite(30, TimeUnit.SECONDS)
             .build();
 
     public static final LungeEffect instance = new LungeEffect();
@@ -62,6 +66,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             double verticalVelocityFactor = 0.8;
             float hitCooldown = 0.7f;
             float exhaustDuration = 0;
+            double echoStrength = 0;
 
             if (canOvercharge(item, itemStack)) {
                 int overcharge = getOverchargeBonus(item, itemStack, chargedTicks);
@@ -93,10 +98,15 @@ public class LungeEffect extends ChargedAbilityEffect {
                 exhaustDuration += 15;
             }
 
+            int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+            if (echoLevel > 0) {
+                echoStrength = item.getEffectEfficiency(itemStack, ItemEffect.abilityEcho);
+            }
+
             if (isDefensive(item, itemStack, hand)) {
                 lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
-                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown, exhaustDuration));
+                activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown, exhaustDuration, echoLevel, echoStrength));
             }
 
             // current velocity projected onto the look vector
@@ -208,6 +218,68 @@ public class LungeEffect extends ChargedAbilityEffect {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static void onRightClick(ClientPlayerEntity player) {
+        LungeData data = activeCache.getIfPresent(getIdentifier(player));
+        if (data != null && data.echoCount > 0) {
+            PacketHandler.sendToServer(new LungeEchoPacket());
+            echo(player, data, false);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void onJump(ClientPlayerEntity player) {
+        LungeData data = activeCache.getIfPresent(getIdentifier(player));
+        if (data != null && data.echoCount > 0) {
+            PacketHandler.sendToServer(new LungeEchoPacket(true));
+            echo(player, data, true);
+        }
+    }
+
+    public static void receiveEchoPacket(PlayerEntity player, boolean isVertical) {
+        LungeData data = activeCache.getIfPresent(getIdentifier(player));
+        if (data != null && data.echoCount > 0) {
+            echo(player, data, isVertical);
+        }
+    }
+
+    public static void echo(PlayerEntity entity, LungeData data, boolean isVertical) {
+        Vector3d lookVector = entity.getLookVec();
+        entity.setMotion(lookVector.scale(entity.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
+
+        double strength = data.echoStrength;
+
+        if (isVertical) {
+            strength *= 0.3;
+        }
+
+        entity.addVelocity(
+                lookVector.x * strength,
+                lookVector.y * strength,
+                lookVector.z * strength);
+
+        if (entity.isCrouching()) {
+            entity.setMotion(entity.getMotion().scale(-0.8));
+        }
+
+        if (isVertical) {
+            Vector3d motion = entity.getMotion();
+            double vertical = motion.y > 0 ? motion.y + strength * 0.5 : strength * 0.5;
+            entity.setMotion(motion.x, vertical, motion.z);
+        }
+
+        if (entity.getMotion().y > 0) {
+            entity.fallDistance = 0;
+        }
+
+        entity.velocityChanged = true;
+
+        entity.getEntityWorld().playSound(entity, new BlockPos(entity.getPositionVec().add(entity.getMotion())), SoundEvents.UI_TOAST_IN,
+                SoundCategory.PLAYERS, 1, 1.3f);
+
+        data.echoCount--;
+    }
+
     private static int getIdentifier(PlayerEntity entity) {
         return entity.world.isRemote ? -entity.getEntityId() : entity.getEntityId();
     }
@@ -217,12 +289,16 @@ public class LungeEffect extends ChargedAbilityEffect {
         float damageMultiplierOffset;
         float hitCooldown;
         float exhaustDuration;
+        int echoCount;
+        double echoStrength;
 
-        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown, float exhaustDuration) {
+        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown, float exhaustDuration, int echoCount, double echoStrength) {
             this.itemStack = itemStack;
             this.damageMultiplierOffset = damageMultiplierOffset;
             this.hitCooldown = hitCooldown;
             this.exhaustDuration = exhaustDuration;
+            this.echoCount = echoCount;
+            this.echoStrength = echoStrength;
         }
     }
 }
