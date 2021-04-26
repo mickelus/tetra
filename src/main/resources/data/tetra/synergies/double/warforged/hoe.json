@@ -63,5 +63,13 @@
         "effects": {
             "abilityExhilaration": 1
         }
+    },
+    {
+        "modules": ["double/hoe_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 60
+        }
     }
 ]

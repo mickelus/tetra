@@ -265,7 +265,11 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_overextend", 14, abilityOverextendGetter,
                             new TooltipGetterNone("tetra.stats.overpower_overextend.tooltip")),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
-                            new TooltipGetterNone("tetra.stats.overpower_exhilaration.tooltip")));
+                            new TooltipGetterNone("tetra.stats.overpower_exhilaration.tooltip")),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
+                            new TooltipGetterMultiValue("tetra.stats.overpower_echo.tooltip",
+                                    withStats(sum(new StatGetterAbilityChargeTime(OverpowerEffect.instance), new StatGetterAbilityCooldown(OverpowerEffect.instance),
+                                            new StatGetterEffectLevel(ItemEffect.abilityEcho, 0.05))), withFormat(StatFormat.noDecimal))));
 
     public static final IStatGetter reapGetter = new StatGetterEffectLevel(ItemEffect.reap, 1);
     public static final GuiStatBar reap = new GuiStatBar(0, 0, barLength, "tetra.stats.reap",

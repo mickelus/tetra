@@ -1,5 +1,7 @@
 package se.mickelus.tetra.effect;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,8 +23,14 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class OverpowerEffect extends ChargedAbilityEffect {
+    private static Cache<Integer, DelayData> delayCache = CacheBuilder.newBuilder()
+            .maximumSize(20)
+            .expireAfterWrite(1, TimeUnit.MINUTES)
+            .build();
 
     public static final OverpowerEffect instance = new OverpowerEffect();
 
@@ -47,7 +55,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
-            int newAmp = currentAmp + 1;
+            int newAmp = 1;
 
             if (overchargeBonus > 0) {
                 newAmp += (int) (overchargeBonus * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
@@ -71,8 +79,14 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 newAmp = -1;
             }
 
-            if (newAmp > currentAmp) {
-                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20), newAmp, false, true));
+            if (newAmp > 0) {
+                int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+                if (echoLevel > 0) {
+                    delayExhaustion(attacker, item, itemStack, (int) (exhaustDuration * 20), newAmp);
+                } else {
+                    attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
+                            newAmp + currentAmp, false, true));
+                }
             }
         }
 
@@ -169,5 +183,34 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         item.applyDamage(2, itemStack, attacker);
+    }
+
+    private void delayExhaustion(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int duration, int amplifier) {
+        int delay = getChargeTime(item, itemStack) + getCooldown(item, itemStack) + item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+
+        try {
+            DelayData data = delayCache.get(attacker.getEntityId(), DelayData::new);
+            data.timestamp = attacker.world.getGameTime() + delay;
+            data.amplifier += amplifier;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        ServerScheduler.schedule(delay + 1, () -> {
+            DelayData data = delayCache.getIfPresent(attacker.getEntityId());
+            if (attacker.isAlive() && attacker.world != null && data != null && attacker.world.getGameTime() > data.timestamp) {
+                int currentAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+                        .map(EffectInstance::getAmplifier)
+                        .orElse(-1);
+                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
+
+                delayCache.invalidate(attacker.getEntityId());
+            }
+        });
+    }
+
+    static class DelayData {
+        int amplifier;
+        long timestamp;
     }
 }

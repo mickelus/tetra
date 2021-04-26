@@ -82,7 +82,7 @@ public class ScrollItem extends BlockItem {
             items.add(setupSchematic("double/claw/warforge",          false, 2, 0x1d262f, 8, 10, 5, 11));
             items.add(setupSchematic("double/hoe/warforge",           false, 2, 0x93b350, 10, 7, 9, 5));
             items.add(setupSchematic("double/sickle/warforge",        false, 2, 0xd99e4c, 5, 9, 6, 10));
-            items.add(setupSchematic("double/butt/warforge",          false, 2, 0xb33636, 11, 5, 8, 9));
+            items.add(setupSchematic("double/butt/warforge", new String[] { "double/butt_shared/warforge/" }, false, 2, 0xb33636, 11, 5, 8, 9));
 
             items.add(setupSchematic("hone_gild_1", new String[] { "shared/hone_gild_1" }, true, 2, 0xc9ae69, 15, 14, 15, 15));
             items.add(setupSchematic("hone_gild_5", new String[] { "shared/hone_gild_" }, true, 2, 0xf2b313, 12, 12, 12, 12));
