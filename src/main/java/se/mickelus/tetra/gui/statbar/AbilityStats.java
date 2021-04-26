@@ -227,7 +227,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
                             new TooltipGetterMultiValue("tetra.stats.pry_exhilaration.tooltip",
                                     withStats(abilityExhilarationGetter, multiply(abilityExhilarationGetter, new StatGetterAbilityDamage(0, 0.01))),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
+                            new TooltipGetterNone("tetra.stats.pry_echo.tooltip")));
 
     public static final IStatGetter overpowerGetter = new StatGetterEffectLevel(ItemEffect.overpower, 1);
     public static final GuiStatBar overpower = new GuiStatBar(0, 0, barLength, "tetra.stats.overpower",

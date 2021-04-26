@@ -32,8 +32,16 @@ public class PryChargedEffect extends ChargedAbilityEffect {
             double damageMultiplier = PryEffect.damageMultiplier;
             damageMultiplier += getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
 
-            AbilityUseResult result = PryEffect.performRegular(attacker, item, itemStack, damageMultiplier, amplifier, target);
+            int comboPoints = ComboPoints.get(attacker);
+            boolean isSatiated = !attacker.getFoodStats().needFood();
+
+            AbilityUseResult result = PryEffect.performRegular(attacker, item, itemStack, damageMultiplier, amplifier, target, isSatiated, comboPoints);
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+
+            int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+            if (echoLevel > 0) {
+                PryEffect.performEcho(attacker, item, itemStack, damageMultiplier, amplifier, target, isSatiated, comboPoints);
+            }
         }
 
         attacker.addExhaustion(1f);

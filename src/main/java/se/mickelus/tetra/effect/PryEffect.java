@@ -33,10 +33,13 @@ public class PryEffect {
 
     public static void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
         if (!attacker.world.isRemote) {
+            int comboPoints = ComboPoints.get(attacker);
+            boolean isSatiated = !attacker.getFoodStats().needFood();
+
             if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
                 performDefensive(attacker, item, itemStack, target);
             } else {
-                performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target);
+                performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target, isSatiated, comboPoints);
             }
 
             target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
@@ -44,6 +47,11 @@ public class PryEffect {
             boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
             attacker.addExhaustion(overextended ? 6f : 0.5f);
             attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+
+            int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+            if (echoLevel > 0) {
+                performEcho(attacker, item, itemStack, damageMultiplier, effectLevel, target, isSatiated, comboPoints);
+            }
         }
 
         if (ComboPoints.canSpend(item, itemStack)) {
@@ -61,8 +69,7 @@ public class PryEffect {
     }
 
     public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
-            int amplifier, LivingEntity target) {
-        int comboPoints = ComboPoints.get(attacker);
+            int amplifier, LivingEntity target, boolean isSatiated, int comboPoints) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
         int comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
@@ -108,7 +115,7 @@ public class PryEffect {
             }
 
             double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-            if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
+            if (overextendLevel > 0 && isSatiated) {
                 amplifier++;
             }
 
@@ -146,5 +153,17 @@ public class PryEffect {
         }
 
         return result;
+    }
+
+    public static void performEcho(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier, int amplifier, LivingEntity target,
+            boolean isSatiated, int comboPoints) {
+        EchoHelper.echo(attacker, 60, () -> {
+            performRegular(attacker, item, itemStack, damageMultiplier, amplifier, target, isSatiated, comboPoints);
+
+            int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+            if (revengeLevel > 0) {
+                RevengeTracker.removeEnemy(attacker, target);
+            }
+        });
     }
 }
