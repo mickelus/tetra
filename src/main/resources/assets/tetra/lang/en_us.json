@@ -307,6 +307,7 @@
   "tetra.stats.lunge_echo.tooltip": "Lunge can be used §e%s§r additional times while midair to extend the distance or change direction",
   "tetra.stats.lunge_echo.tooltip_extended": "Hold shift/crouch to dodge backwards midair, use space/jump instead of right-click for increased upward motion",
   "tetra.stats.execute_echo.tooltip": "The target is struck again after 3 seconds, dealing damage based on the target's missing health and harmful effects",
+  "tetra.stats.slam_echo.tooltip": "Cause a secondary slam at the same point or on the same target after 3 seconds",
 
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",

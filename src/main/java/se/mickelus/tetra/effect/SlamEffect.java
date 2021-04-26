@@ -51,6 +51,28 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+        AbilityUseResult result = directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
+
+        double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
+        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+        attacker.swing(hand, false);
+        attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
+
+        int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+        if (revengeLevel > 0) {
+            RevengeTracker.removeEnemy(attacker, target);
+        }
+
+        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+        item.applyDamage(2, itemStack, attacker);
+
+        int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+        if (echoLevel > 0) {
+            echoTarget(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
+        }
+    }
+
+    public AbilityUseResult directSlam(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
         float knockbackBase = (float) item.getEffectEfficiency(itemStack, ItemEffect.slam);
@@ -62,7 +84,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         if (isDefensive) {
             damageMultiplier -= 0.3;
-             stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
+            stunDuration = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
         }
 
         if (overchargeBonus > 0) {
@@ -119,16 +141,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
         }
 
-        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
-        attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
-
-        if (revengeLevel > 0) {
-            RevengeTracker.removeEnemy(attacker, target);
-        }
-
-        item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
-        item.applyDamage(2, itemStack, attacker);
+        return result;
     }
 
     private void knockbackExhilaration(PlayerEntity attacker, Vector3d origin, LivingEntity target, long timeLimit, double multiplier) {
@@ -173,6 +186,12 @@ public class SlamEffect extends ChargedAbilityEffect {
             spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
 
             attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+
+            int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+            if (echoLevel > 0) {
+                echoGround(attacker, item, itemStack, hitVec, direction, yaw, range, damageMultiplier * echoLevel / 100d, slowDuration,
+                        momentumEfficiency, revengeLevel);
+            }
         }
 
         attacker.swing(hand, false);
@@ -180,6 +199,35 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
+    }
+
+    private void echoGround(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, Vector3d hitVec, Vector3d direction, double yaw,
+            double range, double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
+        EchoHelper.echo(attacker, 60, () -> {
+            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
+            List<LivingEntity> targets = attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
+                    .filter(Entity::isAlive)
+                    .filter(Entity::canBeAttackedWithItem)
+                    .filter(entity -> inRange(hitVec, entity, yaw, range))
+                    .collect(Collectors.toList());
+
+            targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
+
+            spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
+        });
+    }
+
+    private void echoTarget(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+        if (!attacker.world.isRemote) {
+            EchoHelper.echo(attacker, 60, () -> {
+                directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
+
+                int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
+                if (revengeLevel > 0) {
+                    RevengeTracker.removeEnemySynced((ServerPlayerEntity) attacker, target);
+                }
+            });
+        }
     }
 
     private double getAoeDamageMultiplier(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus,
