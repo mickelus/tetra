@@ -10,10 +10,15 @@
         "_right"
     ],
     "improvements": [
-        "tetra:enchantment/ma-enchants_lumberjack",
+        "tetra:enchantment/sharpness",
+        "tetra:enchantment/smite",
+        "tetra:enchantment/bane_of_arthropods",
+        "tetra:enchantment/fire_aspect",
+        "tetra:enchantment/looting",
         "tetra:enchantment/efficiency_adze",
         "tetra:enchantment/silk_touch",
         "tetra:enchantment/fortune",
+        "tetra:enchantment/ma-enchants_lumberjack",
         "tetra:enchantment/apotheosis_depth_miner",
         "tetra:enchantment/cyclic_excavate",
         "tetra:enchantment/ensorcellation_excavating",

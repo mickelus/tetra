@@ -10,6 +10,11 @@
         "_right"
     ],
     "improvements": [
+        "tetra:enchantment/sharpness",
+        "tetra:enchantment/smite",
+        "tetra:enchantment/bane_of_arthropods",
+        "tetra:enchantment/fire_aspect",
+        "tetra:enchantment/looting",
         "tetra:enchantment/efficiency_pickaxe",
         "tetra:enchantment/silk_touch",
         "tetra:enchantment/fortune",
