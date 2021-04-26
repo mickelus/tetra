@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -14,6 +15,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
+import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
@@ -98,6 +100,11 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             attacker.addExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
         }
 
+        int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+        if (echoLevel > 0) {
+            echoExecute(attacker, item, itemStack, target);
+        }
+
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
@@ -120,6 +127,28 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         }
 
         return result;
+    }
+
+    private void echoExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+        EchoHelper.echo(attacker, 100, () -> {
+            long harmfulCount = target.getActivePotionEffects().stream()
+                    .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
+                    .mapToInt(EffectInstance::getAmplifier)
+                    .map(amp -> amp + 1)
+                    .sum();
+
+            if (target.isBurning()) {
+                harmfulCount++;
+            }
+
+            float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
+            double damageMultiplier = missingHealth + harmfulCount;
+
+            if (damageMultiplier > 0) {
+                AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
+                playEffects(result != AbilityUseResult.fail, target, target.getPositionVec().add(0, target.getHeight() / 2, 0));
+            }
+        });
     }
 
     private AbilityUseResult defensiveExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {

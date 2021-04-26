@@ -104,7 +104,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
                             new TooltipGetterMultiValue("tetra.stats.execute_exhilaration.tooltip",
                                     withStats(abilityExhilarationGetter, abilityExhilarationEffGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
+                            new TooltipGetterNone("tetra.stats.execute_echo.tooltip")));
 
     public static final IStatGetter slamGetter = new StatGetterEffectLevel(ItemEffect.slam, 1);
     public static final IStatGetter slamEntityGetter = new StatGetterEffectLevel(ItemEffect.slam, 1.5);

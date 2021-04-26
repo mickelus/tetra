@@ -33,6 +33,7 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class LungeEffect extends ChargedAbilityEffect {
@@ -276,6 +277,15 @@ public class LungeEffect extends ChargedAbilityEffect {
 
         entity.getEntityWorld().playSound(entity, new BlockPos(entity.getPositionVec().add(entity.getMotion())), SoundEvents.UI_TOAST_IN,
                 SoundCategory.PLAYERS, 1, 1.3f);
+
+        if (!entity.world.isRemote) {
+            Random rand = entity.getRNG();
+            ((ServerWorld) entity.world).spawnParticle(ParticleTypes.WITCH,
+                    entity.getPosX() + (rand.nextGaussian() - 0.5) * 0.5,
+                    entity.getPosY(),
+                    entity.getPosZ() + (rand.nextGaussian() - 0.5) * 0.5,
+                    5, rand.nextFloat() * 0.2, -0.2 + rand.nextFloat() * -0.6, rand.nextFloat() * 0.2, 0);
+        }
 
         data.echoCount--;
     }
