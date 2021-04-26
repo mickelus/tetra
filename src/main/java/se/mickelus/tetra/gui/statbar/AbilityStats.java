@@ -151,8 +151,7 @@ public class AbilityStats {
                                             new StatGetterEffectEfficiency(ItemEffect.abilityExhilaration, 20)),
                                     withFormat(StatFormat.noDecimal, StatFormat.oneDecimal, StatFormat.noDecimal))),
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
-                            new TooltipGetterMultiValue("tetra.stats.slam_echo.tooltip",
-                                    withStats(abilityEchoGetter), withFormat(StatFormat.noDecimal))));
+                            new TooltipGetterNone("tetra.stats.slam_echo.tooltip")));
 
     public static final IStatGetter punctureGetter = new StatGetterEffectLevel(ItemEffect.puncture, 5);
     public static final GuiStatBar puncture = new GuiStatBar(0, 0, barLength, "tetra.stats.puncture",
@@ -187,7 +186,9 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
                             new TooltipGetterMultiValue("tetra.stats.puncture_exhilaration.tooltip",
                                     withStats(new StatGetterEffectLevel(ItemEffect.abilityExhilaration, 0.05)),
-                                    withFormat(StatFormat.oneDecimal))));
+                                    withFormat(StatFormat.oneDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
+                            new TooltipGetterNone("tetra.stats.puncture_echo.tooltip")));
 
     public static final IStatGetter pryGetter = new StatGetterEffectLevel(ItemEffect.pry, 1);
     public static final GuiStatBar pry = new GuiStatBar(0, 0, barLength, "tetra.stats.pry_armor",

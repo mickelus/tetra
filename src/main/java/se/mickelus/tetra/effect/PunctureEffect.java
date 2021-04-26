@@ -27,11 +27,14 @@ public class PunctureEffect extends ChargedAbilityEffect {
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
         if (!attacker.world.isRemote) {
             int armorBefore = target.getTotalArmorValue();
+            int comboPoints = ComboPoints.get(attacker);
+            boolean isSatiated = !attacker.getFoodStats().needFood();
+
             AbilityUseResult result;
             if (isDefensive(item, itemStack, hand)) {
                 result = performDefensive(attacker, hand, item, itemStack, target);
             } else {
-                result = performRegular(attacker, hand, item, itemStack, target, chargedTicks);
+                result = performRegular(attacker, item, itemStack, target, chargedTicks, isSatiated, comboPoints);
             }
 
             boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
@@ -43,6 +46,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
             }
 
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
+
+            int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
+            if (echoLevel > 0) {
+                performEcho(attacker, item, itemStack, target, chargedTicks, isSatiated, comboPoints);
+            }
         }
 
         if (ComboPoints.canSpend(item, itemStack)) {
@@ -53,17 +61,16 @@ public class PunctureEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    public AbilityUseResult performRegular(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
+    public AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
+            boolean isSatiated, int comboPoints) {
         int armor = target.getTotalArmorValue();
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 1, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
-            boolean satiated = !attacker.getFoodStats().needFood();
             boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
             boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getTotalArmorValue();
-            double cooldownMultiplier = 1;
 
             if (armor < 6 || isPunctured || reversal) {
                 int duration = 80;
@@ -74,11 +81,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
                 double comboLevel = item.getEffectLevel(itemStack, ItemEffect.abilityCombo);
                 if (comboLevel > 0) {
-                    duration += comboLevel * ComboPoints.get(attacker);
+                    duration += comboLevel * comboPoints;
                 }
 
                 double overextendEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
-                if (overextendEfficiency > 0 && satiated) {
+                if (overextendEfficiency > 0 && isSatiated) {
                     duration += overextendEfficiency * 20;
                 }
 
@@ -99,7 +106,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 }
 
                 int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-                if (overextendLevel > 0 && satiated) {
+                if (overextendLevel > 0 && isSatiated) {
                     amplifier += overextendLevel;
                 }
 
@@ -145,5 +152,10 @@ public class PunctureEffect extends ChargedAbilityEffect {
         }
 
         return result;
+    }
+
+    public void performEcho(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
+            boolean isSatiated, int comboPoints) {
+        EchoHelper.echo(attacker, 60, () -> performRegular(attacker, item, itemStack, target, chargedTicks, isSatiated, comboPoints));
     }
 }
