@@ -6,7 +6,7 @@
         },
         {
             "condition": "minecraft:random_chance",
-            "chance": 1
+            "chance": 0.08
         }
     ],
     "type": "tetra:replace_table",
