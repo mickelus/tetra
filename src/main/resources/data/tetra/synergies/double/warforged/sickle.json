@@ -79,5 +79,13 @@
         "effects": {
             "abilityExhilaration": [1, 40]
         }
+    },
+    {
+        "modules": ["double/sickle_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 10
+        }
     }
 ]

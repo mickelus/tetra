@@ -311,7 +311,7 @@
   "tetra.stats.puncture_echo.tooltip": "Punctures the target again after 3 seconds",
   "tetra.stats.pry_echo.tooltip": "Hit the target with pry again after 3 seconds",
   "tetra.stats.overpower_echo.tooltip": "Exhausted is applied on the wielder after §e%s§r seconds, this is further delayed every time overpower is used",
-  "tetra.stats.reap_echo.tooltip": "All entities hit by reap are struck again for §e%s%% (%s)§r damage after 3 seconds\n \n§rReap grants §e+1§r attack damage per kill for §e20§r seconds, attack damage gained from subsequent kills stacks up to §e+%s§r attack damage",
+  "tetra.stats.reap_echo.tooltip": "Trigger a secondary reap in the same area after 3 seconds\n \n§rReap grants §e+1§r attack damage per kill for §e30§r seconds, attack damage gained from subsequent kills stacks up to §e+%s§r attack damage",
 
 
   "tetra.stats.execute": "Execute",

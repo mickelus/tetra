@@ -314,5 +314,8 @@ public class AbilityStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.ability_exhilaration", 15, abilityExhilarationGetter,
                             new TooltipGetterMultiValue("tetra.stats.reap_exhilaration.tooltip",
                                     withStats(abilityExhilarationEffGetter, abilityExhilarationGetter),
-                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))));
+                                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal))),
+                    new GuiStatIndicator(0, 0, "tetra.stats.ability_echo", 16, abilityEchoGetter,
+                            new TooltipGetterMultiValue("tetra.stats.reap_echo.tooltip",
+                                    withStats(abilityEchoGetter), withFormat(StatFormat.noDecimal))));
 }
