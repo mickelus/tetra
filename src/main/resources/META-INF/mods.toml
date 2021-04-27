@@ -26,13 +26,13 @@ credits="red1854th: korean localization, Jeffku0107: chinese localization"
 [[dependencies.tetra]]
     modId="mgui"
     mandatory=true
-    versionRange="[3.1.2,]"
+    versionRange="[3.2,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
     modId="curios"
     mandatory=false
-    versionRange="[4,)"
+    versionRange="[1.16.2-4,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.tetra]]
