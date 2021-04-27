@@ -10,10 +10,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -27,6 +25,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.blocks.scroll.gui.ScrollScreen;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.util.TileEntityOptional;
@@ -71,30 +70,30 @@ public class ScrollItem extends BlockItem {
             items.add(setupTreatise("axe_efficiency",    false, 0, 0x66ff66, 0, 1, 3, 3));
             items.add(setupTreatise("cut_efficiency",    false, 0, 0x6666ff, 4, 0, 3, 5));
 
-            items.add(setupSchematic("sword/sturdy_guard",   false, 1, 0xbcb8b5, 3, 2, 2, 1));
-            items.add(setupSchematic("sword/throwing_knife", false, 1, 0xb8ced9, 4, 1, 0, 5));
-            items.add(setupSchematic("sword/howling",        false, 1, 0xfaf396, 8, 9, 10, 5));
+            items.add(setupSchematic("sword/sturdy_guard",   null, false, 1, 0xbcb8b5, 3, 2, 2, 1));
+            items.add(setupSchematic("sword/throwing_knife", null, false, 1, 0xb8ced9, 4, 1, 0, 5));
+            items.add(setupSchematic("sword/howling",        null, false, 1, 0xfaf396, 8, 9, 10, 5));
 
-            items.add(setupSchematic("double/adze/warforge",          false, 2, 0x8559b3, 6, 7, 11, 7));
-            items.add(setupSchematic("double/basic_axe/warforge",     false, 2, 0xb35973, 5, 10, 8, 9));
-            items.add(setupSchematic("double/basic_hammer/warforge",  false, 2, 0x3d4299, 9, 8, 11, 10));
-            items.add(setupSchematic("double/basic_pickaxe/warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
-            items.add(setupSchematic("double/claw/warforge",          false, 2, 0x1d262f, 8, 10, 5, 11));
-            items.add(setupSchematic("double/hoe/warforge",           false, 2, 0x93b350, 10, 7, 9, 5));
-            items.add(setupSchematic("double/sickle/warforge",        false, 2, 0xd99e4c, 5, 9, 6, 10));
-            items.add(setupSchematic("double/butt/warforge", new String[] { "double/butt_shared/warforge/" }, false, 2, 0xb33636, 11, 5, 8, 9));
+            items.add(setupSchematic("double/adze/warforge",          "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
+            items.add(setupSchematic("double/basic_axe/warforge",     "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
+            items.add(setupSchematic("double/basic_hammer/warforge",  "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
+            items.add(setupSchematic("double/basic_pickaxe/warforge", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
+            items.add(setupSchematic("double/claw/warforge",          "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
+            items.add(setupSchematic("double/hoe/warforge",           "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
+            items.add(setupSchematic("double/sickle/warforge",        "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
+            items.add(setupSchematic("double/butt/warforge", null, new String[] { "double/butt_shared/warforge/" }, false, 2, 0xb33636, 11, 5, 8, 9));
 
-            items.add(setupSchematic("hone_gild_1", new String[] { "shared/hone_gild_1" }, true, 2, 0xc9ae69, 15, 14, 15, 15));
-            items.add(setupSchematic("hone_gild_5", new String[] { "shared/hone_gild_" }, true, 2, 0xf2b313, 12, 12, 12, 12));
+            items.add(setupSchematic("hone_gild_1", null, new String[] { "shared/hone_gild_1" }, true, 2, 0xc9ae69, 15, 14, 15, 15));
+            items.add(setupSchematic("hone_gild_5", null, new String[] { "shared/hone_gild_" }, true, 2, 0xf2b313, 12, 12, 12, 12));
         }
     }
 
-    private ItemStack setupSchematic(String key, boolean isIntricate, int material, int tint, Integer ... glyphs) {
-        return setupSchematic(key, new String[] { key }, isIntricate, material, tint, glyphs);
+    private ItemStack setupSchematic(String key, String details, boolean isIntricate, int material, int tint, Integer ... glyphs) {
+        return setupSchematic(key, details, new String[] { key }, isIntricate, material, tint, glyphs);
     }
 
-    private ItemStack setupSchematic(String key, String[] schematics, boolean isIntricate, int material, int tint, Integer ... glyphs) {
-        ScrollData data = new ScrollData(key, isIntricate, material, tint, Arrays.asList(glyphs),
+    private ItemStack setupSchematic(String key, String details, String[] schematics, boolean isIntricate, int material, int tint, Integer ... glyphs) {
+        ScrollData data = new ScrollData(key, Optional.ofNullable(details), isIntricate, material, tint, Arrays.asList(glyphs),
                 Arrays.stream(schematics).map(s -> new ResourceLocation(TetraMod.MOD_ID, s)).collect(Collectors.toList()),
                 Collections.emptyList());
 
@@ -105,7 +104,7 @@ public class ScrollItem extends BlockItem {
     }
 
     private ItemStack setupTreatise(String key, boolean isIntricate, int material, int tint, Integer ... glyphs) {
-        ScrollData data = new ScrollData(key, isIntricate, material, tint, Arrays.asList(glyphs), Collections.emptyList(),
+        ScrollData data = new ScrollData(key, Optional.empty(), isIntricate, material, tint, Arrays.asList(glyphs), Collections.emptyList(),
                 ImmutableList.of(new ResourceLocation(TetraMod.MOD_ID, key)));
 
         ItemStack itemStack = new ItemStack(ScrollItem.instance);
@@ -185,28 +184,55 @@ public class ScrollItem extends BlockItem {
         }
     }
 
+    private boolean showDetailsScreen(ItemStack itemStack, boolean isRemote) {
+        ScrollData data = ScrollData.read(itemStack);
+        if (data.details != null) {
+            if (isRemote) {
+                ScrollScreen screen = new ScrollScreen(data.details);
+                Minecraft.getInstance().displayGuiScreen(screen);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getHeldItem(hand);
+        if (showDetailsScreen(player.getHeldItem(hand), world.isRemote)) {
+            return ActionResult.func_233538_a_(itemstack, world.isRemote());
+        }
+        return ActionResult.resultPass(itemstack);
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getPos();
         ItemStack itemStack = context.getItem();
-        if (RolledScrollBlock.instance.equals(context.getWorld().getBlockState(context.getPos()).getBlock())) {
+        PlayerEntity player = context.getPlayer();
+        Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+
+        if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && showDetailsScreen(itemStack, world.isRemote)) {
+            return ActionResultType.func_233537_a_(world.isRemote);
+        }
+
+        // add scroll to an existing stack of rolled up scrolls
+        if (RolledScrollBlock.instance.equals(block)) {
             boolean success = TileEntityOptional.from(world, pos, ScrollTile.class)
-                    .map(tile -> {
-                        return tile.addScroll(itemStack);
-                    })
+                    .map(tile -> tile.addScroll(itemStack))
                     .orElse(false);
 
             if (success) {
-                PlayerEntity player = context.getPlayer();
                 if (player == null || !player.abilities.isCreativeMode) {
                     itemStack.shrink(1);
                 }
                 return ActionResultType.func_233537_a_(world.isRemote);
             }
         }
-        ActionResultType actionresulttype = this.tryPlace(new BlockItemUseContext(context));
-        return !actionresulttype.isSuccessOrConsume() && this.isFood() ? this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() : actionresulttype;
+
+        return tryPlace(new BlockItemUseContext(context));
     }
 
     @Nullable

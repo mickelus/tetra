@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class ScrollData {
     public String key;
+    public String details;
     public boolean isIntricate;
     public int material = 0;
     public int ribbon = 0xffffff;
@@ -32,6 +33,7 @@ public class ScrollData {
 
     private static final Codec<ScrollData> codec = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("key").forGetter(i -> i.key),
+            Codec.STRING.optionalFieldOf("details").forGetter(i -> Optional.ofNullable(i.details)),
             Codec.BOOL.fieldOf("intricate").forGetter(i -> i.isIntricate),
             Codec.INT.fieldOf("material").forGetter(i -> i.material),
             HexCodec.instance.fieldOf("ribbon").forGetter(i -> i.ribbon),
@@ -44,8 +46,9 @@ public class ScrollData {
         key = "unknown";
     }
 
-    public ScrollData(String name, boolean isIntricate, int material, int ribbon, List<Integer> glyphs, List<ResourceLocation> schematics, List<ResourceLocation> craftingEffects) {
+    public ScrollData(String name, Optional<String> details, boolean isIntricate, int material, int ribbon, List<Integer> glyphs, List<ResourceLocation> schematics, List<ResourceLocation> craftingEffects) {
         this.key = name;
+        this.details = details.orElse(null);
         this.isIntricate = isIntricate;
 
         this.material = material;
