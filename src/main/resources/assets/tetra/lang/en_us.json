@@ -1411,6 +1411,12 @@
   "tetra.improvement.head_hone/hammer_tier.name": "Hone: Hammer Tier",
   "tetra.improvement.head_hone/hammer_tier.description": "Increases hammer tier by 1",
 
+  "tetra/schematic/double/warforge.name": "Warforge",
+  "tetra/schematic/double/warforge.description": "Warforge the tool to make it much more effective in combat. Provides passive effects based on which head this improvement is placed on, and an ability based on the composition of the tool.",
+
+  "tetra.improvement.double/warforged.name": "Warforged",
+  "tetra.improvement.double/warforged.description": "Makes this tool much more effective in combat",
+
   "tetra.synergy.double/axe_hammer": "Carpenter's hammer",
   "tetra.synergy.double/axe_axe": "Greataxe",
   "tetra.synergy.double/axe_pickaxe": "Dolabra",
