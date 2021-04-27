@@ -1,16 +1,20 @@
 package se.mickelus.tetra.trades;
 
+import com.google.common.collect.ImmutableList;
+import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
+import se.mickelus.tetra.blocks.scroll.ScrollItem;
 import se.mickelus.tetra.items.forged.*;
 
 import java.util.List;
 
 public class TradeHandler {
     @SubscribeEvent
-    public void setupTrades(WandererTradesEvent event) {
+    public void setupWandererTrades(WandererTradesEvent event) {
         List<VillagerTrades.ITrade> generic = event.getGenericTrades();
         List<VillagerTrades.ITrade> rare = event.getRareTrades();
 
@@ -23,6 +27,98 @@ public class TradeHandler {
         rare.add(new ItemsForEmeraldsAndScrapTrade(EarthpiercerItem.instance, 1, 24, 16, 1));
         rare.add(new ItemsForEmeraldsAndScrapTrade(CombustionChamberItem.instance, 1, 25, 16, 1));
         rare.add(new ItemsForEmeraldsAndScrapTrade(ChthonicExtractorBlock.instance, 1, 8, 16, 5));
+    }
 
+    @SubscribeEvent
+    public void setupVillagerTrades(VillagerTradesEvent event) {
+        VillagerProfession profession = event.getType();
+
+        if (VillagerProfession.TOOLSMITH.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.hammerEfficiency, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.metalExpertise, 8, 1, 1, 15)
+            ));
+        }
+
+        if (VillagerProfession.WEAPONSMITH.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.hammerEfficiency, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.metalExpertise, 8, 1, 1, 15)
+            ));
+        }
+
+        if (VillagerProfession.ARMORER.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.hammerEfficiency, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.metalExpertise, 8, 1, 1, 15)
+            ));
+        }
+
+        if (VillagerProfession.FLETCHER.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.woodExpertise, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.axeEfficiency, 6, 1, 1, 15)
+            ));
+            event.getTrades().get(4).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.fibreExpertise, 8, 1, 1, 20)
+            ));
+        }
+
+        if (VillagerProfession.LEATHERWORKER.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.scaleExpertise, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.cutEfficiency, 6, 1, 1, 15)
+            ));
+            event.getTrades().get(4).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.skinExpertise, 8, 1, 1, 20)
+            ));
+        }
+
+        if (VillagerProfession.MASON.equals(profession)) {
+            event.getTrades().get(2).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.stoneExpertise, 4, 1, 1, 5)
+            ));
+            event.getTrades().get(3).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.hammerEfficiency, 6, 1, 1, 15)
+            ));
+            event.getTrades().get(4).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.gemExpertise, 8, 1, 1, 20)
+            ));
+        }
+
+        if (VillagerProfession.LIBRARIAN.equals(profession)) {
+            event.getTrades().get(4).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.hammerEfficiency, 8, 1, 1, 20),
+                    new ItemsForEmeraldsTrade(ScrollItem.axeEfficiency, 8, 1, 1, 20),
+                    new ItemsForEmeraldsTrade(ScrollItem.cutEfficiency, 8, 1, 1, 20)
+            ));
+            event.getTrades().get(5).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.sturdyGuard, 16, 1, 1, 20),
+                    new ItemsForEmeraldsTrade(ScrollItem.throwingKnife, 16, 1, 1, 20),
+                    new ItemsForEmeraldsTrade(ScrollItem.howlingBlade, 16, 1, 1, 20)
+            ));
+        }
+
+        if (VillagerProfession.SHEPHERD.equals(profession)) {
+            event.getTrades().get(5).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.fabricExpertise, 16, 1, 1, 20)
+            ));
+        }
+
+        if (VillagerProfession.BUTCHER.equals(profession)) {
+            event.getTrades().get(5).addAll(ImmutableList.of(
+                    new ItemsForEmeraldsTrade(ScrollItem.boneExpertise, 16, 1, 1, 20)
+            ));
+        }
     }
 }

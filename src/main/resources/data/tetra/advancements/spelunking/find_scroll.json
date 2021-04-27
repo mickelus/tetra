@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:scroll_rolled",
+            "nbt": "{BlockEntityTag:{data:[{material:0,ribbon:\"ffffff\"}]}}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll.description"
+        },
+        "show_toast": false,
+        "announce_to_chat": false
+    },
+    "parent": "tetra:spelunking/root",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "item": "tetra:scroll_rolled"
+                }]
+            }
+        }
+    }
+}

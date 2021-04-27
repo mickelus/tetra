@@ -20,6 +20,8 @@ public class ScrollDrops {
         basicExtensions.put(LootTables.BASTION_HOGLIN_STABLE, new ResourceLocation(TetraMod.MOD_ID, "bastion_scrolls"));
         basicExtensions.put(LootTables.BASTION_OTHER, new ResourceLocation(TetraMod.MOD_ID, "bastion_scrolls"));
         basicExtensions.put(LootTables.BASTION_TREASURE, new ResourceLocation(TetraMod.MOD_ID, "bastion_scrolls"));
+        basicExtensions.put(LootTables.CHESTS_NETHER_BRIDGE, new ResourceLocation(TetraMod.MOD_ID, "chests/nether_bridge_extended"));
+        basicExtensions.put(LootTables.CHESTS_SIMPLE_DUNGEON, new ResourceLocation(TetraMod.MOD_ID, "chests/simple_dungeon_extended"));
     }
 
     @SubscribeEvent

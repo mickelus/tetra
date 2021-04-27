@@ -67,8 +67,6 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableLookTrigger;
     public static ForgeConfigSpec.BooleanValue enableReach;
 
-    public static ForgeConfigSpec.BooleanValue enableScrolls;
-
     static {
         // misc config
         builder.push("misc");
@@ -222,11 +220,6 @@ public class ConfigHandler {
                 .comment("Enable the extractor bedrock functionality")
                 .worldRestart()
                 .define("extractor", true);
-
-        enableScrolls = builder
-                .comment("Enable secret experimental feature")
-                .worldRestart()
-                .define("secret", false);
 
         enableCrossbow = builder
                 .comment("Enable modular crossbows")

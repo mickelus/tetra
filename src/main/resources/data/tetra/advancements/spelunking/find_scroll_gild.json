@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:scroll_rolled",
+            "nbt": "{BlockEntityTag:{data:[{material:2,ribbon:\"c9ae69\"}]}}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_gild.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_gild.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "item": "tetra:scroll_rolled",
+                    "nbt": "{BlockEntityTag:{data:[{key:\"hone_gild_1\"}]}}"
+                }]
+            }
+        }
+    }
+}

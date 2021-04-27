@@ -1,0 +1,59 @@
+{
+    "type": "minecraft:chest",
+    "pools": [
+        {
+            "name": "tetra_simple_dungeon_extended",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "group",
+                    "conditions": [{
+                        "condition": "minecraft:random_chance",
+                        "chance": 0.8
+                    }],
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "name": "tetra:scroll_rolled",
+                            "functions": [{
+                                "function": "tetra:scroll",
+                                "key": "sword/sturdy_guard",
+                                "intricate": false,
+                                "material": 1,
+                                "ribbon": "bcb8b5",
+                                "glyphs": [3, 2, 2, 1],
+                                "schematics": ["sword/sturdy_guard"]
+                            }]
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "tetra:scroll_rolled",
+                            "functions": [{
+                                "function": "tetra:scroll",
+                                "key": "sword/throwing_knife",
+                                "intricate": false,
+                                "material": 1,
+                                "ribbon": "b8ced9",
+                                "glyphs": [4, 1, 0, 5],
+                                "schematics": ["sword/throwing_knife"]
+                            }]
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "tetra:scroll_rolled",
+                            "functions": [{
+                                "function": "tetra:scroll",
+                                "key": "sword/howling",
+                                "intricate": false,
+                                "material": 1,
+                                "ribbon": "faf396",
+                                "glyphs": [8, 9, 10, 5],
+                                "schematics": ["sword/howling"]
+                            }]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -64,6 +64,25 @@ public class ScrollData {
         }
     }
 
+    public static int readMaterialFast(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+                .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
+                .filter(list -> list.size() > 0)
+                .map(list -> list.getCompound(0))
+                .map(tag -> tag.getInt("material"))
+                .orElse(0);
+    }
+
+    public static int readRibbonFast(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+                .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
+                .filter(list -> list.size() > 0)
+                .map(list -> list.getCompound(0))
+                .map(tag -> tag.getString("ribbon"))
+                .map(hex -> (int) Long.parseLong(hex, 16))
+                .orElse(0);
+    }
+
     public static ScrollData read(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
                 .map(ScrollData::read)

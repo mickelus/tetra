@@ -7,7 +7,7 @@ public class ScrollItemColor implements IItemColor {
     @Override
     public int getColor(ItemStack itemStack, int tintIndex) {
         if (tintIndex == 1) {
-            return ScrollData.read(itemStack).ribbon;
+            return ScrollData.readRibbonFast(itemStack);
         }
         return 0xffffff;
     }
