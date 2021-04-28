@@ -218,12 +218,12 @@ public class ScrollItem extends BlockItem {
         }
     }
 
-    private boolean showDetailsScreen(ItemStack itemStack, boolean isRemote) {
+
+    private boolean openScroll(ItemStack itemStack, boolean isRemote) {
         ScrollData data = ScrollData.read(itemStack);
         if (data.details != null) {
             if (isRemote) {
-                ScrollScreen screen = new ScrollScreen(data.details);
-                Minecraft.getInstance().displayGuiScreen(screen);
+                showDetailsScreen(data.details);
             }
             return true;
         }
@@ -231,10 +231,16 @@ public class ScrollItem extends BlockItem {
         return false;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    private void showDetailsScreen(String detailsKey) {
+        ScrollScreen screen = new ScrollScreen(detailsKey);
+        Minecraft.getInstance().displayGuiScreen(screen);
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
-        if (showDetailsScreen(player.getHeldItem(hand), world.isRemote)) {
+        if (openScroll(player.getHeldItem(hand), world.isRemote)) {
             return ActionResult.func_233538_a_(itemstack, world.isRemote());
         }
         return ActionResult.resultPass(itemstack);
@@ -248,7 +254,7 @@ public class ScrollItem extends BlockItem {
         PlayerEntity player = context.getPlayer();
         Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
 
-        if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && showDetailsScreen(itemStack, world.isRemote)) {
+        if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && openScroll(itemStack, world.isRemote)) {
             return ActionResultType.func_233537_a_(world.isRemote);
         }
 
