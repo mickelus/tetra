@@ -96,7 +96,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         if (overextendLevel > 0) {
             FoodStats foodStats = attacker.getFoodStats();
             float exhaustion = Math.min(40, foodStats.getFoodLevel() + foodStats.getSaturationLevel());
-            damageMultiplier *= overextendLevel * exhaustion * 0.25;
+            damageMultiplier *= 1 + overextendLevel * exhaustion * 0.25 / 100;
             attacker.addExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
         }
 
