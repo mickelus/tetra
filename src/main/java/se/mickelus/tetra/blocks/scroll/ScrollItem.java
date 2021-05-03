@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.forgespi.Environment;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -150,12 +151,16 @@ public class ScrollItem extends BlockItem {
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         String key = ScrollData.read(stack).key;
-        String prefixKey = "item.tetra.scroll." + key + ".prefix";
-        if (I18n.hasKey(prefixKey)) {
-            return new TranslationTextComponent("item.tetra.scroll." + key + ".prefix")
-                    .append(new StringTextComponent(": "))
-                    .append(new TranslationTextComponent("item.tetra.scroll." + key + ".name"));
+        // sometimes called on the server, need to check before calling I18n
+        if (!Environment.get().getDist().isDedicatedServer()) {
+            String prefixKey = "item.tetra.scroll." + key + ".prefix";
+            if (I18n.hasKey(prefixKey)) {
+                return new TranslationTextComponent("item.tetra.scroll." + key + ".prefix")
+                        .append(new StringTextComponent(": "))
+                        .append(new TranslationTextComponent("item.tetra.scroll." + key + ".name"));
+            }
         }
+
         return new TranslationTextComponent("item.tetra.scroll." + key + ".name");
     }
 
