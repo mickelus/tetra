@@ -74,41 +74,45 @@ public class ItemUpgradeRegistry {
             IModularItem item = (IModularItem) modularStack.getItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
-                    ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(modularStack))
-                            .filter(module -> module.acceptsImprovement(mapping.improvement))
-                            .toArray(ItemModuleMajor[]::new);
-                    if (modules.length > 0) {
+                applyEnchantment(item, modularStack, entry.getKey(), entry.getValue());
+            }
+        }
+    }
 
-                        // since efficiency doesn't stack on double headed items it should be fully applied to a single module instead of being split
-                        if (Enchantments.EFFICIENCY.equals(entry.getKey())) {
-                            float level = 1f * entry.getValue() / mapping.multiplier;
-                            for (ItemModuleMajor module : modules) {
-                                if (module.acceptsImprovementLevel(mapping.improvement, (int) level)) {
-                                    module.addImprovement(modularStack, mapping.improvement, (int) level);
-                                    break;
-                                }
+    public static void applyEnchantment(IModularItem item, ItemStack itemStack, Enchantment enchantment, int enchantmentLevel) {
+            for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(enchantment)) {
+                ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(itemStack))
+                        .filter(module -> module.acceptsImprovement(mapping.improvement))
+                        .toArray(ItemModuleMajor[]::new);
+                if (modules.length > 0) {
+
+                    // since efficiency doesn't stack on double headed items it should be fully applied to a single module instead of being split
+                    if (Enchantments.EFFICIENCY.equals(enchantment)) {
+                        float level = 1f * enchantmentLevel / mapping.multiplier;
+                        for (ItemModuleMajor module : modules) {
+                            if (module.acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                module.addImprovement(itemStack, mapping.improvement, (int) level);
+                                break;
                             }
-                        } else {
-                            float level = 1f * entry.getValue() / modules.length / mapping.multiplier;
-
-                            for (int i = 0; i < modules.length; i++) {
-                                if (i == 0) {
-                                    if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
-                                        modules[i].addImprovement(modularStack, mapping.improvement, (int) Math.ceil(level));
-                                    }
-                                } else {
-                                    if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
-                                        modules[i].addImprovement(modularStack, mapping.improvement, (int) level);
-                                    }
-                                }
-                            }
-
                         }
+                    } else {
+                        float level = 1f * enchantmentLevel / modules.length / mapping.multiplier;
+
+                        for (int i = 0; i < modules.length; i++) {
+                            if (i == 0) {
+                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
+                                    modules[i].addImprovement(itemStack, mapping.improvement, (int) Math.ceil(level));
+                                }
+                            } else {
+                                if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                    modules[i].addImprovement(itemStack, mapping.improvement, (int) level);
+                                }
+                            }
+                        }
+
                     }
                 }
             }
-        }
     }
 
     public EnchantmentMapping[] getEnchantmentMappings(String improvement) {

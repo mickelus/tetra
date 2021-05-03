@@ -891,16 +891,6 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public boolean isEnchantable(final ItemStack stack) {
-        return false;
-    }
-
-    @Override
-    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
-        return false;
-    }
-
-    @Override
     public ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player,
             ToolType tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {

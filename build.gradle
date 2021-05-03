@@ -6,19 +6,20 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url = "https://plugins.gradle.org/m2/" }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
@@ -49,6 +50,9 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+
+            arg "-mixin.config=tetra.mixins.json"
+
             property 'forge.logging.markers', '' //'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -61,6 +65,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+
+            arg "-mixin.config=tetra.mixins.json"
+
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -85,6 +92,10 @@ minecraft {
             }
         }
     }
+}
+
+mixin {
+    add sourceSets.main, "tetra.refmap.json"
 }
 
 sourceSets.main.resources {
@@ -137,7 +148,8 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${tetra_version}",
             "Implementation-Vendor" :"tetra",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "tetra.mixins.json"
         ])
     }
 }
@@ -159,25 +171,28 @@ publishing {
 
 processResources {
     doLast {
+        if (project.hasProperty("minify")) {
+            def jsonMinifyStart = System.currentTimeMillis()
+            def jsonMinified = 0
+            def jsonBytesSaved = 0
 
-        def jsonMinifyStart = System.currentTimeMillis()
-        def jsonMinified = 0
-        def jsonBytesSaved = 0
+            fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
 
-        fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-
-            File file = it
-            jsonMinified++
-            def oldLength = file.length()
-            try {
+                File file = it
+                jsonMinified++
+                def oldLength = file.length()
+                try {
+                    file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+                } catch(JsonException e) {
+                    throw new JsonException("Failed to parse json in " + file.path)
+                }
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-            } catch(JsonException e) {
-                throw new JsonException("Failed to parse json in " + file.path)
+                jsonBytesSaved += oldLength - file.length()
             }
-            file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-            jsonBytesSaved += oldLength - file.length()
-        }
 
-        println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+            println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+        } else {
+            println('Skipping json minification')
+        }
     }
 }

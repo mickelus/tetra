@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "se.mickelus.tetra.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "tetra.refmap.json",
+    "mixins": [
+        "MixinItemStack",
+        "MixinGrindstoneContainer"
+    ],
+    "minVersion": "0.8"
+}

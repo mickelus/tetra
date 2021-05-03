@@ -141,7 +141,6 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
         MinecraftForge.EVENT_BUS.register(new TradeHandler());
-        MinecraftForge.EVENT_BUS.register(new DisenchantmentHandler());
         MinecraftForge.EVENT_BUS.register(new DataManager());
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
         MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());

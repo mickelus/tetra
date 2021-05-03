@@ -4,6 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.*;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -21,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.compat.botania.ManaRepair;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.TetraItem;
@@ -238,4 +241,23 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
         return synergies;
     }
 
+    @Override
+    public boolean isEnchantable(ItemStack itemStack) {
+        return canEnchantInEnchantingTable(itemStack);
+    }
+
+    @Override
+    public boolean isBookEnchantable(final ItemStack itemStack, final ItemStack bookStack) {
+        return false;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack itemStack, Enchantment enchantment) {
+        return acceptsEnchantment(itemStack, enchantment);
+    }
+
+    @Override
+    public int getItemEnchantability(ItemStack itemStack) {
+        return getEnchantability(itemStack);
+    }
 }

@@ -1012,12 +1012,14 @@ public interface IModularItem {
      * @param itemStack The modular item itemstack
      * @param severity
      */
-    default void assemble(ItemStack itemStack, World world, float severity) {
+    default void assemble(ItemStack itemStack, @Nullable World world, float severity) {
         if (itemStack.getDamage() > itemStack.getMaxDamage()) {
             itemStack.setDamage(itemStack.getMaxDamage());
         }
 
-        applyDestabilizationEffects(itemStack, world, severity);
+        if (world != null) {
+            applyDestabilizationEffects(itemStack, world, severity);
+        }
 
         CompoundNBT nbt = itemStack.getOrCreateTag();
 
@@ -1027,6 +1029,33 @@ public interface IModularItem {
         EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
 
         updateIdentifier(itemStack);
+    }
+
+    default boolean hasEnchantments(ItemStack itemStack) {
+        return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
+    }
+
+    default boolean canEnchantInEnchantingTable(ItemStack itemStack) {
+        return getEnchantability(itemStack) > 0 && !hasEnchantments(itemStack);
+    }
+
+    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment) {
+        EnchantmentMapping[] mappings = ItemUpgradeRegistry.instance.getEnchantmentMappings(enchantment);
+        if (mappings.length > 0) {
+            return Arrays.stream(getMajorModules(itemStack))
+                    .filter(Objects::nonNull)
+                    .anyMatch(module -> Arrays.stream(mappings).anyMatch(mapping -> module.acceptsImprovement(mapping.improvement)));
+        }
+        return false;
+    }
+
+    default int getEnchantability(ItemStack itemStack) {
+        return (int) (Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .mapToInt(module -> module.getMagicCapacity(itemStack))
+                .filter(capacity -> capacity > 0)
+                .average()
+                .orElse(0) / 6d);
     }
 
     @OnlyIn(Dist.CLIENT)
