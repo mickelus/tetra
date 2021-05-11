@@ -1,28 +1,52 @@
 {
   "variants": {
-    "broken=false,rotation=0": {
+    "x=false,broken=false,rotation=0": {
       "model": "tetra:block/forged_vent0"
     },
-    "broken=true,rotation=0": {
+    "x=false,broken=true,rotation=0": {
       "model": "tetra:block/forged_vent0_broken"
     },
-    "broken=false,rotation=1": {
+    "x=false,broken=false,rotation=1": {
       "model": "tetra:block/forged_vent1"
     },
-    "broken=true,rotation=1": {
+    "x=false,broken=true,rotation=1": {
       "model": "tetra:block/forged_vent1_broken"
     },
-    "broken=false,rotation=2": {
+    "x=false,broken=false,rotation=2": {
       "model": "tetra:block/forged_vent2"
     },
-    "broken=true,rotation=2": {
+    "x=false,broken=true,rotation=2": {
       "model": "tetra:block/forged_vent2_broken"
     },
-    "broken=false,rotation=3": {
+    "x=false,broken=false,rotation=3": {
       "model": "tetra:block/forged_vent3"
     },
-    "broken=true,rotation=3": {
+    "x=false,broken=true,rotation=3": {
       "model": "tetra:block/forged_vent3_broken"
+    },
+    "x=true,broken=false,rotation=0": {
+      "model":"tetra:block/forged_vent0","y":270
+    },
+    "x=true,broken=true,rotation=0": {
+      "model":"tetra:block/forged_vent0_broken","y":270
+    },
+    "x=true,broken=false,rotation=1": {
+      "model":"tetra:block/forged_vent1","y":270
+    },
+    "x=true,broken=true,rotation=1": {
+      "model":"tetra:block/forged_vent1_broken","y":270
+    },
+    "x=true,broken=false,rotation=2": {
+      "model":"tetra:block/forged_vent2","y":270
+    },
+    "x=true,broken=true,rotation=2": {
+      "model":"tetra:block/forged_vent2_broken","y":270
+    },
+    "x=true,broken=false,rotation=3": {
+      "model":"tetra:block/forged_vent3","y":270
+    },
+    "x=true,broken=true,rotation=3": {
+      "model":"tetra:block/forged_vent3_broken","y":270
     }
   }
 }
