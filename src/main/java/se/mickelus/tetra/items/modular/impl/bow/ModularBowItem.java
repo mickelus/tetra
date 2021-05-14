@@ -158,9 +158,9 @@ public class ModularBowItem extends ModularItem {
     protected void fireArrow(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
-            boolean playerInfinite = player.abilities.isCreativeMode
-                    || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, itemStack) > 0;
             ItemStack ammoStack = player.findAmmo(vanillaBow);
+
+            boolean playerInfinite = isInfinite(player, itemStack, ammoStack);
 
             // multiply by 20 to align progress with vanilla bow (fully drawn at 1sec/20ticks)
             int drawProgress = Math.round(getProgress(itemStack, entity) * 20);
@@ -291,6 +291,14 @@ public class ModularBowItem extends ModularItem {
         }
     }
 
+    private boolean isInfinite(PlayerEntity player, ItemStack bowStack, ItemStack ammoStack) {
+        return player.abilities.isCreativeMode
+                || (ammoStack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0)
+                || CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
+                .map(item -> item.isInfinite(ammoStack, bowStack, player))
+                .orElse(false);
+    }
+
     /**
      * Gets the velocity of the arrow entity from the bow's charge
      */
@@ -373,10 +381,6 @@ public class ModularBowItem extends ModularItem {
         return true;
     }
 
-    /**
-     * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
-     * {@link #onItemUse}.
-     */
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack bowStack = player.getHeldItem(hand);
         boolean hasAmmo = !player.findAmmo(vanillaBow).isEmpty();
@@ -388,7 +392,7 @@ public class ModularBowItem extends ModularItem {
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
 
-        if (!player.abilities.isCreativeMode && !hasAmmo) {
+        if (!hasAmmo && !player.abilities.isCreativeMode && EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) <= 0) {
             return ActionResult.resultFail(bowStack);
         } else {
             player.setActiveHand(hand);
