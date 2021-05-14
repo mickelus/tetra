@@ -50,6 +50,23 @@ public class EffectHelper {
         }
     }
 
+    private static final Cache<UUID, Boolean> sprintingCache = CacheBuilder.newBuilder()
+            .maximumSize(50)
+            .expireAfterWrite(1, TimeUnit.SECONDS)
+            .build();
+
+    public static void setSprinting(LivingEntity player, boolean isSprinting) {
+        sprintingCache.put(player.getUniqueID(), isSprinting);
+    }
+
+    public static boolean getSprinting(LivingEntity player) {
+        try {
+            return sprintingCache.get(player.getUniqueID(), () -> false);
+        } catch (ExecutionException e) {
+            return false;
+        }
+    }
+
 
     public static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
         IModularItem item = (IModularItem) itemStack.getItem();

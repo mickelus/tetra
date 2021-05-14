@@ -331,7 +331,7 @@ public class ItemEffectHandler {
 
 
                         if (breakingPlayer.getCooledAttackStrength(0.5f) > 0.9f) {
-                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
+                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && breakingPlayer.isOnGround() && !breakingPlayer.isSprinting()) {
                                 SweepingEffect.truesweep(itemStack, breakingPlayer);
                             }
 

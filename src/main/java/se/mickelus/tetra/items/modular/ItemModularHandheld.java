@@ -23,6 +23,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.UseAction;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
@@ -164,7 +165,7 @@ public class ItemModularHandheld extends ModularItem {
 
             if (attackStrength > 0.9) {
                 int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
-                if (sweepingLevel > 0) {
+                if (sweepingLevel > 0 && attacker.isOnGround() && !EffectHelper.getSprinting(attacker)) {
                     SweepingEffect.sweepAttack(itemStack, target, attacker, sweepingLevel);
                 }
 
@@ -712,6 +713,7 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
         EffectHelper.setCooledAttackStrength(player, player.getCooledAttackStrength(0.5f));
+        EffectHelper.setSprinting(player, player.isSprinting());
         return false;
     }
 

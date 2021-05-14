@@ -369,6 +369,7 @@
 
   "tetra.stats.sweeping": "Sweeping",
   "tetra.stats.sweeping.tooltip": "Attacking an entity also hits all adjacent enemies within a §e%s§r block radius for §e%s§r weapon damage",
+  "tetra.stats.sweeping.tooltip_extended": "Sweeping attacks do not trigger when attacking mid-air or while sprinting.",
 
   "tetra.stats.truesweep": "Truesweep",
   "tetra.stats.truesweep.tooltip": "Entities hit by a sweep are affected by enchantments and item effects. Swinging triggers the sweeping effect even if it does not hit an entity.",
