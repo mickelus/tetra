@@ -110,8 +110,14 @@ public class GuiActionButton extends GuiElement {
     }
 
     public void update(Map<ToolType, Integer> availableTools) {
-        action.getRequiredTools(targetStack).entrySet().stream()
-                .findFirst()
-                .ifPresent(entry -> toolIndicator.updateRequirement(entry.getValue(), availableTools.getOrDefault(entry.getKey(), 0)));
+        Map<ToolType, Integer> requiredTools = action.getRequiredTools(targetStack);
+        if (!requiredTools.isEmpty()) {
+            toolIndicator.setTooltipVisibility(true);
+            requiredTools.entrySet().stream()
+                    .findFirst()
+                    .ifPresent(entry -> toolIndicator.updateRequirement(entry.getValue(), availableTools.getOrDefault(entry.getKey(), 0)));
+        } else {
+            toolIndicator.setTooltipVisibility(false);
+        }
     }
 }

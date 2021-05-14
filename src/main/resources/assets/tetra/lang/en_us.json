@@ -100,16 +100,22 @@
 
   "tetra.tool.hammer": "Hammer",
   "tetra.tool.hammer.requirement": "This action requires a tier %d hammer",
+  "tetra.tool.hammer.material_requirement": "The base requirement for working this material is a tier %d hammer, the requirement may shift based on what the material is used for.",
   "tetra.tool.axe": "Axe",
   "tetra.tool.axe.requirement": "This action requires a tier %d axe",
+  "tetra.tool.axe.material_requirement": "The base requirement for working this material is a tier %d axe, the requirement may shift based on what the material is used for.",
   "tetra.tool.pickaxe": "Pickaxe",
   "tetra.tool.pickaxe.requirement": "This action requires a tier %d pickaxe",
+  "tetra.tool.pickaxe.material_requirement": "The base requirement for working this material is a tier %d pickaxe, the requirement may shift based on what the material is used for.",
   "tetra.tool.shovel": "Shovel",
   "tetra.tool.shovel.requirement": "This action requires a tier %d shovel",
+  "tetra.tool.shovel.material_requirement": "The base requirement for working this material is a tier %d shovel, the requirement may shift based on what the material is used for.",
   "tetra.tool.cut": "Cut",
   "tetra.tool.cut.requirement": "This action requires a tier %d cutting implement.\n§7Most swords can be used for cutting.",
+  "tetra.tool.cut.material_requirement": "The base requirement for working this material is a tier %d cutting implement, the requirement may shift based on what the material is used for.\n§7Most swords can be used for cutting.",
   "tetra.tool.pry": "Pry",
   "tetra.tool.pry.requirement": "This action requires a tier %d prying implement.\n§7Claws can be used for prying.",
+  "tetra.tool.pry.material_requirement": "The base requirement for working this material is a tier %d prying implement, the requirement may shift based on what the material is used for.\n§7Claws can be used for prying.",
 
   "tetra.tool.available": "You have tier %d available",
 

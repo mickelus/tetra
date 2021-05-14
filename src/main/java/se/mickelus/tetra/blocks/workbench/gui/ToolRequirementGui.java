@@ -10,11 +10,31 @@ import java.util.List;
 
 public class ToolRequirementGui extends GuiTool {
 
-    int requiredLevel;
-    int availableLevel;
+    private int requiredLevel;
+    private int availableLevel;
+
+    private boolean showTooltip = true;
+    private boolean showTooltipRequirement = true;
+
+    String requirementTooltip;
 
     public ToolRequirementGui(int x, int y, ToolType toolType) {
+        this(x, y, toolType, "tetra.tool." + toolType.getName() + ".requirement");
+    }
+    public ToolRequirementGui(int x, int y, ToolType toolType, String requirementTooltip) {
         super(x, y, toolType);
+
+        this.requirementTooltip = requirementTooltip;
+    }
+
+    public ToolRequirementGui setTooltipVisibility(boolean shouldShow) {
+        showTooltip = shouldShow;
+        return this;
+    }
+
+    public ToolRequirementGui setTooltipRequirementVisibility(boolean shouldShow) {
+        showTooltipRequirement = shouldShow;
+        return this;
     }
 
     public ToolRequirementGui updateRequirement(int requiredLevel, int availableLevel) {
@@ -35,10 +55,15 @@ public class ToolRequirementGui extends GuiTool {
 
     @Override
     public List<String> getTooltipLines() {
-        if (hasFocus()) {
-            return Collections.singletonList(I18n.format("tetra.tool." + toolType.getName() + ".requirement", requiredLevel) + "\n \n"
-                    + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
-                    + I18n.format( "tetra.tool.available", availableLevel));
+        if (hasFocus() && showTooltip) {
+            if (showTooltipRequirement) {
+                return Collections.singletonList(I18n.format(requirementTooltip, requiredLevel) + "\n \n"
+                        + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
+                        + I18n.format( "tetra.tool.available", availableLevel));
+
+            }
+
+            return Collections.singletonList(I18n.format(requirementTooltip, requiredLevel));
         }
         return super.getTooltipLines();
     }

@@ -35,7 +35,6 @@ public class HoloMaterialDetailGui extends GuiElement {
     private GuiElement modifiers;
 
     private GuiElement requiredTools;
-    private Map<ToolType, Integer> availableToolLevels;
 
     private KeyframeAnimation openAnimation;
     private KeyframeAnimation showAnimation;
@@ -89,12 +88,6 @@ public class HoloMaterialDetailGui extends GuiElement {
         modifiers.setAttachment(GuiAttachment.topCenter);
         content.addChild(modifiers);
 
-        PlayerEntity player = Minecraft.getInstance().player;
-        availableToolLevels = Stream.of(PropertyHelper.getPlayerToolLevels(player), PropertyHelper.getToolbeltToolLevels(player))
-                .map(Map::entrySet)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
-
         // animations
         openAnimation = new KeyframeAnimation(80, this)
                 .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateY(y - 4, y))
@@ -141,7 +134,9 @@ public class HoloMaterialDetailGui extends GuiElement {
                     .map(Map::entrySet)
                     .map(Collection::stream)
                     .orElseGet(Stream::empty)
-                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey()).updateRequirement(entry.getValue(), availableToolLevels.getOrDefault(entry.getKey(), 0)))
+                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey(), "tetra.tool." + entry.getKey().getName() + ".material_requirement")
+                            .setTooltipRequirementVisibility(false)
+                            .updateRequirement(entry.getValue(), 0))
                     .forEach(requiredTools::addChild);
 
             content.getChildren(HoloMaterialStatGui.class).forEach(stat -> stat.update(current, preview));
