@@ -159,6 +159,12 @@ public class ScannerOverlayGui extends GuiRoot {
 
 
     @SubscribeEvent
+    public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        mc.getSoundHandler().stop(sound);
+        sound = new ScannerSound(mc);
+    }
+
+    @SubscribeEvent
     public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         mc.getSoundHandler().stop(sound);
         sound = new ScannerSound(mc);
