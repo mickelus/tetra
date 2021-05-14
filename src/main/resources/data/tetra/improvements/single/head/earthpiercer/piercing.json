@@ -21,5 +21,13 @@
         "effects": {
             "piercing": 3
         }
+    },
+    {
+        "key": "head_hone/piercing",
+        "level": 4,
+        "integrity": -1,
+        "effects": {
+            "piercing": 4
+        }
     }
 ]
