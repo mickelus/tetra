@@ -179,6 +179,11 @@ public class ToolbeltHelper {
      */
     public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, BlockState blockState) {
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(player);
+
+        if (toolbeltStack.isEmpty()) {
+            return -1;
+        }
+
         QuickslotInventory inventory = new QuickslotInventory(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
