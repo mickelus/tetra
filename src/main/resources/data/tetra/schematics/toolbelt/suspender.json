@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": [
+        "toolbelt/slot1",
+        "toolbelt/slot2",
+        "toolbelt/slot3"
+    ],
+    "keySuffixes": [
+        "_slot1",
+        "_slot2",
+        "_slot3"
+    ],
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "glyph": {
+        "textureX": 176,
+        "textureY": 48
+    },
+    "displayType": "major",
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:planar_stabilizer"
+            },
+            "requiredTools": {
+                "hammer": 3
+            },
+            "moduleKey": "toolbelt/suspender",
+            "moduleVariant": "suspender/suspender"
+        }
+    ]
+}

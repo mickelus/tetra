@@ -23,6 +23,11 @@ public class LabelGetterBasic implements ILabelGetter {
     public static final ILabelGetter percentageLabelDecimal = new LabelGetterBasic("%.01f%%", "%+.01f%%");
     public static final ILabelGetter percentageLabelDecimalInverted = new LabelGetterBasic("%.01f%%", "%+.01f%%", true);
 
+    public static final ILabelGetter noLabel = new ILabelGetter() {
+        public String getLabel(double value, double diffValue, boolean flipped) { return ""; }
+        public String getLabelMerged(double value, double diffValue) { return ""; }
+    };
+
     public LabelGetterBasic(String format) {
         this(format, format);
     }

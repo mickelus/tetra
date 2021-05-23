@@ -336,6 +336,11 @@ public class ItemEffect {
      */
     public static ItemEffect cellSocket = get("cellSocket");
 
+    /**
+     * Suspend self: Pressing jump midair while within range of an active beacon will suspend the player in the air
+     */
+    public static ItemEffect suspendSelf = get("suspendSelf");
+
     //////////////////////////////////////////////////////////////
     // bow
     //////////////////////////////////////////////////////////////

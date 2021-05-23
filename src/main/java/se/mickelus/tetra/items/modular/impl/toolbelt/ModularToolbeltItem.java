@@ -36,6 +36,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
+import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
@@ -85,6 +87,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
         packetHandler.registerPacket(OpenToolbeltItemPacket.class, OpenToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
+        packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
 
@@ -99,6 +102,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     public void clientInit() {
         super.clientInit();
         MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
+        MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
         ScreenManager.registerFactory(ModularToolbeltItem.containerType, ToolbeltGui::new);

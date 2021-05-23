@@ -101,6 +101,7 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
+import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
@@ -401,6 +402,7 @@ public class TetraMod {
             event.getRegistry().register(new UnwaveringPotionEffect());
             event.getRegistry().register(new SmallHealthPotionEffect());
             event.getRegistry().register(new SmallAbsorbPotionEffect());
+            event.getRegistry().register(new SuspendPotionEffect());
 //            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 

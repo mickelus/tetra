@@ -41,6 +41,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.storage,
             GuiStats.quiver,
             GuiStats.booster,
+            GuiStats.suspendSelf,
             GuiStats.sweeping,
             GuiStats.bleeding,
             GuiStats.backstab,

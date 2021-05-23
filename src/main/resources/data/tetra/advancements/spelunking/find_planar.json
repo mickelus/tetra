@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:planar_stabilizer"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_planar.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_planar.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "find_planar": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{ "item": "tetra:planar_stabilizer"}]
+            }
+        }
+    }
+}

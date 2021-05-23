@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_toolbelt",
+            "nbt": "{\"id\": \"spelunking/suspend_belt\", \"toolbelt/belt\": \"toolbelt/belt\",\"toolbelt/belt_material\": \"belt/buckled\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.suspend_belt.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.suspend_belt.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_planar",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "suspender/suspender"
+            }
+        }
+    }
+}

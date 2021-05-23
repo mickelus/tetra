@@ -383,6 +383,7 @@ public class ItemEffectHandler {
                         .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
                         .filter(level -> level > 0)
                         .orElse(1);
+
                 for (int i = 0; i < inventory.getSizeInventory(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getStackInSlot(i).isEmpty()) {
 

@@ -5,6 +5,7 @@
     "refmap": "tetra.refmap.json",
     "mixins": [
         "MixinItemStack",
+        "MixinServerPlayNetHandler",
         "MixinGrindstoneContainer"
     ],
     "minVersion": "0.8"

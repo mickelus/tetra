@@ -153,6 +153,11 @@ public class GuiStats {
                 0, 3, true, boosterGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toolbelt.booster.tooltip", boosterGetter));
 
+    public static final IStatGetter suspendSelfGetter = new StatGetterEffectLevel(ItemEffect.suspendSelf, 1d);
+    public static final GuiStatBar suspendSelf = new GuiStatBar(0, 0, barLength, "tetra.stats.toolbelt.suspend_self",
+            0, 1, false, suspendSelfGetter, LabelGetterBasic.noLabel,
+            new TooltipGetterNone("tetra.stats.toolbelt.suspend_self.tooltip"));
+
     public static final IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
     public static final GuiStatBar sweeping = new GuiStatBar(0, 0, barLength, "tetra.stats.sweeping",
                 0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabelDecimal,

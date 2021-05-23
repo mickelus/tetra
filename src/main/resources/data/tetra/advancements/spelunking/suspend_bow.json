@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_bow",
+            "nbt": "{\"id\": \"spelunking/suspend_bow\", \"bow/stave\": \"bow/long_stave\",\"bow/long_stave_material\": \"long_stave/acacia\",\"bow/string\": \"bow/basic_string\",\"bow/basic_string_material\": \"basic_string/string\",\"bow/riser\": \"bow/stabilizer\",\"bow/stabilizer_material\": \"stabilizer/linear\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.suspend_bow.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.suspend_bow.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_planar",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "variant": "stabilizer/linear"
+            }
+        }
+    }
+}
