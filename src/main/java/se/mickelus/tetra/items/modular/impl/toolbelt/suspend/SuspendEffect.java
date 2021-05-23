@@ -37,7 +37,7 @@ public class SuspendEffect {
 
     public static boolean canSuspend(PlayerEntity entity) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(entity);
-        boolean hasEffect = ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.suspendSelf) > 0;
+        boolean hasEffect = !itemStack.isEmpty() && ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.suspendSelf) > 0;
 
         return hasEffect && entity.getActivePotionEffects().stream()
                 .filter(EffectInstance::isAmbient)
