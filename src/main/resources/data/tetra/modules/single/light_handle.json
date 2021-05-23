@@ -69,7 +69,7 @@
         {
             "key": "light_handle/prismarine",
             "attributes": {
-                "generic.attack_speed": -1.1
+                "generic.attack_speed": -1.55
             },
             "effects": {
                 "throwable": [1, 0.9]

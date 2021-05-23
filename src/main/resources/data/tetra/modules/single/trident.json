@@ -31,7 +31,7 @@
             "magicCapacity": 90,
             "attributes": {
                 "generic.attack_damage": 8,
-                "generic.attack_speed": 0.2
+                "generic.attack_speed": -1.25
             },
             "glyph": {
                 "textureX": 192,

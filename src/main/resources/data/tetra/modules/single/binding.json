@@ -42,6 +42,9 @@
             "key": "single_binding/prismarine",
             "durability": 26,
             "integrity": 1,
+            "attributes": {
+                "generic.attack_speed": -0.1
+            },
             "glyph": {
                 "tint": "prismarine_glyph",
                 "textureX": 7,
