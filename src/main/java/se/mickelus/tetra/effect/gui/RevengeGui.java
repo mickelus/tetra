@@ -44,7 +44,7 @@ public class RevengeGui extends GuiElement {
     }
 
     public void update(PlayerEntity player, RayTraceResult mouseover) {
-        if (mouseover.getType() == RayTraceResult.Type.ENTITY
+        if (mouseover != null && mouseover.getType() == RayTraceResult.Type.ENTITY
                 && RevengeTracker.canRevenge(player)
                 && RevengeTracker.canRevenge(player, ((EntityRayTraceResult) mouseover).getEntity())) {
             if (!showAnimationLeft.isActive() && indicatorLeft.getOpacity() < 1) {
