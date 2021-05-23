@@ -145,12 +145,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     public static void setReceiving(World world, BlockPos pos, BlockState blockState, boolean receiving) {
-        if (receiving) {
-            TransferUnitBlock.setSending(world, pos, blockState, false);
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.receiving), 3);
-        } else {
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.none), 3);
-        }
+        EnumTransferState newState = receiving ? EnumTransferState.receiving : EnumTransferState.none;
     }
 
     public static boolean isReceiving(BlockState blockState) {
@@ -158,12 +153,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     public static void setSending(World world, BlockPos pos, BlockState blockState, boolean sending) {
-        if (sending) {
-            TransferUnitBlock.setReceiving(world, pos, blockState, false);
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.sending), 3);
-        } else {
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.none), 3);
-        }
+        EnumTransferState newState = sending ? EnumTransferState.sending : EnumTransferState.none;
     }
 
     public static boolean isSending(BlockState blockState) {
