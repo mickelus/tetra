@@ -1,6 +1,5 @@
 {
     "replace": true,
-    "localizationKey": "serrated_3",
     "slots": [
         "single/head"
     ],

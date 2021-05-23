@@ -1,6 +1,5 @@
 {
     "replace": true,
-    "localizationKey": "serrated_3",
     "slots": [
         "sword/blade"
     ],
