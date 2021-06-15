@@ -26,5 +26,5 @@ public abstract class MixinServerPlayNetHandler {
     }
 
     @Accessor
-    abstract void setFloating(boolean floating);
+    public abstract void setFloating(boolean floating);
 }
