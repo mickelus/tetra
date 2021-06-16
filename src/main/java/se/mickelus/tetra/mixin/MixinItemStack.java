@@ -29,10 +29,10 @@ public class MixinItemStack {
 
     @Inject(at = @At("HEAD"), method = "isEnchanted()Z", cancellable = true)
     private void isEnchanted(CallbackInfoReturnable<Boolean> callback) {
-        if (getItem() instanceof  IModularItem) {
+        if (getItem() instanceof IModularItem) {
             ItemStack itemStack = getInstance();
-            IModularItem item = (IModularItem) getItem();
-            callback.setReturnValue(itemStack.getTag().contains("Enchantments", 9) || item.hasEnchantments(itemStack));
+            callback.setReturnValue(itemStack.hasTag()
+                    && (itemStack.getTag().contains("Enchantments", 9) || ((IModularItem) getItem()).hasEnchantments(itemStack)));
 
             callback.cancel();
         }
