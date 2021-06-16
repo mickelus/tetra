@@ -5,13 +5,6 @@
         "attributes": {
             "**generic.attack_speed": 0.7
         },
-        "tools": {
-            "axe": -1,
-            "shovel": -1,
-            "pickaxe": -1,
-            "hoe": -1,
-            "cut": -1
-        },
         "models": [{
             "location": "tetra:items/module/double/head/butt/warforged",
             "tint": "inherit"
