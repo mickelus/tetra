@@ -61,7 +61,7 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "effects": {
-            "abilityRevenge": [40, 20]
+            "abilityRevenge": [40, 15]
         }
     },
     {
