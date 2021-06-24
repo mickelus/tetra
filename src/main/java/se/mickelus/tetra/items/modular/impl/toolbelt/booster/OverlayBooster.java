@@ -22,7 +22,7 @@ public class OverlayBooster {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         float fuelPercent = 0;
 
-        if (!event.side.isClient()) {
+        if (TickEvent.Phase.START == event.phase && !event.side.isClient()) {
             return;
         }
 

@@ -12,10 +12,12 @@ public class TickHandlerBooster {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
-        int level = UtilBooster.getBoosterLevel(itemStack);
-        if (level > 0) {
-            tickItem(event.player, itemStack, level);
+        if (TickEvent.Phase.START == event.phase) {
+            ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
+            int level = UtilBooster.getBoosterLevel(itemStack);
+            if (level > 0) {
+                tickItem(event.player, itemStack, level);
+            }
         }
     }
 

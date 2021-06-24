@@ -166,7 +166,9 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        LungeEffect.onPlayerTick(event.player);
+        if (TickEvent.Phase.START == event.phase) {
+            LungeEffect.onPlayerTick(event.player);
+        }
     }
 
     @SubscribeEvent
