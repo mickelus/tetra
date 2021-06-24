@@ -1,9 +1,9 @@
 {
     "key": "stick",
     "category": "misc",
-    "primary": "1.5",
+    "primary": "2",
     "secondary": "0.5",
-    "tertiary": "4",
+    "tertiary": "5.5",
     "durability": "40",
     "integrityCost": "1",
     "integrityGain": "3",

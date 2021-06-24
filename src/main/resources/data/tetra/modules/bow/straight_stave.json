@@ -36,12 +36,12 @@
             "durability": 171,
             "extract": {
                 "primaryAttributes": {
-                    "tetra:draw_speed": 0.2,
-                    "tetra:draw_strength": 1.2
+                    "tetra:draw_speed": 0.15,
+                    "tetra:draw_strength": 1
                 },
                 "tertiaryAttributes": {
-                    "tetra:draw_speed": -0.1,
-                    "tetra:draw_strength": 0.9
+                    "tetra:draw_speed": -0.07,
+                    "tetra:draw_strength": 0.6
                 },
                 "durability": 1,
                 "integrity": -1,
