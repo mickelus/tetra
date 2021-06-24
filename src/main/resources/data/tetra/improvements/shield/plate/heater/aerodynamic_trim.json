@@ -4,7 +4,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -24,7 +24,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -44,7 +44,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -64,7 +64,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -84,7 +84,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -104,7 +104,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -124,7 +124,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -144,7 +144,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -164,7 +164,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
@@ -184,7 +184,7 @@
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": 1
+            "throwable": [1, 100]
         },
         "models": [
             {
