@@ -20,9 +20,11 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.Filter;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ConfigSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -158,9 +160,13 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isVisibleForPlayer(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack) {
+    public boolean isVisibleForPlayer(PlayerEntity player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
         if (definition.locked) {
-            return Arrays.stream(tile.getUnlockedSchematics()).anyMatch(rl -> definition.key.startsWith(rl.getPath()));
+            return Optional.ofNullable(tile)
+                    .map(WorkbenchTile::getUnlockedSchematics)
+                    .map(Arrays::stream)
+                    .orElseGet(Stream::empty)
+                    .anyMatch(rl -> definition.key.startsWith(rl.getPath()));
         }
 
         if (definition.materialRevealSlot > -1) {

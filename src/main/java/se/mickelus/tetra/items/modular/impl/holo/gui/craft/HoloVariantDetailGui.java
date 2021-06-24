@@ -118,10 +118,12 @@ public class HoloVariantDetailGui extends GuiElement {
             synergyIndicator.setX(variantLabel.getWidth() + 4);
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
+            PlayerEntity player = Minecraft.getInstance().player;
             ItemStack improvementStack = baseOutcome.itemStack;
             UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
                     .filter(improvementSchematic -> improvementSchematic.isApplicableForItem(improvementStack))
+                    .filter(improvementSchematic -> improvementSchematic.isVisibleForPlayer(player, null, improvementStack))
                     .toArray(UpgradeSchematic[]::new);
 
             improvementsLabel.setVisible(improvementSchematics.length > 0);

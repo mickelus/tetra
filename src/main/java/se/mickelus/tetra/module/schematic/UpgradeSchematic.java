@@ -69,7 +69,7 @@ public interface UpgradeSchematic {
      * @param targetStack The target itemstack for the schematic
      * @return true if it should be visible, otherwise false
      */
-    public default boolean isVisibleForPlayer(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack) {
+    public default boolean isVisibleForPlayer(PlayerEntity player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
         return true;
     }
 
