@@ -46,6 +46,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.bleeding,
             GuiStats.backstab,
             GuiStats.armorPenetration,
+            GuiStats.crushing,
             GuiStats.skewering,
             GuiStats.howling,
             GuiStats.knockback,
