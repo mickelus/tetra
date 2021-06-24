@@ -55,7 +55,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
-        PacketHandler.instance.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
+        packetHandler.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
     }
 
     @Override

@@ -134,6 +134,8 @@ public class TetraMod {
     private static Item[] items;
     private static Block[] blocks;
 
+    public static PacketHandler packetHandler;
+
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CuriosCompat::enqueueIMC);
@@ -284,7 +286,7 @@ public class TetraMod {
                         .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
 
 
-        PacketHandler packetHandler = new PacketHandler();
+        packetHandler = new PacketHandler(MOD_ID, "main");
 
         Arrays.stream(items)
                 .filter(item -> item instanceof ITetraItem)

@@ -150,7 +150,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     public void performAction(PlayerEntity player, String actionKey) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
+            TetraMod.packetHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
             return;
         }
 
@@ -279,7 +279,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private void sync() {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchematic, currentSlot));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchematic, currentSlot));
         } else {
             world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             markDirty();
@@ -321,7 +321,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     public void initiateCrafting(PlayerEntity player) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketCraft(pos));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketCraft(pos));
         }
 
         craft(player);
@@ -445,7 +445,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketTweak(pos, slot, tweaks));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketTweak(pos, slot, tweaks));
         }
 
         tweak(player, slot, tweaks);

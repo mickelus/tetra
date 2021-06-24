@@ -25,6 +25,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
@@ -223,7 +224,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     public static void onRightClick(ClientPlayerEntity player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && data.echoCount > 0) {
-            PacketHandler.sendToServer(new LungeEchoPacket());
+            TetraMod.packetHandler.sendToServer(new LungeEchoPacket());
             echo(player, data, false);
         }
     }
@@ -232,7 +233,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     public static void onJump(ClientPlayerEntity player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && data.echoCount > 0) {
-            PacketHandler.sendToServer(new LungeEchoPacket(true));
+            TetraMod.packetHandler.sendToServer(new LungeEchoPacket(true));
             echo(player, data, true);
         }
     }

@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.EnderReverbEffect;
 import se.mickelus.tetra.effect.FierySelfEffect;
@@ -40,7 +41,6 @@ import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -270,7 +270,7 @@ public interface IModularItem {
                 tag.putBoolean(honeAvailableKey, true);
 
                 if (entity instanceof ServerPlayerEntity) {
-                    PacketHandler.sendTo(new HonePacket(itemStack), (ServerPlayerEntity) entity);
+                    TetraMod.packetHandler.sendTo(new HonePacket(itemStack), (ServerPlayerEntity) entity);
                 }
             }
         }

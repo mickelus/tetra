@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.TetraMod;
 
 public class JumpHandlerSuspend {
     private final Minecraft mc;
@@ -28,7 +28,7 @@ public class JumpHandlerSuspend {
                 boolean isSuspended = player.isPotionActive(SuspendPotionEffect.instance);
                 if (!isSuspended || player.isSneaking()) {
                     SuspendEffect.toggleSuspend(player, !isSuspended);
-                    PacketHandler.sendToServer(new ToggleSuspendPacket(!isSuspended));
+                    TetraMod.packetHandler.sendToServer(new ToggleSuspendPacket(!isSuspended));
                 }
             }
             wasJumpKeyDown = jumpKey.isKeyDown();

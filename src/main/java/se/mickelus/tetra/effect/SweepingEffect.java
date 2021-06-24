@@ -15,10 +15,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.CastOptional;
-
-import java.util.Optional;
 
 public class SweepingEffect {
 
@@ -68,7 +66,7 @@ public class SweepingEffect {
     }
 
     public static void triggerTruesweep() {
-        PacketHandler.sendToServer(new TruesweepPacket());
+        TetraMod.packetHandler.sendToServer(new TruesweepPacket());
     }
 
     /**

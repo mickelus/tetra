@@ -253,7 +253,7 @@ public class ModularBowItem extends ModularItem {
 
                             // vanilla velocity sync breaks when velocity is >3.9 on any axis
                             if (projectileVelocity * 3 > 4) {
-                                PacketHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.getPosition(), 512, world.getDimensionKey());
+                                TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.getPosition(), 512, world.getDimensionKey());
                             }
                         }
 

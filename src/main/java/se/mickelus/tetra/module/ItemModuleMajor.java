@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.items.modular.ItemColors;
@@ -55,7 +56,7 @@ public abstract class ItemModuleMajor extends ItemModule {
                 tag.remove(settleProgressKey);
 
                 if (entity instanceof ServerPlayerEntity) {
-                    PacketHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayerEntity) entity);
+                    TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayerEntity) entity);
                 }
             }
         }

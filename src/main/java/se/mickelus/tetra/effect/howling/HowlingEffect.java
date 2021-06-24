@@ -8,6 +8,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.network.PacketHandler;
@@ -18,7 +19,7 @@ import java.util.Random;
 
 public class HowlingEffect {
     public static void sendPacket() {
-        PacketHandler.sendToServer(new HowlingPacket());
+        TetraMod.packetHandler.sendToServer(new HowlingPacket());
     }
 
     public static void trigger(ItemStack itemStack, LivingEntity player, int effectLevel) {

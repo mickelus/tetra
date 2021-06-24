@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -58,7 +58,7 @@ public class RevengeTracker {
                 addEnemy(entity, enemy);
 
                 if (entity instanceof ServerPlayerEntity) {
-                    PacketHandler.sendTo(new AddRevengePacket(enemy), (ServerPlayerEntity) entity);
+                    TetraMod.packetHandler.sendTo(new AddRevengePacket(enemy), (ServerPlayerEntity) entity);
                 } else {
                     logger.warn("Unable to sync revenge state, server entity of type player is of other heritage. This should not happen");
                 }
@@ -73,7 +73,7 @@ public class RevengeTracker {
      */
     public static void removeEnemySynced(ServerPlayerEntity entity, Entity enemy) {
         removeEnemy(entity, enemy.getEntityId());
-        PacketHandler.sendTo(new RemoveRevengePacket(enemy), entity);
+        TetraMod.packetHandler.sendTo(new RemoveRevengePacket(enemy), entity);
     }
 
     public static void removeEnemy(Entity entity, Entity enemy) {

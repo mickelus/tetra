@@ -32,7 +32,7 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
             endTime = world.getGameTime() + activationDuration;
 
             if (!world.isRemote) {
-                PacketHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(pos, endTime), pos, 64, world.getDimensionKey());
+                TetraMod.packetHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(pos, endTime), pos, 64, world.getDimensionKey());
             }
         }
     }

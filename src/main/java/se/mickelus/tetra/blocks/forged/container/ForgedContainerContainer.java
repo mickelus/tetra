@@ -83,7 +83,7 @@ public class ForgedContainerContainer extends Container {
         }
 
         if (tile.getWorld().isRemote) {
-            PacketHandler.sendToServer(new ChangeCompartmentPacket(compartmentIndex));
+            TetraMod.packetHandler.sendToServer(new ChangeCompartmentPacket(compartmentIndex));
         }
     }
 

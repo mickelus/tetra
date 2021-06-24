@@ -23,7 +23,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.UseAction;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
@@ -38,15 +37,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.*;
-import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -655,7 +653,7 @@ public class ItemModularHandheld extends ModularItem {
 
             Hand activeHand = entity.getActiveHand();
 
-            PacketHandler.sendToServer(new ChargedAbilityPacket(target, targetPos, hitVec, activeHand, ticksUsed));
+            TetraMod.packetHandler.sendToServer(new ChargedAbilityPacket(target, targetPos, hitVec, activeHand, ticksUsed));
 
             handleChargedAbility((PlayerEntity) entity, activeHand, target, targetPos, hitVec, ticksUsed);
         }
@@ -688,7 +686,7 @@ public class ItemModularHandheld extends ModularItem {
 
             Hand activeHand = entity.getActiveHand();
 
-            PacketHandler.sendToServer(new SecondaryAbilityPacket(target, activeHand));
+            TetraMod.packetHandler.sendToServer(new SecondaryAbilityPacket(target, activeHand));
 
             handleSecondaryAbility((PlayerEntity) entity, activeHand, target);
         }

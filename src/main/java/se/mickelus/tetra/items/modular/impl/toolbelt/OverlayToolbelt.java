@@ -17,9 +17,9 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
-import se.mickelus.tetra.network.PacketHandler;
 
 public class OverlayToolbelt {
 
@@ -108,7 +108,7 @@ public class OverlayToolbelt {
 
     private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, Hand hand) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex, hand);
-        PacketHandler.sendToServer(packet);
+        TetraMod.packetHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
             ToolbeltHelper.equipItemFromToolbelt(mc.player, slotType, toolbeltItemIndex, hand);
         } else {
@@ -138,7 +138,7 @@ public class OverlayToolbelt {
     private boolean openToolbelt() {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(mc.player);
         if (!itemStack.isEmpty()) {
-            PacketHandler.sendToServer(new OpenToolbeltItemPacket());
+            TetraMod.packetHandler.sendToServer(new OpenToolbeltItemPacket());
         }
 
         return !itemStack.isEmpty();

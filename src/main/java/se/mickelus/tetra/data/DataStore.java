@@ -96,14 +96,14 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
 
         // PacketHandler dependencies get upset when called upon before the server has started properly
         if (Environment.get().getDist().isDedicatedServer() && ServerLifecycleHooks.getCurrentServer() != null) {
-            PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
+            TetraMod.packetHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
         }
 
         parseData(rawData);
     }
 
     public void sendToPlayer(ServerPlayerEntity player) {
-        PacketHandler.sendTo(new UpdateDataPacket(directory, rawData), player);
+        TetraMod.packetHandler.sendTo(new UpdateDataPacket(directory, rawData), player);
     }
 
     public void loadFromPacket(Map<ResourceLocation, String> data) {
