@@ -27,7 +27,7 @@ public class GuiStatBarTool extends GuiStatBar {
     }
 
     public GuiStatBarTool(int x, int y, int width, ToolType toolType, boolean efficiencyVisibility) {
-        super(x, y, width, "", 0, efficiencyMax,
+        super(x, y, width, null, 0, efficiencyMax,
                 false, new StatGetterToolEfficiency(toolType), LabelGetterBasic.decimalLabel,
                 new TooltipGetterTool(toolType));
 
