@@ -1,6 +1,6 @@
 
 name: 💡 Feature request
-about: Suggest new functionality, new content or balancing changes
+description: Suggest new functionality, new content or balancing changes
 body:
   - type: textarea
     id: description
@@ -17,7 +17,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: experience
+    id: synergies
     attributes:
       label: Tetra synergies
       description: How does this synergize with current features in tetra, or how does it align the the goals of tetra
