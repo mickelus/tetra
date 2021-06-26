@@ -1,9 +1,11 @@
 {
 	"itemGroup.tetra": "테트라",
+
 	"tetra.attribute.draw_strength.name": "잡아당기는 힘",
 	"tetra.attribute.draw_speed.name": "잡아당기는 시간",
 	"tetra.attribute.ability_damage.name": "능력 공격 피해",
 	"tetra.attribute.ability_cooldown.name": "능력 재사용시간",
+
 	"effect.tetra.bleeding": "출혈",
 	"effect.tetra.earthbound": "지면결속",
 	"effect.tetra.stun": "기절",
@@ -27,6 +29,7 @@
 	"effect.tetra.small_absorb.tooltip": "흡수 보호막을 §e%s§r만큼 얻습니다",
 	"effect.tetra.unwavering": "굳셈",
 	"effect.tetra.unwavering.tooltip": "적의 공격에 밀려나지 않게 됩니다",
+
 	"item.tetra.holo.tooltip1": "만지면 허공에 스피어의 도표와 상형문자가 띄워집니다",
 	"item.tetra.holo.tooltip2": "§8[§7오른쪽 클릭§8] §7사용",
 	"tetra.holo.craft.breadcrumb.root": "제작",
@@ -43,6 +46,7 @@
 	"tetra.holo.craft.improvements": "개선 가능한 사항",
 	"tetra.holo.craft.stats": "능력치",
 	"tetra.holo.craft.variants": "종류",
+
 	"tetra.holo.craft.materials.stat.primary": "경도",
 	"tetra.holo.craft.materials.stat.primary.tooltip": "재료의 경도와 날카로운 정도",
 	"tetra.holo.craft.materials.stat.secondary": "밀도",
@@ -58,21 +62,27 @@
 	"tetra.holo.craft.materials.stat.integrity": "무결성",
 	"tetra.holo.craft.materials.stat.integrity.tooltip": "이 재료로 제작된 부품의 기본 무결성 증가 및 무결성 비용 (증가 | 비용)",
 	"tetra.holo.craft.materials.stat.magic_capacity": "마용성",
-	"tetra.holo.craft.materials.stat.magic_capacity.tooltip": "이 재료로 제작된 주요 부품의 마법 수용성",
+	"tetra.holo.craft.materials.stat.magic_capacity.tooltip": "이 재료로 제작된 주요 부품의 마법 수용량을 결정하는 수용성",
+
 	"tetra.holo.craft.materials.stat_modifier": "수식",
 	"tetra.holo.craft.materials.stat_modifier.tooltip": "이 재료로 제작된 주요 부품에는 \"§e%s§r\" 수식어가 부여됩니다",
+
 	"tetra.holo.craft.materials.stat_effect": "효과",
 	"tetra.holo.craft.materials.stat_effect.tooltip": "이 재료로 제작된 부품에는 \"§e%s§r\" 효과가 부여됩니다",
+
 	"tetra.holo.scan.status": "§8측정기 상태: §r%s",
 	"tetra.holo.scan.active": "활성화",
 	"tetra.holo.scan.snoozed": "§8잠시 중단 §r%s:%s",
 	"tetra.holo.scan.snooze": "§7[§8shift + 오른쪽 클릭§7] §8측정기 잠시 중단",
+
 	"tetra.workbench.slot_detail.details_tab": "세부정보",
 	"tetra.workbench.slot_detail.craft_tab": "제작",
 	"tetra.workbench.slot_detail.tweak_tab": "조절",
 	"tetra.workbench.slot_detail.tweak_apply": "적용",
+
 	"tetra.workbench.module_detail.empty": "빈 슬롯",
 	"tetra.workbench.module_detail.not_tweakable": "조절할 수 없는 부품입니다",
+
 	"tetra.workbench.schematic_list.empty": "선택한 창에서 할 수 있는 강화가 없습니다",
 	"tetra.workbench.schematic_detail.craft": "제작",
 	"tetra.workbench.schematic_detail.back": "이전",
@@ -85,97 +95,140 @@
 	"tetra.workbench.schematic_detail.integrity_tooltip": "무결성 사용량을 초과합니다",
 	"tetra.workbench.schematic_detail.tools_tooltip": "필요한 도구가 없습니다",
 	"tetra.workbench.schematic_detail.level_tooltip": "경험치가 더 많이 필요합니다",
-	"tetra.workbench.schematic_list.temporary": "만들 수 있는 아이템이 인벤토리에 있습니다",
+
+	"tetra.workbench.schematic_list.temporary": "만들 수 있는 아이템이 인벤토리에 있거나 설계도가 주변에 있습니다",
+
 	"tetra.repair_action.label": "수리",
+
 	"tetra.tool.hammer": "망치",
 	"tetra.tool.hammer.requirement": "%d등급 망치가 필요합니다",
+	"tetra.tool.hammer.material_requirement": "이 재료는 기본적으로 %d등급 망치가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.",
 	"tetra.tool.axe": "도끼",
 	"tetra.tool.axe.requirement": "%d등급 도끼가 필요합니다",
+	"tetra.tool.axe.material_requirement": "이 재료는 기본적으로 %d등급 도끼가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.",
 	"tetra.tool.pickaxe": "곡괭이",
 	"tetra.tool.pickaxe.requirement": "%d등급 곡괭이가 필요합니다",
+	"tetra.tool.pickaxe.material_requirement": "이 재료는 기본적으로 %d등급 곡괭이가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.",
 	"tetra.tool.shovel": "삽",
 	"tetra.tool.shovel.requirement": "%d등급 삽이 필요합니다",
+	"tetra.tool.shovel.material_requirement": "이 재료는 기본적으로 %d등급 삽이 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.",
 	"tetra.tool.cut": "절단",
 	"tetra.tool.cut.requirement": "%d등급 절단 도구가 필요합니다\n§7절단하는데 대부분의 검을 사용할 수 있습니다",
+	"tetra.tool.cut.material_requirement": "이 재료는 기본적으로 %d등급 절단 도구가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.\n§7절단하는데 대부분의 검을 사용할 수 있습니다.",
 	"tetra.tool.pry": "해체",
 	"tetra.tool.pry.requirement": "%d등급 해체 도구가 필요합니다\n§7해체하는데 클로를 사용할 수 있습니다",
+	"tetra.tool.pry.material_requirement": "이 재료는 기본적으로 %d등급 해체 도구가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.\n§7해체하는데 클로를 사용할 수 있습니다.",
+
 	"tetra.tool.available": "%d등급을 가지고 있습니다",
+
 	"tetra.stats.efficiency_suffix": "효율",
 	"tetra.stats.strength_suffix": "힘",
 	"tetra.stats.tier_suffix": "등급",
 	"tetra.stats.level_suffix": "레벨",
+
 	"tetra.stats.reach": "범위",
 	"tetra.stats.reach.tooltip": "블록을 부술 수 있는 최대 범위 §e%s§r, 엔티티를 피격할 수 있는 최대 범위 §e%s§r",
 	"tetra.stats.reach.tooltip_blocks": "이 아이템은 블록을 부술 수 있는 최대 범위가 §e%s§r 블록까지입니다. 엔티티를 피격할 수 있는 최대 범위에 영향을 주지 않습니다",
+
 	"tetra.stats.reach_normalized": "범위",
 	"tetra.stats.reach_normalized.tooltip": "이 아이템의 최대 범위가 §e%s§r 블록까지로 증가합니다",
+
 	"tetra.stats.durability": "내구성",
 	"tetra.stats.durability.tooltip": "이 아이템의 내구도 §e%s§r",
 	"tetra.stats.durability.tooltip_extended": "§7아이템은 일반적으로 사용할 때 1~2 정도의 내구도를 소모하고, 내구도가 0이 되면 아이템이 파손됩니다.\n파손된 아이템은 작업대에서 수리해야 다시 사용할 수 있습니다",
+
 	"tetra.stats.speed": "속도",
 	"tetra.stats.speed.tooltip": "휘두르는 속도에 영향을 줍니다\n\n§e%s§7 초당 휘두르는 속도\n§ex%s§7 속도 승수",
 	"tetra.stats.speed.tooltip_extended": "휘두르는 \"대기시간\"은 화면 중앙에 있는 검 모양 표식 또는, 단축바 옆에 있는 검 모양 표식을 보고 확인 할 수 있습니다 (설정에서 변경 가능). 완전히 충전되기 전에도 휘두를 수 있지만, 피해를 매우 조금 밖에 줄 수 없습니다. 휩쓸기 또는 크리티컬 공격은 완전히 충전된 경우에만 사용됩니다.\n \n§7속도 값은 채광 효율의 승수 역할을 하며, 1보다 크거나 작은지에 따라 블록이 얼마나 빨리 채굴되는지 결정됩니다. 승수는 다음과 같이 계산합니다: §f§o승수 = 속도 * 0.5 + 0.5§r§7",
+
 	"tetra.stats.draw_speed": "잡아당기는 속도",
 	"tetra.stats.draw_speed.tooltip": "이 아이템의 시위를 끝까지 잡아당기는데 걸리는 시간 §e%s§r초",
-	"tetra.stats.draw_speed_normalized": "속도",
+
+	"tetra.stats.draw_speed_normalized": "잡아당기는 속도",
 	"tetra.stats.draw_speed_normalized.tooltip": "이 아이템의 시위를 잡아당기는 속도가 §e%s§r초 증가합니다",
+
 	"tetra.stats.ability_speed": "재사용 대기시간",
 	"tetra.stats.ability_speed.tooltip": "이 아이템의 재사용 대기시간 §e%s§r",
+
 	"tetra.stats.ability_speed_normalized": "재사용 대기시간",
 	"tetra.stats.ability_speed_normalized.tooltip": "이 아이템의 재사용 대기시간이 §e%s§r초 감소합니다",
+
 	"tetra.stats.speed_normalized": "속도",
 	"tetra.stats.speed_normalized.tooltip": "이 아이템의 공격 속도 §e%s",
+
 	"tetra.stats.attack_damage": "공격 피해",
 	"tetra.stats.attack_damage.tooltip": "이 아이템의 공격 피해 §e%s§r",
 	"tetra.stats.attack_damage.tooltip_extended": "아이템의 피해를 주는 능력들의 대부분은 공격 피해 수치를 기반으로 합니다",
+
 	"tetra.stats.attack_damage_normalized": "공격 피해",
 	"tetra.stats.attack_damage_normalized.tooltip": "이 아이템의 공격 피해가 §e%s§r 증가합니다",
+
 	"tetra.stats.draw_strength": "힘",
 	"tetra.stats.draw_strength.tooltip": "이 아이템의 시위를 끝까지 잡아당길 경우 발사된 발사체의 공격 피해 §e%s§r",
 	"tetra.stats.draw_strength.tooltip_extended": "공격 피해의 계산은 기본 발사체를 기반으로 합니다. 하한 공격 피해 값은 부품과 개선 가능한 사항으로 올릴 수 있습니다. 상한 공격 피해 값은 다음과 같이 계산합니다: §f§o상한 = 하한 * 1.5 + 1§r§7. 부분적으로 잡아당긴 활에서 발사되는 발사체는 하한 값을 기준으로 합니다, 예를 들어 활을 50%% 잡아당기고 발사하면 하한 값의 50%%의 공격 피해를 줍니다.",
+
 	"tetra.stats.ability_damage": "공격 피해",
 	"tetra.stats.ability_damage.tooltip": "이 아이템의 능력을 사용했을 때 §e%s§r 기본 피해를 줍니다",
+
 	"tetra.stats.bleeding": "출혈",
 	"tetra.stats.bleeding.tooltip": "피격된 엔티티에게 30%%의 확률로 2초 동안 §e%s§r 피해를 주는 출혈을 줍니다",
+
 	"tetra.stats.backstab": "기습",
 	"tetra.stats.backstab.tooltip": "엔티티를 뒤에서 공격하면, §e%s§r 공격 피해를 추가로 줍니다",
+
 	"tetra.stats.armor": "갑옷",
 	"tetra.stats.armor.tooltip": "손에 있을 때 §e%s§r 갑옷을 추가합니다",
+
 	"tetra.stats.toughness": "강인함",
 	"tetra.stats.toughness.tooltip": "손에 있을 때 §e%s§r 강인함을 추가합니다",
+
 	"tetra.stats.blocking": "방어",
 	"tetra.stats.blocking.tooltip": "오른쪽 클릭을 누르고 있으면 들어오는 공격과 발사체를 방어합니다",
 	"tetra.stats.blocking_duration.tooltip": "오른쪽 클릭을 누르고 있으면 들어오는 공격과 발사체를 최대 §e%s§r초간 방어합니다",
 	"tetra.stats.blocking_duration_cooldown.tooltip": "오른쪽 클릭을 누르고 있으면 들어오는 공격과 발사체를 최대 §e%s§r초간 방어합니다. \n \n§7재사용 대기시간: §e%sx§r (§e%ss§r)",
-	"tetra.stats.blocking.tooltip_extended": "이 아이템이 2번째 능력을 가지고 있다면, 그 능력은 Shift + 오른쪽 클릭을 누르거나 시프트 유지하며 오른쪽 클릭이 해제할 때 사용됩니다. (재사용 대기시간이 50%% 더 김)",
+	"tetra.stats.blocking.tooltip_extended": "이 아이템이 2번째 능력을 가지고 있다면, 그 능력은 Shift + 오른쪽 클릭을 누르거나 시프트 유지하며 오른쪽 클릭이 해제할 때 사용됩니다. (재사용 대기시간이 50%% 더 길어집니다)",
+
 	"tetra.stats.blocking_reflect": "반사",
 	"tetra.stats.blocking_reflect.tooltip": "근거리 공격을 방어하면 §e%s§7확률로 §e%s§7 공격자에게 피해를 주고 명중 효과를 줍니다",
+
 	"tetra.stats.bashing": "타격",
 	"tetra.stats.bashing.tooltip": "오른쪽 클릭을 눌러 적을 타격할 수 있습니다. 타격은 적을 밀쳐내고, 기절시키고, 적에게 공격 피해의 §e100%%§r만큼의 피해를 줍니다.\n\n밀쳐내는 거리: §e%s§r\n기절 지속시간: §e%s§r초",
+
 	"tetra.stats.throwable": "던지기",
 	"tetra.stats.throwable.tooltip": "오른쪽 클릭을 눌러 던질 수 있습니다. 던진 아이템이 적에게 부딪쳤을 때 공격 피해의 §e%s§r만큼의 피해를 줍니다. 블록에 부딪쳤을 때 그 블록의 경도보다 채광 등급이 높고 아이템 수확 속도도 높다면 블록이 부서집니다",
-	"tetra.stats.ricochet": "튕김",
+
+	"tetra.stats.ricochet": "튕기기",
 	"tetra.stats.ricochet.tooltip": "던졌을 때 주변 적에게 §e%s§r번 튕겨나갑니다",
+
 	"tetra.stats.piercing": "꿰뚫기",
 	"tetra.stats.piercing.tooltip": "던졌을 때 최대 §e%s§r번까지 관통할 수 있습니다",
+
 	"tetra.stats.piercing_harvest": "꿰뚫는 채광",
 	"tetra.stats.piercing_harvest.tooltip": "던지거나 블록을 채굴할 때 추가로 블록이 파괴됩니다",
+
 	"tetra.stats.jab": "찌르기",
 	"tetra.stats.jab.tooltip": "보조로 사용하는 손에 들고 오른쪽 클릭을 누르면 적에게 §e%s§r피해를 주고, 명중 효과를 적용합니다. 아이템의 공격과 동일한 재사용 대기시간이 발생합니다.",
+
 	"tetra.stats.armorPenetration": "관통",
 	"tetra.stats.armorPenetration.tooltip": "공격이 대상의 갑옷에 §e%s§r를 무시합니다",
+
 	"tetra.stats.crushing": "파쇄",
 	"tetra.stats.crushing.tooltip": "공격이 대상의 갑옷과 상관없이 항상 최소 §e%s§r만큼의 피해를 줍니다",
+
 	"tetra.stats.skewering": "꿰찌르기",
 	"tetra.stats.skewering.tooltip": "공격이 §e%s§r만큼의 추가 피해를 줍니다. 단, 적의 갑옷이 §e%s§r 미만일 경우에만 추가 피해를 줍니다.",
+
 	"tetra.stats.stun": "기절",
 	"tetra.stats.stun.tooltip": "공격이 §e%s%%§의 확률로 §e%s%%§r초 동안 적을 기절시킵니다",
+
 	"tetra.stats.howling": "휘날리는 바람",
 	"tetra.stats.howling.tooltip": "이 아이템은 휘두르면 사용자를 투사체로부터 보호하는 휘날리는 바람을 일으킵니다.\n \n§7휘두르면 §e%s§7단계의 휘날리는 바람이 일으켜지고, 일으켜진 휘날리는 바람은 §e%s§7초의 지속시간을 가지고 있습니다. 단계마다\n* §e12.5%%§7의 확률로 방어하고,\n* §e5%%§7씩 이동 속도가 감소하고,\n* §e2.5%%§7의 확률로 방어한 발사체가 반사됩니다.",
+
 	"tetra.stats.ability_speed_bonus": "가벼움",
 	"tetra.stats.ability_speed_bonus.tooltip": "충전 시간과 재사용 대기시간이 §e%s§r만큼 감소합니다",
 	"tetra.stats.reap_speed_bonus.tooltip": "충전 시간과 재사용 대기시간이 §e%s§r만큼 감소합니다\n \n§r수확으로 적을 죽이면 공격 속도가 §e10%%§r 증가하고, 죽인 적 당 지속시간이 §e%s§r초씩 증가합니다",
 	"tetra.stats.pry_speed_bonus.tooltip": "재사용 대기시간이 §e%s§r만큼 감소합니다",
+
 	"tetra.stats.ability_defensive": "방어태세",
 	"tetra.stats.lunge_defensive.tooltip": "아이템을 주로 사용하지 않는 손에 들고 돌진을 사용하면 뒤로 회피합니다",
 	"tetra.stats.execute_defensive.tooltip": "아이템을 주로 사용하지 않는 손에 들고 즉결을 사용하면 적에게 §e%s%% (%s)§r 공격 피해를 주고 §e1§r단계의 단절을 줍니다. 이때, 적의 체력이 가득 차 있다면 적에게 §e%s%% (%s)§r 공격 피해를 추가로 주고 §e1§r단계의 단절을 추가로 줍니다",
@@ -185,6 +238,7 @@
 	"tetra.stats.pry_defensive.tooltip": "아이템을 주로 사용하지 않는 손에 들고 비틀기를 사용하면 적의 공격 피해가 §e%s§r만큼 §e%s§r초 동안 감소하지만, 갑옷이 감소되지 않습니다",
 	"tetra.stats.overpower_defensive.tooltip": "아이템을 주로 사용하지 않는 손에 들고 압도를 사용하면 적에게 §e탈진§7 (§e1§r단계)이 주어지지만, 공격 피해가 §e%s%% (%s)§r 감소하고, 재사용 대기시간이 §e%s%%§r 증가합니다",
 	"tetra.stats.reap_defensive.tooltip": "아이템을 주로 사용하지 않는 손에 들고 수확을 사용하면 죽인 적 당 갑옷이 §e1§r씩 증가합니다. §e%s§r초 동안 지속되며, 수확으로 죽인 적 당 지속시간이 §e%s§r초씩 증가합니다.\n \n§r아이템을 주로 사용하는 손에 들고 수확을 사용하여 적을 죽이면 이동 속도가 §e20%%§r 증가하고, 죽인 적 당 지속시간이 §e%s§r초씩 증가합니다",
+
 	"tetra.stats.ability_overcharge": "과충전",
 	"tetra.stats.lunge_overcharge.tooltip": "돌진을 더 충전할 수 있게 됩니다. 각 충전 단계마다 초기 속도가 §e%s%%§r씩 증가하고, 공격 피해가 §e%s%% (%s)§r씩 증가합니다",
 	"tetra.stats.execute_overcharge.tooltip": "즉결을 더 충전할 수 있게 됩니다. 각 충전 단계마다 적의 감소한 체력과 해로운 효과로 증가하는 공격 피해가 §e%s%%§r씩 증가합니다",
@@ -193,6 +247,7 @@
 	"tetra.stats.pry_overcharge.tooltip": "비틀기를 충전할 수 있게 변경되고, 더 충전할 수 있게 됩니다. 각 충전 단계마다 공격 피해가 §e%s%% (%s)§r씩 증가하고 갑옷이 §e%s§r씩 감소합니다\n \n§7충전 시간: §e%s§7초",
 	"tetra.stats.overpower_overcharge.tooltip": "압도를 더 충전할 수 있게 됩니다. 각 충전 단계마다 공격 피해가 §e%s%% (%s)§r씩 증가하고 양측에게 주어지는 탈진의 등급이 §e%s§r씩 증가합니다",
 	"tetra.stats.reap_overcharge.tooltip": "수확을 더 충전할 수 있게 됩니다. 각 충전 단계마다 공격 피해가 §e%s%% (%s)§r씩 증가하고, 범위가 §e0.5§r 블록씩 증가하고, 수확으로 죽인 적 당 공격 피해가 §e1§r씩 증가합니다. §e30§r초 동안 지속됩니다.",
+
 	"tetra.stats.ability_momentum": "가속",
 	"tetra.stats.lunge_momentum.tooltip": "돌진하면 더 높게 돌진하고, 적에게 부딪치면 적에게 §e0.5§r초 동안 기절을 줍니다. 낙하하는 거리에 따라 공격 피해가 최대 §e%s§r까지 증가하고, 기절의 지속시간이 최대 §e%s§r초까지 증가합니다",
 	"tetra.stats.lunge_momentum_extended.tooltip": "공격 피해와 낙하하는 거리의 비율은 1:1이고, 적에게 준 공격 피해만큼 낙하 피해가 감소합니다",
@@ -202,6 +257,7 @@
 	"tetra.stats.pry_momentum.tooltip": "적의 비틀림 단계 당 적을 §e%s§r초 간 기절시킵니다",
 	"tetra.stats.overpower_momentum.tooltip": "적을 공중으로 날립니다. 적의 탈진 단계에 따라 날아가는 거리가 증가하지만, 사용자의 탈진 단계에 따라 날아가는 거리가 감소합니다.",
 	"tetra.stats.reap_momentum.tooltip": "수확으로 죽인 적 당 수확에 피해를 받은 적을 §e%s§r초 동안 기절시킵니다.\n\n§r수확으로 죽인 적 당 §e%s§r초 동안 적에 공격에 밀려나지 않습니다",
+
 	"tetra.stats.ability_combo": "연타",
 	"tetra.stats.lunge_combo.tooltip": "일반 공격으로 연타 포인트 얻을 수 있습니다. 연타 포인트 당 돌진의 충전 시간이 §e%s%%§r씩 감소하고, 연타 포인트 당 재사용 대기시간이 §e%s%%§r씩 감소합니다",
 	"tetra.stats.lunge_combo.tooltip_extended": "연타 포인트를 얻으려면 이 아이템을 어느 한 손에 들고 있어야 하고, 연타 포인트는 돌진을 사용하거나 30초가 지나도 공격하지 않으면 초기화됩니다",
@@ -217,6 +273,7 @@
 	"tetra.stats.overpower_combo.tooltip_extended": "연타 포인트를 얻으려면 이 아이템을 어느 한 손에 들고 있어야 하고, 연타 포인트는 압도를 사용하거나 30초가 지나도 공격하지 않으면 초기화됩니다",
 	"tetra.stats.reap_combo.tooltip": "일반 공격으로 연타 포인트 얻을 수 있습니다. 연타 포인트 당 수확의 공격 피해가 §e%s%% (%s)§r씩 증가합니다\n \n§r수확으로 죽인 적 당 공격 속도와 채굴 속도가 §e15§r초 동안 §e10%%§r씩 증가하고 연타 포인트 당 지속 시간이 §e%s§r초씩 증가합니다",
 	"tetra.stats.reap_combo.tooltip_extended": "연타 포인트를 얻으려면 이 아이템을 어느 한 손에 들고 있어야 하고, 연타 포인트는 수확을 사용하거나 30초가 지나도 공격하지 않으면 초기화됩니다",
+
 	"tetra.stats.ability_overextend": "과연장",
 	"tetra.stats.lunge_overextend.tooltip": "돌진의 공격 피해가 §e%s%% (%s)§r 더 증가하고, 배고픔 바가 가득 차 있을 경우 거리가 증가하지만, 돌진을 사용할 때마다 상당한 배고픔/포만도를 소모합니다",
 	"tetra.stats.execute_overextend.tooltip": "즉결이 배고픔과 포만도를 §e25%%§r 소모합니다. 소모한 배고픔과 포만도 1칸 당 총 공격 피해가 §e%s%%§r씩 증가합니다",
@@ -227,15 +284,17 @@
 	"tetra.stats.overpower_overextend.tooltip": "압도를 사용할 때마다 상당한 배고픔/포만도를 소모되지만, 배고픔이 최대인 경우 사용자가 탈진되지 않습니다",
 	"tetra.stats.reap_overextend.tooltip": "배고픔이 최대인 경우 수확을 체력이 §e%s%%§r 미만인 적에게 사용하면, 수확의 공격 피해가 2배가 되지만, 수확을 사용할 때마다 상당한 배고픔/포만도를 소모합니다. 수확을 사용했을 때 적을 거두어 들이지 못하면 배고픔의 소모가 3배로 증가하고, 사용자가 탈진됩니다\n \n§7수확으로 죽인 적 당 §e45§r초 동안 최대 체력이 §e1§r씩 증가합니다",
 	"tetra.stats.reap_overextend.tooltip_extended": "탈진 효과는 이동 속도와 공격 속도, 채굴 속도를 감소시킵니다",
+
 	"tetra.stats.ability_exhilaration": "흥분",
 	"tetra.stats.lunge_exhilaration.tooltip": "돌진의 공격 피해가 §e%s%% (%s)§r 더 증가하고, 돌진 거리가 증가하지만, 적에게 부딪히지 않으면 사용자가 탈진됩니다",
 	"tetra.stats.lunge_exhilaration.tooltip_extended": "탈진 효과는 이동 속도와 공격 속도, 채굴 속도를 감소시킵니다",
 	"tetra.stats.execute_exhilaration.tooltip": "즉결로 적을 죽였을 때 즉결하기 직전의 적의 체력의 §e%s§r 당 사용자의 공격 피해가 f §e1§r씩 증가합니다. 효과의 지속시간은 적의 최대 체력 당 §e%s§r초씩 최대 §e200§r초까지 증가합니다.",
 	"tetra.stats.slam_exhilaration.tooltip": "격타를 지면에 내리쳤을 때 피격된 적 당 격타의 공격 피해가 §e%s%% (%s)§r씩 증가합니다. 적에게 내리쳤을 때 적을 밀쳐내는 거리에 따라서 §e10§r초 동안 공격 피해가 증가합니다. 공격 피해는 §e20§r 블록을 밀쳐냈을 때 증가하는 공격 피해인 §e%s§r까지 증가합니다.",
 	"tetra.stats.puncture_exhilaration.tooltip": "갑옷 감소 효과로 인해 적의 갑옷이 §e6§r 이상에서 §e6§r 미만이 되었을 때 파손의 재사용 대기시간이 초기화되고, 적이 갑옷 감소 효과에 영향을 받는다면, 출혈의 지속시간이 §e%s§r초 증가합니다",
-	"tetra.stats.pry_exhilaration.tooltip": "적에게 영향을 미치는 비틀림 단계 당 비틀기의 공격 피해가  §e%s%% (%s)§r씩 증가합니다",
+	"tetra.stats.pry_exhilaration.tooltip": "적에게 영향을 미치는 비틀림 단계 당 비틀기의 공격 피해가 §e%s%% (%s)§r씩 증가합니다",
 	"tetra.stats.overpower_exhilaration.tooltip": "압도를 사용하여 적을 죽이면 사용자에게 주어진 탈진이 사라집니다",
 	"tetra.stats.reap_exhilaration.tooltip": "수확으로 죽인 적 당 수확의 재사용 대기시간이 §e%s%%§r 감소합니다.\n \n§r수확으로 죽인 적 당 §e30§r초 동안 §e%s§r칸의 흡수 방어막을 얻습니다. 방어막이 사라지지 않은 상태에서 수확으로 다음 적을 죽이면 이전에 있던 방어막을 되살립니다",
+
 	"tetra.stats.ability_revenge": "복수",
 	"tetra.stats.lunge_revenge.tooltip": "돌진으로 적에게 복수하면 돌진의 재사용 대기시간이 초기화됩니다",
 	"tetra.stats.lunge_revenge.tooltip_extended": "사용자를 공격한 적에게는 복수를 할 수 있게 됩니다. 복수할 수 있는 적은 바라보면 십자선 밑에 표시가 나타납니다. 돌진을 사용하여 복수하면 복수한 적은 복수할 수 있는 적에서 제외됩니다. 모든 복수할 수 있는 적에게 30초 동안 공격을 받지 않으면 복수할 수 있는 적에서 제외됩니다.",
@@ -251,6 +310,7 @@
 	"tetra.stats.overpower_revenge.tooltip_extended": "사용자를 공격한 적에게는 복수를 할 수 있게 됩니다. 복수할 수 있는 적은 바라보면 십자선 밑에 표시가 나타납니다. 압도를 사용하여 복수하면 복수한 적은 복수할 수 있는 적에서 제외됩니다. 모든 복수할 수 있는 적에게 30초 동안 공격을 받지 않으면 복수할 수 있는 적에서 제외됩니다.",
 	"tetra.stats.reap_revenge.tooltip": "수확으로 적에게 복수하면 수확의 공격 피해가 §e%s%% (%s)§r 증가합니다\n \n§r수확으로 죽인 복수할 수 있는 적 당 §e20§r초 동안 공격 피해가 §e1§r씩 증가하고, 수확으로 죽인 복수할 수 있는 적 당 지속시간이 §e%s§r초씩 증가합니다",
 	"tetra.stats.reap_revenge.tooltip_extended": "사용자를 공격한 적에게는 복수를 할 수 있게 됩니다. 복수할 수 있는 적은 바라보면 십자선 밑에 표시가 나타납니다. 수확을 사용하여 복수하면 복수한 적은 복수할 수 있는 적에서 제외됩니다. 모든 복수할 수 있는 적에게 30초 동안 공격을 받지 않으면 복수할 수 있는 적에서 제외됩니다.",
+
 	"tetra.stats.ability_echo": "메아리",
 	"tetra.stats.lunge_echo.tooltip": "돌진을 허공에서 §e%s§r번 더 사용할 수 있게 됩니다.",
 	"tetra.stats.lunge_echo.tooltip_extended": "웅크리고 공중에서 돌진하면 뒤로 돌진하고, 공중에서 오른쪽 버튼 대신에 점프를 사용하여 위로 돌진합니다",
@@ -260,123 +320,179 @@
 	"tetra.stats.pry_echo.tooltip": "비틀기를 사용하고 3초 뒤에 적에게 비틀기가 발생합니다 ",
 	"tetra.stats.overpower_echo.tooltip": "사용자에게 탈진이 §e%s§r초 뒤에 적용됩니다. 압도를 사용할 때마다 탈진이 지연됩니다",
 	"tetra.stats.reap_echo.tooltip": "수확을 사용하고 3초 뒤에 동일한 범위에서 2차 수확이 발생합니다.\n \n§r수확으로 죽인 적 당 §e30§r초 동안 공격 피해가 §e1§r씩 증가하고, 공격 피해 증가 효과가 사라지지 않은 상태에서 수확으로 다음 적을 죽이면 공격 피해가 1씩 최대 §e%s§r 공격 피해까지 증가합니다",
+
 	"tetra.stats.execute": "즉결",
 	"tetra.stats.execute.tooltip": "오른쪽 버튼을 누르면 강력한 즉결 공격을 충전합니다. 즉결 공격은 §e100%% (%s)§f의 공격 피해를 주고, \n적의 감소한 체력의 비율에 따라 공격 피해가 §e%s%%§f만큼 추가로 증가하고,\n해로운 효과의 단계마다 공격 피해가 §e%s%%§f씩 증가합니다\n \n§7충전 시간: §e%s§7초\n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.execute.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.severing": "절단",
 	"tetra.stats.severing.tooltip": "공격이 §e%s%%§r의 확률로 §e60§r초 동안 적의 최대 체력의 §e10%%§r를 감소시키고, 적의 공격 피해의 §e5%%§r를 감소시킵니다. 이 효과는 최대 §e%s§r번 까지 중첩시킬 수 있습니다",
 	"tetra.stats.severing.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.lunge": "돌진",
 	"tetra.stats.lunge.tooltip": "오른쪽 버튼을 누르면 돌진을 준비하고, 앞으로 도약합니다. 도약하는 도중에 적과 부딪치면 적에게 §e%s%% (%s)§f 공격 피해를 주고 돌진의 재사용 대기시간이 §e30%%§f 감소합니다.\n \n§7충전 시간: §e%s§7초\n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.lunge.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.slam": "격타",
 	"tetra.stats.slam.tooltip": "오른쪽 버튼을 누르면 강력한 격타 공격을 충전합니다\n \n§7격타는 지면이나 적에게 내리칠 수 있습니다. 지면에 내리쳤을 때는 내리친 지면을 기준으로 충격파가 일어나고, 충격파에 맞은 적은 §e%s%% (%s)§7 공격 피해를 받습니다.\n \n§7적에게 내리쳤을 때는 적에게 §e%s%% (%s)§7 공격 피해를 주고, 멀리 밀쳐냅니다. 적에게 내리칠 경우 재사용 대기시간이 §e50%%§7 더 길어집니다.\n \n§7충전 시간: §e%s§7초\n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.slam.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.puncture": "파손",
 	"tetra.stats.puncture.tooltip": "오른쪽 버튼을 누르면 적에게 §e100%% (%s)§f 공격 피해를 주고 적의 갑옷을 §e%s%%§f만큼 §e%s§f초 동안 감소시키는 공격을 충전합니다.\n \n§7갑옷이 §e6§7 미만인 적의 갑옷을 파손하거나, 이미 파손된 적의 갑옷을 파손하면, §e4§7초 동안 §e8§7 공격 피해를 주는 출혈을 일으킵니다.\n\n§7재사용 대기시간은 적의 갑옷에 따라 증가합니다. 적의 갑옷 1칸 마다 재사용 대기시간이 §e0.5§7초 증가합니다.\n \n§7충전 시간: §e%s§7초\n§7기본 재사용 대기시간: §e%s§7초",
 	"tetra.stats.puncture.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.overpower": "압도",
 	"tetra.stats.overpower.tooltip": "오른쪽 버튼을 누르면 적에게 §e%s%% (%s)§f 공격 피해를 주지만, 적을 거의 밀쳐내지 않는 공격을 충전합니다.\n \n§7적에게 §e2§7단계의 탈진을 주고, 사용자에게 §e1§7단계의 탈진이 주어집니다. 단계마다 이동 속도가 §e10%%§7 감소하고, 공격 속도와 채굴 속도가 §e5%%§7 감소합니다. 사용자가 공격에 실패하더라도, 사용자에게는 탈진이 주어집니다.\n \n§7탈진 지속시간: §e%s§7초\n§7충전 시간: §e%s§7초\n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.overpower.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.reap": "수확",
 	"tetra.stats.reap.tooltip": "오른쪽 버튼을 누르면 적에게 휩쓸기 공격을 하여, 범위 안에 있는 적에게 §e%s%% (%s)§f 공격 피해를 주는 공격을 충전합니다.\n \n§7범위: §e%s§7블록\n§7충전 시간: §e%s§7초\n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.reap.tooltip_extended": "충전 시간과 재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다.",
+
 	"tetra.stats.pry_armor": "비틀기",
 	"tetra.stats.pry_armor.tooltip": "오른쪽 버튼을 누르면 적에게 §e50%% (%s)§f 공격 피해를 주고 적의 갑옷을 §e%s§f만큼 §e%s§f초 동안 감소시킵니다.\n \n§7재사용 대기시간: §e%s§7초",
 	"tetra.stats.pry_armor.tooltip_extended": "재사용 대기시간은 아이템의 속도를 기준으로 합니다. 강타 같은 추가 피해 효과는 기본적인 공격 피해에 포함됩니다. 갑옷을 감소시키는 효과가 주어질 때마다 효과의 지속시간이 갱신됩니다.",
+
 	"tetra.stats.knockback": "밀치기",
 	"tetra.stats.knockback.tooltip": "적중된 엔티티를 §e%s배만큼 밀어내는 거리가 증가합니다",
+
 	"tetra.stats.looting": "약탈",
 	"tetra.stats.looting.tooltip": "엔티티가 죽었을 때 아이템을 떨어뜨리는 양이 증가합니다",
+
 	"tetra.stats.fiery": "발화",
 	"tetra.stats.fiery.tooltip": "엔티티가 때렸을 때 불이 §e%s§r초간 붙습니다",
+
 	"tetra.stats.smite": "강타",
 	"tetra.stats.smite.tooltip": "언데드 엔티티를 공격할 때 §e%s§r의 추가 피해를 줍니다",
+
 	"tetra.stats.arthropod": "살충",
 	"tetra.stats.arthropod.tooltip": "절지동물을 공격할 때 §e%s§r 추가 피해를 주고 1에서 §e%s§r초간 구속 IV를 줍니다",
+
 	"tetra.stats.sweeping": "휩쓸기",
 	"tetra.stats.sweeping.tooltip": "엔티티를 공격하면 인접한 적도 공격 피해를 §e%s§r 받습니다",
+	"tetra.stats.sweeping.tooltip_extended": "공중에서 공격하거나 달리면서 공격하면, 휩쓸기는 발동되지 않습니다.",
+
 	"tetra.stats.truesweep": "진-휩쓸기",
 	"tetra.stats.truesweep.tooltip": "휩쓸기도 §e마법 부여§r와 §e아이템 효과§r에 영향을 받습니다. 휩쓸기가 허공을 휘둘러도 발동합니다.",
 	"tetra.stats.truesweep.tooltip_extended": "마법 부여는 §e강타§7 같은 공격 피해를 증가시켜주거나 §e발화§7 같은 특정한 효과가 있는 모든 마법 부여가 포함됩니다. 아이템 효과는 §e출혈§r이나 §e치명타§r가 포함됩니다.",
+
 	"tetra.stats.unbreaking": "내구성",
 	"tetra.stats.unbreaking.tooltip": "사용 시 내구성의 손상을 받지 않을 수 있습니다\n\n§7내구성 등급: §e%s§7\n확률: §e%s%%",
+
 	"tetra.stats.mending": "수리",
 	"tetra.stats.mending.tooltip": "수집된 경험치를 소비하여 §e%s§r경험치 마다 내구도를 수리합니다\n\n§7손에 들고 있을 때만 활성화됩니다",
+
 	"tetra.stats.silkTouch": "섬세한 손길",
 	"tetra.stats.silkTouch.tooltip": "채집한 블록이 그대로 떨어집니다",
+
 	"tetra.stats.fortune": "행운",
 	"tetra.stats.fortune.tooltip": "블록의 채집량이 증가합니다",
+
 	"tetra.stats.flame": "화염",
 	"tetra.stats.flame.tooltip": "엔티티를 피격하면 §e%s§r초간 불에 붙습니다, TNT나 모닥불 같은 블록을 점화할 수도 있습니다",
+
 	"tetra.stats.punch": "밀어내기",
 	"tetra.stats.punch.tooltip": "화살이 엔티티를 밀어내는 거리 §e%s§r배",
+
 	"tetra.stats.infinity": "무한",
 	"tetra.stats.infinity.tooltip": "일반 화살을 활로 쏠 때 화살 소비가 없습니다, 특수한 화살은 소모됩니다",
+
 	"tetra.stats.quickStrike": "쾌속",
 	"tetra.stats.quickStrike.tooltip": "공격 재사용 대기 중 최소 피해가 §e%s§r 감소합니다",
+
 	"tetra.stats.counterweight": "무게추",
 	"tetra.stats.counterweight.tooltip": "이 도구의 전체 무결성 사용량이 §e%s§r인 경우 공격 속도를 0.15까지 높이고, 전체 무결성이 차이 날수록 추가 효과가 0.05씩 낮아집니다.",
 	"tetra.stats.counterweight.indicator_tooltip": "현재 추가 효과: §e%s \n \n§7이 도구의 전체 무결성 사용량이 §e%s§r인 경우 공격 속도를 0.15까지 높이고, 전체 무결성이 차이 날수록 추가 효과가 0.05씩 낮아집니다.",
+
 	"tetra.stats.softStrike": "부드러운 타격",
 	"tetra.stats.softStrike.tooltip": "이 도구를 사용하여 제작된 아이템의 내구성이 향상됩니다",
+
 	"tetra.stats.fierySelf": "불길",
 	"tetra.stats.fierySelf.tooltip_short": "사용하면 불에 붙을 수도 있습니다, 더운 생물군계에서는 더 심각합니다",
 	"tetra.stats.fierySelf.tooltip": "아이템을 사용하면 휘두를 때 불이 붙을 수도 있습니다, 더운 생물군계에서는 더 심각하고, 차가운 생물군계에서는 덜 발생합니다\n\n§7기본 확률: §e%s\n§7불길 지속시간: §e%s",
-	"tetra.stats.enderReverb": "메아리",
+
+	"tetra.stats.enderReverb": "반향",
 	"tetra.stats.enderReverb.tooltip_short": "사용하면 주변의 엔더맨이 순간이동 할 때 사용자가 순간이동 될 수 있습니다",
 	"tetra.stats.enderReverb.tooltip": "아이템을 사용하면 주변의 엔더맨이 순간이동 할 때 사용자가 순간이동 될 수 있습니다\n\n§7기본 확률: §e%s§7",
+
 	"tetra.stats.toolbelt.quickslot": "퀵슬롯",
 	"tetra.stats.toolbelt.quickslot.tooltip": "§e%s§r 퀵슬롯",
+
 	"tetra.stats.toolbelt.potion_storage": "물약 슬롯",
 	"tetra.stats.toolbelt.potion_storage.tooltip": "§e%s§r 물약 슬롯",
+
 	"tetra.stats.toolbelt.storage": "저장 슬롯",
 	"tetra.stats.toolbelt.storage.tooltip": "§e%s§r 저장 슬롯",
+
 	"tetra.stats.toolbelt.quiver": "화살 슬롯",
 	"tetra.stats.toolbelt.quiver.tooltip": "§e%s§r 화살 슬롯",
-	"tetra.stats.toolbelt.booster": "끌어오르는 힘",
-	"tetra.stats.toolbelt.booster.tooltip": "점프 강화와 제한된 비행의 속도 §e%s",
+
+	"tetra.stats.toolbelt.booster": "부스터",
+	"tetra.stats.toolbelt.booster.tooltip": "점프 부스트와 제한된 비행을 할 수 있습니다 §e%s\n \n§7[점프] §3(공중에서)§8 비행\n§7[웅크리기] + [점프]§8 점프 부스트",
+
+	"tetra.stats.toolbelt.suspend_self": "중단",
+	"tetra.stats.toolbelt.suspend_self.tooltip": "공중에서 점프하면, 공중에서 떠 있을 수 있습니다. 작동하려면, 신호기나 전달체의 영향을 받아야 합니다.\n \n§7[점프] §3(공중에서)§8 중단\n§7[웅크리기]§8 천천히 하강\n§7[웅크리기] + [점프]§8 중단 종료",
+	"tetra.stats.toolbelt.suspend_self.tooltip_extended": "전달체는 젖은 엔티티에게만 영향을 주므로, 주위에 전달체가 있더라도 비를 맞고 있어야 중단기가 작동합니다",
+
 	"tetra.stats.bow.releaseLatch": "빠른 발사",
 	"tetra.stats.bow.releaseLatch.tooltip": "활이 완전히 잡아당기겨지면 자동으로 화살 발사합니다",
+
 	"tetra.stats.bow.overbowed": "빡빡함",
 	"tetra.stats.bow.overbowed.tooltip": "이 활은 무거워 잡아당기기 힘듭니다, 시위를 끝까지 잡아당기고 유지하면 시간 경과에 따라 피해량이 줄어듭니다.\n\n§7최대 감소량: §e%s\n§7감소 속도: §e%s",
 	"tetra.stats.bow.overbowed.tooltip_extended": "특정 한계를 넘어가면 화살이 나가지 않고 잡아당기기가 해제되고 §70.5§r초 동안 사용할 수 없게 됩니다",
+
 	"tetra.stats.multishot": "다중 발사",
-	"tetra.stats.multishot.tooltip": "내구도를 더 소모하여 발사체 하나를 여러 갈래로 나누어 사용할 수 있습니다. \n \n§7개수:  §e%s\n§7분산 각도: §e%s",
+	"tetra.stats.multishot.tooltip": "내구도를 더 소모하여 발사체 하나를 여러 갈래로 나누어 사용할 수 있습니다. \n \n§7개수: §e%s\n§7분산 각도: §e%s",
+
 	"tetra.stats.zoom": "확대",
 	"tetra.stats.zoom.tooltip": "조준하거나 웅크리고 있는 동안 §e%sx§r로 확대합니다.",
+
 	"tetra.stats.velocity": "속도",
 	"tetra.stats.velocity.tooltip": "발사된 발사체의 초기 속도를 §e%s (%s)§r만큼 증가시킵니다",
+
 	"tetra.stats.suspend": "보류",
 	"tetra.stats.suspend.tooltip": "발사체의 초기 속도를 §e100%%§r만큼 증가시키고, 완전히 잡아당긴 활에서 발사되면 중력을 무시합니다",
+
 	"tetra.stats.criticalStrike": "치명타",
-	"tetra.stats.criticalStrike.tooltip": "엔티티를 타격하거나 블록을 채굴할 때 치명적으로 타격할 수 있습니다.\n\n§e%s%%§7 확률로 치명타 피해를 주고,\n§e%s%%§7 확률로 블록을 즉시 부숩니다\n\n§7이 효과는 채굴할 수 없는 블록에게 발생하지 않습니다",
+	"tetra.stats.criticalStrike.tooltip": "엔티티를 타격하거나 블록을 채굴할 때 치명적으로 타격할 수 있습니다.\n\n§e%s§7 확률로 치명타 피해를 주고,\n§e%s§7 확률로 블록을 즉시 부숩니다\n\n§7이 효과는 채굴할 수 없는 블록에게 발생하지 않습니다",
 	"tetra.stats.criticalStrike.tooltip_extended": "1.5초 이내에 채굴할 수 있는 블록을 가끔 바로 부숩니다 (블록의 강도 < 도구의 효율성)\n \n§7이 효과를 사용할 수 있는 도구: 송곳, 휩쓸기(수확)를 사용할 수 있는 도구, 추출기",
+
 	"tetra.stats.holo_speed": "재사용 대기시간",
 	"tetra.stats.holo_speed.tooltip": "측정을 위한 재사용 대기시간 §e%sx§r",
+
 	"tetra.stats.holo.scannerRange": "측정 거리",
 	"tetra.stats.holo.scannerRange.tooltip": "측정기가 최대 §e%s§r 블록까지 측정합니다",
+
 	"tetra.stats.holo.scannerHorizontalSpread": "측정 가로",
 	"tetra.stats.holo.scannerHorizontalSpread.tooltip": "측정기의 가로 칸 수 §e%s§r개 \n§7칸 1개의 각도: §e%s§r도",
+
 	"tetra.stats.holo.scannerVerticalSpread": "측정 세로",
 	"tetra.stats.holo.scannerVerticalSpread.tooltip": "측정기의 세로 범위 §e%s§r도",
 	"tetra.stats.holo.scannerVerticalSpread.tooltip_extended": "세로 범위는 세 칸으로 나뉩니다, 가운데 칸은 중앙을 중심으로 §e20§7도를 차지하고 위쪽과 아래쪽 칸은 §e+-25§7도를 차지합니다, 세로 범위가 §e50§7도 보다 클때 위쪽과 아래쪽 칸이 활성화됩니다",
+
 	"tetra.stats.intuit": "본능",
-	"tetra.stats.intuit.tooltip": "엔티티를 죽이거나 블록을 채굴하여 얻은 경험치로 연마 진행률을 올릴 수 있습니다, §e%sx§r 진행률",
+	"tetra.stats.intuit.tooltip": "엔티티를 죽이거나 블록을 채굴하여 얻은 경험치로 연마 진행률을 올릴 수 있습니다, 진행률 §ex%s§r",
+
 	"tetra.stats.earthbind": "지면결속",
 	"tetra.stats.earthbind.tooltip": "엔티티를 때렸을 때 §e10%%§r 확률로 제자리에 §e%s초간 고정시킵니다.§r 낮은 y좌표에서 자주 발생합니다, 기반암에서는 §e50%%§r까지 확률을 올릴 수 있습니다",
+
 	"tetra.stats.manaRepair": "마나 수리",
-	"tetra.stats.manaRepair.tooltip": "이 아이템은 마나를 사용하여 시간이 지남에 따라 스스로 수리합니다, 내구성 1을 수리하는데 §e%s§r마나를 사용합니다",
+	"tetra.stats.manaRepair.tooltip": "이 아이템은 마나를 사용하여 수리할 수 있습니다, 내구성 1을 수리하는데 §e%s§r마나를 사용합니다",
 	"tetra.stats.magicCapacity": "마법 수용량",
 	"tetra.stats.magicCapacity.tooltip": "이 부품이 보유할 수 있는 마법 부여의 양과 사용 중인 용량의 양, 이 용량은 마법과 같은 개선에 사용됩니다.\n\n§7마법 수용량: §e%s",
+
 	"tetra.stats.stability": "안정성",
-	"tetra.stats.stability.tooltip": "주요 부품의 유효 마법 수용량을 §e%s§r으로 변경합니다",
+	"tetra.stats.stability.tooltip": "주요 부품의 유효 마법 수용량이 §e%s§r 변경됩니다",
+
 	"tetra.stats.stabilizing": "안정화",
 	"tetra.stats.stabilizing.tooltip_short": "주요 부품의 유효 마법 수용량이 증가합니다",
-	"tetra.stats.unstable": "불안정함",
-	"tetra.stats.unstable.tooltip_short": "이 아이템의 주요 부품의 마법 수용량의 부정적인 영향이 감소합니다",
+
+	"tetra.stats.unstable": "불안정화",
+	"tetra.stats.unstable.tooltip_short": "주요 부품의 유효 마법 수용량이 감소합니다",
+
 	"tetra.stats.workable": "단축",
 	"tetra.stats.workable.tooltip": "해체하는 데 걸리는 시간을 §e%s§r 단축합니다",
+
 	"tetra.stats.hammer.tooltip": "이 아이템은 망치질을 할 수 있고, 제작과 수집에 사용할 수 있습니다.\n \n§7망치 등급: §e%s\n§7망치 효율: §e%s",
 	"tetra.stats.axe.tooltip": "이 아이템은 나무를 자르는 데 사용할 수 있습니다.\n \n§7도끼 등급: §e%s\n§7도끼 효율: §e%s",
 	"tetra.stats.pickaxe.tooltip": "이 아이템은 채광에 사용할 수 있습니다.\n \n§7곡괭이 등급: §e%s\n§7곡괭이 효율: §e%s",
@@ -384,18 +500,23 @@
 	"tetra.stats.hoe.tooltip": "이 아이템은 식물을 수확하는 데 사용할 수 있습니다.\n \n§7괭이 등급: §e%s\n§7괭이 효율: §e%s",
 	"tetra.stats.cut.tooltip": "이 아이템은 절단에 사용할 수 있습니다. 제작 또는 거미줄과 식물을 부술 때 사용할 수 있습니다.\n \n§7절단 등급: §e%s\n§7절단 효율: §e%s",
 	"tetra.stats.pry.tooltip": "이 아이템은 무언가를 억지로 열때 사용할 수 있습니다. 수집에 사용할 수 있습니다.\n \n§7해체 등급: §e%s\n§7해체 효율: §e%s",
+
 	"tetra.stats.tool.tooltip_extended": "더 단단한 블록을 부수고 더 단단한 재료를 가공하려면 높은 등급의 아이템이 필요합니다. 효율이 얼마나 빨리 블록을 부수는지 결정합니다.",
+
 	"tetra.stats.tool.striking": "타격",
 	"tetra.stats.tool.striking.tooltip": "때린 블록을 즉시 부숩니다, 휘두르는 속도에 제약을 받습니다",
 	"tetra.stats.tool.sweeping": "휩쓸기",
 	"tetra.stats.tool.sweeping.tooltip": "때린 블록을 즉시 부숩니다, 휘두르는 속도에 제약을 받습니다. 블록의 경도와 도구의 효율이 부서지는 블록의 수에 영향을 미칩니다.",
 	"tetra.stats.tool.extractor": "추출기",
 	"tetra.stats.tool.extractor.tooltip": "블록을 채굴할 때 §e%s§7개의 블록을 3x3반경으로 부숩니다. 내구성이 추가로 손상됩니다.",
+
 	"tetra.stats.integrity": "무결성",
 	"tetra.stats.integrity.tooltip_positive": "이 부품은 §e%s§r 무결성을 추가합니다",
 	"tetra.stats.integrity.tooltip_negative": "이 부품은 §e%s§r 무결성이 필요합니다",
+
 	"tetra.stats.integrity_usage": "무결성 사용량: %s/%s",
 	"tetra.stats.integrity_usage.tooltip": "대부분의 부품들은 무결성이 필요하지만, 일부 부품은 무결성을 추가합니다 (종종 특정 슬롯에).",
+
 	"tetra.variant_category.fabric.label": "직물",
 	"tetra.variant_category.fibre.label": "섬유",
 	"tetra.variant_category.gem.label": "보석",
@@ -406,6 +527,7 @@
 	"tetra.variant_category.stone.label": "돌",
 	"tetra.variant_category.wood.label": "나무",
 	"tetra.variant_category.bone.label": "뼈",
+
 	"tetra.material.obsidian": "흑요석",
 	"tetra.material.obsidian.prefix": "흑요석",
 	"tetra.material.flint": "부싯돌",
@@ -480,6 +602,7 @@
 	"tetra.material.spruce.prefix": "가문비나무",
 	"tetra.material.crimson": "진홍빛 자루",
 	"tetra.material.crimson.prefix": "진홍빛",
+
 	"tetra.material.bronze": "청동",
 	"tetra.material.bronze.prefix": "청동",
 	"tetra.material.copper": "구리",
@@ -549,71 +672,94 @@
 	"tetra.material.mana_string": "마나가 주입된 실",
 	"tetra.material.mana_string.prefix": "마나가 주입된 실",
 	"tetra.improvement.mana_repair.name": "마나 수리",
-	"tetra.improvement.mana_repair.description": "이 아이템은 마나를 사용하여 시간이 지남에 따라 스스로 수리합니다",
-	"item.tetra.modular.broken": "부러짐",
+	"tetra.improvement.mana_repair.description": "이 아이템은 마나를 사용하여 수리할 수 있습니다",
+
+	"item.tetra.modular.broken": "부서짐",
 	"item.tetra.modular.empty_slot": "비어 있음",
 	"item.tetra.modular.magic_capacity.label": "마법 수용량",
 	"item.tetra.modular.magic_capacity.description": "이 부품이 보유할 수 있는 마법의 양과 사용 중인 용량의 양\n\n§7마법 수용량: §e%s\n§7수용량 사용량: §e%s",
 	"item.tetra.modular.magic_capacity.description_extended": "§7용량은 초과될 수 있지만 부품을 작업할 때 경험치가 들고, 부품이 교체되면 마법이 불안정해져 부정적인 마법이 생길 수 있습니다",
 	"item.tetra.modular.repair_material.label": "수리 재료:",
 	"item.tetra.modular.repair_material.empty": "수리할 필요가 없습니다",
+
 	"block.tetra.basic_workbench": "작업대",
 	"block.tetra.basic_workbench.description": "망치를 들고 제작대에 오른쪽 클릭을 눌러 작업대를 만들 수 있습니다",
+
 	"block.tetra.rack": "선반",
 	"block.tetra.rack.description": "선반에는 아이템을 걸 수 있으며, 오른쪽 클릭으로 아이템을 추가하거나 제거할 수 있습니다.\n작업대 근처에 선반에 걸린 도구들은 플레이어의 인벤토리에 있는 것처럼 작업에 사용할 수 있습니다, 선반이 작업대를 중심으로 3x3x3이내(작업대를 중심으로 한 블록 떨어져있는 블록에 배치되어 있을 때)에 있어야 작동합니다.",
+
 	"block.tetra.block_geode": "정동 블록",
 	"item.tetra.geode": "정동",
 	"item.tetra.geode.tooltip": "작업대에서 깨뜨리면 귀중한 광물이 나올 수도 있습니다\n\n§8떨어지는 양은 행운 마법에 영향을 받습니다",
 	"tetra.break_geode_action.label": "깨뜨리기",
+
 	"item.tetra.pristine_diamond": "본래의 다이아몬드",
 	"tetra.shatter_diamond_action.label": "깨뜨리기",
+
 	"item.tetra.pristine_emerald": "본래의 에메랄드",
 	"tetra.shatter_emerald_action.label": "깨뜨리기",
+
 	"item.tetra.pristine_lapis": "본래의 청금석",
 	"tetra.shatter_lapis_action.label": "깨뜨리기",
+
 	"item.tetra.pristine_gem.description": "자연 그대로의 오염되지 않은 보석입니다. 작업대에서 깨뜨리면, 규칙적인 모양으로 부서집니다\n\n§8떨어지는 양은 행운 마법에 영향을 받습니다",
+
 	"item.tetra.dragon_sinew": "드래곤 힘줄",
+
 	"item.tetra.scroll.unknown.name": "두루마리",
 	"item.tetra.scroll.unknown.description":"이상하게 완벽한 알 수 없는 문양이 그려져 있습니다... 아무 능력도 없어 보입니다. 어떤 방법으로 얻었는지 의문입니다.",
+
 	"item.tetra.scroll.gem_expertise.prefix": "기술서",
 	"item.tetra.scroll.gem_expertise.name": "보석 세공 기술",
 	"item.tetra.scroll.gem_expertise.description": "보석으로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.metal_expertise.prefix": "기술서",
 	"item.tetra.scroll.metal_expertise.name": "금속 제련 기술",
 	"item.tetra.scroll.metal_expertise.description": "금속으로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.wood_expertise.prefix": "기술서",
 	"item.tetra.scroll.wood_expertise.name": "나무 조각 기술",
 	"item.tetra.scroll.wood_expertise.description": "나무로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.stone_expertise.prefix": "기술서",
 	"item.tetra.scroll.stone_expertise.name": "석재 조각 기술",
 	"item.tetra.scroll.stone_expertise.description": "돌로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.fibre_expertise.prefix": "기술서",
 	"item.tetra.scroll.fibre_expertise.name": "섬유 절단 기술",
 	"item.tetra.scroll.fibre_expertise.description": "섬유로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.skin_expertise.prefix": "기술서",
 	"item.tetra.scroll.skin_expertise.name": "가죽 절단 기술",
 	"item.tetra.scroll.skin_expertise.description": "가죽으로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.bone_expertise.prefix": "기술서",
 	"item.tetra.scroll.bone_expertise.name": "뼈 조각 기술",
 	"item.tetra.scroll.bone_expertise.description": "뼈로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.fabric_expertise.prefix": "기술서",
 	"item.tetra.scroll.fabric_expertise.name": "직물 재봉 기술",
 	"item.tetra.scroll.fabric_expertise.description": "직물로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.scale_expertise.prefix": "기술서",
 	"item.tetra.scroll.scale_expertise.name": "비늘 조각 기술",
 	"item.tetra.scroll.scale_expertise.description": "비늘로 분류된 재료를 사용하여 주요 부품을 제작할 때 제작되는 부품의 공격 피해와 효율성이 약간 증가합니다",
+
 	"item.tetra.scroll.hammer_efficiency.prefix": "기술서",
 	"item.tetra.scroll.hammer_efficiency.name": "망치 효율화 기술",
 	"item.tetra.scroll.hammer_efficiency.description": "망치를 사용하여 부품을 제작하거나, 수리할 때 가끔 재료를 덜 사용합니다",
 	"item.tetra.scroll.hammer_efficiency.description_extended": "25%% 확률로 사용되는 재료의 양을 1개로 줄일 수 있으며, 사용되는 총 재료의 양은 1개 이하로 줄여지지 않습니다",
+
 	"item.tetra.scroll.axe_efficiency.prefix": "기술서",
 	"item.tetra.scroll.axe_efficiency.name": "도끼 효율화 기술",
 	"item.tetra.scroll.axe_efficiency.description": "도끼를 사용하여 부품을 제작하거나, 수리할 때 가끔 재료를 덜 사용합니다",
 	"item.tetra.scroll.axe_efficiency.description_extended": "25%% 확률로 사용되는 재료의 양을 1개로 줄일 수 있으며, 사용되는 총 재료의 양은 1개 이하로 줄여지지 않습니다",
+
 	"item.tetra.scroll.cut_efficiency.prefix": "기술서",
 	"item.tetra.scroll.cut_efficiency.name": "절단 효율화 기술",
 	"item.tetra.scroll.cut_efficiency.description": "절단 도구를 사용하여 부품을 제작하거나, 수리할 때 가끔 재료를 덜 사용합니다",
 	"item.tetra.scroll.cut_efficiency.description_extended": "25%% 확률로 사용되는 재료의 양을 1개로 줄일 수 있으며, 사용되는 총 재료의 양은 1개 이하로 줄여지지 않습니다",
+
 	"item.tetra.scroll.sword/sturdy_guard.prefix": "설계도",
 	"item.tetra.scroll.sword/sturdy_guard.name": "튼튼한 코등이",
 	"item.tetra.scroll.sword/sturdy_guard.description": "오래전에 잊혀진 기술을 사용할 수 있는, 한 때는 흔히 볼 수 있었던 코등이의 종류 중에 하나를 제작하는 방법이 나와 있습니다. 공격과 발사체를 잠시 동안 막을 수 있습니다",
@@ -626,59 +772,74 @@
 	"item.tetra.scroll.single/points_end.prefix": "설계도",
 	"item.tetra.scroll.single/points_end.name": "Point`s End",
 	"item.tetra.scroll.single/points_end.description": "Schematics for a spearhead that's capable of drawing power from several types of spherical objects",
+
 	"item.tetra.scroll.hone_gild_1.prefix": "연마",
 	"item.tetra.scroll.hone_gild_1.name": "도금 I",
 	"item.tetra.scroll.hone_gild_1.description": "연마를 통해 부품의 마법 수용성을 증가시킬 수 있게 만드는 마법이 부여된 두루마리입니다",
 	"item.tetra.scroll.hone_gild_1.description_extended": "이 두루마리의 마법은 다소 바래져, 부품을 I단계까지만 도금할 수 있습니다. 2개의 도금 I 두루마리를 제작으로 결합하여 도금 II 두루마리를 만들 수 있습니다",
+
 	"item.tetra.scroll.hone_gild_2.prefix": "연마",
 	"item.tetra.scroll.hone_gild_2.name": "도금 II",
 	"item.tetra.scroll.hone_gild_2.description": "연마를 통해 부품의 마법 수용성을 증가시킬 수 있게 만드는 마법이 부여된 두루마리입니다",
 	"item.tetra.scroll.hone_gild_2.description_extended": "이 두루마리의 마법은 부분적으로 복원되어, 부품을 II단계까지 도금할 수 있습니다. 2개의 도금 II 두루마리를 제작으로 결합하여 도금 III 두루마리를 만들 수 있습니다",
+
 	"item.tetra.scroll.hone_gild_3.prefix": "연마",
 	"item.tetra.scroll.hone_gild_3.name": "도금 III",
 	"item.tetra.scroll.hone_gild_3.description": "연마를 통해 부품의 마법 수용성을 증가시킬 수 있게 만드는 마법이 부여된 두루마리입니다",
 	"item.tetra.scroll.hone_gild_3.description_extended": "이 두루마리의 마법은 어느 정도 복원되어, 부품을 III단계까지 도금할 수 있습니다. 2개의 도금 III 두루마리를 제작으로 결합하여 도금 IV 두루마리를 만들 수 있습니다",
+
 	"item.tetra.scroll.hone_gild_4.prefix": "연마",
 	"item.tetra.scroll.hone_gild_4.name": "도금 IV",
 	"item.tetra.scroll.hone_gild_4.description": "연마를 통해 부품의 마법 수용성을 증가시킬 수 있게 만드는 마법이 부여된 두루마리입니다",
 	"item.tetra.scroll.hone_gild_4.description_extended": "이 두루마리의 마법은 거의 복원되어, 부품을 IV단계까지 도금할 수 있습니다. 2개의 도금 IV 두루마리를 제작으로 결합하여 도금 V 두루마리를 만들 수 있습니다",
+
 	"item.tetra.scroll.hone_gild_5.prefix": "연마",
 	"item.tetra.scroll.hone_gild_5.name": "도금 V",
 	"item.tetra.scroll.hone_gild_5.description": "연마를 통해 부품의 마법 수용성을 증가시킬 수 있게 만드는 마법이 부여된 두루마리입니다",
 	"item.tetra.scroll.hone_gild_5.description_extended": "이 두루마리의 마법은 완벽하게 복원되어, 부품을 V단계까지 도금할 수 있습니다",
+
 	"item.tetra.scroll.double/basic_axe/warforge.prefix": "전투용 도구, 제1장",
 	"item.tetra.scroll.double/basic_axe/warforge.name": "전투도끼",
 	"item.tetra.scroll.double/basic_axe/warforge.description": "도끼를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/basic_axe/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/basic_hammer/warforge.prefix": "전투용 도구, 제2장",
 	"item.tetra.scroll.double/basic_hammer/warforge.name": "전투망치",
 	"item.tetra.scroll.double/basic_hammer/warforge.description": "망치를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/basic_hammer/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/basic_pickaxe/warforge.prefix": "전투용 도구, 제3장",
 	"item.tetra.scroll.double/basic_pickaxe/warforge.name": "전투곡괭이",
 	"item.tetra.scroll.double/basic_pickaxe/warforge.description": "곡괭이를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/basic_pickaxe/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/butt/warforge.prefix": "전투용 도구, 제4장",
 	"item.tetra.scroll.double/butt/warforge.name": "무딘 끝",
 	"item.tetra.scroll.double/butt/warforge.description": "도구를 전투에 훨씬 적합하게 만들어주는 버트를 만드는 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/butt/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/claw/warforge.prefix": "전투용 도구, 제5장",
 	"item.tetra.scroll.double/claw/warforge.name": "클로",
 	"item.tetra.scroll.double/claw/warforge.description": "클로를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/claw/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/hoe/warforge.prefix": "전투용 도구, 제6장",
 	"item.tetra.scroll.double/hoe/warforge.name": "기삼",
 	"item.tetra.scroll.double/hoe/warforge.description": "괭이를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/hoe/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/sickle/warforge.prefix": "전투용 도구, 제7장",
 	"item.tetra.scroll.double/sickle/warforge.name": "전투낫",
 	"item.tetra.scroll.double/sickle/warforge.description": "낫을 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/sickle/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
+
 	"item.tetra.scroll.double/adze/warforge.prefix": "전투용 도구, 제8장",
 	"item.tetra.scroll.double/adze/warforge.name": "전투까뀌",
 	"item.tetra.scroll.double/adze/warforge.description": "까뀌를 전투에 훨씬 적합하게 만드는 다양한 방법이 포함되어 있습니다",
 	"item.tetra.scroll.double/adze/warforge.description_extended": "§8[§7손에 들고 shift + 오른쪽 클릭§8]§7 더 읽어보기",
-	"item.tetra.scroll.warforge.details": "§l§n전투구축§r\n\n전투구축은 머리가 두개인 도구를 전투에 훨씬 적합하게 만들어 줍니다.\n\n + §l효과§r는 전투구축된 머리를 기반으로 정해집니다\n\n + 오른쪽 클릭을 눌러 사용할 수 있는 §l능력§r은 왼쪽 머리를 기반으로 정해집니다\n\n + 능력을 보조하는 §l수식어§r는 오른쪽 머리를 기반으로 정해집니다\r§l§n전투도끼§r\n\n§l효과:§r 절단\n공격이 가끔 적의 최대 체력을 감소시킵니다\n\n§l능력:§r 즉결\n적의 감소한 체력과 해로운 효과를 기반으로 추가 피해를 줍니다\n\n§l수식어:§r 과충전\n능력을 추가로 충전할 수 있게 됩니다. 능력을 추가로 충전하면 능력의 공격 피해가 증가하고, 효과가 증대됩니다\r§l§n전투망치§r\n\n§l효과:§r 파쇄\n공격 피해의 일부분이 적의 갑옷과 흡수를 무시하고 들어갑니다\n\n§l능력:§r 격타\n적을 격타하여 하나의 적을 강력한 밀치기로 밀어내거나, 지면을 격타하여 넓은 범위 안에 있는 여려 적을 쳐낼 수 있습니다\n\n§l수식어:§r 가속\n능력이 적을 기절시키거나 적을 더 뒤로 밀쳐냅니다\r§l§n전투곡괭이§r\n\n§l효과:§r 꿰찌르기\n공격이 갑옷이 없는 적에게 추가 피해를 줍니다\n\n§l능력:§r 파손\n적의 방어력을 감소시키거나 적에게 출혈을 일으킵니다\n\n§l수식어:§r 연타\n일반 공격으로 연타 포인트 얻어, 능력의 위력을 증가시킵니다\r§l§n버트§r\n\n§l효과:§r 가벼움\n도구의 속도가 상당히 증가하지만 도구의 효율성이 감소합니다\n\n§l능력:§r 없음\n\n§l수식어:§r 가벼움\n충전 시간과 재사용 대기시간이 단축됩니다\r§l§n클로§r\n\n§l효과:§r 관통\n공격 피해의 일부분이 적의 갑옷을 무시합니다\n\n§l능력:§r 비틀기\n적에게 갑옷이 감소하는 효과를 줍니다\n\n§l수식어:§r 복수\n사용자가 전투에서 불리해지면 능력의 위력이 증가합니다\r§l§n기삼(괭이)§r\n\n§l효과:§r 추가 피해\n전체적인 무기의 공격 피해가 증가합니다\n\n§l능력:§r 압도\n적에게 치명적인 피해를 주고 적을 탈진시키지만 사용자도 탈진됩니다\n\n§l수식어:§r 과연장\n능력의 위력이 증가하지만, 배고픔이 빠르게 감소합니다\r§l§n전투낫§r\n\n§l효과:§r 휩쓸기\n휩쓸기의 공격 피해와 범위가 증가합니다\n\n§l능력:§r 수확\n구역 안에 있는 적을 피격하고, 적이 죽었을 경우 사용자에게 이로운 효과를 줍니다\n\n§l수식어:§r 흥분\n능력을 사용할 때 사용을 성공시키면 능력이 증대됩니다\r§l§n전투까뀌§r\n\n§l효과:§r 추가 피해\n까뀌 머리의 공격 피해가 상당히 증가합니다\n\n§l능력:§r 돌진\n앞으로 돌진하여 적에게 피해를 줍니다\n\n§l수식어:§r 방어태세\n아이템을 주로 사용하지 않는 손으로 사용하면 능력이 방어적으로 변경됩니다",
+
+	"item.tetra.scroll.warforge.details": "§l§n전투구축§r\n\n전투구축은 머리가 두개인 도구를 전투에 훨씬 적합하게 만들어 줍니다.\n\n + §l효과§r는 전투구축된 머리를 기반으로 정해집니다\n\n + 오른쪽 클릭을 눌러 사용할 수 있는 §l능력§r은 왼쪽 머리를 기반으로 정해집니다\n\n + 능력을 보조하는 §l수식어§r는 오른쪽 머리를 기반으로 정해집니다\r§l§n전투도끼§r\n\n§l효과:§r 절단\n공격이 가끔 적의 최대 체력을 감소시킵니다\n\n§l능력:§r 즉결\n적의 감소한 체력과 해로운 효과를 기반으로 추가 피해를 줍니다\n\n§l수식어:§r 과충전\n능력을 추가로 충전할 수 있게 됩니다. 능력을 추가로 충전하면 능력의 공격 피해가 증가하고, 효과가 증대됩니다\r§l§n전투망치§r\n\n§l효과:§r 파쇄\n공격 피해의 일부분이 적의 갑옷과 흡수를 무시하고 들어갑니다\n\n§l능력:§r 격타\n적을 격타하여 하나의 적을 강력한 밀치기로 밀어내거나, 지면을 격타하여 넓은 범위 안에 있는 여려 적을 쳐낼 수 있습니다\n\n§l수식어:§r 가속\n능력이 적을 기절시키거나 적을 더 뒤로 밀쳐냅니다\r§l§n전투곡괭이§r\n\n§l효과:§r 꿰찌르기\n공격이 갑옷이 없는 적에게 추가 피해를 줍니다\n\n§l능력:§r 파손\n적의 방어력을 감소시키거나 적에게 출혈을 일으킵니다\n\n§l수식어:§r 연타\n일반 공격으로 연타 포인트 얻어, 능력의 위력을 증가시킵니다\r§l§n버트§r\n\n§l효과:§r 가벼움\n도구의 속도가 상당히 증가하지만 도구의 등급이 감소합니다\n\n§l능력:§r 없음\n\n§l수식어:§r 가벼움\n충전 시간과 재사용 대기시간이 단축됩니다\r§l§n클로§r\n\n§l효과:§r 관통\n공격 피해의 일부분이 적의 갑옷을 무시합니다\n\n§l능력:§r 비틀기\n적에게 갑옷이 감소하는 효과를 줍니다\n\n§l수식어:§r 복수\n사용자가 전투에서 불리해지면 능력의 위력이 증가합니다\r§l§n기삼(괭이)§r\n\n§l효과:§r 추가 피해\n전체적인 무기의 공격 피해가 증가합니다\n\n§l능력:§r 압도\n적에게 치명적인 피해를 주고 적을 탈진시키지만 사용자도 탈진됩니다\n\n§l수식어:§r 과연장\n능력의 위력이 증가하지만, 배고픔이 빠르게 감소합니다\r§l§n전투낫§r\n\n§l효과:§r 휩쓸기\n휩쓸기의 공격 피해와 범위가 증가합니다\n\n§l능력:§r 수확\n구역 안에 있는 적을 피격하고, 적이 죽었을 경우 사용자에게 이로운 효과를 줍니다\n\n§l수식어:§r 흥분\n능력을 사용할 때 사용을 성공시키면 능력이 증대됩니다\r§l§n전투까뀌§r\n\n§l효과:§r 추가 피해\n까뀌 머리의 공격 피해가 상당히 증가합니다\n\n§l능력:§r 돌진\n앞으로 돌진하여 적에게 피해를 줍니다\n\n§l수식어:§r 방어태세\n아이템을 주로 사용하지 않는 손으로 사용하면 능력이 방어적으로 변경됩니다",
+
 	"item.tetra.scroll.effects": "제작 효과",
 	"item.tetra.scroll.effects.description": "부품을 제작하거나 도구를 수정하는 경우 어떤 형태로든 영향을 줍니다",
 	"item.tetra.scroll.schematics": "설계도",
@@ -686,81 +847,105 @@
 	"item.tetra.scroll.intricate": "난해",
 	"item.tetra.scroll.intricate.description": "두루마리가 작업대 바로 위에 펼쳐저 있어야 작동합니다",
 	"item.tetra.scroll.range.description": "두루마리가 작업대를 중심으로 5x5x5이내(작업대를 중심으로 두 블록 떨어져있는 블록에 배치되어 있을 때)에 펼쳐저 있어야 작동합니다",
+
 	"item.tetra.magmatic_cell": "열 전지",
 	"item.tetra.magmatic_cell.charge": "잔량: %s",
 	"item.tetra.magmatic_cell.charge_full": "§a가득참",
 	"item.tetra.magmatic_cell.charge_good": "§a높음",
 	"item.tetra.magmatic_cell.charge_low": "§e낮음",
 	"item.tetra.magmatic_cell.charge_empty": "§c비어 있음",
+
 	"block.tetra.forged_pillar": "대장간 기둥",
 	"block.tetra.forged_platform": "대장간 발판",
 	"block.tetra.forged_platform_slab": "대장간 발판 반 블록",
 	"block.tetra.forged_wall": "대장간 벽",
 	"block.tetra.forged_vent": "대장간 통풍구",
 	"block.tetra.forged_crate": "대장간 상자",
+
 	"block.tetra.forged_container": "대장간 컨테이너",
 	"tetra.forged_container.compartment_0": "첫째 칸",
 	"tetra.forged_container.compartment_1": "둘째 칸",
 	"tetra.forged_container.compartment_2": "셋째 칸",
+
 	"block.tetra.hammer_base": "대장간 망치",
 	"block.tetra.hammer_head.name": "망치 머리",
+
 	"block.tetra.forged_workbench": "대장간 작업대",
+
 	"block.tetra.transfer_unit": "이송 장치",
 	"block.tetra.core_extractor": "추출기 코어",
 	"block.tetra.extractor_piston": "추출기 피스톤",
 	"block.tetra.extractor_pipe": "추출관",
 	"block.tetra.seeping_bedrock": "스며나오는 기반암",
+
 	"block.multiblock_hint.1x2x1": "§8[§71x2x1멀티블록§8]",
+
 	"block.tetra.fractured_bedrock": "파열된 기반암",
 	"block.tetra.depleted_bedrock": "파열된 기반암 (고갈)",
 	"block.tetra.chthonic_extractor": "지하 추출기",
 	"block.tetra.chthonic_extractor.description": "윗부분을 망치로 내리치면 아래로부터 자원을 추출할 수 있습니다",
 	"block.tetra.chthonic_extractor.description_extended": " * 몇 개의 추출기를 같은 파열된 기반암에 두드리면 추출량이 증가합니다\n * 스며나오는 기반암 위에 배치하면 추출량이 증가합니다\n * 스트레이가 사는 추운 생물군계와 허스크가 사는 사막, 마녀가 사는 늪 생물군계에서 추출량이 약간 증가합니다",
+
 	"item.tetra.forged_bolt": "나사",
 	"tetra.salvage_bolt_action.label": "수집",
+
 	"item.tetra.forged_beam": "구조물 기둥",
 	"tetra.salvage_beam_action.label": "수집",
+
 	"item.tetra.forged_mesh": "플렉스 메쉬",
 	"tetra.salvage_mesh_action.label": "수집",
+
 	"item.tetra.quick_latch": "퀵래치",
 	"tetra.salvage_quick_latch_action_hammer.label": "수집",
 	"tetra.salvage_quick_latch_action_pry.label": "수집",
+
 	"item.tetra.metal_scrap": "금속 파편",
 	"item.tetra.metal_scrap.description": "금속의 형상, 쓰임새가 알려지지 않았거나 알 수 없습니다, 새로운 쓰임새를 기다리고 있습니다",
 	"tetra.salvage_metal_scrap_action.label": "수집",
+
 	"item.tetra.vent_plate": "절연된 판",
 	"item.tetra.vent_plate.description": "기계에 다시 부착하면 능율을 약간 높일 수 있습니다",
 	"tetra.salvage_vent_plate_action.label": "수집",
+
 	"item.tetra.combustion_chamber": "연소석",
 	"item.tetra.combustion_chamber.description": "대장간 망치에 부착하여 망치의 등급을 1단계 증가시킬 수 있습니다",
 	"tetra.salvage_combustion_chamber_action.label": "수집",
+
 	"item.tetra.planar_stabilizer": "안정 장치",
 	"item.tetra.planar_stabilizer.description": "대장간 망치에 부착하여 망치로 제조된 주요 부품의 상태를 약간 개선합니다",
 	"tetra.salvage_planar_stabilizer_action.label": "수집",
+
 	"item.tetra.lubricant_dispenser": "윤활기",
 	"item.tetra.lubricant_dispenser.description": "대장간 망치에 부착하여 망치가 끼일 확률을 50%% 감소시킵니다",
 	"tetra.salvage_lubricant_dispenser_action.label": "수집",
+
 	"item.tetra.stonecutter": "암석 절단기",
 	"item.tetra.stonecutter.description": "제작대에서 막대기와 연결하거나 작업대로 칼날 대신 사용하게 하여 강력한 채광용 도구를 제작할 수 있습니다",
 	"tetra.salvage_stonecutter_action.label": "수집",
+
 	"item.tetra.earthpiercer": "지면의 송곳",
 	"item.tetra.earthpiercer.description": "제작대에서 막대기와 연결하거나 작업대로 머리가 하나인 도구의 머리 대신 사용하게 하여 강력한 채광용 도구를 제작할 수 있습니다",
 	"tetra.salvage_earthpiercer_action.label": "수집",
+
 	"item.tetra.forged_unsettling": "닿는 곳에 약간의 진동과 불안정한 반향을 일으킵니다",
 	"item.tetra.forged_description": "추운 생물군계나 산 생물군계 속 깊은 곳에서 발견됩니다",
+
 	"item.tetra.tooltip_reveal": "아이템을 강화할 때 사용할 수 있습니다",
 	"item.tetra.tooltip_expand": "§7[§8shift§7] §8+",
 	"item.tetra.tooltip_expanded": "§8[§fshift§8] §f+",
+
 	"tetra.slot.sword/blade": "칼날",
 	"tetra.slot.sword/hilt": "자루",
 	"tetra.slot.sword/guard": "코등이",
 	"tetra.slot.sword/pommel": "검파두식",
 	"tetra.slot.sword/fuller": "혈조",
+
 	"tetra.slot.double/head_left": "머리 §7(왼쪽)",
 	"tetra.slot.double/head_right": "머리 §7(오른쪽)",
 	"tetra.slot.double/handle": "손잡이",
 	"tetra.slot.double/binding": "연결",
-	"tetra.slot.double/accessory": "장신구",
+	"tetra.slot.double/accessory": "부가 장치",
+
 	"item.tetra.modular.settle_progress.label": "장착 진행 상태",
 	"item.tetra.modular.settle_progress_gain.description": "아이템을 사용할 때마다 부품이 서서히 장착됩니다, 한 번 제대로 장착되면 추가적인 무결성을 제공합니다.\n\n§7진행 상태: §e%s§7/§e%s\n\n§7기본 요구사항: §e%s\n§7내구성 손해: §e%s",
 	"item.tetra.modular.settle_progress_cost.description": "아이템을 사용할 때마다 부품이 서서히 장착됩니다, 한 번 제대로 장착되면 무결성의 비용 감소합니다.\n\n§7진행 상태: §e%s§7/§e%s\n\n§7기본 요구사항: §e%s\n§7내구성 손해: §e%s",
@@ -769,39 +954,53 @@
 	"item.tetra.modular.settle_full_cost.description": "이 부품은 제대로 장착돼, 무결성의 비용이 감소합니다",
 	"item.tetra.modular.settle_full_null.label": "제대로 장착",
 	"item.tetra.modular.settle_full_null.description": "이 부품은 단순해서 쉽게 제대로 장착되어, 더 이상 장착될 수 없습니다",
+
 	"item.tetra.modular.hone_progress.label": "연마",
 	"item.tetra.modular.hone_progress.description": "이 아이템은 연마가 진행 중입니다\n \n§7진행 상태: §e%s§7/§e%s §7(§e%s§7)\n \n§7기본 요구사항: §e%s\n§7무결성 사용: §e+%s",
 	"item.tetra.modular.hone_progress.description_workable": "\n§7연마 가능: §e%s",
 	"item.tetra.modular.hone_progress.description_extended": "아이템이 사용될 때 마다 진행률이 증가하며, 진행이 완료되면 아이템의 주요 부품 중 하나를 연마하여 능력치 중 하나를 약간 증가시킬 수 있습니다. 기본 요구사항과 무결성 사용은 아이템의 유형(예: 검, 활 또는 곡괭이)에 따라 약간 다릅니다. 연마의 진행을 시작하려면 작업대에서 아이템을 수정하거나 수리해야 합니다 (연마 진행 막대가 보이면 진행 중입니다).",
+
 	"tetra.improvement.settled.name": "제대로 장착",
 	"tetra.improvement.settled.description": "이 부품은 계속 사용하여 제자리에 제대로 장착되어, 추가적인 무결성을 제공합니다",
 	"tetra.settled.toast": "부품이 제대로 장착되었습니다!",
+
 	"tetra.improvement.arrested.name": "억제",
 	"tetra.improvement.arrested.description": "이 부품은 시간이 지나도 제대로 장착되지 않는 재료로 제작됩니다",
+
 	"tetra.improvement.workable.name": "단축",
 	"tetra.improvement.workable.description": "이 부품은 제작하기 쉬운 재료로 재작되어, 연마하는 데 시간이 덜 소요됩니다",
+
 	"tetra.improvement.quality.name": "좋은 품질",
 	"tetra.improvement.quality.description": "이 부품은 품질이 좋아, 공격 피해와 효율이 약간 증가합니다",
+
 	"tetra.improvement.gilded_material.name": "도금",
 	"tetra.improvement.gilded_material.description": "마법의 안정성이 약간 증가합니다",
+
 	"tetra.improvement.crying.name": "눈물",
 	"tetra.improvement.crying.description": "마법의 안정성이 약간 감소합니다",
+
 	"tetra.hone.progress": "연마: §7%s§8/§7%s§8 (§7%s%%§8)",
 	"tetra.hone.available": "연마 가능",
+
 	"item.tetra.modular.synergy_indicator.empty": "이 부품에는 잠재적인 추가 효과가 없습니다",
 	"item.tetra.modular.synergy_indicator.header": "추가 효과:",
 	"item.tetra.modular.synergy_indicator.variant_same": "(같은 종류)",
+
 	"tetra/schematic/repair.name": "수리",
 	"tetra/schematic/repair.description": "손상되고 닳은 부품을 수리합니다. 돌아가며 아이템의 부품을 수리하고, 한 번에 한 부품을 수리합니다",
 	"tetra/schematic/repair.description_details": "손상되고 닳은 부품을 수리합니다. 돌아가며 아이템의 부품을 수리합니다, 한 번에 한 부품을 수리합니다.\n\n§7부품: §f%s",
 	"tetra/schematic/repair.slot1": "재료",
+
 	"tetra/schematic/remove.name": "부품 제거",
 	"tetra/schematic/remove.description": "선택된 슬롯의 부품을 제거합니다",
+
 	"tetra/schematic/book_enchant.name": "마법 부여",
 	"tetra/schematic/book_enchant.description": "마법이 부여된 책의 마법을 적용합니다",
 	"tetra/schematic/book_enchant.slot1": "마법이 부여된 책",
+
 	"tetra/schematic/cleanse.name": "정화",
 	"tetra/schematic/cleanse.description": "마법의 불안정성으로 인한 부정적인 마법을 깨끗이 씻어내세요.\n\n마법 수용량 및 부정정인 마법의 양에 따라 경험치 비용 증가합니다",
+
 	"tetra/schematic/sword/shared_blade/hone_damage_1.name": "연마: 공격 피해 I",
 	"tetra/schematic/sword/shared_blade/hone_damage_1.description": "이 부품을 연마하여 공격 피해가 0.5 증가합니다",
 	"tetra/schematic/sword/shared_blade/hone_damage_2.name": "연마: 공격 피해 II",
@@ -812,8 +1011,10 @@
 	"tetra/schematic/sword/shared_blade/hone_damage_4.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 1.5에서 2로 증가합니다.",
 	"tetra/schematic/sword/shared_blade/hone_damage_5.name": "연마: 공격 피해 V",
 	"tetra/schematic/sword/shared_blade/hone_damage_5.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 2에서 3로 증가합니다.",
+
 	"tetra.improvement.blade_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.blade_hone/damage.description": "공격 피해가 증가합니다",
+
 	"tetra/schematic/sword/shared_blade/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/sword/shared_blade/hone_speed_1.description": "이 부품을 연마하여 전체적인 휘두르는 속도가 7%%로 증가합니다.",
 	"tetra/schematic/sword/shared_blade/hone_speed_2.name": "연마: 속도 II",
@@ -824,8 +1025,10 @@
 	"tetra/schematic/sword/shared_blade/hone_speed_4.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 22%%에서 30%%로 증가합니다.",
 	"tetra/schematic/sword/shared_blade/hone_speed_5.name": "연마: 속도 V",
 	"tetra/schematic/sword/shared_blade/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 30%%에서 40%%로 증가합니다.",
+
 	"tetra.improvement.blade_hone/speed.name": "연마: 속도",
 	"tetra.improvement.blade_hone/speed.description": "휘두르는 속도가 증가합니다",
+
 	"tetra/schematic/sword/basic_hilt/hone_damage_1.name": "연마: 공격 피해 I",
 	"tetra/schematic/sword/basic_hilt/hone_damage_1.description": "이 부품을 연마하여 전체적인 공격 피해가 5%% 증가합니다.",
 	"tetra/schematic/sword/basic_hilt/hone_damage_2.name": "연마: 공격 피해 II",
@@ -836,8 +1039,10 @@
 	"tetra/schematic/sword/basic_hilt/hone_damage_4.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 15%%에서 20%%로 증가합니다.",
 	"tetra/schematic/sword/basic_hilt/hone_damage_5.name": "연마: 공격 피해 V",
 	"tetra/schematic/sword/basic_hilt/hone_damage_5.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 20%%에서 25%%로 증가합니다.",
+
 	"tetra.improvement.hilt_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.hilt_hone/damage.description": "공격 피해가 증가합니다",
+
 	"tetra/schematic/sword/basic_hilt/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/sword/basic_hilt/hone_speed_1.description": "이 부품을 연마하여 휘두르는 속도가 0.05 증가합니다.",
 	"tetra/schematic/sword/basic_hilt/hone_speed_2.name": "연마: 속도 II",
@@ -848,95 +1053,122 @@
 	"tetra/schematic/sword/basic_hilt/hone_speed_4.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 0.15에서 0.2로 증가합니다.",
 	"tetra/schematic/sword/basic_hilt/hone_speed_5.name": "연마: 속도 V",
 	"tetra/schematic/sword/basic_hilt/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 0.2에서 0.25로 증가합니다.",
+
 	"tetra.improvement.hilt_hone/speed.name": "연마: 속도",
 	"tetra.improvement.hilt_hone/speed.description": "휘두르는 속도가 증가합니다",
+
 	"tetra/schematic/sword/basic_blade.name": "기본 날",
 	"tetra/schematic/sword/basic_blade.description": "현재 칼날을 기본 칼날로 교체하거나 원자재를 사용하여 새로 만듭니다.\n\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.",
 	"tetra/schematic/sword/basic_blade.slot1": "칼날 재료",
+
 	"tetra.module.sword/basic_blade.name": "기본 날",
 	"tetra.module.sword/basic_blade.description": "공격 속도와 공격 피해가 평균적인 기본 칼날, 무결성을 사용합니다.",
 	"tetra.module.sword/basic_blade.item_name": "검",
 	"tetra.module.sword/basic_blade.material_name": "%s 검",
 	"tetra.module.sword/basic_blade.prefix": "%s",
+
 	"tetra.improvement.blade/serrated.name": "톱니형 날",
 	"tetra.improvement.blade/serrated.prefix": "톱니형",
 	"tetra.improvement.blade/serrated.description": "공격 시 출혈이 발생할 수 있습니다",
+
 	"tetra.improvement.blade/hooked.name": "갈고리형 날",
 	"tetra.improvement.blade/hooked.prefix": "갈고리형",
 	"tetra.improvement.blade/hooked.description": "뒤에서 적을 때리면 치명타 피해를 줍니다",
+
 	"tetra.improvement.blade/tempered.name": "담금",
 	"tetra.improvement.blade/tempered.prefix": "담금질",
 	"tetra.improvement.blade/tempered.description": "공격이 부분적으로 방어구를 무시합니다",
+
 	"tetra/schematic/sword/shared_blade/serrated_1.name": "톱니형",
-	"tetra/schematic/sword/shared_blade/serrated_1.description": "톱니모양의 칼날, 30%%확률로 4공격 피해 출혈을 2초간 부여합니다. 언데드에게 효과적이지 않습니다.",
+	"tetra/schematic/sword/shared_blade/serrated_1.description": "톱니모양의 칼날, 30%% 확률로 4 공격 피해를 주는 출혈을 2초간 부여합니다. 언데드에게 효과적이지 않습니다.",
 	"tetra/schematic/sword/shared_blade/serrated_2.name": "연마: 톱니형 II",
-	"tetra/schematic/sword/shared_blade/serrated_2.description": "연마하여 톱니모양을 개선, 공격 피해가 8로 증가합니다.",
+	"tetra/schematic/sword/shared_blade/serrated_2.description": "톱니모양을 개선하여 공격 피해가 8로 증가합니다.",
 	"tetra/schematic/sword/shared_blade/serrated_3.name": "연마: 톱니형 III",
-	"tetra/schematic/sword/shared_blade/serrated_3.description": "톱니모양의 개선을 한층 더 연마합니다, 공격 피해가 16으로 증가합니다.",
+	"tetra/schematic/sword/shared_blade/serrated_3.description": "톱니모양을 개선하여 공격 피해가 16으로 증가합니다.",
+
 	"tetra/schematic/sword/shared_blade/tempered_1.name": "담금질",
 	"tetra/schematic/sword/shared_blade/tempered_1.description": "칼날을 담금질하여, 경도가 크게 증가합니다. 공격 피해의 일부분이 갑옷을 관통합니다.",
 	"tetra/schematic/sword/shared_blade/tempered_2.name": "연마: 담금질 II",
-	"tetra/schematic/sword/shared_blade/tempered_2.description": "연마하여 담금질을 개선, 갑옷을 관통하는 공격 피해를 3으로 중가시킵니다.",
+	"tetra/schematic/sword/shared_blade/tempered_2.description": "담금질을 개선하여 갑옷 관통 효과가 개선됩니다.",
 	"tetra/schematic/sword/shared_blade/tempered_3.name": "연마: 담금질 III",
-	"tetra/schematic/sword/shared_blade/tempered_3.description": "담금질의 개선을 한층 더 연마합니다, 갑옷을 관통하는 공격 피해를 5로 중가시킵니다.",
+	"tetra/schematic/sword/shared_blade/tempered_3.description": "담금질의 개선을 한층 더 개선하여 갑옷 관통 효과가 개선됩니다.",
+
 	"tetra/schematic/sword/shared_blade/hooked_1.name": "갈고리형",
 	"tetra/schematic/sword/shared_blade/hooked_1.description": "칼날 뒷면에 갈고리모양을 새깁니다, 낌새를 못 채는 적에게 추가 피해를 줍니다. 뒤에서 적을 공격할 때 치명타를 줍니다.",
 	"tetra/schematic/sword/shared_blade/hooked_2.name": "연마: 갈고리형 II",
 	"tetra/schematic/sword/shared_blade/hooked_2.description": "연마하여 갈고리 모양을 개선, 뒤에서 적을 공격할 때 추가 피해량이 75%% 증가합니다.",
 	"tetra/schematic/sword/shared_blade/hooked_3.name": "연마: 갈고리형 III",
 	"tetra/schematic/sword/shared_blade/hooked_3.description": "갈고리 모양의 개선을 한층 더 연마합니다, 뒤에서 적을 공격할 때 추가 피해량이 125%% 증가합니다.",
+
 	"tetra/schematic/sword/basic_hilt/basic_hilt.name": "기본 자루",
 	"tetra/schematic/sword/basic_hilt/basic_hilt.description": "현재 자루를 제공된 재료를 사용하여 새로 만듭니다.\n\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/sword/basic_hilt/basic_hilt.slot1": "자루 재료",
+
 	"tetra.module.sword/basic_hilt.name": "기본 자루",
 	"tetra.module.sword/basic_hilt.description": "기본적인 자루, 검의 주요 무결성의 원천입니다.",
 	"tetra.module.sword/basic_hilt.material_name": "%s 자루",
+
 	"tetra.variant.basic_hilt/blaze_rod": "이글거리는 자루",
 	"tetra.variant.basic_hilt/end_rod": "엔드 막대기",
 	"tetra.variant.basic_hilt/forged_beam": "용도가 변경된 기둥",
+
 	"tetra.improvement.basic_hilt/wrap_string.name": "실 끈",
-	"tetra.improvement.basic_hilt/wrap_string.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 자루 효과를 줄입니다.",
+	"tetra.improvement.basic_hilt/wrap_string.description": "공격 피해와 속도가 약간 증가하고, 부정적인 자루 효과를 줄입니다.",
 	"tetra.improvement.basic_hilt/wrap_leather.name": "가죽 끈",
-	"tetra.improvement.basic_hilt/wrap_leather.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 자루 효과를 줄입니다.",
+	"tetra.improvement.basic_hilt/wrap_leather.description": "공격 피해와 속도가 약간 증가하고, 부정적인 자루 효과를 줄입니다.",
 	"tetra.improvement.basic_hilt/wrap_hide.name": "토끼 가죽 끈",
-	"tetra.improvement.basic_hilt/wrap_hide.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 자루 효과를 줄입니다.",
+	"tetra.improvement.basic_hilt/wrap_hide.description": "공격 피해와 속도가 약간 증가하고, 부정적인 자루 효과를 줄입니다.",
 	"tetra.improvement.basic_hilt/wrap_vine.name": "덩굴 끈",
-	"tetra.improvement.basic_hilt/wrap_vine.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 자루 효과를 줄입니다.",
+	"tetra.improvement.basic_hilt/wrap_vine.description": "공격 피해와 속도가 약간 증가하고, 부정적인 자루 효과를 줄입니다.",
+
 	"tetra/schematic/sword/basic_hilt/wrap_hilt.name": "병사",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt.slot1": "재료",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt.description": "재료를 사용하여 자루를 감싼다. 자루에 의해 발생하는 부정적인 효과를 감소시키고 공격 피해와 속도가 증가합니다.",
+
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.name": "연마: 병사 II",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.slot1": "재료",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.description": "자루를 감싸는 병사를 개선하여, 부정적인 효과를 더 감소시키고 공격 피해와 속도가 더 증가합니다.",
+
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.name": "연마: 병사 III",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.slot1": "재료",
 	"tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.description": "병사의 개선을 한층 더 연마하여, 부정적인 효과를 더 감소시키고 공격 피해와 속도가 더 증가합니다.",
+
 	"tetra.module.sword/decorative_pommel.name": "장식용 검파두식",
 	"tetra.module.sword/decorative_pommel.description": "장식용 검파두식, 내구성이 약간 증가합니다 기능적인 가치는 없습니다.",
 	"tetra.module.sword/decorative_pommel.material_name": "장식용 %s 검파두식",
+
 	"tetra.module.sword/makeshift_guard.name": "임시변통 코등이",
 	"tetra.module.sword/makeshift_guard.description": "검의 코등이, 취약한 구조로 되어있어, 휘두르는 손은 거의 보호가 되지않습니다.",
 	"tetra.module.sword/makeshift_guard.material_name": "임시변통 %s 코등이",
+
 	"tetra.variant.makeshift_guard/oak": "나무 임시변통 코등이",
+
 	"tetra/schematic/sword/wide_guard.name": "넓은 코등이",
 	"tetra/schematic/sword/wide_guard.description": "손에 들고 있을 때 추가적인 갑옷을 제공하는 휘두르는 손을 보호하는 넓은 코등이를 제작합니다.\n\n재료의 §f경도§r와 §f유연성§r이 높아질수록 갑옷량이 증가합니다.",
 	"tetra/schematic/sword/wide_guard.slot1": "코등이 재료",
+
 	"tetra.module.sword/wide_guard.name": "넓은 코등이",
 	"tetra.module.sword/wide_guard.description": "손에 들고 있을 때 추가적인 갑옷을 제공는 휘두르는 손을 보호하는 넓은 코등이입니다.",
 	"tetra.module.sword/wide_guard.material_name": "넓은 %s 코등이",
+
 	"tetra.variant.wide_guard/oak": "나무 넓은 코등이",
 	"tetra.variant.wide_guard/vent_plate": "용도가 변경된 판으로 된 코등이",
+
 	"tetra/schematic/sword/sturdy_guard.name": "튼튼한 코등이",
 	"tetra/schematic/sword/sturdy_guard.description": "공격을 방어할 수 있는 튼튼한 코등이를 제작합니다.\n \n재료의 §f경도§r가 높아질수록 방어 지속시간이 증가합니다.\n재료의 §f밀도§r가 낮아질수록 방어 지속시간이 증가합니다.",
 	"tetra/schematic/sword/sturdy_guard.slot1": "코등이 재료",
+
 	"tetra.module.sword/sturdy_guard.name": "튼튼한 코등이",
 	"tetra.module.sword/sturdy_guard.description": "공격을 방어할 수 있는 튼튼한 코등이입니다.",
 	"tetra.module.sword/sturdy_guard.material_name": "튼튼한 %s 코등이",
+
 	"tetra/schematic/sword/socket.name": "소켓",
 	"tetra/schematic/sword/socket.description": "보석을 검에 꽂습니다, 보석에 따라 다른 효과를 제공합니다.",
 	"tetra/schematic/sword/socket.slot1": "보석",
+
 	"tetra.module.sword/socket.name": "소켓",
 	"tetra.module.sword/socket.description": "자루와 칼날이 만나는 곳에 있는 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.",
+
 	"tetra.variant.sword_socket/diamond": "소켓 [§b다이아몬드§r]",
 	"tetra.variant.sword_socket/emerald": "소켓 [§a에메랄드§r]",
 	"tetra.variant.sword_socket/lapis": "소켓 [§9청금석§r]",
@@ -949,95 +1181,124 @@
 	"tetra.variant.sword_socket/pristine_lapis.description": "자루와 칼날이 만나는 곳에 있는 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
 	"tetra.variant.sword_socket/mana_rune": "소켓 [§d마나§r]",
 	"tetra.variant.sword_socket/mana_rune.description": "자루와 칼날이 만나는 곳에 있는 룬, 이 룬은 마력을 사용하여 아이템의 내구도를 수리합니다.",
+
 	"tetra/schematic/sword/counterweight.name": "무게추",
 	"tetra/schematic/sword/counterweight.description": "칼날의 균형을 잡는 무게추를 만듭니다. 만약 무게추값과 전체 무결성 사용량이 같다면 공격속도가 크게 증가합니다. 무게추값과 전체 무결성 사용량이 차이날 경우에는 공격속도가 감소합니다, 너무 차이날 경우에는 기본 공격속도보다 공격속도가 떨어질 수 있습니다.",
 	"tetra/schematic/sword/counterweight.slot1": "재료",
+
 	"tetra.module.sword/counterweight.name": "무게추",
 	"tetra.module.sword/counterweight.description": "만약 무게추값과 전체 무결성 사용량이 같다면 공격속도가 크게 증가합니다. 무게추값과 전체 무결성 사용량이 차이날 경우에는 공격속도가 감소합니다, 너무 차이날 경우에는 기본 공격속도보다 공격속도가 떨어질 수 있습니다.",
 	"tetra.module.sword/counterweight.material_name": "%s 무게추",
+
 	"tetra/schematic/sword/reinforced_fuller.name": "보강용 혈조",
 	"tetra/schematic/sword/reinforced_fuller.description": "재료를 사용하여 혈조를 보강합니다. 추가적인 무결성을 제공하고 물건의 내구도가 감소되는 확률을 줄이지만 검이 더 무거워지고 공격속도가 느려집니다.",
 	"tetra/schematic/sword/reinforced_fuller.slot1": "재료",
+
 	"tetra.module.sword/reinforced_fuller.name": "보강용 혈조",
 	"tetra.module.sword/reinforced_fuller.description": "보강용 혈조는 추가적인 무결성을 제공하고 물건의 내구도가 감소되는 확률을 줄이지만 검이 더 무거워지고 공격속도가 느려집니다.",
 	"tetra.module.sword/reinforced_fuller.material_name": "%s 보강용 혈조",
+
 	"tetra.variant.reinforced_fuller/oak": "나무 보강용 혈조",
 	"tetra.variant.reinforced_fuller/forged_beam": "기둥으로 된 보강용 혈조",
+
 	"tetra/schematic/sword/howling.name": "휘날리는 칼날",
 	"tetra/schematic/sword/howling.description": "사용자를 감싸는 휘날리는 바람을 일으키는 혈조 부가 장치를 제작합니다. 휘날리는 바람은 발사체를 방어하고, 가끔 발사체를 반사합니다.\n \n재료의 §f경도§r가 높아질수록 휘두를 때 휘날리는 바람이 §f일으켜지는 양§r이 증가합니다.\n재료의 §f유연성§r이 높아질수록 §f지속 시간§r이 증가합니다.",
 	"tetra/schematic/sword/howling.slot1": "재료",
+
 	"tetra.module.sword/howling.name": "바람날",
 	"tetra.module.sword/howling.description": "사용자를 감싸는 휘날리는 바람을 일으키는 혈조 부가 장치입니다. 휘날리는 바람은 발사체를 방어하고, 가끔 발사체를 반사합니다.",
 	"tetra.module.sword/howling.material_name": "%s 바람날",
-	"tetra/schematic/sword/binding.name": "고정",
-	"tetra/schematic/sword/binding.description": "고정으로 자루와 칼날 사이를 밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 고정합니다.",
+
+	"tetra/schematic/sword/binding.name": "바인딩",
+	"tetra/schematic/sword/binding.description": "밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 자루와 칼날 사이를 고정하는 바인딩을 제작합니다.",
 	"tetra/schematic/sword/binding.slot1": "재료",
-	"tetra.module.sword/binding.name": "고정",
+
+	"tetra.module.sword/binding.name": "바인딩",
 	"tetra.module.sword/binding.description": "칼날과 자루사이를 촘촘하게 고정합니다.",
 	"tetra.module.sword/binding.material_name": "%s 끈",
+
 	"tetra.variant.sword_binding/bolt": "나사",
-	"tetra.variant.sword_binding/bolt.description": "조절식 나사를 장착하여 칼날를 자루에 고정합니다.",
+	"tetra.variant.sword_binding/bolt.description": "조절식 나사를 장착하여 칼날을 자루에 고정합니다.",
+
 	"tetra.tweak.sword_tweak/binding_bolt.label": "나사의 조임",
 	"tetra.tweak.sword_tweak/binding_bolt.tooltip": "§e조임§r 검이 더 뻣뻣해져, 공격 피해가 증가합니다.\n§e풀림§r 반동이 적어져, 내구성이 증가합니다.",
 	"tetra.tweak.sword_tweak/binding_bolt.left": "풀림",
 	"tetra.tweak.sword_tweak/binding_bolt.right": "조임",
+
 	"tetra/schematic/sword/forefinger_ring.name": "검지 반지",
 	"tetra/schematic/sword/forefinger_ring.description": "자루 상단에 반지를 장착합니다. 잡는 느낌이 크게 향상되어 너무 빠르게 휘두를 때 최소 피해량이 증가합니다.",
 	"tetra/schematic/sword/forefinger_ring.slot1": "재료",
+
 	"tetra.module.sword/forefinger_ring.name": "검지 반지",
 	"tetra.module.sword/forefinger_ring.description": "자루 상단에 반지를 장착하여 구멍이 잘 잡도록 해주어서 너무 빠르게 휘두를 때의 최소 피해량이 증가합니다.",
 	"tetra.module.sword/forefinger_ring.material_name": "%s 반지",
+
 	"tetra/schematic/sword/grip_loop.name": "자루 고리",
 	"tetra/schematic/sword/grip_loop.description": "자루 끝에 고리을 장착합니다, 검의 범위가 증가하고 휩쓸기 공격 범위도 2블록 증가합니다.",
 	"tetra/schematic/sword/grip_loop.slot1": "재료",
+
 	"tetra.module.sword/grip_loop.name": "자루 고리",
 	"tetra.module.sword/grip_loop.description": "자루 끝에 장착된 고리. 검의 범위가 증가하고 휩쓸기 공격 범위도 2블록 증가합니다.",
 	"tetra.module.sword/grip_loop.material_name": "%s 고리",
+
 	"tetra/schematic/sword/short_blade.name": "짧은 날",
 	"tetra/schematic/sword/short_blade.description": "현재 칼날을 일반 칼날보다 짧고 가벼운 칼날로 교체합니다. 사용자가 더 빠른 속도로 휘두를 수 있고, 일반 칼날에 비해 공격 피해가 약간 낮고 휩쓸기를 쓸 수 없습니다.\n\n재료에 따라 §f절단§r 효율이 크게 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r와 §f찌르기 피해§r가 약간 감소합니다.",
 	"tetra/schematic/sword/short_blade.slot1": "칼날 재료",
+
 	"tetra.module.sword/short_blade.item_name": "단검",
 	"tetra.module.sword/short_blade.name": "단검",
 	"tetra.module.sword/short_blade.description": "짧고 가벼운 칼날, 더 빠른 속도로 휘두를 수 있지만 공격 피해가 낮고 휩쓸기를 쓸 수 없습니다.",
-	"tetra.module.sword/short_blade.material_name": "%s 짧은 날",
+	"tetra.module.sword/short_blade.material_name": "짧은 %s 날",
 	"tetra.module.sword/short_blade.prefix": "%s",
+
 	"tetra/schematic/sword/heavy_blade.name": "무거운 날",
 	"tetra/schematic/sword/heavy_blade.description": "현재 칼날을 일반 칼날보다 크고 무거운 칼날로 교체합니다. 공격 속도를 희생하여 공격 피해를 높입니다. 완벽히 충전된 공격으로 강력한 휩쓸기 공격을 쓸 수 있습니다.\n\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가하고, §f휩쓸기§r효과가 개선됩니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가하지만 §f공격 속도§r가 감소합니다",
 	"tetra/schematic/sword/heavy_blade.slot1": "칼날 재료",
+
 	"tetra.module.sword/heavy_blade.item_name": "대검",
 	"tetra.module.sword/heavy_blade.name": "무거운 날",
 	"tetra.module.sword/heavy_blade.description": "크고 무거운 칼날, 공격 속도를 희생하여 공격 피해를 높입니다. 완벽히 충전된 공격은 강력한 휩쓸기 공격을 합니다.",
 	"tetra.module.sword/heavy_blade.material_name": "무거운 %s 날",
 	"tetra.module.sword/heavy_blade.prefix": "%s",
+
 	"tetra.improvement.heavy_blade/crushing.name": "파쇄",
 	"tetra.improvement.heavy_blade/crushing.description": "공격 피해의 일부분이 갑옷과 흡수를 무시합니다",
+
 	"tetra/schematic/sword/machete.name": "마체테",
 	"tetra/schematic/sword/machete.description": "현재 칼날을 단조한 마체테로 교체합니다, 한 구역의 식물을 자르는 데 사용될 수 있습니다. 마체테는 휘두르기 대기시간이 아닌 경우에만 블록을 즉시 수집할 수 있습니다.\n\n재료에 따라 §f절단§r 효율이 적게 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/sword/machete.slot1": "칼날 재료",
+
 	"tetra.module.sword/machete.item_name": "마체테",
 	"tetra.module.sword/machete.name": "마체테",
 	"tetra.module.sword/machete.description": "한 구역의 식물을 자르는 데 사용될 수 있습니다, 공격 피해와 공격 속도가 평균적입니다.\n\n마체테는 휘두르기 대기시간이 아닌 경우에만 블록을 즉시 수집할 수 있습니다.",
 	"tetra.module.sword/machete.material_name": "%s 마체테",
 	"tetra.module.sword/machete.prefix": "%s",
+
 	"tetra/schematic/sword/stonecutter/stonecutter.name": "암석 절단기",
 	"tetra/schematic/sword/stonecutter/stonecutter.description": "현재 칼날을 암석 절단기로 교체합니다, 돌을 쉽게 박살내는 무거운 칼날입니다.",
 	"tetra/schematic/sword/stonecutter/stonecutter.slot1": "암석 절단기",
+
 	"tetra.module.sword/stonecutter.item_name": "암석 절단기",
 	"tetra.module.sword/stonecutter.name": "암석 절단기",
 	"tetra.module.sword/stonecutter.description": "돌을 쉽게 박살내는 무거운 칼날입니다.",
 	"tetra.variant.stonecutter/stonecutter": "암석 절단기",
+
 	"tetra.improvement.stonecutter_hone/efficiency.name": "연마: 채광 효율",
 	"tetra.improvement.stonecutter_hone/efficiency.description": "채광 효율성이 증가합니다",
+
 	"tetra.improvement.stonecutter_hone/tier.name": "연마: 채광 등급",
 	"tetra.improvement.stonecutter_hone/tier.description": "채광 등급이 1 증가합니다",
+
 	"tetra/schematic/sword/throwing_knife.name": "투척용 날",
 	"tetra/schematic/sword/throwing_knife.description": "현재 칼날을 던지기에 적합한 균형이 잘 잡힌 칼날로 교체합니다.\n \n재료에 따라 §f절단§r 효율이 크게 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f투척 공격 피해§r가 약간 증가합니다.",
 	"tetra/schematic/sword/throwing_knife.slot1": "칼날 재료",
+
 	"tetra.module.sword/throwing_knife.item_name": "투척용 단검",
 	"tetra.module.sword/throwing_knife.name": "투척용 날",
 	"tetra.module.sword/throwing_knife.description": "던지기에 적합한 균형이 잘 잡힌 칼날입니다.",
-	"tetra.module.sword/throwing_knife.material_name": "%s 투척용 날",
+	"tetra.module.sword/throwing_knife.material_name": "투척용 %s 날",
 	"tetra.module.sword/throwing_knife.prefix": "%s",
+
 	"tetra/schematic/shared/hone_gild_1.name": "연마: 도금 I",
 	"tetra/schematic/shared/hone_gild_1.description": "황금 조각과 경험치를 주입하여 부품의 마법 수용성을 증가시킵니다.",
 	"tetra/schematic/shared/hone_gild_1.slot1": "황금 조각",
@@ -1053,8 +1314,10 @@
 	"tetra/schematic/shared/hone_gild_5.name": "연마: 도금 V",
 	"tetra/schematic/shared/hone_gild_5.description": "부품의 마법 수용성을 증가시킵니다.",
 	"tetra/schematic/shared/hone_gild_5.slot1": "황금 조각",
+
 	"tetra.improvement.hone_gild.name": "연마: 도금",
 	"tetra.improvement.hone_gild.description": "부품의 마법 수용성이 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_durability_1.name": "연마: 내구성 I",
 	"tetra/schematic/double/shared_head/hone_durability_1.description": "부품을 연마하여 내구도가 4%% 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_durability_2.name": "연마: 내구성 II",
@@ -1065,8 +1328,10 @@
 	"tetra/schematic/double/shared_head/hone_durability_4.description": "이 부품의 내구도를 연마합니다, 추가 내구도가 13%%에서 18%%로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_durability_5.name": "연마: 내구성 V",
 	"tetra/schematic/double/shared_head/hone_durability_5.description": "이 부품의 내구도를 연마합니다, 추가 내구도가 18%%에서 22%%로 증가합니다.",
+
 	"tetra.improvement.head_hone/durability.name": "연마: 내구성",
 	"tetra.improvement.head_hone/durability.description": "내구도가 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/double/shared_head/hone_speed_1.description": "이 부품을 연마하여 전체적인 휘두르는 속도가 0.03 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_speed_2.name": "연마: 속도 II",
@@ -1077,8 +1342,10 @@
 	"tetra/schematic/double/shared_head/hone_speed_4.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 0.1에서 0.14로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_speed_5.name": "연마: 속도 V",
 	"tetra/schematic/double/shared_head/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 0.14에서 0.17로 증가합니다.",
+
 	"tetra.improvement.head_hone/speed.name": "연마: 속도",
 	"tetra.improvement.head_hone/speed.description": "휘두르는 속도가 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_damage_flat_1.name": "연마: 공격 피해 I",
 	"tetra/schematic/double/shared_head/hone_damage_flat_1.description": "이 부품을 연마하여 공격 피해가 0.5 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_damage_flat_2.name": "연마: 공격 피해 II",
@@ -1089,8 +1356,10 @@
 	"tetra/schematic/double/shared_head/hone_damage_flat_4.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 1.5에서 2로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_damage_flat_5.name": "연마: 공격 피해 V",
 	"tetra/schematic/double/shared_head/hone_damage_flat_5.description": "이 부품의 공격 피해를 연마합니다, 추가 공격 피해가 2에서 3으로 증가합니다.",
+
 	"tetra.improvement.head_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.head_hone/damage.description": "공격 피해가 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_1.name": "연마: 벌목 효율 I",
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_1.description": "부품을 연마하여 벌목 효율이 1 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_2.name": "연마: 벌목 효율 II",
@@ -1101,12 +1370,16 @@
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_4.description": "이 부품의 벌목 효율을 연마합니다, 추가 벌목 효율이 5에서 10으로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_5.name": "연마: 벌목 효율 V",
 	"tetra/schematic/double/shared_head/hone_axe_efficiency_5.description": "이 부품의 벌목 효율을 연마합니다, 추가 벌목 효율이 10에서 15로 증가합니다.",
+
 	"tetra.improvement.head_hone/axe_efficiency.name": "연마: 벌목 효율",
 	"tetra.improvement.head_hone/axe_efficiency.description": "벌목 등급이 1 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_axe_tier_1.name": "연마: 벌목 등급 I",
 	"tetra/schematic/double/shared_head/hone_axe_tier_1.description": "부품을 연마하여 벌목 등급이 1 증가합니다.",
+
 	"tetra.improvement.head_hone/axe_tier.name": "연마: 벌목 등급",
 	"tetra.improvement.head_hone/axe_tier.description": "벌목 등급이 1 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_1.name": "연마: 땅파기 효율 I",
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_1.description": "부품을 연마하여 땅파기 효율이 1 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_2.name": "연마: 땅파기 효율 II",
@@ -1117,12 +1390,16 @@
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_4.description": "이 부품의 땅파기 효율을 연마합니다, 추가 땅파기 효율이 5에서 10으로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_5.name": "연마: 땅파기 효율 V",
 	"tetra/schematic/double/shared_head/hone_shovel_efficiency_5.description": "이 부품의 땅파기 효율을 연마합니다, 추가 땅파기 효율이 10에서 15로 증가합니다.",
+
 	"tetra.improvement.head_hone/shovel_efficiency.name": "연마: 땅파기 효율",
 	"tetra.improvement.head_hone/shovel_efficiency.description": "땅파기 효율이 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_shovel_tier_1.name": "연마: 땅파기 등급 I",
 	"tetra/schematic/double/shared_head/hone_shovel_tier_1.description": "부품을 연마하여 땅파기 등급이 1 증가합니다.",
+
 	"tetra.improvement.head_hone/shovel_tier.name": "연마: 땅파기 등급",
 	"tetra.improvement.head_hone/shovel_tier.description": "땅파기 등급이 1 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_1.name": "연마: 채광 효율 I",
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_1.description": "부품을 연마하여 채광 효율이 1 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_2.name": "연마: 채광 효율 II",
@@ -1133,20 +1410,28 @@
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_4.description": "이 부품의 채광 효율을 연마합니다, 추가 채광 효율이 5에서 10으로 증가합니다.",
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_5.name": "연마: 채광 효율 V",
 	"tetra/schematic/double/shared_head/hone_pickaxe_efficiency_5.description": "이 부품의 채광 효율을 연마합니다, 추가 채광 효율이 10에서 15로 증가합니다.",
+
 	"tetra.improvement.head_hone/pickaxe_efficiency.name": "연마: 채광 효율",
 	"tetra.improvement.head_hone/pickaxe_efficiency.description": "채광 효율이 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_pickaxe_tier_1.name": "연마: 채광 등급 I",
 	"tetra/schematic/double/shared_head/hone_pickaxe_tier_1.description": "부품을 연마하여 채광 등급이 1 증가합니다.",
+
 	"tetra.improvement.head_hone/pickaxe_tier.name": "연마: 채광 등급",
 	"tetra.improvement.head_hone/pickaxe_tier.description": "채광 등급이 1 증가합니다",
+
 	"tetra/schematic/double/shared_head/hone_hammer_tier_1.name": "연마: 망치 등급 I",
 	"tetra/schematic/double/shared_head/hone_hammer_tier_1.description": "부품을 연마하여 망치 등급이 1 증가합니다.",
+
 	"tetra.improvement.head_hone/hammer_tier.name": "연마: 망치 등급",
 	"tetra.improvement.head_hone/hammer_tier.description": "망치 등급이 1 증가합니다",
+
 	"tetra/schematic/double/warforge.name": "전투구축",
 	"tetra/schematic/double/warforge.description": "§f전투구축§r은 이 도구를 전투에 훨씬 적합하게 만듭니다. \n머리를 기반으로 하는 §f효과§r와 §f능력§r, §f수식어§r가 추가됩니다.\n\n§f능력§r은 왼쪽 머리의 능력을 기반으로 하고, \n§f수식어§r는 오른쪽 머리의 수식어를 기반으로 합니다.",
+
 	"tetra.improvement.double/warforged.name": "전투구축",
 	"tetra.improvement.double/warforged.description": "이 도구를 전투에 훨씬 적합하게 만듭니다",
+
 	"tetra.synergy.double/axe_hammer": "목수 망치",
 	"tetra.synergy.double/axe_axe": "양날 도끼",
 	"tetra.synergy.double/axe_pickaxe": "돌라브라",
@@ -1161,34 +1446,44 @@
 	"tetra.synergy.double/war_pick": "전투곡괭이",
 	"tetra.synergy.double/guisarme": "기삼",
 	"tetra.synergy.double/warsickle": "전투낫",
+
 	"tetra/schematic/double/basic_handle/basic_handle.name": "기본 손잡이",
 	"tetra/schematic/double/basic_handle/basic_handle.description": "현재 손잡이를 변경합니다. 더 튼튼한 손잡이가 더 무겁고 진보된 도구 머리를 지지합니다.\n\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/double/basic_handle/basic_handle.slot1": "손잡이 재료",
+
 	"tetra.module.double/basic_handle.name": "기본 손잡이",
 	"tetra.module.double/basic_handle.description": "기본 도구의 손잡이입니다. 도구의 주요 무결성의 원천입니다.",
 	"tetra.module.double/basic_handle.material_name": "%s 손잡이",
+
 	"tetra.variant.basic_handle/forged_beam": "용도가 변경된 기둥",
+
 	"tetra.improvement.basic_handle/blazing.name": "불길",
 	"tetra.improvement.basic_handle/blazing.description": "사용하면 불에 붙을 수 있다, 더운 환경에서는 더 심각합니다",
-	"tetra.improvement.basic_handle/ender_reverb.name": "엔더 메아리",
+
+	"tetra.improvement.basic_handle/ender_reverb.name": "엔더 반향",
 	"tetra.improvement.basic_handle/ender_reverb.description": "주변 엔드의 엔티티에 부정적으로 반응합니다.",
+
 	"tetra.improvement.basic_handle/wrap_string.name": "실 끈",
-	"tetra.improvement.basic_handle/wrap_string.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.basic_handle/wrap_string.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.basic_handle/wrap_leather.name": "가죽 끈",
-	"tetra.improvement.basic_handle/wrap_leather.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.basic_handle/wrap_leather.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.basic_handle/wrap_hide.name": "토끼 가죽 끈",
-	"tetra.improvement.basic_handle/wrap_hide.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.basic_handle/wrap_hide.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.basic_handle/wrap_vine.name": "덩굴 끈",
-	"tetra.improvement.basic_handle/wrap_vine.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.basic_handle/wrap_vine.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
+
 	"tetra/schematic/double/basic_handle/wrap_handle.name": "손잡이 덮개",
 	"tetra/schematic/double/basic_handle/wrap_handle.slot1": "재료",
 	"tetra/schematic/double/basic_handle/wrap_handle.description": "재료를 사용하여 손잡이를 감싼다.손잡이에 의해 발생하는 부정적인 효과를 감소시키고 공격 피해와 속도를 증가시킵니다.",
+
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_1.name": "연마: 덮개 II",
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_1.slot1": "재료",
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_1.description": "손잡이를 감싸는 손잡이를 개선, 부정적인 효과를 더 감소시키고 공격 피해와 속도를 더 증가합니다.",
+
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_2.name": "연마: 덮개 III",
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_2.slot1": "재료",
 	"tetra/schematic/double/basic_handle/wrap_handle_hone_2.description": "손잡이의 개선을 한층 더 연마합니다, 부정적인 효과를 더 감소시키고 공격 피해와 속도를 더 증가합니다.",
+
 	"tetra/schematic/double/basic_handle/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/double/basic_handle/hone_speed_1.description": "이 부품을 연마하여 전체적인 휘두르는 속도가 4%%로 증가합니다.",
 	"tetra/schematic/double/basic_handle/hone_speed_2.name": "연마: 속도 II",
@@ -1199,15 +1494,20 @@
 	"tetra/schematic/double/basic_handle/hone_speed_4.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 13%%에서 18%%로 증가합니다.",
 	"tetra/schematic/double/basic_handle/hone_speed_5.name": "연마: 속도 V",
 	"tetra/schematic/double/basic_handle/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 18%%에서 22%%로 증가합니다.",
+
 	"tetra.improvement.handle_hone/speed.name": "연마: 속도",
 	"tetra.improvement.handle_hone/speed.description": "휘두르는 속도가 증가합니다",
+
 	"tetra.improvement.basic_handle/soot.name": "그을음",
 	"tetra.improvement.basic_handle/soot.description": "검댕이에 뒤집어 씌워집니다",
+
 	"tetra/schematic/double/socket.name": "소켓",
 	"tetra/schematic/double/socket.description": "보석을 도구에 꽂습니다, 보석에 따라 다른 효과를 제공합니다.",
 	"tetra/schematic/double/socket.slot1": "보석",
+
 	"tetra.module.double/socket.name": "소켓",
 	"tetra.module.double/socket.description": "도구 머리의 측면에 있는 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다",
+
 	"tetra.variant.double_socket/diamond": "소켓 [§b다이아몬드§r]",
 	"tetra.variant.double_socket/emerald": "소켓 [§a에메랄드§r]",
 	"tetra.variant.double_socket/lapis": "소켓 [§9청금석§r]",
@@ -1220,50 +1520,65 @@
 	"tetra.variant.double_socket/pristine_lapis.description": "도구 머리의 측면에 있는 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
 	"tetra.variant.double_socket/mana_rune": "소켓 [§d마나§r]",
 	"tetra.variant.double_socket/mana_rune.description": "도구 머리의 측면에 있는 룬, 이 룬은 마력을 사용하여 아이템의 내구도를 수리합니다.",
-	"tetra/schematic/double/binding.name": "고정",
-	"tetra/schematic/double/binding.description": "고정으로 손잡이와 도구 머리 사이를 밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 고정합니다.",
+
+	"tetra/schematic/double/binding.name": "바인딩",
+	"tetra/schematic/double/binding.description": "밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 손잡이와 도구 머리 사이를 고정하는 바인딩을 제작합니다.",
 	"tetra/schematic/double/binding.slot1": "재료",
-	"tetra.module.double/binding.name": "고정",
+
+	"tetra.module.double/binding.name": "바인딩",
 	"tetra.module.double/binding.description": "도구 머리와 손잡이 사이를 촘촘하게 고정합니다.",
 	"tetra.module.double/binding.material_name": "%s 끈",
+
 	"tetra.variant.double_binding/bolt": "나사",
 	"tetra.variant.double_binding/bolt.description": "조절식 나사를 장착하여 도구 머리를 손잡이에 고정합니다",
+
 	"tetra.tweak.double_tweak/binding_bolt.label": "나사의 조임",
 	"tetra.tweak.double_tweak/binding_bolt.tooltip": "§e조임§r 도구를 더 단단하게 만들어, 집열 효율이 증가합니다.\n§e풀림§r 반동이 적어져, 효과적으로 내구성이 증가합니다.",
 	"tetra.tweak.double_tweak/binding_bolt.left": "풀림",
 	"tetra.tweak.double_tweak/binding_bolt.right": "조임",
+
 	"tetra/schematic/double/basic_axe/basic_axe.name": "도끼 머리",
 	"tetra/schematic/double/basic_axe/basic_axe.description": "지정된 재료를 사용해서 도끼 머리를 만들어 주로 판자나 통나무 같은 것들을 벌목하거나 나무껍질을 벗겨내고 나무종류 부품을 제작하는 데 유용합니다.\n\n재료에 따라 §f도끼 효율§r이 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n양쪽에 도끼 머리가 있다면 추가로 §f공격 피해§r가 증가합니다.",
 	"tetra/schematic/double/basic_axe/basic_axe.slot1": "머리 재료",
+
 	"tetra.module.double/basic_axe.item_name": "도끼",
 	"tetra.module.double/basic_axe.name": "도끼 머리",
 	"tetra.module.double/basic_axe.description": "판자나 통나무 같은 것들을 벌목하거나 나무껍질을 벗겨내고 나무종류 부품을 제작하는 데 유용한 기본적인 도끼입니다.\n\n양쪽에 도끼 머리가 있다면 시너지 효과를 받을 수 있습니다.",
 	"tetra.module.double/basic_axe.material_name": "%s 도끼",
 	"tetra.module.double/basic_axe.prefix": "%s",
+
 	"tetra.improvement.basic_axe/severing.name": "절단",
 	"tetra.improvement.basic_axe/severing.description": "갑옷이 없는 적에게 추가 피해를 줍니다",
+
 	"tetra/schematic/double/basic_pickaxe/basic_pickaxe.name": "곡괭이 머리",
 	"tetra/schematic/double/basic_pickaxe/basic_pickaxe.description": "지정된 재료를 사용해서 곡괭이 머리를 만듭니다.\n\n재료에 따라 §f곡괭이 효율§r이 변화합니다. \n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n양쪽에 곡괭이 머리가 있다면 추가로 §f곡괭이 등급§r이 증가합니다.",
 	"tetra/schematic/double/basic_pickaxe/basic_pickaxe.slot1": "머리 재료",
+
 	"tetra.module.double/basic_pickaxe.item_name": "곡괭이",
 	"tetra.module.double/basic_pickaxe.name": "곡괭이 머리",
 	"tetra.module.double/basic_pickaxe.description": "채광에 사용할 수 있는 기본적인 곡괭이 머리입니다.\n\n양쪽에 곡괭이 머리를 만들면 더 단단한 블록을 채굴할 수 있습니다.",
 	"tetra.module.double/basic_pickaxe.material_name": "%s 곡괭이",
 	"tetra.module.double/basic_pickaxe.prefix": "%s",
+
 	"tetra.improvement.basic_pickaxe/puncturing.name": "파손",
 	"tetra.improvement.basic_pickaxe/puncturing.description": "공격 피해의 일부분이 갑옷을 무시합니다",
+
 	"tetra/schematic/double/butt/butt.name": "버트",
 	"tetra/schematic/double/butt/butt.description": "머리를 1개만 사용하는 도구의 뒤쪽, 일반적으로 머리를 2개 사용하는 도구보다 휘두르는 속도가 높고 견고한 재료로 제작할 경우 망치질에 사용할 수 있습니다.",
 	"tetra/schematic/double/butt/butt.slot1": "머리 재료",
+
 	"tetra.module.double/butt.name": "버트",
 	"tetra.module.double/butt.description": "머리를 1개만 사용하는 도구의 뒤쪽, 일반적으로 머리를 2개 사용하는 도구보다 휘두르는 속도가 높습니다.",
 	"tetra.module.double/butt.material_name": "%s 버트",
+
 	"tetra/schematic/double/extractor/extractor.name": "추출기",
 	"tetra/schematic/double/extractor/extractor.description": "한 번에 여러 블록을 채굴할 수 있도록 지하 추출기의 용도를 변경합니다.",
 	"tetra/schematic/double/extractor/extractor.slot1": "추출기",
+
 	"tetra.module.double/extractor.name": "도구 버트",
 	"tetra.module.double/extractor.description": "용도가 변경된 지하 추출기를 통해 도구가 한 번에 여러 블록을 채굴할 수 있습니다.",
 	"tetra.variant.extractor/extractor": "추출기",
+
 	"tetra/schematic/double/extractor/hone_extractor_1.name": "연마: 힘 I",
 	"tetra/schematic/double/extractor/hone_extractor_1.description": "추출기의 효과의 힘을 연마하여 채굴하는 블럭의 양을 증가시킵니다.",
 	"tetra/schematic/double/extractor/hone_extractor_2.name": "연마: 힘 II",
@@ -1274,91 +1589,118 @@
 	"tetra/schematic/double/extractor/hone_extractor_4.description": "추출기의 효과의 힘을 연마하여 채굴하는 블럭의 양을 증가시킵니다.",
 	"tetra/schematic/double/extractor/hone_extractor_5.name": "연마: 힘 V",
 	"tetra/schematic/double/extractor/hone_extractor_5.description": "추출기의 효과의 힘을 연마하여 채굴하는 블럭의 양을 증가시킵니다.",
+
 	"tetra.improvement.extractor_hone/potency.name": "연마: 힘",
 	"tetra.improvement.extractor_hone/potency.description": "채굴하는 블럭의 양을 증가시킵니다",
+
 	"tetra/schematic/double/basic_hammer/basic_hammer.name": "망치 머리",
 	"tetra/schematic/double/basic_hammer/basic_hammer.description": "지정된 재료로 망치 머리를 만듭니다. 부품형 도구를 만들때 유용하고 가끔 수집에 이용할 수 있습니다.\n재료에 따라 §f망치 효율§r이 변화합니다. 재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다. 재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가하지만 §f공격 속도§r.가 감소합니다\n양쪽에 망치 머리가 있다면 추가로 §f망치 등급§r이 증가합니다.",
 	"tetra/schematic/double/basic_hammer/basic_hammer.slot1": "머리 재료",
+
 	"tetra.module.double/basic_hammer.item_name": "망치",
 	"tetra.module.double/basic_hammer.name": "망치 머리",
 	"tetra.module.double/basic_hammer.description": "망치는 부품형 도구를 만들때 유용하고 가끔 수집에 이용할 수 있습니다다.\n\n양쪽에 망치 머리가 있다면 시너지 효과를 받을 수 있습니다.",
 	"tetra.module.double/basic_hammer.material_name": "%s 망치",
 	"tetra.module.double/basic_hammer.prefix": "%s",
+
 	"tetra.variant.basic_hammer/oak.prefix": "나무",
+
 	"tetra/schematic/double/adze/adze.name": "까뀌 머리",
 	"tetra/schematic/double/adze/adze.description": "지정된 재료로 까뀌 머리를 만듭니다. 땅을 파거나 벌목 할 때 사용할 수 있습니다.\n\n재료에 따라 §f삽§r과 §f도끼§r의 효율이 변화합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가합니다",
 	"tetra/schematic/double/adze/adze.slot1": "머리 재료",
+
 	"tetra.module.double/adze.item_name": "까뀌",
 	"tetra.module.double/adze.name": "까뀌 머리",
 	"tetra.module.double/adze.description": "손잡이와 직각인 두꺼운 아치형 머리입니다. 땅을 파거나 벌목 할 때 사용할 수 있습니다.",
 	"tetra.module.double/adze.material_name": "%s 까뀌",
 	"tetra.module.double/adze.prefix": "%s",
+
 	"tetra/schematic/double/claw/claw.name": "클로",
 	"tetra/schematic/double/claw/claw.description": "지정된 재료로 클로 머리를 만듭니다. 무언가를 해체하여 열거나 나무 블록을 부술 때 사용할 수 있습니다.\n\n재료에 따라 §f클로 효율§r이 변화합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가합니다",
 	"tetra/schematic/double/claw/claw.slot1": "클로 재료",
+
 	"tetra.module.double/claw.item_name": "클로",
 	"tetra.module.double/claw.name": "클로",
 	"tetra.module.double/claw.description": "약간 구부러진 모양인 클로는 무언가를 해체하여 열거나 나무 블록을 부술 때 사용할 수 있습니다.",
 	"tetra.module.double/claw.material_name": "%s 클로",
 	"tetra.module.double/claw.prefix": "%s",
+
 	"tetra/schematic/double/hoe/hoe.name": "괭이",
 	"tetra/schematic/double/hoe/hoe.description": "지정된 재료로 괭이를 만들어 흙을 경작하는 데 사용합니다.\n\n재료에 따라 §f괭이 효율§r이 변화합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가합니다",
 	"tetra/schematic/double/hoe/hoe.slot1": "괭이 재료",
+
 	"tetra.module.double/hoe.item_name": "괭이",
 	"tetra.module.double/hoe.name": "괭이",
 	"tetra.module.double/hoe.description": "흙 경작에 유용한 기본 괭이",
 	"tetra.module.double/hoe.material_name": "%s 괭이",
 	"tetra.module.double/hoe.prefix": "%s",
+
 	"tetra/schematic/double/sickle/sickle.name": "낫",
 	"tetra/schematic/double/sickle/sickle.description": "지정된 재료로 낫을 만듭니다. 한 구역의 블록을 자르는 데 사용합니다.\n\n재료에 따라 §f괭이 효율§r과 속도가 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다",
 	"tetra/schematic/double/sickle/sickle.slot1": "낫 재료",
+
 	"tetra.module.double/sickle.item_name": "낫",
 	"tetra.module.double/sickle.name": "낫",
 	"tetra.module.double/sickle.description": "낫은 한 구역의 블록을 자르는 데 사용합니다.\n낫은 휘두르기 대기시간이 아닌 경우에만 블록을 즉시 수집할 수 있습니다.",
 	"tetra.module.double/sickle.material_name": "%s 낫",
 	"tetra.module.double/sickle.prefix": "%s",
+
 	"tetra.slot.single/head": "머리",
 	"tetra.slot.single/handle": "손잡이",
 	"tetra.slot.single/binding": "연결",
+
 	"tetra.synergy.single/javelin": "투창",
+
 	"tetra/schematic/single/handle/basic_handle.name": "기본 손잡이",
 	"tetra/schematic/single/handle/basic_handle.description": "지정된 재료로 현재 손잡이를 기본 손잡이로 교체합니다. 더 튼튼한 손잡이가 더 무겁고 진보된 도구 머리를 지지합니다.\n\n재료에 따라 무결성이 변화합니다. 재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/single/handle/basic_handle.slot1": "손잡이 재료",
+
 	"tetra.module.single/basic_handle.name": "기본 손잡이",
 	"tetra.module.single/basic_handle.description": "기본 손잡이. 주요 무결성의 원천입니다.",
 	"tetra.module.single/basic_handle.material_name": "%s 손잡이",
+
 	"tetra/schematic/single/handle/light_handle.name": "가벼운 손잡이",
 	"tetra/schematic/single/handle/light_handle.description": "던질 수 있는 가벼운 손잡이로 손잡이를 교체합니다, 다른 손잡이에 비해 내구성이 떨어집니다. \n\n재료에 따라 무결성이 변화합니다. 재료의 §f밀도§r가 높아질수록 §f던지기 피해§r가 증가하지만, §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/single/handle/light_handle.slot1": "손잡이 재료",
+
 	"tetra.module.single/light_handle.name": "가벼운 손잡이",
 	"tetra.module.single/light_handle.description": "내구성이 떨어지지만 던질 수 있는 가벼운 손잡이입니다. 주요 무결성의 원천입니다.",
 	"tetra.module.single/light_handle.material_name": "가벼운 %s 손잡이",
+
 	"tetra.variant.light_handle/prismarine": "가벼운 프리즈머린 손잡이",
 	"tetra.variant.light_handle/stick": "조잡한 가벼운 손잡이",
+
 	"tetra/schematic/single/handle/long_handle.name": "긴 손잡이",
 	"tetra/schematic/single/handle/long_handle.description": "더 길게 뻗을 수 있는 긴 손잡이로 교체합니다.\n\n재료에 따라 무결성이 변화합니다. 재료의 §f유연성§r과 §f경도§r 높아질수록 §f거리§r가 증가하고.\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/single/handle/long_handle.slot1": "손잡이 재료",
+
 	"tetra.module.single/long_handle.name": "긴 손잡이",
 	"tetra.module.single/long_handle.description": "긴 손잡이는 긴 사거리를 가지고 있습니다. 주요 무결성의 원천입니다.",
 	"tetra.module.single/long_handle.material_name": "긴 %s 손잡이",
+
 	"tetra.variant.long_handle/stick": "조잡한 긴 손잡이",
+
 	"tetra.improvement.single_handle/wrap_string.name": "실 끈",
-	"tetra.improvement.single_handle/wrap_string.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.single_handle/wrap_string.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.single_handle/wrap_leather.name": "가죽 끈",
-	"tetra.improvement.single_handle/wrap_leather.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.single_handle/wrap_leather.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.single_handle/wrap_hide.name": "토끼 가죽 끈",
-	"tetra.improvement.single_handle/wrap_hide.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.single_handle/wrap_hide.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
 	"tetra.improvement.single_handle/wrap_vine.name": "덩굴 끈",
-	"tetra.improvement.single_handle/wrap_vine.description": "공격 피해와 속도가 약간 증가합니다, 부정적인 손잡이 효과를 줄입니다.",
+	"tetra.improvement.single_handle/wrap_vine.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과를 줄입니다.",
+
 	"tetra/schematic/single/handle/wrap_handle.name": "손잡이 덮개",
 	"tetra/schematic/single/handle/wrap_handle.slot1": "재료",
 	"tetra/schematic/single/handle/wrap_handle.description": "재료를 사용하여 손잡이를 감싼다.손잡이에 의해 발생하는 부정적인 효과를 감소시키고 공격 피해와 속도를 증가시킵니다.",
+
 	"tetra/schematic/single/handle/wrap_handle_hone_1.name": "연마: 덮개 II",
 	"tetra/schematic/single/handle/wrap_handle_hone_1.slot1": "재료",
 	"tetra/schematic/single/handle/wrap_handle_hone_1.description": "손잡이를 감싸는 덮개를 개선, 부정적인 효과를 더 감소시키고 공격 피해와 속도를 더 증가합니다.",
+
 	"tetra/schematic/single/handle/wrap_handle_hone_2.name": "연마: 덮개 III",
 	"tetra/schematic/single/handle/wrap_handle_hone_2.slot1": "재료",
 	"tetra/schematic/single/handle/wrap_handle_hone_2.description": "덮개의 개선을 한층 더 연마합니다, 부정적인 효과를 더 감소시키고 공격 피해와 속도를 더 증가합니다.",
+
 	"tetra/schematic/single/handle/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/single/handle/hone_speed_1.description": "이 부품을 연마하여 전체적인 휘두르는 속도가 4%% 증가합니다.",
 	"tetra/schematic/single/handle/hone_speed_2.name": "연마: 속도 II",
@@ -1369,84 +1711,104 @@
 	"tetra/schematic/single/handle/hone_speed_4.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 13%%에서 18%%로 증가합니다.",
 	"tetra/schematic/single/handle/hone_speed_5.name": "연마: 속도 V",
 	"tetra/schematic/single/handle/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 18%%에서 22%%로 증가합니다.",
+
 	"tetra/schematic/single/socket.name": "소켓",
 	"tetra/schematic/single/socket.description": "머리와 손잡이가 만나는 곳에 보석을 장착합니다. 보석에 따라 다른 효과를 제공합니다.",
 	"tetra/schematic/single/socket.slot1": "보석",
+
 	"tetra.module.single/socket.name": "소켓",
-	"tetra.module.single/socket.description": "머리가 손잡이와 만나는 곳에 장착된 보석입니다. 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.",
+	"tetra.module.single/socket.description": "머리와 손잡이가 만나는 곳에 장착된 보석입니다. 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.",
+
 	"tetra.variant.single_socket/diamond": "소켓 [§b다이아몬드§r]",
 	"tetra.variant.single_socket/emerald": "소켓 [§a에메랄드§r]",
 	"tetra.variant.single_socket/lapis": "소켓 [§9청금석§r]",
 	"tetra.variant.single_socket/amber": "소켓 [§6호박§r]",
 	"tetra.variant.single_socket/pristine_diamond": "소켓 [§b다이아몬드+§r]",
-	"tetra.variant.single_socket/pristine_diamond.description": "머리가 손잡이와 만나는 곳에 장착된 보석. 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
+	"tetra.variant.single_socket/pristine_diamond.description": "머리와 손잡이가 만나는 곳에 장착된 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
 	"tetra.variant.single_socket/pristine_emerald": "소켓 [§a에메랄드+§r]",
-	"tetra.variant.single_socket/pristine_emerald.description": "머리가 손잡이와 만나는 곳에 장착된 보석. 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
+	"tetra.variant.single_socket/pristine_emerald.description": "머리와 손잡이가 만나는 곳에 장착된 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
 	"tetra.variant.single_socket/pristine_lapis": "소켓 [§9청금석+§r]",
-	"tetra.variant.single_socket/pristine_lapis.description": "머리가 손잡이와 만나는 곳에 장착된 보석. 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
+	"tetra.variant.single_socket/pristine_lapis.description": "머리와 손잡이가 만나는 곳에 장착된 보석, 마법을 부여하고 사용자에게 마법의 혜택을 제공합니다.\n\n보석의 품질이 높아 더 많은 효과를 제공합니다.",
 	"tetra.variant.single_socket/mana_rune": "소켓 [§d마나§r]",
-	"tetra.variant.single_socket/mana_rune.description": "머리가 손잡이와 만나는 곳에 장착된 룬, 이 룬은 마력을 사용하여 아이템의 내구도를 수리합니다.",
-	"tetra/schematic/single/binding.name": "고정",
-	"tetra/schematic/single/binding.description": "고정으로 손잡이와 도구 머리 사이를 밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 고정합니다.",
+	"tetra.variant.single_socket/mana_rune.description": "머리와 손잡이가 만나는 곳에 장착된 룬, 이 룬은 마력을 사용하여 아이템의 내구도를 수리합니다.",
+
+	"tetra/schematic/single/binding.name": "바인딩",
+	"tetra/schematic/single/binding.description": "밧줄이나 끈, 또는 완전히 다른 재료와 방법을 사용하여 손잡이와 도구 머리 사이를 고정하는 바인딩을 제작합니다.",
 	"tetra/schematic/single/binding.slot1": "재료",
-	"tetra.module.single/binding.name": "고정",
+
+	"tetra.module.single/binding.name": "바인딩",
 	"tetra.module.single/binding.description": "도구 머리와 손잡이 사이를 촘촘하게 고정합니다.",
 	"tetra.module.single/binding.material_name": "%s 끈",
+
 	"tetra.variant.single_binding/prismarine": "프리즈머린 죔쇠",
 	"tetra.variant.single_binding/prismarine.description": "이상한 프리즈머린 죔쇠입니다. 머리와 손잡이를 튼튼하게 연결합니다.",
 	"tetra.variant.single_binding/bolt": "나사",
 	"tetra.variant.single_binding/bolt.description": "조절식 나사를 장착하여 도구 머리를 손잡이에 고정합니다",
+
 	"tetra.tweak.single_tweak/binding_bolt.label": "나사의 조임",
 	"tetra.tweak.single_tweak/binding_bolt.tooltip": "§e조임§r 도구를 더 단단하게 만들어, 집열 효율이 증가합니다.\n§e풀림§r 반동이 적어져, 내구성이 증가합니다.",
 	"tetra.tweak.single_tweak/binding_bolt.left": "풀림",
 	"tetra.tweak.single_tweak/binding_bolt.right": "조임",
+
 	"tetra/schematic/single/head/basic_shovel/basic_shovel.name": "삽 머리",
 	"tetra/schematic/single/head/basic_shovel/basic_shovel.description": "지정된 재료로 삽 머리를 만들어 주로 땅를 파는데 사용하거나 흙길을 만들때 사용합니다.",
 	"tetra/schematic/single/head/basic_shovel/basic_shovel.slot1": "머리 재료",
+
 	"tetra.module.single/basic_shovel.item_name": "삽",
 	"tetra.module.single/basic_shovel.name": "삽 머리",
 	"tetra.module.single/basic_shovel.description": "기본적인 삽 주로 땅를 파는데 사용하거나 흙길을 만들때 사용합니다.",
 	"tetra.module.single/basic_shovel.material_name": "%s 삽",
 	"tetra.module.single/basic_shovel.prefix": "%s",
+
 	"tetra/schematic/single/head/spearhead/spearhead.name": "창 머리",
 	"tetra/schematic/single/head/spearhead/spearhead.description": "지정된 재료로 창 머리를 만듭니다. 일반적으로 피해를 주는 데 사용됩니다. \n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다. \n재료의 §f밀도§r가 높아질수록 §f공격 피해§r가 증가하지만 §f공격 속도§r가 감소합니다.",
 	"tetra/schematic/single/head/spearhead/spearhead.slot1": "머리 재료",
+
 	"tetra.module.single/spearhead.item_name": "창",
 	"tetra.module.single/spearhead.name": "창 머리",
 	"tetra.module.single/spearhead.description": "기본적인 창, 일반적으로 적에게 피해를 주는 데 사용됩니다.",
 	"tetra.module.single/spearhead.material_name": "%s 창",
 	"tetra.module.single/spearhead.prefix": "%s",
+
 	"tetra.module.single/trident.item_name": "삼지창",
 	"tetra.module.single/trident.name": "삼지창",
 	"tetra.module.single/trident.description": "삼지창의 머리입니다. 만드는 방법은 이미 잊혀진지 오래입니다",
 	"tetra.variant.trident/trident": "삼지창",
+
 	"tetra/schematic/single/head/spearhead/serrated_1.name": "톱니형",
 	"tetra/schematic/single/head/spearhead/serrated_1.description": "톱니모양의 칼날, 30%%확률로 2초 동안 4 공격 피해를 주는 출혈을 줍니다. 언데드에게 효과적이지 않습니다.",
 	"tetra/schematic/single/head/spearhead/serrated_2.name": "연마: 톱니형 II",
 	"tetra/schematic/single/head/spearhead/serrated_2.description": "톱니모양을 개선하여, 공격 피해가 8로 증가합니다.",
 	"tetra/schematic/single/head/spearhead/serrated_3.name": "연마: 톱니형 III",
 	"tetra/schematic/single/head/spearhead/serrated_3.description": "톱니모양의 개선을 한층 더 연마하여, 공격 피해가 16으로 증가합니다.",
+
 	"tetra.improvement.spearhead/serrated.name": "톱니형",
 	"tetra.improvement.spearhead/serrated.prefix": "톱니형",
 	"tetra.improvement.spearhead/serrated.description": "공격하면 출혈이 발생할 수 있습니다",
+
 	"tetra/schematic/single/head/spearhead/tempered_1.name": "담금질",
 	"tetra/schematic/single/head/spearhead/tempered_1.description": "칼날을 담금질하여, 경도가 크게 증가합니다. 공격 피해의 일부분이 갑옷을 무시합니다.",
 	"tetra/schematic/single/head/spearhead/tempered_2.name": "연마: 담금질 II",
 	"tetra/schematic/single/head/spearhead/tempered_2.description": "담금질을 개선하여, 갑옷을 무시하는 공격 피해를 3으로 증가합니다.",
 	"tetra/schematic/single/head/spearhead/tempered_3.name": "연마: 담금질 III",
 	"tetra/schematic/single/head/spearhead/tempered_3.description": "담금질의 개선을 한층 더 연마하여, 갑옷을 무시하는 공격 피해를 5로 증가합니다.",
+
 	"tetra.improvement.spearhead/tempered.name": "담금질",
 	"tetra.improvement.spearhead/tempered.prefix": "담금질",
 	"tetra.improvement.spearhead/tempered.description": "공격이 부분적으로 방어구를 무시합니다",
+
 	"tetra.improvement.spearhead_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.spearhead_hone/damage.description": "공격 피해가 증가합니다",
+
 	"tetra/schematic/single/head/earthpiercer/earthpiercer.name": "지면의 송곳",
 	"tetra/schematic/single/head/earthpiercer/earthpiercer.description": "현재 도구 머리를 지면의 송곳으로 변경합니다, 창의 머리를 닮은 무거운 송곳입니다. 속도는 느리지만 한 번에 여러 블록을 파괴합니다.\n\n지면의 송곳이 기본 또는 긴 손잡이와 결합되면 송곳 효과가 약간 상승합니다.",
 	"tetra/schematic/single/head/earthpiercer/earthpiercer.slot1": "지면의 송곳",
+
 	"tetra.module.single/earthpiercer.item_name": "지면의 송곳",
 	"tetra.module.single/earthpiercer.name": "지면의 송곳",
 	"tetra.module.single/earthpiercer.description": "창의 머리를 닮은 무거운 송곳입니다. 속도는 느리지만 한 번에 여러 블록을 파괴합니다.\n\n지면의 송곳이 기본 또는 긴 손잡이와 결합되면 송곳 효과가 약간 상승합니다.",
 	"tetra.variant.earthpiercer/earthpiercer": "지면의 송곳",
+
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_1.name": "연마: 꿰뚫기 I",
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_1.description": "지면의 송곳을 연마하여 꿰뚫는 힘을 증가시킵니다.",
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_2.name": "연마: 꿰뚫기 II",
@@ -1455,51 +1817,67 @@
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_3.description": "지면의 송곳을 연마하여 꿰뚫는 힘을 증가시킵니다.",
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_4.name": "연마: 꿰뚫기 IV",
 	"tetra/schematic/single/head/earthpiercer/hone_piercing_4.description": "지면의 송곳을 연마하여 꿰뚫는 힘을 증가시킵니다.",
+
 	"tetra.improvement.head_hone/piercing.name": "연마: 꿰뚫기",
 	"tetra.improvement.head_hone/piercing.description": "꿰뚫는 힘을 증가시킵니다",
+
 	"tetra.slot.toolbelt/slot1": "",
 	"tetra.slot.toolbelt/slot2": "",
 	"tetra.slot.toolbelt/slot3": "",
 	"tetra.slot.toolbelt/belt": "허리띠",
+
 	"tetra.toolbelt.full": "공구허리띠가 가득 찼습니다",
 	"tetra.toolbelt.blocked": "인벤토리가 가득 찼습니다, 공간을 먼저 만들어야합니다",
 	"tetra.toolbelt.binding.group": "테트라 공구허리띠",
 	"tetra.toolbelt.binding.access": "빠른 접근",
 	"tetra.toolbelt.binding.restock": "추가",
-	"tetra.toolbelt.binding.open": "접근",
+	"tetra.toolbelt.binding.open": "열기",
+
 	"tetra.toolbelt.effect.tooltip.quick.quickAccess": "이 슬롯에서 적합한 도구를 신속하게 빼낼 수 있습니다",
 	"tetra.toolbelt.effect.tooltip.quiver.quickAccess": "이 슬롯에서 적합한 화살를 신속하게 빼낼 수 있습니다",
 	"tetra.toolbelt.effect.tooltip.storage.quickAccess": "아이템을 이 슬롯에 추가 시킬 수 있습니다",
 	"tetra.toolbelt.effect.tooltip.storage.cellSocket": "이 슬롯에서는 열 전지의 힘을 끌어낼 수 있습니다",
+
 	"tetra/schematic/toolbelt/belt/belt_0.name": "양털 띠",
 	"tetra/schematic/toolbelt/belt/belt_0.description": "밧줄은 도구를 쉽게 이용할 수 있는 좋은 방법이지만, 밧줄은 추가적인 부품을 지탱할 힘이 부족합니다. 양털 띠를 사용하는 것이 단순히 밧줄을 묶은 것 보다 더 많이 지탱할 수 있습니다.",
 	"tetra/schematic/toolbelt/belt/belt_0.slot1": "양털",
+
 	"tetra/schematic/toolbelt/belt/belt_1.name": "가죽 덮개",
 	"tetra/schematic/toolbelt/belt/belt_1.description": "가죽을 긴 끈으로 자를 수 있어야 가죽 랩을 만들 수 있습니다, 털실로 만든 허리띠보다 더 강합니다.",
 	"tetra/schematic/toolbelt/belt/belt_1.slot1": "가죽",
+
 	"tetra/schematic/toolbelt/belt/belt_2.name": "허리띠 죔쇠",
 	"tetra/schematic/toolbelt/belt/belt_2.description": "덮개 대신 죔쇠은 허리에 물건을 운반할 수 있는 추가적인 무결성을 제공합니다.",
 	"tetra/schematic/toolbelt/belt/belt_2.slot1": "죔쇠 재료",
+
 	"tetra/schematic/toolbelt/belt/belt_3.name": "셜커 상감",
 	"tetra/schematic/toolbelt/belt/belt_3.description": "셜커 껍데기는 상자 같은 것을 지지하는 능력 뛰어나서 허리띠에 사용됩니다, 허리띠에 상감을 박아 무결성이 더욱 증가합니다.",
 	"tetra/schematic/toolbelt/belt/belt_3.slot1": "셜커 껍데기",
+
 	"tetra.module.toolbelt/belt.name": "공구허리띠",
 	"tetra.module.toolbelt/belt.item_name": "공구허리띠",
+
 	"tetra.variant.belt/rope": "밧줄",
 	"tetra.variant.belt/rope.name": "밧줄",
 	"tetra.variant.belt/rope.item_name": "밧줄",
 	"tetra.variant.belt/rope.description": "밧줄로 만든 아주 기본적인 허리끈입니다. 매우 제한된 양의 부품을 장착할 수 있습니다.",
+
 	"tetra.variant.belt/sash": "양털 띠",
 	"tetra.variant.belt/sash.name": "띠",
 	"tetra.variant.belt/sash.description": "소량의 부품을 장착할 수 있는 양털 띠",
+
 	"tetra.variant.belt/leather": "가죽 덮개",
 	"tetra.variant.belt/leather.name": "덮개",
 	"tetra.variant.belt/leather.description": "허리에 감을 수 있는 튼튼한 가죽 덮개입니다. 상당한 양의 부품을 장착할 수 있습니다.",
+
 	"tetra.variant.belt/buckled": "가죽 허리띠",
 	"tetra.variant.belt/buckled.description": "버클로 고정된 가죽 허리띠입니다. 많은 양의 부품을 장착할 수 있습니다.",
+
 	"tetra.variant.belt/inlaid": "셜커 상감 허리띠",
 	"tetra.variant.belt/inlaid.prefix": "상감",
 	"tetra.variant.belt/inlaid.description": "셜커 껍질로 상감한 튼튼한 가죽 허리띠. 매우 많은 양의 부품을 장착할 수 있습니다.",
+
+
 	"tetra/schematic/toolbelt/strap/strap_1.name": "허리띠 끈",
 	"tetra/schematic/toolbelt/strap/strap_1.description": "허리띠에 1개의 스트랩을 장착합니다, 도구 또는 물품을 운반하고 신속하게 접근하는 데 사용할 수 있습니다",
 	"tetra/schematic/toolbelt/strap/strap_1.slot1": "끈 재료",
@@ -1512,133 +1890,191 @@
 	"tetra/schematic/toolbelt/strap/strap_4.name": "허리띠 끈 (4x)",
 	"tetra/schematic/toolbelt/strap/strap_4.description": "허리띠에 4개의 스트랩을 장착합니다, 도구 또는 물품을 운반하고 신속하게 접근하는 데 사용할 수 있습니다.",
 	"tetra/schematic/toolbelt/strap/strap_4.slot1": "끈 재료",
+
 	"tetra.variant.strap1/leather": "가죽 끈",
 	"tetra.variant.strap1/leather.description": "허리띠에 물건을 걸 때 사용할 수 있는 가죽 끈, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다",
+
 	"tetra.variant.strap1/iron": "철 고리",
 	"tetra.variant.strap1/iron.description": "허리띠에 물건을 걸어 놓을 때 사용할 수 있는 철제 고리, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap2/leather": "2x 가죽 끈",
 	"tetra.variant.strap2/leather.description": "허리띠에 물건을 걸 때 사용할 수 있는 가죽 끈 2개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap2/iron": "2x 철 고리",
 	"tetra.variant.strap2/iron.description": "허리띠에 물건을 걸어 놓을 때 사용할 수 있는 철제 고리 2개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap3/leather": "3x 가죽 끈",
 	"tetra.variant.strap3/leather.description": "허리띠에 물건을 걸 때 사용할 수 있는 가죽 끈 3개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap3/iron": "3x 철 고리",
 	"tetra.variant.strap3/iron.description": "허리띠에 물건을 걸어 놓을 때 사용할 수 있는 철제 고리 3개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap4/leather": "4x 가죽 끈",
 	"tetra.variant.strap4/leather.description": "허리띠에 물건을 걸 때 사용할 수 있는 가죽 끈 4개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
 	"tetra.variant.strap4/iron": "4x 철 고리",
 	"tetra.variant.strap4/iron.description": "허리띠에 물건을 걸어 놓을 때 사용할 수 있는 철제 고리 4개, 자주 사용하는 도구 또는 무기에 대한 빠른 접근을 할 수 있습니다.",
+
+
 	"tetra/schematic/toolbelt/potion_storage.name": "물약 가방",
 	"tetra/schematic/toolbelt/potion_storage.description": "물약 운반용으로 특수 설계된 작은 가방을 장착합니다. 많은 양의 물약을 저장할 수 있지만, 많은 종류의 물약은 사용하기 힘듭니다.",
 	"tetra/schematic/toolbelt/potion_storage.slot1": "재료",
+
 	"tetra.module.toolbelt/potion_storage.name": "물약 가방",
 	"tetra.module.toolbelt/potion_storage.description": "물약을 운반하기 위해 특별히 고안된 작은 가방입니다. 많은 양의 물약을 저장할 수 있지만, 많은 종류의 물약은 사용하기 힘듭니다.",
+
 	"tetra.variant.potion_storage/forged_mesh": "메쉬 물약 가방",
 	"tetra.variant.potion_storage/leather": "큰 물약 가방",
 	"tetra.variant.potion_storage/wool": "물약 가방",
 	"tetra.variant.potion_storage/hide": "작은 물약 가방",
+
+
 	"tetra/schematic/toolbelt/storage/storage.name": "저장 주머니",
 	"tetra/schematic/toolbelt/storage/storage.description": "공구허리띠에 작은 주머니를 장착합니다. 적정한 양의 물품을 보관할 수 있습니다. 공구허리띠의 빠른 접근 기능으로 물건을 꺼낼 수 없습니다.",
 	"tetra/schematic/toolbelt/storage/storage.slot1": "재료",
+
 	"tetra.module.toolbelt/storage.name": "저장 주머니",
 	"tetra.module.toolbelt/storage.description": "적정한 양의 물품을 보관할 수 있는 작은 주머니입니다. 공구허리띠의 빠른 접근 기능으로 물건을 꺼낼 수 없습니다.",
+
 	"tetra.variant.storage/forged_mesh": "메쉬 주머니",
 	"tetra.variant.storage/leather": "큰 주머니",
 	"tetra.variant.storage/wool": "주머니",
 	"tetra.variant.storage/hide": "작은 주머니",
+
+
 	"tetra/schematic/toolbelt/quiver/quiver.name": "화살통",
 	"tetra/schematic/toolbelt/quiver/quiver.description": "공구허리띠에 화살을 저장할 수 있는 화살통을 장착합니다. 공구허리띠의 빠른 접근 기능을 사용하여 접근할 수 있는 많은 양의 화살을 사용할 수 있습니다. 퀵래치로 화살통이 직접 꺼낼 수 있게 강화할 수 있습니다.",
 	"tetra/schematic/toolbelt/quiver/quiver.slot1": "재료",
+
 	"tetra.module.toolbelt/quiver.name": "화살통",
 	"tetra.module.toolbelt/quiver.description": "많은 량의 화살을 저장할 수 있는 화살통입니다. 공구허리띠의 빠른 접근 기능을 사용하여 접근할 수 있는 많은 양의 화살을 사용할 수 있습니다.",
+
 	"tetra.variant.quiver/forged_mesh": "메쉬 화살통",
 	"tetra.variant.quiver/leather": "가죽 화살통",
 	"tetra.variant.quiver/wool": "천 화살통",
 	"tetra.variant.quiver/hide": "토끼 가죽 화살통",
+
 	"tetra/schematic/toolbelt/booster.name": "부스터",
 	"tetra/schematic/toolbelt/booster.description": "부스터 유닛을 장착합니다. 장거리를 점프하거나, 짧은 시간 동안 날 수 있습니다. 웅크리고 점프하거나 공중에서 점프하거나 겉날개로 비행할 때 점프하면 활성화할 수 있습니다. §o공구허리띠의 안의 화약을 연료로 사용합니다.",
 	"tetra/schematic/toolbelt/booster.slot1": "재료",
+
 	"tetra.module.toolbelt/booster.name": "부스터",
 	"tetra.module.toolbelt/booster.description": "부스터 유닛은 장거리를 점프하거나, 짧은 시간 동안 날 수 있습니다. 웅크리고 점프하거나 공중에서 점프하거나 겉날개로 비행할 때 점프하면 활성화할 수 있습니다. §o공구허리띠의 안의 화약을 연료로 사용합니다.",
+
 	"tetra.variant.booster/iron": "부스터 유닛",
+
+	"tetra/schematic/toolbelt/suspender.name": "안정용 중단기",
+	"tetra/schematic/toolbelt/suspender.description": "안정 장치를 약간 수정하여 벨트에 부착하여, 근처의 신호기나 전달체에서 힘을 끌어와 공중에서 떠 있을 수 있게 만듭니다.",
+	"tetra/schematic/toolbelt/suspender.slot1": "안정 장치",
+
+	"tetra.module.toolbelt/suspender.name": "안정용 중단기",
+	"tetra.module.toolbelt/suspender.description": "근처의 신호기나 전달체에서 힘을 끌어와 공중에서 떠 있게 하는 수정된 안정 장치입니다",
+
+	"tetra.variant.suspender/suspender": "안정용 중단기",
+
 	"tetra/schematic/toolbelt/strap/quickslot.name": "퀵래치",
 	"tetra/schematic/toolbelt/strap/quickslot.description": "퀵래치를 이용하여 끈을 단단히 고정해 빠른 접근 기능을 더 빨리 사용할 수 있습니다.\n\n§7이 강화가 있는 슬롯안에 도구가 있다면 공구허리띠의 빠른 접근 키를 눌렀을 때 보고있는 블럭을 채굴하거나 수집하기 좋은 도구를 꺼냅니다.",
 	"tetra/schematic/toolbelt/strap/quickslot.slot1": "래치",
+
 	"tetra.improvement.strap/quick_latch.name": "퀵래치",
 	"tetra.improvement.strap/quick_latch.description": "공구허리띠의 빠른 접근 키를 눌렀을 때 적절한 도구를 꺼냅니다.",
+
 	"tetra/schematic/toolbelt/quiver/quickslot.name": "퀵래치",
 	"tetra/schematic/toolbelt/quiver/quickslot.description": "퀵래치의 기계 장치로 화살통을 강화합니다. 화살통이 화살의 빠른 접근을 사용합니다.\n\n§7활의 잡아당길때 화살이 없다면 자동으로 화살통의 화살이 꺼내집니다.",
 	"tetra/schematic/toolbelt/quiver/quickslot.slot1": "래치",
+
 	"tetra.improvement.quiver/quick_latch.name": "퀵래치",
 	"tetra.improvement.quiver/quick_latch.description": "화살이 없을 때 화살이 자동으로 화살통에서 뽑힙니다.",
+
 	"tetra/schematic/toolbelt/storage/quickslot.name": "퀵래치",
 	"tetra/schematic/toolbelt/storage/quickslot.description": "퀵래치의 기계 장치로 주머니를 강화합니다. 아이템을 쉽게 보관할 수 있게 됩니다.\n\n§7추가 키를 눌러 들고있는 아이템을 주머니에 넣을 수 있습니다.",
 	"tetra/schematic/toolbelt/storage/quickslot.slot1": "래치",
+
 	"tetra.improvement.storage/quick_latch.name": "퀵래치",
 	"tetra.improvement.storage/quick_latch.description": "추가 키를 눌러 들고있는 아이템을 주머니에 넣을 수 있습니다.",
+
 	"tetra.slot.bow/stave": "활대",
 	"tetra.slot.bow/string": "활시위",
 	"tetra.slot.bow/riser": "줌통",
+
 	"tetra/schematic/bow/string/basic_string.name": "기본 시위",
 	"tetra/schematic/bow/string/basic_string.description": "재료로 제작된 활시위로 현재 활시위와 교체합니다. 활의 주요 무결성의 원천입니다.\n재료의 §f밀도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.",
 	"tetra/schematic/bow/string/basic_string.slot1": "재료",
+
 	"tetra.module.bow/basic_string.name": "기본 시위",
 	"tetra.module.bow/basic_string.description": "기본적인 활시위입니다. 활의 주요 무결성의 원천입니다.",
 	"tetra.module.bow/basic_string.material_name": "%s 시위",
+
 	"tetra.variant.basic_string/string": "기본적인 시위",
 	"tetra.variant.basic_string/hide": "토끼 가죽 줄",
 	"tetra.variant.basic_string/leather": "가죽 줄",
 	"tetra.variant.basic_string/phantom_membrane": "팬텀의 힘줄",
 	"tetra.variant.basic_string/dragon_sinew": "드래곤 힘줄",
+
 	"tetra/schematic/bow/stave/straight_stave.name": "기본 활대",
 	"tetra/schematic/bow/stave/straight_stave.description": "직선형 활대을 현재 활대와 교체합니다.\n\n재료의 §f경도§r가 높아질수록 §f힘§r이 증가하고 §f잡아당기는 속도§r가 빨라집니다..\n재료의 §f유연성§r이 높아질수록 §f힘§r이 증가하지만 §f잡아당기는 속도§r 느려집니다.",
 	"tetra/schematic/bow/stave/straight_stave.slot1": "재료",
+
 	"tetra.module.bow/straight_stave.item_name": "활",
 	"tetra.module.bow/straight_stave.name": "기본 활대",
 	"tetra.module.bow/straight_stave.description": "기본 활대",
 	"tetra.module.bow/straight_stave.material_name": "%s 기본 활대",
 	"tetra.module.bow/straight_stave.prefix": "%s",
+
 	"tetra.variant.straight_stave/stick": "임시변통 활대",
+
 	"tetra/schematic/bow/stave/long_stave.name": "장궁 활대",
 	"tetra/schematic/bow/stave/long_stave.description": "장궁 활대를 현재 활대와 교체합니다. 장궁 활대는 활을 잡아당기는 속도는 느리지만 다른 활대에 비해 공격 피해가 높습니다.\n\n재료의 §f경도§r가 높아질수록 §f힘§r이 증가하고 §f잡아당기는 속도§r가 빨라집니다..\n재료의 §f유연성§r이 높아질수록 §f힘§r이 증가하지만 §f잡아당기는 속도§r 느려집니다.",
 	"tetra/schematic/bow/stave/long_stave.slot1": "재료",
+
 	"tetra.module.bow/long_stave.item_name": "장궁",
 	"tetra.module.bow/long_stave.name": "장궁 활대",
 	"tetra.module.bow/long_stave.description": "긴 활대입니다. 활을 잡아당기기 속도는 느리지만 다른 활대에 비해 공격 피해가 높습니다.",
 	"tetra.module.bow/long_stave.material_name": "%s 장궁 활대",
 	"tetra.module.bow/long_stave.prefix": "%s",
+
 	"tetra.variant.long_stave/stick": "임시변통 장궁 활대",
+
 	"tetra/schematic/bow/stave/recurve_stave.name": "국궁 활대",
 	"tetra/schematic/bow/stave/recurve_stave.description": "국궁 활대를 현재 활대와 교체합니다. 다른 활대에 비해 활을 잡아당기는 속도가 빠릅니다.\n\n재료의 §f경도§r가 높아질수록 §f힘§r이 증가하고 §f잡아당기는 속도§r가 빨라집니다..\n재료의 §f유연성§r이 높아질수록 §f힘§r이 증가하지만 §f잡아당기는 속도§r 느려집니다.",
 	"tetra/schematic/bow/stave/recurve_stave.slot1": "재료",
+
 	"tetra.module.bow/recurve_stave.item_name": "국궁",
 	"tetra.module.bow/recurve_stave.name": "국궁 활대",
 	"tetra.module.bow/recurve_stave.description": "휘어있는 활대입니다. 다른 활대에 비해 활을 잡아당기는 속도가 빠릅니다.",
 	"tetra.module.bow/recurve_stave.material_name": "%s 국궁 활대",
 	"tetra.module.bow/recurve_stave.prefix": "%s",
+
 	"tetra.variant.recurve_stave/stick": "임시변통 국궁 활대",
+
 	"tetra/schematic/bow/string/release_latch.name": "빠른발사",
 	"tetra/schematic/bow/string/release_latch.slot1": "빠른발사",
 	"tetra/schematic/bow/string/release_latch.description": "퀵래치의 기계 부품의 용도를 변경하여 사용합니다, 다 잡아당겼을때 자동으로 발사되어 연속적으로 화살을 쏠 수 있게 됩니다.\n활이 완전히 잡아당겨지면 자동으로 화살을 발사합니다.",
+
 	"tetra.improvement.bowstring/release_latch.name": "빠른발사",
-	"tetra.improvement.bowstring/release_latch.description": "잡아당기는 속도 증가하고 완전히 잡아당겨지면 자동으로 발사됩니다.",
+	"tetra.improvement.bowstring/release_latch.description": "잡아당기는 속도와 힘이 증가하고 완전히 잡아당겨지면 자동으로 발사됩니다.",
+
 	"tetra.improvement.stave_grip/wrap_string.name": "실 줌피",
-	"tetra.improvement.stave_grip/wrap_string.description": "잡아당기는 속도 증가합니다, 활의 부정적인 효과를 줄입니다.",
+	"tetra.improvement.stave_grip/wrap_string.description": "잡아당기는 속도와 힘이 증가하고, 활대의 부정적인 효과를 줄입니다.",
 	"tetra.improvement.stave_grip/wrap_leather.name": "가죽 줌피",
-	"tetra.improvement.stave_grip/wrap_leather.description": "잡아당기는 속도 증가합니다, 활의 부정적인 효과를 줄입니다.",
+	"tetra.improvement.stave_grip/wrap_leather.description": "잡아당기는 속도와 힘이 증가하고, 활대의 부정적인 효과를 줄입니다.",
 	"tetra.improvement.stave_grip/wrap_hide.name": "토끼 가죽 줌피",
-	"tetra.improvement.stave_grip/wrap_hide.description": "잡아당기는 속도 증가합니다, 활의 부정적인 효과를 줄입니다.",
+	"tetra.improvement.stave_grip/wrap_hide.description": "잡아당기는 속도와 힘이 증가하고, 활대의 부정적인 효과를 줄입니다.",
 	"tetra.improvement.stave_grip/wrap_vine.name": "덩굴 줌피",
-	"tetra.improvement.stave_grip/wrap_vine.description": "잡아당기는 속도 증가합니다, 활의 부정적인 효과를 줄입니다.",
+	"tetra.improvement.stave_grip/wrap_vine.description": "잡아당기는 속도와 힘이 증가하고, 활대의 부정적인 효과를 줄입니다.",
+
 	"tetra/schematic/bow/stave/wrap_grip.name": "줌피",
 	"tetra/schematic/bow/stave/wrap_grip.slot1": "재료",
-	"tetra/schematic/bow/stave/wrap_grip.description": "재료를 사용하여 줌통을 덮습니다. 잡아당기는 속도가 증가합니다, 활의 재료로 인해 발생할 수 있는 부정적인 영향이 감소합니다.",
+	"tetra/schematic/bow/stave/wrap_grip.description": "재료를 사용하여 줌통을 덮습니다. 잡아당기는 속도와 힘이 증가하고, 활대의 재료로 인해 발생할 수 있는 부정적인 영향이 감소합니다.",
+
 	"tetra/schematic/bow/stave/wrap_grip_hone_1.name": "연마: 줌피 II",
 	"tetra/schematic/bow/stave/wrap_grip_hone_1.slot1": "재료",
-	"tetra/schematic/bow/stave/wrap_grip_hone_1.description": "줌피를 개선, 잡아당기는 속도가 증가하고, 부정적인 영향이 감소합니다.",
+	"tetra/schematic/bow/stave/wrap_grip_hone_1.description": "줌피를 개선합니다, 잡아당기는 속도와 힘이 증가하고, 부정적인 영향이 감소합니다.",
+
 	"tetra/schematic/bow/stave/wrap_grip_hone_2.name": "연마: 줌피 III",
 	"tetra/schematic/bow/stave/wrap_grip_hone_2.slot1": "재료",
-	"tetra/schematic/bow/stave/wrap_grip_hone_2.description": "줌피를 더 개선, 잡아당기는 속도가 증가하고, 부정적인 영향이 감소합니다.",
+	"tetra/schematic/bow/stave/wrap_grip_hone_2.description": "줌피를 더 개선합니다, 잡아당기는 속도와 힘이 증가하고, 부정적인 영향이 감소합니다.",
+
 	"tetra/schematic/bow/stave/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/bow/stave/hone_speed_1.description": "부품을 연마하여 전제적인 잡아당기는 속도가 증가합니다.",
 	"tetra/schematic/bow/stave/hone_speed_2.name": "연마: 속도 II",
@@ -1651,6 +2087,7 @@
 	"tetra/schematic/bow/stave/hone_speed_5.description": "부품을 개선하여 잡아당기는 속도가 증가합니다.",
 	"tetra.improvement.stave_hone/speed.name": "연마: 속도",
 	"tetra.improvement.stave_hone/speed.description": "잡아당기는 속도가 증가합니다",
+
 	"tetra/schematic/bow/string/hone_damage_1.name": "연마: 공격 피해 I",
 	"tetra/schematic/bow/string/hone_damage_1.description": "부품을 연마하여 전제적인 공격 피해가 증가합니다.",
 	"tetra/schematic/bow/string/hone_damage_2.name": "연마: 공격 피해 II",
@@ -1663,123 +2100,161 @@
 	"tetra/schematic/bow/string/hone_damage_5.description": "부품을 개선하여 공격 피해가 증가합니다.",
 	"tetra.improvement.bowstring_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.bowstring_hone/damage.description": "공격 피해가 증가합니다",
+
 	"tetra/schematic/bow/riser/adjustable_strength.name": "날개 조절기",
 	"tetra/schematic/bow/riser/adjustable_strength.description": "2개의 나사를 줌통에 장착합니다. 나사를 조이거나 풀면 활의 힘을 §l조절§r할수 있습니다.",
 	"tetra/schematic/bow/riser/adjustable_strength.slot1": "나사",
+
 	"tetra.module.bow/adjustable_strength.name": "날개 조절기",
 	"tetra.variant.adjustable_strength/bolt": "날개 조절기",
 	"tetra.variant.adjustable_strength/bolt.description": "2개의 나사를 줌통에 장착합니다. 나사를 조이거나 풀면 활의 힘을 §l조절§r할수 있습니다.",
+
 	"tetra.tweak.bow/adjustable_strength.label": "활의 힘",
 	"tetra.tweak.bow/adjustable_strength.tooltip": "§e조임§r 활의 힘을 높입니다, 공격 피해가 증가합니다.\n§e풀림§r 활의 느슨해져 잡아당기기 쉬워집니다, 잡아당기는 속도가 증가합니다.",
 	"tetra.tweak.bow/adjustable_strength.left": "풀림",
 	"tetra.tweak.bow/adjustable_strength.right": "조임",
+
 	"tetra/schematic/bow/riser/extended_rest.name": "화살 받침대",
 	"tetra/schematic/bow/riser/extended_rest.description": "각 사격마다 여러 개의 화살을 발사할 수 있도록 화살 받침대를 확장합니다\n참고: 각각의 엔티티는 피해를 받고 0.5초 동안은 피해를 받지 않습니다.\n \n재료의 §f경도§r가 높아질수록 §f발사체의 수§r가 증가합니다.\n재료의 §f유연성§r이 높아질수록 §f분산 각도§r가 감소합니다.",
 	"tetra/schematic/bow/riser/extended_rest.slot1": "재료",
+
 	"tetra.module.bow/extended_rest.name": "화살 받침대",
 	"tetra.module.bow/extended_rest.description": "각 사격마다 여러 개의 화살을 발사할 수 있도록 화살 받침대를 확장합니다",
 	"tetra.module.bow/extended_rest.material_name": "%s 화살 받침대",
 	"tetra.variant.extended_rest/bolt": "조절식 화살 받침대",
+
 	"tetra.tweak.bow/multishot_count.label": "개수",
 	"tetra.tweak.bow/multishot_count.tooltip": "발사체가 발사되는 개수를 조절합니다",
 	"tetra.tweak.bow/multishot_count.left": "1",
 	"tetra.tweak.bow/multishot_count.right": "7",
+
 	"tetra.tweak.bow/multishot_spread.label": "분산 각도",
 	"tetra.tweak.bow/multishot_spread.tooltip": "발사체가 분산되는 각도를 조절합니다",
 	"tetra.tweak.bow/multishot_spread.left": "1",
 	"tetra.tweak.bow/multishot_spread.right": "19",
+
 	"tetra/schematic/bow/riser/sights.name": "조준경",
 	"tetra/schematic/bow/riser/sights.description": "재료를 사용하여 조준경을 만듭니다. 조준하거나 웅크리고 있는 동안 먼 거리 앞을 볼 수 있습니다.",
 	"tetra/schematic/bow/riser/sights.slot1": "재료",
+
 	"tetra.module.bow/sights.name": "조준경",
 	"tetra.module.bow/sights.description": "조준하거나 웅크리고 있는 동안 먼 거리 앞을 볼 수 있습니다",
 	"tetra.module.bow/sights.material_name": "%s 조준경",
+
 	"tetra/schematic/bow/riser/stabilizer.name": "안정 장치",
 	"tetra/schematic/bow/riser/stabilizer.description": "재료를 사용하여 안정 장치를 만듭니다. 발사체의 초기 속도가 증가합니다. \n\n재료의 §f유연성§r이 높아질수록 추가 §f속도§r가 증가합니다.",
 	"tetra/schematic/bow/riser/stabilizer.slot1": "재료",
+
 	"tetra.module.bow/stabilizer.name": "안정 장치",
 	"tetra.module.bow/stabilizer.description": "발사체의 초기 속도가 증가합니다",
 	"tetra.module.bow/stabilizer.material_name": "%s 안정 장치",
 	"tetra.variant.stabilizer/linear": "안정 장치",
+
 	"tetra.slot.crossbow/stave": "활대",
 	"tetra.slot.crossbow/stock": "화살대",
 	"tetra.slot.crossbow/string": "활시위",
 	"tetra.slot.crossbow/attachment_0": "부가 장치",
 	"tetra.slot.crossbow/attachment_1": "부가 장치",
-	"item.tetra.crossbow.wip": "석궁이 여전히 작업 중이며, 여러 부품과 마법 부여가 누락되었습니다.",
+
+	"item.tetra.crossbow.wip": "쇠뇌는 여전히 작업 중이며, 여러 부품과 마법 부여가 누락되었습니다.",
+
 	"tetra/schematic/crossbow/string/basic_string.name": "기본 시위",
 	"tetra/schematic/crossbow/string/basic_string.description": "재료를 사용하여 새로운 활시위를 만듭니다.\n \n재료에 기초해 무결성을 제공합니다.\n재료의 §f밀도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.",
 	"tetra/schematic/crossbow/string/basic_string.slot1": "재료",
+
 	"tetra.module.crossbow/basic_string.name": "기본 시위",
 	"tetra.module.crossbow/basic_string.description": "기본적인 활시위입니다. 활시위는 쇠뇌의 주요 무결성의 원천입니다.",
 	"tetra.module.crossbow/basic_string.material_name": "%s 시위",
+
 	"tetra/schematic/crossbow/stave/basic_stave.name": "기본 활대",
 	"tetra/schematic/crossbow/stave/basic_stave.description": "재료를 사용하여 새로운 활대를 만듭니다.\n \n재료의 §f경도§r가 높아질수록 §f힘§r이 증가하고 §f잡아당기는 속도§r가 빨라집니다..\n재료의 §f유연성§r이 높아질수록 §f힘§r이 증가하지만 §f잡아당기는 속도§r 느려집니다.",
 	"tetra/schematic/crossbow/stave/basic_stave.slot1": "재료",
+
 	"tetra.module.crossbow/basic_stave.item_name": "쇠뇌",
 	"tetra.module.crossbow/basic_stave.name": "기본 활대",
 	"tetra.module.crossbow/basic_stave.description": "기본적인 활대입니다. 활대는 쇠뇌의 잡아당기는 힘을 결정합니다.",
 	"tetra.module.crossbow/basic_stave.material_name": "%s 활대",
+
 	"tetra.variant.basic_stave/stick": "임시변통 활대",
+
 	"tetra/schematic/crossbow/stock/basic_stock.name": "기본 화살대",
 	"tetra/schematic/crossbow/stock/basic_stock.description": "재료를 사용하여 새로운 화살대를 만듭니다.\n \n재료에 기초해 무결성을 제공합니다(감소된).\n재료의 §f밀도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.",
 	"tetra/schematic/crossbow/stock/basic_stock.slot1": "재료",
+
 	"tetra.module.crossbow/basic_stock.item_name": "쇠뇌",
 	"tetra.module.crossbow/basic_stock.name": "기본 화살대",
 	"tetra.module.crossbow/basic_stock.description": "기본적인 화살대입니다. 화살대는 약간의 무결성을 제공하고 쇠뇌의 부가 장치를 수용합니다.",
 	"tetra.module.crossbow/basic_stock.material_name": "%s 화살대",
+
 	"tetra.variant.basic_stock/stick": "조잡한 화살대",
+
 	"tetra/schematic/crossbow/attachment/stirrup.name": "등자",
-	"tetra/schematic/crossbow/attachment/stirrup.description": "재료를 사용하여 쇠뇌 앞쪽에 등자를 만듭니다. 등자는 석궁을 잡아당길 때 한쪽 발을 사용할 수 있게 하여, 잡아당기는 시간이 약간 개선합니다.\n \n재료의 §f경도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.\n재료의 §f밀도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.",
+	"tetra/schematic/crossbow/attachment/stirrup.description": "재료를 사용하여 쇠뇌 앞쪽에 등자를 만듭니다. 등자는 쇠뇌를 잡아당길 때 한쪽 발을 사용할 수 있게 하여, 잡아당기는 시간이 약간 개선합니다.\n \n재료의 §f경도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.\n재료의 §f밀도§r가 높아질수록 §f잡아당기는 속도§r가 빨라집니다.",
 	"tetra/schematic/crossbow/attachment/stirrup.slot1": "재료",
+
 	"tetra.module.crossbow/stirrup.name": "등자",
-	"tetra.module.crossbow/stirrup.description": "쇠뇌 앞쪽에 붙어있는 등자는 석궁을 잡아당길 때 한쪽 발을 사용할 수 있게 하여, 잡아당기는 시간이 약간 개선합니다.",
+	"tetra.module.crossbow/stirrup.description": "쇠뇌 앞쪽에 붙어있는 등자는 쇠뇌를 잡아당길 때 한쪽 발을 사용할 수 있게 하여, 잡아당기는 시간이 약간 개선합니다.",
 	"tetra.module.crossbow/stirrup.material_name": "%s 등자",
+
 	"tetra.slot.shield/plate": "방패판",
 	"tetra.slot.shield/grip": "손잡이",
 	"tetra.slot.shield/boss": "보스",
+
 	"tetra/schematic/shield/plate/tower.name": "대형 방패판",
 	"tetra/schematic/shield/plate/tower.description": "재료로 대형 방패판을 제작합니다. 대형 방패는 재사용 대기시간 없이 계속 막을 수 있지만, 다른 유형의 방패보다 높은 무결성을 사용합니다.\n\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r와 §f재사용 대기시간§r이 증가합니다. \n재료의 §f유연성§r이 높아질수록 §f재사용 대기시간§r이 감소합니다.",
 	"tetra/schematic/shield/plate/tower.slot1": "재료",
+
 	"tetra.module.shield/tower.item_name": "대형 방패",
 	"tetra.module.shield/tower.name": "대형 방패판",
 	"tetra.module.shield/tower.description": "대형 방패는 재사용 대기시간 없이 계속 막을 수 있습니다.",
 	"tetra.module.shield/tower.material_name": "%s 대형 방패판",
 	"tetra.module.shield/tower.prefix": "%s",
+
 	"tetra/schematic/shield/plate/heater.name": "사각형 방패판",
 	"tetra/schematic/shield/plate/heater.description": "재료로 사각형 방패판을 제작합니다. 대형 방패판보다 무결성을 적게 사용하는 중간 크기의 방패입니다. 제한된 시간 동안만 방어 할 수 있습니다.\n\n재료의 §f경도§r가 높아질수록 §f공격 피해§r와 §f방어 지속시간§r이 증가합니다. 재료의 §f밀도§r가 높아질수록 §f공격 피해§r와 §f재사용 대기시간§r이 증가하고, §f방어 지속시간§r이 약간 증가합니다. 재료의 §f유연성§r이 높아질수록 §f방어 지속시간§r이 감소합니다.",
 	"tetra/schematic/shield/plate/heater.slot1": "재료",
+
 	"tetra.module.shield/heater.item_name": "사각형 방패",
 	"tetra.module.shield/heater.name": "사각형 방패판",
 	"tetra.module.shield/heater.description": "대형 방패판보다 무결성을 적게 사용하는 중간 크기의 방패입니다. 제한된 시간 동안만 방어 할 수 있습니다",
 	"tetra.module.shield/heater.material_name": "%s 사각형 방패판",
 	"tetra.module.shield/heater.prefix": "%s",
+
 	"tetra/schematic/shield/plate/buckler.name": "버클러 방패판",
 	"tetra/schematic/shield/plate/buckler.description": "재료로 버클러 방패판을 제작합니다. 버클러는 방어할 수 없지만, 추가 강인함을 제공합니다.\n\n재료의 §f경도§r가 높아질수록 §f공격 피해§r와 §f강인함§r이 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 피해§r와 §f재사용 대기시간§r, §f강인함§이 증가합니다.\n재료의 §f유연성§r이 높아질수록 §f강인함§r이 증가합니다.",
 	"tetra/schematic/shield/plate/buckler.slot1": "재료",
+
 	"tetra.module.shield/buckler.item_name": "버클러",
 	"tetra.module.shield/buckler.name": "버클러 방패판",
 	"tetra.module.shield/buckler.description": "추가 강인함을 제공합니다.",
 	"tetra.module.shield/buckler.material_name": "%s 버클러 방패판",
 	"tetra.module.shield/buckler.prefix": "%s",
+
 	"tetra/schematic/shield/grip/basic_grip.name": "기본 손잡이",
 	"tetra/schematic/shield/grip/basic_grip.description": "재료로 기본 손잡이를 제작합니다. 방패의 주요 무결성 원천입니다.",
 	"tetra/schematic/shield/grip/basic_grip.slot1": "재료",
+
 	"tetra.module.shield/basic_grip.item_name": "기본 손잡이",
 	"tetra.module.shield/basic_grip.name": "기본 손잡이",
 	"tetra.module.shield/basic_grip.description": "기본 손잡이. 손잡이는 방패의 주요 무결성 원천입니다.",
 	"tetra.module.shield/basic_grip.material_name": "%s 손잡이",
+
 	"tetra/schematic/shield/grip/straps.name": "끈",
 	"tetra/schematic/shield/grip/straps.description": "재료로 제작된 끈으로 손잡이를 교체합니다. 끈으로 고정된 방패입니다. 부담이 덜 합니다. 방패의 주요 무결성 원천입니다.",
 	"tetra/schematic/shield/grip/straps.slot1": "재료",
+
 	"tetra.module.shield/straps.name": "끈",
 	"tetra.module.shield/straps.description": "끈으로 고정된 방패. 부담이 덜 합니다. 방패의 주요 무결성 원천입니다.",
 	"tetra.module.shield/straps.material_name": "%s 끈",
+
 	"tetra.variant.straps/string": "실 끈",
+
 	"tetra.improvement.grip/blazing.name": "불길",
 	"tetra.improvement.grip/blazing.description": "사용하면 불에 붙을 수 있다, 더운 환경에서는 더 심각합니다",
-	"tetra.improvement.grip/ender_reverb.name": "엔더 메아리",
+
+	"tetra.improvement.grip/ender_reverb.name": "엔더 반향",
 	"tetra.improvement.grip/ender_reverb.description": "주변 엔드의 엔티티에 부정적으로 반응합니다",
+
 	"tetra/schematic/shield/grip/hone_speed_1_mult.name": "연마: 속도 I",
 	"tetra/schematic/shield/grip/hone_speed_1_mult.description": "손잡이를 연마하여 기본 재사용 대기시간을 상대적인 양만큼 줄입니다",
 	"tetra/schematic/shield/grip/hone_speed_2_mult.name": "연마: 속도 II",
@@ -1792,6 +2267,7 @@
 	"tetra/schematic/shield/grip/hone_speed_5_mult.description": "부품을 더 연마하여 기본 재사용 대기시간을 줄입니다 (상대적으로).",
 	"tetra.improvement.grip_hone/speed_mult.name": "연마: 속도",
 	"tetra.improvement.grip_hone/speed_mult.description": "기본 재사용 대기시간이 감소합니다",
+
 	"tetra/schematic/shield/grip/hone_speed_1_flat.name": "연마: 속도 I",
 	"tetra/schematic/shield/grip/hone_speed_1_flat.description": "손잡이를 연마하여 기본 재사용 대기시간을 균일하게 줄입니다.",
 	"tetra/schematic/shield/grip/hone_speed_2_flat.name": "연마: 속도 II",
@@ -1804,6 +2280,7 @@
 	"tetra/schematic/shield/grip/hone_speed_5_flat.description": "부품을 더 연마하여 기본 재사용 대기시간을 줄입니다 (균일하게).",
 	"tetra.improvement.grip_hone/speed_flat.name": "연마: 속도",
 	"tetra.improvement.grip_hone/speed_flat.description": "기본 재사용 대기시간이 감소합니다",
+
 	"tetra/schematic/shield/grip/hone_damage_1_flat.name": "연마: 공격 피해 I",
 	"tetra/schematic/shield/grip/hone_damage_1_flat.description": "손잡이를 연마하여 기본 공격 피해를 균일하게 늘립니다.",
 	"tetra/schematic/shield/grip/hone_damage_2_flat.name": "연마: 공격 피해 II",
@@ -1816,6 +2293,7 @@
 	"tetra/schematic/shield/grip/hone_damage_5_flat.description": "부품을 더 연마하여 기본 공격 피해를 늘립니다 (균일하게).",
 	"tetra.improvement.grip_hone/damage_flat.name": "연마: 공격 피해",
 	"tetra.improvement.grip_hone/damage_flat.description": "기본 공격 피해가 증가합니다",
+
 	"tetra/schematic/shield/grip/hone_damage_1_mult.name": "연마: 공격 피해 I",
 	"tetra/schematic/shield/grip/hone_damage_1_mult.description": "손잡이를 연마하여 기본 공격 피해를 상대적인 양만큼 늘립니다.",
 	"tetra/schematic/shield/grip/hone_damage_2_mult.name": "연마: 공격 피해 II",
@@ -1828,6 +2306,7 @@
 	"tetra/schematic/shield/grip/hone_damage_5_mult.description": "부품을 더 연마하여 기본 공격 피해를 늘립니다 (상대적으로).",
 	"tetra.improvement.grip_hone/damage_mult.name": "연마: 공격 피해",
 	"tetra.improvement.grip_hone/damage_mult.description": "기본 공격 피해가 증가합니다",
+
 	"tetra/schematic/shield/grip/hone_durability_1.name": "연마: 내구성 I",
 	"tetra/schematic/shield/grip/hone_durability_1.description": "손잡이를 연마하여 내구성을 균일하게 늘립니다.",
 	"tetra/schematic/shield/grip/hone_durability_2.name": "연마: 내구성 II",
@@ -1838,11 +2317,14 @@
 	"tetra/schematic/shield/grip/hone_durability_4.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
 	"tetra/schematic/shield/grip/hone_durability_5.name": "연마: 내구성 V",
 	"tetra/schematic/shield/grip/hone_durability_5.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
+
 	"tetra.improvement.grip_hone/durability.name": "연마: 내구성",
 	"tetra.improvement.grip_hone/durability.description": "내구성이 증가합니다",
+
 	"tetra/schematic/shield/plate/studs.name": "금속 단추 도금",
 	"tetra/schematic/shield/plate/studs.description": "방패판에 금속 단추를 박아 내구성을 균일하게 증가시킵니다.",
 	"tetra/schematic/shield/plate/studs.slot1": "재료",
+
 	"tetra.improvement.shield/studs_iron.name": "금속 단추 §8(철)",
 	"tetra.improvement.shield/studs_iron.description": "균일하게 내구성이 증가합니다",
 	"tetra.improvement.shield/studs_gold.name": "금속 단추 §8(금)",
@@ -1863,9 +2345,11 @@
 	"tetra.improvement.shield/studs_bronze.description": "균일하게 내구성이 증가합니다",
 	"tetra.improvement.shield/studs_steel.name": "금속 단추 §8(강철)",
 	"tetra.improvement.shield/studs_steel.description": "균일하게 내구성이 증가합니다",
+
 	"tetra/schematic/shield/plate/trim.name": "테두리",
-	"tetra/schematic/shield/plate/trim.description": "방패의 테두리를 감싸 내구성이 증가합니다, 추가 내구성은 곱해집니다.",
+	"tetra/schematic/shield/plate/trim.description": "방패의 테두리를 감싸 내구성이 증가하고, 추가 내구성은 곱해집니다.",
 	"tetra/schematic/shield/plate/trim.slot1": "재료",
+
 	"tetra.improvement.shield/trim_iron.name": "철 테두리",
 	"tetra.improvement.shield/trim_iron.description": "균일하게 내구성 증가합니다",
 	"tetra.improvement.shield/trim_gold.name": "금 테두리",
@@ -1892,9 +2376,11 @@
 	"tetra.improvement.shield/trim_hide.description": "균일하게 내구성 증가합니다",
 	"tetra.improvement.shield/trim_scrap.name": "금속 파편 테두리",
 	"tetra.improvement.shield/trim_scrap.description": "균일하게 내구성 증가합니다",
+
 	"tetra/schematic/shield/plate/aerodynamic_trim.name": "공기역학적 테두리",
 	"tetra/schematic/shield/plate/aerodynamic_trim.description": "방패를 던질 수 있게 해주는 공기역학적으로 설계된 테두리입니다",
 	"tetra/schematic/shield/plate/aerodynamic_trim.slot1": "재료",
+
 	"tetra.improvement.shield/aerodynamic_trim_iron.name": "공기역학적 테두리 §8(철)",
 	"tetra.improvement.shield/aerodynamic_trim_iron.description": "방패를 던질 수 있습니다",
 	"tetra.improvement.shield/aerodynamic_trim_gold.name": "공기역학적 테두리 §8(금)",
@@ -1915,19 +2401,24 @@
 	"tetra.improvement.shield/aerodynamic_trim_bronze.description": "방패를 던질 수 있습니다",
 	"tetra.improvement.shield/aerodynamic_trim_steel.name": "공기역학적 테두리 §8(강철)",
 	"tetra.improvement.shield/aerodynamic_trim_steel.description": "방패를 던질 수 있습니다",
+
 	"tetra/schematic/shield/plate/banner.name": "현수막",
 	"tetra/schematic/shield/plate/banner.description": "현수막을 판의 앞에 씌웁니다",
 	"tetra/schematic/shield/plate/banner.slot1": "현수막",
+
 	"tetra.improvement.shield/banner.name": "현수막",
 	"tetra.improvement.shield/banner.description": "현수막이 씌워져 있습니다",
+
 	"tetra/schematic/shield/plate/ricochet_1.name": "연마: 튕김",
 	"tetra/schematic/shield/plate/ricochet_1.description": "공기역학적 테두리를 개선하여 방패를 던졌을 때 주변 적을 추가로 타격합니다.",
 	"tetra/schematic/shield/plate/ricochet_2.name": "연마: 튕김",
 	"tetra/schematic/shield/plate/ricochet_2.description": "공기역학적 테두리를 개선하여 방패를 던졌을 때 주변 적을 추가로 타격합니다.",
 	"tetra/schematic/shield/plate/ricochet_3.name": "연마: 튕김",
 	"tetra/schematic/shield/plate/ricochet_3.description": "공기역학적 테두리를 개선하여 방패를 던졌을 때 주변 적을 추가로 타격합니다.",
+
 	"tetra.improvement.shield/ricochet.name": "튕김",
 	"tetra.improvement.shield/ricochet.description": "던졌을 때 방패의 주변의 다른 적이 맞습니다.",
+
 	"tetra/schematic/shield/plate/hone_speed_1.name": "연마: 속도 I",
 	"tetra/schematic/shield/plate/hone_speed_1.description": "판을 연마하여, 기본 재사용 대기시간을 상대적인 양만큼 감소합니다.",
 	"tetra/schematic/shield/plate/hone_speed_2.name": "연마: 속도 II",
@@ -1940,6 +2431,7 @@
 	"tetra/schematic/shield/plate/hone_speed_5.description": "부품을 더 연마하여, 기본 재사용 대기시간을 감소합니다 (상대적으로).",
 	"tetra.improvement.plate_hone/speed.name": "연마: 속도",
 	"tetra.improvement.plate_hone/speed.description": "기본 재사용 대기시간이 감소합니다",
+
 	"tetra/schematic/shield/plate/hone_damage_1.name": "연마: 공격 피해 I",
 	"tetra/schematic/shield/plate/hone_damage_1.description": "판을 연마하여 기본 공격 피해를 균일하게 증가합니다.",
 	"tetra/schematic/shield/plate/hone_damage_2.name": "연마: 공격 피해 II",
@@ -1952,6 +2444,7 @@
 	"tetra/schematic/shield/plate/hone_damage_5.description": "부품을 더 연마하여 기본 공격 피해를 늘립니다 (균일하게).",
 	"tetra.improvement.plate_hone/damage.name": "연마: 공격 피해",
 	"tetra.improvement.plate_hone/damage.description": "기본 공격 피해가 증가합니다",
+
 	"tetra/schematic/shield/plate/hone_durability_1.name": "연마: 내구성 I",
 	"tetra/schematic/shield/plate/hone_durability_1.description": "판을 연마하여 내구성을 균일하게 늘립니다.",
 	"tetra/schematic/shield/plate/hone_durability_2.name": "연마: 내구성 II",
@@ -1962,20 +2455,26 @@
 	"tetra/schematic/shield/plate/hone_durability_4.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
 	"tetra/schematic/shield/plate/hone_durability_5.name": "연마: 내구성 V",
 	"tetra/schematic/shield/plate/hone_durability_5.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
+
 	"tetra.improvement.plate_hone/durability.name": "연마: 내구성",
 	"tetra.improvement.plate_hone/durability.description": "내구성이 증가합니다",
+
 	"tetra/schematic/shield/sturdy_boss.name": "튼튼한 보스",
 	"tetra/schematic/shield/sturdy_boss.description": "재료로 튼튼한 보스를 제작합니다. 방패를 사용하여 다른 엔티티를 밀어낼 수 있습니다.\n\n재료의 §f경도§r가 높아질수록 §f밀치기§r와 §f기절 시간§r이 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f밀치기§r와 §f재사용 대기시간§r이 증가하고, §f기절 시간§r이 약간 증가합니다.",
 	"tetra/schematic/shield/sturdy_boss.slot1": "재료",
+
 	"tetra.module.shield/sturdy_boss.name": "튼튼한 보스",
 	"tetra.module.shield/sturdy_boss.description": "튼튼한 보스는 방패를 엔티티를 밀어낼 때 사용합니다.",
 	"tetra.module.shield/sturdy_boss.material_name": "튼튼한 %s 보스",
+
 	"tetra/schematic/shield/spike.name": "스파이크",
 	"tetra/schematic/shield/spike.description": "방패 스파이크는 근거리 공격을 방어하면 피해를 줄 수 있습니다.\n\n재료의 §f경도§r가 높아질수록 §f반사 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f반사 피해§r와 §f재사용 대기시간§r이 증가합니다.",
 	"tetra/schematic/shield/spike.slot1": "재료",
+
 	"tetra.module.shield/spike.name": "스파이크",
 	"tetra.module.shield/spike.description": "방패 스파이크는 근거리 공격을 방어하면 피해를 줄 수 있습니다.",
 	"tetra.module.shield/spike.material_name": "%s 스파이크",
+
 	"tetra.variant.spike/iron": "철 스파이크",
 	"tetra.variant.spike/gold": "금 스파이크",
 	"tetra.variant.spike/copper": "구리 스파이크",
@@ -1988,8 +2487,10 @@
 	"tetra.variant.spike/steel": "강철 스파이크",
 	"tetra.variant.spike/netherite": "네더라이트 스파이크",
 	"tetra.variant.spike/bone": "뼈 스파이크",
+
 	"tetra.advancements.story.more_upgrades.title": "기본적인 망치질",
 	"tetra.advancements.story.more_upgrades.description": "막대기와 나무로 망치를 제작하세요\n\n§8§o테트라의 시작",
+
 	"tetra.advancements.spelunking.root.title": "동굴 탐사 §7(테트라)§r",
 	"tetra.advancements.spelunking.root.description": "깊은 바닥을 조사하세요",
 	"tetra.advancements.spelunking.ancient_ruins.title": "오래전에 사라진",
@@ -2005,7 +2506,7 @@
 	"tetra.advancements.spelunking.chthonic_cooldown.title": "불조심",
 	"tetra.advancements.spelunking.chthonic_cooldown.description": "추출기에 물을 붓거나 잠시 그대로 놔두어 추출기를 빼낼 때 받는 화염 공격을 피하세요",
 	"tetra.advancements.spelunking.chthonic_crossbow.title": "의도하지 않은 사용법",
-	"tetra.advancements.spelunking.chthonic_crossbow.description": "잡아당기는 힘이 높은 석궁을 사용하여 지하 추출기를 발사하세요\n\n§7주로 사용하지 않는 손에 추출기를 들고 재장전하세요\n\n§4 * 주의! 보증이 무효가 될 수도 있습니다",
+	"tetra.advancements.spelunking.chthonic_crossbow.description": "잡아당기는 힘이 높은 쇠뇌를 사용하여 지하 추출기를 발사하세요\n\n§7주로 사용하지 않는 손에 추출기를 들고 재장전하세요\n\n§4 * 주의! 보증이 무효가 될 수도 있습니다",
 	"tetra.advancements.spelunking.chthonic_hammer.title": "수동 추출",
 	"tetra.advancements.spelunking.chthonic_hammer.description": "지하 추출기를 기반암 위에 놓고 망치로 윗부분을 내리치세요",
 	"tetra.advancements.spelunking.chthonic_module.title": "용도가 변경된 추출기",
@@ -2022,6 +2523,12 @@
 	"tetra.advancements.spelunking.find_cell.description": "고대 유적에서 열 전지를 찾으세요",
 	"tetra.advancements.spelunking.find_latch.title": "§o클릭 클릭 클릭 클릭",
 	"tetra.advancements.spelunking.find_latch.description": "고대 유적에서 퀵래치를 수집하여 공구허리띠를 개선하세요",
+	"tetra.advancements.spelunking.find_planar.title": "차원 사이의 기술",
+	"tetra.advancements.spelunking.find_planar.description": "고대 유적에서 안정 장치를 찾으세요",
+	"tetra.advancements.spelunking.suspend_belt.title": "낙하 중단",
+	"tetra.advancements.spelunking.suspend_belt.description": "안정 장치로 허리띠의 강력한 부가 장치를 만드세요",
+	"tetra.advancements.spelunking.suspend_bow.title": "안정의 교차로",
+	"tetra.advancements.spelunking.suspend_bow.description": "안정 장치 2개로 활의 안정 장치를 만드세요",
 	"tetra.advancements.spelunking.geode.title": "빈 광석",
 	"tetra.advancements.spelunking.geode.description": "깊은 곳에서 정동을 찾으세요",
 	"tetra.advancements.spelunking.geode_open.title": "광물 파괴",
@@ -2062,6 +2569,7 @@
 	"tetra.advancements.spelunking.find_scroll_throwing.description": "던전에서 투척용 날의 설계도를 찾으세요",
 	"tetra.advancements.spelunking.find_scroll_warforge.title": "전투용 도구",
 	"tetra.advancements.spelunking.find_scroll_warforge.description": "피글린과 교환하거나 보루 잔해에서 두루마리 \"전투용 도구\"를 찾으세요",
+
 	"tetra.advancements.upgrades.root.title": "기본적인 망치질 §7(테트라)§r",
 	"tetra.advancements.upgrades.root.description": "막대기와 통나무로 망치를 제작하세요\n\n§e보상: 홀로스피어",
 	"tetra.advancements.upgrades.bow_upgrade.title": "궁수의 강화",
@@ -2075,7 +2583,7 @@
 	"tetra.advancements.upgrades.hammer_3.title": "망치 III (철)",
 	"tetra.advancements.upgrades.hammer_3.description": "철을 녹여 양쪽에 망치 머리를 만들어 3단계 망치인 철 망치를 만드세요\n\n§7테트라의 작업대에서 만들 수 있고, 2단계 망치가 인벤토리에 있어야 합니다",
 	"tetra.advancements.upgrades.hammer_4.title": "망치 IV (흑암)",
-	"tetra.advancements.upgrades.hammer_4.description": "흑암을 녹여 양쪽에 망치 머리를 만들어 4단계 망치인 흑암 망치를 만드세요\n\n§7손잡이를 변경하거나 고정을 만들어 무결성을 늘릴 수 있습니다",
+	"tetra.advancements.upgrades.hammer_4.description": "흑암을 녹여 양쪽에 망치 머리를 만들어 4단계 망치인 흑암 망치를 만드세요\n\n§7손잡이를 변경하거나 바인딩을 만들어 무결성을 늘릴 수 있습니다",
 	"tetra.advancements.upgrades.hammer_5.title": "망치 V (흑요석)",
 	"tetra.advancements.upgrades.hammer_5.description": "강화된 대장간 망치로 흑요석을 녹여 양쪽에 망치 머리를 만들어 5단계 망치인 흑요석 망치를 만드세요\n\n§7대장간 망치에 관한 정보는 발전과제에서 확인할 수 있습니다",
 	"tetra.advancements.upgrades.hammer_6.title": "망치 VI (네더라이트)",
@@ -2089,7 +2597,7 @@
 	"tetra.advancements.upgrades.sword_improvement_hone.title": "개선!",
 	"tetra.advancements.upgrades.sword_improvement_hone.description": "검의 부품에 개선 가능한 사항을 적용하고, 그 효과를 높이기 위해 더 개선하세요",
 	"tetra.advancements.upgrades.sword_integrity.title": "단단하게 짜여진",
-	"tetra.advancements.upgrades.sword_integrity.description": "칼자루를 강화하거나 고정을 강화하여 무결성을 증가시키세요",
+	"tetra.advancements.upgrades.sword_integrity.description": "칼자루를 강화하거나 바인딩을 강화하여 무결성을 증가시키세요",
 	"tetra.advancements.upgrades.sword_upgrade.title": "새로운 것으로 절단",
 	"tetra.advancements.upgrades.sword_upgrade.description": "작업대에 기본적인 검을 놓고 강화하세요",
 	"tetra.advancements.upgrades.toolbelt.title": "간단한 허리띠",
@@ -2102,38 +2610,49 @@
 	"tetra.advancements.upgrades.workbench.description": "망치를 들고 제작대를 향해 오른쪽 클릭을 눌러 테트라의 작업대를 만드세요",
 	"tetra.advancements.upgrades.rack.title": "걸어두기",
 	"tetra.advancements.upgrades.rack.description": "도구에 쉽게 접근할 수 있도록 작업대 근처에 선반을 설치하세요",
+
 	"tetra.improvement.destabilized/haunted.name": "§5불안정한: 유령",
 	"tetra.improvement.destabilized/haunted.description": "가끔 부품에 귀신이 들려 아이템이 사용하는 사람에게 등을 돌리기도 합니다! 시간이 지남에 따라 사라집니다.",
+
 	"tetra.slot.holo/frame": "틀",
 	"tetra.slot.holo/core": "핵",
 	"tetra.slot.holo/attachment_0": "부가 장치",
 	"tetra.slot.holo/attachment_1": "부가 장치",
+
 	"tetra.module.holo/frame.name": "고대의 틀",
 	"tetra.module.holo/frame.item_name": "홀로스피어",
 	"tetra.module.holo/frame.description": "오래된 금속으로 만들어진 틀, 스피어를 구성하는 대부분을 차지합니다.",
 	"tetra.variant.frame/ancient": "고대의 틀",
+
 	"tetra.module.holo/core.name": "어두운 핵",
 	"tetra.module.holo/core.description": "스피어의 중앙에 있는 작은 실린더, 만지면 따뜻합니다. 스피어의 모든 것은 실린더과 연결되어 있습니다.",
 	"tetra.variant.core/dim": "어두운 핵",
+
 	"tetra/schematic/holo/scanner/scanner.name": "측정기",
 	"tetra/schematic/holo/scanner/scanner.description": "홀로스피어에 §l엔더의 눈§r을 장착해 측정 기능을 잠금해제합니다.\n스피어가 플레이어의 인벤토리에 있을 때 플레이어가 보는 방향을 기준으로 고대 유적을 측정합니다. 고대 유적을 발견하면 소리가 나고, 스피어를 들면 많은 정보가 표시됩니다.",
 	"tetra/schematic/holo/scanner/scanner.slot1": "엔더의 눈",
 	"tetra.module.holo/scanner.description": "스피어가 플레이어의 인벤토리에 있을 때 플레이어가 보는 방향을 기준으로 고대 유적을 측정합니다. 고대 유적을 발견하면 소리가 나고, 스피어를 들면 많은 정보가 표시됩니다.",
 	"tetra.variant.scanner/scanner": "측정기",
+
 	"tetra/schematic/holo/scanner/adjustable.name": "조절",
 	"tetra/schematic/holo/scanner/adjustable.description": "2개의 나사를 사용하여 측정기의 특성을 조절할 수 있도록 측정기를 개선합니다.",
 	"tetra/schematic/holo/scanner/adjustable.slot1": "나사",
+
 	"tetra.improvement.scanner/adjustable.name": "조절",
 	"tetra.improvement.scanner/adjustable.description": "측정기의 동작을 조절할 수 있습니다",
+
 	"tetra.tweak.scanner/adjustable_range.label": "효율",
 	"tetra.tweak.scanner/adjustable_range.tooltip": "측정 거리, 재사용 대기시간의 효율을 조절합니다",
 	"tetra.tweak.scanner/adjustable_range.left": "속도",
 	"tetra.tweak.scanner/adjustable_range.right": "범위",
+
 	"tetra.tweak.scanner/adjustable_span.label": "폭",
 	"tetra.tweak.scanner/adjustable_span.tooltip": "가로, 세로의 폭을 조절합니다",
 	"tetra.tweak.scanner/adjustable_span.left": "세로",
 	"tetra.tweak.scanner/adjustable_span.right": "가로",
-	"tetra.localization.comment_generated": "=============================== 아래 값이 생성되었습니다  ===============================",
+
+	"tetra.localization.comment_generated": "=============================== 아래 값이 생성되었습니다 ===============================",
+
 	"tetra.improvement.enchantment/vanishing_curse.name": "§5소실 저주",
 	"tetra.improvement.enchantment/sharpness.name": "날카로움",
 	"tetra.improvement.destabilized/sharpness.name": "§5불안정한:날카로움",
@@ -2260,7 +2779,7 @@
 	"tetra.improvement.destabilized/ma-enchants_detonation.name": "§5불안정한:폭발",
 	"tetra.improvement.destabilized/ma-enchants_detonation.description": "폭발의 마법 효과가 감소합니다",
 	"tetra.improvement.enchantment/ma-enchants_combo.name": "콤보",
-	"tetra.improvement.enchantment/ma-enchants_combo.description": "타격 성공 시마다 피해가 증가합니다, 공기 또는 블록에 닿으면 초기화됩니다",
+	"tetra.improvement.enchantment/ma-enchants_combo.description": "타격 성공 시마다 피해가 증가하고, 공기 또는 블록에 닿으면 초기화됩니다",
 	"tetra.improvement.enchantment/ma-enchants_faster_attack.name": "빠른 공격",
 	"tetra.improvement.enchantment/ma-enchants_faster_attack.description": "공격 속도가 증가합니다",
 	"tetra.improvement.destabilized/ma-enchants_faster_attack.name": "§5불안정한:빠른 공격",
@@ -2284,7 +2803,7 @@
 	"tetra.improvement.enchantment/ma-enchants_night_vision.name": "야간 투시",
 	"tetra.improvement.enchantment/ma-enchants_night_vision.description": "착용했을 때 야간 투시 물약 효과를 줍니다",
 	"tetra.improvement.enchantment/ma-enchants_multi_jump.name": "공중 점프",
-	"tetra.improvement.enchantment/ma-enchants_multi_jump.description": "공중에서 점프를 할 수 있습니다",
+	"tetra.improvement.enchantment/ma-enchants_multi_jump.description": "공중에서 점프 할 수 있습니다",
 	"tetra.improvement.destabilized/ma-enchants_multi_jump.name": "§5불안정한:공중 점프",
 	"tetra.improvement.destabilized/ma-enchants_multi_jump.description": "공중 점프의 마법 효과가 감소합니다",
 	"tetra.improvement.enchantment/ma-enchants_timeless.name": "영원한",
@@ -2479,7 +2998,7 @@
 	"tetra.improvement.destabilized/cyclic_life_leech.name": "§5불안정한:생명 거머리",
 	"tetra.improvement.destabilized/cyclic_life_leech.description": "생명 거머리의 마법 효과가 감소합니다",
 	"tetra.improvement.enchantment/cyclic_launch.name": "더블 점프",
-	"tetra.improvement.enchantment/cyclic_launch.description": "더블 점프(두번 점프)만큼의 점프력을 부여합니다  레벨당 한 번의 추가 점프가 추가됩니다, 재사용 대기시간이 있습니다, 웅크리면 발동하지 않습니다",
+	"tetra.improvement.enchantment/cyclic_launch.description": "더블 점프(두번 점프)만큼의 점프력을 부여합니다 레벨당 한 번의 추가 점프가 추가됩니다, 재사용 대기시간이 있습니다, 웅크리면 발동하지 않습니다",
 	"tetra.improvement.destabilized/cyclic_launch.name": "§5불안정한:더블 점프",
 	"tetra.improvement.destabilized/cyclic_launch.description": "더블 점프의 마법 효과가 감소합니다",
 	"tetra.improvement.enchantment/cyclic_magnet.name": "자석",
@@ -2521,6 +3040,7 @@
 	"tetra.improvement.enchantment/enchantable_ore_eater.name": "광물 이터",
 	"tetra.improvement.destabilized/enchantable_ore_eater.name": "§5불안정한:광물 이터",
 	"tetra.improvement.destabilized/enchantable_ore_eater.description": "광물 이터의 마법 효과가 감소합니다",
+
 	"tetra.improvement.enchantment/vanishing_curse.description": "아이템을 가지고 있는 상태에서 죽으면 아이템이 사라집니다",
 	"tetra.improvement.enchantment/fire_aspect.description": "피격된 대상에 발화를 줍니다",
 	"tetra.improvement.enchantment/looting.description": "처치한 몹의 아이템 드랍률 및 최대 드랍량이 증가합니다",
@@ -2544,6 +3064,7 @@
 	"tetra.improvement.enchantment/channeling.description": "뇌우가 올 때에 던졌을 때 맞은 몹에게 번개가 내리칩니다",
 	"tetra.improvement.enchantment/cyclic_life_leech.description": "엔티티를 죽이면 사용자의 체력을 회복시킵니다",
 	"tetra.improvement.enchantment/enchantable_ore_eater.description": "광물 원석을 파괴하면 붙어있는 광물 전체가 파괴됩니다",
+
 	"tetra.improvement.enchantment/cursed_blindness.name": "§5실명 저주",
 	"tetra.improvement.enchantment/cursed_blindness.description": "사용자의 시야를 대폭 낮춥니다",
 	"tetra.improvement.enchantment/cursed_curtail.name": "§5축소 저주",
