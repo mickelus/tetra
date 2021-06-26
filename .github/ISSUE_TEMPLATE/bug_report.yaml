@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        See if the issue persist with the latest version of tetra, thanks you for putting effort into this bug report.
+        Please try the latest version of tetra and check if the issue persist before submitting a report, thanks you for putting effort into your bug reports.
   - type: textarea
     id: observed
     attributes:
@@ -26,7 +26,7 @@ body:
     id: crashlog
     attributes:
       label: Crashlog
-      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it as a (gist)[https://gist.github.com/] and paste the link here
+      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it to https://gist.github.com/ and paste the link here
       placeholder: https://gist.github.com/mickelus/e23d75f
   - type: input
     id: tetra-version
