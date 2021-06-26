@@ -1,0 +1,56 @@
+name: 🐛 Bug Report
+description: Something is not working as expected
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        See if the issue persist with the latest version of tetra, thanks you for putting effort into this bug report.
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+      description: Describe what happened and when this happened
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: Describe what you expected to happen
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Step by step instructions on how to reproduce the observed behaviour
+  - type: input
+    id: crashlog
+    attributes:
+      label: Crashlog
+      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it as a (gist)[https://gist.github.com/] and paste the link here
+      placeholder: https://gist.github.com/mickelus/e23d75f
+  - type: input
+    id: tetra-version
+    attributes:
+      label: Tetra version
+      placeholder: 3.0.0
+    validations:
+      required: true
+  - type: input
+    id: mgui-version
+    attributes:
+      label: mGui version
+      placeholder: 2.0.0
+    validations:
+      required: true
+  - type: input
+    id: forge-version
+    attributes:
+      label: Forge version
+      placeholder: 1.16.5 - 36.1.32
+    validations:
+      required: true
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods
+      description: List any other mods present when the bug was encountered, include the mod versions
