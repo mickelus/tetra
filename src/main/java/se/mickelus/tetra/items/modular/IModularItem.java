@@ -1035,6 +1035,18 @@ public interface IModularItem {
         return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
     }
 
+    static ItemStack removeAllEnchantments(ItemStack itemStack) {
+        itemStack.removeChildTag("Enchantments");
+        itemStack.removeChildTag("StoredEnchantments");
+        Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .forEach(module -> module.removeEnchantments(itemStack));
+
+        IModularItem.updateIdentifier(itemStack);
+
+        return itemStack;
+    }
+
     default boolean canEnchantInEnchantingTable(ItemStack itemStack) {
         return getEnchantability(itemStack) > 0 && !hasEnchantments(itemStack);
     }

@@ -19,12 +19,7 @@ public class MixinGrindstoneContainer {
     @Inject(at = @At("HEAD"), method = "removeEnchantments", cancellable = true)
     private void removeEnchantments(ItemStack itemStack, int damage, int count, CallbackInfoReturnable<ItemStack> callback) {
         if (itemStack.getItem() instanceof IModularItem) {
-            ItemStack result = itemStack.copy();
-            result.removeChildTag("Enchantments");
-            result.removeChildTag("StoredEnchantments");
-            Arrays.stream(((IModularItem) result.getItem()).getMajorModules(result))
-                    .filter(Objects::nonNull)
-                    .forEach(module -> module.removeEnchantments(result));
+            ItemStack result = IModularItem.removeAllEnchantments(itemStack.copy());
 
             callback.setReturnValue(result);
             callback.cancel();
