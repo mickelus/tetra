@@ -12,11 +12,15 @@ body:
     attributes:
       label: Observed behaviour
       description: Describe what happened and when this happened
+    validations:
+      required: true
   - type: textarea
     id: expected
     attributes:
       label: Expected behaviour
       description: Describe what you expected to happen
+    validations:
+      required: true
   - type: textarea
     id: reproduction
     attributes:
@@ -27,6 +31,8 @@ body:
         2. Select [module] and [schematic]
         3. Place [item] in the material slot
         4. Note [issue] with [something]
+    validations:
+      required: true
   - type: input
     id: crashlog
     attributes:
