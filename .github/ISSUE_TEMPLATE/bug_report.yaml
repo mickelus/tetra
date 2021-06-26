@@ -22,11 +22,16 @@ body:
     attributes:
       label: Steps to reproduce
       description: Step by step instructions on how to reproduce the observed behaviour
+      placeholder: |
+        1. Place a vanilla pickaxe in a workbench
+        2. Select [module] and [schematic]
+        3. Place [item] in the material slot
+        4. Note [issue] with [something]
   - type: input
     id: crashlog
     attributes:
       label: Crashlog
-      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it to https://gist.github.com/ and paste the link here
+      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it as a [gist](https://gist.github.com/) and paste the link here
       placeholder: https://gist.github.com/mickelus/e23d75f
   - type: input
     id: tetra-version
