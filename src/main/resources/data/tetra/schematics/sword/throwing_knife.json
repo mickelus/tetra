@@ -3,6 +3,7 @@
     "locked": true,
     "slots": ["sword/blade"],
     "materialSlotCount": 1,
+    "rarity": "temporary",
     "displayType": "major",
     "glyph": {
         "textureX": 160,

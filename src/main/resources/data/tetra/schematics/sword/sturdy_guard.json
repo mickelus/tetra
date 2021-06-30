@@ -1,9 +1,9 @@
 {
     "replace": true,
-    "slots": ["sword/guard"],
     "locked": true,
-    "rarity": "temporary",
+    "slots": ["sword/guard"],
     "materialSlotCount": 1,
+    "rarity": "temporary",
     "displayType": "minor",
     "glyph": {
         "textureX": 147,

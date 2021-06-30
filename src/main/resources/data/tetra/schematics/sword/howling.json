@@ -3,6 +3,7 @@
     "locked": true,
     "slots": ["sword/fuller"],
     "materialSlotCount": 1,
+    "rarity": "temporary",
     "displayType": "minor",
     "glyph": {
         "textureX": 72,
