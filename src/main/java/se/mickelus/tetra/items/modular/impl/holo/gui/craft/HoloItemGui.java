@@ -48,7 +48,7 @@ public class HoloItemGui extends GuiClickable {
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        icon = new GuiTexture(0, 0, 38, 38, 38 * textureIndex, 218, GuiTextures.workbench);
+        icon = new GuiTexture(0, 0, 38, 38, 38 * (textureIndex % 6), 218 - 38 * (textureIndex / 6), GuiTextures.workbench);
         icon.setAttachment(GuiAttachment.middleCenter);
         addChild(icon);
 

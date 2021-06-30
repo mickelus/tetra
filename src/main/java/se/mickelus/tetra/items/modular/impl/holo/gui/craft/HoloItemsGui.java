@@ -11,6 +11,7 @@ import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
@@ -50,11 +51,11 @@ public class HoloItemsGui extends GuiElement {
                     .setAttachment(GuiAttachment.topCenter));
         }
 
-//        if (ConfigHandler.enableShield.get()) {
-//            addChild(new GuiJournalItem(81, 40, ModularDoubleHeadedItem.instance, 3,
-//                    () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
-//                    .setAttachment(GuiAttachment.topCenter));
-//        }
+        if (ConfigHandler.enableCrossbow.get()) {
+            addChild(new HoloItemGui(-79, 40, ModularCrossbowItem.instance, 7,
+                    () -> onItemSelect.accept(ModularCrossbowItem.instance), onSlotSelect)
+                    .setAttachment(GuiAttachment.topCenter));
+        }
 
         if (ConfigHandler.enableBow.get()) {
             addChild(new HoloItemGui(-79, -40, ModularBowItem.instance, 5,
@@ -68,7 +69,7 @@ public class HoloItemsGui extends GuiElement {
 //
 
         if (ConfigHandler.enableShield.get()) {
-            addChild(new HoloItemGui(-79, 40, ModularShieldItem.instance, 3,
+            addChild(new HoloItemGui(81, 40, ModularShieldItem.instance, 3,
                     () -> onItemSelect.accept(ModularShieldItem.instance), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
