@@ -2,12 +2,14 @@ package se.mickelus.tetra.blocks.forged;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -27,11 +29,17 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWaterLoggable {
+    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+
     public static final String unlocalizedName = "forged_workbench";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static AbstractWorkbenchBlock instance;
 
-    private static final VoxelShape shape = VoxelShapes.or(
+    private static final VoxelShape zShape = VoxelShapes.or(
+            makeCuboidShape(1, 0, 3, 15, 2, 13),
+            makeCuboidShape(2, 2, 4, 14, 9, 12),
+            makeCuboidShape(0, 9, 2, 16, 16, 14));
+    private static final VoxelShape xShape = VoxelShapes.or(
             makeCuboidShape(3, 0, 1, 13, 2, 15),
             makeCuboidShape(4, 2, 2, 12, 9, 14),
             makeCuboidShape(2, 9, 0, 14, 16, 16));
@@ -46,6 +54,10 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
         setDefaultState(getDefaultState().with(WATERLOGGED, false));
     }
 
+    public static Direction getFacing(BlockState blockState) {
+        return blockState.get(FACING);
+    }
+
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
@@ -53,14 +65,25 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return shape;
+        Direction facing = state.get(FACING);
+
+        switch (facing) {
+            case NORTH:
+            case SOUTH:
+                return zShape;
+            case EAST:
+            case WEST:
+                return xShape;
+            default:
+                return null;
+        }
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
 
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, FACING);
     }
 
     @Override
@@ -72,7 +95,8 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return getDefaultState()
-                .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER);
+                .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER)
+                .with(FACING, context.getPlacementHorizontalFacing());
     }
 
     @Override

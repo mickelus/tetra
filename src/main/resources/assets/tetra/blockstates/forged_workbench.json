@@ -1,5 +1,16 @@
 {
-  "variants": {
-    "": { "model": "tetra:block/forged_workbench" }
-  }
+  "multipart": [
+    {   "when": { "facing": "north" },
+        "apply": { "model": "tetra:block/forged_workbench", "y": -90 }
+    },
+    {   "when": { "facing": "east" },
+        "apply": { "model": "tetra:block/forged_workbench", "y": 0 }
+    },
+    {   "when": { "facing": "south" },
+        "apply": { "model": "tetra:block/forged_workbench", "y": 90 }
+    },
+    {   "when": { "facing": "west" },
+        "apply": { "model": "tetra:block/forged_workbench", "y": 180 }
+    }
+  ]
 }
