@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["certus_sword", "certus_quartz_sword", "sword_certus_quartz"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/certus_quartz"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/certus_quartz"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/certus_quartz"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["certus_shovel", "certus_quartz_shovel", "shovel_certus_quartz"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/certus_quartz"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["certus_pickaxe", "certus_quartz_pickaxe", "pickaxe_certus_quartz"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/certus_quartz"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/certus_quartz"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["certus_hoe", "certus_quartz_hoe", "hoe_certus_quartz"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/certus_quartz"],
+            "double/head_right": ["double/butt_right", "butt/certus_quartz"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["certus_axe", "certus_quartz_axe", "axe_certus_quartz"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/certus_quartz"],
+            "double/head_right": ["double/butt_right", "butt/certus_quartz"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

@@ -5,7 +5,7 @@
     "renderLayer": "higher",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/"],
             "key": "makeshift_guard/",
             "attributes": {
                 "generic.attack_speed": -0.05

@@ -1,0 +1,80 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["bronze_sword", "sword_bronze"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/bronze"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/bronze"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/bronze"]
+        },
+        "improvements": {
+            "sword/blade:workable": 1
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["bronze_shovel", "shovel_bronze"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/bronze"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/head:workable": 1
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["bronze_pickaxe", "pickaxe_bronze"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/bronze"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:workable": 1,
+            "double/head_right:workable": 1
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["bronze_hoe", "hoe_bronze"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:workable": 1,
+            "double/head_right:workable": 1
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["bronze_axe", "axe_bronze"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/bronze"],
+            "double/head_right": ["double/butt_right", "butt/bronze"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:workable": 1,
+            "double/head_right:workable": 1
+        }
+    }
+]

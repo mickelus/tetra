@@ -1,0 +1,80 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["obsidian_sword", "sword_obsidian"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/obsidian"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/obsidian"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/obsidian"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["obsidian_shovel", "shovel_obsidian"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/obsidian"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/head:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["obsidian_pickaxe", "pickaxe_obsidian"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/obsidian"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/obsidian"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["obsidian_hoe", "hoe_obsidian"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/obsidian"],
+            "double/head_right": ["double/butt_right", "butt/obsidian"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["obsidian_axe", "axe_obsidian"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/obsidian"],
+            "double/head_right": ["double/butt_right", "butt/obsidian"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    }
+]

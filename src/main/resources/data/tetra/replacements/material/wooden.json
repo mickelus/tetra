@@ -1,0 +1,57 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:wooden_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/oak"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/oak"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/oak"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:wooden_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/oak"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:wooden_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/oak"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/oak"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:wooden_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/oak"],
+            "double/head_right": ["double/butt_right", "butt/oak"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:wooden_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/oak"],
+            "double/head_right": ["double/butt_right", "butt/oak"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

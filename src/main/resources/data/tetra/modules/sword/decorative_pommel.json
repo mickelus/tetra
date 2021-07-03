@@ -4,7 +4,7 @@
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/"],
             "key": "decorative_pommel/",
             "attributes": {
                 "generic.attack_speed": -0.05

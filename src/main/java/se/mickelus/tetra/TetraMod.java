@@ -157,6 +157,7 @@ public class TetraMod {
 
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
         ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
+        ItemPredicate.register(new ResourceLocation("tetra:loose"), LooseItemPredicate::new);
 
         Registry.register(Registry.LOOT_CONDITION_TYPE, FortuneBonusCondition.identifier, FortuneBonusCondition.type);
         Registry.register(Registry.LOOT_FUNCTION_TYPE, ScrollDataFunction.identifier, ScrollDataFunction.type);

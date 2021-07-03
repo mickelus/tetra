@@ -1,0 +1,72 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:netherite_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/netherite"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/netherite"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/netherite"]
+        },
+        "improvements": {
+            "sword/hilt:basic_hilt/soot": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/netherite"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/handle:basic_handle/soot": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/netherite"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/netherite"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/handle:basic_handle/soot": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/netherite"],
+            "double/head_right": ["double/butt_right", "butt/netherite"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/handle:basic_handle/soot": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:netherite_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/netherite"],
+            "double/head_right": ["double/butt_right", "butt/netherite"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/handle:basic_handle/soot": 0
+        }
+    }
+]
