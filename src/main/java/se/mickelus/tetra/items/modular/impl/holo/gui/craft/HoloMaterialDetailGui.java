@@ -123,7 +123,7 @@ public class HoloMaterialDetailGui extends GuiElement {
         hasSelected = selected != null;
 
         if (current != null) {
-            String labelString = I18n.format("tetra.material." + preview.key);
+            String labelString = I18n.hasKey("tetra.material." + preview.key) ? I18n.format("tetra.material." + preview.key) : preview.key;
             label.setString(Minecraft.getInstance().fontRenderer.func_238412_a_(labelString, 70));
             labelHighlight.setColor(preview.tints.glyph);
             icon.setItems(preview.material.getApplicableItemStacks());

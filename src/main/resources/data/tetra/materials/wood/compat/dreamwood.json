@@ -1,4 +1,8 @@
 {
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "botania"
+    }],
     "key": "dreamwood",
     "category": "wood",
     "primary": "4",

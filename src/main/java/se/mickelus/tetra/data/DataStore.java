@@ -15,9 +15,7 @@ import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.network.PacketHandler;
 
-import javax.annotation.Nullable;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -72,16 +70,21 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
                 } else {
                     json = JSONUtils.fromJson(gson, reader, JsonElement.class);
                 }
-                if (shouldLoad(json)) {
-                    JsonElement duplicate = map.put(location, json);
-                    if (duplicate != null) {
-                        throw new IllegalStateException("Duplicate data file ignored with ID " + location);
+
+                if (json != null) {
+                    if (shouldLoad(json)) {
+                        JsonElement duplicate = map.put(location, json);
+                        if (duplicate != null) {
+                            throw new IllegalStateException("Duplicate data ignored with ID " + location);
+                        }
+                    } else {
+                        logger.debug("Skipping data '{}' due to condition", fullLocation);
                     }
                 } else {
-                    logger.error("Couldn't load data file {} from {} as it's null or empty", location, fullLocation);
+                    logger.error("Couldn't load data from '{}' as it's null or empty", fullLocation);
                 }
             } catch (IllegalArgumentException | IOException | JsonParseException jsonparseexception) {
-                logger.error("Couldn't parse data file {} from {}", location, fullLocation, jsonparseexception);
+                logger.error("Couldn't parse data '{}' from '{}'", location, fullLocation, jsonparseexception);
             }
         }
 
@@ -131,6 +134,21 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         processData();
 
         listeners.forEach(Runnable::run);
+    }
+
+    protected boolean shouldLoad(JsonElement json) {
+        if (json.isJsonArray()) {
+            JsonArray arr = json.getAsJsonArray();
+            if (arr.size() > 0)
+                json = arr.get(0);
+        }
+
+        if (!json.isJsonObject()) {
+            return true;
+        }
+
+        JsonObject jsonObject = json.getAsJsonObject();
+        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getJsonArray(jsonObject, "conditions"));
     }
 
     protected void processData() {
@@ -183,20 +201,5 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
      */
     public void onReload(Runnable callback) {
         listeners.add(callback);
-    }
-
-    protected boolean shouldLoad(@Nullable JsonElement json) {
-        if (json == null)
-            return false;
-        if (json.isJsonArray()) {
-            JsonArray arr = json.getAsJsonArray();
-            if (arr.size() > 0)
-                json = arr.get(0);
-        }
-
-        if (!json.isJsonObject())
-            return true;
-        JsonObject jsonObject = json.getAsJsonObject();
-        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getJsonArray(jsonObject, "conditions"));
     }
 }

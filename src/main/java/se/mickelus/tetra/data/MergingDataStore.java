@@ -54,23 +54,30 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
                     ) {
                         JsonObject json = JSONUtils.fromJson(gson, reader, JsonObject.class);
+
                         if (json != null) {
-                            allResources.add(json);
+                            if (shouldLoad(json)) {
+                                allResources.add(json);
+                            } else {
+                                logger.debug("Skipping data '{}' from '{}' due to condition", fullLocation, resource.getPackName());
+                            }
                         } else {
-                            logger.error("Couldn't load data from {} in data pack {} as it's empty or null",
+                            logger.error("Couldn't load data from '{}' in data pack '{}' as it's empty or null",
                                     fullLocation, resource.getPackName());
                         }
                     } catch (RuntimeException | IOException e) {
-                        logger.error("Couldn't load data from {} in data pack {}", fullLocation, resource.getPackName(), e);
+                        logger.error("Couldn't load data from '{}' in data pack '{}'", fullLocation, resource.getPackName(), e);
                     } finally {
                         IOUtils.closeQuietly(resource);
                     }
                 }
             } catch (IOException e) {
-                logger.error("Couldn't load data from {}", fullLocation, e);
+                logger.error("Couldn't load data from '{}'", fullLocation, e);
             }
 
-            map.put(location, allResources);
+            if (allResources.size() > 0) {
+                map.put(location, allResources);
+            }
         }
 
         return map;

@@ -1,4 +1,8 @@
 {
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "botania"
+    }],
     "key": "terrasteel",
     "category": "metal",
     "primary": "7",

@@ -1,5 +1,9 @@
 [
     {
+        "conditions": [{
+            "type": "forge:mod_loaded",
+            "modid": "naturesaura"
+        }],
         "predicate": {
             "item": "naturesaura:sky_pickaxe"
         },

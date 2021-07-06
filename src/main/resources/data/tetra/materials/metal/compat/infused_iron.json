@@ -1,4 +1,8 @@
 {
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "naturesaura"
+    }],
     "key": "infused_iron",
     "category": "metal",
     "primary": "5",

@@ -1,4 +1,8 @@
 {
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "naturesaura"
+    }],
     "key": "sky",
     "category": "metal",
     "primary": "6",
