@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "conditions": [
+    "requirements": [
         {
             "type": "tetra:locked",
             "key": "tetra:fabric_expertise"

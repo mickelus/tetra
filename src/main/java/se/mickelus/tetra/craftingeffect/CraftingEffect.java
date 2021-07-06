@@ -16,13 +16,13 @@ import java.util.stream.Stream;
 
 public class CraftingEffect {
     public boolean replace = false;
-    CraftingEffectCondition[] conditions = new CraftingEffectCondition[0];
+    CraftingEffectCondition[] requirements = new CraftingEffectCondition[0];
     CraftingEffectOutcome[] outcomes = new CraftingEffectOutcome[0];
     CraftingProperties properties = new CraftingProperties();
 
     public boolean isApplicable(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, PlayerEntity player,
             ItemStack[] materials, Map<ToolType, Integer> tools, World world, BlockPos pos, BlockState blockState) {
-        return Arrays.stream(conditions)
+        return Arrays.stream(requirements)
                 .allMatch(condition -> condition.test(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, world, pos, blockState));
     }
 
@@ -39,7 +39,7 @@ public class CraftingEffect {
     }
 
     public static void copyFields(CraftingEffect from, CraftingEffect to) {
-        to.conditions = Stream.concat(Arrays.stream(to.conditions), Arrays.stream(from.conditions)).toArray(CraftingEffectCondition[]::new);
+        to.requirements = Stream.concat(Arrays.stream(to.requirements), Arrays.stream(from.requirements)).toArray(CraftingEffectCondition[]::new);
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes)).toArray(CraftingEffectOutcome[]::new);
 
         to.properties = CraftingProperties.merge(from.properties, to.properties);
