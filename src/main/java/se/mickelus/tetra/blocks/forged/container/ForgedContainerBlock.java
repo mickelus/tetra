@@ -131,7 +131,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     private static boolean breakLock(World world, BlockPos pos, PlayerEntity player, int index, Hand hand) {
         ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
         if (te != null) {
-            te.getOrDelegate().breakLock(player, index, hand);
+            te.getOrDelegate().ifPresent(primary -> primary.breakLock(player, index, hand));
         }
 
         return true;
@@ -140,7 +140,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     private static boolean open(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
         ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
         if (te != null) {
-            te.getOrDelegate().open(player);
+            te.getOrDelegate().ifPresent(primary -> primary.open(player));
         }
 
         return true;
@@ -160,10 +160,10 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
         if (didInteract != ActionResultType.SUCCESS) {
             if (!world.isRemote) {
                 TileEntityOptional.from(world, pos, ForgedContainerTile.class)
-                        .ifPresent(te -> {
-                            ForgedContainerTile delegate = te.getOrDelegate();
-                            if (delegate.isOpen()) {
-                                NetworkHooks.openGui((ServerPlayerEntity) player, delegate, delegate.getPos());
+                        .flatMap(ForgedContainerTile::getOrDelegate)
+                        .ifPresent(primary -> {
+                            if (primary.isOpen()) {
+                                NetworkHooks.openGui((ServerPlayerEntity) player, primary, primary.getPos());
                             }
                         });
             }
