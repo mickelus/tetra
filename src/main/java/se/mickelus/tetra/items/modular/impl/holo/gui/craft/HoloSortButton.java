@@ -76,7 +76,7 @@ public class HoloSortButton extends GuiElement {
 
     @Override
     public List<String> getTooltipLines() {
-        if (hasFocus()) {
+        if (hasFocus() && !popover.isVisible()) {
             return tooltip;
         }
         return null;
