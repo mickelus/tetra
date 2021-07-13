@@ -24,7 +24,7 @@ public class StatSorters {
             new BasicStatSorter(GuiStats.abilityDamageGetter, "tetra.stats.ability_damage", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.abilityCooldownGetter, "tetra.stats.ability_speed", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.reachGetterNormalized, "tetra.stats.reach_normalized", StatFormat.oneDecimal),
-            new BasicStatSorter(GuiStats.durabilityGetter, "tetra.stats.durability", StatFormat.noDecimal),
+            new BasicStatSorter(GuiStats.durabilityGetter, "tetra.stats.durability", StatFormat.abbreviate),
             new BasicStatSorter(GuiStats.armorGetter, "tetra.stats.armor", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.toughnessGetter, "tetra.stats.toughness", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.blockingReflectGetter, "tetra.stats.blocking_reflect", StatFormat.oneDecimal),

@@ -21,7 +21,7 @@ public class HoloVariantMajorItemGui extends HoloVariantItemGui {
         addChild(backdrop);
 
         if (label != null) {
-            GuiString labelElement = new GuiStringOutline(1, 0, label);
+            GuiString labelElement = new GuiStringOutline(label.startsWith("-") ? -2 : 1, 0, label);
             labelElement.setColor(outcome.glyph.tint);
             labelElement.setAttachment(GuiAttachment.middleCenter);
             addChild(labelElement);
