@@ -1,22 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.stats.IStatFormatter;
-import net.minecraft.util.text.ITextComponent;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.gui.statbar.getter.ILabelGetter;
+import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
 import se.mickelus.tetra.module.data.MaterialData;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class HoloMaterialStatGui extends GuiElement {
     protected GuiTexture backdrop;
@@ -45,7 +38,7 @@ public class HoloMaterialStatGui extends GuiElement {
         value.setAttachment(GuiAttachment.topCenter);
         addChild(value);
 
-        label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat." + key));
+        label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat." + key + ".short"));
         label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);

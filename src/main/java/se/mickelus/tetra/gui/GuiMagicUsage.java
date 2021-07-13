@@ -9,12 +9,11 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.gui.statbar.GuiBar;
+import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class GuiMagicUsage extends GuiElement {

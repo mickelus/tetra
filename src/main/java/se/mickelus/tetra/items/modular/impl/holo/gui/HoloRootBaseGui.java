@@ -26,10 +26,6 @@ public class HoloRootBaseGui extends GuiElement {
                 .start();
     }
 
-    public void charTyped(char typedChar) {
-
-    }
-
     @Override
     protected void onShow() {
         hideAnimation.stop();

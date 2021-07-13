@@ -14,7 +14,7 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.gui.statbar.GuiBar;
+import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.Collections;

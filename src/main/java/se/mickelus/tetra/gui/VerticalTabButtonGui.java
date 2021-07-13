@@ -43,6 +43,7 @@ public class VerticalTabButtonGui extends GuiClickable {
         labelHide = new KeyframeAnimation(150, this.label).applyTo(new Applier.Opacity(0), new Applier.TranslateX(-2));
 
         this.keybinding = new GuiKeybinding(0, 2, keybinding);
+        this.keybinding.setAttachmentPoint(GuiAttachment.topRight);
         this.keybinding.setOpacity(0);
         keybindShow = new KeyframeAnimation(100, this.keybinding).applyTo(new Applier.Opacity(1), new Applier.TranslateX(0));
         keybindHide = new KeyframeAnimation(150, this.keybinding).applyTo(new Applier.Opacity(0), new Applier.TranslateX(3));

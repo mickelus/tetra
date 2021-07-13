@@ -5,6 +5,7 @@
   "tetra.attribute.draw_speed.name": "Draw time",
   "tetra.attribute.ability_damage.name": "Ability damage",
   "tetra.attribute.ability_cooldown.name": "Ability cooldown",
+  "tetra.attribute.multiplier": "multiplier",
 
   "effect.tetra.earthbound": "Earthbound",
   "effect.tetra.howling": "Howling",
@@ -45,22 +46,35 @@
   "tetra.holo.craft.improvements": "Improvements",
   "tetra.holo.craft.stats": "Stats",
   "tetra.holo.craft.variants": "Variants",
+  "tetra.holo.craft.variants_filter": "Input a string to filter out modules based on their name, prefix with # to filter based on material category.\n \n§7[§8f§7] §8focus\n§7[§8enter§7] §8toggle focus",
+  "tetra.holo.craft.variants_sort": "Sort all variants based on the selected stat\n \n§7[§8s§7] §8toggle dropdown\n§7[§81§7] - §7[§89§7] §8select stat",
+  "tetra.holo.craft.empty_description": "Description missing",
+  "tetra.holo.craft.translation": "Stats gained based on material properties for this module",
+  "tetra.holo.craft.empty_translation": "It is not known how material properties translate into stats for this module",
 
-  "tetra.holo.craft.materials.stat.primary": "hard",
+  "tetra.holo.craft.materials.stat.primary": "Hardness",
+  "tetra.holo.craft.materials.stat.primary.short": "hard",
   "tetra.holo.craft.materials.stat.primary.tooltip": "The material's hardness or sharpness, or the ability to shape this material into something with a hard/sharp edge",
-  "tetra.holo.craft.materials.stat.secondary": "dens",
+  "tetra.holo.craft.materials.stat.secondary": "Density",
+  "tetra.holo.craft.materials.stat.secondary.short": "dens",
   "tetra.holo.craft.materials.stat.secondary.tooltip": "The material's density, rigidity or weight, how much kinetic energy does this carry as it's swung",
-  "tetra.holo.craft.materials.stat.tertiary": "flex",
+  "tetra.holo.craft.materials.stat.tertiary": "Flexibility",
+  "tetra.holo.craft.materials.stat.tertiary.short": "flex",
   "tetra.holo.craft.materials.stat.tertiary.tooltip": "The material's flexibility or tensile strength, how fast does this material spring back when bent",
-  "tetra.holo.craft.materials.stat.tool_level": "tlvl",
-  "tetra.holo.craft.materials.stat.tool_level.tooltip": "The base value for tool level for modules crafted from this material",
-  "tetra.holo.craft.materials.stat.tool_efficiency": "teff",
+  "tetra.holo.craft.materials.stat.tool_level": "Tool tier",
+  "tetra.holo.craft.materials.stat.tool_level.short": "ttie",
+  "tetra.holo.craft.materials.stat.tool_level.tooltip": "The base value for tool tier for modules crafted from this material",
+  "tetra.holo.craft.materials.stat.tool_efficiency": "Tool efficiency",
+  "tetra.holo.craft.materials.stat.tool_efficiency.short": "teff",
   "tetra.holo.craft.materials.stat.tool_efficiency.tooltip": "The base value tool efficiency for modules crafted from this material",
-  "tetra.holo.craft.materials.stat.durability": "dura",
+  "tetra.holo.craft.materials.stat.durability": "Durability",
+  "tetra.holo.craft.materials.stat.durability.short": "dura",
   "tetra.holo.craft.materials.stat.durability.tooltip": "The base durability for modules crafted from this material",
-  "tetra.holo.craft.materials.stat.integrity": "int",
+  "tetra.holo.craft.materials.stat.integrity": "Integrity",
+  "tetra.holo.craft.materials.stat.integrity.short": "int",
   "tetra.holo.craft.materials.stat.integrity.tooltip": "The base values for integrity gain and integrity cost for modules crafted from this material (gain | cost)",
-  "tetra.holo.craft.materials.stat.magic_capacity": "magi",
+  "tetra.holo.craft.materials.stat.magic_capacity": "Magic capacity",
+  "tetra.holo.craft.materials.stat.magic_capacity.short": "magi",
   "tetra.holo.craft.materials.stat.magic_capacity.tooltip": "The magic capacity for major modules crafted from this material",
 
   "tetra.holo.craft.materials.stat_modifier": "mod",
@@ -111,6 +125,9 @@
   "tetra.tool.shovel": "Shovel",
   "tetra.tool.shovel.requirement": "This action requires a tier %d shovel",
   "tetra.tool.shovel.material_requirement": "The base requirement for working this material is a tier %d shovel, the requirement may shift based on what the material is used for.",
+  "tetra.tool.hoe": "Cut",
+  "tetra.tool.hoe.requirement": "This action requires a tier %d hoeting implement.\n§7Most swords can be used for hoeting.",
+  "tetra.tool.hoe.material_requirement": "The base requirement for working this material is a tier %d cutting implement, the requirement may shift based on what the material is used for.\n§7Most swords can be used for cutting.",
   "tetra.tool.cut": "Cut",
   "tetra.tool.cut.requirement": "This action requires a tier %d cutting implement.\n§7Most swords can be used for cutting.",
   "tetra.tool.cut.material_requirement": "The base requirement for working this material is a tier %d cutting implement, the requirement may shift based on what the material is used for.\n§7Most swords can be used for cutting.",
@@ -320,7 +337,6 @@
   "tetra.stats.overpower_echo.tooltip": "Exhausted is applied on the wielder after §e%s§r seconds, this is further delayed every time overpower is used",
   "tetra.stats.reap_echo.tooltip": "Trigger a secondary reap in the same area after 3 seconds\n \n§rReap grants §e+1§r attack damage per kill for §e30§r seconds, attack damage gained from subsequent kills stacks up to §e+%s§r attack damage",
 
-
   "tetra.stats.execute": "Execute",
   "tetra.stats.execute.tooltip": "Hold right-click to charge up a powerful attack with §e100%% (%s)§f base damage, the damage is further increased by:\n§e%s%%§7 for each missing percent of the target's health\n§e%s%%§7 for each stack of any harmful effect on the target\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
   "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
@@ -369,6 +385,8 @@
   "tetra.stats.arthropod.tooltip": "Deals §e%s§r bonus damage when attacking an arthropod and applies slowness IV for 1 to §e%s§r seconds",
 
   "tetra.stats.sweeping": "Sweeping",
+  "tetra.stats.sweeping.level": "Sweep Damage",
+  "tetra.stats.sweeping.efficiency": "Sweep Area",
   "tetra.stats.sweeping.tooltip": "Attacking an entity also hits all adjacent enemies within a §e%s§r block radius for §e%s§r weapon damage",
   "tetra.stats.sweeping.tooltip_extended": "Sweeping attacks do not trigger when attacking mid-air or while sprinting.",
 
@@ -517,6 +535,8 @@
 
   "tetra.stats.integrity_usage": "Integrity usage: %s/%s",
   "tetra.stats.integrity_usage.tooltip": "Integrity is provided by some modules (often in a specific slot), while it is required by other modules and most improvements",
+
+  "tetra.stats.sorting.none": "None",
 
   "tetra.variant_category.fabric.label": "Fabric",
   "tetra.variant_category.fibre.label": "Fibre",
@@ -1541,7 +1561,7 @@
 
   "tetra.module.double/basic_axe.item_name": "Axe",
   "tetra.module.double/basic_axe.name": "Axe head",
-  "tetra.module.double/basic_axe.description": "A basic axe head that can primarily be used to chop things like planks and logs, but it's also useful for stripping bark from logs and crafting item modules from wood.\n \nDouble axe heads provide synergy bonuses.",
+  "tetra.module.double/basic_axe.description": "A basic axe head that can be used to break wooden blocks like planks and logs, to strip bark from logs and for crafting item modules from wood.\n \nDouble axe heads provide synergy bonuses.",
   "tetra.module.double/basic_axe.material_name": "%s axe",
   "tetra.module.double/basic_axe.prefix": "%s",
 
@@ -1619,7 +1639,7 @@
 
   "tetra.module.double/claw.item_name": "Claw",
   "tetra.module.double/claw.name": "Claw",
-  "tetra.module.double/claw.description": "A slightly curved claw that can be used for prying things open, and can quickly break most wooden blocks.",
+  "tetra.module.double/claw.description": "A slightly curved claw, can be used for prying things open and to quickly break most wooden blocks.",
   "tetra.module.double/claw.material_name": "%s claw",
   "tetra.module.double/claw.prefix": "%s",
 

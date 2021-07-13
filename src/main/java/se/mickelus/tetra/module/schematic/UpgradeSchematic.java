@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.MaterialVariantData;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -15,6 +16,16 @@ public interface UpgradeSchematic {
     public String getKey();
     public String getName();
     public String getDescription(@Nullable ItemStack itemStack);
+
+    /**
+     * Used to display some information about how material properties translate into stats for the module or improvement that the schematic crafts.
+     * @return
+     */
+    @Nullable
+    default MaterialVariantData.MaterialMultiplier getMaterialTranslation() {
+        return null;
+    }
+
     public int getNumMaterialSlots();
 
     public String getSlotName(final ItemStack itemStack, int index);

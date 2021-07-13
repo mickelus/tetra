@@ -2,7 +2,7 @@ package se.mickelus.tetra.compat.botania;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.gui.statbar.getter.StatGetterEffectEfficiency;
+import se.mickelus.tetra.gui.stats.getter.StatGetterEffectEfficiency;
 
 import java.util.Optional;
 

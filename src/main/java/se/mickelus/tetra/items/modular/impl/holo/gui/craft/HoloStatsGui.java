@@ -7,7 +7,9 @@ import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.gui.statbar.*;
+import se.mickelus.tetra.gui.stats.*;
+import se.mickelus.tetra.gui.stats.bar.GuiStatBarTool;
+import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.ArrayList;

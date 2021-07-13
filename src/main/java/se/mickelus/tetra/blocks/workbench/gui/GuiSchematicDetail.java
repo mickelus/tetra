@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuiSchematicDetail extends GuiElement {
@@ -22,6 +24,7 @@ public class GuiSchematicDetail extends GuiElement {
     private GuiElement glyph;
     private GuiString title;
     private GuiTextSmall description;
+    private List<String> descriptionTooltip;
 
     private CraftButtonGui craftButton;
 
@@ -92,7 +95,11 @@ public class GuiSchematicDetail extends GuiElement {
 
         title.setString(schematic.getName());
         title.setColor(schematic.getRarity().tint);
-        description.setString(TextFormatting.GRAY + schematic.getDescription(itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
+
+        String descriptionString = schematic.getDescription(itemStack);
+        description.setString(TextFormatting.GRAY + descriptionString
+                .replace(TextFormatting.RESET.toString(), TextFormatting.RESET.toString() + TextFormatting.GRAY.toString()));
+        descriptionTooltip = ImmutableList.of(descriptionString);
 
         glyph.clearChildren();
         GlyphData glyphData = schematic.getGlyph();
@@ -177,5 +184,14 @@ public class GuiSchematicDetail extends GuiElement {
     public void updateButton(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolType, Integer> availableTools) {
         craftButton.update(schematic, player, itemStack, previewStack, materials, slot, availableTools);
+    }
+
+    @Override
+    public List<String> getTooltipLines() {
+        if (description.hasFocus()) {
+            return descriptionTooltip;
+        }
+
+        return super.getTooltipLines();
     }
 }

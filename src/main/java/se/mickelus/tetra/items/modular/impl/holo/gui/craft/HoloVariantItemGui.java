@@ -3,15 +3,14 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiItem;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class HoloVariantItemGui extends GuiClickable {
@@ -38,14 +37,21 @@ public class HoloVariantItemGui extends GuiClickable {
                 .setItems(outcome.materials);
     }
 
-    public HoloVariantItemGui(int x, int y, OutcomePreview outcome,
+    public HoloVariantItemGui(int x, int y, OutcomePreview outcome, @Nullable String label,
             Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onBlur, Consumer<OutcomePreview> onSelect) {
         this(x, y, 11, 11, outcome, onHover, onBlur, onSelect);
 
         backdrop = new GuiTexture(0, 0, 11, 11, 68, 0, GuiTextures.workbench);
         addChild(backdrop);
 
-        addChild(new GuiModuleGlyph(2, 2, 8, 8, outcome.glyph).setShift(false));
+        if (label != null) {
+            GuiString labelElement = new GuiStringOutline(1, 1, label);
+            labelElement.setColor(outcome.glyph.tint);
+            labelElement.setAttachment(GuiAttachment.middleCenter);
+            addChild(labelElement);
+        } else {
+            addChild(new GuiModuleGlyph(2, 2, 8, 8, outcome.glyph).setShift(false));
+        }
     }
 
     public void updateSelection(OutcomePreview outcome) {

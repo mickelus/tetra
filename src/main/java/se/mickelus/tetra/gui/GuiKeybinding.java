@@ -38,22 +38,6 @@ public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description) {
         super(x, y, 0, 11);
-
-        GuiKey guiKey = new GuiKey(0, 0, key, GuiAttachment.topRight);
-        addChild(guiKey);
-
-        if (description != null) {
-            addChild(new GuiStringOutline(3, 2, description));
-        }
-
-        if (modifier != null) {
-            addChild(new GuiKey(guiKey.getX() - 7, 0, modifier, GuiAttachment.topRight));
-            addChild(new GuiStringOutline(guiKey.getX() - 6, 2, "+", GuiColors.muted));
-        }
-    }
-
-    public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description, GuiAttachment attachment) {
-        super(x, y, 0, 11);
         if (modifier != null) {
             GuiKey modifierKey = new GuiKey(0, 0, modifier);
             addChild(modifierKey);
@@ -66,13 +50,19 @@ public class GuiKeybinding extends GuiElement {
 
         GuiKey guiKey = new GuiKey(width, 0, key);
         addChild(guiKey);
-        width += guiKey.getWidth() + 4;
+        width += guiKey.getWidth();
 
         if (description != null) {
+            width += 4;
             GuiStringOutline descriptionElement = new GuiStringOutline(width, 2, description);
             addChild(descriptionElement);
             width += descriptionElement.getWidth();
         }
+    }
+
+    public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description, GuiAttachment attachment) {
+        this(x, y, key, modifier, description);
+        setAttachment(attachment);
     }
 
     private class GuiKey extends GuiElement {

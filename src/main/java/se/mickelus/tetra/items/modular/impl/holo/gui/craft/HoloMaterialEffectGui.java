@@ -6,11 +6,8 @@ import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.gui.statbar.getter.ILabelGetter;
-import se.mickelus.tetra.module.data.MaterialData;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class HoloMaterialEffectGui extends GuiElement {
     protected GuiTexture backdrop;

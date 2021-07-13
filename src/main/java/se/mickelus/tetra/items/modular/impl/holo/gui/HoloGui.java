@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,6 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
@@ -119,24 +121,52 @@ public class HoloGui extends Screen {
                     .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 300, font);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
         }
     }
 
     @Override
     public boolean mouseClicked(double x, double y, int button) {
-        defaultGui.onMouseClick((int) x, (int) y, button);
+        if (defaultGui.onMouseClick((int) x, (int) y, button)) {
+            return true;
+        }
 
         return super.mouseClicked(x, y, button);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double distance) {
-        return defaultGui.onMouseScroll(mouseX, mouseY, distance);
+        if (currentPage.onMouseScroll(mouseX, mouseY, distance)) {
+            return true;
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, distance);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (currentPage.onKeyPress(keyCode, scanCode, modifiers)) {
+            return true;
+        }
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        if (currentPage.onKeyRelease(keyCode, scanCode, modifiers)) {
+            return true;
+        }
+
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean charTyped(char typedChar, int keyCode) {
+        if (currentPage.onCharType(typedChar, keyCode)) {
+            return true;
+        }
+
         if (ConfigHandler.development.get()) {
             switch (typedChar) {
                 case 'r':
@@ -154,10 +184,8 @@ public class HoloGui extends Screen {
             }
         }
 
-        currentPage.charTyped(typedChar);
         return false;
     }
-
 
     private static void onReload() {
         if (instance != null && instance.getMinecraft().currentScreen == instance) {

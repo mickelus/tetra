@@ -11,12 +11,12 @@ import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.Filter;
 
@@ -90,6 +90,12 @@ public class ConfigSchematic extends BaseSchematic {
             return I18n.format(localizationPrefix + definition.localizationKey + descriptionSuffix);
         }
         return I18n.format(localizationPrefix + definition.key + descriptionSuffix);
+    }
+
+    @Nullable
+    @Override
+    public MaterialVariantData.MaterialMultiplier getMaterialTranslation() {
+        return definition.translation;
     }
 
     @Override
@@ -399,10 +405,17 @@ public class ConfigSchematic extends BaseSchematic {
                     ItemStack itemStack = targetStack.copy();
                     applyOutcome(outcome, itemStack, false, slot, null);
 
-                    return new OutcomePreview(outcome.moduleKey, key, category, glyph, itemStack, definition.displayType, outcome.requiredTools,
+                    return new OutcomePreview(outcome.moduleKey, key, getVariantName(outcome, itemStack), category, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
                 })
                 .filter(Filter.distinct(preview -> preview.variantKey))
                 .toArray(OutcomePreview[]::new);
+    }
+
+    private String getVariantName(OutcomeDefinition outcome, ItemStack itemStack) {
+        return Optional.ofNullable(getModuleKey(outcome))
+                .map(ItemUpgradeRegistry.instance::getModule)
+                .map(module -> module.getName(itemStack))
+                .orElse("");
     }
 }

@@ -78,11 +78,11 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
         GuiHorizontalLayoutGroup keybindGroup = new GuiHorizontalLayoutGroup(0, -5, 11, 8);
         keybindGroup.setAttachment(GuiAttachment.bottomCenter);
         keybindGui.addChild(keybindGroup);
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.accessBinding, GuiAttachment.topRight));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.accessBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.restockBinding, GuiAttachment.topRight));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.restockBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.openBinding, GuiAttachment.topRight));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.openBinding));
 
         instance = this;
     }
@@ -118,7 +118,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
                     .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, -1, font);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
         }
     }
 

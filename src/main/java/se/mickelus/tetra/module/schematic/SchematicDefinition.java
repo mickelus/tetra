@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
@@ -127,6 +128,11 @@ public class SchematicDefinition {
      * The glyph displayed for this schematic, preferably the same as the module it will be used to craft but with no tint.
      */
     public GlyphData glyph = new GlyphData();
+
+    /**
+     * Used to display some information about how material properties translate into stats for the module or improvement that the schematic crafts.
+     */
+    public MaterialVariantData.MaterialMultiplier translation;
 
     /**
      * An array of all potential outcomes of this schematic.

@@ -156,7 +156,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
                     .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 300, minecraft.fontRenderer);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
         }
 
         updateMaterialHoverPreview();

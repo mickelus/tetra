@@ -1,6 +1,5 @@
 package se.mickelus.tetra.compat.botania;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,13 +9,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.gui.statbar.GuiStatBar;
-import se.mickelus.tetra.gui.statbar.GuiStats;
-import se.mickelus.tetra.gui.statbar.StatsHelper;
-import se.mickelus.tetra.gui.statbar.getter.IStatGetter;
-import se.mickelus.tetra.gui.statbar.getter.LabelGetterBasic;
-import se.mickelus.tetra.gui.statbar.getter.StatGetterEffectLevel;
-import se.mickelus.tetra.gui.statbar.getter.TooltipGetterInteger;
+import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
+import se.mickelus.tetra.gui.stats.StatsHelper;
+import se.mickelus.tetra.gui.stats.getter.IStatGetter;
+import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
+import se.mickelus.tetra.gui.stats.getter.TooltipGetterInteger;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 import se.mickelus.tetra.util.CastOptional;
 import vazkii.botania.api.mana.ManaItemHandler;

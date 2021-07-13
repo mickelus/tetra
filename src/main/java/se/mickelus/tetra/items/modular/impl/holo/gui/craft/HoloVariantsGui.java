@@ -1,20 +1,19 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
+import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
-import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HoloVariantsGui extends GuiElement {
     private GuiHorizontalScrollable groupsScroll;
@@ -23,6 +22,13 @@ public class HoloVariantsGui extends GuiElement {
     private Consumer<OutcomePreview> onVariantHover;
     private Consumer<OutcomePreview> onVariantBlur;
     private Consumer<OutcomePreview> onVariantSelect;
+
+    private boolean filterCategory = false;
+    private String filter = "";
+
+    private IStatSorter sorter = StatSorters.none;
+
+    private OutcomePreview[] previews;
 
     public HoloVariantsGui(int x, int y, int width, Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur,
             Consumer<OutcomePreview> onVariantSelect) {
@@ -38,18 +44,33 @@ public class HoloVariantsGui extends GuiElement {
         this.onVariantSelect = onVariantSelect;
     }
 
-    public void update(IModularItem item, String slot, UpgradeSchematic schematic) {
+    public void update(OutcomePreview[] previews) {
+        this.previews = previews;
+        this.filter = "";
+        this.sorter = StatSorters.none;
+        update();
+    }
+
+    private void update() {
         groups.clearChildren();
 
+        PlayerEntity player = Minecraft.getInstance().player;
+
         boolean isDevelopment = ConfigHandler.development.get();
-        Map<String, List<OutcomePreview>> result = Arrays.stream(schematic.getPreviews(new ItemStack(item.getItem()), slot))
+        Map<String, List<OutcomePreview>> result = Arrays.stream(previews)
                 .filter(preview -> isDevelopment || preview.materials.length != 0)
+                .filter(this::filter)
                 .collect(Collectors.groupingBy(preview -> preview.category, LinkedHashMap::new, Collectors.toList()));
+
+        // categories start moving around if it's sorted before it's split up, so it's better to do it after
+        if (sorter != StatSorters.none) {
+            result.values().forEach(category -> category.sort(sorter.compare(player, preview -> preview.itemStack)));
+        }
 
         // some wonk needed to do staggered animations of variants
         int offset = 0;
         for (Map.Entry<String, List<OutcomePreview>> entry : result.entrySet()) {
-            groups.addChild(new HoloVariantGroupGui(0, 0, entry.getKey(), entry.getValue(), offset,
+            groups.addChild(new HoloVariantGroupGui(0, 0, entry.getKey(), entry.getValue(), offset, sorter, player,
                     onVariantHover, onVariantBlur, onVariantSelect));
             offset += entry.getValue().size();
         }
@@ -64,5 +85,43 @@ public class HoloVariantsGui extends GuiElement {
     @Override
     protected void onShow() {
         groups.getChildren(HoloVariantGroupGui.class).forEach(HoloVariantGroupGui::animateIn);
+    }
+
+    @Override
+    public boolean onCharType(char character, int modifiers) {
+        if (character == 'f') {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean filter(OutcomePreview preview) {
+        if (filter.length() == 0) {
+            return true;
+        }
+
+        if (filterCategory) {
+            return preview.category.contains(filter);
+        }
+
+        return preview.variantName.contains(filter);
+    }
+
+    public void updateFilter(String newValue) {
+        filter = newValue.toLowerCase();
+
+        filterCategory = filter.startsWith("#");
+        if (filterCategory) {
+            filter = filter.substring(1);
+        }
+
+        update();
+    }
+
+    public void changeSorting(IStatSorter sorter) {
+        this.sorter = sorter;
+
+        update();
     }
 }

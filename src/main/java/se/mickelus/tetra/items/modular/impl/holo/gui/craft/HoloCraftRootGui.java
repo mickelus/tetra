@@ -1,8 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.I18n;
-import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 import se.mickelus.tetra.module.SchematicRegistry;
@@ -53,14 +51,17 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     }
 
     @Override
-    public void charTyped(char typedChar) {
-        switch (typedChar) {
-            case backBinding:
-                if (depth > 0) {
-                    onBreadcrumbClick(depth - 1);
-                }
-            default:
+    public boolean onCharType(char character, int modifiers) {
+        if (super.onCharType(character, modifiers)) {
+            return true;
         }
+
+        if (character == backBinding && depth > 0) {
+            onBreadcrumbClick(depth - 1);
+            return true;
+        }
+
+        return false;
     }
 
     private void onBreadcrumbClick(int depth) {

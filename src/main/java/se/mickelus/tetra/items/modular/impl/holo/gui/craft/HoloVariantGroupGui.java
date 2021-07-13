@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -9,6 +10,7 @@ import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
@@ -25,7 +27,7 @@ public class HoloVariantGroupGui extends GuiElement {
     private final KeyframeAnimation labelAnimation;
     private final KeyframeAnimation[] itemAnimations;
 
-    public HoloVariantGroupGui(int x, int y, String category, List<OutcomePreview> outcomes, int offset,
+    public HoloVariantGroupGui(int x, int y, String category, List<OutcomePreview> outcomes, int offset, IStatSorter sorter, PlayerEntity player,
             Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, 0, 50);
 
@@ -46,7 +48,7 @@ public class HoloVariantGroupGui extends GuiElement {
         for (int i = 0; i < outcomes.size(); i++) {
             OutcomePreview outcome = outcomes.get(i);
             if (SchematicType.minor.equals(outcome.type)) {
-                HoloVariantItemGui variant = new HoloVariantItemGui((i / 2) * 15, (i % 2) * 15, outcome,
+                HoloVariantItemGui variant = new HoloVariantItemGui((i / 2) * 15, (i % 2) * 15, outcome, sorter.getValue(player, outcome.itemStack),
                         onVariantHover, onVariantBlur, onVariantSelect);
                 variantsContainer.addChild(variant);
 
@@ -58,7 +60,7 @@ public class HoloVariantGroupGui extends GuiElement {
                 width = variant.getX() + variant.getWidth();
             } else {
                 HoloVariantMajorItemGui variant = new HoloVariantMajorItemGui((i / 2) * 20 + (i % 2) * 10, (i % 2) * 15, outcome,
-                        onVariantHover, onVariantBlur, onVariantSelect);
+                        sorter.getValue(player, outcome.itemStack), onVariantHover, onVariantBlur, onVariantSelect);
                 variantsContainer.addChild(variant);
 
                 itemAnimations[i] = new KeyframeAnimation(80, variant)

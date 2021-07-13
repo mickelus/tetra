@@ -89,7 +89,7 @@ public class ScrollScreen extends Screen {
                     .map(StringTextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 300, font);
+            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
         }
     }
 
