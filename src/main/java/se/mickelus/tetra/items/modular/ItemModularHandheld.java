@@ -537,6 +537,11 @@ public class ItemModularHandheld extends ModularItem {
         return getEffectLevel(itemStack, ItemEffect.blocking) > 0;
     }
 
+    public void onShieldDisabled(PlayerEntity player, ItemStack itemStack) {
+        player.getCooldownTracker().removeCooldown(this);
+        player.getCooldownTracker().setCooldown(this, (int) (getCooldownBase(itemStack) * 20 * 0.75));
+    }
+
     @Override
     public boolean canDisableShield(ItemStack itemStack, ItemStack shieldStack, LivingEntity target, LivingEntity attacker) {
         return getEffectLevel(itemStack, ItemEffect.shieldbreaker) > 0;
