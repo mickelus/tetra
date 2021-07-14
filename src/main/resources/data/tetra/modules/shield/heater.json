@@ -42,7 +42,7 @@
             "effects": {
                 "blocking": [2.5, 1]
             },
-            "durability": -20,
+            "durability": 150,
             "extract": {
                 "primaryAttributes": {
                     "tetra:ability_damage": 0.8
