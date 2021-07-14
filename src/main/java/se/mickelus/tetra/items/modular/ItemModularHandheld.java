@@ -537,6 +537,11 @@ public class ItemModularHandheld extends ModularItem {
         return getEffectLevel(itemStack, ItemEffect.blocking) > 0;
     }
 
+    @Override
+    public boolean canDisableShield(ItemStack itemStack, ItemStack shieldStack, LivingEntity target, LivingEntity attacker) {
+        return getEffectLevel(itemStack, ItemEffect.shieldbreaker) > 0;
+    }
+
     /**
      * How long it takes to use this item (or how long it can be held at max)
      */

@@ -64,6 +64,9 @@
                 "generic.attack_speed": -1.6,
                 "generic.attack_damage": 3.5
             },
+            "effects": {
+                "shieldbreaker": 1
+            },
             "durability": -10,
             "extract": {
                 "primaryAttributes": {

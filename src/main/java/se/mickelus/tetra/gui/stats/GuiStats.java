@@ -98,6 +98,11 @@ public class GuiStats {
             0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));
 
+    public static final IStatGetter shieldbreakerGetter = new StatGetterEffectLevel(ItemEffect.shieldbreaker, 1d);
+    public static final GuiStatBar shieldbreaker = new GuiStatBar(0, 0, barLength, "tetra.stats.shieldbreaker",
+            0, 1, false, shieldbreakerGetter, LabelGetterBasic.noLabel,
+            new TooltipGetterNone("tetra.stats.shieldbreaker.tooltip"));
+
     public static final GuiStatBar blocking = new GuiStatBarBlockingDuration(0, 0, barLength);
 
     public static final IStatGetter blockingReflectGetter = new StatGetterEffectLevel(ItemEffect.blockingReflect, 1d);
@@ -214,7 +219,6 @@ public class GuiStats {
     public static final GuiStatBar howling = new GuiStatBar(0, 0, barLength, "tetra.stats.howling",
             0, 8, false, howlingGetter, LabelGetterBasic.integerLabel, new TooltipGetterHowling());
 
-
     public static final IStatGetter knockbackGetter = new StatGetterEnchantmentLevel(Enchantments.KNOCKBACK, 0.5);
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
@@ -252,7 +256,7 @@ public class GuiStats {
 
     public static final IStatGetter silkTouchGetter = new StatGetterEnchantmentLevel(Enchantments.SILK_TOUCH, 1);
     public static final GuiStatBar silkTouch = new GuiStatBar(0, 0, barLength, "tetra.stats.silkTouch",
-                0, 1, false, silkTouchGetter, LabelGetterBasic.integerLabel,
+                0, 1, false, silkTouchGetter, LabelGetterBasic.noLabel,
             new TooltipGetterDecimal("tetra.stats.silkTouch.tooltip", silkTouchGetter));
 
     public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.FORTUNE, 1);
@@ -262,7 +266,7 @@ public class GuiStats {
 
     public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY, 1);
     public static final GuiStatBar infinity = new GuiStatBar(0, 0, barLength, "tetra.stats.infinity",
-            0, 1, false, infinityGetter, LabelGetterBasic.integerLabel,
+            0, 1, false, infinityGetter, LabelGetterBasic.noLabel,
             new TooltipGetterInteger("tetra.stats.infinity.tooltip", infinityGetter));
 
     public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAME, 4);

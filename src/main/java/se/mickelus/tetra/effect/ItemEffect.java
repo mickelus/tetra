@@ -283,6 +283,12 @@ public class ItemEffect {
      */
     public static ItemEffect throwable = get("throwable");
 
+    /**
+     * Shieldbreaker: If an attack from this item is blocked there's a 25% chance for the blocker to have their shield disabled, like vanilla axes.
+     * Mobs wielding this are guaranteed to disable shields.
+     */
+    public static ItemEffect shieldbreaker = get("shieldbreaker");
+
     //////////////////////////////////////////////////////////////
     // toolbelt
     //////////////////////////////////////////////////////////////

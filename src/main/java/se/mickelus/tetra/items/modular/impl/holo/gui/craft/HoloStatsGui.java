@@ -31,6 +31,7 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.durability,
             GuiStats.armor,
             GuiStats.toughness,
+            GuiStats.shieldbreaker,
             GuiStats.blocking,
             GuiStats.blockingReflect,
             GuiStats.bashing,

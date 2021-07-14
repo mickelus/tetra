@@ -198,6 +198,9 @@
   "tetra.stats.toughness": "Toughness",
   "tetra.stats.toughness.tooltip": "Provides §e%s§r toughness when held",
 
+  "tetra.stats.shieldbreaker": "Shieldbreaker",
+  "tetra.stats.shieldbreaker.tooltip": "Attacking a blocking entity has a §e25%%§r chance to disable its shield for §e5§r seconds (or §e75%%§r of the base cooldown for modular shields)",
+
   "tetra.stats.blocking": "Block",
   "tetra.stats.blocking.tooltip": "Holding down right-click will block incoming attacks and projectiles",
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
@@ -1556,12 +1559,12 @@
   "tetra.tweak.double_tweak/binding_bolt.right": "Tight",
 
   "tetra/schematic/double/basic_axe/basic_axe.name": "Axe head",
-  "tetra/schematic/double/basic_axe/basic_axe.description": "Craft an axe head from the given material. The axe can be used to break wooden blocks and for stripping logs.\n \nProvides §faxe§r tool capabilities based on the material. Material §fhardness§r (primarily) and §fdensity§r increases §fdamage§r.\nDouble axe heads provide additional §fdamage§r.",
+  "tetra/schematic/double/basic_axe/basic_axe.description": "Craft an axe head from the given material. The axe can be used to break wooden blocks, for stripping logs and to disable shields.\n \nProvides §faxe§r tool capabilities based on the material. Material §fhardness§r (primarily) and §fdensity§r increases §fdamage§r.\nDouble axe heads provide additional §fdamage§r.",
   "tetra/schematic/double/basic_axe/basic_axe.slot1": "Head material",
 
   "tetra.module.double/basic_axe.item_name": "Axe",
   "tetra.module.double/basic_axe.name": "Axe head",
-  "tetra.module.double/basic_axe.description": "A basic axe head that can be used to break wooden blocks like planks and logs, to strip bark from logs and for crafting item modules from wood.\n \nDouble axe heads provide synergy bonuses.",
+  "tetra.module.double/basic_axe.description": "A basic axe head that can be used to break wooden blocks like planks and logs, to strip bark from logs,for crafting item modules from wood and to disable shields.\n \nDouble axe heads provide synergy bonuses.",
   "tetra.module.double/basic_axe.material_name": "%s axe",
   "tetra.module.double/basic_axe.prefix": "%s",
 
