@@ -10,45 +10,10 @@
     "displayType": "improvement",
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:string",
-                "count": 4
-            },
+            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "countFactor": 1.5,
             "improvements": {
-                "basic_hilt/wrap_string": 1
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:leather",
-                "count": 1
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "improvements": {
-                "basic_hilt/wrap_leather": 1
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:rabbit_hide",
-                "count": 2
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "improvements": {
-                "basic_hilt/wrap_hide": 1
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:vine",
-                "count": 4
-            },
-            "improvements": {
-                "basic_hilt/wrap_vine": 1
+                "hilt/wrap/": 0
             }
         }
     ]

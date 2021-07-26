@@ -16,7 +16,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.data.MaterialVariantData;
+import se.mickelus.tetra.module.data.MaterialMultiplier;
 import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.Filter;
 
@@ -94,7 +94,7 @@ public class ConfigSchematic extends BaseSchematic {
 
     @Nullable
     @Override
-    public MaterialVariantData.MaterialMultiplier getMaterialTranslation() {
+    public MaterialMultiplier getMaterialTranslation() {
         return definition.translation;
     }
 

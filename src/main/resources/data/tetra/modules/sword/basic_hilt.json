@@ -24,8 +24,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:sword/hilt/shared",
-        "tetra:sword/hilt/shared_hone",
+        "tetra:sword/basic_hilt/",
+        "tetra:sword/shared_hilt/",
+        "tetra:sword/shared/",
         "tetra:shared/"
     ],
     "variants": [

@@ -1,5 +1,9 @@
 package se.mickelus.tetra.module.data;
 
+import com.google.gson.*;
+
+import java.lang.reflect.Type;
+
 /**
  * Data for improvements are mostly the same as module data but introduces a few additional fields.
  *
@@ -36,5 +40,18 @@ public class ImprovementData extends VariantData {
 
     public int getLevel() {
         return level;
+    }
+
+    public static class Deserializer implements JsonDeserializer<ImprovementData> {
+        @Override
+        public ImprovementData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+
+            if (jsonObject.has("materials")) {
+                return context.deserialize(json, MaterialImprovementData.class);
+            } else {
+                return context.deserialize(json, UniqueImprovementData.class);
+            }
+        }
     }
 }

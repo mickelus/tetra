@@ -27,6 +27,14 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
 
         if (moduleVariant != null) {
             result.moduleVariant = moduleVariant + materialData.key;
+
+            result.improvements = Stream.of(improvements, materialData.improvements)
+                    .map(Map::entrySet)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::max));
+        } else if (!improvements.isEmpty()) {
+            result.improvements = improvements.entrySet().stream()
+                    .collect(Collectors.toMap(e -> e.getKey() + materialData.key, Map.Entry::getValue));
         }
 
         result.material = materialData.material.offsetCount(countFactor, countOffset);
@@ -39,11 +47,6 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
                 Optional.ofNullable(materialData.requiredTools)
                         .map(materialTools -> ToolData.offsetLevel(materialTools, toolFactor, toolOffset))
                         .orElse(null));
-
-        result.improvements = Stream.of(improvements, materialData.improvements)
-                .map(Map::entrySet)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::max));
 
         return result;
     }

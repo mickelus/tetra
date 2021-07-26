@@ -1133,26 +1133,15 @@
   "tetra.variant.basic_hilt/end_rod": "End rod",
   "tetra.variant.basic_hilt/forged_beam": "Repurposed beam",
 
-  "tetra.improvement.basic_hilt/wrap_string.name": "String wrap",
-  "tetra.improvement.basic_hilt/wrap_string.description": "Slightly increases damage and speed, reduces negative hilt effects.",
-  "tetra.improvement.basic_hilt/wrap_leather.name": "Leather wrap",
-  "tetra.improvement.basic_hilt/wrap_leather.description": "Slightly increases damage and speed, reduces negative hilt effects.",
-  "tetra.improvement.basic_hilt/wrap_hide.name": "Hide wrap",
-  "tetra.improvement.basic_hilt/wrap_hide.description": "Slightly increases damage and speed, reduces negative hilt effects.",
-  "tetra.improvement.basic_hilt/wrap_vine.name": "Vine wrap",
-  "tetra.improvement.basic_hilt/wrap_vine.description": "Slightly increases damage and speed, reduces negative hilt effects.",
+  "tetra.improvement.basic_hilt/soot.name": "Sooted",
+  "tetra.improvement.basic_hilt/soot.description": "Covered in soot",
+
+  "tetra.improvement.hilt/wrap.name": "%s wrap",
+  "tetra.improvement.hilt/wrap.description": "Slightly increases damage and speed, reduces negative hilt effects.",
 
   "tetra/schematic/sword/basic_hilt/wrap_hilt.name": "Wrap hilt",
   "tetra/schematic/sword/basic_hilt/wrap_hilt.slot1": "Material",
   "tetra/schematic/sword/basic_hilt/wrap_hilt.description": "Wrap the hilt using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the hilt.",
-
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.name": "Hone: Wrap II",
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.slot1": "Material",
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_1.description": "Improve the hilt wrap, further increasing damage and speed, and reducing negative effects.",
-
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.name": "Hone: Wrap III",
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.slot1": "Material",
-  "tetra/schematic/sword/basic_hilt/wrap_hilt_hone_2.description": "Further improve the hilt wrap, increasing damage and speed, and reducing negative effects.",
 
   "tetra.module.sword/decorative_pommel.name": "Decorative pommel",
   "tetra.module.sword/decorative_pommel.description": "A decorative pommel, it provides a small amount of durability but has no functional value.",
@@ -1281,9 +1270,6 @@
   "tetra.module.sword/heavy_blade.description": "A large and hefty blade that sacrifices attack speed for increased damage, always sweeps on fully charged swings.",
   "tetra.module.sword/heavy_blade.material_name": "Heavy %s blade",
   "tetra.module.sword/heavy_blade.prefix": "%s",
-
-  "tetra.improvement.heavy_blade/crushing.name": "Crushing",
-  "tetra.improvement.heavy_blade/crushing.description": "Attacks partially bypass armor and absorption",
 
   "tetra/schematic/sword/machete.name": "Machete",
   "tetra/schematic/sword/machete.description": "Replace the current sword blade with a machete which can be used to cut down web and some types of plants in an area.\n \nThe §fcutting efficiency§r is based on the material, at an increased rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
@@ -1484,26 +1470,12 @@
   "tetra.improvement.basic_handle/ender_reverb.name": "Ender reverb",
   "tetra.improvement.basic_handle/ender_reverb.description": "Reacts negatively with nearby entities originating from the end.",
 
-  "tetra.improvement.basic_handle/wrap_string.name": "String wrap",
-  "tetra.improvement.basic_handle/wrap_string.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.basic_handle/wrap_leather.name": "Leather wrap",
-  "tetra.improvement.basic_handle/wrap_leather.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.basic_handle/wrap_hide.name": "Hide wrap",
-  "tetra.improvement.basic_handle/wrap_hide.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.basic_handle/wrap_vine.name": "Vine wrap",
-  "tetra.improvement.basic_handle/wrap_vine.description": "Slightly increases damage and speed, reduces negative handle effects.",
+  "tetra.improvement.basic_handle/wrap.name": "%s wrap",
+  "tetra.improvement.basic_handle/wrap.description": "Slightly increases damage and speed, reduces negative handle effects.",
 
   "tetra/schematic/double/basic_handle/wrap_handle.name": "Wrap handle",
   "tetra/schematic/double/basic_handle/wrap_handle.slot1": "Material",
   "tetra/schematic/double/basic_handle/wrap_handle.description": "Wrap the handle using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the handle.",
-
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_1.name": "Hone: Wrap II",
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_1.slot1": "Material",
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_1.description": "Improve the handle wrap, further increasing damage and speed, and reducing negative effects.",
-
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_2.name": "Hone: Wrap III",
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_2.slot1": "Material",
-  "tetra/schematic/double/basic_handle/wrap_handle_hone_2.description": "Further improve the handle wrap, increasing damage and speed, and reducing negative effects.",
 
   "tetra/schematic/double/basic_handle/hone_speed_1.name": "Hone: Speed I",
   "tetra/schematic/double/basic_handle/hone_speed_1.description": "Hone the handle to increase the overall swing speed by 4%%.",
@@ -1701,26 +1673,12 @@
 
   "tetra.variant.long_handle/stick": "Flimsy long handle",
 
-  "tetra.improvement.single_handle/wrap_string.name": "String wrap",
-  "tetra.improvement.single_handle/wrap_string.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.single_handle/wrap_leather.name": "Leather wrap",
-  "tetra.improvement.single_handle/wrap_leather.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.single_handle/wrap_hide.name": "Hide wrap",
-  "tetra.improvement.single_handle/wrap_hide.description": "Slightly increases damage and speed, reduces negative handle effects.",
-  "tetra.improvement.single_handle/wrap_vine.name": "Vine wrap",
-  "tetra.improvement.single_handle/wrap_vine.description": "Slightly increases damage and speed, reduces negative handle effects.",
-
   "tetra/schematic/single/handle/wrap_handle.name": "Wrap handle",
   "tetra/schematic/single/handle/wrap_handle.slot1": "Material",
   "tetra/schematic/single/handle/wrap_handle.description": "Wrap the handle using the provided materials. Slighly increases damage and speed, and reduces negative effects potentially caused by the handle.",
 
-  "tetra/schematic/single/handle/wrap_handle_hone_1.name": "Hone: Wrap II",
-  "tetra/schematic/single/handle/wrap_handle_hone_1.slot1": "Material",
-  "tetra/schematic/single/handle/wrap_handle_hone_1.description": "Improve the handle wrap, further increasing damage and speed, and reducing negative effects.",
-
-  "tetra/schematic/single/handle/wrap_handle_hone_2.name": "Hone: Wrap III",
-  "tetra/schematic/single/handle/wrap_handle_hone_2.slot1": "Material",
-  "tetra/schematic/single/handle/wrap_handle_hone_2.description": "Further improve the handle wrap, increasing damage and speed, and reducing negative effects.",
+  "tetra.improvement.single_handle/wrap.name": "%s wrap",
+  "tetra.improvement.single_handle/wrap.description": "Slightly increases damage and speed, reduces negative handle effects.",
 
   "tetra/schematic/single/handle/hone_speed_1.name": "Hone: Speed I",
   "tetra/schematic/single/handle/hone_speed_1.description": "Hone the handle to increase the swing speed.",
@@ -2088,13 +2046,8 @@
   "tetra/schematic/bow/stave/wrap_grip.slot1": "Material",
   "tetra/schematic/bow/stave/wrap_grip.description": "Wrap the grip using the provided materials. Slighly increases drawspeed, and reduces negative effects potentially caused by the stave material.",
 
-  "tetra/schematic/bow/stave/wrap_grip_hone_1.name": "Hone: Wrap grip II",
-  "tetra/schematic/bow/stave/wrap_grip_hone_1.slot1": "Material",
-  "tetra/schematic/bow/stave/wrap_grip_hone_1.description": "Improve the grip wrap, further increasing drawspeed, and reducing negative effects.",
-
-  "tetra/schematic/bow/stave/wrap_grip_hone_2.name": "Hone: Wrap grip III",
-  "tetra/schematic/bow/stave/wrap_grip_hone_2.slot1": "Material",
-  "tetra/schematic/bow/stave/wrap_grip_hone_2.description": "Further improve the hilt wrap, increasing drawspeed, and reducing negative effects.",
+  "tetra.improvement.stave/wrap.name": "%s wrap",
+  "tetra.improvement.stave/wrap.description": "Slightly increases damage and speed, reduces negative stave effects.",
 
   "tetra/schematic/bow/stave/hone_speed_1.name": "Hone: Speed I",
   "tetra/schematic/bow/stave/hone_speed_1.description": "Hone the module to increase the overall draw speed.",

@@ -23,8 +23,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:single/head/shovel/",
-        "tetra:single/head/shared/",
+        "tetra:single/shovel/",
+        "tetra:single/shared_head/",
+        "tetra:single/shared/",
         "tetra:shared/"
     ],
     "variants": [

@@ -22,8 +22,9 @@
         "tetra:enchantment/cursed_misfortune",
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
-        "tetra:bow/string/shared",
-        "tetra:bow/string/shared_hone",
+        "tetra:bow/basic_string/",
+        "tetra:bow/shared_string/",
+        "tetra:bow/shared/",
         "tetra:shared/"
     ],
     "variants": [

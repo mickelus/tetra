@@ -19,8 +19,9 @@
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_lifesteal",
         "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:single/head/spearhead/",
-        "tetra:single/head/shared/",
+        "tetra:single/spearhead/",
+        "tetra:single/shared_head/",
+        "tetra:single/shared/",
         "tetra:shared/"
     ],
     "variants": [

@@ -12,9 +12,8 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.EffectData;
-import se.mickelus.tetra.module.data.MaterialVariantData;
+import se.mickelus.tetra.module.data.MaterialMultiplier;
 import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.*;
@@ -41,7 +40,7 @@ public class HoloMaterialTranslation extends GuiElement {
     }
 
     public void update(UpgradeSchematic schematic) {
-        MaterialVariantData.MaterialMultiplier translation = schematic.getMaterialTranslation();
+        MaterialMultiplier translation = schematic.getMaterialTranslation();
         if (translation != null) {
 
             LinkedList<String> primary = new LinkedList<>();

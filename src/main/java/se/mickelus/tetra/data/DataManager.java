@@ -53,6 +53,7 @@ public class DataManager {
             .registerTypeAdapter(Block.class, new BlockDeserializer())
             .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
             .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
+            .registerTypeAdapter(ImprovementData.class, new ImprovementData.Deserializer())
             .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
             .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
             .registerTypeAdapter(CraftingEffectCondition.class, new CraftingEffectCondition.Deserializer())
@@ -64,7 +65,7 @@ public class DataManager {
 
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
     public static DataStore<MaterialData> materialData = new MaterialStore(gson, "materials");
-    public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
+    public static DataStore<ImprovementData[]> improvementData = new ImprovementStore(gson, "improvements");
     public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
     public static DataStore<RepairDefinition> repairData = new DataStore<>(gson, "repairs", RepairDefinition.class);
     public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",

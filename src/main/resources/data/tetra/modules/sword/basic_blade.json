@@ -40,13 +40,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:sword/blade/basic_blade",
-        "tetra:sword/blade/serrated",
-        "tetra:sword/blade/hooked",
-        "tetra:sword/blade/tempered",
-        "tetra:sword/blade/shared",
-        "tetra:sword/blade/shared_compat",
-        "tetra:sword/blade/shared_hone",
+        "tetra:sword/basic_blade/",
+        "tetra:sword/shared_blade/",
+        "tetra:sword/shared/",
         "tetra:shared/"
     ],
     "variants": [

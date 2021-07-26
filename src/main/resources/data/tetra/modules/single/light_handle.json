@@ -30,10 +30,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:single/light_handle",
-        "tetra:single/shared_handle",
-        "tetra:single/shared_handle_compat",
-        "tetra:single/shared_handle_hone",
+        "tetra:single/light_handle/",
+        "tetra:single/shared_handle/",
+        "tetra:single/shared/",
         "tetra:shared/"
     ],
     "variants": [

@@ -1,8 +1,5 @@
 package se.mickelus.tetra.module.data;
 
-import com.google.common.collect.Multimap;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.properties.AttributeHelper;
 
@@ -16,28 +13,6 @@ public class MaterialVariantData extends VariantData {
     public ResourceLocation[] materials = {};
 
     public MaterialMultiplier extract = new MaterialMultiplier();
-
-    public static class MaterialMultiplier {
-        public Multimap<Attribute, AttributeModifier> primaryAttributes;
-        public Multimap<Attribute, AttributeModifier> secondaryAttributes;
-        public Multimap<Attribute, AttributeModifier> tertiaryAttributes;
-
-        public Float durability;
-        public Float durabilityMultiplier;
-
-        public Float integrity;
-        public Float magicCapacity;
-
-        public EffectData primaryEffects;
-        public EffectData secondaryEffects;
-        public EffectData tertiaryEffects;
-        public ToolData tools;
-
-        public GlyphData glyph;
-
-        public String[] availableTextures = {};
-        public ModuleModel[] models = {};
-    }
 
     public VariantData combine(MaterialData material) {
         UniqueVariantData result = new UniqueVariantData();

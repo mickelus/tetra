@@ -732,8 +732,6 @@
   "tetra.module.sword/heavy_blade.description":"大又重的劍刃犧牲攻速但增加傷害,當完全蓄力時總能橫掃.",
   "tetra.module.sword/heavy_blade.material_name":"重型 %s 劍刃",
   "tetra.module.sword/heavy_blade.prefix":"%s",
-  "tetra.improvement.heavy_blade/crushing.name":"粉碎",
-  "tetra.improvement.heavy_blade/crushing.description":"攻擊忽略部分護甲",
   "tetra/schematic/sword/machete.name":"彎刀",
   "tetra/schematic/sword/machete.description":"將目前劍刃替換為彎刀,蜘蛛網和範圍內某些植物種類.\n \n \u00a7f切割效率\u00a7r基於材料,並有所增加.\n材料\u00a7f硬度\u00a7r增加\u00a7f傷害\u00a7r.\n材料\u00a7f密度\u00a7r稍微減少\u00a7f攻擊速度\u00a7r.",
   "tetra/schematic/sword/machete.slot1":"劍刃材料",

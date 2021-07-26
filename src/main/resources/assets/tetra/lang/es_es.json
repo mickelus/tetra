@@ -1246,9 +1246,6 @@
     "tetra.module.sword/heavy_blade.material_name": "Hoja pesada %s",
     "tetra.module.sword/heavy_blade.prefix": "%s",
     
-    "tetra.improvement.heavy_blade/crushing.name": "Aplastante",
-    "tetra.improvement.heavy_blade/crushing.description": "Los ataques ignoran parcialmente la armadura y la absorción",
-    
     "tetra/schematic/sword/machete.name": "Machete",
     "tetra/schematic/sword/machete.description": "Reemplaza la hoja actual de la espada por un machete que se puede utilizar para cortar telarañas y algunos tipos de plantas de un área.\n \nLa §feficiencia de corte§r se basa en el material, a un ritmo aumentado.\nLa §fdureza§r del material aumenta el §fdaño§r.\nLa §fdensidad§r del material disminuye ligeramente la §fvelocidad de ataque§r.",
     "tetra/schematic/sword/machete.slot1": "Material",

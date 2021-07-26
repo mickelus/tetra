@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.data.MaterialVariantData;
+import se.mickelus.tetra.module.data.MaterialMultiplier;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -22,7 +22,7 @@ public interface UpgradeSchematic {
      * @return
      */
     @Nullable
-    default MaterialVariantData.MaterialMultiplier getMaterialTranslation() {
+    default MaterialMultiplier getMaterialTranslation() {
         return null;
     }
 

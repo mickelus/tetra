@@ -26,10 +26,9 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:sword/blade/stonecutter",
-        "tetra:sword/blade/shared",
-        "tetra:sword/blade/shared_compat",
-        "tetra:sword/blade/shared_hone",
+        "tetra:sword/stonecutter/",
+        "tetra:sword/shared_blade/",
+        "tetra:sword/shared/",
         "tetra:shared/"
     ],
     "variants": [

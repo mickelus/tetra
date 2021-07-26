@@ -1261,9 +1261,6 @@
 	"tetra.module.sword/heavy_blade.material_name": "무거운 %s 날",
 	"tetra.module.sword/heavy_blade.prefix": "%s",
 
-	"tetra.improvement.heavy_blade/crushing.name": "파쇄",
-	"tetra.improvement.heavy_blade/crushing.description": "공격 피해의 일부분이 갑옷과 흡수를 무시합니다",
-
 	"tetra/schematic/sword/machete.name": "마체테",
 	"tetra/schematic/sword/machete.description": "현재 칼날을 단조한 마체테로 교체합니다, 한 구역의 식물을 자르는 데 사용될 수 있습니다. 마체테는 휘두르기 대기시간이 아닌 경우에만 블록을 즉시 수집할 수 있습니다.\n\n재료에 따라 §f절단§r 효율이 적게 변화합니다.\n재료의 §f경도§r가 높아질수록 §f공격 피해§r가 증가합니다.\n재료의 §f밀도§r가 높아질수록 §f공격 속도§r가 약간 감소합니다.",
 	"tetra/schematic/sword/machete.slot1": "칼날 재료",
