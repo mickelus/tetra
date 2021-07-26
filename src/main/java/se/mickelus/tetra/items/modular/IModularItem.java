@@ -84,11 +84,11 @@ public interface IModularItem {
         return new ItemStack(getItem());
     }
 
-    static void updateIdentifier(ItemStack itemStack) {
+    public static void updateIdentifier(ItemStack itemStack) {
         updateIdentifier(itemStack.getOrCreateTag());
     }
 
-    static void updateIdentifier(CompoundNBT nbt) {
+    public static void updateIdentifier(CompoundNBT nbt) {
         nbt.putString(identifierKey, UUID.randomUUID().toString());
     }
 
@@ -113,7 +113,7 @@ public interface IModularItem {
                 .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().getRegistryName());
     }
 
-    void clearCaches();
+    public void clearCaches();
 
     public String[] getMajorModuleKeys();
     public String[] getMinorModuleKeys();
@@ -198,13 +198,13 @@ public interface IModularItem {
      * @param moduleVariantKey
      * @param moduleVariant
      */
-    static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
+    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
         CompoundNBT tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(moduleVariantKey, moduleVariant);
     }
 
-    static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
+    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
         CompoundNBT tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(module + "_material", moduleVariant);
@@ -293,9 +293,9 @@ public interface IModularItem {
         return (int) Math.max((getHoneBase() + getHoneIntegrityMultiplier() * getIntegrityCost(itemStack)) * workableFactor, 1);
     }
 
-    int getHoneBase();
+    public int getHoneBase();
 
-    int getHoneIntegrityMultiplier();
+    public int getHoneIntegrityMultiplier();
 
     default int getHoningIntegrityPenalty(ItemStack itemStack) {
         return getHoneIntegrityMultiplier() * getIntegrityCost(itemStack);
@@ -307,21 +307,21 @@ public interface IModularItem {
                 .orElse(0);
     }
 
-    boolean canGainHoneProgress();
+    public boolean canGainHoneProgress();
 
-    static boolean isHoneable(ItemStack itemStack) {
+    public static boolean isHoneable(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getTag())
                 .map(tag -> tag.contains(honeAvailableKey))
                 .orElse(false);
     }
 
-    static int getHoningSeed(ItemStack itemStack) {
+    public static int getHoningSeed(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getTag())
                 .map(tag -> tag.getInt(honeCountKey))
                 .orElse(0);
     }
 
-    static void removeHoneable(ItemStack itemStack) {
+    public static void removeHoneable(ItemStack itemStack) {
         CompoundNBT tag = itemStack.getTag();
 
         if (tag != null) {
@@ -455,15 +455,55 @@ public interface IModularItem {
     }
 
     default String getImprovementTooltip(String key, int level, boolean clearFormatting) {
-        String tooltip = I18n.format("tetra.improvement." + key + ".name");
+        if (clearFormatting) {
+            return TextFormatting.getTextWithoutFormattingCodes(getImprovementName(key, level));
+        }
+
+        return getImprovementName(key, level);
+    }
+
+    public static String getImprovementName(String key, int level) {
+        String tooltip = null;
+        if (I18n.hasKey("tetra.improvement." + key + ".name")) {
+            tooltip = I18n.format("tetra.improvement." + key + ".name");
+        } else {
+            int lastSlash = key.lastIndexOf("/");
+            if (lastSlash != -1) {
+                String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
+                if (I18n.hasKey(templateKey)) {
+                    String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
+                    if (I18n.hasKey(materialKey)) {
+                        tooltip = StringUtils.capitalize(I18n.format(templateKey, I18n.format(materialKey).toLowerCase()));
+                    }
+                }
+            }
+
+            if (tooltip == null) {
+                tooltip = "tetra.improvement." + key + ".name";
+            }
+        }
+
         if (level > 0) {
             tooltip += " " + I18n.format("enchantment.level." + level);
         }
 
-        if (clearFormatting) {
-            return TextFormatting.getTextWithoutFormattingCodes(tooltip);
-        }
         return tooltip;
+    }
+
+    public static String getImprovementDescription(String key) {
+        if (I18n.hasKey("tetra.improvement." + key + ".description")) {
+            return I18n.format("tetra.improvement." + key + ".description");
+        }
+
+        int lastSlash = key.lastIndexOf("/");
+        if (lastSlash != -1) {
+            String splitKey = "tetra.improvement." + key.substring(0, lastSlash) + ".description";
+            if (I18n.hasKey(splitKey)) {
+                return I18n.format(splitKey);
+            }
+        }
+
+        return "tetra.improvement." + key + ".description";
     }
 
     /**
@@ -1035,7 +1075,7 @@ public interface IModularItem {
         return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
     }
 
-    static ItemStack removeAllEnchantments(ItemStack itemStack) {
+    public static ItemStack removeAllEnchantments(ItemStack itemStack) {
         itemStack.removeChildTag("Enchantments");
         itemStack.removeChildTag("StoredEnchantments");
         Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
