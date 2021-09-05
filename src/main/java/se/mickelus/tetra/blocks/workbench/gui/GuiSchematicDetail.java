@@ -127,7 +127,7 @@ public class GuiSchematicDetail extends GuiElement {
         glyph.addChild(glyphTexture);
 
         if (schematic.getType() == SchematicType.improvement) {
-            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
+            glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench).setColor(GuiColors.muted));
         }
 
         for (int i = 0; i < schematic.getNumMaterialSlots(); i++) {

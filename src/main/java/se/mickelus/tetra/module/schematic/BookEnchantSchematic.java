@@ -18,9 +18,11 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
+import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class BookEnchantSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -190,6 +192,30 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
+        ItemModuleMajor module = CastOptional.cast(targetStack.getItem(), IModularItem.class)
+                .map(item -> item.getModuleFromSlot(targetStack, slot))
+                .flatMap(m -> CastOptional.cast(m, ItemModuleMajor.class))
+                .orElse(null);
+
+        if (module != null) {
+            ToolData emptyTools = new ToolData();
+            return Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings())
+                    .filter(mapping -> mapping.enchantment != null)
+                    .filter(mapping -> !mapping.enchantment.isCurse())
+                    .filter(mapping -> mapping.extract)
+                    .filter(mapping -> module.acceptsImprovement(mapping.improvement))
+                    .flatMap(mapping -> IntStream.range(mapping.enchantment.getMinLevel(), mapping.enchantment.getMaxLevel() + 1)
+                            .mapToObj(level -> {
+                                ItemStack enchantedStack = targetStack.copy();
+
+                                module.addImprovement(enchantedStack, mapping.improvement, level);
+                                return new OutcomePreview(null, mapping.improvement,
+                                        IModularItem.getImprovementName(mapping.improvement, level), "misc", level, glyph, enchantedStack,
+                                        SchematicType.improvement, emptyTools, new ItemStack[0]);
+                            }))
+                    .toArray(OutcomePreview[]::new);
+        }
+
         return new OutcomePreview[0];
     }
 }

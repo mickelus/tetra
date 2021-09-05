@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class HoloMaterialsGui extends GuiElement {
+public class HoloMaterialListGui extends GuiElement {
     private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;
 
@@ -25,7 +25,7 @@ public class HoloMaterialsGui extends GuiElement {
 
     private KeyframeAnimation openAnimation;
 
-    public HoloMaterialsGui(int x, int y, int width, int height) {
+    public HoloMaterialListGui(int x, int y, int width, int height) {
         super(x, y, width, height);
 
         groupsScroll = new GuiHorizontalScrollable(0, 0, width, 75).setGlobal(true);

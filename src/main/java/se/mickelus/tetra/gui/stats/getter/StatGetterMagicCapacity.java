@@ -20,15 +20,25 @@ public class StatGetterMagicCapacity implements IStatGetter {
                 .map(Arrays::stream)
                 .orElse(Stream.empty())
                 .filter(Objects::nonNull)
-                .mapToInt(module -> module.getMagicCapacityGain(itemStack))
+                .mapToInt(module -> module.getMagicCapacity(itemStack))
                 .sum();
     }
 
     @Override
     public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot).getMagicCapacityGain(itemStack))
+                .map(item -> item.getModuleFromSlot(itemStack, slot).getMagicCapacity(itemStack))
                 .orElse(0);
+    }
+
+    public boolean hasGain(ItemStack itemStack) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getMajorModules(itemStack))
+                .map(Arrays::stream)
+                .orElse(Stream.empty())
+                .filter(Objects::nonNull)
+                .mapToInt(module -> module.getMagicCapacityGain(itemStack))
+                .anyMatch(gain -> gain > 0);
     }
 
     @Override
@@ -38,6 +48,6 @@ public class StatGetterMagicCapacity implements IStatGetter {
 
     @Override
     public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
-        return getValue(player, currentStack) > 0 || getValue(player, previewStack) > 0;
+        return hasGain(currentStack) || hasGain(previewStack);
     }
 }

@@ -463,9 +463,9 @@ public interface IModularItem {
     }
 
     public static String getImprovementName(String key, int level) {
-        String tooltip = null;
+        String name = null;
         if (I18n.hasKey("tetra.improvement." + key + ".name")) {
-            tooltip = I18n.format("tetra.improvement." + key + ".name");
+            name = I18n.format("tetra.improvement." + key + ".name");
         } else {
             int lastSlash = key.lastIndexOf("/");
             if (lastSlash != -1) {
@@ -473,21 +473,21 @@ public interface IModularItem {
                 if (I18n.hasKey(templateKey)) {
                     String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
                     if (I18n.hasKey(materialKey)) {
-                        tooltip = StringUtils.capitalize(I18n.format(templateKey, I18n.format(materialKey).toLowerCase()));
+                        name = StringUtils.capitalize(I18n.format(templateKey, I18n.format(materialKey).toLowerCase()));
                     }
                 }
             }
 
-            if (tooltip == null) {
-                tooltip = "tetra.improvement." + key + ".name";
+            if (name == null) {
+                name = "tetra.improvement." + key + ".name";
             }
         }
 
         if (level > 0) {
-            tooltip += " " + I18n.format("enchantment.level." + level);
+            name += " " + I18n.format("enchantment.level." + level);
         }
 
-        return tooltip;
+        return name;
     }
 
     public static String getImprovementDescription(String key) {

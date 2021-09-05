@@ -1,41 +1,39 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
+import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringSmall;
-import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
-import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
+import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
+import se.mickelus.tetra.properties.PropertyHelper;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HoloVariantDetailGui extends GuiElement {
 
+    private final GuiHorizontalLayoutGroup header;
     private GuiString variantLabel;
 
     private GuiSynergyIndicator synergyIndicator;
-
-    private GuiString improvementsLabel;
-    private GuiElement improvements;
 
     private GuiElement requiredTools;
     private GuiItemRolling material;
@@ -44,30 +42,49 @@ public class HoloVariantDetailGui extends GuiElement {
 
     private Map<ToolType, Integer> availableToolLevels;
 
+    private Runnable populateImprovements;
+    private HoloImprovementButton improvementButton;
+    private HoloImprovementListGui improvements;
+
     private KeyframeAnimation openAnimation;
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
-    public HoloVariantDetailGui(int x, int y, int width) {
+    private final KeyframeAnimation foldAnimation;
+    private final KeyframeAnimation unfoldAnimation;
+
+    private OutcomePreview variantOutcome;
+    private OutcomePreview currentOutcome;
+    private String slot;
+    private List<OutcomeStack> selectedOutcomes;
+    private OutcomePreview hoveredImprovement;
+
+    private int originalY;
+
+    public HoloVariantDetailGui(int x, int y, int width, Consumer<OutcomePreview> onVariantOpen) {
         super(x, y, width, 100);
 
+        originalY = y;
+
+        selectedOutcomes = new LinkedList<>();
+
+        header = new GuiHorizontalLayoutGroup(0, 0, 20, 5);
+        addChild(header);
+
         variantLabel = new GuiString(0, 0, "");
-        addChild(variantLabel);
+        header.addChild(variantLabel);
 
         synergyIndicator = new GuiSynergyIndicator(0, -1, true);
-        addChild(synergyIndicator);
+        header.addChild(synergyIndicator);
 
-        // variant requirements
-        GuiStringSmall requirementsLabel = new GuiStringSmall(0, 13, I18n.format("tetra.holo.craft.requirements"));
-        requirementsLabel.setColor(GuiColors.muted);
-        addChild(requirementsLabel);
-
-        requiredTools = new GuiElement(0, 20, width, height);
-        addChild(requiredTools);
-
-        material = new GuiItemRolling(0, 20)
+        GuiElement materialWrapper = new MaterialWrapper(0, -4);
+        material = new GuiItemRolling(0, 0)
                 .setCountVisibility(GuiItem.CountMode.always);
-        addChild(material);
+        materialWrapper.addChild(material);
+        header.addChild(materialWrapper);
+
+        requiredTools = new GuiElement(0, -3, width, height);
+        header.addChild(requiredTools);
 
         PlayerEntity player = Minecraft.getInstance().player;
         availableToolLevels = Stream.of(PropertyHelper.getPlayerToolLevels(player), PropertyHelper.getToolbeltToolLevels(player))
@@ -75,22 +92,15 @@ public class HoloVariantDetailGui extends GuiElement {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
 
-
-        // variant improvements
-        improvementsLabel = new GuiStringSmall(57, 13, I18n.format("tetra.holo.craft.improvements"));
-        improvementsLabel.setColor(GuiColors.muted);
-        addChild(improvementsLabel);
-
-        improvements = new GuiElement(57, 18, width, height);
-        addChild(improvements);
-
-        // variant stats
-        GuiStringSmall statsLabel = new GuiStringSmall(120, 13, I18n.format("tetra.holo.craft.stats"));
-        statsLabel.setColor(GuiColors.muted);
-        addChild(statsLabel);
-
-        stats = new HoloStatsGui(120, 20);
+        stats = new HoloStatsGui(-5, 24);
         addChild(stats);
+
+        improvementButton = new HoloImprovementButton(0, 64, () -> onVariantOpen.accept(variantOutcome));
+        improvementButton.setAttachment(GuiAttachment.topCenter);
+        addChild(improvementButton);
+
+        improvements = new HoloImprovementListGui(0, 78, width, 0, this::onImprovementHover, this::onImprovementBlur, this::onImprovementSelect);
+        addChild(improvements);
 
         // animations
         openAnimation = new KeyframeAnimation(80, this)
@@ -107,54 +117,103 @@ public class HoloVariantDetailGui extends GuiElement {
                         this.isVisible = false;
                     }
                 });
+
+        foldAnimation = new KeyframeAnimation(60, this)
+                .applyTo(new Applier.TranslateY(0));
+
+        unfoldAnimation = new KeyframeAnimation(100, this)
+                .applyTo(new Applier.TranslateY(y));
     }
 
     public void updateVariant(OutcomePreview selectedOutcome, OutcomePreview hoveredOutcome, String slot) {
+        variantOutcome = selectedOutcome;
+        currentOutcome = selectedOutcome;
+        this.slot = slot;
+
         if (selectedOutcome != null || hoveredOutcome != null) {
             OutcomePreview baseOutcome = hoveredOutcome != null ? hoveredOutcome : selectedOutcome;
 
             variantLabel.setString(I18n.format(ItemModule.getName(baseOutcome.moduleKey, baseOutcome.variantKey)));
 
-            synergyIndicator.setX(variantLabel.getWidth() + 4);
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
             PlayerEntity player = Minecraft.getInstance().player;
             ItemStack improvementStack = baseOutcome.itemStack;
-            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot))
+            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot, improvementStack))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
                     .filter(improvementSchematic -> improvementSchematic.isApplicableForItem(improvementStack))
                     .filter(improvementSchematic -> improvementSchematic.isVisibleForPlayer(player, null, improvementStack))
                     .toArray(UpgradeSchematic[]::new);
 
-            improvementsLabel.setVisible(improvementSchematics.length > 0);
-            improvements.setVisible(improvementSchematics.length > 0);
-            if (improvementSchematics.length > 0) {
-                improvements.clearChildren();
-                for (int i = 0; i < improvementSchematics.length; i++) {
-                    improvements.addChild(new HoloImprovementGui(0, i * 18, improvementSchematics[i]));
-                }
-            }
+            improvementButton.updateCount(improvementSchematics.length);
+
+            populateImprovements = () -> {
+                improvements.updateSchematics(improvementStack, slot, improvementSchematics);
+                populateImprovements = null;
+            };
 
             requiredTools.clearChildren();
             baseOutcome.tools.getLevelMap().forEach((tool, level) -> {
-                ToolRequirementGui requirement = new ToolRequirementGui(20, requiredTools.getNumChildren() * 18, tool);
+                ToolRequirementGui requirement = new ToolRequirementGui( requiredTools.getNumChildren() * 20, 0, tool,
+                        "tetra.tool." + tool.getName() + ".craft_requirement");
                 requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
                 requiredTools.addChild(requirement);
             });
 
-            if (baseOutcome.materials.length > 0) {
-                material.setItems(baseOutcome.materials);
-            } else {
-                material.setItems(new ItemStack[0]);
-            }
+            material.setItems(baseOutcome.materials);
 
-            stats.update(selectedOutcome != null ? selectedOutcome.itemStack : hoveredOutcome.itemStack,
-                    baseOutcome.itemStack,null, null, Minecraft.getInstance().player);
+            updateStats(selectedOutcome, hoveredOutcome);
+
+            header.forceLayout();
 
             show();
         } else {
             hide();
         }
+    }
+
+    public void onImprovementSelect(OutcomeStack selectedStack) {
+        boolean wasRemoved = selectedOutcomes.removeIf(stack -> stack.equals(selectedStack));
+
+        if (!wasRemoved) {
+            selectedOutcomes.add(selectedStack);
+        }
+
+        currentOutcome = variantOutcome.clone();
+
+        for (OutcomeStack stack : selectedOutcomes) {
+            OutcomePreview[] tempPreviews = stack.schematic.getPreviews(currentOutcome.itemStack, slot);
+            for (OutcomePreview tempPreview : tempPreviews) {
+                if (tempPreview.equals(stack.preview)) {
+                    currentOutcome = tempPreview;
+                    break;
+                }
+            }
+        }
+
+        selectedOutcomes.removeIf(stack -> !stack.preview.isApplied(currentOutcome.itemStack, slot));
+
+        improvements.updateSelection(currentOutcome.itemStack, selectedOutcomes);
+
+        updateStats(currentOutcome, currentOutcome);
+    }
+
+    private void onImprovementHover(OutcomePreview improvement) {
+        updateStats(currentOutcome, improvement);
+        hoveredImprovement = improvement;
+    }
+
+    private void onImprovementBlur(OutcomePreview improvement) {
+        if (improvement.equals(hoveredImprovement)) {
+            updateStats(currentOutcome, null);
+            hoveredImprovement = null;
+        }
+    }
+
+    public void updateStats(OutcomePreview selectedOutcome, OutcomePreview hoveredOutcome) {
+        ItemStack baseStack = hoveredOutcome != null ? hoveredOutcome.itemStack : selectedOutcome != null ? selectedOutcome.itemStack : ItemStack.EMPTY;
+        stats.update(selectedOutcome != null ? selectedOutcome.itemStack : baseStack, baseStack,null, null,
+                Minecraft.getInstance().player);
     }
 
     public void animateOpen() {
@@ -171,5 +230,55 @@ public class HoloVariantDetailGui extends GuiElement {
     public void hide() {
         showAnimation.stop();
         hideAnimation.start();
+    }
+
+    public void forceHide() {
+        setY(originalY);
+        setOpacity(0);
+        improvements.forceHide();
+        improvementButton.setVisible(false);
+    }
+
+    public void showImprovements() {
+        if (populateImprovements != null) {
+            populateImprovements.run();
+        }
+
+        unfoldAnimation.stop();
+        foldAnimation.start();
+        improvements.show();
+        improvementButton.hide();
+    }
+
+    public void hideImprovements() {
+        currentOutcome = variantOutcome;
+        selectedOutcomes.clear();
+
+        if (currentOutcome != null) {
+            updateStats(currentOutcome, null);
+        }
+
+        foldAnimation.stop();
+        unfoldAnimation.start();
+
+        improvements.hide();
+        improvementButton.show();
+    }
+
+    static class MaterialWrapper extends GuiElement {
+        public MaterialWrapper(int x, int y) {
+            super(x, y, 16, 16);
+        }
+
+        @Override
+        public List<String> getTooltipLines() {
+            if (hasFocus()) {
+                List<String> tooltip = super.getTooltipLines();
+                if (tooltip != null && tooltip.size() > 0) {
+                    return ImmutableList.of(I18n.format("tetra.holo.craft.material_requirement", tooltip.get(0)));
+                }
+            }
+            return null;
+        }
     }
 }

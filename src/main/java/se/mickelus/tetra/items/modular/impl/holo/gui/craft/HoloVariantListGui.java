@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HoloVariantsGui extends GuiElement {
+public class HoloVariantListGui extends GuiElement {
     private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;
 
@@ -30,7 +30,7 @@ public class HoloVariantsGui extends GuiElement {
 
     private OutcomePreview[] previews;
 
-    public HoloVariantsGui(int x, int y, int width, Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur,
+    public HoloVariantListGui(int x, int y, int width, Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur,
             Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, width, 50);
 
@@ -85,6 +85,15 @@ public class HoloVariantsGui extends GuiElement {
     @Override
     protected void onShow() {
         groups.getChildren(HoloVariantGroupGui.class).forEach(HoloVariantGroupGui::animateIn);
+    }
+
+    @Override
+    public boolean onMouseScroll(double mouseX, double mouseY, double distance) {
+        if (isVisible()) {
+            return super.onMouseScroll(mouseX, mouseY, distance);
+        }
+
+        return false;
     }
 
     @Override

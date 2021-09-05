@@ -14,12 +14,14 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 import se.mickelus.tetra.module.data.ToolData;
+import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.*;
 
 public class HoloMaterialTranslation extends GuiElement {
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.format("tetra.holo.craft.empty_translation"));
+    private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.format("tetra.holo.craft.empty_translation_improvement"));
+    private final List<String> emptyTooltip = Collections.singletonList(I18n.format("tetra.holo.craft.empty_translation_module"));
     private List<String> tooltip;
 
     private GuiTexture icon;
@@ -56,7 +58,12 @@ public class HoloMaterialTranslation extends GuiElement {
             extractEffects(translation.tertiaryEffects, tertiary);
 
             ImmutableList.Builder<String> result = new ImmutableList.Builder<>();
-            result.add(I18n.format("tetra.holo.craft.translation"));
+
+            if (schematic.getType() == SchematicType.improvement) {
+                result.add(I18n.format("tetra.holo.craft.translation_improvement"));
+            } else {
+                result.add(I18n.format("tetra.holo.craft.translation_module"));
+            }
 
             if (translation.durability != null || translation.integrity != null) {
                 result.add(" ");
@@ -91,6 +98,11 @@ public class HoloMaterialTranslation extends GuiElement {
             tooltip = result.build();
         } else {
             tooltip = emptyTooltip;
+            if (schematic.getType() == SchematicType.improvement) {
+                tooltip = emptyTooltipImprovement;
+            } else {
+                tooltip = emptyTooltip;
+            }
         }
     }
 

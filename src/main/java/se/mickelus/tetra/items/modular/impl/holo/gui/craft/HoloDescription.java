@@ -1,6 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
@@ -8,6 +10,7 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,6 +40,10 @@ public class HoloDescription extends GuiElement {
                 .map(Collections::singletonList)
                 .findFirst()
                 .orElse(emptyTooltip);
+    }
+
+    public void update(UpgradeSchematic schematic, ItemStack itemStack) {
+        tooltip = ImmutableList.of(schematic.getDescription(itemStack));
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.LinkedList;
@@ -18,14 +19,15 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private HoloItemsGui itemsView;
     private IModularItem item;
 
-    private HoloSchematicsGui schematicsView;
+    private HoloSchematicListGui schematicsView;
     private String slot;
 
     private HoloSchematicGui schematicView;
     private UpgradeSchematic schematic;
+    private OutcomePreview openVariant;
 
     private boolean showingMaterials = false;
-    private HoloMaterialsGui materialsView;
+    private HoloMaterialListGui materialsView;
 
     public HoloCraftRootGui(int x, int y) {
         super(x, y);
@@ -37,15 +39,15 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect, this::onMaterialsSelect);
         addChild(itemsView);
 
-        schematicsView = new HoloSchematicsGui(0, 20, width, height, this::onSchematicSelect);
+        schematicsView = new HoloSchematicListGui(0, 20, width, height, this::onSchematicSelect);
         schematicsView.setVisible(false);
         addChild(schematicsView);
 
-        schematicView = new HoloSchematicGui(0, 20, width, height);
+        schematicView = new HoloSchematicGui(0, 20, width, height, this::onVariantSelect);
         schematicView.setVisible(false);
         addChild(schematicView);
 
-        materialsView = new HoloMaterialsGui(0, 20, width, height);
+        materialsView = new HoloMaterialListGui(0, 20, width, height);
         materialsView.setVisible(false);
         addChild(materialsView);
     }
@@ -76,6 +78,10 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 break;
             case 2:
                 onSlotSelect(slot);
+                break;
+            case 3:
+                onSchematicSelect(schematic);
+                break;
         }
 
         this.depth = depth;
@@ -106,6 +112,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         this.slot = null;
         schematicsView.setVisible(false);
 
+        this.openVariant = null;
         this.schematic = null;
         schematicView.setVisible(false);
 
@@ -127,6 +134,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
         itemsView.setVisible(false);
 
+        this.openVariant = null;
         this.schematic = null;
         schematicView.setVisible(false);
 
@@ -140,6 +148,25 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         this.schematic = schematic;
 
         schematicView.update(item, slot, schematic);
+        schematicView.setVisible(true);
+
+        this.openVariant = null;
+        schematicView.openVariant(null);
+
+        schematicsView.setVisible(false);
+
+        itemsView.setVisible(false);
+
+        this.showingMaterials = false;
+        materialsView.setVisible(false);
+
+        updateBreadcrumb();
+    }
+
+    private void onVariantSelect(OutcomePreview variant) {
+        this.openVariant = variant;
+
+        schematicView.openVariant(openVariant);
         schematicView.setVisible(true);
 
         schematicsView.setVisible(false);
@@ -167,6 +194,10 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
             if (schematic != null) {
                 result.add(schematic.getName());
+            }
+
+            if (openVariant != null) {
+                result.add(openVariant.variantName);
             }
         } else if (showingMaterials) {
             result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));

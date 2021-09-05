@@ -139,9 +139,9 @@ public class SchematicRegistry {
                 .toArray(UpgradeSchematic[]::new);
     }
 
-    public static UpgradeSchematic[] getSchematics(String slot) {
+    public static UpgradeSchematic[] getSchematics(String slot, ItemStack itemStack) {
         return getAllSchematics().stream()
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, ItemStack.EMPTY))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, itemStack))
                 .toArray(UpgradeSchematic[]::new);
     }
 

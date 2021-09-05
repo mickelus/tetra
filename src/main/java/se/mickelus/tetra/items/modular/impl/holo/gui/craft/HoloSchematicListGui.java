@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import net.minecraft.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.gui.GuiSchematicListItem;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
@@ -14,7 +15,7 @@ import se.mickelus.tetra.util.Filter;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class HoloSchematicsGui extends GuiElement {
+public class HoloSchematicListGui extends GuiElement {
 
     private Consumer<UpgradeSchematic> onSchematicSelect;
 
@@ -23,7 +24,7 @@ public class HoloSchematicsGui extends GuiElement {
     private KeyframeAnimation showAnimation;
     private KeyframeAnimation hideAnimation;
 
-    public HoloSchematicsGui(int x, int y, int width, int height, Consumer<UpgradeSchematic> onSchematicSelect) {
+    public HoloSchematicListGui(int x, int y, int width, int height, Consumer<UpgradeSchematic> onSchematicSelect) {
         super(x, y, width, height);
 
         this.onSchematicSelect = onSchematicSelect;
@@ -43,7 +44,7 @@ public class HoloSchematicsGui extends GuiElement {
     public void update(IModularItem item, String slot) {
         int offset = 0;
         int pageLines = 8;
-        UpgradeSchematic[] schematics = Arrays.stream(SchematicRegistry.getSchematics(slot))
+        UpgradeSchematic[] schematics = Arrays.stream(SchematicRegistry.getSchematics(slot, ItemStack.EMPTY))
                 .filter(schematic -> !schematic.isHoning())
                 .filter(schematic -> !schematic.getRarity().equals(SchematicRarity.temporary))
                 .filter(schematic -> !schematic.getType().equals(SchematicType.improvement))

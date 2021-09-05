@@ -7,7 +7,9 @@ import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ToolTypes;
-import se.mickelus.tetra.gui.stats.*;
+import se.mickelus.tetra.gui.stats.AbilityStats;
+import se.mickelus.tetra.gui.stats.GuiStats;
+import se.mickelus.tetra.gui.stats.StatsHelper;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBarTool;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -101,7 +103,7 @@ public class HoloStatsGui extends GuiElement {
     private GuiElement barGroup;
 
     public HoloStatsGui(int x, int y) {
-        super(x, y, 200, 52);
+        super(x, y, 320, 52);
 
         barGroup = new GuiElement(0, 0, width, height);
         addChild(barGroup);
@@ -131,8 +133,8 @@ public class HoloStatsGui extends GuiElement {
         bar.setAttachment(GuiAttachment.topLeft);
         bar.setAlignment(GuiAlignment.left);
 
-        bar.setX((index % 3) * (StatsHelper.barLength + 10));
-        bar.setY(17 * ((index / 3)));
+        bar.setX((index % 5) * (StatsHelper.barLength + 9));
+        bar.setY(17 * ((index / 5)));
     }
 
     public void realignBars() {

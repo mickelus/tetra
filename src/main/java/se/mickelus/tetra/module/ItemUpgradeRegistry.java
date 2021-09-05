@@ -115,6 +115,14 @@ public class ItemUpgradeRegistry {
             }
     }
 
+    public EnchantmentMapping[] getEnchantmentMappings() {
+        return DataManager.enchantmentData.getData().values().stream()
+                .flatMap(Arrays::stream)
+                .filter(mapping -> mapping.enchantment != null)
+                .filter(mapping -> mapping.apply)
+                .toArray(EnchantmentMapping[]::new);
+    }
+
     public EnchantmentMapping[] getEnchantmentMappings(String improvement) {
         return DataManager.enchantmentData.getData().values().stream()
                 .flatMap(Arrays::stream)

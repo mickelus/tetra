@@ -59,7 +59,7 @@ public class GuiSchematicListItem extends GuiClickable {
         addChild(glyph);
 
         if (schematic.getType() == SchematicType.improvement) {
-            addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench));
+            addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench).setColor(GuiColors.muted));
         }
     }
 

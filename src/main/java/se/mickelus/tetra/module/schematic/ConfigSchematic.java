@@ -378,20 +378,27 @@ public class ConfigSchematic extends BaseSchematic {
     public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
         return Arrays.stream(definition.outcomes)
                 .map(outcome -> {
+                    ItemStack itemStack = targetStack.copy();
+
                     String key = null;
+                    String name = "";
                     String category = "misc";
+                    int level = -1;
                     GlyphData glyph;
 
                     if (outcome.moduleKey != null) {
                         VariantData variant = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome)).getVariantData(outcome.moduleVariant);
 
                         key = outcome.moduleVariant;
+                        name = getVariantName(outcome, itemStack);
                         glyph = variant.glyph;
                         category = variant.category;
                     } else {
                         if (outcome.improvements.size() == 1) {
-                            for (String improvementKey : outcome.improvements.keySet()) {
-                                key = improvementKey;
+                            for (Map.Entry<String, Integer> entry: outcome.improvements.entrySet()) {
+                                key = entry.getKey();
+                                name = IModularItem.getImprovementName(key, entry.getValue());
+                                level = entry.getValue();
                             }
                             glyph = definition.glyph;
                         } else if (!outcome.improvements.isEmpty()) {
@@ -402,10 +409,9 @@ public class ConfigSchematic extends BaseSchematic {
                         }
                     }
 
-                    ItemStack itemStack = targetStack.copy();
                     applyOutcome(outcome, itemStack, false, slot, null);
 
-                    return new OutcomePreview(outcome.moduleKey, key, getVariantName(outcome, itemStack), category, glyph, itemStack, definition.displayType, outcome.requiredTools,
+                    return new OutcomePreview(outcome.moduleKey, key, name, category, level, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
                 })
                 .filter(Filter.distinct(preview -> preview.variantKey))
