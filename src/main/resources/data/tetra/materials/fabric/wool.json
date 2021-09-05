@@ -22,6 +22,6 @@
         "tag": "minecraft:wool"
     },
     "requiredTools": {
-        "axe": 1
+        "cut": 1
     }
 }
