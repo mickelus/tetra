@@ -1,227 +1,49 @@
 [
     {
-        "key": "shield/trim_iron",
+        "materials": ["tetra:metal/"],
+        "key": "shield/trim/",
         "group": "trim",
-        "durabilityMultiplier": 1.15,
         "integrity": -1,
-        "models": [
-            {
+        "durability": 5,
+        "models": [{
+            "type": "shield_tower",
+            "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
+            "tint": "inherit"
+        }],
+        "extract": {
+            "durability": 0.15,
+            "availableTextures": ["trim"],
+            "models": [{
                 "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "iron"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
+                "location": "tetra:items/module/shield/plate/tower/improvements/"
+            }]
+        }
     },
     {
-        "key": "shield/trim_gold",
+        "materials": ["tetra:skin/"],
+        "key": "shield/trim/",
         "group": "trim",
-        "durabilityMultiplier": 1.1,
         "integrity": -1,
-        "models": [
-            {
+        "durability": 10,
+        "models": [{
+            "type": "shield_tower",
+            "location": "tetra:items/module/shield/plate/tower/improvements/trim_shadow",
+            "tint": "inherit"
+        }],
+        "extract": {
+            "durability": 0.17,
+            "availableTextures": ["trim"],
+            "models": [{
                 "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "gold"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
+                "location": "tetra:items/module/shield/plate/tower/improvements/"
+            }]
+        }
     },
     {
-        "key": "shield/trim_copper",
-        "group": "trim",
-        "durabilityMultiplier": 1.15,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "copper"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_tin",
-        "group": "trim",
-        "durabilityMultiplier": 1.15,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "tin"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_silver",
-        "group": "trim",
-        "durabilityMultiplier": 1.1,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "silver"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_nickel",
-        "group": "trim",
-        "durabilityMultiplier": 1.15,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "nickel"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_lead",
-        "group": "trim",
-        "durabilityMultiplier": 1.15,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "lead"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_bronze",
-        "group": "trim",
-        "durabilityMultiplier": 1.2,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "bronze"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_steel",
-        "group": "trim",
-        "durabilityMultiplier": 1.3,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "steel"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_electrum",
-        "group": "trim",
-        "durabilityMultiplier": 1.1,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "electrum"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_leather",
-        "group": "trim",
-        "durabilityMultiplier": 1.1,
-        "durability": 20,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "leather"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_shadow",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_hide",
-        "group": "trim",
-        "durabilityMultiplier": 1.1,
-        "durability": 20,
-        "integrity": -1,
-        "models": [
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim",
-                "tint": "hide"
-            },
-            {
-                "type": "shield_tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_shadow",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/trim_scrap",
+        "key": "shield/trim/scrap",
         "group": "trim",
         "integrity": -1,
-        "durabilityMultiplier": 1.4,
+        "durability": 120,
         "models": [
             {
                 "type": "shield_tower",

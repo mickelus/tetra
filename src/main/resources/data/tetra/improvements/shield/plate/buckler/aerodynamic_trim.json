@@ -1,202 +1,27 @@
 [
     {
-        "key": "shield/aerodynamic_trim_iron",
+        "materials": ["tetra:metal/"],
+        "key": "shield/aerodynamic_trim/",
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": [1, 1]
+            "throwable": [1, 0.8]
         },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "iron"
+        "models": [{
+            "type": "shield_buckler",
+            "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
+            "tint": "inherit"
+        }],
+        "extract": {
+            "primaryEffects": {
+                "throwable": [0, 0.008]
             },
-            {
+            "durability": 0.1,
+            "availableTextures": ["aerodynamic_trim"],
+            "models": [{
                 "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_gold",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "gold"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_copper",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "copper"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_tin",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "tin"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_silver",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "silver"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_nickel",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "nickel"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_lead",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "lead"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_bronze",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "bronze"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_steel",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "steel"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
-    },
-    {
-        "key": "shield/aerodynamic_trim_electrum",
-        "group": "trim",
-        "integrity": -1,
-        "effects": {
-            "throwable": [1, 1]
-        },
-        "models": [
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim",
-                "tint": "electrum"
-            },
-            {
-                "type": "shield_buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/aerodynamic_trim_bevel",
-                "tint": "inherit"
-            }
-        ]
+                "location": "tetra:items/module/shield/plate/buckler/improvements/"
+            }]
+        }
     }
 ]

@@ -7,139 +7,22 @@
         "textureX": 48,
         "textureY": 240
     },
+    "translation": {
+        "durability": 1
+    },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:iron_ingot"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
+            "materials": ["tetra:metal/"],
+            "countFactor": 2,
             "improvements": {
-                "shield/trim_iron": 0
+                "shield/trim/": 0
             }
         },
         {
-            "material": {
-                "item": "minecraft:gold_ingot"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
+            "materials": ["tetra:skin/"],
+            "countFactor": 4,
             "improvements": {
-                "shield/trim_gold": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/copper"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/trim_copper": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/tin"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/trim_tin": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/silver"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/trim_silver": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/nickel"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/trim_nickel": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/lead"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/trim_lead": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/electrum"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/trim_electrum": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/bronze"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/trim_bronze": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/steel"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/trim_steel": 0
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:leather",
-                "count": 2
-            },
-            "requiredTools": {
-                "cut": 2
-            },
-            "improvements": {
-                "shield/trim_leather": 0
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:rabbit_hide",
-                "count": 4
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "improvements": {
-                "shield/trim_hide": 0
+                "shield/trim/": 0
             }
         },
         {
@@ -151,7 +34,7 @@
                 "hammer": 4
             },
             "improvements": {
-                "shield/trim_scrap": 0
+                "shield/trim/scrap": 0
             }
         }
     ]

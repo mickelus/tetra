@@ -7,115 +7,14 @@
         "textureX": 64,
         "textureY": 240
     },
+    "translation": {
+        "durability": 1
+    },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:iron_ingot"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
+            "materials": ["tetra:metal/"],
             "improvements": {
-                "shield/studs_iron": 0
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:gold_ingot"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/studs_gold": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/copper"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/studs_copper": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/tin"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/studs_tin": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/silver"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/studs_silver": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/nickel"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/studs_nickel": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/lead"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/studs_lead": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/electrum"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/studs_electrum": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/bronze"
-            },
-            "requiredTools": {
-                "hammer": 2
-            },
-            "improvements": {
-                "shield/studs_bronze": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/steel"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/studs_steel": 0
+                "shield/studs/": 0
             }
         }
     ]

@@ -1,123 +1,24 @@
 {
     "replace": true,
-    "slots": [
-        "shield/plate"
-    ],
+    "slots": ["shield/plate"],
     "materialSlotCount": 1,
     "displayType": "improvement",
     "glyph": {
         "textureX": 80,
         "textureY": 240
     },
+    "translation": {
+        "primaryEffects": {
+            "throwable": 3
+        },
+        "durability": 1
+    },
     "outcomes": [
         {
-            "material": {
-                "item": "minecraft:iron_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
+            "materials": ["tetra:metal/"],
+            "countFactor": 2,
             "improvements": {
-                "shield/aerodynamic_trim_iron": 0
-            }
-        },
-        {
-            "material": {
-                "item": "minecraft:gold_ingot"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_gold": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/copper"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_copper": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/tin"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_tin": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/silver"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_silver": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/nickel"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_nickel": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/lead"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_lead": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/electrum"
-            },
-            "requiredTools": {
-                "hammer": 4
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_electrum": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/bronze"
-            },
-            "requiredTools": {
-                "hammer": 3
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_bronze": 0
-            }
-        },
-        {
-            "material": {
-                "tag": "forge:ingots/steel"
-            },
-            "requiredTools": {
-                "hammer": 5
-            },
-            "improvements": {
-                "shield/aerodynamic_trim_steel": 0
+                "shield/aerodynamic_trim/": 0
             }
         }
     ]
