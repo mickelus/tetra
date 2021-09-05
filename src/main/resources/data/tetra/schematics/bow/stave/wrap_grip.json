@@ -8,6 +8,18 @@
         "textureX": 16
     },
     "displayType": "improvement",
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": 1
+        },
+        "secondaryEffects": {
+            "fierySelf": -1
+        },
+        "tertiaryEffects": {
+            "enderReverb": -1
+        },
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": ["tetra:fibre/", "tetra:skin/"],
