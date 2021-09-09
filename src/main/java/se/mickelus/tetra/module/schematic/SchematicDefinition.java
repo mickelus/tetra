@@ -134,6 +134,12 @@ public class SchematicDefinition {
     public MaterialMultiplier translation;
 
     /**
+     * Used to display hints about which materials that can be used for this schematic, strings starting with # are considered as materials, others
+     * as item IDs.
+     */
+    public String[] applicableMaterials;
+
+    /**
      * An array of all potential outcomes of this schematic.
      */
     public OutcomeDefinition[] outcomes = new OutcomeDefinition[0];
@@ -201,6 +207,13 @@ public class SchematicDefinition {
 
         if (!from.glyph.equals(defaultValues.glyph)) {
             to.glyph = from.glyph;
+        }
+
+        if (to.applicableMaterials != null && from.applicableMaterials != null) {
+            to.applicableMaterials = Stream.concat(Arrays.stream(to.applicableMaterials), Arrays.stream(from.applicableMaterials))
+                    .toArray(String[]::new);
+        } else if (from.applicableMaterials != null) {
+            to.applicableMaterials = from.applicableMaterials;
         }
 
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes))

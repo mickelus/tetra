@@ -98,6 +98,12 @@ public class ConfigSchematic extends BaseSchematic {
         return definition.translation;
     }
 
+    @Nullable
+    @Override
+    public String[] getApplicableMaterials() {
+        return definition.applicableMaterials;
+    }
+
     @Override
     public int getNumMaterialSlots() {
         return definition.materialSlotCount;

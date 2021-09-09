@@ -16,10 +16,12 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiSpinner;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +43,8 @@ public class HoloGui extends Screen {
     private static HoloGui instance = null;
 
     private static boolean hasListener = false;
+
+    private Runnable closeCallback;
 
     public HoloGui() {
         super(new StringTextComponent("tetra:holosphere"));
@@ -75,6 +79,24 @@ public class HoloGui extends Screen {
                 Minecraft.getInstance().runImmediately(HoloGui::onReload);
             });
             hasListener = true;
+        }
+    }
+
+    public void openSchematic(IModularItem item, String slot, UpgradeSchematic schematic, Runnable closeCallback) {
+        changePage(HoloPage.craft);
+
+        ((HoloCraftRootGui) pages[0]).updateState(item, slot, schematic);
+        this.closeCallback = closeCallback;
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        if (closeCallback != null) {
+            // onClose is called in Minecarft.displayGuiScreen, pre-null-assignement prevents gui chaining from getting stuck in recursion
+            Runnable callback = closeCallback;
+            this.closeCallback = null;
+            callback.run();
         }
     }
 

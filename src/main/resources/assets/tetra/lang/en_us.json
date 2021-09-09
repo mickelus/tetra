@@ -54,6 +54,13 @@
   "tetra.holo.craft.empty_translation_module": "It is not known how material properties translate into stats for this module",
   "tetra.holo.craft.translation_improvement": "Stats gained based on material properties for this improvement",
   "tetra.holo.craft.empty_translation_improvement": "It is not known how material properties translate into stats for this improvement",
+  "tetra.holo.craft.empty_applicable_materials": "Which materials are applicable for this schematic is unknown",
+  "tetra.holo.craft.applicable_materials": "Materials applicable for this schematic:",
+
+  "tetra.holo.craft.holosphere_shortcut": "§7[§8click§7] §8View details",
+  "tetra.holo.craft.holosphere_shortcut_disabled": "§7[§8§mclick§7] §8§mView details",
+  "tetra.holo.craft.holosphere_shortcut_missing": "Requires Holosphere",
+  "tetra.holo.craft.holosphere_shortcut_unavailable": "Details unavailable",
 
   "tetra.holo.craft.materials.stat.primary": "Hardness",
   "tetra.holo.craft.materials.stat.primary.short": "hard",

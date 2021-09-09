@@ -33,7 +33,6 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         super(x, y);
 
         breadcrumbs = new HoloBreadcrumbsGui(0, 0, width, this::onBreadcrumbClick);
-        breadcrumbs.setVisible(false);
         addChild(breadcrumbs);
 
         itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect, this::onMaterialsSelect);
@@ -179,8 +178,17 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         updateBreadcrumb();
     }
 
+    public void updateState(IModularItem item, String slot, UpgradeSchematic schematic) {
+        this.item = item;
+        itemsView.changeItem(item);
+
+        this.slot = slot;
+
+        onSchematicSelect(schematic);
+        breadcrumbs.animateOpen(false);
+    }
+
     private void updateBreadcrumb() {
-        breadcrumbs.setVisible(item != null);
         LinkedList<String> result = new LinkedList<>();
 
         if (item != null) {

@@ -100,6 +100,35 @@ public class SchematicRegistry {
     }
 
     private void processDefinition(SchematicDefinition definition) {
+        if (definition.applicableMaterials == null) {
+            definition.applicableMaterials = Arrays.stream(definition.outcomes)
+                    .flatMap(outcome -> {
+                        if (outcome instanceof MaterialOutcomeDefinition) {
+                            return Arrays.stream(((MaterialOutcomeDefinition) outcome).materials)
+                                    .map(ResourceLocation::getPath)
+                                    .map(path -> {
+                                        if (path.endsWith("/")) {
+                                            return "#" + path.substring(0, path.length() - 1);
+                                        }
+
+                                        int separatorIndex = path.lastIndexOf("/");
+                                        if (separatorIndex != -1) {
+                                            return "!" + path.substring(separatorIndex + 1);
+                                        }
+                                        return "!" + path;
+                                    });
+                        } else if (outcome.material.isValid()) {
+                            ItemStack[] applicableItemStacks = outcome.material.getApplicableItemStacks();
+                            if (applicableItemStacks.length > 0) {
+                                return Stream.of(applicableItemStacks[0].getItem().getRegistryName().toString());
+                            }
+                        }
+
+                        return Stream.empty();
+                    })
+                    .toArray(String[]::new);
+        }
+
         // todo: merge outcomes instead of filtering duplicates
         definition.outcomes = Arrays.stream(definition.outcomes)
                 .flatMap(outcome ->

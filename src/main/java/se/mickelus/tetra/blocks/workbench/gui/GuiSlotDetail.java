@@ -132,8 +132,7 @@ public class GuiSlotDetail extends GuiElement {
 
             ItemStack previewStack = currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player);
 
-            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools,
-                    player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
+            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools, player);
             schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack, previewStack);
             schematicDetail.updateButton(currentSchematic, player, itemStack, previewStack, materials, selectedSlot, availableTools);
 

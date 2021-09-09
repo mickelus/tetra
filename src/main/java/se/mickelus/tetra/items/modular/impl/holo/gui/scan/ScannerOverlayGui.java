@@ -114,14 +114,7 @@ public class ScannerOverlayGui extends GuiRoot {
     }
 
     private void updateStats() {
-        ItemStack itemStack = Stream.of(
-                mc.player.inventory.offHandInventory.stream(),
-                mc.player.inventory.mainInventory.stream(),
-                ToolbeltHelper.getToolbeltItems(mc.player).stream())
-                .flatMap(Function.identity())
-                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
-                .findFirst()
-                .orElse(ItemStack.EMPTY);
+        ItemStack itemStack = ModularHolosphereItem.findHolosphere(mc.player);
 
         if (!itemStack.isEmpty()) {
             ModularHolosphereItem item = (ModularHolosphereItem) itemStack.getItem();

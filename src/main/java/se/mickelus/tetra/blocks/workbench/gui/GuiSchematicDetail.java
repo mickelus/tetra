@@ -8,6 +8,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialApplicable;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslation;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -39,6 +41,9 @@ public class GuiSchematicDetail extends GuiElement {
 
     private GuiExperience experienceIndicator;
 
+    private HoloMaterialTranslation materialTranslation;
+    private HoloMaterialApplicable applicableMaterials;
+
     public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
         addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("tetra.workbench.schematic_detail.back"), backListener));
@@ -51,6 +56,11 @@ public class GuiSchematicDetail extends GuiElement {
 
         description = new GuiTextSmall(5, 17, 105, "");
         addChild(description);
+
+        materialTranslation = new HoloMaterialTranslation(110, 4);
+        addChild(materialTranslation);
+        applicableMaterials = new HoloMaterialApplicable(111, 13);
+        addChild(applicableMaterials);
 
         slotNames = new GuiString[MAX_NUM_SLOTS];
         slotQuantities = new GuiString[MAX_NUM_SLOTS];
@@ -90,7 +100,7 @@ public class GuiSchematicDetail extends GuiElement {
     }
 
     public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolType, Integer> availableTools,
-            int playerLevel) {
+            PlayerEntity player) {
         this.schematic = schematic;
 
         title.setString(schematic.getName());
@@ -100,6 +110,13 @@ public class GuiSchematicDetail extends GuiElement {
         description.setString(TextFormatting.GRAY + descriptionString
                 .replace(TextFormatting.RESET.toString(), TextFormatting.RESET.toString() + TextFormatting.GRAY.toString()));
         descriptionTooltip = ImmutableList.of(descriptionString);
+
+        materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);
+        applicableMaterials.setVisible(schematic.getNumMaterialSlots() > 0);
+        if (schematic.getNumMaterialSlots() > 0) {
+            materialTranslation.update(schematic);
+            applicableMaterials.update(itemStack, slot, schematic, player);
+        }
 
         glyph.clearChildren();
         GlyphData glyphData = schematic.getGlyph();
@@ -163,7 +180,11 @@ public class GuiSchematicDetail extends GuiElement {
         int xpCost = schematic.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
         if (xpCost > 0) {
-            experienceIndicator.update(xpCost, xpCost <= playerLevel);
+            if (!player.isCreative()) {
+                experienceIndicator.update(xpCost, xpCost <= player.experienceLevel);
+            } else {
+                experienceIndicator.update(xpCost, true);
+            }
         }
     }
 

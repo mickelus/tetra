@@ -26,6 +26,15 @@ public interface UpgradeSchematic {
         return null;
     }
 
+    /**
+     * Used to display hints about which materials that can be used for this schematic, strings starting with # are considered as materials, others
+     * as item IDs.
+     */
+    @Nullable
+    default String[] getApplicableMaterials() {
+        return null;
+    }
+
     public int getNumMaterialSlots();
 
     public String getSlotName(final ItemStack itemStack, int index);

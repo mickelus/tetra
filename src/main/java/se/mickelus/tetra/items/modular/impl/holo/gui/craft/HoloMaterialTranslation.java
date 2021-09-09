@@ -97,7 +97,6 @@ public class HoloMaterialTranslation extends GuiElement {
 
             tooltip = result.build();
         } else {
-            tooltip = emptyTooltip;
             if (schematic.getType() == SchematicType.improvement) {
                 tooltip = emptyTooltipImprovement;
             } else {

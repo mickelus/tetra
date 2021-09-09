@@ -26,12 +26,15 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class ModularHolosphereItem extends ModularItem {
     private static final String unlocalizedName = "holo";
@@ -135,5 +138,16 @@ public class ModularHolosphereItem extends ModularItem {
 
     public double getCooldownBase(ItemStack itemStack) {
         return Math.max(0, getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get()));
+    }
+
+    public static ItemStack findHolosphere(PlayerEntity player) {
+        return Stream.of(
+                player.inventory.offHandInventory.stream(),
+                player.inventory.mainInventory.stream(),
+                ToolbeltHelper.getToolbeltItems(player).stream())
+                .flatMap(Function.identity())
+                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
+                .findFirst()
+                .orElse(ItemStack.EMPTY);
     }
 }
