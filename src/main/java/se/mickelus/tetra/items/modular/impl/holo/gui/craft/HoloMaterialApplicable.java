@@ -115,7 +115,7 @@ public class HoloMaterialApplicable extends GuiElement {
             HoloGui gui = HoloGui.getInstance();
 
             Minecraft.getInstance().displayGuiScreen(gui);
-            gui.openSchematic(item, slot, schematic, () -> Minecraft.getInstance().displayGuiScreen(currentScreen));
+            gui.openSchematic(item, slot, schematic, () -> ClientScheduler.schedule(0, () -> Minecraft.getInstance().displayGuiScreen(currentScreen)));
             return true;
         }
 
