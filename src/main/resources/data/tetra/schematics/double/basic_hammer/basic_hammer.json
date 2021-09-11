@@ -14,6 +14,21 @@
     },
     "displayType": "major",
     "applicableMaterials": ["#wood", "#stone", "!iron", "!blackstone", "!obsidian", "!netherite"],
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 2
+        },
+        "secondaryAttributes": {
+            "generic.attack_damage": 3,
+            "generic.attack_speed": -1
+        },
+        "tools": {
+            "hammer": [0, 2]
+        },
+        "durability": 2,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
             "materials": [

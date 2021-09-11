@@ -7,6 +7,14 @@
         "textureX": 128,
         "textureY": 48
     },
+    "translation": {
+        "secondaryAttributes": {
+            "tetra:draw_speed": -2
+        },
+        "durability": 3,
+        "integrity": 2,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
             "material": {

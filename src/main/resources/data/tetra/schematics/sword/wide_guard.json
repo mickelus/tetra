@@ -9,6 +9,19 @@
         "textureX": 40,
         "textureY": 16
     },
+    "translation": {
+        "primaryAttributes": {
+            "generic.armor": 2
+        },
+        "tertiaryAttributes": {
+            "generic.armor": 1
+        },
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "durability": 2,
+        "integrity": -1
+    },
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:bone/", "tetra:misc/vent_plate"],

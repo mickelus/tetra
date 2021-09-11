@@ -9,6 +9,22 @@
         "textureX": 144,
         "textureY": 32
     },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": -3,
+            "tetra:draw_strength": 4
+        },
+        "tertiaryAttributes": {
+            "tetra:draw_speed": 1,
+            "tetra:draw_strength": 2
+        },
+        "primaryEffects": {
+            "overbowed": -1
+        },
+        "durability": 4,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
             "material": {

@@ -9,6 +9,9 @@
         "textureX": 48,
         "textureY": 16
     },
+    "translation": {
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": [

@@ -9,6 +9,20 @@
         "textureX": 112,
         "textureY": 32
     },
+    "translation": {
+        "primaryAttributes": {
+            "forge:reach_distance": 1
+        },
+        "secondaryAttributes": {
+            "generic.attack_speed": -2
+        },
+        "tertiaryAttributes": {
+            "forge:reach_distance": 2
+        },
+        "durability": 1,
+        "integrity": 3,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
             "materials": [

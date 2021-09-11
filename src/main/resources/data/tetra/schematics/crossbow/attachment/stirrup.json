@@ -7,6 +7,15 @@
         "textureY": 16
     },
     "displayType": "minor",
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": 1
+        },
+        "secondaryAttributes": {
+            "tetra:draw_speed": -1
+        },
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": ["tetra:metal/"],

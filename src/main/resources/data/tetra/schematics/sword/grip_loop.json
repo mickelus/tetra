@@ -9,6 +9,9 @@
         "textureX": 56,
         "textureY": 16
     },
+    "translation": {
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:bone/"],

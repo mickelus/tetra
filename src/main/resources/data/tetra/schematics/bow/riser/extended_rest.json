@@ -7,6 +7,15 @@
         "textureX": 128,
         "textureY": 16
     },
+    "translation": {
+        "primaryEffects": {
+            "multishot": 3
+        },
+        "tertiaryEffects": {
+            "multishot": [0, -3]
+        },
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick"],

@@ -50,11 +50,7 @@
                 "textureX": 224,
                 "textureY": 32
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/single/head/earthpiercer/default"
-                }
-            ]
+            "models": [{ "location": "tetra:items/module/single/head/earthpiercer/default" }]
         }
     ]
 }

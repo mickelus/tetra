@@ -9,6 +9,19 @@
         "textureX": 96,
         "textureY": 16
     },
+    "translation": {
+        "secondaryAttributes": {
+            "tetra:ability_cooldown": -3
+        },
+        "primaryEffects": {
+            "bashing": [1, 2]
+        },
+        "secondaryEffects": {
+            "bashing": [2, 1]
+        },
+        "durability": 1,
+        "integrity": -2
+    },
     "outcomes": [
         {
             "materials": ["tetra:metal/"],

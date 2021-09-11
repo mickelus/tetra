@@ -8,6 +8,14 @@
     "glyph": {
         "textureX": 16
     },
+    "translation": {
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "durability": 2,
+        "integrity": 3,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
             "materials": [

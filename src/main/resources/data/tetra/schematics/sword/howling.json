@@ -9,6 +9,18 @@
         "textureX": 72,
         "textureY": 16
     },
+    "translation": {
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "primaryEffects": {
+            "howling": 2
+        },
+        "tertiaryEffects": {
+            "howling": [0, 1]
+        },
+        "durability": 1
+    },
     "outcomes": [
         {
             "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:misc/vent_plate"],

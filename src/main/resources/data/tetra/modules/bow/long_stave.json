@@ -39,14 +39,6 @@
                 "overbowed": 60
             },
             "durability": 171,
-            "strpri": {
-                "tetra:draw_speed": 0.15,
-                "tetra:draw_strength": 1
-            },
-            "strtert": {
-                "tetra:draw_speed": -0.08,
-                "tetra:draw_strength": 0.6
-            },
             "extract": {
                 "primaryAttributes": {
                     "tetra:draw_speed": 0.22,

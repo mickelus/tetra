@@ -219,18 +219,25 @@
   "tetra.stats.shieldbreaker.tooltip": "Attacking a blocking entity has a §e25%%§r chance to disable its shield for §e5§r seconds (or §e75%%§r of the base cooldown for modular shields)",
 
   "tetra.stats.blocking": "Block",
+  "tetra.stats.blocking.level": "Block duration",
+  "tetra.stats.blocking.efficiency": "Block cooldown",
   "tetra.stats.blocking.tooltip": "Holding down right-click will block incoming attacks and projectiles",
   "tetra.stats.blocking_duration.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds",
   "tetra.stats.blocking_duration_cooldown.tooltip": "Holding down right-click will block incoming attacks and projectiles for up to §e%s§r seconds.\n \n§7Cooldown: §e%sx§r (§e%ss§r)",
   "tetra.stats.blocking.tooltip_extended": "If this item has a secondary ability available then that ability can be used by pressing shift + right-click, or by holding shift as right-click is released (this will trigger a 50%% longer cooldown).",
 
   "tetra.stats.blocking_reflect": "Reflect",
+  "tetra.stats.blockingReflect.level": "Reflect damage",
+  "tetra.stats.blockingReflect.efficiency": "Reflect chance",
   "tetra.stats.blocking_reflect.tooltip": "Blocking melee attacks has a §e%s§r chance to deal §e%s§r damage the attacker and apply on hit effects",
 
   "tetra.stats.bashing": "Bashing",
+  "tetra.stats.bashing.level": "Bash knockback",
+  "tetra.stats.bashing.efficiency": "Stun duration",
   "tetra.stats.bashing.tooltip": "Can be used to bash an entity by pressing right-click. Bashing an entity will knock it back, stun it and deal §e100%%§r item damage\n \n§7Knockback factor: §e%s§r\n§7Stun duration: §e%s§7 seconds",
 
   "tetra.stats.throwable": "Throwable",
+  "tetra.stats.throwable.efficiency": "Throwing damage",
   "tetra.stats.throwable.tooltip": "Can be thrown by holding down right-click. Deals §e%s§r damage if it hits an entity, hitting a block will break the block if the item's harvest level is high enough and the item's harvest speed is greater than the block's hardness",
 
   "tetra.stats.ricochet": "Ricochet",
@@ -243,6 +250,7 @@
   "tetra.stats.piercing_harvest.tooltip": "Breaks additional blocks when thrown or when breaking a block",
 
   "tetra.stats.jab": "Jab",
+  "tetra.stats.jab.level": "Jab damage",
   "tetra.stats.jab.tooltip": "Can be used to attack entities using right-click when held in the offhand, dealing §e%s§r damage and applying on-hit effects. Triggers a cooldown equal to the item's attack.",
 
   "tetra.stats.armorPenetration": "Penetrating",
@@ -258,6 +266,8 @@
   "tetra.stats.stun.tooltip": "Attacks have a §e%s%%§r chance to stun the target for §e%s§r seconds",
 
   "tetra.stats.howling": "Howling",
+  "tetra.stats.howling.level": "Howling stacks",
+  "tetra.stats.howling.efficiency": "Howling duration",
   "tetra.stats.howling.tooltip": "Swinging this item will envelop the wielder in howling winds which may deflect incoming projectiles.\n \n§7Each swing adds §e%s§7 stack(s) of the effect with a §e%s§7 second duration. Each stack grants:\n* §e12.5%%§7 chance to deflect\n* §e-5%%§7 movement speed\n* §e2.5%%§7 chance for a deflected projectile to go back to where it came from.",
 
   "tetra.stats.ability_speed_bonus": "Light",
@@ -480,6 +490,8 @@
   "tetra.stats.bow.overbowed.tooltip_extended": "When this limit is exceeded the draw is released without firing an arrow and the bow goes on a §70.5§r second cooldown",
 
   "tetra.stats.multishot": "Multishot",
+  "tetra.stats.multishot.level": "Multishot count",
+  "tetra.stats.multishot.efficiency": "Multishot spread",
   "tetra.stats.multishot.tooltip": "Each shot fires multiple projectiles. \n \n§7Count:  §e%s\n§7Spread: §e%s",
 
   "tetra.stats.zoom": "Zoom",
@@ -1096,7 +1108,7 @@
   "tetra.improvement.hilt_hone/speed.description": "Increases swing speed",
 
   "tetra/schematic/sword/basic_blade.name": "Basic blade",
-  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials.\n \nMaterial §fhardness§r increases §fdamage§r.",
+  "tetra/schematic/sword/basic_blade.description": "Replace the current sword blade with the given blade, or reforge it using raw materials.",
   "tetra/schematic/sword/basic_blade.slot1": "Blade material",
 
   "tetra.module.sword/basic_blade.name": "Basic blade",
@@ -1139,7 +1151,7 @@
   "tetra/schematic/sword/shared_blade/hooked_3.description": "Further hone the hooked improvement, increases the bonus damage dealt when hitting enemies from behind to 125%%.",
 
   "tetra/schematic/sword/basic_hilt/basic_hilt.name": "Simple hilt",
-  "tetra/schematic/sword/basic_hilt/basic_hilt.description": "Replaces the current hilt with a new one crafted from the provided material.\n \nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/sword/basic_hilt/basic_hilt.description": "Replaces the current hilt with a new one crafted from the provided material.",
   "tetra/schematic/sword/basic_hilt/basic_hilt.slot1": "Hilt material",
 
   "tetra.module.sword/basic_hilt.name": "Simple hilt",
@@ -1171,7 +1183,7 @@
   "tetra.variant.makeshift_guard/oak": "Wooden makeshift guard",
 
   "tetra/schematic/sword/wide_guard.name": "Wide guard",
-  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the mainhand or offhand.\n \nMaterial §fhardness§r and §fflexibility§r increases the armor amount.",
+  "tetra/schematic/sword/wide_guard.description": "Craft a wide guard which protects the wielding hand, providing additional armor when held in the mainhand or offhand.",
   "tetra/schematic/sword/wide_guard.slot1": "Guard material",
 
   "tetra.module.sword/wide_guard.name": "Wide guard",
@@ -1182,7 +1194,7 @@
   "tetra.variant.wide_guard/vent_plate": "Repurposed plate guard",
 
   "tetra/schematic/sword/sturdy_guard.name": "Sturdy guard",
-  "tetra/schematic/sword/sturdy_guard.description": "Craft a sturdy guard which can block incoming attacks if timed correctly.\n \nMaterial §fhardness§r increases the block duration.\nMaterial §fdensity§r decreases the block duration.",
+  "tetra/schematic/sword/sturdy_guard.description": "Craft a sturdy guard which can block incoming attacks if timed correctly.",
   "tetra/schematic/sword/sturdy_guard.slot1": "Guard material",
 
   "tetra.module.sword/sturdy_guard.name": "Sturdy guard",
@@ -1210,7 +1222,7 @@
   "tetra.variant.sword_socket/mana_rune.description": "A rune, fitted onto the sword where the blade meets the hilt. The rune uses mana to repair the item over time.",
 
   "tetra/schematic/sword/counterweight.name": "Counterweight",
-  "tetra/schematic/sword/counterweight.description": "Balance the blade with a counterweight. Increases the attack speed by §f0.15§r, this bonus is reduced by §f0.05§r for each point of difference between the total integrity use and the effect level.\n \nMaterial §fhardness§r increase the level of the effect.",
+  "tetra/schematic/sword/counterweight.description": "Balance the blade with a counterweight. Increases the attack speed by §f0.15§r, this bonus is reduced by §f0.05§r for each point of difference between the total integrity use and the effect level.",
   "tetra/schematic/sword/counterweight.slot1": "Material",
 
   "tetra.module.sword/counterweight.name": "Counterweight",
@@ -1229,7 +1241,7 @@
   "tetra.variant.reinforced_fuller/forged_beam": "Beam reinforced fuller",
 
   "tetra/schematic/sword/howling.name": "Howling blade",
-  "tetra/schematic/sword/howling.description": "Craft a set of fuller attachments that will cause howling winds to envelop the wielder when the sword is swung, the winds will occasionally deflect incoming projectiles.\n \nMaterial §fhardness§r increase §fstacks§r gained per swing.\nMaterial §fflexibility§r increases the §fduration§r.",
+  "tetra/schematic/sword/howling.description": "Craft a set of fuller attachments that will cause howling winds to envelop the wielder when the sword is swung, the winds will occasionally deflect incoming projectiles.",
   "tetra/schematic/sword/howling.slot1": "Material",
 
   "tetra.module.sword/howling.name": "Howlers",
@@ -1269,7 +1281,7 @@
   "tetra.module.sword/grip_loop.material_name": "%s loop",
 
   "tetra/schematic/sword/short_blade.name": "Shortblade",
-  "tetra/schematic/sword/short_blade.description": "Craft a light and short blade that can be used for crafting and for offhand attacks.\n \nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r and §fjab damage§r.",
+  "tetra/schematic/sword/short_blade.description": "Craft a light and short blade that can be used for crafting and for offhand attacks.",
   "tetra/schematic/sword/short_blade.slot1": "Blade material",
 
   "tetra.module.sword/short_blade.item_name": "Shortblade",
@@ -1279,7 +1291,7 @@
   "tetra.module.sword/short_blade.prefix": "%s",
 
   "tetra/schematic/sword/heavy_blade.name": "Heavy blade",
-  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade that always sweeps on fully charged swings.\n \nMaterial §fhardness§r increases §fdamage§r and improves §fsweep damage§r.\nMaterial §fdensity§r increases §fdamage§r, but decreases §fattack speed§r.",
+  "tetra/schematic/sword/heavy_blade.description": "Replace the current sword blade with a large and hefty blade that always sweeps on fully charged swings.",
   "tetra/schematic/sword/heavy_blade.slot1": "Blade material",
 
   "tetra.module.sword/heavy_blade.item_name": "Greatsword",
@@ -1289,7 +1301,7 @@
   "tetra.module.sword/heavy_blade.prefix": "%s",
 
   "tetra/schematic/sword/machete.name": "Machete",
-  "tetra/schematic/sword/machete.description": "Replace the current sword blade with a machete which can be used to cut down web and some types of plants in an area.\n \nThe §fcutting efficiency§r is based on the material, at an increased rate.\nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/sword/machete.description": "Replace the current sword blade with a machete which can be used to cut down web and some types of plants in an area.",
   "tetra/schematic/sword/machete.slot1": "Blade material",
 
   "tetra.module.sword/machete.item_name": "Machete",
@@ -1314,7 +1326,7 @@
   "tetra.improvement.stonecutter_hone/tier.description": "Increases mining tier by 1",
 
   "tetra/schematic/sword/throwing_knife.name": "Throwing knife",
-  "tetra/schematic/sword/throwing_knife.description": "Craft a well-balanced blade that is suitable for throwing.\n \nProvides §fcutting§r tool capabilities based on the material, at a reduced rate.\nMaterial §fhardness§r increases §fdamage§r, at a reduced rate.\nMaterial §fdensity§r slightly increases §fthrowing damage§r.",
+  "tetra/schematic/sword/throwing_knife.description": "Craft a well-balanced blade that is suitable for throwing.",
   "tetra/schematic/sword/throwing_knife.slot1": "Blade material",
 
   "tetra.module.sword/throwing_knife.item_name": "Throwing knife",
@@ -1472,7 +1484,7 @@
   "tetra.synergy.double/warsickle": "Warsickle",
 
   "tetra/schematic/double/basic_handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.\n \nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/double/basic_handle/basic_handle.description": "Replace the handle for the head. A sturdier handle supports heavier and more advanced tool heads.",
   "tetra/schematic/double/basic_handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.double/basic_handle.name": "Basic handle",
@@ -1548,7 +1560,7 @@
   "tetra.tweak.double_tweak/binding_bolt.right": "Tight",
 
   "tetra/schematic/double/basic_axe/basic_axe.name": "Axe head",
-  "tetra/schematic/double/basic_axe/basic_axe.description": "Craft an axe head from the given material. The axe can be used to break wooden blocks, for stripping logs and to disable shields.\n \nProvides §faxe§r tool capabilities based on the material. Material §fhardness§r (primarily) and §fdensity§r increases §fdamage§r.\nDouble axe heads provide additional §fdamage§r.",
+  "tetra/schematic/double/basic_axe/basic_axe.description": "Craft an axe head from the given material. The axe can be used to break wooden blocks, for stripping logs and to disable shields.",
   "tetra/schematic/double/basic_axe/basic_axe.slot1": "Head material",
 
   "tetra.module.double/basic_axe.item_name": "Axe",
@@ -1561,7 +1573,7 @@
   "tetra.improvement.basic_axe/severing.description": "Deals bonus damage to unarmored targets",
 
   "tetra/schematic/double/basic_pickaxe/basic_pickaxe.name": "Pickaxe head",
-  "tetra/schematic/double/basic_pickaxe/basic_pickaxe.description": "Craft a pickaxe head That can be used for mining.\n \nProvides §fpickaxe§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.\nDouble pickaxe heads provide an additional §fpickaxe tier§r.",
+  "tetra/schematic/double/basic_pickaxe/basic_pickaxe.description": "Craft a pickaxe head That can be used for mining.\n \nDouble pickaxe heads provide an additional §fpickaxe tier§r.",
   "tetra/schematic/double/basic_pickaxe/basic_pickaxe.slot1": "Head material",
 
   "tetra.module.double/basic_pickaxe.item_name": "Pickaxe",
@@ -1604,12 +1616,12 @@
   "tetra.improvement.extractor_hone/potency.description": "Increases the amount of blocks broken by the extractor effect",
 
   "tetra/schematic/double/basic_hammer/basic_hammer.name": "Hammer head",
-  "tetra/schematic/double/basic_hammer/basic_hammer.description": "Craft a hammer head which can be used for crafting modular items, and for salvaging.\nThe §fhammer efficiency§r is based on the material. Material §fhardness§r increases §fdamage§r. Material §fdensity§r increases §fdamage§r but decreases §fattack speed§r.\nDouble hammer heads provide an additional §fhammer tier§r.",
+  "tetra/schematic/double/basic_hammer/basic_hammer.description": "Craft a hammer head which can be used for crafting modular items, and for salvaging.\n \nHammer tier level doesn't follow the typical material progression. Double hammer heads provide an additional §fhammer tier§r.",
   "tetra/schematic/double/basic_hammer/basic_hammer.slot1": "Head material",
 
   "tetra.module.double/basic_hammer.item_name": "Hammer",
   "tetra.module.double/basic_hammer.name": "Hammer head",
-  "tetra.module.double/basic_hammer.description": "The hammer head can be used when crafting modular items, and is sometimes used for salvaging.\n \nDouble hammer heads may provide synergy bonuses.",
+  "tetra.module.double/basic_hammer.description": "The hammer head can be used when crafting modular items, and is sometimes used for salvaging.\n \nDouble hammer heads provide synergy bonuses.",
   "tetra.module.double/basic_hammer.material_name": "%s hammer",
   "tetra.module.double/basic_hammer.prefix": "%s",
 
@@ -1626,7 +1638,7 @@
   "tetra.module.double/adze.prefix": "%s",
 
   "tetra/schematic/double/claw/claw.name": "Claw",
-  "tetra/schematic/double/claw/claw.description": "Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.\n \nProvides §fclaw§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.",
+  "tetra/schematic/double/claw/claw.description": "Craft a claw from the given material. The claw can be used for prying things open and to quickly break most wooden blocks.",
   "tetra/schematic/double/claw/claw.slot1": "Claw material",
 
   "tetra.module.double/claw.item_name": "Claw",
@@ -1636,7 +1648,7 @@
   "tetra.module.double/claw.prefix": "%s",
 
   "tetra/schematic/double/hoe/hoe.name": "Hoe",
-  "tetra/schematic/double/hoe/hoe.description": "Craft a hoe from the given material, the hoe can be used for harvesting plants and for tilling soil.\n \nProvides §fhoe§r tool capabilities based on the material.\nMaterial §fhardness§r increases §fdamage§r.",
+  "tetra/schematic/double/hoe/hoe.description": "Craft a hoe from the given material, the hoe can be used for harvesting plants and for tilling soil.",
   "tetra/schematic/double/hoe/hoe.slot1": "Hoe material",
 
   "tetra.module.double/hoe.item_name": "Hoe",
@@ -1646,7 +1658,7 @@
   "tetra.module.double/hoe.prefix": "%s",
 
   "tetra/schematic/double/sickle/sickle.name": "Sickle",
-  "tetra/schematic/double/sickle/sickle.description": "Craft a sickle which can be used to cut down plants in an area.\n \nProvides §fhoe§r tool capabilities based on the material, at a decreased rate.\nMaterial §fhardness§r increases §fdamage§r.",
+  "tetra/schematic/double/sickle/sickle.description": "Craft a sickle which can be used to cut down plants in an area.\n \nWorks different from other tools as it instantly harvests blocks but only if it's not on swing cooldown.",
   "tetra/schematic/double/sickle/sickle.slot1": "Sickle material",
 
   "tetra.module.double/sickle.item_name": "Sickle",
@@ -1662,7 +1674,7 @@
   "tetra.synergy.single/javelin": "Javelin",
 
   "tetra/schematic/single/handle/basic_handle.name": "Basic handle",
-  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle with a basic handle crafted from the given materials. \n \nProvides integrity based on the material. Material §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/single/handle/basic_handle.description": "Replace the handle with a basic handle crafted from the given materials.",
   "tetra/schematic/single/handle/basic_handle.slot1": "Handle material",
 
   "tetra.module.single/basic_handle.name": "Basic handle",
@@ -1670,7 +1682,7 @@
   "tetra.module.single/basic_handle.material_name": "%s handle",
 
   "tetra/schematic/single/handle/light_handle.name": "Light handle",
-  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.\n \nProvides integrity based on the material. Material §fdensity§r increases §fthrow damage§r, but slightly decreases §fattack speed§r.",
+  "tetra/schematic/single/handle/light_handle.description": "Replace the handle with a lighter handle that allows the item to be thrown, but it provides less durability than other handles.",
   "tetra/schematic/single/handle/light_handle.slot1": "Handle material",
 
   "tetra.module.single/light_handle.name": "Light handle",
@@ -1681,7 +1693,7 @@
   "tetra.variant.light_handle/stick": "Flimsy light handle",
 
   "tetra/schematic/single/handle/long_handle.name": "Long handle",
-  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.\n \nProvides integrity based on the material. Material §fflexibility§r and §fhardness§r improves the §freach§r effect.\nMaterial §fdensity§r slightly decreases §fattack speed§r.",
+  "tetra/schematic/single/handle/long_handle.description": "Replace the handle with a longer handle that yields longer reach.",
   "tetra/schematic/single/handle/long_handle.slot1": "Handle material",
 
   "tetra.module.single/long_handle.name": "Long handle",
@@ -1757,7 +1769,7 @@
   "tetra.module.single/basic_shovel.prefix": "%s",
 
   "tetra/schematic/single/head/spearhead/spearhead.name": "Spearhead",
-  "tetra/schematic/single/head/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.\n \nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r slightly increases §fdamage§r and slightly decreases §fattack speed§r.",
+  "tetra/schematic/single/head/spearhead/spearhead.description": "Craft a spearhead from the given material, which can typically be used to cause damage to others.",
   "tetra/schematic/single/head/spearhead/spearhead.slot1": "Head material",
 
   "tetra.module.single/spearhead.item_name": "Spear",
@@ -1994,7 +2006,7 @@
   "tetra.slot.bow/riser": "Riser",
 
   "tetra/schematic/bow/string/basic_string.name": "Basic String",
-  "tetra/schematic/bow/string/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.\n \nMaterial §fdensity§r slightly increases §fdraw time§r.",
+  "tetra/schematic/bow/string/basic_string.description": "Replaces the bowstring with a new basic bowstring crafted from the given materials. The bowstring is the primary source of integrity for bows.",
   "tetra/schematic/bow/string/basic_string.slot1": "Material",
 
   "tetra.module.bow/basic_string.name": "Basic string",
@@ -2008,7 +2020,7 @@
   "tetra.variant.basic_string/dragon_sinew": "Dragon sinew",
 
   "tetra/schematic/bow/stave/straight_stave.name": "Straight stave",
-  "tetra/schematic/bow/stave/straight_stave.description": "Replaces the stave with a straight stave crafted from the given materials.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/bow/stave/straight_stave.description": "Replaces the stave with a straight stave crafted from the given materials.",
   "tetra/schematic/bow/stave/straight_stave.slot1": "Material",
 
   "tetra.module.bow/straight_stave.item_name": "Bow",
@@ -2020,7 +2032,7 @@
   "tetra.variant.straight_stave/stick": "Makeshift straight stave",
 
   "tetra/schematic/bow/stave/long_stave.name": "Long stave",
-  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/bow/stave/long_stave.description": "Replaces the stave with a long stave crafted from the given materials. Longbows typically have a slower draw speed but deal more damage.",
   "tetra/schematic/bow/stave/long_stave.slot1": "Material",
 
   "tetra.module.bow/long_stave.item_name": "Longbow",
@@ -2032,7 +2044,7 @@
   "tetra.variant.long_stave/stick": "Makeshift long stave",
 
   "tetra/schematic/bow/stave/recurve_stave.name": "Recurve stave",
-  "tetra/schematic/bow/stave/recurve_stave.description": "Replaces the stave with a recurve stave crafted from the given materials. Recurve bows typically have a faster draw speed than other types of bows.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/bow/stave/recurve_stave.description": "Replaces the stave with a recurve stave crafted from the given materials. Recurve bows typically have a faster draw speed than other types of bows.",
   "tetra/schematic/bow/stave/recurve_stave.slot1": "Material",
 
   "tetra.module.bow/recurve_stave.item_name": "Recurve bow",
@@ -2106,7 +2118,7 @@
   "tetra.tweak.bow/adjustable_strength.right": "Tight",
 
   "tetra/schematic/bow/riser/extended_rest.name": "Extended rest",
-  "tetra/schematic/bow/riser/extended_rest.description": "Extend the arrow rest so that multiple arrows can be fired each shot\nNote: Each entity can only take damage once within a 0.5sec timeframe.\n \nMaterial §fhardness§r increases §fprojectile count§r.\nMaterial §fflexibility§r decreases §fspread§r.",
+  "tetra/schematic/bow/riser/extended_rest.description": "Extend the arrow rest so that multiple arrows can be fired each shot\nNote: Each entity can only take damage once within a 0.5sec timeframe.",
   "tetra/schematic/bow/riser/extended_rest.slot1": "Material",
 
   "tetra.module.bow/extended_rest.name": "Extended rest",
@@ -2125,7 +2137,7 @@
   "tetra.tweak.bow/multishot_spread.right": "19",
 
   "tetra/schematic/bow/riser/sights.name": "Sights",
-  "tetra/schematic/bow/riser/sights.description": "Sights crafted from the provided material, allows one to see further while aiming or while holding [shift]. \n \nMaterial §fhardness§r increases §fzoom amount§r.",
+  "tetra/schematic/bow/riser/sights.description": "Sights crafted from the provided material, allows one to see further while aiming or while holding [shift].",
   "tetra/schematic/bow/riser/sights.slot1": "Material",
 
   "tetra.module.bow/sights.name": "Sights",
@@ -2133,7 +2145,7 @@
   "tetra.module.bow/sights.material_name": "%s sights",
 
   "tetra/schematic/bow/riser/stabilizer.name": "Stabilizer",
-  "tetra/schematic/bow/riser/stabilizer.description": "A stabilizer crafted from the provided material, increases the initial velocity of fired projectiles. \n \nMaterial §fflexibility§r increases the bonus §fvelocity§r.",
+  "tetra/schematic/bow/riser/stabilizer.description": "A stabilizer crafted from the provided material, increases the initial velocity of fired projectiles.",
   "tetra/schematic/bow/riser/stabilizer.slot1": "Material",
 
   "tetra.module.bow/stabilizer.name": "Stabilizer",
@@ -2150,7 +2162,7 @@
   "item.tetra.crossbow.wip": "The crossbow is still work in progress, several modules and enchantments are missing",
 
   "tetra/schematic/crossbow/string/basic_string.name": "Basic String",
-  "tetra/schematic/crossbow/string/basic_string.description": "Replaces the bowstring with a new string crafted from the given materials.\n \nProvides integrity based on the material.\nMaterial §fdensity§r slightly increases §fdraw time§r.",
+  "tetra/schematic/crossbow/string/basic_string.description": "Replaces the bowstring with a new string crafted from the given materials.",
   "tetra/schematic/crossbow/string/basic_string.slot1": "Material",
 
   "tetra.module.crossbow/basic_string.name": "Basic string",
@@ -2158,7 +2170,7 @@
   "tetra.module.crossbow/basic_string.material_name": "%s bowstring",
 
   "tetra/schematic/crossbow/stave/basic_stave.name": "Basic stave",
-  "tetra/schematic/crossbow/stave/basic_stave.description": "Replaces the stave with a one crafted from the given materials.\n \nMaterial §fhardness§r increases §fstrength§r and §fdraw time§r.\nMaterial §fflexibility§r increases §fstrength§r and slightly decreases §fdraw time§r.",
+  "tetra/schematic/crossbow/stave/basic_stave.description": "Replaces the stave with a one crafted from the given materials.",
   "tetra/schematic/crossbow/stave/basic_stave.slot1": "Material",
 
   "tetra.module.crossbow/basic_stave.item_name": "Crossbow",
@@ -2169,7 +2181,7 @@
   "tetra.variant.basic_stave/stick": "Makeshift stave",
 
   "tetra/schematic/crossbow/stock/basic_stock.name": "Basic stock",
-  "tetra/schematic/crossbow/stock/basic_stock.description": "Replaces the stock with a one crafted from the given materials.\n \nProvides integrity based on the material, at a reduced rate.\nMaterial §fdensity§r increases §fdraw time§r.",
+  "tetra/schematic/crossbow/stock/basic_stock.description": "Replaces the stock with a one crafted from the given materials.",
   "tetra/schematic/crossbow/stock/basic_stock.slot1": "Material",
 
   "tetra.module.crossbow/basic_stock.item_name": "Crossbow",
@@ -2180,7 +2192,7 @@
   "tetra.variant.basic_stock/stick": "Shoddy stock",
 
   "tetra/schematic/crossbow/attachment/stirrup.name": "Stirrup",
-  "tetra/schematic/crossbow/attachment/stirrup.description": "Attach a stirrup at the front of the crossbow. The stirrup allows the use of one's feet when drawing the crossbow, slightly improving draw time.\n \nMaterial §fhardness§r slightly decreases §fdraw time§r.\nMaterial §fdensity§r slightly increases §fdraw time§r.",
+  "tetra/schematic/crossbow/attachment/stirrup.description": "Attach a stirrup at the front of the crossbow. The stirrup allows the use of one's feet when drawing the crossbow, slightly improving draw time.",
   "tetra/schematic/crossbow/attachment/stirrup.slot1": "Material",
 
   "tetra.module.crossbow/stirrup.name": "Stirrup",
@@ -2192,7 +2204,7 @@
   "tetra.slot.shield/boss": "Boss",
 
   "tetra/schematic/shield/plate/tower.name": "Tower plate",
-  "tetra/schematic/shield/plate/tower.description": "Craft a tower shield plate, tower shields can block indefinitely with no cooldown but uses more integrity than other types of shields.\n \nMaterial §fhardness§r increases §fdamage§r.\nMaterial §fdensity§r increases §fdamage§r and §fcooldown§r.\nMaterial §fflexibility§r decreases §fcooldown§r.",
+  "tetra/schematic/shield/plate/tower.description": "Craft a tower shield plate, tower shields can block indefinitely with no cooldown but uses more integrity than other types of shields.",
   "tetra/schematic/shield/plate/tower.slot1": "Material",
 
   "tetra.module.shield/tower.item_name": "Tower shield",
@@ -2202,7 +2214,7 @@
   "tetra.module.shield/tower.prefix": "%s",
 
   "tetra/schematic/shield/plate/heater.name": "Heater plate",
-  "tetra/schematic/shield/plate/heater.description": "Craft a heater shield plate, heaters can block for a limited time before going on cooldown.\n \nMaterial §fhardness§r increases §fdamage§r and §fblock duration§r. Material §fdensity§r increases §fdamage§r and §fcooldown§r, and decreases §fblock duration§r. Material §fflexibility§r increases §fblock duration§r.",
+  "tetra/schematic/shield/plate/heater.description": "Craft a heater shield plate, heaters can block for a limited time before going on cooldown.",
   "tetra/schematic/shield/plate/heater.slot1": "Material",
 
   "tetra.module.shield/heater.item_name": "Heater shield",
@@ -2212,7 +2224,7 @@
   "tetra.module.shield/heater.prefix": "%s",
 
   "tetra/schematic/shield/plate/buckler.name": "Buckler plate",
-  "tetra/schematic/shield/plate/buckler.description": "Craft a buckler from the given materials. Bucklers provide a passive toughness bonus but cannot be used to block.\n \nMaterial §fhardness§r increases §fdamage§r and §ftoughness§r.\nMaterial §fdensity§r increases §fdamage§r, §fcooldown§r and §ftoughness§r.\nMaterial §fflexibility§r increases §ftoughness§r.",
+  "tetra/schematic/shield/plate/buckler.description": "Craft a buckler from the given materials. Bucklers provide a passive toughness bonus but cannot be used to block.",
   "tetra/schematic/shield/plate/buckler.slot1": "Material",
 
   "tetra.module.shield/buckler.item_name": "Buckler",
@@ -2393,7 +2405,7 @@
   "tetra.improvement.plate_hone/durability.description": "Increases durability",
 
   "tetra/schematic/shield/sturdy_boss.name": "Sturdy boss",
-  "tetra/schematic/shield/sturdy_boss.description": "Craft a sturdy boss that makes it possible to bash other entities using the shield.\n \nMaterial §fhardness§r increases §fknockback§r and §fstun duration§r.\nMaterial §fdensity§r increases §fknockback§r and §fcooldown§r, and slightly increases §fstun duration§r.",
+  "tetra/schematic/shield/sturdy_boss.description": "Craft a sturdy boss that makes it possible to bash other entities using the shield.",
   "tetra/schematic/shield/sturdy_boss.slot1": "Material",
 
   "tetra.module.shield/sturdy_boss.name": "Sturdy boss",
@@ -2401,7 +2413,7 @@
   "tetra.module.shield/sturdy_boss.material_name": "Sturdy %s boss",
 
   "tetra/schematic/shield/spike.name": "Spike",
-  "tetra/schematic/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.\n \nMaterial §fhardness§r increases §freflect damage§r.\nMaterial §fdensity§r decreases §freflect chance§r and increases §fcooldown§r.",
+  "tetra/schematic/shield/spike.description": "Craft a shield spike from the given materials. Blocking melee attacks has a chance to damage the attacker.",
   "tetra/schematic/shield/spike.slot1": "Material",
 
   "tetra.module.shield/spike.name": "Spike",
