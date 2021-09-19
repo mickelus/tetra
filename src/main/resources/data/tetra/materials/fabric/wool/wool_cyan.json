@@ -1,5 +1,7 @@
 {
-    "key": "wool",
+    "key": "wool_cyan",
+    "hidden": true,
+    "hiddenOutcomes": true,
     "category": "fabric",
     "primary": "0.5",
     "secondary": "0.5",
@@ -11,15 +13,15 @@
     "toolLevel": "0",
     "toolEfficiency": "0",
     "tints": {
-        "glyph": "wool_glyph",
-        "texture": "wool"
+        "glyph": "6cc6d6",
+        "texture": "48e0e0"
     },
     "textures": [
         "crude",
         "default"
     ],
     "material": {
-        "tag": "minecraft:wool"
+        "item": "minecraft:cyan_wool"
     },
     "requiredTools": {
         "cut": 1
