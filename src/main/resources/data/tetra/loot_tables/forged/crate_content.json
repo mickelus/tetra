@@ -21,6 +21,11 @@
                 },
                 {
                     "type": "item",
+                    "name": "tetra:forged_bolt",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
                     "name": "tetra:lubricant_dispenser",
                     "weight": 3,
                     "conditions": [
