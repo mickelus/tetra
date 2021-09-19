@@ -16,14 +16,9 @@
     "displayType": "minor",
     "outcomes": [
         {
-            "material": {
-                "tag": "minecraft:wool"
-            },
-            "requiredTools": {
-                "cut": 1
-            },
-            "moduleKey": "toolbelt/belt",
-            "moduleVariant": "belt/sash"
+            "materials": ["tetra:fabric/wool/"],
+            "moduleKey": "toolbelt/belt_wool",
+            "moduleVariant": "belt_wool/"
         }
     ]
 }
