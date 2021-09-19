@@ -109,7 +109,7 @@ dependencies {
     if (findProject(':mgui') != null) {
         compile project(':mgui')
     } else {
-        compile fg.deobf("curse.maven:mgui:3291267")
+        compile fg.deobf("curse.maven:mgui:3456505")
     }
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
