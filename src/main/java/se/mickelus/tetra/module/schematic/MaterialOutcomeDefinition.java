@@ -23,6 +23,10 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
     public OutcomeDefinition combine(MaterialData materialData) {
         UniqueOutcomeDefinition result = new UniqueOutcomeDefinition();
 
+        if (materialData.hiddenOutcomes) {
+            result.hidden = true;
+        }
+
         result.moduleKey = moduleKey;
 
         if (moduleVariant != null) {

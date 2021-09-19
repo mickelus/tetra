@@ -19,6 +19,16 @@ public class MaterialData {
     public String category = "misc";
 
     /**
+     * If set to true, material will not show up in the holosphere.
+     */
+    public boolean hidden = false;
+
+    /**
+     * If set to true, module and improvement variants derived from this material will not show up in the holosphere.
+     */
+    public boolean hiddenOutcomes = false;
+
+    /**
      * Innate attributes gained from the material
      */
     public Multimap<Attribute, AttributeModifier> attributes;
@@ -88,6 +98,14 @@ public class MaterialData {
     public static void copyFields(MaterialData from, MaterialData to) {
         if (from.key != null) {
             to.key = from.key;
+        }
+
+        if (from.hidden != defaultValues.hidden) {
+            to.hidden = from.hidden;
+        }
+
+        if (from.hiddenOutcomes != defaultValues.hiddenOutcomes) {
+            to.hiddenOutcomes = from.hiddenOutcomes;
         }
 
         if (from.category != null) {
