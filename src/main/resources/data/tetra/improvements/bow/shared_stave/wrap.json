@@ -1,6 +1,6 @@
 [
     {
-        "materials": ["tetra:skin/", "tetra:fibre/"],
+        "materials": ["tetra:skin/", "tetra:fibre/", "tetra:fabric/"],
         "key": "stave/wrap/",
         "level": 0,
         "durability": 3,

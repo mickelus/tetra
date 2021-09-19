@@ -1,8 +1,6 @@
 {
     "replace": true,
-    "slots": [
-        "bow/string"
-    ],
+    "slots": ["bow/string"],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:enchantment/infinity",
