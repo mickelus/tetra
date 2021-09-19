@@ -383,6 +383,7 @@ public class ConfigSchematic extends BaseSchematic {
     @Override
     public OutcomePreview[] getPreviews(ItemStack targetStack, String slot) {
         return Arrays.stream(definition.outcomes)
+                .filter(outcome -> !outcome.hidden)
                 .map(outcome -> {
                     ItemStack itemStack = targetStack.copy();
 
@@ -391,6 +392,8 @@ public class ConfigSchematic extends BaseSchematic {
                     String category = "misc";
                     int level = -1;
                     GlyphData glyph;
+
+                    applyOutcome(outcome, itemStack, false, slot, null);
 
                     if (outcome.moduleKey != null) {
                         VariantData variant = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome)).getVariantData(outcome.moduleVariant);
@@ -414,8 +417,6 @@ public class ConfigSchematic extends BaseSchematic {
                             return null;
                         }
                     }
-
-                    applyOutcome(outcome, itemStack, false, slot, null);
 
                     return new OutcomePreview(outcome.moduleKey, key, name, category, level, glyph, itemStack, definition.displayType, outcome.requiredTools,
                             outcome.material.getApplicableItemStacks());
