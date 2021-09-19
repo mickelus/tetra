@@ -1,6 +1,6 @@
 [
     {
-        "materials": ["tetra:skin/"],
+        "materials": ["tetra:skin/", "tetra:fabric/"],
         "key": "basic_handle/wrap/",
         "level": 0,
         "durability": 3,
