@@ -35,6 +35,11 @@ public class OutcomeDefinition {
     public OutcomeMaterial material = new OutcomeMaterial();
 
     /**
+     * If set to true, this outcome will not show up in the holosphere.
+     */
+    public boolean hidden = false;
+
+    /**
      * The slot in which to look for the material.
      * Optional, defaults to slot 0;
      */

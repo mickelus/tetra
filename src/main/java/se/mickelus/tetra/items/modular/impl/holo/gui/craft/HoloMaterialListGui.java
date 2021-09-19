@@ -50,6 +50,7 @@ public class HoloMaterialListGui extends GuiElement {
         boolean isDevelopment = ConfigHandler.development.get();
         Map<String, List<MaterialData>> result = DataManager.materialData.getData().values().stream()
                 .filter(data -> data.material != null)
+                .filter(data -> !data.hidden)
                 .filter(data -> isDevelopment || data.material.getApplicableItemStacks().length > 0)
                 .collect(Collectors.groupingBy(data -> data.category, LinkedHashMap::new, Collectors.toList()));
 
