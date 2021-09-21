@@ -1896,9 +1896,10 @@
   "tetra.variant.belt/rope.item_name": "Rope",
   "tetra.variant.belt/rope.description": "A very basic waistband fashioned from a rope. Can hold a very limited amount of attachments.",
 
-  "tetra.variant.belt/sash": "Wool sash",
-  "tetra.variant.belt/sash.name": "Sash",
-  "tetra.variant.belt/sash.description": "A woolen sash that can hold a small amount of attachments.",
+  "tetra.module.toolbelt/belt_wool.name": "Wool sash",
+  "tetra.module.toolbelt/belt_wool.material_name": "%s sash",
+  "tetra.module.toolbelt/belt_wool.item_name": "Sash",
+  "tetra.module.toolbelt/belt_wool.description": "A woolen sash that can hold a small amount of attachments.",
 
   "tetra.variant.belt/leather": "Leather wrap",
   "tetra.variant.belt/leather.name": "Wrap",
