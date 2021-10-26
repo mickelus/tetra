@@ -1,6 +1,5 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.item.Item;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;

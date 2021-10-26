@@ -166,8 +166,10 @@ public class HoloBreadcrumbsGui extends GuiElement {
 
     @Override
     protected void onFocus() {
-        blurAnimation.stop();
-        focusAnimation.start();
+        if (buttons.size() > 0) {
+            blurAnimation.stop();
+            focusAnimation.start();
+        }
     }
 
     @Override
