@@ -538,7 +538,6 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void onShieldDisabled(PlayerEntity player, ItemStack itemStack) {
-        player.getCooldownTracker().removeCooldown(this);
         player.getCooldownTracker().setCooldown(this, (int) (getCooldownBase(itemStack) * 20 * 0.75));
     }
 
