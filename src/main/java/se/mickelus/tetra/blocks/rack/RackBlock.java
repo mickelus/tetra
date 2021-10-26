@@ -100,7 +100,6 @@ public class RackBlock extends TetraWaterloggedBlock {
         Direction facing = blockState.get(facingProp);
         AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
         if (facing == hit.getFace()) {
-            System.out.println(hit.getHitVec());
             Vector3d hitVec = hit.getHitVec();
             int slot = getHitX(facing, boundingBox,
                     (float) hitVec.x - pos.getX(),
