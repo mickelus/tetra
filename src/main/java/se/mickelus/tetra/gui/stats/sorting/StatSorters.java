@@ -4,6 +4,7 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.stats.GuiStats;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
+import se.mickelus.tetra.gui.stats.getter.StatGetterIntegrity;
 import se.mickelus.tetra.gui.stats.getter.StatGetterToolEfficiency;
 import se.mickelus.tetra.gui.stats.getter.StatGetterToolLevel;
 
@@ -16,6 +17,7 @@ public class StatSorters {
     public static final IStatSorter none = new NaturalSorter();
     public static final List<IStatSorter> sorters = new ArrayList<>(Arrays.asList(
             none,
+            new BasicStatSorter(new StatGetterIntegrity(), "tetra.stats.integrity", StatFormat.noDecimal),
             new BasicStatSorter(GuiStats.attackDamageNormalizedGetter, "tetra.stats.attack_damage_normalized", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.counterweightGetter, "tetra.stats.counterweight", StatFormat.noDecimal),
             new BasicStatSorter(GuiStats.attackSpeedGetterNormalized, "tetra.stats.speed_normalized", StatFormat.oneDecimal),
