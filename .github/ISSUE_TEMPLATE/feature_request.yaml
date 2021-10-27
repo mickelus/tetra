@@ -1,0 +1,25 @@
+
+name: 💡 Feature request
+description: Suggest new functionality, new content or balancing changes
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature description
+      description: A clear and concise description of what you want to improve
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: How it improves the player experience
+      description: Describe how this would make the game more fun, deep, intuitive, interesting or immersive
+    validations:
+      required: true
+  - type: textarea
+    id: synergies
+    attributes:
+      label: Tetra synergies
+      description: How does this synergize with current features in tetra, or how does it align the the goals of tetra
+    validations:
+      required: true
