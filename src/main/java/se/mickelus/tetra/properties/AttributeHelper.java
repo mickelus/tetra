@@ -203,7 +203,7 @@ public class AttributeHelper {
 //        return mod;
     }
 
-    private static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
+    public static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
         return attribute.getAttributeName() + operation.ordinal();
     }
 

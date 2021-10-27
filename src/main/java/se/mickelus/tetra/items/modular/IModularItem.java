@@ -796,8 +796,12 @@ public interface IModularItem {
                                 Map.Entry::getKey,
                                 entry -> AttributeHelper.collapse(entry.getValue()).stream(),
                                 ArrayListMultimap::create)))
-                .map(AttributeHelper::fixIdentifiers)
+                .map(this::fixIdentifiers)
                 .orElse(null);
+    }
+
+    default Multimap<Attribute, AttributeModifier> fixIdentifiers(Multimap<Attribute, AttributeModifier> modifiers) {
+        return AttributeHelper.fixIdentifiers(modifiers);
     }
 
     Cache<String, Multimap<Attribute, AttributeModifier>> getAttributeModifierCache();
