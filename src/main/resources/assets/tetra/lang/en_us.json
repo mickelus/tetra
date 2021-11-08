@@ -210,7 +210,7 @@
   "tetra.stats.backstab.tooltip": "Hitting entities from behind cause critical hits that deal §e%s§r bonus damage",
 
   "tetra.stats.armor": "Armor",
-  "tetra.stats.armor.tooltip": "Provides §e%s§r armor when worn",
+  "tetra.stats.armor.tooltip": "Provides §e%s§r armor when held",
 
   "tetra.stats.toughness": "Toughness",
   "tetra.stats.toughness.tooltip": "Provides §e%s§r toughness when held",

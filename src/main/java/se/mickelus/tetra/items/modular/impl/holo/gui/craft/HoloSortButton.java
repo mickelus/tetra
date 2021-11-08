@@ -58,7 +58,8 @@ public class HoloSortButton extends GuiElement {
     }
 
     private void onSelect(IStatSorter sorter) {
-        this.label.setString(sorter.getName().substring(0, 4));
+        String name = sorter.getName();
+        this.label.setString(name.length() > 4 ? name.substring(0, 4) : name);
         icon.setColor(GuiColors.normal);
         label.setColor(GuiColors.normal);
         this.onSelect.accept(sorter);
