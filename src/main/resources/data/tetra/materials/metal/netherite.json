@@ -11,12 +11,12 @@
     "toolLevel": "5",
     "toolEfficiency": "9",
     "tints": {
-        "glyph": "netherite_glyph",
-        "texture": "netherite"
+        "glyph": "806164",
+        "texture": "695e5f"
     },
     "textures": [
-        "metal",
-        "default"
+        "heavy",
+        "metal"
     ],
     "material": {
         "item": "minecraft:netherite_ingot"
