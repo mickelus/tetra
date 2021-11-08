@@ -195,6 +195,8 @@ public class AttributeHelper {
 
     private static AttributeModifier round(Attribute attribute, AttributeModifier mod) {
         double multiplier = (Attributes.ATTACK_DAMAGE.equals(attribute)
+                || Attributes.ARMOR.equals(attribute)
+                || Attributes.ARMOR_TOUGHNESS.equals(attribute)
                 || TetraAttributes.drawStrength.get().equals(attribute)
                 || TetraAttributes.abilityDamage.get().equals(attribute))
                 && mod.getOperation() == AttributeModifier.Operation.ADDITION

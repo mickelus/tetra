@@ -90,12 +90,12 @@ public class GuiStats {
 
     public static final IStatGetter armorGetter = new StatGetterAttribute(Attributes.ARMOR);
     public static final GuiStatBar armor = new GuiStatBar(0, 0, barLength, "tetra.stats.armor",
-                0, 20, false, armorGetter, LabelGetterBasic.integerLabel,
+                0, 20, false, armorGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterInteger("tetra.stats.armor.tooltip", armorGetter));
 
     public static final IStatGetter toughnessGetter = new StatGetterAttribute(Attributes.ARMOR_TOUGHNESS);
     public static final GuiStatBar toughness = new GuiStatBar(0, 0, barLength, "tetra.stats.toughness",
-            0, 20, false, toughnessGetter, LabelGetterBasic.integerLabel,
+            0, 20, false, toughnessGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterInteger("tetra.stats.toughness.tooltip", toughnessGetter));
 
     public static final IStatGetter shieldbreakerGetter = new StatGetterEffectLevel(ItemEffect.shieldbreaker, 1d);
